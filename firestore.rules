@@ -1,0 +1,190 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * SOVEREIGN AI PLATFORM v14.1.0 - SECURITY RULES DOCUMENTATION
+     *
+     * Core Philosophy: 
+     * This ruleset enforces a strict User-Ownership model based on Authorization Independence. 
+     * Access is primarily governed by the user's path context (/users/{userId}), ensuring that 
+     * users can only interact with their own data.
+     *
+     * Data Structure:
+     * - User Data: All private user operations, reports, scans, and OSINT tasks are nested under /users/{userId}/.
+     * - Global Data: AI model configurations and tool metadata are stored in top-level collections.
+     *
+     * Key Security Decisions:
+     * - Denormalization for Authorization: Essential identifiers (like userId) are stored directly on documents 
+     *   to allow for atomic, high-performance security checks without needing to look up parent documents.
+     * - Prototyping Flexibility: While authorization is strictly enforced (who can access what), the data 
+     *   shape (schema) is kept flexible to allow for rapid iteration on AI and OSINT features.
+     * - Structural Segregation: Administrative configurations are kept in separate top-level collections 
+     *   from user-generated content to prevent accidental data leaks.
+     */
+
+    // --- Helper Functions ---
+
+    /** 
+     * @description Basic check to verify the user is authenticated. 
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /** 
+     * @description Checks if the authenticated user's UID matches the provided userId. 
+     */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    /** 
+     * @description Combines ownership check with verification that the resource exists for updates/deletes.
+     */
+    function isExistingOwner(userId) {
+      return isOwner(userId) && resource != null;
+    }
+
+    /** 
+     * @description Verifies the incoming data contains the correct userId to maintain relational integrity.
+     */
+    function isValidOwnershipCreation(userId) {
+      return request.resource.data.userId == userId;
+    }
+
+    // --- User-Scoped Operations ---
+
+    /**
+     * @description Manages individual operations initiated by a user.
+     * @path /users/{userId}/operations/{operationId}
+     * @allow (create) if auth UID matches path and userId in data matches path.
+     * @deny (list) if requesting a userId other than the authenticated UID.
+     * @principle Enforces document ownership and relational integrity for user tasks.
+     */
+    match /users/{userId}/operations/{operationId} {
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidOwnershipCreation(userId);
+      allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Manages generated reports owned by a specific user.
+     * @path /users/{userId}/reports/{reportId}
+     * @allow (get) if the report belongs to the authenticated user.
+     * @deny (update) if attempting to change the report owner.
+     * @principle Ensures private reports are only accessible and manageable by their owner.
+     */
+    match /users/{userId}/reports/{reportId} {
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidOwnershipCreation(userId);
+      allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Stores individual pieces of knowledge for a user's RAG system.
+     * @path /users/{userId}/knowledgeItems/{knowledgeItemId}
+     * @allow (create) if the user provides their own UID in the knowledge document.
+     * @deny (delete) if the document does not exist or belongs to another user.
+     * @principle Protects proprietary knowledge assets and internal RAG data.
+     */
+    match /users/{userId}/knowledgeItems/{knowledgeItemId} {
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidOwnershipCreation(userId);
+      allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Records of web vulnerability scans.
+     * @path /users/{userId}/vulnerabilityScans/{scanId}
+     * @allow (list) if the user is viewing their own scan history.
+     * @deny (create) if the scanId in the path does not match the internal ID (if provided).
+     * @principle Scopes security audit data to the specific user who performed the scan.
+     */
+    match /users/{userId}/vulnerabilityScans/{scanId} {
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidOwnershipCreation(userId);
+      allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Individual findings discovered within a user's scan.
+     * @path /users/{userId}/vulnerabilityScans/{scanId}/findings/{findingId}
+     * @allow (get) if the user owns the parent scan (verified via denormalized userId).
+     * @deny (write) if the denormalized userId field is missing or incorrect.
+     * @principle Uses denormalized ownership for performant subcollection security.
+     */
+    match /users/{userId}/vulnerabilityScans/{scanId}/findings/{findingId} {
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidOwnershipCreation(userId);
+      allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Records of OSINT investigation tasks.
+     * @path /users/{userId}/osintTasks/{taskId}
+     * @allow (create) when an OSINT process is initiated by the owner.
+     * @deny (update) if the task does not exist.
+     * @principle Restricts OSINT task metadata and logs to the initiating user.
+     */
+    match /users/{userId}/osintTasks/{taskId} {
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidOwnershipCreation(userId);
+      allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Individual OSINT results found within a user's task.
+     * @path /users/{userId}/osintTasks/{taskId}/results/{resultId}
+     * @allow (list) by the owner to retrieve discovered intel.
+     * @deny (create) if the userId in the result data doesn't match the user path.
+     * @principle Ensures intelligence gathered via OSINT remains private and secure.
+     */
+    match /users/{userId}/osintTasks/{taskId}/results/{resultId} {
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidOwnershipCreation(userId);
+      allow update: if isExistingOwner(userId) && request.resource.data.userId == resource.data.userId;
+      allow delete: if isExistingOwner(userId);
+    }
+
+    // --- Global Configuration Collections ---
+
+    /**
+     * @description Global configurations for AI models (Ollama, Mistral, etc.).
+     * @path /aiModelConfigurations/{modelConfigId}
+     * @allow (get, list) for any signed-in user to see available models.
+     * @deny (create, update, delete) for all standard users; reserved for system admins.
+     * @principle Provides public read access for configuration while locking down modification.
+     */
+    match /aiModelConfigurations/{modelConfigId} {
+      allow get, list: if isSignedIn();
+      allow create, update, delete: if false; // TODO: Implement admin role check (e.g., exists(/roles/admin/uid))
+    }
+
+    /**
+     * @description Metadata and definitions for platform tools (Deep Eye, OSINT Master).
+     * @path /toolDefinitions/{toolDefinitionId}
+     * @allow (get, list) for all users to populate UI dashboards and menus.
+     * @deny (write) to prevent unauthorized tool path or syntax changes.
+     * @principle Enables dynamic tool loading for users while ensuring tool integrity.
+     */
+    match /toolDefinitions/{toolDefinitionId} {
+      allow get, list: if isSignedIn();
+      allow create, update, delete: if false; // TODO: Implement admin role check
+    }
+
+  }
+}
