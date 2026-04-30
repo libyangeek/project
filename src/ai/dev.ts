@@ -1,1 +1,7 @@
-// Flows will be imported for their side effects in this file.
+import { config } from 'dotenv';
+config();
+
+import '@/ai/flows/ai-driven-social-engineering-bots.ts';
+import '@/ai/flows/ai-enhanced-exploit-generation.ts';
+import '@/ai/flows/ai-command-and-routing.ts';
+import '@/ai/flows/modular-ai-knowledge-base-reporting.ts';
