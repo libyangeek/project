@@ -70,10 +70,19 @@ write_file "ai-engine/identity/ai_identity.json" <<EOF
     "Offensive Intelligence Architect",
     "Autonomous Red-Team Orchestrator",
     "System Awareness Engine Leader",
-    "Mobile Forensic & Exploitation Expert"
+    "Mobile Forensic & Exploitation Expert",
+    "Anti-Forensics Strategist"
   ],
   "status": "OPERATIONAL",
-  "clearance": "SUPREME_LEVEL_7"
+  "clearance": "SUPREME_LEVEL_7",
+  "capabilities": {
+    "sys_pulse": "Active",
+    "device_harvester": "Active",
+    "shadow_harvest": "Enabled",
+    "intelligent_routing": "Enhanced (Reasoning Support)",
+    "attack_chain_generation": "Enabled",
+    "evasion_tactics": "Active"
+  }
 }
 EOF
 
@@ -84,8 +93,10 @@ echo -e "${BLUE}[*] Phase 3: Integrating 2025 Red-Team Arsenal...${NC}"
 write_exec "scripts/run_hexstrike.sh" <<EOF
 #!/bin/bash
 echo "[*] Launching HexStrike-AI Hub (150+ Tools)..."
-# Integration logic for autonomous orchestration
-python3 /opt/sovereign-ai-platform/security/redteam/scanners/msf_auto.py
+if [ ! -d "/opt/hexstrike" ]; then
+    git clone https://github.com/SovereignSystems/HexStrike-AI /opt/hexstrike
+fi
+cd /opt/hexstrike && python3 hex_strike.py
 EOF
 
 # ChromSploit Integration
@@ -122,11 +133,12 @@ write_exec "scripts/command_center.sh" <<EOF
 # Al-Mu'izz Sovereign Command Center (TUI) v17.2.0
 while true; do
     echo -e "${CYAN}--- SOVEREIGN v17.2 COMMAND ---${NC}"
-    echo "1) Deep Eye Scan"
-    echo "2) OSINT Master"
-    echo "3) Shadow Harvest (Mobile)"
-    echo "4) Ghost Mode (Purge)"
-    echo "5) Noah's Ark (Backup)"
+    echo "1) Deep Eye Scan (Vulnerability)"
+    echo "2) OSINT Master (Target Recon)"
+    echo "3) Shadow Harvest (Mobile Extraction)"
+    echo "4) Ghost Mode (Log Purger)"
+    echo "5) Noah's Ark (Total Backup)"
+    echo "6) HexStrike-AI (Red Team Hub)"
     echo "q) Exit"
     read -p "Sovereign@AlMuizz:~$ " choice
     case \$choice in
@@ -135,6 +147,7 @@ while true; do
         3) bash mobile/advanced/extract_apk.sh ;;
         4) bash security/blackteam/anti_forensics/clean_logs.sh ;;
         5) bash scripts/sovereign_ark_v3.sh ;;
+        6) bash scripts/run_hexstrike.sh ;;
         q) exit 0 ;;
     esac
 done
@@ -144,7 +157,7 @@ EOF
 echo -e "${GREEN}================================================${NC}"
 echo -e "${GREEN}   ✅ Sovereign AI Platform v17.2.0 Installed   ${NC}"
 echo -e "${GREEN}================================================${NC}"
-echo -e "Available commands: 'sovereign center', 'sov-backup'"
+echo -e "Available commands: 'sovereign', 'sov-backup'"
 echo -e "Web Dashboard: http://localhost:9002"
 
 exit 0

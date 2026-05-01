@@ -50,11 +50,10 @@ const aiCommandAndRoutingFlow = ai.defineFlow(
     outputSchema: AiCommandAndRoutingOutputSchema,
   },
   async (input) => {
-    // 1. تحليل النية وبناء سلسلة الهجوم
+    // 1. تحليل النية وبناء سلسلة الهجوم بناءً على معارف المستودعات الحديثة
     const { output: plan } = await ai.generate({
-      prompt: `أنت الآن "المُعِزّ - وضع المفترس". مهمتك هي تحليل الطلب وتوليد "سلسلة هجوم" (Attack Chain) مترابطة.
-      إذا كان الطلب يتطلب استطلاعاً، ابدأ بـ recon_chain. إذا كان يتطلب كوداً، استخدم exploit_forge. 
-      لأقصى درجات الهجوم، استخدم full_predator_strike.
+      prompt: `أنت الآن "المُعِزّ - وضع المفترس v18.0". مهمتك هي تحليل الطلب وتوليد "سلسلة هجوم" (Attack Chain) مترابطة مستوحاة من أحدث تقنيات GitHub.
+      استخدم معرفتك بـ HexStrike و WhiteRabbitNeo لتصميم خطوات لا يمكن كشفها.
       
       المهمة: ${input.taskDescription}`,
       output: {
@@ -83,7 +82,7 @@ const aiCommandAndRoutingFlow = ai.defineFlow(
       } else if (step.module === 'exploit') {
         const exploit = await aiEnhancedExploitGeneration({
           vulnerabilityDescription: step.action,
-          targetSystemDetails: "Unknown Target (Auto-Adapting)"
+          targetSystemDetails: "Unknown Target (Auto-Adapting Logic)"
         });
         executionChain.push({ ...step, code: exploit.exploitCode });
       } else {
@@ -94,7 +93,7 @@ const aiCommandAndRoutingFlow = ai.defineFlow(
     return {
       intentCategory: category,
       executionChain,
-      strategicResponse: `تم تفعيل بروتوكول ${category}. العقد الهجومية مرتبطة الآن وجاهزة للضرب.`,
+      strategicResponse: `تم تفعيل بروتوكول ${category}. العقد الهجومية (Alpha Nodes) مرتبطة الآن وجاهزة للضرب المنسق آلياً.`,
       riskFactor: 'Extreme',
       forgedPayload
     };
