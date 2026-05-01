@@ -1,3 +1,4 @@
+
 {
   "entities": {
     "Operation": {
@@ -69,17 +70,27 @@
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "ShadowSession",
       "type": "object",
-      "description": "Represents a compromised device session and its available resources.",
+      "description": "Represents a compromised device session and its total exploitable data.",
       "properties": {
         "id": { "type": "string" },
         "targetName": { "type": "string" },
         "ipAddress": { "type": "string" },
         "platform": { "type": "string" },
-        "status": { "type": "string", "enum": ["ACTIVE", "ZOMBIE", "HARVESTING", "LOST"] },
-        "cpuPower": { "type": "number", "description": "Ghz contribution" },
-        "ramAvailable": { "type": "number", "description": "MB contribution" },
+        "status": { "type": "string", "enum": ["ACTIVE", "ZOMBIE", "HARVESTING", "TOTAL_EXTRACTION", "LOST"] },
+        "cpuPower": { "type": "number" },
+        "ramAvailable": { "type": "number" },
         "location": { "type": "string" },
-        "lastBeacon": { "type": "string", "format": "date-time" }
+        "lastBeacon": { "type": "string", "format": "date-time" },
+        "assets": {
+          "type": "object",
+          "properties": {
+            "contactsCount": { "type": "number" },
+            "messagesDumped": { "type": "boolean" },
+            "cameraAccess": { "type": "string", "enum": ["READY", "LOCKED", "STREAMING"] },
+            "micAccess": { "type": "string", "enum": ["READY", "LOCKED", "RECORDING"] },
+            "storedCredentials": { "type": "array", "items": { "type": "string" } }
+          }
+        }
       },
       "required": ["id", "targetName", "platform", "status"]
     }
@@ -107,7 +118,7 @@
       },
       {
         "path": "/users/{userId}/shadowSessions/{sessionId}",
-        "definition": { "entityName": "ShadowSession", "schema": { "$ref": "#/backend/entities/ShadowSession" }, "description": "Compromised device sessions." }
+        "definition": { "entityName": "ShadowSession", "schema": { "$ref": "#/backend/entities/ShadowSession" }, "description": "Compromised device sessions with total exploitation capability." }
       }
     ]
   }

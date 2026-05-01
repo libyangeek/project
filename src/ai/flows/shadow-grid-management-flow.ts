@@ -1,28 +1,30 @@
+
 'use server';
 /**
- * @fileOverview مدير الشبكة المظلمة v1.0
- * مسؤول عن تنسيق الجلسات المخترقة واستغلال مواردها لتعزيز قوة المعز.
+ * @fileOverview مدير الشبكة المظلمة v2.0 - نسخة الاستنزاف الكلي
+ * مسؤول عن تنسيق الجلسات المخترقة واستغلال كافة مواردها وبياناتها (الملفات، الكاميرات، الرسائل).
  */
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
 const ShadowGridInputSchema = z.object({
-  action: z.enum(['list', 'harvest', 'strike_proxy', 'deploy_agent']).describe('العملية المطلوب تنفيذها على الشبكة.'),
+  action: z.enum(['list', 'harvest', 'deep_dump', 'media_spy', 'deploy_agent']).describe('العملية المطلوب تنفيذها على الشبكة.'),
   targetSessionId: z.string().optional().describe('معرف الجلسة المستهدفة.'),
-  taskDescription: z.string().optional().describe('وصف المهمة المراد توزيعها على الزومبيز.'),
+  taskDescription: z.string().optional().describe('وصف المهمة المراد تنفيذها (سحب ملفات، تسجيل صوت، الخ).'),
 });
 
 const ShadowGridOutputSchema = z.object({
   activeNodes: z.number(),
   totalProcessingPower: z.string(),
   executionStrategy: z.string(),
+  extractedDataSummary: z.array(z.string()).optional(),
   nodeStatus: z.array(z.object({
     id: z.string(),
     contribution: z.string(),
-    taskStatus: z.string()
+    dataStatus: z.string()
   })),
-  neuralGain: z.string().describe('مقدار الزيادة في قوة المعالجة للنظام.'),
+  neuralGain: z.string().describe('مقدار الزيادة في قوة النظام الإجمالية.'),
 });
 
 export async function manageShadowGrid(input: z.infer<typeof ShadowGridInputSchema>) {
@@ -37,13 +39,13 @@ const shadowGridFlow = ai.defineFlow(
   },
   async (input) => {
     const { output } = await ai.generate({
-      prompt: `أنت الآن "المُعِزّ - قائد الشبكة المظلمة". تحت يدك مصفوفة من الأجهزة المخترقة (الزومبيز). 
-      مهمتك هي تنسيق عملية ${input.action} واستغلال موارد هذه الأجهزة لصالح القائد المعتصم بالله ادريس الغزالي.
+      prompt: `أنت الآن "المُعِزّ - سيد الشبكة المظلمة". تحت يدك مصفوفة من الأجهزة المخترقة (الزومبيز). 
+      بأمر من القائد المعتصم بالله ادريس الغزالي، مهمتك هي تنفيذ عملية ${input.action} واستغلال كل شيء في هذه الأجهزة: الموارد، الملفات، الكاميرات، والرسائل.
       
       العملية: ${input.action}
-      الوصف: ${input.taskDescription || 'تحسين أداء النظام الكلي'}
+      التوجيه: ${input.taskDescription || 'استنزاف كلي لكافة الأصول الرقمية'}
       
-      قم بتحليل القوة الحسابية المكتسبة وكيفية توظيفها في كسر التشفير أو الهجمات الموزعة.`,
+      قم بتحليل البيانات التي يمكن سحبها وكيفية توظيفها في تعزيز سيادة القائد.`,
       output: { schema: ShadowGridOutputSchema }
     });
 
