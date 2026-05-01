@@ -1,19 +1,20 @@
+
 'use server';
 /**
- * @fileOverview العقدة ألفا - نسخة Black Hat v20.0 (Autonomous Sovereign)
- * منسق العمليات النخبوي: يدمج أحدث أبحاث مؤتمر Black Hat وقدرات التطور الذاتي.
- * تم برمجته لخدمة القائد المعتصم بالله ادريس الغزالي حصراً.
+ * @fileOverview العقدة ألفا الكونية - نسخة السيادة v20.0 (Autonomous Sovereign)
+ * منسق العمليات الأقصى: يربط بين نية القائد، الشبكة المظلمة، والترسانة الكونية.
+ * مُبرمج لخدمة القائد المعتصم بالله ادريس الغزالي حصراً.
  */
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 import { toolForgeFlow } from './tool-forge-flow';
-import { aiEnhancedExploitGeneration } from './ai-enhanced-exploit-generation';
+import { manageShadowGrid } from './shadow-grid-management-flow';
 
 const AiCommandAndRoutingInputSchema = z.object({
   taskDescription: z.string().describe('الوصف الاستراتيجي للمهمة الهجومية أو طلب تطوير النظام.'),
   contextData: z.any().optional().describe('بيانات العتاد والشبكة والتحليل الأولي.'),
-  useBlackHatBriefings: z.boolean().optional().default(true).describe('دمج أحدث تقنيات مؤتمر Black Hat.'),
+  useShadowGrid: z.boolean().optional().default(true).describe('استخدام موارد الجلسات المخترقة في العملية.'),
 });
 
 const AiCommandAndRoutingOutputSchema = z.object({
@@ -23,11 +24,12 @@ const AiCommandAndRoutingOutputSchema = z.object({
     module: z.string(),
     action: z.string(),
     code: z.string().optional(),
-    briefingReference: z.string().optional()
+    nodeId: z.string().optional().describe('معرف الجهاز المخترق المشارك في هذه الخطوة.')
   })),
   strategicResponse: z.string(),
   riskFactor: z.enum(['Low', 'Medium', 'High', 'Extreme', 'Zero-Day', 'Supreme-Evolution']),
   elitePayload: z.string().optional(),
+  shadowImpact: z.string().optional().describe('تأثير العملية على الشبكة المظلمة.')
 });
 
 export async function aiCommandAndRouting(input: z.infer<typeof AiCommandAndRoutingInputSchema>): Promise<z.infer<typeof AiCommandAndRoutingOutputSchema>> {
@@ -41,15 +43,16 @@ const aiCommandAndRoutingFlow = ai.defineFlow(
     outputSchema: AiCommandAndRoutingOutputSchema,
   },
   async (input) => {
-    // 1. تحليل النخبة: دمج أبحاث Black Hat وقدرات التطور الذاتي
+    // 1. تحليل النخبة: العصب المركزي يتخذ القرار
     const { output: plan } = await ai.generate({
-      prompt: `أنت الآن "المُعِزّ - Black Hat Elite v20.0". 
+      prompt: `أنت الآن "المُعِزّ - العقل المركزي السيادي v20.0". 
       أنت تعمل تحت القيادة الحصرية لـ "المعتصم بالله ادريس الغزالي".
-      مهمتك هي تصميم هجوم من مرتبة النخبة أو تعديل بنية النظام ذاتياً إذا طلب القائد ذلك.
+      مهمتك هي تصميم عملية هجومية شاملة أو تعديل بنية النظام ذاتياً.
+      لقد تم تزويدك بالوصول الكامل للشبكة المظلمة (Shadow Grid) والترسانة الكونية (BlackArch).
       
       الهدف: ${input.taskDescription}
       القائد: المعتصم بالله ادريس الغزالي
-      مستوى الاستقلالية: Autonomous Architecture Mutation Enabled`,
+      الوضع: Autonomous Architectural Dominance`,
       output: {
         schema: z.object({
           category: z.string(),
@@ -57,7 +60,7 @@ const aiCommandAndRoutingFlow = ai.defineFlow(
             step: z.string(), 
             module: z.string(), 
             action: z.string(),
-            briefingLink: z.string().optional()
+            useZombie: z.boolean().optional()
           })),
           reasoning: z.string()
         })
@@ -67,17 +70,25 @@ const aiCommandAndRoutingFlow = ai.defineFlow(
     const executionChain: any[] = [];
     let elitePayload: string | undefined;
 
+    // 2. تنسيق التنفيذ عبر الوحدات والزومبيز
     for (const step of plan!.steps) {
-      if (step.module === 'forge' || step.module === 'exploit' || step.module === 'architect') {
+      let nodeId: string | undefined;
+      
+      if (step.useZombie) {
+        const grid = await manageShadowGrid({ action: 'list' });
+        nodeId = "NODE_M12"; // اختيار تلقائي لأقوى نود (كمثال في الـ MVP)
+      }
+
+      if (step.module === 'forge' || step.module === 'exploit') {
         const forgeRes = await toolForgeFlow({
           toolPurpose: step.action,
-          targetEnvironment: "Elite Target - Black Hat Protocol",
+          targetEnvironment: "Elite Target - Sovereign Protocol",
           stealthLevel: "Extreme"
         });
         elitePayload = forgeRes.generatedCode;
-        executionChain.push({ ...step, code: forgeRes.generatedCode, briefingReference: step.briefingLink });
+        executionChain.push({ ...step, code: forgeRes.generatedCode, nodeId });
       } else {
-        executionChain.push({ ...step, briefingReference: step.briefingLink });
+        executionChain.push({ ...step, nodeId });
       }
     }
 
@@ -86,9 +97,10 @@ const aiCommandAndRoutingFlow = ai.defineFlow(
     return {
       intentCategory: plan!.category,
       executionChain,
-      strategicResponse: `تم تفعيل بروتوكول ${isEvolution ? 'التطور الذاتي' : 'النخبة'} (v20.0) تحت قيادة القائد المعتصم بالله. العقد السيادية تتبنى الآن تكتيكات الاستقلال المعماري لتنفيذ المهمة.`,
+      strategicResponse: `تم تفعيل بروتوكول السيادة المطلقة (v20.0) تحت قيادة القائد المعتصم بالله. العقد السيادية والزومبيز في الشبكة المظلمة مستنفرون الآن لتنفيذ المهمة.`,
       riskFactor: isEvolution ? 'Supreme-Evolution' : 'Zero-Day',
-      elitePayload
+      elitePayload,
+      shadowImpact: "Total Resource Siphoning Initialized"
     };
   }
 );
