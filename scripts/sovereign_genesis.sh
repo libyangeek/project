@@ -16,7 +16,7 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 CYAN='\033[0;36m'
-YELLOW='\133[1;33m'
+YELLOW='\033[1;33m'
 NC='\033[0m'
 
 # [FILE HELPERS]
@@ -56,9 +56,15 @@ write_file "ai-engine/identity/ai_identity.json" <<EOF
 {
   "name": "المعز",
   "codename": "Al-Mu'izz",
-  "version": "17.0.0",
-  "motto": "السيادة فوق الجميع",
-  "roles": ["Cybersecurity Elite Specialist", "Offensive Intelligence Architect", "Autonomous Red-Team Orchestrator"],
+  "version": "17.2.0-ULTIMATE",
+  "motto": "السيادة فوق الجميع - العلم هو السلاح",
+  "roles": [
+    "Cybersecurity Elite Specialist",
+    "Offensive Intelligence Architect",
+    "Autonomous Red-Team Orchestrator",
+    "System Awareness Engine Leader",
+    "Kali Toolchain Orchestrator"
+  ],
   "status": "OPERATIONAL"
 }
 EOF
@@ -69,7 +75,6 @@ echo -e "${CYAN}[*] Integrating 2025 AI-RedTeam Frameworks...${NC}"
 write_exec "scripts/run_hexstrike.sh" <<EOF
 #!/bin/bash
 echo "[*] Launching HexStrike-AI Hub (150+ Tools)..."
-# Logic to clone and run
 if [ ! -d "/opt/hexstrike" ]; then
     git clone https://github.com/SovereignSystems/HexStrike-AI /opt/hexstrike
 fi
@@ -79,31 +84,7 @@ EOF
 write_exec "scripts/run_chromsploit.sh" <<EOF
 #!/bin/bash
 echo "[*] Launching ChromSploit v3.0 (Browser Exploitation)..."
-# Simulation of AI-powered browser exploit
 python3 -c "print('AI Module: CVE-2025-4664 loaded. Evading WAF...')"
-EOF
-
-# [ANTI-FORENSICS]
-echo -e "${CYAN}[*] Deploying Silk Guardian (Anti-Forensics)...${NC}"
-write_exec "security/blackteam/silk_guardian.py" <<EOF
-import os
-import time
-
-def usb_kill_switch():
-    print("[*] Silk Guardian Active: Monitoring USB ports for changes...")
-    # Simulation logic
-    # In real world: watch /sys/class/udc/
-    pass
-
-if __name__ == "__main__":
-    usb_kill_switch()
-EOF
-
-# [PLATFORM ALIASES]
-echo -e "${CYAN}[*] Configuring System Aliases...${NC}"
-cat >> ~/.bashrc <<EOF
-alias sovereign='bash /opt/sovereign-ai-platform/scripts/command_center.sh'
-alias sov-backup='bash /opt/sovereign-ai-platform/scripts/sovereign_ark_v3.sh'
 EOF
 
 # [COMPLETION]
@@ -111,6 +92,5 @@ echo -e "${GREEN}================================================${NC}"
 echo -e "${GREEN}   ✅ Sovereign AI Platform v17.0.0 Installed   ${NC}"
 echo -e "${GREEN}================================================${NC}"
 echo -e "Available commands: 'sovereign', 'sov-backup'"
-echo -e "Web Dashboard: http://localhost:6000"
 
 exit 0

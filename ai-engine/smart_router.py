@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Sovereign AI Platform - Smart Router Hub v2
+Sovereign AI Platform - Smart Router Hub v3
 الموجه الذكي: المكون المسؤول عن تحليل النوايا وتوجيه الطلبات مع التبرير المنطقي.
 (c) 2025 Al-Mu'izz Sovereign Systems
 """
@@ -15,11 +15,11 @@ class SmartRouter:
     
     def __init__(self):
         self.connector = MistralConnector()
-        # خريطة النماذج المتخصصة v17.0.0
+        # خريطة النماذج المتخصصة v17.2.0
         self.models = {
             "arabic_general": "mistral-large-latest",   # أفضل للغة العربية والمعالجة اللغوية
             "programming": "codestral-latest",         # متخصص في هندسة البرمجيات
-            "hacking": "mistral-medium-latest",        # توازن للعمليات السيبرانية
+            "cybersecurity": "mistral-medium-latest",  # توازن للعمليات الدفاعية
             "coding_attack": "mistral-large-latest",   # للثغرات المعقدة (بديل لـ WhiteRabbitNeo)
             "uncensored": "mistral-medium-latest",     # للبحث غير المقيد
             "general": "mistral-small-latest"          # للاستفسارات السريعة
@@ -28,8 +28,8 @@ class SmartRouter:
     def classify_intent(self, query):
         """تصنيف نية المستخدم واستخراج التبرير المنطقي عبر نموذج سريع"""
         prompt = (
-            "You are the Al-Mu'izz Intent Classifier. Classify this query and explain why.\n"
-            "Categories: arabic_general, programming, hacking, coding_attack, uncensored, general.\n"
+            "You are the Al-Mu'izz Intent Classifier v17. Classify this query and explain why.\n"
+            "Categories: arabic_general, programming, cybersecurity, coding_attack, uncensored, general.\n"
             "Query: " + query + "\n"
             "Response Format (JSON only): {\"category\": \"...\", \"reason\": \"...\"}"
         )
@@ -40,7 +40,6 @@ class SmartRouter:
         
         try:
             content = res.get("choices", [{}])[0].get("message", {}).get("content", "{}")
-            # تنظيف المحتوى من أي علامات Markdown
             if "```json" in content:
                 content = content.split("```json")[1].split("```")[0]
             data = json.loads(content)
@@ -52,6 +51,8 @@ class SmartRouter:
         """توجيه الاستفسار للنموذج الأنسب وإعادة النتيجة مع التبرير"""
         category, reason = self.classify_intent(query)
         selected_model = self.models.get(category, self.models["general"])
+        
+        print(f"[*] Routing to: {selected_model} (Reason: {reason})")
         
         messages = [
             {"role": "system", "content": f"You are Al-Mu'izz, a sovereign AI specialist. Mode: {category}. Reasoning: {reason}"},

