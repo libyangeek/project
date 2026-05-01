@@ -30,7 +30,7 @@ export async function generateSovereignTool(input: ToolForgeInput): Promise<Tool
   return toolForgeFlow(input);
 }
 
-const toolForgeFlow = ai.defineFlow(
+export const toolForgeFlow = ai.defineFlow(
   {
     name: 'toolForgeFlow',
     inputSchema: ToolForgeInputSchema,

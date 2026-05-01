@@ -17,7 +17,11 @@ import {
   Smartphone,
   Database,
   History,
-  Info
+  Info,
+  Hammer,
+  Code2,
+  Copy,
+  Wrench
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -33,6 +37,8 @@ type Message = {
   content: string
   model?: string
   intent?: string
+  forgedCode?: string
+  forgedAnalysis?: string
 }
 
 export default function TerminalPage() {
@@ -40,7 +46,7 @@ export default function TerminalPage() {
   const [messages, setMessages] = React.useState<Message[]>([
     { 
       role: "system", 
-      content: "Al-Mu'izz Sovereign Terminal [Version 17.2.0-ULTIMATE]\n(c) 2025 Sovereign Systems - Intelligence Division.\n\nNeural link established. Encryption: AES-8192-Quantum. All systems operational." 
+      content: "Al-Mu'izz Sovereign Terminal [Version 17.5.0-ULTIMATE]\n(c) 2025 Sovereign Systems - Intelligence Division.\n\nNeural link established. Unified Tactical Orchestrator is ACTIVE. All systems operational." 
     }
   ])
   const [isLoading, setIsLoading] = React.useState(false)
@@ -68,8 +74,14 @@ export default function TerminalPage() {
         role: "assistant", 
         content: result.generatedResponse,
         model: result.selectedModel,
-        intent: result.intentCategory
+        intent: result.intentCategory,
+        forgedCode: result.forgedToolCode,
+        forgedAnalysis: result.forgedToolAnalysis
       }])
+      
+      if (result.forgedToolCode) {
+        toast({ title: "Auto-Forge Triggered", description: "A custom tool was forged to handle this scenario." })
+      }
     } catch (error) {
       setMessages(prev => [...prev, { role: "system", content: "ERROR: Critical engine failure. Autonomous routing hub is unresponsive." }])
       toast({ variant: "destructive", title: "Core Sync Failure", description: "The neural routing hub encountered a fatal error." })
@@ -80,7 +92,7 @@ export default function TerminalPage() {
 
   const quickCommands = [
     { label: "Scan Target URL", icon: Search, cmd: "Run Deep Eye scanner on https://example.com" },
-    { label: "OSINT Probe", icon: Target, cmd: "Execute OSINT master for target@email.com" },
+    { label: "Forge Stealth RAT", icon: Hammer, cmd: "Create a Python-based stealth RAT for Linux target" },
     { label: "Mobile Sync", icon: Smartphone, cmd: "Check connected mobile hardware and map vectors" },
     { label: "System Pulse", icon: Activity, cmd: "Generate full platform health report" }
   ]
@@ -89,7 +101,7 @@ export default function TerminalPage() {
     <div className="flex min-h-screen bg-black">
       <SidebarNav />
       <main className="flex-1 ml-64 flex flex-col h-screen overflow-hidden bg-[radial-gradient(circle_at_center,rgba(170,76,255,0.03),transparent)]">
-        {/* Header - Advanced Sovereign Hub */}
+        {/* Header */}
         <header className="p-6 border-b border-white/5 flex items-center justify-between bg-black/40 backdrop-blur-2xl z-20">
           <div className="flex items-center gap-4">
             <div className="size-12 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 shadow-[0_0_20px_rgba(170,76,255,0.2)]">
@@ -104,41 +116,28 @@ export default function TerminalPage() {
                 </Badge>
                 <div className="flex items-center gap-1.5 text-[9px] text-muted-foreground uppercase font-bold tracking-tighter">
                   <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  Neural Router Active
+                  Tactical Orchestrator Active
                 </div>
               </div>
             </div>
           </div>
           <div className="flex gap-6 items-center">
             <div className="text-right hidden md:block">
-              <div className="text-xs font-code text-primary uppercase tracking-widest font-bold">Mistral-Large-Ultimate</div>
-              <div className="text-[9px] text-muted-foreground uppercase font-bold tracking-tighter">Active Decision Engine</div>
-            </div>
-            <div className="h-10 w-px bg-white/5 mx-2" />
-            <div className="flex items-center gap-4">
-               <div className="text-center">
-                  <div className="text-xs font-bold text-white">482</div>
-                  <div className="text-[8px] text-muted-foreground uppercase">Probes</div>
-               </div>
-               <div className="text-center">
-                  <div className="text-xs font-bold text-white">92%</div>
-                  <div className="text-[8px] text-muted-foreground uppercase">Load</div>
-               </div>
+              <div className="text-xs font-code text-primary uppercase tracking-widest font-bold">Forge-Enabled Mode</div>
+              <div className="text-[9px] text-muted-foreground uppercase font-bold tracking-tighter">Autonomous Script Generation</div>
             </div>
           </div>
         </header>
 
         <div className="flex-1 flex min-h-0 relative">
-          {/* Internal Sidebar for Status */}
           <aside className="w-64 border-r border-white/5 bg-black/20 p-6 hidden xl:flex flex-col gap-8 overflow-y-auto">
              <div className="space-y-4">
-                <h4 className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] opacity-60">Node Integrity</h4>
+                <h4 className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] opacity-60">System Awareness</h4>
                 <div className="space-y-3">
                    {[
+                     { name: "Tool Forge", status: "Linked", color: "bg-primary" },
                      { name: "Neural Router", status: "Active", color: "bg-emerald-500" },
-                     { name: "Shadow Harvest", status: "Ready", color: "bg-blue-500" },
-                     { name: "Deep Eye v17", status: "Armed", color: "bg-primary" },
-                     { name: "OSINT Master", status: "Monitoring", color: "bg-amber-500" }
+                     { name: "Deep Eye", status: "Armed", color: "bg-red-500" }
                    ].map((node, i) => (
                      <div key={i} className="flex items-center justify-between p-2 rounded bg-white/5 border border-white/5">
                         <span className="text-[10px] text-white font-medium">{node.name}</span>
@@ -150,36 +149,8 @@ export default function TerminalPage() {
                    ))}
                 </div>
              </div>
-
-             <div className="space-y-4">
-                <h4 className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] opacity-60">System Events</h4>
-                <div className="space-y-4">
-                   {[
-                     "Quantum link secured",
-                     "USB Port 002 recognized",
-                     "Shadow RAT beaconing"
-                   ].map((ev, i) => (
-                     <div key={i} className="flex gap-3 items-start group">
-                        <div className="size-1.5 mt-1 rounded-full bg-white/10 group-hover:bg-primary transition-colors shrink-0" />
-                        <span className="text-[10px] text-muted-foreground group-hover:text-white transition-colors">{ev}</span>
-                     </div>
-                   ))}
-                </div>
-             </div>
-
-             <div className="mt-auto p-4 rounded-xl bg-primary/5 border border-primary/10">
-                <div className="flex items-center gap-2 mb-2">
-                   <Cpu className="size-3 text-primary" />
-                   <span className="text-[10px] font-bold text-white uppercase tracking-wider">Arbiter Memory</span>
-                </div>
-                <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden mb-2">
-                   <div className="h-full bg-primary w-[74%]" />
-                </div>
-                <div className="text-[8px] text-muted-foreground text-right">74% Utilization</div>
-             </div>
           </aside>
 
-          {/* Main Terminal Area */}
           <div className="flex-1 flex flex-col min-w-0 bg-black/10">
             <ScrollArea className="flex-1 p-8">
               <div className="max-w-5xl mx-auto space-y-8 pb-4">
@@ -212,6 +183,40 @@ export default function TerminalPage() {
                       <pre className="whitespace-pre-wrap font-code leading-loose">
                         {msg.content}
                       </pre>
+
+                      {/* عرض الكود المولد تلقائياً في التيرمينال */}
+                      {msg.forgedCode && (
+                        <div className="mt-8 space-y-4 animate-in slide-in-from-top-4 duration-700">
+                          <div className="flex items-center gap-2 text-primary">
+                            <Hammer className="size-4" />
+                            <span className="text-[10px] font-bold uppercase tracking-widest">Autonomous Forge Triggered</span>
+                          </div>
+                          <div className="rounded-2xl border border-primary/20 overflow-hidden bg-black/60 shadow-inner">
+                            <div className="p-3 border-b border-white/5 bg-primary/5 flex justify-between items-center">
+                              <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-2">
+                                <Code2 className="size-3" /> Auto-Generated Payload
+                              </span>
+                              <Button variant="ghost" size="icon" className="size-6 rounded-lg" onClick={() => {
+                                navigator.clipboard.writeText(msg.forgedCode!);
+                                toast({ title: "Code Copied" });
+                              }}>
+                                <Copy className="size-3" />
+                              </Button>
+                            </div>
+                            <pre className="p-4 font-code text-xs text-emerald-400 overflow-x-auto max-h-[300px]">
+                              <code>{msg.forgedCode}</code>
+                            </pre>
+                            {msg.forgedAnalysis && (
+                              <div className="p-3 bg-white/5 border-t border-white/5">
+                                <p className="text-[9px] text-muted-foreground italic leading-relaxed">
+                                  <Info className="size-3 inline mr-1 text-primary"/> {msg.forgedAnalysis}
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
                       {msg.role === "assistant" && (
                         <div className="mt-6 pt-4 border-t border-white/5 flex gap-4">
                            <Button variant="ghost" size="sm" className="h-7 text-[9px] uppercase tracking-widest text-muted-foreground hover:text-white">
@@ -233,7 +238,7 @@ export default function TerminalPage() {
                          <div className="size-1.5 rounded-full bg-primary animate-bounce [animation-delay:-0.15s]" />
                          <div className="size-1.5 rounded-full bg-primary animate-bounce" />
                       </div>
-                      <span className="text-xs font-code text-muted-foreground uppercase tracking-widest font-bold">Al-Mu'izz neural engine is processing tactical request...</span>
+                      <span className="text-xs font-code text-muted-foreground uppercase tracking-widest font-bold">Al-Mu'izz Orchestrator is analyzing and forging...</span>
                     </div>
                   </div>
                 )}
@@ -244,7 +249,6 @@ export default function TerminalPage() {
             {/* Input & Quick Actions */}
             <div className="p-8 border-t border-white/5 bg-black/40 backdrop-blur-3xl">
               <div className="max-w-5xl mx-auto space-y-6">
-                {/* Quick Task Chips */}
                 <div className="flex flex-wrap gap-2">
                    {quickCommands.map((qc, i) => (
                      <Button 
@@ -268,35 +272,19 @@ export default function TerminalPage() {
                   <Input
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    placeholder="Enter strategic command or natural language task..."
-                    className="w-full bg-white/5 border-white/5 pl-14 pr-20 py-8 font-code text-lg focus-visible:ring-primary/40 focus-visible:border-primary rounded-[2rem] shadow-2xl transition-all placeholder:text-muted-foreground/30"
+                    placeholder="Enter strategic command or request a custom tool..."
+                    className="w-full bg-white/5 border-white/5 pl-14 pr-20 py-8 font-code text-lg focus-visible:ring-primary/40 focus-visible:border-primary rounded-[2rem] shadow-2xl transition-all"
                     disabled={isLoading}
                   />
                   <Button 
                     type="submit" 
                     size="icon" 
-                    className="absolute right-4 top-1/2 -translate-y-1/2 size-12 bg-primary hover:bg-primary/90 rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-xl shadow-primary/20"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 size-12 bg-primary hover:bg-primary/90 rounded-2xl shadow-xl"
                     disabled={!input.trim() || isLoading}
                   >
                     {isLoading ? <Loader2 className="size-6 animate-spin" /> : <Send className="size-6" />}
                   </Button>
                 </form>
-                
-                <div className="flex justify-between items-center px-4">
-                   <p className="text-[10px] text-muted-foreground/50 uppercase tracking-[0.3em] font-medium italic">
-                    Al-Mu'izz Secure Channel <span className="mx-2 opacity-20">|</span> 0x88.42.11.9
-                   </p>
-                   <div className="flex gap-4">
-                      <div className="flex items-center gap-1.5">
-                         <span className="size-1 rounded-full bg-emerald-500" />
-                         <span className="text-[9px] font-bold text-muted-foreground uppercase">Local Link</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                         <span className="size-1 rounded-full bg-blue-500" />
-                         <span className="text-[9px] font-bold text-muted-foreground uppercase">External API</span>
-                      </div>
-                   </div>
-                </div>
               </div>
             </div>
           </div>
