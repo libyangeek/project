@@ -1,43 +1,52 @@
 #!/bin/bash
-# Sovereign AI Platform - Extract APK Utility
+# Sovereign AI Platform - Mobile Forensic Unit
 # (c) 2025 Al-Mu'izz Sovereign Systems
+# سكريبت سحب APK من جهاز أندرويد متصل عبر ADB.
 
-echo "------------------------------------------------"
-echo "  Sovereign Mobile Forensics: APK Extractor     "
-echo "------------------------------------------------"
+echo "================================================"
+echo "    SOVEREIGN MOBILE FORENSIC: APK EXTRACTOR    "
+echo "================================================"
 
-# Check for ADB
+# التأكد من وجود ADB
 if ! command -v adb &> /dev/null
 then
-    echo "Error: ADB not found. Please install Android Platform Tools."
+    echo "[!] خطأ: ADB غير مثبت. يرجى تثبيت Android Platform Tools."
     exit 1
 fi
 
-# List connected devices
-devices=$(adb devices | grep -v "List" | grep "device")
-if [ -z "$devices" ]; then
-    echo "No devices connected via ADB. Please check USB/WiFi connection."
+# فحص الأجهزة المتصلة
+DEVICES=$(adb devices | grep -v "List" | grep "device")
+if [ -z "$DEVICES" ]; then
+    echo "[!] لم يتم العثور على أجهزة متصلة. يرجى تفعيل USB Debugging."
     exit 1
 fi
 
-echo "Scanning for installed packages..."
-packages=$(adb shell pm list packages -3 | cut -d':' -f2)
+echo "[*] جاري جلب قائمة الحزم المثبتة..."
+# جلب الحزم الخارجية فقط (User Apps)
+PACKAGES=$(adb shell pm list packages -3 | cut -d':' -f2 | head -n 10)
 
-if [ -z "$packages" ]; then
-    echo "No 3rd party packages found."
+if [ -z "$PACKAGES" ]; then
+    echo "[!] لا توجد تطبيقات خارجية مثبتة للسحب."
     exit 1
 fi
 
-echo "Select a package to extract:"
-select pkg in $packages; do
-    if [ -n "$pkg" ]; then
-        echo "Locating APK for $pkg..."
-        path=$(adb shell pm path $pkg | cut -d':' -f2)
-        echo "Extracting from $path..."
-        adb pull $path ./${pkg}.apk
-        echo "Extraction complete: ./${pkg}.apk"
-        break
-    else
-        echo "Invalid selection."
-    fi
-done
+# اختيار أول حزمة كمثال في وضع التشغيل الآلي أو طلب إدخال
+TARGET_PKG=$(echo $PACKAGES | awk '{print $1}')
+echo "[*] الهدف التلقائي: $TARGET_PKG"
+
+echo "[*] تحديد مسار ملف الـ APK على الجهاز..."
+APK_PATH=$(adb shell pm path $TARGET_PKG | cut -d':' -f2)
+
+if [ -z "$APK_PATH" ]; then
+    echo "[!] فشل في تحديد مسار الملف."
+    exit 1
+fi
+
+echo "[*] جاري سحب الملف من $APK_PATH ..."
+adb pull "$APK_PATH" "./extracted_${TARGET_PKG}.apk"
+
+if [ $? -eq 0 ]; then
+    echo "[+] نجاح: تم استخراج الملف إلى ./extracted_${TARGET_PKG}.apk"
+else
+    echo "[!] فشل في سحب الملف."
+fi
