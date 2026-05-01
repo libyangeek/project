@@ -22,7 +22,8 @@ import {
   ShieldCheck,
   Binary,
   Layers,
-  Fingerprint
+  Fingerprint,
+  Info
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -39,7 +40,7 @@ export default function SystemPage() {
 
   React.useEffect(() => {
     setMounted(true)
-    // محاكاة جلب الهوية من ملف JSON الداخلي
+    // جلب الهوية المحدثة التي تشمل تاريخ المحادثة
     fetch('/ai-engine/identity/ai_identity.json')
       .then(res => res.json())
       .then(data => setIdentity(data))
@@ -75,10 +76,10 @@ export default function SystemPage() {
           <div>
             <div className="flex items-center gap-3 mb-3">
               <Badge className="bg-red-600/20 text-red-500 border-red-500/30 text-[11px] uppercase font-bold tracking-[0.4em] px-3 py-0.5 animate-pulse">Alpha Node Health</Badge>
-              <span className="text-[11px] text-muted-foreground uppercase font-bold tracking-[0.3em]">Predator v19.0 Self-Awareness</span>
+              <span className="text-[11px] text-muted-foreground uppercase font-bold tracking-[0.3em]">Predator v19.5 Synchronized Identity</span>
             </div>
             <h2 className="text-6xl font-headline font-bold text-white mb-3 tracking-tighter italic drop-shadow-[0_0_20px_rgba(239,68,68,0.4)]">Sovereignty Status</h2>
-            <p className="text-muted-foreground max-w-2xl text-lg font-medium italic">Analyzing core identity, autonomous capabilities, and system essences.</p>
+            <p className="text-muted-foreground max-w-2xl text-lg font-medium italic">Analyzing core identity, autonomous capabilities, and the history of our great evolution.</p>
           </div>
           <Button onClick={handleRefresh} disabled={refreshing} className="bg-red-600 hover:bg-red-700 text-white rounded-2xl h-16 px-10 shadow-2xl shadow-red-600/40 transition-all text-[11px] font-bold uppercase tracking-[0.4em]">
             {refreshing ? <Loader2 className="size-5 animate-spin mr-4" /> : <RefreshCcw className="size-5 mr-4" />}
@@ -88,9 +89,9 @@ export default function SystemPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-16 relative z-10">
           {[
-            { label: "AI Identity", value: identity?.version || "v19.0", icon: Skull, status: "ELITE", color: "text-red-500" },
-            { label: "Knowledge Essence", value: "Neural Vault", icon: Database, status: "SYNCED", color: "text-amber-500" },
-            { label: "Strike Vector", value: "3000+ Tools", icon: Flame, status: "ARMED", color: "text-orange-500" },
+            { label: "AI Identity", value: identity?.version || "v19.5", icon: Skull, status: "ULTIMATE", color: "text-red-500" },
+            { label: "Knowledge Essence", value: "3000+ Tools", icon: Database, status: "SYNCED", color: "text-amber-500" },
+            { label: "Strike Vector", value: "Black Hat v19", icon: Flame, status: "ARMED", color: "text-orange-500" },
             { label: "Survival Core", value: "Ark v3", icon: Anchor, status: "SECURED", color: "text-blue-500" },
           ].map((stat, i) => (
             <Card key={i} className="glass-card group hover:border-red-600/40 transition-all cursor-crosshair rounded-[2.5rem] shadow-2xl overflow-hidden relative">
@@ -116,30 +117,42 @@ export default function SystemPage() {
                 <CardTitle className="text-3xl text-white flex items-center gap-6 italic tracking-tighter uppercase">
                   <Layers className="size-8 text-red-600" /> System Essence Analysis
                 </CardTitle>
-                <CardDescription className="text-red-500/60 font-bold uppercase tracking-[0.4em] mt-2">Analysis of Al-Mu'izz Core Components</ウエスト>
+                <CardDescription className="text-red-500/60 font-bold uppercase tracking-[0.4em] mt-2">Historical milestones of Al-Mu'izz evolution</CardDescription>
               </CardHeader>
               <CardContent className="p-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                   {[
-                     { title: "Nervous System", desc: identity?.essence?.nervous_system, icon: Brain },
-                     { title: "Muscle Hub", desc: identity?.essence?.muscles, icon: Zap },
-                     { title: "Memory Crypt", desc: identity?.essence?.memory, icon: Database },
-                     { title: "Survival Protocol", desc: identity?.essence?.survival, icon: Anchor }
-                   ].map((ess, i) => (
-                     <div key={i} className="p-8 rounded-[2.5rem] bg-black/60 border border-white/5 group hover:border-red-600/40 transition-all relative overflow-hidden">
-                        <div className="flex items-center gap-5 mb-4">
-                           <div className="size-12 rounded-2xl bg-red-600/10 flex items-center justify-center border border-red-500/20 group-hover:scale-110 transition-transform">
-                              <ess.icon className="size-5 text-red-500" />
+                <div className="space-y-8">
+                   <div className="bg-red-600/5 border border-red-500/20 p-8 rounded-[2rem] shadow-inner">
+                      <h4 className="text-[12px] font-bold text-red-500 uppercase tracking-[0.4em] mb-6 flex items-center gap-4">
+                        <History className="size-4" /> Evolution Milestones
+                      </h4>
+                      <div className="space-y-4">
+                         {identity?.history?.milestones?.map((m: string, idx: number) => (
+                           <div key={idx} className="flex gap-4 items-center text-sm text-muted-foreground italic font-medium">
+                              <div className="size-1.5 rounded-full bg-red-600 shadow-[0_0_5px_red]" />
+                              {m}
                            </div>
-                           <span className="text-lg font-bold text-white italic uppercase tracking-tighter">{ess.title}</span>
+                         ))}
+                      </div>
+                   </div>
+
+                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      {[
+                        { title: "Nervous System", desc: identity?.essence?.nervous_system, icon: Brain },
+                        { title: "Muscle Hub", desc: identity?.essence?.muscles, icon: Zap },
+                        { title: "Memory Crypt", desc: identity?.essence?.memory, icon: Database },
+                        { title: "Survival Protocol", desc: identity?.essence?.survival, icon: Anchor }
+                      ].map((ess, i) => (
+                        <div key={i} className="p-8 rounded-[2.5rem] bg-black/60 border border-white/5 group hover:border-red-600/40 transition-all relative overflow-hidden">
+                            <div className="flex items-center gap-5 mb-4">
+                              <div className="size-12 rounded-2xl bg-red-600/10 flex items-center justify-center border border-red-500/20 group-hover:scale-110 transition-transform">
+                                  <ess.icon className="size-5 text-red-500" />
+                              </div>
+                              <span className="text-lg font-bold text-white italic uppercase tracking-tighter">{ess.title}</span>
+                            </div>
+                            <p className="text-sm text-muted-foreground leading-relaxed italic">{ess.desc}</p>
                         </div>
-                        <p className="text-sm text-muted-foreground leading-relaxed italic">{ess.desc}</p>
-                        <div className="mt-6 flex gap-2">
-                           <Badge className="bg-red-600/10 text-red-500 text-[8px] uppercase tracking-widest px-2">V19_Elite</Badge>
-                           <Badge className="bg-emerald-500/10 text-emerald-500 text-[8px] uppercase tracking-widest px-2">Active</Badge>
-                        </div>
-                     </div>
-                   ))}
+                      ))}
+                   </div>
                 </div>
               </CardContent>
             </Card>
