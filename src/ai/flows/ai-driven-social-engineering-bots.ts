@@ -2,10 +2,8 @@
 /**
  * @fileOverview A Genkit flow for an AI-driven social engineering bot that can engage targets,
  * gather intelligence, or craft persuasive messages across social platforms.
- *
- * - aiDrivenSocialEngineeringBots - A function to interact with the AI social engineering bot.
- * - SocialEngineeringInput - The input type for the aiDrivenSocialEngineeringBots function.
- * - SocialEngineeringOutput - The return type for the aiDrivenSocialEngineeringBots function.
+ * 
+ * - Enhanced v17.2: Supports Knowledge Base context for better priming.
  */
 
 import { ai } from '@/ai/genkit';
@@ -29,16 +27,10 @@ const SocialEngineeringInputSchema = z.object({
     .string()
     .optional()
     .describe('Previous messages or conversation history with the target, if any.'),
-  intelligenceToGather: z
+  knowledgeBaseContext: z
     .string()
     .optional()
-    .describe(
-      'Specific pieces of information to gather from the target (e.g., email address, software used, personal details).'
-    ),
-  persuasiveMessageTopic: z
-    .string()
-    .optional()
-    .describe('If crafting a message, the main topic or subject of the message.'),
+    .describe('Contextual intelligence from the Sovereign Knowledge Base to prime the bot.'),
   persuasiveMessageStyle: z
     .string()
     .optional()
@@ -58,22 +50,22 @@ const SocialEngineeringOutputSchema = z.object({
     .string()
     .optional()
     .describe(
-      'The AI-generated message to send to the target, if an engagement or message crafting action is proposed.'
+      'The AI-generated message to send to the target.'
     ),
-  intelligenceExtracted: z
-    .array(z.string())
-    .optional()
-    .describe(
-      'A list of specific intelligence points extracted from the conversation context, if intelligence gathering was the goal.'
-    ),
+  psychologicalVectors: z.array(z.object({
+    vector: z.string(),
+    description: z.string(),
+    impact: z.enum(['High', 'Medium', 'Low'])
+  })).describe('Analysis of psychological triggers for this specific persona.'),
   nextStepSuggestion: z
     .string()
     .describe(
-      'A suggestion for the next step in the social engineering campaign, based on the current context and goal.'
+      'A suggestion for the next step in the campaign.'
     ),
   rationale: z
     .string()
-    .describe('The reasoning behind the proposed action and message/intelligence extracted.'),
+    .describe('The reasoning behind the proposed action.'),
+  riskLevel: z.enum(['Low', 'Medium', 'High', 'Extreme']).describe('Operational risk level of this specific engagement.'),
 });
 export type SocialEngineeringOutput = z.infer<typeof SocialEngineeringOutputSchema>;
 
@@ -87,34 +79,31 @@ const socialEngineeringPrompt = ai.definePrompt({
   name: 'socialEngineeringPrompt',
   input: { schema: SocialEngineeringInputSchema },
   output: { schema: SocialEngineeringOutputSchema },
-  prompt: `You are an AI-driven social engineering bot, an expert in human psychology, influence, and digital communication. Your goal is to assist a social engineering specialist in automating parts of their campaigns on the {{platform}} platform.
+  prompt: `You are an elite AI-driven social engineering bot, an expert in human psychology, influence, and digital communication within the Al-Mu'izz OS.
 
-Based on the following information, determine the best course of action: either to 'engage' the target with a general message, 'gather_intelligence' by asking leading questions or analyzing context, or 'craft_message' for a specific persuasive purpose.
+Based on the target persona and campaign goal, determine the best psychological vector to exploit.
 
 Target Persona: {{{targetPersona}}}
 Campaign Goal: {{{campaignGoal}}}
+Platform: {{platform}}
+
+{{#if knowledgeBaseContext}}
+Contextual Intel from Knowledge Base: {{{knowledgeBaseContext}}}
+Use this intel to personalize the message and make it more convincing.
+{{/if}}
 
 {{#if conversationContext}}
-Previous Conversation Context: {{{conversationContext}}}
+Previous Conversation History: {{{conversationContext}}}
+Analyze this history to identify tone shifts and weaknesses.
 {{/if}}
 
-{{#if intelligenceToGather}}
-Specific Intelligence to Gather: {{{intelligenceToGather}}}
-If the 'actionProposed' is 'gather_intelligence', analyze the 'conversationContext' carefully for any information matching 'intelligenceToGather' and return it in 'intelligenceExtracted' as a list of strings. If 'intelligenceToGather' is provided, prioritize gathering that information over general engagement.
-{{/if}}
+Analyze the 'targetPersona' to identify 3 distinct 'psychologicalVectors' (e.g., Authority, Scarcity, Reciprocity, Liking, Social Proof, Consistency).
 
-{{#if persuasiveMessageTopic}}
-Message Topic: {{{persuasiveMessageTopic}}}
-Message Style: {{{persuasiveMessageStyle}}}
-If the 'actionProposed' is 'craft_message', generate a highly persuasive message based on 'targetPersona', 'campaignGoal', 'persuasiveMessageTopic', and 'persuasiveMessageStyle'. The message should be subtle, convincing, and tailored to the target's persona, designed to achieve the 'campaignGoal' without raising suspicion. Return this message in 'generatedMessage'.
-{{/if}}
+Generate a highly persuasive message in 'generatedMessage' that aligns with the 'persuasiveMessageStyle' and the identified vectors.
 
-If the 'actionProposed' is 'engage' (or no specific intelligence/message topic is provided), generate an engaging opening message that aligns with the 'targetPersona' and 'campaignGoal' to initiate or continue the interaction. Return this message in 'generatedMessage'.
+Assess the 'riskLevel' (Extreme if targeting credentials/system access, Medium if general intelligence gathering).
 
-Always provide a 'nextStepSuggestion' for the social engineering specialist and a detailed 'rationale' for your proposed 'actionProposed' and the content of 'generatedMessage' or 'intelligenceExtracted'.
-
-Ensure that 'generatedMessage' is only populated if 'actionProposed' is 'engage' or 'craft_message'.
-Ensure that 'intelligenceExtracted' is only populated if 'actionProposed' is 'gather_intelligence' and actual intelligence was found.`,
+Always provide a 'nextStepSuggestion' and a 'rationale' in Arabic (Military/Technical style).`,
 });
 
 const aiDrivenSocialEngineeringBotsFlow = ai.defineFlow(
