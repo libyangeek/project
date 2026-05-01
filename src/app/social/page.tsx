@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -45,6 +46,7 @@ import { ResponsiveContainer, Radar as RadarChart, PolarGrid, PolarAngleAxis, Po
 import Link from "next/link"
 
 export default function SocialPage() {
+  const [mounted, setMounted] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
   const [contextLoading, setContextLoading] = React.useState(false)
   const [platform, setPlatform] = React.useState<"telegram" | "whatsapp" | "other">("telegram")
@@ -54,6 +56,10 @@ export default function SocialPage() {
   const [kbContext, setKbContext] = React.useState("")
   const [result, setResult] = React.useState<any>(null)
   const [activePulse, setActivePulse] = React.useState(false)
+
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
 
   // بيانات افتراضية للرادار التحليلي
   const radarData = result?.psychologicalVectors?.map((v: any) => ({
@@ -404,7 +410,7 @@ export default function SocialPage() {
               </div>
             ) : (
               <div className="h-full min-h-[750px] border-2 border-dashed border-white/5 rounded-[4rem] flex flex-col items-center justify-center text-center p-12 bg-black/10 group transition-all hover:bg-black/20 relative overflow-hidden">
-                {loading && (
+                {mounted && loading && (
                    <div className="absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-xl z-50">
                       <div className="flex flex-col items-center gap-6">
                          <div className="relative">
@@ -425,7 +431,7 @@ export default function SocialPage() {
                 <div className="size-48 bg-primary/5 rounded-full flex items-center justify-center mb-12 border border-primary/10 group-hover:scale-110 transition-transform duration-1000 relative">
                   <Users className="size-24 text-primary/20 transition-all group-hover:text-primary/40" />
                   <div className="absolute inset-0 bg-primary/5 rounded-full blur-[80px] animate-pulse" />
-                  {activePulse && (
+                  {mounted && activePulse && (
                     <div className="absolute inset-0 flex items-center justify-center">
                        <div className="size-64 border border-primary/20 rounded-full animate-ping" />
                     </div>
@@ -444,7 +450,7 @@ export default function SocialPage() {
 
                 {/* Animated Spectrum at bottom of placeholder */}
                 <div className="absolute bottom-12 flex gap-1 items-end h-16 opacity-10">
-                   {Array.from({ length: 40 }).map((_, i) => (
+                   {mounted && Array.from({ length: 40 }).map((_, i) => (
                      <div key={i} className="w-1 bg-primary rounded-full" style={{ height: `${Math.random() * 100}%`, animation: `pulse 1.5s infinite ${i * 0.05}s` }} />
                    ))}
                 </div>
@@ -466,7 +472,7 @@ export default function SocialPage() {
               </div>
            </div>
            <div className="flex items-end gap-1.5 h-10 px-2">
-              {Array.from({ length: 45 }).map((_, i) => (
+              {mounted && Array.from({ length: 45 }).map((_, i) => (
                 <div 
                   key={i} 
                   className="flex-1 bg-primary/40 rounded-full hover:bg-primary transition-colors cursor-pointer" 

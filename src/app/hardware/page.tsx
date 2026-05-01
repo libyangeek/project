@@ -45,6 +45,7 @@ import Link from "next/link"
  * يدير الاتصال بالعتاد الفيزيائي، سحب البيانات، وتوليد سلاسل الهجوم.
  */
 export default function MobileOpsPage() {
+  const [mounted, setMounted] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
   const [scanning, setScanning] = React.useState(false)
   const [intel, setIntel] = React.useState<MobileIntelligenceOutput | null>(null)
@@ -60,6 +61,10 @@ export default function MobileOpsPage() {
     { platform: "Android" as const, id: "RF8W10XXXXX", status: "READY", version: "14", name: "Samsung Galaxy S24" },
     { platform: "iOS" as const, id: "00008110-XXXX", status: "RESTRICTED", version: "17.4", name: "iPhone 15 Pro" }
   ])
+
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const addLog = (msg: string, type: 'info' | 'warn' | 'success' = 'info') => {
     setLogs(prev => [...prev, { msg, type }].slice(-10))
@@ -221,7 +226,7 @@ export default function MobileOpsPage() {
                <CardContent className="p-4 flex-1 overflow-y-auto font-code text-[9px] space-y-1.5 scrollbar-hide">
                   {logs.map((log, i) => (
                     <div key={i} className="flex gap-2 animate-in slide-in-from-left-1">
-                       <span className="opacity-30">[{new Date().toLocaleTimeString().split(' ')[0]}]</span>
+                       <span className="opacity-30">[{mounted ? new Date().toLocaleTimeString().split(' ')[0] : "--:--:--"}]</span>
                        <span className={cn(
                          log.type === 'success' ? 'text-emerald-500' : log.type === 'warn' ? 'text-amber-500' : 'text-primary'
                        )}>{log.msg}</span>
@@ -334,7 +339,7 @@ export default function MobileOpsPage() {
                </div>
              ) : (
                <div className="h-full min-h-[700px] border-2 border-dashed border-white/5 rounded-[4rem] flex flex-col items-center justify-center text-center p-12 bg-black/10 relative overflow-hidden group transition-all hover:bg-black/20">
-                  {(activePulse || scanning) && (
+                  {mounted && (activePulse || scanning) && (
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                        <div className="size-[500px] border border-primary/20 rounded-full animate-ping duration-1000" />
                        <div className="size-[300px] border border-primary/40 rounded-full animate-ping duration-700 delay-300" />
@@ -342,9 +347,9 @@ export default function MobileOpsPage() {
                     </div>
                   )}
                   <div className="size-56 bg-primary/5 rounded-full flex items-center justify-center mb-12 border border-primary/10 group-hover:scale-110 transition-transform duration-1000 relative">
-                     <Smartphone className={cn("size-28 text-primary/20 transition-all duration-700", (activePulse || scanning) && "text-primary animate-pulse")} />
+                     <Smartphone className={cn("size-28 text-primary/20 transition-all duration-700", mounted && (activePulse || scanning) && "text-primary animate-pulse")} />
                      <div className="absolute inset-0 bg-primary/5 rounded-full blur-[80px] animate-pulse" />
-                     {scanning && <Loader2 className="absolute inset-0 size-56 text-primary/10 animate-spin" />}
+                     {mounted && scanning && <Loader2 className="absolute inset-0 size-56 text-primary/10 animate-spin" />}
                   </div>
                   <h3 className="text-6xl font-headline font-bold text-white mb-8 tracking-tighter italic drop-shadow-2xl">Mobile Link Standby</h3>
                   <p className="text-muted-foreground max-w-xl mx-auto leading-relaxed mb-14 text-2xl font-medium">
@@ -357,7 +362,7 @@ export default function MobileOpsPage() {
 
                   {/* Animated Waveform at bottom */}
                   <div className="absolute bottom-16 flex gap-1.5 items-end h-24 opacity-10">
-                     {Array.from({ length: 60 }).map((_, i) => (
+                     {mounted && Array.from({ length: 60 }).map((_, i) => (
                        <div key={i} className="w-1.5 bg-primary rounded-full" 
                         style={{ 
                           height: `${20 + Math.random() * 80}%`, 
@@ -384,16 +389,19 @@ export default function MobileOpsPage() {
               </div>
            </div>
            <div className="flex items-end gap-1.5 h-12 px-2">
-              {Array.from({ length: 50 }).map((_, i) => (
-                <div key={i} className="flex-1 bg-primary/40 rounded-full hover:bg-primary transition-all cursor-pointer group/bar relative" 
-                  style={{ 
-                    height: scanning ? `${10 + Math.random() * 90}%` : `${20 + Math.random() * 40}%`, 
-                    animation: scanning ? `pulse 0.5s infinite ${i * 0.02}s` : `pulse 2s infinite ${i * 0.04}s` 
-                  }} 
-                >
-                   <div className="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover/bar:opacity-100 text-[6px] font-code text-white transition-opacity">{(Math.random()*100).toFixed(1)}</div>
-                </div>
-              ))}
+              {mounted && Array.from({ length: 50 }).map((_, i) => {
+                const randomHeight = scanning ? 10 + Math.random() * 90 : 20 + Math.random() * 40;
+                return (
+                  <div key={i} className="flex-1 bg-primary/40 rounded-full hover:bg-primary transition-all cursor-pointer group/bar relative" 
+                    style={{ 
+                      height: `${randomHeight}%`, 
+                      animation: scanning ? `pulse 0.5s infinite ${i * 0.02}s` : `pulse 2s infinite ${i * 0.04}s` 
+                    }} 
+                  >
+                     <div className="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover/bar:opacity-100 text-[6px] font-code text-white transition-opacity">{(Math.random()*100).toFixed(1)}</div>
+                  </div>
+                );
+              })}
            </div>
            <div className="mt-6 flex justify-between px-2 items-center opacity-40 group-hover:opacity-100 transition-opacity">
               <div className="flex gap-4">
