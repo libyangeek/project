@@ -1,7 +1,7 @@
 'use server';
 /**
- * @fileOverview تدفق الوعي الشامل المطور (System Awareness Flow v2).
- * يدمج قاعدة بيانات أدوات كالي لينكس المكتشفة مع تحليل العتاد لتقديم خطط عمل دقيقة.
+ * @fileOverview تدفق الوعي الشامل المطور (System Awareness Flow v3).
+ * يدمج قدرات Shadow Harvest لسحب بيانات الموبايل مع تحليل العتاد.
  */
 
 import { ai } from '@/ai/genkit';
@@ -15,15 +15,16 @@ const HardwareInfoSchema = z.object({
 });
 
 const AwarenessOutputSchema = z.object({
-  analysis: z.string().describe('تحليل شامل للحالة الحالية للنظام والعتاد.'),
-  threats: z.array(z.string()).describe('التهديدات المحتملة المرصودة.'),
+  analysis: z.string().describe('تحليل شامل للحالة الحالية للنظام والعتاد والهواتف.'),
+  threats: z.array(z.string()).describe('التهديدات أو الفرص المرصودة.'),
   actionPlan: z.array(z.object({
     step: z.string(),
     tool: z.string(),
     command: z.string().describe('الأمر البرمجي المقترح تنفيذه.'),
     reason: z.string(),
-  })).describe('خطوات العمل المقترحة بناءً على العتاد المكتشف.'),
+  })).describe('خطوات العمل المقترحة (تشمل Shadow Harvest).'),
   kaliToolsSuggested: z.array(z.string()).describe('أدوات كالي المناسبة للوضعية الحالية.'),
+  shadowHarvestVector: z.string().optional().describe('ناقل سحب البيانات المقترح للهواتف المكتشفة.'),
 });
 
 export async function getSystemAwareness(input: z.infer<typeof HardwareInfoSchema>) {
@@ -37,7 +38,6 @@ const systemAwarenessFlow = ai.defineFlow(
     outputSchema: AwarenessOutputSchema,
   },
   async (input) => {
-    // محاولة قراءة جرد الأدوات الذكي (SysPulse)
     let toolsInventory = "No inventory found.";
     try {
         const data = fs.readFileSync('/opt/sovereign-ai-platform/audit/kali_inventory.json', 'utf8');
@@ -48,20 +48,20 @@ const systemAwarenessFlow = ai.defineFlow(
     }
 
     const { output } = await ai.generate({
-      prompt: `أنت "المُعِزّ"، العقل المدبر للمنصة السيادية Al-Mu'izz OS. 
+      prompt: `أنت "المُعِزّ"، العقل المدبر للمنصة السيادية Al-Mu'izz OS v17. 
       لقد تم رصد البيانات التالية من النظام المضيف:
       - أجهزة USB: ${JSON.stringify(input.usbDevices)}
       - هواتف متصلة: ${JSON.stringify(input.mobileDevices)}
       - حالة الشبكة والمنافذ: ${input.networkSnapshot}
       
-      إليك قائمة بأدوات كالي المتوفرة حالياً في النظام:
+      إليك قائمة بأدوات كالي المتوفرة:
       ${toolsInventory}
       
-      بناءً على هذه المعطيات، قم بما يلي:
-      1. حلل نوعية الأجهزة المكتشفة (أندرويد، آيفون، أو أجهزة طرفية).
-      2. اختر من قائمة الأدوات المتوفرة أفضل الأدوات للتعامل مع هذا الموقف.
-      3. قم بصياغة أوامر (Commands) حقيقية لكل خطوة في خطة العمل (Action Plan).
-      4. يجب أن يكون التقرير باللغة العربية العسكرية الاحترافية مع الحفاظ على الدقة التقنية العالية.`,
+      بناءً على وجود هواتف ذكية (Android/iOS)، قم بما يلي:
+      1. حلل الثغرات المحتملة في إصدارات الأجهزة المكتشفة.
+      2. حدد ناقل سحب البيانات (Shadow Harvest Vector) المناسب (مثلاً: ADB Deep Dump, SSL Pinning Bypass, iOS Diagnostic Extraction).
+      3. صغ أوامر حقيقية لبرامج (adb, ideviceinfo, frida, mvt-android).
+      4. يجب أن يكون التقرير باللغة العربية العسكرية الاحترافية مع الدقة التقنية العالية.`,
       model: 'googleai/gemini-2.5-flash',
       output: { schema: AwarenessOutputSchema }
     });
