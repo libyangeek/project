@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import { SidebarNav } from "@/components/platform/sidebar-nav"
 import { 
   Zap, 
@@ -156,17 +157,23 @@ export default function DashboardPage() {
                 <CardDescription className="text-primary/70">Autonomous Intelligence Hub</CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                <Button className="w-full justify-between bg-primary hover:bg-primary/90">
-                  Deploy OSINT Probe
-                  <ArrowRight className="size-4" />
+                <Button asChild className="w-full justify-between bg-primary hover:bg-primary/90">
+                  <Link href="/recon">
+                    Deploy OSINT Probe
+                    <ArrowRight className="size-4" />
+                  </Link>
                 </Button>
-                <Button variant="outline" className="w-full justify-between border-white/10 hover:bg-white/5">
-                  Launch Shadow RAT
-                  <ArrowRight className="size-4" />
+                <Button asChild variant="outline" className="w-full justify-between border-white/10 hover:bg-white/5">
+                  <Link href="/red-team">
+                    Launch Shadow RAT
+                    <ArrowRight className="size-4" />
+                  </Link>
                 </Button>
-                <Button variant="outline" className="w-full justify-between border-white/10 hover:bg-white/5">
-                  Universal Parser
-                  <ArrowRight className="size-4" />
+                <Button asChild variant="outline" className="w-full justify-between border-white/10 hover:bg-white/5">
+                  <Link href="/terminal">
+                    Universal Parser
+                    <ArrowRight className="size-4" />
+                  </Link>
                 </Button>
               </CardContent>
             </Card>
