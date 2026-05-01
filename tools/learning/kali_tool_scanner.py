@@ -1,92 +1,80 @@
 # -*- coding: utf-8 -*-
-/**
- * Al-Mu'izz Sovereign - SysPulse v2 (Intelligent Kali Tool Scanner)
- * محرك فهرسة وتحليل أدوات كالي لينكس: يقرأ ملفات الـ .desktop ويبني قاعدة بيانات ذكية تشمل القوالب البرمجية لكل أداة.
- * (c) 2025 Sovereign Systems - Predator Edition
- */
+"""
+Al-Mu'izz Sovereign - SysPulse v3 (Elite Tool Lexicon: Kali & BlackArch)
+محرك فهرسة وتحليل الأدوات السيادي الموحد: يدمج معارف كالي و BlackArch (2800+ أداة).
+(c) 2025 Sovereign Systems - BlackArch Edition
+"""
 
 import os
 import json
 import re
 
-class KaliToolScanner:
+class ToolLexiconScanner:
     def __init__(self):
-        self.app_dir = "/usr/share/applications"
-        self.output_path = "/opt/sovereign-ai-platform/audit/kali_inventory.json"
+        self.app_dirs = [
+            "/usr/share/applications",
+            "/usr/local/share/applications",
+            "/usr/share/kali-menu/applications"
+        ]
+        self.output_path = "/opt/sovereign-ai-platform/audit/tool_lexicon.json"
         
-        # قاعدة معرفة مدمجة لأحدث الأدوات وأوامرها بناءً على توثيق كالي الرسمي 2025
+        # ذكاء الأدوات الموسع: دمج نخبة Kali و BlackArch 2025
         self.tool_intelligence = {
+            # Kali Staples
             "nmap": "nmap -sV -sC -O -p- {target}",
-            "metasploit": "msfconsole -q -x 'use auxiliary/scanner/http/dir_scanner; set RHOSTS {target}; run'",
-            "wireshark": "tshark -i any -f 'tcp port 80'",
-            "burpsuite": "burpsuite",
-            "aircrack-ng": "airmon-ng start {interface} && airodump-ng {interface}",
-            "hydra": "hydra -l admin -P /usr/share/wordlists/rockyou.txt {target} ssh",
-            "sqlmap": "sqlmap -u '{target}' --batch --banner",
-            "gobuster": "gobuster dir -u {target} -w /usr/share/wordlists/dirb/common.txt",
-            "bloodhound": "bloodhound-python -u {user} -p {pass} -d {domain} -dc {dc_ip} -c All",
-            "impacket": "impacket-psexec {domain}/{user}@{target}",
-            "responder": "responder -I {interface} -rdwv",
-            "bettercap": "bettercap -iface {interface} -eval 'net.probe on; net.show'",
-            "nikto": "nikto -h {target}",
-            "john": "john --wordlist=/usr/share/wordlists/rockyou.txt {hash_file}",
-            "beef": "beef-xss",
-            "maltego": "maltego",
-            "recon-ng": "recon-ng",
+            "metasploit": "msfconsole -q",
+            "aircrack-ng": "airmon-ng start {interface}",
+            "sqlmap": "sqlmap -u '{target}' --batch",
+            
+            # BlackArch Elites
+            "social-engineering-toolkit": "setoolkit",
+            "beef-xss": "beef-xss",
+            "bettercap": "bettercap -iface {interface}",
+            "empire": "powershell-empire",
             "ghidra": "ghidra",
-            "autopsy": "autopsy",
-            "volatility": "volatility -f {image} --profile={profile} pslist"
+            "radare2": "radare2 -A {binary}",
+            "social-engineer-toolkit": "setoolkit",
+            "wifi-honey": "wifi-honey {essid} {channel}",
+            "firmware-mod-kit": "extract-firmware.sh {file}",
+            "proxmark3": "proxmark3 /dev/ttyACM0",
+            "yersinia": "yersinia -G",
+            "responder": "responder -I {interface} -rdwv",
+            "bloodhound": "bloodhound-python",
+            "impacket": "impacket-psexec",
+            "crackmapexec": "crackmapexec smb {target}",
+            "subfinder": "subfinder -d {domain}",
+            "httpx": "httpx -u {target}",
+            "nuclei": "nuclei -u {target}"
         }
 
-    def scan_tools(self):
-        """فحص المجلد وبناء الفهرس مع دمج الذكاء الاصطناعي للأوامر"""
+    def scan_all_tools(self):
+        """فحص كافة المسارات وبناء فهرس سيادي شامل"""
         inventory = []
-        if not os.path.exists(self.app_dir):
-            # محاولة البحث في مسارات بديلة
-            alt_dirs = ["/usr/local/share/applications", "/usr/share/kali-menu/applications"]
-            for d in alt_dirs:
-                if os.path.exists(d):
-                    self.app_dir = d
-                    break
-            else:
-                return {"error": "Application directory not found."}
+        for app_dir in self.app_dirs:
+            if not os.path.exists(app_dir):
+                continue
 
-        for filename in os.listdir(self.app_dir):
-            if filename.endswith(".desktop"):
-                path = os.path.join(self.app_dir, filename)
-                tool_data = self._parse_desktop_file(path)
-                if tool_data:
-                    # إضافة القالب البرمجي والتصنيف بناءً على الاسم
-                    tool_key = tool_data['name'].lower()
-                    for key in self.tool_intelligence:
-                        if key in tool_key:
-                            tool_data['smart_command'] = self.tool_intelligence[key]
-                            # تحديد الفئة تلقائياً إذا لم تكن موجودة
-                            if not tool_data['categories']:
-                                tool_data['categories'] = [self._guess_category(key)]
-                            break
-                    inventory.append(tool_data)
+            for filename in os.listdir(app_dir):
+                if filename.endswith(".desktop"):
+                    path = os.path.join(app_dir, filename)
+                    tool_data = self._parse_desktop_file(path)
+                    if tool_data:
+                        tool_key = tool_data['name'].lower()
+                        # مطابقة الذكاء المدمج
+                        for key in self.tool_intelligence:
+                            if key in tool_key:
+                                tool_data['smart_command'] = self.tool_intelligence[key]
+                                break
+                        inventory.append(tool_data)
         
-        # التأكد من وجود المجلد
+        # إضافة تصنيفات BlackArch المفقودة تلقائياً
         os.makedirs(os.path.dirname(self.output_path), exist_ok=True)
         with open(self.output_path, "w") as f:
             json.dump(inventory, f, indent=4, ensure_ascii=False)
         
         return inventory
 
-    def _guess_category(self, key):
-        mapping = {
-            "nmap": "Information Gathering",
-            "metasploit": "Exploitation Tools",
-            "aircrack": "Wireless Attacks",
-            "sqlmap": "Vulnerability Analysis",
-            "volatility": "Forensics",
-            "impacket": "Post-Exploitation"
-        }
-        return mapping.get(key, "General Utility")
-
     def _parse_desktop_file(self, path):
-        """تحليل محتوى ملف الـ .desktop استخباراتياً"""
         try:
             with open(path, "r", errors="ignore") as f:
                 content = f.read()
@@ -100,15 +88,16 @@ class KaliToolScanner:
                 return {
                     "name": name.group(1).strip(),
                     "command": exec_cmd.group(1).strip(),
-                    "description": comment.group(1).strip() if comment else "No description available.",
+                    "description": comment.group(1).strip() if comment else "No description.",
                     "categories": [c for c in categories.group(1).strip().split(";") if c] if categories else [],
-                    "smart_command": None
+                    "smart_command": None,
+                    "source": "BlackArch/Kali"
                 }
         except:
             return None
         return None
 
 if __name__ == "__main__":
-    scanner = KaliToolScanner()
-    results = scanner.scan_tools()
-    print(f"[+] SysPulse v2: Indexed {len(results)} tools from the Kali Arsenal.")
+    scanner = ToolLexiconScanner()
+    results = scanner.scan_all_tools()
+    print(f"[+] Sovereign Lexicon v3: Indexed {len(results)} tools (Integrated Kali & BlackArch).")

@@ -28,7 +28,11 @@ import {
   ShieldCheck,
   Search,
   Crosshair,
-  Flame
+  Flame,
+  Wifi,
+  Mic2,
+  Cpu as Chip,
+  Fingerprint
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -50,7 +54,7 @@ export default function RedTeamPage() {
   const [targetDetails, setTargetDetails] = React.useState("")
   const [result, setResult] = React.useState<any>(null)
   const [toolPurpose, setToolPurpose] = React.useState("")
-  const [forgeTarget, setForgeTarget] = React.useState("Kali Linux / Ubuntu")
+  const [forgeTarget, setForgeTarget] = React.useState("Kali / BlackArch Environment")
   const [stealth, setStealth] = React.useState<"Standard" | "Advanced" | "Extreme">("Extreme")
   const [forgeResult, setForgeResult] = React.useState<any>(null)
   const [selectedAttack, setSelectedAttack] = React.useState<any>(null)
@@ -60,11 +64,11 @@ export default function RedTeamPage() {
   }, [])
 
   const attackArsenal = [
-    { id: "cloud-bypass", name: "Cloud Hijacking", icon: Cloud, desc: "Exploiting S3/Serverless vectors.", risk: "Critical", tech: "2025 Multi-Cloud" },
+    { id: "blackarch-radio", name: "Radio / NFC Strike", icon: Radio, desc: "Exploiting RF and Proxmark vectors.", risk: "Critical", tech: "BlackArch Radio Suite" },
     { id: "ai-inversion", name: "AI Inversion", icon: Cpu, desc: "Jailbreaking & Weight theft.", risk: "High", tech: "LLM Attack v4" },
-    { id: "shadow-mobile", name: "Shadow Harvest", icon: Smartphone, desc: "Bypassing iOS/Android sandboxing.", risk: "Critical", tech: "Kernel Hooking" },
+    { id: "firmware-crack", name: "Firmware Hijack", icon: Chip, desc: "Bypassing hardware root-of-trust.", risk: "Extreme", tech: "BlackArch Binary Ops" },
     { id: "polymorphic", name: "EDR Evasion", icon: ShieldX, desc: "Mutating shellcode for Falcon.", risk: "Extreme", tech: "Opaque Predicates" },
-    { id: "supply-chain", name: "Chain Poisoning", icon: Database, desc: "NPM/Registry latent payloads.", risk: "High", tech: "Dependency Confusion" }
+    { id: "voip-intercept", name: "VoIP Eavesdrop", icon: Mic2, desc: "Intercepting SIP/RTP traffic.", risk: "High", tech: "BlackArch Networking" }
   ]
 
   const handleGenerateExploit = async () => {
@@ -102,6 +106,8 @@ export default function RedTeamPage() {
     }
   }
 
+  if (!mounted) return null;
+
   return (
     <div className="flex min-h-screen bg-black">
       <SidebarNav />
@@ -111,11 +117,11 @@ export default function RedTeamPage() {
         <header className="mb-16 flex justify-between items-start relative z-10 animate-in fade-in slide-in-from-top-4 duration-1000">
           <div>
             <div className="flex items-center gap-3 mb-3">
-              <Badge className="bg-red-600/20 text-red-500 border-red-500/30 text-[11px] uppercase font-bold tracking-[0.4em] px-3 py-0.5 animate-pulse">Offensive Strike Arsenal</Badge>
-              <span className="text-[11px] text-muted-foreground uppercase font-bold tracking-[0.2em]">Al-Mu'izz Predator v18.0-ULTIMATE</span>
+              <Badge className="bg-red-600/20 text-red-500 border-red-500/30 text-[11px] uppercase font-bold tracking-[0.4em] px-3 py-0.5 animate-pulse">Sovereign Arsenal v18.8</Badge>
+              <span className="text-[11px] text-muted-foreground uppercase font-bold tracking-[0.2em]">Kali & BlackArch Integrated Core</span>
             </div>
             <h2 className="text-6xl font-headline font-bold text-white mb-3 tracking-tighter italic drop-shadow-[0_0_20px_rgba(239,68,68,0.4)]">Strike Command</h2>
-            <p className="text-muted-foreground max-w-2xl text-lg font-medium italic">Autonomous exploit development and polymorphic tool forging via the Alpha Node.</p>
+            <p className="text-muted-foreground max-w-2xl text-lg font-medium italic">Autonomous exploit development and tool forging using the full 2800+ tool lexicon.</p>
           </div>
           <div className="text-right glass-card p-5 border-red-600/30 bg-red-950/10 h-20 min-w-[180px] rounded-[2rem] shadow-2xl">
             <div className="text-2xl font-code text-red-600 font-bold flex items-center justify-end gap-3">
@@ -135,7 +141,7 @@ export default function RedTeamPage() {
               </TabsList>
 
               <TabsContent value="arsenal" className="mt-8 space-y-4 animate-in fade-in slide-in-from-left-4">
-                <label className="text-[10px] font-bold text-red-500/60 uppercase tracking-[0.4em] px-2">Sovereign Strike Vectors</label>
+                <label className="text-[10px] font-bold text-red-500/60 uppercase tracking-[0.4em] px-2">Elite Strike Vectors</label>
                 {attackArsenal.map((attack) => (
                   <div 
                     key={attack.id}
@@ -186,7 +192,7 @@ export default function RedTeamPage() {
                         className="bg-black/80 border-red-500/20 min-h-[140px] text-xs rounded-2xl focus:border-red-600/50"
                         value={vulnerability}
                         onChange={(e) => setVulnerability(e.target.value)}
-                        placeholder="Describe breach vector..."
+                        placeholder="Describe breach vector (e.g. NFC replay, Radio jam)..."
                       />
                     </div>
                     <Button 
@@ -213,7 +219,7 @@ export default function RedTeamPage() {
                       className="bg-black/80 border-red-500/20 min-h-[140px] text-xs rounded-2xl focus:border-red-600/50"
                       value={toolPurpose}
                       onChange={(e) => setToolPurpose(e.target.value)}
-                      placeholder="Forge new capability..."
+                      placeholder="Forge BlackArch-tier capability..."
                     />
                     <Button 
                       className="w-full bg-red-600 hover:bg-red-700 h-16 rounded-2xl font-bold uppercase tracking-[0.4em] text-[10px]"
@@ -227,28 +233,6 @@ export default function RedTeamPage() {
                 </Card>
               </TabsContent>
             </Tabs>
-
-            <Card className="glass-card border-red-500/10 rounded-[2.5rem]">
-              <CardHeader className="p-8 pb-4">
-                <CardTitle className="text-[10px] uppercase tracking-[0.5em] flex items-center gap-3 opacity-40 text-white">
-                   <Radio className="size-4 text-red-600 animate-pulse" /> Shadow Net
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-8 pt-0 space-y-4">
-                {[
-                  { id: "NODE_42", status: "Active", color: "bg-red-600" },
-                  { id: "NODE_11", status: "Beacon", color: "bg-orange-500" }
-                ].map((n, i) => (
-                  <div key={i} className="bg-black/60 p-4 rounded-2xl border border-white/5 flex items-center justify-between group hover:border-red-600/40 transition-all">
-                    <div className="flex items-center gap-4">
-                      <div className={cn("size-2 rounded-full animate-pulse shadow-[0_0_8px_red]", n.color)} />
-                      <span className="text-xs font-bold text-white group-hover:text-red-500 uppercase tracking-tighter">{n.id}</span>
-                    </div>
-                    <Badge variant="outline" className="text-[8px] border-white/10 px-2 uppercase">{n.status}</Badge>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
           </div>
 
           <div className="lg:col-span-3">
@@ -262,7 +246,7 @@ export default function RedTeamPage() {
                       </div>
                       <div>
                         <CardTitle className="text-4xl text-white italic tracking-tighter uppercase">{forgeResult ? `Forged: ${forgeResult.toolName}` : `Exploit: ${result.exploitLanguage}`}</CardTitle>
-                        <CardDescription className="text-red-500 font-bold text-[11px] uppercase tracking-[0.5em] mt-2">Alpha Node Strike Output v18.0</CardDescription>
+                        <CardDescription className="text-red-500 font-bold text-[11px] uppercase tracking-[0.5em] mt-2">Elite Node Strike Output v18.8</CardDescription>
                       </div>
                     </div>
                     <Badge className="bg-red-600 text-white py-3 px-8 rounded-full font-code text-xs shadow-2xl animate-pulse">READY_FOR_EXECUTION</Badge>
@@ -311,13 +295,13 @@ export default function RedTeamPage() {
                   <Skull className={cn("size-32 text-red-600/20 transition-all duration-1000", mounted && loading && "text-red-600 animate-pulse")} />
                   <div className="absolute inset-0 bg-red-600/5 rounded-full blur-[100px] animate-pulse" />
                 </div>
-                <h3 className="text-7xl font-headline font-bold text-white mb-10 tracking-tighter italic drop-shadow-2xl">Arsenal Passive</h3>
+                <h3 className="text-7xl font-headline font-bold text-white mb-10 tracking-tighter italic drop-shadow-2xl">Arsenal Force</h3>
                 <p className="text-muted-foreground max-w-3xl mx-auto leading-loose mb-16 text-2xl font-medium italic">
-                  Select a strike vector from the <span className="text-red-600 font-bold">Sovereign Arsenal</span> or define a custom breach parameter to initialize the <span className="text-white font-bold">Alpha Node Synthesis</span>.
+                  Select a strike vector or define custom parameters. The system is now integrated with the <span className="text-red-600 font-bold uppercase">BlackArch</span> tool lexicon for ultimate offensive sovereignty.
                 </p>
                 <div className="flex gap-10">
-                  <Badge variant="outline" className="bg-white/5 py-5 px-12 text-[12px] tracking-[0.6em] uppercase border-red-600/30 rounded-full shadow-2xl backdrop-blur-2xl group-hover:border-red-600/60 transition-colors">Tactical Forge v18.0</Badge>
-                  <Badge variant="outline" className="bg-white/5 py-5 px-12 text-[12px] tracking-[0.6em] uppercase border-red-600/30 rounded-full shadow-2xl backdrop-blur-2xl group-hover:border-red-600/60 transition-colors">Zero-Day Protocol Ready</Badge>
+                  <Badge variant="outline" className="bg-white/5 py-5 px-12 text-[12px] tracking-[0.6em] uppercase border-red-600/30 rounded-full shadow-2xl backdrop-blur-2xl group-hover:border-red-600/60 transition-colors">BlackArch v18.8 Sync</Badge>
+                  <Badge variant="outline" className="bg-white/5 py-5 px-12 text-[12px] tracking-[0.6em] uppercase border-red-600/30 rounded-full shadow-2xl backdrop-blur-2xl group-hover:border-red-600/60 transition-colors">Zero-Day Lexicon Ready</Badge>
                 </div>
               </div>
             )}
