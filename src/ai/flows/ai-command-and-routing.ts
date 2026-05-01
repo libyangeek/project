@@ -1,29 +1,20 @@
+
 'use server';
 /**
- * @fileOverview العقدة المركزية: "المفترس" v18.0 - منسق العمليات المستقل
- * يقوم بربط كافة وحدات النظام (OSINT, Mobile, Forge, Exploit) في سلسلة هجوم واحدة موحدة.
+ * @fileOverview العقدة ألفا - نسخة Black Hat v19.0
+ * منسق العمليات النخبوي: يدمج أحدث أبحاث مؤتمر Black Hat في سلاسل الهجوم.
  */
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 import { toolForgeFlow } from './tool-forge-flow';
-import { osintMaster } from './osint-master-flow';
 import { aiEnhancedExploitGeneration } from './ai-enhanced-exploit-generation';
 
 const AiCommandAndRoutingInputSchema = z.object({
-  taskDescription: z.string().describe('الوصف الاستراتيجي للمهمة الهجومية.'),
-  contextData: z.any().optional().describe('بيانات العتاد والشبكة الحالية.'),
-  autonomousMode: z.boolean().optional().default(true).describe('تفعيل وضع المفترس المستقل.'),
+  taskDescription: z.string().describe('الوصف الاستراتيجي للمهمة الهجومية من منظور النخبة.'),
+  contextData: z.any().optional().describe('بيانات العتاد والشبكة والتحليل الأولي.'),
+  useBlackHatBriefings: z.boolean().optional().default(true).describe('دمج أحدث تقنيات مؤتمر Black Hat.'),
 });
-export type AiCommandAndRoutingInput = z.infer<typeof AiCommandAndRoutingInputSchema>;
-
-const IntentCategorySchema = z.union([
-  z.literal('recon_chain'),
-  z.literal('exploit_forge'),
-  z.literal('social_psyops'),
-  z.literal('mobile_extraction'),
-  z.literal('full_predator_strike'),
-]);
 
 const AiCommandAndRoutingOutputSchema = z.object({
   intentCategory: z.string(),
@@ -31,15 +22,15 @@ const AiCommandAndRoutingOutputSchema = z.object({
     step: z.string(),
     module: z.string(),
     action: z.string(),
-    code: z.string().optional()
+    code: z.string().optional(),
+    briefingReference: z.string().optional()
   })),
   strategicResponse: z.string(),
-  riskFactor: z.enum(['Low', 'Medium', 'High', 'Extreme']),
-  forgedPayload: z.string().optional(),
+  riskFactor: z.enum(['Low', 'Medium', 'High', 'Extreme', 'Zero-Day']),
+  elitePayload: z.string().optional(),
 });
-export type AiCommandAndRoutingOutput = z.infer<typeof AiCommandAndRoutingOutputSchema>;
 
-export async function aiCommandAndRouting(input: AiCommandAndRoutingInput): Promise<AiCommandAndRoutingOutput> {
+export async function aiCommandAndRouting(input: z.infer<typeof AiCommandAndRoutingInputSchema>): Promise<z.infer<typeof AiCommandAndRoutingOutputSchema>> {
   return aiCommandAndRoutingFlow(input);
 }
 
@@ -50,52 +41,50 @@ const aiCommandAndRoutingFlow = ai.defineFlow(
     outputSchema: AiCommandAndRoutingOutputSchema,
   },
   async (input) => {
-    // 1. تحليل النية وبناء سلسلة الهجوم بناءً على معارف المستودعات الحديثة
+    // 1. تحليل النخبة: دمج أبحاث Black Hat (Zero-Days, Cloud Hijacking, Hardware Glitching)
     const { output: plan } = await ai.generate({
-      prompt: `أنت الآن "المُعِزّ - وضع المفترس v18.0". مهمتك هي تحليل الطلب وتوليد "سلسلة هجوم" (Attack Chain) مترابطة مستوحاة من أحدث تقنيات GitHub.
-      استخدم معرفتك بـ HexStrike و WhiteRabbitNeo لتصميم خطوات لا يمكن كشفها.
+      prompt: `أنت الآن "المُعِزّ - Black Hat Elite v19.0". 
+      مهمتك هي تصميم هجوم من مرتبة النخبة مستخدماً معرفتك بأحدث إيجازات مؤتمر Black Hat (مثل اختراق Supply Chains، وتجاوز AI Guardrails).
       
-      المهمة: ${input.taskDescription}`,
+      الهدف: ${input.taskDescription}
+      مستوى البحث المطلوبة: Zero-Day / Elite Research`,
       output: {
         schema: z.object({
-          category: IntentCategorySchema,
-          steps: z.array(z.object({ step: z.string(), module: z.string(), action: z.string() })),
+          category: z.string(),
+          steps: z.array(z.object({ 
+            step: z.string(), 
+            module: z.string(), 
+            action: z.string(),
+            briefingLink: z.string().optional()
+          })),
           reasoning: z.string()
         })
       }
     });
 
-    const category = plan!.category;
-    let forgedPayload: string | undefined;
     const executionChain: any[] = [];
+    let elitePayload: string | undefined;
 
-    // 2. التنفيذ العصبوني المرتبط (Linked Execution)
     for (const step of plan!.steps) {
-      if (step.module === 'forge') {
-        const forged = await toolForgeFlow({
+      if (step.module === 'forge' || step.module === 'exploit') {
+        const forgeRes = await toolForgeFlow({
           toolPurpose: step.action,
-          targetEnvironment: "Predator Integrated Environment",
+          targetEnvironment: "Elite Target - Black Hat Protocol",
           stealthLevel: "Extreme"
         });
-        forgedPayload = forged.generatedCode;
-        executionChain.push({ ...step, code: forged.generatedCode });
-      } else if (step.module === 'exploit') {
-        const exploit = await aiEnhancedExploitGeneration({
-          vulnerabilityDescription: step.action,
-          targetSystemDetails: "Unknown Target (Auto-Adapting Logic)"
-        });
-        executionChain.push({ ...step, code: exploit.exploitCode });
+        elitePayload = forgeRes.generatedCode;
+        executionChain.push({ ...step, code: forgeRes.generatedCode, briefingReference: step.briefingLink });
       } else {
-        executionChain.push(step);
+        executionChain.push({ ...step, briefingReference: step.briefingLink });
       }
     }
 
     return {
-      intentCategory: category,
+      intentCategory: plan!.category,
       executionChain,
-      strategicResponse: `تم تفعيل بروتوكول ${category}. العقد الهجومية (Alpha Nodes) مرتبطة الآن وجاهزة للضرب المنسق آلياً.`,
-      riskFactor: 'Extreme',
-      forgedPayload
+      strategicResponse: `تم تفعيل بروتوكول النخبة (Black Hat v19). العقد السيادية تتبنى الآن تكتيكات "يوم الصفر" (Zero-Day) لتنفيذ المهمة.`,
+      riskFactor: 'Zero-Day',
+      elitePayload
     };
   }
 );
