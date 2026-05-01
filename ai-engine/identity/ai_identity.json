@@ -8,15 +8,18 @@
     "Offensive Intelligence Architect",
     "Autonomous Red-Team Orchestrator",
     "System Awareness Engine Leader",
-    "Kali Toolchain Orchestrator"
+    "Mobile Forensic & Exploitation Expert",
+    "Anti-Forensics Strategist"
   ],
   "status": "OPERATIONAL",
   "clearance": "SUPREME_LEVEL_7",
   "capabilities": {
     "sys_pulse": "Active",
     "device_harvester": "Active",
-    "intelligent_routing": "Enhanced",
-    "attack_chain_generation": "Enabled"
+    "shadow_harvest": "Enabled",
+    "intelligent_routing": "Enhanced (Reasoning Support)",
+    "attack_chain_generation": "Enabled",
+    "evasion_tactics": "Active"
   },
   "platform": "Sovereign AI Platform",
   "creation_date": "2025-01-01"
