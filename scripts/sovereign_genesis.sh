@@ -1,6 +1,6 @@
 #!/bin/bash
 # ==============================================================================
-# 🦅 AL-MUI'ZZ SOVEREIGN GENESIS v17.0.0 (COMPLETE)
+# 🦅 AL-MUI'ZZ SOVEREIGN GENESIS v17.0.1 (COMPLETE)
 # The Ultimate AI-Powered Offensive/Defensive Cybersecurity Platform
 # ==============================================================================
 # (c) 2025 Sovereign Systems. All rights reserved.
@@ -8,7 +8,7 @@
 set -e
 
 INSTALL_DIR="/opt/sovereign-ai-platform"
-VERSION="17.0.0"
+VERSION="17.0.1"
 CODENAME="Al-Mu'izz"
 
 # [COLOR PALETTE]
@@ -35,7 +35,7 @@ write_exec() {
 
 # [INITIALIZATION]
 echo -e "${CYAN}================================================${NC}"
-echo -e "${CYAN}   🦅 EXECUTING SOVEREIGN GENESIS v17.0.0       ${NC}"
+echo -e "${CYAN}   🦅 EXECUTING SOVEREIGN GENESIS v17.0.1       ${NC}"
 echo -e "${CYAN}================================================${NC}"
 
 if [[ $EUID -ne 0 ]]; then
@@ -49,7 +49,9 @@ cd "$INSTALL_DIR"
 # [SYSTEM DEPENDENCIES]
 echo -e "${CYAN}[*] Installing sovereign dependencies...${NC}"
 apt-get update -y
-apt-get install -y python3-pip python3-venv nmap airmon-ng adb libimobiledevice6 tor curl git docker.io nodejs npm zip dialog
+# تصحيح مسميات الحزم لـ Kali 2024
+apt-get install -y python3-pip python3-venv nmap airmon-ng adb libimobiledevice-1.0-6 libimobiledevice-utils tor curl git docker.io nodejs npm zip dialog
+pip3 install frida-tools --break-system-packages || true
 
 # [AI IDENTITY]
 write_file "ai-engine/identity/ai_identity.json" <<EOF
@@ -89,7 +91,7 @@ EOF
 
 # [COMPLETION]
 echo -e "${GREEN}================================================${NC}"
-echo -e "${GREEN}   ✅ Sovereign AI Platform v17.0.0 Installed   ${NC}"
+echo -e "${GREEN}   ✅ Sovereign AI Platform v17.0.1 Installed   ${NC}"
 echo -e "${GREEN}================================================${NC}"
 echo -e "Available commands: 'sovereign', 'sov-backup'"
 
