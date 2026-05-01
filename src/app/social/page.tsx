@@ -30,7 +30,9 @@ import {
   ShieldX,
   Globe,
   Wifi,
-  Info
+  Info,
+  Skull,
+  Flame
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -64,7 +66,6 @@ export default function SocialPage() {
     setMounted(true)
   }, [])
 
-  // بيانات الرادار التحليلي
   const radarData = result?.psychologicalVectors?.map((v: any) => ({
     subject: v.vector,
     A: v.impact === 'High' ? 100 : v.impact === 'Medium' ? 70 : 40,
@@ -84,20 +85,16 @@ export default function SocialPage() {
     try {
       const data = await modularAiKnowledgeBaseReporting({ reportQuery: intelQuery })
       setKbContext(data.reportContent || "")
-      toast({ title: "Intelligence Synced", description: "Knowledge base context added to the vector." })
+      toast({ title: "Intelligence Synced" })
     } catch (err) {
-      toast({ variant: "destructive", title: "Intel Sync Failed", description: "Could not access the neural vault." })
+      toast({ variant: "destructive", title: "Intel Sync Failed" })
     } finally {
       setContextLoading(false)
     }
   }
 
   const handleGenerate = async () => {
-    if (!persona || !goal) {
-      toast({ title: "Input Required", description: "Target persona and campaign goal are needed." })
-      return
-    }
-
+    if (!persona || !goal) return
     setLoading(true)
     setActivePulse(true)
     try {
@@ -109,9 +106,9 @@ export default function SocialPage() {
         useRealTimeIntel: useSearch
       })
       setResult(data)
-      toast({ title: "Bot Intelligence Ready", description: "Live search grounded and message generated." })
+      toast({ title: "Bot Intelligence Ready" })
     } catch (err) {
-      toast({ variant: "destructive", title: "Core Sync Error", description: "Failed to initialize social engineering logic." })
+      toast({ variant: "destructive", title: "Core Sync Error" })
     } finally {
       setLoading(false)
       setTimeout(() => setActivePulse(false), 1500)
@@ -121,184 +118,169 @@ export default function SocialPage() {
   return (
     <div className="flex min-h-screen bg-black">
       <SidebarNav />
-      <main className="flex-1 ml-64 p-8 bg-[radial-gradient(circle_at_bottom_right,rgba(170,76,255,0.05),transparent)] overflow-y-auto">
-        {/* Header Section */}
-        <header className="mb-12 flex justify-between items-start">
-          <div className="animate-in fade-in slide-in-from-left-4 duration-700">
-            <div className="flex items-center gap-2 mb-2">
-              <Badge className="bg-primary/20 text-primary border-primary/30 text-[10px] uppercase font-bold tracking-[0.3em] px-2 py-0 animate-pulse">Psychological Ops Center</Badge>
-              <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">Al-Mu'izz Neural Link v17.5-ULTIMATE</span>
+      <main className="flex-1 ml-64 p-10 bg-[radial-gradient(circle_at_bottom_right,rgba(239,68,68,0.08),transparent)] overflow-y-auto">
+        <header className="mb-16 flex justify-between items-start relative z-10 animate-in fade-in slide-in-from-top-4 duration-1000">
+          <div>
+            <div className="flex items-center gap-3 mb-3">
+              <Badge className="bg-red-600/20 text-red-500 border-red-500/30 text-[11px] uppercase font-bold tracking-[0.4em] px-3 py-0.5 animate-pulse">Psychological Ops Center</Badge>
+              <span className="text-[11px] text-muted-foreground uppercase font-bold tracking-[0.2em]">Al-Mu'izz Predator v18.0-ULTIMATE</span>
             </div>
-            <h2 className="text-5xl font-headline font-bold text-white mb-2 tracking-tighter italic drop-shadow-[0_0_15px_rgba(170,76,255,0.3)]">Social Engineering Suite</h2>
-            <p className="text-muted-foreground max-w-xl font-medium">Automated HUMAN-Intelligence (HUMINT) engine with integrated Real-time Search Grounding.</p>
+            <h2 className="text-6xl font-headline font-bold text-white mb-3 tracking-tighter italic drop-shadow-[0_0_20px_rgba(239,68,68,0.4)]">Social Ops</h2>
+            <p className="text-muted-foreground max-w-2xl text-lg font-medium italic">Automated HUMAN-Intelligence (HUMINT) and aggressive persuasion engine connected to the Alpha Core.</p>
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-6">
              <div className={cn(
-               "text-right glass p-3 rounded-2xl border transition-all duration-500",
-               useSearch ? "border-emerald-500/40 bg-emerald-500/5" : "border-white/5 bg-black/40"
+               "text-right glass-card p-5 border transition-all duration-700 h-20 min-w-[200px] rounded-[2rem] shadow-2xl",
+               useSearch ? "border-red-600/40 bg-red-950/20" : "border-white/10 bg-black/40"
              )}>
-                <div className={cn("text-lg font-code font-bold tracking-widest flex items-center gap-2", useSearch ? "text-emerald-500" : "text-white")}>
-                  {useSearch ? <Globe className="size-4 animate-spin-slow" /> : <ShieldCheck className="size-4" />}
-                  {useSearch ? "SEARCH_ACTIVE" : "OFFLINE_MODE"}
+                <div className={cn("text-2xl font-code font-bold tracking-widest flex items-center justify-end gap-3", useSearch ? "text-red-500" : "text-white")}>
+                  {useSearch ? <Globe className="size-6 animate-spin-slow" /> : <ShieldCheck className="size-6" />}
+                  {useSearch ? "SEARCH_ON" : "OFFLINE"}
                 </div>
-                <div className="text-[9px] text-muted-foreground uppercase font-bold tracking-widest">Neural Knowledge Status</div>
+                <div className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest mt-1">Grounded Intel Status</div>
               </div>
           </div>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Left Column: Command & Parameters */}
-          <div className="lg:col-span-1 space-y-6">
-            <Card className="glass-card border-primary/20 relative overflow-hidden group">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent animate-pulse" />
-              <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2 text-sm uppercase tracking-[0.2em]">
-                  <Brain className="size-4 text-primary" />
-                  Specialized Brain v17.5
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-10 relative z-10">
+          <div className="lg:col-span-1 space-y-8">
+            <Card className="glass-card border-red-600/30 rounded-[3rem] p-4 shadow-2xl relative overflow-hidden group">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-red-600 to-transparent animate-pulse" />
+              <CardHeader className="p-8 pb-4">
+                <CardTitle className="text-white flex items-center gap-4 text-sm uppercase tracking-[0.3em]">
+                  <Brain className="size-5 text-red-600" /> Predator Brain v18
                 </CardTitle>
-                <CardDescription className="text-[10px] uppercase font-bold opacity-60">PsyOps Orchestration Matrix</CardDescription>
+                <CardDescription className="text-[11px] uppercase font-bold opacity-40 italic">PsyOps Orchestration</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-5">
-                <div className="flex items-center justify-between p-4 rounded-xl bg-primary/5 border border-primary/10">
-                   <div className="space-y-0.5">
-                      <Label className="text-[10px] font-bold text-white uppercase tracking-widest flex items-center gap-2">
-                        <Globe className="size-3 text-primary" /> Real-time Intel
+              <CardContent className="p-8 pt-0 space-y-8">
+                <div className="flex items-center justify-between p-5 rounded-2xl bg-red-600/5 border border-red-600/20 group hover:border-red-600/40 transition-all">
+                   <div className="space-y-1">
+                      <Label className="text-[11px] font-bold text-white uppercase tracking-widest flex items-center gap-3 italic">
+                        <Globe className="size-4 text-red-600" /> Real-time Intel
                       </Label>
-                      <p className="text-[8px] text-muted-foreground font-medium">Search internet for target context</p>
+                      <p className="text-[9px] text-muted-foreground font-medium uppercase opacity-60">Internet Grounding Active</p>
                    </div>
-                   <Switch checked={useSearch} onCheckedChange={setUseSearch} />
+                   <Switch checked={useSearch} onCheckedChange={setUseSearch} className="data-[state=checked]:bg-red-600" />
                 </div>
 
-                <div className="space-y-2">
-                  <Label className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest">Platform Matrix</Label>
+                <div className="space-y-3">
+                  <Label className="text-[10px] uppercase font-bold text-red-500/60 tracking-widest px-2">Platform Matrix</Label>
                   <Select value={platform} onValueChange={(v: any) => setPlatform(v)}>
-                    <SelectTrigger className="bg-black/60 border-white/5 h-11 rounded-xl focus:ring-primary/20">
+                    <SelectTrigger className="bg-black/80 border-red-500/20 h-14 rounded-2xl focus:ring-red-600/20">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-black/90 border-white/10 backdrop-blur-xl">
-                      <SelectItem value="telegram">Telegram Protocol</SelectItem>
-                      <SelectItem value="whatsapp">WhatsApp Matrix</SelectItem>
-                      <SelectItem value="other">Custom Overlay</SelectItem>
+                    <SelectContent className="bg-black/95 border-red-600/30 backdrop-blur-3xl rounded-2xl">
+                      <SelectItem value="telegram" className="rounded-xl">Telegram Protocol</SelectItem>
+                      <SelectItem value="whatsapp" className="rounded-xl">WhatsApp Matrix</SelectItem>
+                      <SelectItem value="other" className="rounded-xl">Custom Overlay</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
-                <div className="space-y-2">
-                  <Label className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest flex items-center gap-2">
-                    <Database className="size-3 text-primary" />
-                    Neural Vault (RAG)
-                  </Label>
-                  <div className="flex gap-2">
+                <div className="space-y-3">
+                  <Label className="text-[10px] uppercase font-bold text-red-500/60 tracking-widest px-2">Neural Vault (RAG)</Label>
+                  <div className="flex gap-3">
                     <Input 
                       placeholder="Context query..."
-                      className="bg-black/60 border-white/5 h-10 text-xs rounded-xl focus:border-primary/40"
+                      className="bg-black/80 border-red-500/20 h-12 text-sm rounded-2xl focus:border-red-600/50"
                       value={intelQuery}
                       onChange={(e) => setIntelQuery(e.target.value)}
                     />
-                    <Button size="icon" variant="outline" className="size-10 shrink-0 border-white/10 rounded-xl hover:bg-primary/20" onClick={fetchKbIntel} disabled={contextLoading}>
-                      {contextLoading ? <Loader2 className="size-4 animate-spin text-primary" /> : <LinkIcon className="size-4 text-primary" />}
+                    <Button size="icon" variant="outline" className="size-12 shrink-0 border-white/10 rounded-2xl hover:bg-red-600/20 hover:border-red-600/40" onClick={fetchKbIntel} disabled={contextLoading}>
+                      {contextLoading ? <Loader2 className="size-5 animate-spin text-red-600" /> : <LinkIcon className="size-5 text-red-600" />}
                     </Button>
                   </div>
-                  {kbContext && (
-                    <div className="flex items-center gap-1.5 animate-in slide-in-from-top-1">
-                      <ShieldCheck className="size-2.5 text-emerald-500" />
-                      <span className="text-[8px] text-emerald-500 font-bold uppercase tracking-tighter">Vault Context Ready</span>
-                    </div>
-                  )}
                 </div>
 
-                <div className="space-y-2">
-                  <Label className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest">Target Persona</Label>
+                <div className="space-y-3">
+                  <Label className="text-[10px] uppercase font-bold text-red-500/60 tracking-widest px-2">Target Persona</Label>
                   <Textarea 
-                    placeholder="e.g., IT Security Manager, 10 years exp, recently shared post about firewall upgrade..."
-                    className="bg-black/60 border-white/5 min-h-[100px] text-sm rounded-xl focus:border-primary/40 transition-all resize-none font-medium"
+                    placeholder="e.g., Lead Developer, focuses on Golang, public github active..."
+                    className="bg-black/80 border-red-500/20 min-h-[120px] text-sm rounded-2xl focus:border-red-600/50 transition-all resize-none font-medium italic"
                     value={persona}
                     onChange={(e) => setPersona(e.target.value)}
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest">Campaign Goal</Label>
+                <div className="space-y-3">
+                  <Label className="text-[10px] uppercase font-bold text-red-500/60 tracking-widest px-2">Campaign Goal</Label>
                   <Input 
-                    placeholder="e.g., Extract specific VPN vendor details"
-                    className="bg-black/60 border-white/5 h-11 text-sm rounded-xl focus:border-primary/40"
+                    placeholder="e.g., Extract API keys via phishing"
+                    className="bg-black/80 border-red-500/20 h-14 text-sm rounded-2xl focus:border-red-600/50 italic"
                     value={goal}
                     onChange={(e) => setGoal(e.target.value)}
                   />
                 </div>
 
                 <Button 
-                  className="w-full bg-primary hover:bg-primary/90 text-white shadow-[0_10px_40px_rgba(170,76,255,0.25)] h-14 rounded-2xl group transition-all duration-500"
+                  className="w-full bg-red-600 hover:bg-red-700 text-white shadow-2xl shadow-red-600/40 h-20 rounded-[2rem] group transition-all duration-700"
                   onClick={handleGenerate}
                   disabled={loading}
                 >
-                  {loading ? <Loader2 className="size-5 mr-2 animate-spin" /> : <Zap className="size-5 mr-2 group-hover:scale-125 transition-transform duration-500" />}
-                  <span className="font-bold uppercase tracking-widest text-xs">Deploy Specialized Brain</span>
+                  {loading ? <Loader2 className="size-7 mr-4 animate-spin" /> : <Zap className="size-7 mr-4 group-hover:scale-125 transition-transform duration-700" />}
+                  <span className="font-bold uppercase tracking-[0.4em] text-xs">Deploy Predator Brain</span>
                 </Button>
               </CardContent>
             </Card>
 
-            <Card className="glass-card bg-black/40 border-white/5">
-              <CardHeader>
-                <CardTitle className="text-white text-[10px] uppercase tracking-[0.3em] flex items-center gap-2 opacity-60">
-                   <Wifi className="size-3 text-emerald-500" />
-                   Grounded Intelligence
+            <Card className="glass-card border-red-500/10 bg-black/60 rounded-[3rem]">
+              <CardHeader className="p-8 pb-4">
+                <CardTitle className="text-white text-[11px] uppercase tracking-[0.5em] flex items-center gap-4 opacity-40 italic font-bold">
+                   <Wifi className="size-4 text-red-600" /> Grounded Intelligence
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                 <div className="space-y-2">
-                    <div className="flex justify-between items-center text-[8px] font-bold uppercase text-muted-foreground tracking-widest">
-                       <span>Real-time Confidence</span>
-                       <span className="text-emerald-500">98%</span>
+              <CardContent className="p-8 pt-0 space-y-6">
+                 <div className="space-y-3">
+                    <div className="flex justify-between items-center text-[10px] font-bold uppercase text-muted-foreground tracking-[0.3em]">
+                       <span>Confidence Matrix</span>
+                       <span className="text-red-500">98.2%</span>
                     </div>
-                    <div className="h-1 bg-white/5 rounded-full overflow-hidden">
-                       <div className="h-full bg-emerald-500 w-[98%] animate-pulse" />
+                    <div className="h-2 bg-white/5 rounded-full overflow-hidden border border-white/5">
+                       <div className="h-full bg-red-600 w-[98.2%] animate-pulse shadow-[0_0_10px_red]" />
                     </div>
                  </div>
-                 <div className="p-3 rounded-xl bg-white/5 border border-white/5 text-[9px] text-muted-foreground italic leading-relaxed">
-                    "The specialized brain is pre-seeded with 1.4M psychological profiles and 2025 influence patterns. Search Grounding enabled."
+                 <div className="p-5 rounded-2xl bg-white/5 border border-white/5 text-[11px] text-muted-foreground italic leading-relaxed font-medium">
+                    "The specialized Predator Brain is pre-seeded with 1.4M psychological profiles and 2025 influence patterns. Real-time grounding enabled via the Alpha Node."
                  </div>
               </CardContent>
             </Card>
           </div>
 
-          {/* Right Column: Dynamic Analysis & Interaction */}
           <div className="lg:col-span-3">
             {result ? (
-              <div className="space-y-8 animate-in fade-in zoom-in-95 duration-700">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  {/* Strategy & Message Area */}
-                  <Card className="glass-card border-emerald-500/20 md:col-span-2 overflow-hidden shadow-[0_0_50px_rgba(16,185,129,0.1)]">
-                    <CardHeader className="bg-emerald-500/5 border-b border-white/5 flex flex-row items-center justify-between p-8">
-                      <div className="flex items-center gap-4">
-                        <div className="size-16 rounded-3xl bg-emerald-500/20 flex items-center justify-center border border-emerald-500/30 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
-                          <MessageSquare className="size-8 text-emerald-500" />
+              <div className="space-y-10 animate-in fade-in zoom-in-95 duration-1000">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+                  <Card className="glass-card border-red-600/40 md:col-span-2 overflow-hidden shadow-[0_0_80px_rgba(239,68,68,0.2)] rounded-[3.5rem]">
+                    <CardHeader className="bg-red-950/20 border-b border-red-600/20 flex flex-row items-center justify-between p-10">
+                      <div className="flex items-center gap-6">
+                        <div className="size-20 rounded-[2.5rem] bg-red-600 flex items-center justify-center border border-red-400 shadow-[0_0_30px_rgba(239,68,68,0.4)]">
+                          <MessageSquare className="size-10 text-white" />
                         </div>
                         <div>
-                          <CardTitle className="text-3xl text-white italic tracking-tighter">Strategic Engagement</CardTitle>
-                          <CardDescription className="text-[10px] uppercase font-bold text-emerald-500 tracking-[0.4em] mt-1">Specialized Search-Augmented Payload</CardDescription>
+                          <CardTitle className="text-4xl text-white italic tracking-tighter uppercase">Strategic Strike</CardTitle>
+                          <CardDescription className="text-[12px] uppercase font-bold text-red-500 tracking-[0.6em] mt-2 italic">Search-Augmented Predator Vector</CardDescription>
                         </div>
                       </div>
-                      <div className="flex flex-col items-end gap-2">
+                      <div className="flex flex-col items-end gap-3">
                          <Badge className={cn(
-                           "font-code text-[10px] px-4 py-1.5 rounded-full border-white/10",
-                           result.riskLevel === 'Extreme' ? 'bg-red-500/20 text-red-500 animate-pulse' : 'bg-emerald-500/20 text-emerald-500'
+                           "font-code text-[11px] px-6 py-2 rounded-full border-red-500/30 shadow-2xl",
+                           result.riskLevel === 'Extreme' ? 'bg-red-600 text-white animate-pulse' : 'bg-red-600/20 text-red-500'
                          )}>
-                           RISK: {result.riskLevel}
+                           STRIKE_LVL: {result.riskLevel}
                          </Badge>
-                         <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">Grounding Active</span>
+                         <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.4em] opacity-40">Grounding Sync: 100%</span>
                       </div>
                     </CardHeader>
-                    <CardContent className="p-10">
+                    <CardContent className="p-12">
                       {result.intelligenceInsights && result.intelligenceInsights.length > 0 && (
-                        <div className="mb-8 p-6 rounded-2xl bg-emerald-500/5 border border-emerald-500/10 animate-in slide-in-from-top-4">
-                           <h4 className="text-[10px] font-bold text-emerald-500 uppercase tracking-[0.4em] mb-4 flex items-center gap-2">
-                             <Search className="size-3" /> Live Intelligence Insights
+                        <div className="mb-10 p-8 rounded-[2rem] bg-red-600/5 border border-red-600/20 animate-in slide-in-from-top-4 shadow-inner">
+                           <h4 className="text-[12px] font-bold text-red-500 uppercase tracking-[0.6em] mb-6 flex items-center gap-4 italic">
+                             <Search className="size-4" /> Predator Intelligence Insights
                            </h4>
-                           <ul className="space-y-2">
+                           <ul className="space-y-4">
                               {result.intelligenceInsights.map((insight: string, idx: number) => (
-                                <li key={idx} className="text-[11px] text-muted-foreground flex gap-3 italic">
-                                   <div className="size-1 mt-1.5 rounded-full bg-emerald-500 shrink-0" />
+                                <li key={idx} className="text-sm text-muted-foreground flex gap-4 italic font-medium opacity-80 hover:opacity-100 transition-opacity">
+                                   <div className="size-1.5 mt-2 rounded-full bg-red-600 shadow-[0_0_5px_red] shrink-0" />
                                    {insight}
                                 </li>
                               ))}
@@ -306,54 +288,52 @@ export default function SocialPage() {
                         </div>
                       )}
 
-                      <div className="bg-black/60 rounded-[2.5rem] p-12 border border-white/5 relative group mb-12 overflow-hidden shadow-inner hover:border-emerald-500/30 transition-all">
-                        <div className="absolute top-6 left-8 text-[10px] font-bold text-primary uppercase tracking-[0.5em] opacity-30">Neural Engagment Vector</div>
-                        <p className="text-3xl text-white font-medium italic leading-relaxed pt-10 relative z-10 drop-shadow-sm">
+                      <div className="bg-black/90 rounded-[4rem] p-16 border border-red-600/20 relative group mb-12 overflow-hidden shadow-2xl hover:border-red-600/40 transition-all duration-700">
+                        <div className="absolute top-8 left-10 text-[11px] font-bold text-red-600/40 uppercase tracking-[0.8em] italic">Strike Engagement Vector</div>
+                        <p className="text-4xl text-white font-medium italic leading-relaxed pt-12 relative z-10 drop-shadow-2xl">
                           "{result.generatedMessage}"
                         </p>
                         
-                        <div className="flex gap-4 mt-16 pt-10 border-t border-white/5 relative z-10">
-                          <Button variant="outline" className="bg-white/5 border-white/10 text-[10px] rounded-2xl h-12 px-8 hover:bg-emerald-500/10 hover:border-emerald-500/30 transition-all font-bold tracking-widest" onClick={() => {
+                        <div className="flex gap-6 mt-20 pt-12 border-t border-white/5 relative z-10">
+                          <Button variant="outline" className="bg-white/5 border-white/10 text-[11px] rounded-2xl h-16 px-12 hover:bg-red-600/20 hover:border-red-600/40 transition-all font-bold tracking-[0.4em] uppercase" onClick={() => {
                             navigator.clipboard.writeText(result.generatedMessage);
-                            toast({ title: "Payload Extracted", description: "Vector copied to tactical clipboard." });
+                            toast({ title: "Payload Extracted" });
                           }}>
-                            <Copy className="size-4 mr-3" /> COPY PAYLOAD
+                            <Copy className="size-5 mr-4" /> Copy Payload
                           </Button>
-                          <Button variant="outline" className="bg-white/5 border-white/10 text-[10px] rounded-2xl h-12 px-8 font-bold tracking-widest">
-                            <Sparkles className="size-4 mr-3 text-primary" /> OPTIMIZE TONE
+                          <Button variant="outline" className="bg-white/5 border-white/10 text-[11px] rounded-2xl h-16 px-12 font-bold tracking-[0.4em] uppercase hover:bg-red-600/20 transition-all">
+                            <Sparkles className="size-5 mr-4 text-red-600" /> Optimize Tone
                           </Button>
                           
-                          <Button className="bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 text-[10px] rounded-2xl h-12 px-8 ml-auto font-bold tracking-widest group" asChild>
+                          <Button className="bg-red-600/10 border border-red-600/30 text-red-500 hover:bg-red-600/20 text-[11px] rounded-2xl h-16 px-12 ml-auto font-bold tracking-[0.4em] group uppercase" asChild>
                             <Link href="/red-team">
-                              <Hammer className="size-4 mr-3 group-hover:rotate-45 transition-transform duration-500" /> FORGE COMPANION TOOL
+                              <Hammer className="size-5 mr-4 group-hover:rotate-45 transition-transform duration-700" /> Forge Companion
                             </Link>
                           </Button>
                         </div>
                         
-                        <div className="absolute -bottom-10 -right-10 p-8 opacity-[0.03] pointer-events-none group-hover:opacity-[0.06] transition-opacity">
-                           <Fingerprint className="size-64 text-emerald-500" />
+                        <div className="absolute -bottom-10 -right-10 p-12 opacity-[0.03] pointer-events-none group-hover:opacity-[0.1] transition-opacity">
+                           <Skull className="size-72 text-red-600" />
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                        <div className="space-y-6">
-                          <h4 className="text-[11px] font-bold text-emerald-500 uppercase tracking-[0.5em] flex items-center gap-3">
-                            <ShieldCheck className="size-4" />
-                            Tactical Rationale
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+                        <div className="space-y-8">
+                          <h4 className="text-[12px] font-bold text-red-500 uppercase tracking-[0.6em] flex items-center gap-4 italic">
+                            <ShieldCheck className="size-5" /> Tactical Rationale
                           </h4>
-                          <div className="p-8 rounded-3xl bg-white/5 border border-white/5 text-sm text-muted-foreground leading-loose italic relative">
-                             <div className="absolute top-4 right-4 opacity-10"><Info className="size-8"/></div>
+                          <div className="p-10 rounded-[2.5rem] bg-white/5 border border-white/5 text-lg text-muted-foreground leading-loose italic relative shadow-inner">
+                             <div className="absolute top-6 right-6 opacity-10"><Info className="size-10"/></div>
                             {result.rationale}
                           </div>
                         </div>
-                        <div className="space-y-6">
-                          <h4 className="text-[11px] font-bold text-primary uppercase tracking-[0.5em] flex items-center gap-3">
-                            <TrendingUp className="size-4" />
-                            Next Strategic Move
+                        <div className="space-y-8">
+                          <h4 className="text-[12px] font-bold text-red-500 uppercase tracking-[0.6em] flex items-center gap-4 italic">
+                            <TrendingUp className="size-5" /> Next Tactical Move
                           </h4>
-                          <div className="p-10 rounded-[2.5rem] bg-primary/5 border border-primary/10 text-xl text-primary font-medium italic relative overflow-hidden group hover:scale-[1.02] transition-transform">
-                            <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity animate-pulse" />
-                            <ChevronRight className="absolute top-4 right-4 size-5 text-primary/30" />
+                          <div className="p-12 rounded-[3.5rem] bg-red-600/5 border border-red-600/20 text-2xl text-red-500 font-medium italic relative overflow-hidden group hover:scale-[1.03] transition-all duration-700 shadow-2xl">
+                            <div className="absolute inset-0 bg-red-600/5 opacity-0 group-hover:opacity-100 transition-opacity animate-pulse" />
+                            <ChevronRight className="absolute top-6 right-6 size-6 text-red-600/30" />
                             {result.nextStepSuggestion}
                           </div>
                         </div>
@@ -361,66 +341,64 @@ export default function SocialPage() {
                     </CardContent>
                   </Card>
 
-                  {/* Analytic Neural Radar Column */}
-                  <div className="space-y-6">
-                    <Card className="glass-card border-primary/20 h-full relative overflow-hidden">
-                      <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-transparent via-primary/50 to-transparent" />
-                      <CardHeader>
-                        <CardTitle className="text-white text-[11px] uppercase tracking-[0.4em] flex items-center gap-3">
-                          <Radar className="size-4 text-primary animate-pulse" />
-                          Psychological Pulse
+                  <div className="space-y-8">
+                    <Card className="glass-card border-red-600/30 h-full relative overflow-hidden rounded-[3rem] shadow-2xl">
+                      <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-transparent via-red-600/60 to-transparent" />
+                      <CardHeader className="p-8">
+                        <CardTitle className="text-white text-[12px] uppercase tracking-[0.5em] flex items-center gap-4 font-bold italic">
+                          <Radar className="size-5 text-red-600 animate-pulse" /> Predator Pulse
                         </CardTitle>
-                        <CardDescription className="text-[9px] uppercase font-bold opacity-40">Neural Impact Matrix</CardDescription>
+                        <CardDescription className="text-[10px] uppercase font-bold opacity-40 tracking-widest mt-1">Neural Impact Matrix</CardDescription>
                       </CardHeader>
-                      <CardContent className="p-6 flex flex-col items-center">
-                        <div className="w-full aspect-square mb-10 relative">
+                      <CardContent className="p-8 flex flex-col items-center">
+                        <div className="w-full aspect-square mb-12 relative">
                           <ResponsiveContainer width="100%" height="100%">
-                            <RechartsRadar cx="50%" cy="50%" outerRadius="70%" data={radarData}>
-                              <PolarGrid stroke="#ffffff08" />
-                              <PolarAngleAxis dataKey="subject" tick={{ fill: '#ffffff40', fontSize: 9, fontWeight: 'bold' }} />
+                            <RechartsRadar cx="50%" cy="50%" outerRadius="75%" data={radarData}>
+                              <PolarGrid stroke="#ff000015" />
+                              <PolarAngleAxis dataKey="subject" tick={{ fill: '#ff000060', fontSize: 10, fontWeight: 'bold' }} />
                               <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
                               <RadarChart
                                 name="Impact"
                                 dataKey="A"
                                 stroke="hsl(var(--primary))"
                                 fill="hsl(var(--primary))"
-                                fillOpacity={0.4}
-                                animationBegin={300}
-                                animationDuration={1500}
+                                fillOpacity={0.5}
+                                animationBegin={400}
+                                animationDuration={2000}
                               />
                             </RechartsRadar>
                           </ResponsiveContainer>
                           <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-5">
-                             <Brain className="size-32 text-primary" />
+                             <Skull className="size-48 text-red-600" />
                           </div>
                         </div>
 
-                        <div className="w-full space-y-4">
-                          <h4 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-6 border-b border-white/5 pb-2">Active Influence Vectors</h4>
+                        <div className="w-full space-y-6">
+                          <h4 className="text-[11px] font-bold text-muted-foreground uppercase tracking-[0.6em] mb-8 border-b border-white/5 pb-4 italic">Active Strike Vectors</h4>
                           {result.psychologicalVectors.map((v: any, i: number) => (
-                            <div key={i} className="p-4 rounded-2xl bg-white/5 border border-white/5 flex flex-col gap-3 hover:bg-white/[0.08] hover:border-primary/40 transition-all group relative overflow-hidden">
-                              <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:scale-150 transition-transform"><Zap className="size-12"/></div>
+                            <div key={i} className="p-5 rounded-3xl bg-black/60 border border-white/5 flex flex-col gap-4 hover:bg-red-950/10 hover:border-red-600/40 transition-all duration-500 group relative overflow-hidden">
+                              <div className="absolute -right-6 -bottom-6 opacity-5 group-hover:scale-150 transition-transform"><Zap className="size-16 text-red-600"/></div>
                               <div className="flex justify-between items-center relative z-10">
-                                <span className="text-[10px] font-bold text-white uppercase tracking-tighter">{v.vector}</span>
+                                <span className="text-[11px] font-bold text-white uppercase tracking-widest italic">{v.vector}</span>
                                 <Badge className={cn(
-                                  "text-[8px] h-4.5 tracking-tighter px-2 font-bold",
-                                  v.impact === 'High' ? 'bg-red-500/20 text-red-500' : 'bg-emerald-500/20 text-emerald-500'
+                                  "text-[9px] px-3 font-bold uppercase tracking-tighter",
+                                  v.impact === 'High' ? 'bg-red-600 text-white shadow-[0_0_10px_red]' : 'bg-red-600/20 text-red-500'
                                 )}>
                                   {v.impact} IMPACT
                                 </Badge>
                               </div>
-                              <p className="text-[11px] text-muted-foreground leading-relaxed italic relative z-10">"{v.description}"</p>
+                              <p className="text-xs text-muted-foreground leading-relaxed italic relative z-10 opacity-70 group-hover:opacity-100 transition-opacity">"{v.description}"</p>
                             </div>
                           ))}
                         </div>
 
-                        <div className="mt-10 pt-8 border-t border-white/5 w-full">
-                           <div className="flex justify-between text-[11px] font-bold mb-4 uppercase text-muted-foreground tracking-[0.3em]">
-                              <span>Persuasion Probability</span>
-                              <span className="text-emerald-500 text-lg">96.4%</span>
+                        <div className="mt-12 pt-10 border-t border-white/5 w-full">
+                           <div className="flex justify-between text-[12px] font-bold mb-5 uppercase text-muted-foreground tracking-[0.4em] italic">
+                              <span>Strike Probability</span>
+                              <span className="text-red-500 text-2xl">98.4%</span>
                            </div>
-                           <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
-                              <div className="h-full bg-emerald-500 w-[96.4%] animate-pulse shadow-[0_0_15px_rgba(16,185,129,0.5)]" />
+                           <div className="h-3 w-full bg-white/5 rounded-full overflow-hidden border border-white/5 p-0.5">
+                              <div className="h-full bg-red-600 w-[98.4%] animate-pulse shadow-[0_0_20px_rgba(255,0,0,0.6)] rounded-full" />
                            </div>
                         </div>
                       </CardContent>
@@ -429,107 +407,37 @@ export default function SocialPage() {
                 </div>
               </div>
             ) : (
-              <div className="h-full min-h-[750px] border-2 border-dashed border-white/5 rounded-[4rem] flex flex-col items-center justify-center text-center p-12 bg-black/10 group transition-all hover:bg-black/20 relative overflow-hidden">
-                {mounted && loading && (
-                   <div className="absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-xl z-50">
-                      <div className="flex flex-col items-center gap-6">
-                         <div className="relative">
-                            <div className="size-24 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
-                            <div className="absolute inset-0 flex items-center justify-center">
-                               <Globe className="size-8 text-primary animate-pulse" />
-                            </div>
-                         </div>
-                         <div className="flex flex-col items-center gap-1">
-                            <span className="text-sm font-code text-primary uppercase tracking-[0.6em] animate-pulse font-bold">Search Grounding in Progress</span>
-                            <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Scraping Live Intel for Vector Mapping...</span>
-                         </div>
-                      </div>
-                   </div>
-                )}
-                
-                <div className="size-48 bg-primary/5 rounded-full flex items-center justify-center mb-12 border border-primary/10 group-hover:scale-110 transition-transform duration-1000 relative">
-                  <Brain className={cn("size-24 text-primary/20 transition-all group-hover:text-primary/40", mounted && loading && "animate-pulse")} />
-                  <div className="absolute inset-0 bg-primary/5 rounded-full blur-[80px] animate-pulse" />
+              <div className="h-full min-h-[850px] border-2 border-dashed border-red-600/20 rounded-[5rem] flex flex-col items-center justify-center text-center p-20 bg-black/40 group transition-all hover:bg-red-950/5 relative overflow-hidden shadow-2xl">
+                <div className="size-64 bg-red-600/5 rounded-full flex items-center justify-center mb-16 border border-red-600/10 group-hover:scale-110 transition-transform duration-1000 relative">
+                  <Brain className={cn("size-32 text-red-600/20 transition-all duration-1000", mounted && activePulse && "text-red-600 animate-pulse")} />
+                  <div className="absolute inset-0 bg-red-600/5 rounded-full blur-[100px] animate-pulse" />
                   {mounted && activePulse && (
                     <div className="absolute inset-0 flex items-center justify-center">
-                       <div className="size-64 border border-primary/20 rounded-full animate-ping" />
+                       <div className="size-80 border border-red-600/20 rounded-full animate-ping" />
                     </div>
                   )}
                 </div>
                 
-                <h3 className="text-6xl font-headline font-bold text-white mb-8 tracking-tighter italic drop-shadow-2xl">Psychological Operations Center</h3>
-                <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-14 text-xl font-medium">
-                  Initialize the Al-Mu'izz <span className="text-primary font-bold">Specialized Neural Brain</span>. This autonomous agent is pre-fed with global persuasion matrices and uses <span className="text-emerald-500 font-bold italic">Real-time Search</span> to anchor influence vectors in current reality.
+                <h3 className="text-7xl font-headline font-bold text-white mb-10 tracking-tighter italic drop-shadow-2xl">PsyOps Center</h3>
+                <p className="text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-20 text-3xl font-medium italic">
+                  Initialize the <span className="text-red-600 font-bold uppercase tracking-widest">Predator Brain</span>. This autonomous agent uses <span className="text-red-500 font-bold italic">Search Grounding</span> to anchor lethal influence vectors in reality via the Alpha Core.
                 </p>
                 
-                <div className="flex gap-8">
-                  <Badge variant="outline" className="bg-white/5 py-4 px-10 text-[11px] tracking-[0.5em] uppercase border-white/10 rounded-[2rem] shadow-xl">Pre-Seeded Knowledge Matrix</Badge>
-                  <Badge variant="outline" className="bg-white/5 py-4 px-10 text-[11px] tracking-[0.5em] uppercase border-white/10 rounded-[2rem] shadow-xl">v17.5 Search-Augmented Link</Badge>
+                <div className="flex gap-10">
+                  <Badge variant="outline" className="bg-white/5 py-6 px-12 text-[14px] tracking-[0.6em] uppercase border-red-600/30 rounded-full shadow-2xl backdrop-blur-3xl group-hover:border-red-600/60 transition-colors">Neural Predator Matrix</Badge>
+                  <Badge variant="outline" className="bg-white/5 py-6 px-12 text-[14px] tracking-[0.6em] uppercase border-red-600/30 rounded-full shadow-2xl backdrop-blur-3xl group-hover:border-red-600/60 transition-colors">v18.0 Strike Suite</Badge>
                 </div>
 
-                <div className="absolute bottom-12 flex gap-1 items-end h-16 opacity-10">
-                   {mounted && Array.from({ length: 40 }).map((_, i) => (
-                     <div key={i} className="w-1 bg-primary rounded-full" style={{ height: `${Math.random() * 100}%`, animation: `pulse 1.5s infinite ${i * 0.05}s` }} />
+                <div className="absolute bottom-16 flex gap-2 items-end h-20 opacity-10">
+                   {mounted && Array.from({ length: 50 }).map((_, i) => (
+                     <div key={i} className="w-1.5 bg-red-600 rounded-full" style={{ height: `${Math.random() * 100}%`, animation: `pulse 1.5s infinite ${i * 0.05}s` }} />
                    ))}
                 </div>
               </div>
             )}
           </div>
         </div>
-
-        {/* Tactical Footer Overlay */}
-        <div className="fixed bottom-8 right-8 w-96 h-28 glass rounded-[2.5rem] border border-white/10 p-6 hidden 2xl:block overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-40">
-           <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                 <div className={cn("size-2 rounded-full animate-pulse shadow-[0_0_10px_#10b981]", useSearch ? "bg-emerald-500" : "bg-blue-500")} />
-                 <span className="text-[10px] font-bold text-white uppercase tracking-[0.3em]">System Brain Status: {useSearch ? 'LIVE_SEARCH_SYNCED' : 'OFFLINE_CORE'}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                 <Radio className="size-3 text-primary/60 animate-pulse" />
-                 <span className="text-[9px] font-code text-emerald-500/80">LATENCY // 2.1 ms</span>
-              </div>
-           </div>
-           <div className="flex items-end gap-1.5 h-10 px-2">
-              {mounted && Array.from({ length: 45 }).map((_, i) => (
-                <div 
-                  key={i} 
-                  className={cn("flex-1 rounded-full transition-colors cursor-pointer", useSearch ? "bg-emerald-500/40 hover:bg-emerald-500" : "bg-primary/40 hover:bg-primary")} 
-                  style={{ 
-                    height: `${20 + Math.random() * 80}%`,
-                    animation: `pulse 2s infinite ${i * 0.04}s`
-                  }} 
-                />
-              ))}
-           </div>
-           <div className="mt-2 flex justify-between px-2">
-              <span className="text-[7px] text-muted-foreground uppercase font-bold tracking-widest">Grounding Active v17.5</span>
-              <span className="text-[7px] text-primary uppercase font-bold tracking-widest">Al-Mu'izz Specialized Core</span>
-           </div>
-        </div>
       </main>
     </div>
-  )
-}
-
-function Radio(props: any) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9" />
-      <path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5" />
-      <circle cx="12" cy="12" r="2" />
-      <path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5" />
-      <path d="M19.1 4.9C23 8.8 23 15.2 19.1 19.1" />
-    </svg>
   )
 }
