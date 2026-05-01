@@ -8,3 +8,4 @@ import '@/ai/flows/modular-ai-knowledge-base-reporting.ts';
 import '@/ai/flows/osint-master-flow.ts';
 import '@/ai/flows/vulnerability-scan-flow.ts';
 import '@/ai/flows/tool-forge-flow.ts';
+import '@/ai/flows/mobile-intelligence-flow.ts';

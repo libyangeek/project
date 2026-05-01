@@ -13,7 +13,7 @@ import {
   Settings, 
   Activity,
   Zap,
-  Usb,
+  Smartphone,
   ShieldX
 } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -21,7 +21,7 @@ import { cn } from "@/lib/utils"
 const navItems = [
   { name: "Dashboard", icon: LayoutDashboard, href: "/" },
   { name: "Terminal Hub", icon: Terminal, href: "/terminal" },
-  { name: "Hardware Recon", icon: Usb, href: "/hardware" },
+  { name: "Mobile Ops", icon: Smartphone, href: "/hardware" },
   { name: "Cyber Recon", icon: Search, href: "/recon" },
   { name: "Knowledge Base", icon: Database, href: "/knowledge" },
   { name: "Red Team Ops", icon: ShieldX, href: "/red-team" },
@@ -77,7 +77,7 @@ export function SidebarNav() {
             <div className="size-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
             <span className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest">Engine Online</span>
           </div>
-          <p className="text-[11px] text-white font-bold mb-3 italic">Al-Mu'izz Neural v17.2</p>
+          <p className="text-[11px] text-white font-bold mb-3 italic">Al-Mu'izz Neural v17.5</p>
           <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
             <div className="h-full bg-primary w-[92%] animate-pulse" />
           </div>
