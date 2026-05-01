@@ -15,244 +15,255 @@ import {
   ArrowRight,
   Terminal as TerminalIcon,
   Search,
-  Database,
   ShieldX,
+  Skull,
+  Crosshair,
   Radio,
-  CpuIcon
+  Flame
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
+/**
+ * @fileOverview لوحة القيادة المركزية - وضع المفترس (The Predator)
+ * واجهة هجومية غاشمة توضح ترابط العقد السيادية.
+ */
 export default function DashboardPage() {
+  const [mounted, setMounted] = React.useState(false)
+
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
+
   return (
-    <div className="flex min-h-screen bg-black">
+    <div className="flex min-h-screen bg-black text-white selection:bg-red-500/30">
       <SidebarNav />
-      <main className="flex-1 ml-64 p-8 bg-[radial-gradient(circle_at_top_right,rgba(170,76,255,0.05),transparent)]">
-        <header className="flex justify-between items-start mb-8">
-          <div className="animate-in fade-in slide-in-from-left-4 duration-700">
-            <div className="flex items-center gap-2 mb-1">
-              <Badge className="bg-primary/20 text-primary border-primary/30 text-[10px] px-2 py-0 animate-pulse">GOLDEN EDITION v17.0.0</Badge>
-              <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">Al-Mu'izz Neural Core</span>
+      <main className="flex-1 ml-64 p-8 relative overflow-hidden">
+        {/* Predator Background Atmosphere */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(239,68,68,0.08),transparent)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 pointer-events-none" />
+
+        <header className="flex justify-between items-start mb-12 relative z-10 animate-in fade-in slide-in-from-top-4 duration-1000">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <Badge className="bg-red-600 text-white border-red-500/50 text-[10px] px-3 py-0.5 animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.5)]">PREDATOR MODE ACTIVE</Badge>
+              <span className="text-[10px] text-red-500/70 uppercase font-bold tracking-[0.4em]">Al-Mu'izz Neural Strike v18.0</span>
             </div>
-            <h2 className="text-5xl font-headline font-bold text-white mb-2 tracking-tighter italic drop-shadow-[0_0_15px_rgba(170,76,255,0.3)]">Operational Command</h2>
-            <p className="text-muted-foreground font-medium">Welcome, Sovereign Architect. All subsystems operational.</p>
+            <h2 className="text-6xl font-headline font-bold text-white mb-2 tracking-tighter italic drop-shadow-[0_0_20px_rgba(239,68,68,0.4)]">
+              Sovereign <span className="text-red-600">Predator</span> Hub
+            </h2>
+            <p className="text-muted-foreground font-medium max-w-xl">The Alpha Node is engaged. All sovereign modules are linked for synchronized autonomous operations.</p>
           </div>
-          <div className="flex gap-4 animate-in fade-in slide-in-from-right-4 duration-700">
-            <Badge variant="outline" className="bg-emerald-500/10 text-emerald-500 border-emerald-500/20 py-1.5 px-3 glass">
-              <ShieldCheck className="size-4 mr-2" />
-              Sovereign Protocol Active
-            </Badge>
-            <div className="text-right glass p-2 rounded-lg border border-white/5">
-              <div className="text-sm font-code text-white">03:42:15 UTC</div>
-              <div className="text-[9px] text-muted-foreground uppercase font-bold tracking-tighter">System Uptime</div>
+          <div className="flex gap-4">
+            <div className="text-right glass-card p-4 border-red-500/30 bg-red-950/10 min-w-[160px] shadow-2xl">
+              <div className="text-2xl font-code text-red-500 font-bold flex items-center justify-end gap-2">
+                <Skull className="size-5 animate-bounce" /> ALPHA_7
+              </div>
+              <div className="text-[9px] text-muted-foreground uppercase font-bold tracking-widest">Sovereignty Level</div>
             </div>
           </div>
         </header>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {/* Linked Nodes Visualization */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12 relative z-10">
           {[
-            { label: "Neural Nodes", value: "64", icon: Globe, trend: "+12", color: "text-primary" },
-            { label: "NPU Load", value: "18%", icon: Cpu, trend: "Optimal", color: "text-blue-500" },
-            { label: "Vault Key", value: "RSA-8K", icon: Lock, trend: "Quantum", color: "text-emerald-500" },
-            { label: "Data Ingest", value: "8.4 TB/d", icon: Activity, trend: "Surge", color: "text-amber-500" },
+            { label: "Alpha Nodes", value: "Locked", icon: Cpu, color: "text-red-500", glow: "shadow-red-500/20" },
+            { label: "Active Vectors", value: "482", icon: Crosshair, color: "text-orange-500", glow: "shadow-orange-500/20" },
+            { label: "Strike Force", value: "Extreme", icon: Flame, color: "text-primary", glow: "shadow-primary/20" },
+            { label: "Extraction Rate", value: "8.4 TB/h", icon: Activity, color: "text-emerald-500", glow: "shadow-emerald-500/20" },
           ].map((stat, i) => (
-            <Card key={i} className="glass-card group hover:border-primary/40 transition-all cursor-crosshair relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-2 opacity-5">
-                <stat.icon className="size-16" />
-              </div>
-              <CardContent className="p-6 relative z-10">
-                <div className="flex justify-between items-start mb-4">
-                  <div className={`p-2 rounded-lg bg-white/5 border border-white/10 group-hover:bg-primary/20 transition-colors`}>
-                    <stat.icon className={`size-5 ${stat.color}`} />
+            <Card key={i} className={cn("glass-card border-white/5 group hover:border-red-500/40 transition-all cursor-crosshair overflow-hidden", stat.glow)}>
+               <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                  <stat.icon className="size-20" />
+               </div>
+               <CardContent className="p-6 relative z-10">
+                  <div className="flex justify-between items-start mb-6">
+                    <div className="p-3 rounded-2xl bg-white/5 border border-white/10 group-hover:bg-red-500/20 transition-colors">
+                      <stat.icon className={cn("size-6", stat.color)} />
+                    </div>
+                    <div className="size-2 rounded-full bg-red-600 animate-ping" />
                   </div>
-                  <span className="text-[10px] font-bold text-emerald-500">{stat.trend}</span>
-                </div>
-                <div className="text-3xl font-bold text-white tracking-tighter mb-1">{stat.value}</div>
-                <div className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">{stat.label}</div>
-              </CardContent>
+                  <div className="text-4xl font-bold text-white tracking-tighter mb-1">{stat.value}</div>
+                  <div className="text-[10px] text-muted-foreground font-bold uppercase tracking-[0.3em]">{stat.label}</div>
+               </CardContent>
             </Card>
           ))}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Monitor */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10">
+          {/* Linked Engagement Monitor */}
           <div className="lg:col-span-2 space-y-8">
-            <Card className="glass-card overflow-hidden border-primary/20 shadow-[0_0_30px_rgba(170,76,255,0.1)]">
-              <CardHeader className="bg-white/5 border-b border-white/5">
-                <div className="flex justify-between items-center">
+            <Card className="glass-card border-red-500/20 overflow-hidden shadow-[0_0_50px_rgba(239,68,68,0.1)]">
+               <CardHeader className="bg-red-950/20 border-b border-white/5 p-8 flex flex-row items-center justify-between">
                   <div>
-                    <CardTitle className="text-white flex items-center gap-2">
-                      <Wifi className="size-4 text-primary animate-pulse" />
-                      Live Engagement Monitor
+                    <CardTitle className="text-3xl text-white italic tracking-tighter flex items-center gap-3">
+                      <Radio className="size-6 text-red-500 animate-pulse" /> Linked Strike Feed
                     </CardTitle>
-                    <CardDescription>Packet analysis and autonomous threat mitigation</CardDescription>
+                    <CardDescription className="text-red-400/60 font-bold text-xs uppercase tracking-[0.3em] mt-1">Autonomous Multi-Node Orchestration</CardDescription>
                   </div>
-                  <div className="flex gap-2">
-                    <Badge className="bg-emerald-500/20 text-emerald-500 font-code">AES-256-GCM</Badge>
-                    <Button variant="outline" size="sm" className="bg-white/5 border-white/10 hover:bg-white/10 h-7 text-[10px] tracking-widest">
-                      LIVE FEED
-                    </Button>
+                  <Badge variant="outline" className="border-red-500/30 text-red-500 bg-red-500/5 px-4 py-2 font-code">TARGETING: GLOBAL_MATRIX</Badge>
+               </CardHeader>
+               <CardContent className="p-0">
+                  <div className="aspect-video bg-black/80 relative flex items-center justify-center group">
+                     {/* Cyber Map Visualizer (Conceptual) */}
+                     <div className="absolute inset-0 opacity-20 bg-[url('https://picsum.photos/seed/predator/1200/800')] bg-cover bg-center mix-blend-overlay" />
+                     <div className="relative z-10 text-center space-y-8">
+                        <div className="flex gap-2 justify-center">
+                           {Array.from({ length: 15 }).map((_, i) => (
+                             <div key={i} className="w-1 bg-red-600/60 rounded-full animate-pulse" style={{ height: 40 + Math.random() * 100, animationDelay: `${i * 0.1}s` }} />
+                           ))}
+                        </div>
+                        <div className="flex flex-col items-center gap-2">
+                           <span className="text-2xl font-code text-red-500 font-bold tracking-[0.5em] animate-pulse">PREDATOR_SCAN_IN_PROGRESS</span>
+                           <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-[0.2em]">Intercepting Neural Patterns...</span>
+                        </div>
+                     </div>
+                     <div className="absolute top-4 left-4 p-4 border-l-2 border-red-600 bg-black/40 backdrop-blur-md">
+                        <div className="text-[10px] font-bold text-red-500 uppercase mb-2">Linked Nodes Status</div>
+                        <div className="space-y-1">
+                           <div className="flex items-center gap-2 text-[9px] font-medium"><div className="size-1 rounded-full bg-emerald-500" /> OSINT_MASTER: SYNCED</div>
+                           <div className="flex items-center gap-2 text-[9px] font-medium"><div className="size-1 rounded-full bg-emerald-500" /> TOOL_FORGE: READY</div>
+                           <div className="flex items-center gap-2 text-[9px] font-medium"><div className="size-1 rounded-full bg-red-500 animate-pulse" /> EXPLOIT_GEN: ACTIVE</div>
+                        </div>
+                     </div>
                   </div>
-                </div>
-              </CardHeader>
-              <CardContent className="p-0">
-                <div className="aspect-video bg-black/60 relative flex items-center justify-center group">
-                  <div className="absolute inset-0 opacity-10 pointer-events-none" style={{
-                    backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)',
-                    backgroundSize: '24px 24px'
-                  }}></div>
-                  <div className="relative z-10 text-center">
-                    <div className="flex gap-1.5 justify-center mb-6">
-                      {[60, 80, 40, 95, 70, 110, 50, 90, 65, 100].map((h, i) => (
-                        <div 
-                          key={i} 
-                          className="w-3 bg-primary/80 rounded-full animate-pulse shadow-[0_0_10px_rgba(170,76,255,0.4)]" 
-                          style={{ height: h, animationDelay: `${i * 0.08}s` }}
-                        />
-                      ))}
-                    </div>
-                    <p className="font-code text-primary text-xs tracking-widest animate-pulse font-bold">AL-MUIZZ NEURAL SCAN IN PROGRESS...</p>
-                  </div>
-                  <div className="absolute bottom-4 left-4 right-4 flex justify-between text-[8px] font-code text-muted-foreground uppercase bg-black/40 p-2 rounded border border-white/5">
-                    <span className="flex items-center gap-1"><Globe className="size-2"/> Lat: 24.7136° N</span>
-                    <span className="flex items-center gap-1"><Globe className="size-2"/> Long: 46.6753° E</span>
-                    <span className="flex items-center gap-1 text-primary"><Search className="size-2"/> Target: 0x88.42.11.9</span>
-                  </div>
-                </div>
-              </CardContent>
+               </CardContent>
             </Card>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card className="glass-card">
-                <CardHeader>
-                  <CardTitle className="text-white text-lg flex items-center gap-2">
-                    <AlertTriangle className="size-5 text-amber-500" />
-                    Strategic Advisories
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {[
-                    { text: "Decision Engine: whiterabbit-neo-v3 deployed", type: "success" },
-                    { text: "BridgeLink: External inference channel active", type: "info" },
-                    { text: "Noah's Ark: Auto-snapshot scheduled (04:00)", type: "patch" }
-                  ].map((note, i) => (
-                    <div key={i} className="flex gap-3 text-sm border-b border-white/5 pb-3 last:border-0 last:pb-0 group">
-                      <div className="size-2 mt-1.5 rounded-full bg-primary shrink-0 group-hover:animate-ping" />
-                      <p className="text-muted-foreground group-hover:text-white transition-colors">{note.text}</p>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-              <Card className="glass-card">
-                <CardHeader>
-                  <CardTitle className="text-white text-lg flex items-center gap-2">
-                    <Activity className="size-5 text-primary" />
-                    Resource Allocation
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div>
-                    <div className="flex justify-between text-[10px] font-bold mb-2 uppercase text-muted-foreground">
-                      <span>Neural Engine</span>
-                      <span className="text-primary">92%</span>
-                    </div>
-                    <Progress value={92} className="h-1 bg-white/5" />
-                  </div>
-                  <div>
-                    <div className="flex justify-between text-[10px] font-bold mb-2 uppercase text-muted-foreground">
-                      <span>Shadow Bandwidth</span>
-                      <span className="text-primary">45%</span>
-                    </div>
-                    <Progress value={45} className="h-1 bg-white/5" />
-                  </div>
-                </CardContent>
-              </Card>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+               <Card className="glass-card border-red-500/20 bg-red-500/5">
+                  <CardHeader>
+                    <CardTitle className="text-white flex items-center gap-3">
+                       <Zap className="size-5 text-red-500" /> Predator ACA Sequence
+                    </CardTitle>
+                    <CardDescription>Autonomous Chain of Attack</CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                     {[
+                       { step: "Node Handshake", status: "Secure", info: "Alpha link validated" },
+                       { step: "Target Ingestion", status: "Active", info: "Mapping 14.2M endpoints" },
+                       { step: "Shadow Deployment", status: "Standby", info: "Awaiting forged vector" }
+                     ].map((item, i) => (
+                       <div key={i} className="p-4 rounded-2xl bg-black/40 border border-white/5 group hover:border-red-500/40 transition-all">
+                          <div className="flex justify-between items-center mb-1">
+                             <span className="text-xs font-bold text-white italic">{item.step}</span>
+                             <Badge variant="outline" className="text-[8px] bg-red-600/10 text-red-500 border-red-500/30">{item.status}</Badge>
+                          </div>
+                          <p className="text-[10px] text-muted-foreground italic">{item.info}</p>
+                       </div>
+                     ))}
+                  </CardContent>
+               </Card>
+               <Card className="glass-card bg-primary/5 border-primary/20">
+                  <CardHeader>
+                     <CardTitle className="text-white flex items-center gap-3">
+                        <Activity className="size-5 text-primary" /> Offensive Load
+                     </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-8">
+                     <div className="space-y-3">
+                        <div className="flex justify-between text-[10px] font-bold uppercase text-muted-foreground">
+                           <span>Neural Striker</span>
+                           <span className="text-red-500">98%</span>
+                        </div>
+                        <Progress value={98} className="h-1.5 bg-white/5" />
+                     </div>
+                     <div className="space-y-3">
+                        <div className="flex justify-between text-[10px] font-bold uppercase text-muted-foreground">
+                           <span>Evasion Logic</span>
+                           <span className="text-emerald-500">OPTIMAL</span>
+                        </div>
+                        <Progress value={85} className="h-1.5 bg-white/5" />
+                     </div>
+                  </CardContent>
+               </Card>
             </div>
           </div>
 
-          {/* Sidebar Modules */}
-          <div className="space-y-6">
-            <Card className="glass-card bg-primary/5 border-primary/20 border-l-4">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
-                  <Zap className="size-4 text-primary" />
-                  Quick Strike
-                </CardTitle>
-                <CardDescription className="text-primary/70">Instant Offensive Deployment</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <Button asChild className="w-full justify-between bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 h-12 rounded-xl group">
-                  <Link href="/recon">
-                    <div className="flex items-center gap-2">
-                      <Search className="size-4 group-hover:scale-110 transition-transform" />
-                      Deploy OSINT Probe
-                    </div>
-                    <ArrowRight className="size-4" />
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" className="w-full justify-between border-white/10 hover:bg-white/5 h-12 rounded-xl group">
-                  <Link href="/red-team">
-                    <div className="flex items-center gap-2">
-                      <ShieldX className="size-4 text-primary group-hover:rotate-12 transition-transform" />
-                      Launch Shadow RAT
-                    </div>
-                    <ArrowRight className="size-4" />
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" className="w-full justify-between border-white/10 hover:bg-white/5 h-12 rounded-xl group">
-                  <Link href="/terminal">
-                    <div className="flex items-center gap-2">
-                      <TerminalIcon className="size-4 text-primary" />
-                      Universal Parser
-                    </div>
-                    <ArrowRight className="size-4" />
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" className="w-full justify-between border-white/10 hover:bg-white/5 h-12 rounded-xl group">
-                  <Link href="/social">
-                    <div className="flex items-center gap-2">
-                      <Radio className="size-4 text-primary animate-pulse" />
-                      Social Automation
-                    </div>
-                    <ArrowRight className="size-4" />
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
+          {/* Quick Strike Side Panel */}
+          <div className="space-y-8">
+             <Card className="glass-card border-red-500/40 bg-red-600/5 shadow-[0_0_30px_rgba(239,68,68,0.1)]">
+                <CardHeader>
+                   <CardTitle className="text-white flex items-center gap-3 uppercase tracking-widest italic">
+                      <Skull className="size-5 text-red-500" /> Strike Vector
+                   </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                   <Button asChild className="w-full h-16 bg-red-600 hover:bg-red-500 shadow-xl shadow-red-600/20 rounded-[2rem] group">
+                      <Link href="/terminal" className="flex justify-between px-8 w-full">
+                         <div className="flex items-center gap-3">
+                            <TerminalIcon className="size-5 group-hover:scale-110 transition-transform" />
+                            <span className="font-bold uppercase tracking-widest text-xs">Execute Strike</span>
+                         </div>
+                         <ArrowRight className="size-4" />
+                      </Link>
+                   </Button>
+                   <Button asChild variant="outline" className="w-full h-14 border-white/10 bg-white/5 hover:bg-red-500/20 hover:border-red-500/40 rounded-2xl group">
+                      <Link href="/red-team" className="flex justify-between px-8 w-full">
+                         <div className="flex items-center gap-3">
+                            <ShieldX className="size-5 text-red-500 group-hover:rotate-12 transition-transform" />
+                            <span className="font-bold uppercase tracking-widest text-[10px]">Open Arsenal</span>
+                         </div>
+                         <ArrowRight className="size-4" />
+                      </Link>
+                   </Button>
+                </CardContent>
+             </Card>
 
-            <Card className="glass-card border-white/5 bg-black/40">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-white text-xs uppercase tracking-widest opacity-50 flex justify-between items-center">
-                  System Manifest
-                  <Button variant="ghost" size="icon" className="size-4 h-4" asChild>
-                    <Link href="/system"><Activity className="size-3"/></Link>
-                  </Button>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="bg-black/60 rounded-lg p-4 font-code text-[10px] text-primary/80 leading-relaxed border border-white/5">
-                  {`{
-  "os": "Al-Mu'izz Sovereign",
-  "version": "17.0.0-GOLDEN",
-  "modules": [
-    "DecisionEngine_v1",
-    "BridgeLink_AI",
-    "NetSight_v2",
-    "USB_ArmyKnife"
-  ],
-  "enc": "AES-8192-Quantum",
-  "status": "SUPREME"
-}`}
+             <Card className="glass-card border-white/5 bg-black/60 relative overflow-hidden">
+                <div className="absolute -bottom-10 -right-10 p-10 opacity-5">
+                   <Crosshair className="size-48 text-red-500" />
                 </div>
-                <Button className="w-full mt-4 bg-white/5 border border-white/10 hover:bg-white/10 text-[10px] font-bold h-8 tracking-widest" asChild>
-                  <Link href="/system">VIEW FULL DIAGNOSTICS</Link>
-                </Button>
-              </CardContent>
-            </Card>
+                <CardHeader>
+                   <CardTitle className="text-white text-[10px] uppercase tracking-[0.4em] opacity-60">Neural Predator Manifest</CardTitle>
+                </CardHeader>
+                <CardContent>
+                   <div className="bg-black/80 rounded-2xl p-6 font-code text-[11px] text-red-400/90 leading-relaxed border border-red-500/10 shadow-inner">
+                      {`{
+  "mode": "PREDATOR",
+  "orchestrator": "ALPHA_CORE",
+  "link_status": "FULL_SYNC",
+  "strike_nodes": [
+    "Shadow_Forge",
+    "Deep_Recon",
+    "PsyOps_Bot",
+    "Mobile_Pulse"
+  ],
+  "security": "REDACTED",
+  "threat_level": "RED"
+}`}
+                   </div>
+                   <Button className="w-full mt-6 bg-red-600/10 border border-red-600/30 text-red-500 hover:bg-red-600/20 h-10 rounded-xl font-bold uppercase tracking-widest text-[9px]">
+                      Sync Predator Nodes
+                   </Button>
+                </CardContent>
+             </Card>
           </div>
+        </div>
+
+        {/* Tactical Predator Footer */}
+        <div className="mt-12 pt-8 border-t border-red-600/20 flex flex-col md:flex-row justify-between items-center gap-8 opacity-40 hover:opacity-100 transition-opacity duration-500">
+           <div className="flex items-center gap-12">
+              <div className="flex items-center gap-3">
+                 <div className="size-3 rounded-full bg-red-600 animate-pulse shadow-[0_0_10px_#ef4444]" />
+                 <span className="text-xs font-bold text-white uppercase tracking-[0.4em] italic">System Status: PREDATOR_ACTIVE</span>
+              </div>
+              <div className="flex gap-6">
+                 {['DB_LINK', 'NET_SIGHT', 'ARK_VAULT'].map((s) => (
+                   <div key={s} className="flex items-center gap-2 text-[9px] font-bold text-muted-foreground uppercase tracking-widest">
+                      <ShieldCheck className="size-3 text-red-500" /> {s}
+                   </div>
+                 ))}
+              </div>
+           </div>
+           <div className="flex items-end gap-1 h-8">
+              {Array.from({ length: 40 }).map((_, i) => (
+                <div key={i} className="w-1 bg-red-600/40 rounded-full" style={{ height: `${20 + Math.random() * 80}%`, animation: `pulse 1.5s infinite ${i * 0.05}s` }} />
+              ))}
+           </div>
         </div>
       </main>
     </div>

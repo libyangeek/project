@@ -13,15 +13,13 @@ import {
   Activity, 
   Zap, 
   Target, 
-  Search, 
-  Smartphone,
-  Database,
-  History,
-  Info,
-  Hammer,
+  Skull,
+  Crosshair,
   Code2,
   Copy,
-  Wrench
+  Wrench,
+  Flame,
+  ShieldX
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -37,8 +35,8 @@ type Message = {
   content: string
   model?: string
   intent?: string
+  chain?: any[]
   forgedCode?: string
-  forgedAnalysis?: string
 }
 
 export default function TerminalPage() {
@@ -46,7 +44,7 @@ export default function TerminalPage() {
   const [messages, setMessages] = React.useState<Message[]>([
     { 
       role: "system", 
-      content: "Al-Mu'izz Sovereign Terminal [Version 17.5.0-ULTIMATE]\n(c) 2025 Sovereign Systems - Intelligence Division.\n\nNeural link established. Unified Tactical Orchestrator is ACTIVE. All systems operational." 
+      content: "Al-Mu'izz Sovereign Terminal [PREDATOR MODE v18.0]\n(c) 2025 Sovereign Systems - Autonomous Strike Division.\n\nAlpha Node Linked. All strike vectors synchronized. Tactical Orchestrator is ARMED." 
     }
   ])
   const [isLoading, setIsLoading] = React.useState(false)
@@ -72,158 +70,142 @@ export default function TerminalPage() {
       const result = await aiCommandAndRouting({ taskDescription: userMessage })
       setMessages(prev => [...prev, { 
         role: "assistant", 
-        content: result.generatedResponse,
-        model: result.selectedModel,
+        content: result.strategicResponse,
+        model: "PREDATOR_ALPHA_CORE",
         intent: result.intentCategory,
-        forgedCode: result.forgedToolCode,
-        forgedAnalysis: result.forgedToolAnalysis
+        chain: result.executionChain,
+        forgedCode: result.forgedPayload
       }])
       
-      if (result.forgedToolCode) {
-        toast({ title: "Auto-Forge Triggered", description: "A custom tool was forged to handle this scenario." })
-      }
+      toast({ title: "Attack Chain Initialized", description: "Alpha Node has synchronized all modules." })
     } catch (error) {
-      setMessages(prev => [...prev, { role: "system", content: "ERROR: Critical engine failure. Autonomous routing hub is unresponsive." }])
-      toast({ variant: "destructive", title: "Core Sync Failure", description: "The neural routing hub encountered a fatal error." })
+      setMessages(prev => [...prev, { role: "system", content: "CRITICAL: Predator node synchronization failed. Check system heartbeat." }])
+      toast({ variant: "destructive", title: "Sync Failure" })
     } finally {
       setIsLoading(false)
     }
   }
 
-  const quickCommands = [
-    { label: "Scan Target URL", icon: Search, cmd: "Run Deep Eye scanner on https://example.com" },
-    { label: "Forge Stealth RAT", icon: Hammer, cmd: "Create a Python-based stealth RAT for Linux target" },
-    { label: "Mobile Sync", icon: Smartphone, cmd: "Check connected mobile hardware and map vectors" },
-    { label: "System Pulse", icon: Activity, cmd: "Generate full platform health report" }
-  ]
-
   return (
-    <div className="flex min-h-screen bg-black">
+    <div className="flex min-h-screen bg-black text-white">
       <SidebarNav />
-      <main className="flex-1 ml-64 flex flex-col h-screen overflow-hidden bg-[radial-gradient(circle_at_center,rgba(170,76,255,0.03),transparent)]">
-        {/* Header */}
-        <header className="p-6 border-b border-white/5 flex items-center justify-between bg-black/40 backdrop-blur-2xl z-20">
+      <main className="flex-1 ml-64 flex flex-col h-screen overflow-hidden bg-[radial-gradient(circle_at_center,rgba(239,68,68,0.05),transparent)]">
+        {/* Predator Terminal Header */}
+        <header className="p-6 border-b border-red-600/20 flex items-center justify-between bg-red-950/10 backdrop-blur-3xl z-20">
           <div className="flex items-center gap-4">
-            <div className="size-12 rounded-2xl bg-primary/10 flex items-center justify-center border border-primary/20 shadow-[0_0_20px_rgba(170,76,255,0.2)]">
-              <TerminalIcon className="size-6 text-primary" />
+            <div className="size-14 rounded-3xl bg-red-600/10 flex items-center justify-center border border-red-600/30 shadow-[0_0_30px_rgba(239,68,68,0.2)] animate-pulse">
+              <Skull className="size-7 text-red-600" />
             </div>
             <div>
-              <h2 className="text-2xl font-headline font-bold text-white tracking-tight italic">Al-Mu'izz Central Core</h2>
+              <h2 className="text-3xl font-headline font-bold text-white tracking-tighter italic uppercase">Alpha Predator Core</h2>
               <div className="flex items-center gap-3 mt-1">
-                <Badge className="bg-emerald-500/10 text-emerald-500 border-emerald-500/20 text-[9px] uppercase font-bold tracking-widest px-2 py-0">
-                  <ShieldCheck className="size-3 mr-1" />
-                  Sovereign-Admin Level 7
-                </Badge>
-                <div className="flex items-center gap-1.5 text-[9px] text-muted-foreground uppercase font-bold tracking-tighter">
-                  <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  Tactical Orchestrator Active
+                <Badge className="bg-red-600 text-white border-red-500/40 text-[10px] uppercase font-bold tracking-[0.4em] px-2 py-0">ORCHESTRATOR ARMED</Badge>
+                <div className="flex items-center gap-2 text-[9px] text-red-400 font-bold uppercase tracking-widest">
+                  <span className="size-2 rounded-full bg-red-600 animate-ping" />
+                  Chain Sync: 100%
                 </div>
               </div>
             </div>
           </div>
           <div className="flex gap-6 items-center">
-            <div className="text-right hidden md:block">
-              <div className="text-xs font-code text-primary uppercase tracking-widest font-bold">Forge-Enabled Mode</div>
-              <div className="text-[9px] text-muted-foreground uppercase font-bold tracking-tighter">Autonomous Script Generation</div>
-            </div>
+             <div className="text-right">
+                <div className="text-[10px] font-code text-red-500 uppercase tracking-widest font-bold">Combat Protocol v18.0</div>
+                <div className="text-[8px] text-muted-foreground uppercase font-bold tracking-tighter italic">Multi-Node Autonomous Hub</div>
+             </div>
           </div>
         </header>
 
         <div className="flex-1 flex min-h-0 relative">
-          <aside className="w-64 border-r border-white/5 bg-black/20 p-6 hidden xl:flex flex-col gap-8 overflow-y-auto">
-             <div className="space-y-4">
-                <h4 className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] opacity-60">System Awareness</h4>
-                <div className="space-y-3">
-                   {[
-                     { name: "Tool Forge", status: "Linked", color: "bg-primary" },
-                     { name: "Neural Router", status: "Active", color: "bg-emerald-500" },
-                     { name: "Deep Eye", status: "Armed", color: "bg-red-500" }
-                   ].map((node, i) => (
-                     <div key={i} className="flex items-center justify-between p-2 rounded bg-white/5 border border-white/5">
-                        <span className="text-[10px] text-white font-medium">{node.name}</span>
-                        <div className="flex items-center gap-1.5">
-                           <span className={cn("size-1 rounded-full", node.color)} />
-                           <span className="text-[8px] uppercase font-bold text-muted-foreground">{node.status}</span>
-                        </div>
-                     </div>
-                   ))}
-                </div>
-             </div>
-          </aside>
-
-          <div className="flex-1 flex flex-col min-w-0 bg-black/10">
+          <div className="flex-1 flex flex-col min-w-0 bg-black/40">
             <ScrollArea className="flex-1 p-8">
-              <div className="max-w-5xl mx-auto space-y-8 pb-4">
+              <div className="max-w-5xl mx-auto space-y-10 pb-8">
                 {messages.map((msg, i) => (
                   <div key={i} className={cn(
-                    "flex flex-col gap-3 animate-in fade-in slide-in-from-bottom-2 duration-500",
+                    "flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700",
                     msg.role === "user" ? "items-end" : "items-start"
                   )}>
                     <div className={cn(
-                      "max-w-[90%] rounded-3xl p-6 font-code text-sm leading-relaxed relative group overflow-hidden",
+                      "max-w-[92%] rounded-[2.5rem] p-8 font-code text-base leading-relaxed relative group overflow-hidden border",
                       msg.role === "user" 
-                        ? "bg-primary text-white shadow-[0_10px_30px_rgba(170,76,255,0.2)] rounded-br-none" 
+                        ? "bg-red-600 text-white border-red-500 shadow-[0_15px_40px_rgba(239,68,68,0.2)] rounded-br-none" 
                         : msg.role === "system" 
-                          ? "bg-white/5 border border-white/10 text-primary font-bold italic" 
-                          : "bg-card/40 backdrop-blur-xl border border-white/5 text-foreground shadow-2xl rounded-bl-none"
+                          ? "bg-black/60 border-red-600/30 text-red-500 font-bold italic" 
+                          : "bg-red-950/10 backdrop-blur-2xl border-white/5 text-foreground shadow-2xl rounded-bl-none"
                     )}>
-                      {msg.role === "assistant" && msg.model && (
-                        <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/5">
-                          <div className="flex items-center gap-2">
-                            <Sparkles className="size-3.5 text-primary" />
-                            <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-primary">
+                      {msg.role === "assistant" && (
+                        <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/5">
+                          <div className="flex items-center gap-3">
+                            <Flame className="size-5 text-red-600 animate-bounce" />
+                            <span className="text-[11px] uppercase font-bold tracking-[0.5em] text-red-500">
                               {msg.model}
                             </span>
                           </div>
-                          <Badge variant="outline" className="text-[8px] uppercase tracking-tighter bg-white/5">
-                            Intent: {msg.intent}
+                          <Badge variant="outline" className="text-[9px] uppercase tracking-tighter bg-red-600/10 text-red-500 border-red-500/20">
+                            Protocol: {msg.intent}
                           </Badge>
                         </div>
                       )}
-                      <pre className="whitespace-pre-wrap font-code leading-loose">
+                      
+                      <div className={cn(
+                        "whitespace-pre-wrap font-code leading-loose mb-6",
+                        msg.role === "user" ? "text-white" : "text-gray-100"
+                      )}>
                         {msg.content}
-                      </pre>
+                      </div>
 
-                      {/* عرض الكود المولد تلقائياً في التيرمينال */}
+                      {/* Display Attack Chain Steps */}
+                      {msg.chain && (
+                        <div className="space-y-6 mt-8 p-6 bg-black/40 rounded-3xl border border-white/5">
+                           <h4 className="text-[10px] font-bold text-red-500 uppercase tracking-[0.5em] mb-4 flex items-center gap-2">
+                             <Crosshair className="size-3" /> Autonomous Execution Chain
+                           </h4>
+                           {msg.chain.map((step, idx) => (
+                             <div key={idx} className="flex gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 animate-in slide-in-from-left-4" style={{ animationDelay: `${idx * 0.1}s` }}>
+                                <div className="size-8 rounded-xl bg-red-600/20 flex items-center justify-center text-xs font-bold text-red-500 border border-red-600/30">
+                                  {idx + 1}
+                                </div>
+                                <div className="flex-1">
+                                   <div className="flex justify-between items-center mb-1">
+                                      <span className="text-xs font-bold text-white uppercase tracking-tighter">{step.step}</span>
+                                      <Badge className="bg-emerald-500/20 text-emerald-500 text-[8px] h-4.5">LINKED: {step.module.toUpperCase()}</Badge>
+                                   </div>
+                                   <p className="text-[10px] text-muted-foreground italic">"{step.action}"</p>
+                                </div>
+                             </div>
+                           ))}
+                        </div>
+                      )}
+
+                      {/* Display Forged Payload in Chain */}
                       {msg.forgedCode && (
-                        <div className="mt-8 space-y-4 animate-in slide-in-from-top-4 duration-700">
-                          <div className="flex items-center gap-2 text-primary">
-                            <Hammer className="size-4" />
-                            <span className="text-[10px] font-bold uppercase tracking-widest">Autonomous Forge Triggered</span>
-                          </div>
-                          <div className="rounded-2xl border border-primary/20 overflow-hidden bg-black/60 shadow-inner">
-                            <div className="p-3 border-b border-white/5 bg-primary/5 flex justify-between items-center">
-                              <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-2">
-                                <Code2 className="size-3" /> Auto-Generated Payload
-                              </span>
-                              <Button variant="ghost" size="icon" className="size-6 rounded-lg" onClick={() => {
-                                navigator.clipboard.writeText(msg.forgedCode!);
-                                toast({ title: "Code Copied" });
-                              }}>
-                                <Copy className="size-3" />
-                              </Button>
-                            </div>
-                            <pre className="p-4 font-code text-xs text-emerald-400 overflow-x-auto max-h-[300px]">
-                              <code>{msg.forgedCode}</code>
-                            </pre>
-                            {msg.forgedAnalysis && (
-                              <div className="p-3 bg-white/5 border-t border-white/5">
-                                <p className="text-[9px] text-muted-foreground italic leading-relaxed">
-                                  <Info className="size-3 inline mr-1 text-primary"/> {msg.forgedAnalysis}
-                                </p>
+                        <div className="mt-8 space-y-4">
+                           <div className="flex items-center justify-between text-red-500">
+                              <div className="flex items-center gap-2">
+                                <Code2 className="size-4" />
+                                <span className="text-[10px] font-bold uppercase tracking-widest">Predator Payload Compiled</span>
                               </div>
-                            )}
-                          </div>
+                              <Button variant="ghost" size="icon" className="size-8 hover:bg-red-600/20" onClick={() => {
+                                navigator.clipboard.writeText(msg.forgedCode!);
+                                toast({ title: "Payload Copied" });
+                              }}>
+                                <Copy className="size-4" />
+                              </Button>
+                           </div>
+                           <div className="rounded-3xl border border-red-500/30 overflow-hidden bg-black shadow-inner">
+                              <pre className="p-8 font-code text-xs text-emerald-400 overflow-x-auto max-h-[400px]">
+                                <code>{msg.forgedCode}</code>
+                              </pre>
+                           </div>
                         </div>
                       )}
 
                       {msg.role === "assistant" && (
-                        <div className="mt-6 pt-4 border-t border-white/5 flex gap-4">
-                           <Button variant="ghost" size="sm" className="h-7 text-[9px] uppercase tracking-widest text-muted-foreground hover:text-white">
-                              <History className="size-3 mr-2" /> Logs
+                        <div className="mt-10 pt-6 border-t border-white/5 flex gap-6">
+                           <Button className="bg-red-600 hover:bg-red-500 text-white h-10 px-8 rounded-xl font-bold uppercase tracking-widest text-[10px] shadow-lg shadow-red-600/20 group">
+                              <Zap className="size-4 mr-2 group-hover:scale-125 transition-transform" /> FULL DEPLOYMENT
                            </Button>
-                           <Button variant="ghost" size="sm" className="h-7 text-[9px] uppercase tracking-widest text-muted-foreground hover:text-white">
-                              <Zap className="size-3 mr-2" /> Execute
+                           <Button variant="outline" className="h-10 px-8 rounded-xl border-white/10 bg-white/5 text-[10px] uppercase font-bold tracking-widest hover:bg-white/10">
+                              <ShieldX className="size-4 mr-2 text-red-500" /> SIMULATE IMPACT
                            </Button>
                         </div>
                       )}
@@ -231,14 +213,14 @@ export default function TerminalPage() {
                   </div>
                 ))}
                 {isLoading && (
-                  <div className="flex flex-col gap-2 items-start animate-pulse">
-                    <div className="max-w-[85%] rounded-2xl p-6 bg-white/5 border border-white/10 flex items-center gap-4">
-                      <div className="flex gap-1">
-                         <div className="size-1.5 rounded-full bg-primary animate-bounce [animation-delay:-0.3s]" />
-                         <div className="size-1.5 rounded-full bg-primary animate-bounce [animation-delay:-0.15s]" />
-                         <div className="size-1.5 rounded-full bg-primary animate-bounce" />
+                  <div className="flex flex-col gap-4 items-start animate-pulse">
+                    <div className="max-w-[90%] rounded-3xl p-8 bg-red-950/10 border border-red-600/20 flex items-center gap-6">
+                      <div className="flex gap-1.5">
+                         <div className="size-2 rounded-full bg-red-600 animate-bounce [animation-delay:-0.3s]" />
+                         <div className="size-2 rounded-full bg-red-600 animate-bounce [animation-delay:-0.15s]" />
+                         <div className="size-2 rounded-full bg-red-600 animate-bounce" />
                       </div>
-                      <span className="text-xs font-code text-muted-foreground uppercase tracking-widest font-bold">Al-Mu'izz Orchestrator is analyzing and forging...</span>
+                      <span className="text-sm font-code text-red-500 uppercase tracking-[0.5em] font-bold italic">ALPHA NODE IS ORCHESTRATING STRIKE CHAIN...</span>
                     </div>
                   </div>
                 )}
@@ -246,45 +228,39 @@ export default function TerminalPage() {
               </div>
             </ScrollArea>
 
-            {/* Input & Quick Actions */}
-            <div className="p-8 border-t border-white/5 bg-black/40 backdrop-blur-3xl">
-              <div className="max-w-5xl mx-auto space-y-6">
-                <div className="flex flex-wrap gap-2">
-                   {quickCommands.map((qc, i) => (
-                     <Button 
-                       key={i} 
-                       variant="outline" 
-                       size="sm" 
-                       className="h-8 bg-white/5 border-white/5 hover:bg-primary/20 hover:border-primary/40 text-[10px] rounded-full px-4 transition-all group"
-                       onClick={() => handleSend(undefined, qc.cmd)}
-                       disabled={isLoading}
-                     >
-                       <qc.icon className="size-3 mr-2 text-muted-foreground group-hover:text-primary transition-colors" />
-                       {qc.label}
-                     </Button>
-                   ))}
-                </div>
-
+            {/* Predator Input Box */}
+            <div className="p-10 border-t border-red-600/20 bg-red-950/5 backdrop-blur-3xl">
+              <div className="max-w-5xl mx-auto">
                 <form onSubmit={handleSend} className="relative group">
-                  <div className="absolute left-6 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors">
-                    <ChevronRight className="size-6" />
+                  <div className="absolute left-8 top-1/2 -translate-y-1/2 text-red-600/50 group-focus-within:text-red-600 transition-all">
+                    <Skull className="size-8" />
                   </div>
                   <Input
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    placeholder="Enter strategic command or request a custom tool..."
-                    className="w-full bg-white/5 border-white/5 pl-14 pr-20 py-8 font-code text-lg focus-visible:ring-primary/40 focus-visible:border-primary rounded-[2rem] shadow-2xl transition-all"
+                    placeholder="Enter strategic objective for Predator Mode (e.g., 'Full extraction of mobile unit #42 via shadow bypass')..."
+                    className="w-full bg-black/60 border-red-600/30 pl-20 pr-24 py-10 font-code text-xl focus-visible:ring-red-600/40 focus-visible:border-red-600 rounded-[3rem] shadow-2xl transition-all placeholder:text-red-900/50 text-white"
                     disabled={isLoading}
                   />
                   <Button 
                     type="submit" 
                     size="icon" 
-                    className="absolute right-4 top-1/2 -translate-y-1/2 size-12 bg-primary hover:bg-primary/90 rounded-2xl shadow-xl"
+                    className="absolute right-6 top-1/2 -translate-y-1/2 size-16 bg-red-600 hover:bg-red-500 rounded-3xl shadow-[0_0_30px_rgba(239,68,68,0.4)] group"
                     disabled={!input.trim() || isLoading}
                   >
-                    {isLoading ? <Loader2 className="size-6 animate-spin" /> : <Send className="size-6" />}
+                    {isLoading ? <Loader2 className="size-8 animate-spin" /> : <Flame className="size-8 group-hover:scale-125 transition-all" />}
                   </Button>
                 </form>
+                <div className="mt-6 flex justify-between items-center px-4">
+                   <div className="flex gap-4">
+                      {['SYNCHRONIZED', 'ARMED', 'AUTO_FORGE'].map(t => (
+                        <div key={t} className="flex items-center gap-1.5 text-[8px] font-bold text-red-500/60 uppercase tracking-[0.3em]">
+                           <div className="size-1 rounded-full bg-red-600" /> {t}
+                        </div>
+                      ))}
+                   </div>
+                   <span className="text-[9px] font-code text-muted-foreground uppercase tracking-widest">Alpha Node Command Input // v18.0</span>
+                </div>
               </div>
             </div>
           </div>
