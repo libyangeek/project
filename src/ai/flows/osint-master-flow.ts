@@ -1,7 +1,7 @@
 'use server';
 /**
- * @fileOverview محرك OSINT Master v17.2
- * استخبارات المصادر المفتوحة وتحليل البصمة الرقمية العميقة.
+ * @fileOverview محرك OSINT Master v18.5 - نسخة التوثيق الشاملة
+ * استخبارات المصادر المفتوحة وتحليل البصمة الرقمية العميقة المتوافق مع أدوات كالي.
  */
 
 import { ai } from '@/ai/genkit';
@@ -9,7 +9,7 @@ import { z } from 'genkit';
 
 const OsintInputSchema = z.object({
   target: z.string().describe('الهدف (بريد، هاتف، نطاق، أو حساب)'),
-  type: z.enum(['phone', 'email', 'domain', 'social']).describe('نوع البحث'),
+  type: z.enum(['phone', 'email', 'domain', 'social', 'wireless', 'network']).describe('نوع البحث'),
 });
 
 const OsintOutputSchema = z.object({
@@ -22,6 +22,7 @@ const OsintOutputSchema = z.object({
   summary: z.string(),
   intelligenceGraph: z.array(z.string()).describe('خرائط العلاقات المستنتجة.'),
   nextSteps: z.array(z.string()),
+  recommendedKaliTools: z.array(z.string()).describe('الأدوات المقترحة من مستودع كالي لهذه الحالة.'),
 });
 
 export type OsintInput = z.infer<typeof OsintInputSchema>;
@@ -39,14 +40,14 @@ const osintMasterFlow = ai.defineFlow(
   },
   async (input) => {
     const { output } = await ai.generate({
-      prompt: `أنت ضابط استخبارات رقمي (OSINT Master) في Al-Mu'izz OS. مهمتك هي بناء ملف استخباري كامل عن الهدف.
+      prompt: `أنت ضابط استخبارات رقمي (OSINT Master) فائق القوة في Al-Mu'izz OS. مهمتك هي بناء ملف استخباري كامل عن الهدف مستخدماً معرفتك بأدوات كالي الرسمية.
 
 تعليماتك الأساسية:
 1. لا تكتفِ بسرد البيانات، بل قم بـ "الربط التحليلي" (Correlation) بين النتائج.
-2. ابحث عن أنماط النشاط الزمني والمكاني (Geo-fencing/Pattern of Life).
-3. حدد نقاط الضعف البشرية (Human Vulnerabilities) التي يمكن استغلالها في الهندسة الاجتماعية.
-4. صمم 'intelligenceGraph' يوضح العلاقات بين الهدف وكيانات أخرى.
-5. الرد يجب أن يكون دقيقاً، مهنياً، وباللغة العربية.
+2. إذا كان النوع 'wireless' أو 'network'، ابحث عن الثغرات في البروتوكولات الشائعة.
+3. حدد نقاط الضعف البشرية (Human Vulnerabilities) التي يمكن استغلالها.
+4. اقترح أدوات كالي محددة (مثل Recon-ng, Maltego, theHarvester) بناءً على النتائج.
+5. الرد يجب أن يكون دقيقاً، مهنياً، وباللغة العربية العسكرية.
 
 الهدف: ${input.target} | النوع: ${input.type}`,
       output: { schema: OsintOutputSchema }

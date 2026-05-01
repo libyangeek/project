@@ -20,7 +20,11 @@ import {
   Activity,
   Fingerprint,
   Skull,
-  Crosshair
+  Crosshair,
+  Wifi,
+  Scan,
+  Binary,
+  Radio
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -38,13 +42,18 @@ export default function ReconPage() {
   const [osintResults, setOsintResults] = React.useState<any>(null)
   const [vulnResults, setVulnResults] = React.useState<any>(null)
   const [activeTab, setActiveTab] = React.useState("osint")
-  const [searchType, setSearchType] = React.useState<'phone' | 'email' | 'domain' | 'social'>('domain')
+  const [searchType, setSearchType] = React.useState<'phone' | 'email' | 'domain' | 'social' | 'wireless' | 'network'>('domain')
+  const [mounted, setMounted] = React.useState(false)
+
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const handleOsint = async () => {
     if (!target.trim()) return
     setLoading(true)
     try {
-      const data = await osintMaster({ target, type: searchType })
+      const data = await osintMaster({ target, type: searchType as any })
       setOsintResults(data)
       toast({ title: "OSINT Strike Complete" })
     } catch (err) {
@@ -68,22 +77,24 @@ export default function ReconPage() {
     }
   }
 
+  if (!mounted) return null;
+
   return (
     <div className="flex min-h-screen bg-black">
       <SidebarNav />
-      <main className="flex-1 ml-64 p-10 bg-[radial-gradient(circle_at_top_left,rgba(239,68,68,0.08),transparent)]">
+      <main className="flex-1 ml-64 p-10 bg-[radial-gradient(circle_at_top_left,rgba(239,68,68,0.08),transparent)] overflow-y-auto">
         <header className="mb-16 flex justify-between items-center relative z-10 animate-in fade-in slide-in-from-top-4 duration-1000">
           <div>
             <div className="flex items-center gap-3 mb-3">
               <Badge className="bg-red-600/20 text-red-500 border-red-500/30 text-[11px] uppercase font-bold tracking-[0.4em] px-3 py-0.5 animate-pulse">Intelligence Node</Badge>
-              <span className="text-[11px] text-muted-foreground uppercase font-bold tracking-[0.2em]">Predator v18.0 Recon Hub</span>
+              <span className="text-[11px] text-muted-foreground uppercase font-bold tracking-[0.2em]">Predator v18.5 Kali-Integrated Hub</span>
             </div>
-            <h2 className="text-6xl font-headline font-bold text-white mb-3 tracking-tighter italic drop-shadow-[0_0_20px_rgba(239,68,68,0.4)]">Recon Hub</h2>
-            <p className="text-muted-foreground max-w-2xl text-lg font-medium italic">Multi-faceted OSINT engine and aggressive web vulnerability scanning via the Alpha Core.</p>
+            <h2 className="text-6xl font-headline font-bold text-white mb-3 tracking-tighter italic drop-shadow-[0_0_20px_rgba(239,68,68,0.4)]">Cyber Recon</h2>
+            <p className="text-muted-foreground max-w-2xl text-lg font-medium italic">Advanced reconnaissance engine utilizing the full 10 categories of the Kali Linux documentation.</p>
           </div>
           <div className="text-right glass-card p-5 border-red-600/30 bg-red-950/10 min-w-[180px] rounded-[2rem] shadow-2xl h-20">
              <div className="text-2xl font-code text-red-600 font-bold flex items-center justify-end gap-3">
-                <Search className="size-6" /> DEEP_SCAN
+                <Search className="size-6" /> KALI_ARSENAL
              </div>
              <div className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest mt-1">Operational Mode</div>
           </div>
@@ -107,16 +118,24 @@ export default function ReconPage() {
                   <div className="mt-10 space-y-8">
                     {activeTab === 'osint' && (
                       <div className="space-y-4">
-                        <label className="text-[10px] uppercase font-bold text-red-500/60 tracking-widest px-1">Recon Type</label>
+                        <label className="text-[10px] uppercase font-bold text-red-500/60 tracking-widest px-1">Kali Category</label>
                         <div className="grid grid-cols-2 gap-3">
-                          {['domain', 'email', 'phone', 'social'].map((type) => (
+                          {[
+                            {id: 'domain', icon: Globe},
+                            {id: 'email', icon: Mail},
+                            {id: 'phone', icon: Phone},
+                            {id: 'social', icon: User},
+                            {id: 'wireless', icon: Wifi},
+                            {id: 'network', icon: Scan}
+                          ].map((type) => (
                             <Button 
-                              key={type}
-                              variant={searchType === type ? 'default' : 'outline'}
-                              className={cn("text-[10px] h-10 uppercase rounded-xl transition-all duration-500", searchType === type ? "bg-red-600 text-white shadow-lg shadow-red-600/30" : "border-white/10")}
-                              onClick={() => setSearchType(type as any)}
+                              key={type.id}
+                              variant={searchType === type.id ? 'default' : 'outline'}
+                              className={cn("text-[10px] h-10 uppercase rounded-xl transition-all duration-500 gap-2", searchType === type.id ? "bg-red-600 text-white shadow-lg shadow-red-600/30" : "border-white/10")}
+                              onClick={() => setSearchType(type.id as any)}
                             >
-                              {type}
+                              <type.icon className="size-3" />
+                              {type.id}
                             </Button>
                           ))}
                         </div>
@@ -134,7 +153,7 @@ export default function ReconPage() {
                     </div>
 
                     <Button 
-                      className="w-full bg-red-600 hover:bg-red-700 h-16 rounded-2xl shadow-2xl shadow-red-600/30 font-bold tracking-[0.4em] text-[11px] uppercase group transition-all"
+                      className="w-full bg-red-600 hover:bg-red-700 h-16 rounded-2xl shadow-2xl shadow-red-600/40 font-bold tracking-[0.4em] text-[11px] uppercase group transition-all"
                       disabled={loading}
                       onClick={activeTab === 'osint' ? handleOsint : handleVulnScan}
                     >
@@ -149,14 +168,14 @@ export default function ReconPage() {
             <Card className="glass-card border-red-500/10 rounded-[2.5rem]">
               <CardHeader className="p-8 pb-4">
                 <CardTitle className="text-white text-[10px] uppercase tracking-[0.5em] opacity-40 flex items-center gap-3 font-bold italic">
-                  <Activity className="size-4 text-red-600" /> Active Probes
+                  <Activity className="size-4 text-red-600" /> Grounded Probes
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-8 pt-0 space-y-4">
                 {[
                   { name: "Whois_Alpha", status: "Active", color: "bg-red-600" },
-                  { name: "Leak_Striker", status: "Ready", color: "bg-emerald-500" },
-                  { name: "Payload_Forge", status: "Standby", color: "bg-orange-500" }
+                  { name: "Nmap_Predator", status: "Ready", color: "bg-emerald-500" },
+                  { name: "Wireless_Sniffer", status: "Standby", color: "bg-orange-500" }
                 ].map((p, i) => (
                   <div key={i} className="flex justify-between items-center p-4 rounded-2xl bg-black/60 border border-white/5 group hover:border-red-600/40 transition-all">
                     <span className="text-[11px] text-white font-bold uppercase tracking-widest">{p.name}</span>
@@ -182,10 +201,10 @@ export default function ReconPage() {
                         </div>
                         <div>
                           <CardTitle className="text-3xl text-white italic tracking-tighter uppercase">Intelligence Profile: {target}</CardTitle>
-                          <CardDescription className="text-red-500 font-bold text-[11px] uppercase tracking-[0.5em] mt-2">Sovereign Predator Synthesis</CardDescription>
+                          <CardDescription className="text-red-500 font-bold text-[11px] uppercase tracking-[0.5em] mt-2">Sovereign Predator Synthesis v18.5</CardDescription>
                         </div>
                       </div>
-                      <Badge className="bg-red-600/20 text-red-500 font-code px-8 py-3 rounded-full border border-red-500/30">CONFIDENCE: 96%</Badge>
+                      <Badge className="bg-red-600/20 text-red-500 font-code px-8 py-3 rounded-full border border-red-500/30">CONFIDENCE: 98%</Badge>
                     </CardHeader>
                     <CardContent className="p-12">
                       <div className="bg-black/90 rounded-[3rem] p-12 border border-red-600/20 mb-10 shadow-2xl relative group overflow-hidden">
@@ -214,6 +233,12 @@ export default function ReconPage() {
                                     <Badge variant="outline" className="text-[9px] uppercase border-red-500/20">{f.riskLevel}</Badge>
                                  </div>
                                  <p className="text-sm text-muted-foreground leading-relaxed font-medium italic opacity-80 group-hover:opacity-100 transition-opacity">"{f.data}"</p>
+                                 {f.correlation && (
+                                   <div className="mt-4 pt-4 border-t border-white/5">
+                                      <p className="text-[10px] text-red-400 font-bold uppercase tracking-widest mb-1 italic">Correlation Link:</p>
+                                      <p className="text-[11px] text-muted-foreground italic font-medium">"{f.correlation}"</p>
+                                   </div>
+                                 )}
                               </div>
                            </div>
                          ))}
@@ -222,7 +247,7 @@ export default function ReconPage() {
                   </Card>
                 </div>
               ) : (
-                <EmptyPlaceholder icon={Globe} title="Awaiting Strike Objective" description="Initiate the Al-Mu'izz OSINT suite to map the digital footprint of your target via the Alpha Core." />
+                <EmptyPlaceholder icon={Globe} title="Awaiting Strike Objective" description="Initiate the Al-Mu'izz OSINT suite to map the digital footprint of your target via the Kali-integrated Alpha Core." />
               )
             ) : (
               vulnResults ? (
@@ -235,7 +260,7 @@ export default function ReconPage() {
                         </div>
                         <div>
                           <CardTitle className="text-3xl text-white italic tracking-tighter uppercase">Vulnerability Manifest: {target}</CardTitle>
-                          <CardDescription className="text-red-500 font-bold text-[11px] uppercase tracking-[0.5em] mt-2">Deep Eye Aggressive Analysis v18.0</CardDescription>
+                          <CardDescription className="text-red-500 font-bold text-[11px] uppercase tracking-[0.5em] mt-2">Deep Eye Aggressive Analysis v18.5</CardDescription>
                         </div>
                       </div>
                       <Badge variant="destructive" className="animate-pulse shadow-2xl py-3 px-8 rounded-full">{vulnResults.vulnerabilities.length} Attack Vectors Identified</Badge>
@@ -269,7 +294,10 @@ export default function ReconPage() {
                                   </div>
                                </div>
                                <div className="mt-8 pt-6 border-t border-white/5">
-                                  <p className="text-[11px] text-muted-foreground italic font-medium group-hover:text-white transition-colors"><Zap className="size-4 inline mr-2 text-red-600 animate-pulse"/> Remediation Protocol: {v.remediation}</p>
+                                  <div className="flex items-center justify-between">
+                                     <p className="text-[11px] text-muted-foreground italic font-medium group-hover:text-white transition-colors"><Zap className="size-4 inline mr-2 text-red-600 animate-pulse"/> Remediation Protocol: {v.remediation}</p>
+                                     <Badge variant="outline" className="text-[9px] uppercase border-red-500/30 text-red-500">Bypass: {v.bypassTechnique}</Badge>
+                                  </div>
                                </div>
                             </div>
                           ))}
@@ -301,7 +329,7 @@ function EmptyPlaceholder({ icon: Icon, title, description }: any) {
       </p>
       <div className="flex gap-10">
         <Badge variant="outline" className="bg-white/5 py-6 px-12 text-[13px] tracking-[0.6em] uppercase border-red-600/30 rounded-full shadow-2xl backdrop-blur-3xl group-hover:border-red-600/60 transition-colors">Target Matrix Alpha</Badge>
-        <Badge variant="outline" className="bg-white/5 py-6 px-12 text-[13px] tracking-[0.6em] uppercase border-red-600/30 rounded-full shadow-2xl backdrop-blur-3xl group-hover:border-red-600/60 transition-colors">Neural Recon v18.0</Badge>
+        <Badge variant="outline" className="bg-white/5 py-6 px-12 text-[13px] tracking-[0.6em] uppercase border-red-600/30 rounded-full shadow-2xl backdrop-blur-3xl group-hover:border-red-600/60 transition-colors">Neural Recon v18.5</Badge>
       </div>
     </div>
   )
