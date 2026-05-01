@@ -12,14 +12,15 @@ import {
   MessageSquare, 
   Settings, 
   Activity,
-  Github,
-  Zap
+  Zap,
+  Usb
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navItems = [
   { name: "Dashboard", icon: LayoutDashboard, href: "/" },
   { name: "Terminal Hub", icon: Terminal, href: "/terminal" },
+  { name: "Hardware Recon", icon: Usb, href: "/hardware" },
   { name: "Knowledge Base", icon: Database, href: "/knowledge" },
   { name: "Red Team Ops", icon: ShieldAlert, href: "/red-team" },
   { name: "Cyber Recon", icon: Search, href: "/recon" },
