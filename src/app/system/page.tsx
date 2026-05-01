@@ -6,65 +6,79 @@ import {
   Activity, 
   Cpu, 
   Database, 
-  HardDrive, 
-  Network, 
-  ShieldCheck, 
   Zap,
   RefreshCcw,
   CheckCircle2,
-  AlertCircle,
-  Smartphone,
-  Globe,
+  Skull,
+  Flame,
+  Brain,
+  Search,
   Lock,
   Loader2,
   Anchor,
   Download,
   History,
-  ShieldAlert,
-  Skull,
-  Flame
+  ShieldAlert
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { toast } from "@/hooks/use-toast"
+import { getSystemAwareness } from "@/ai/flows/system-awareness-flow"
 
 export default function SystemPage() {
   const [refreshing, setRefreshing] = React.useState(false)
-  const [backingUp, setBackingUp] = React.useState(false)
+  const [awareness, setAwareness] = React.useState<any>(null)
+  const [mounted, setMounted] = React.useState(false)
 
-  const handleRefresh = () => {
+  React.useEffect(() => {
+    setMounted(true)
+    handleRefresh()
+  }, [])
+
+  const handleRefresh = async () => {
     setRefreshing(true)
-    setTimeout(() => {
+    try {
+      // محاكاة بيانات العتاد للطلب
+      const data = await getSystemAwareness({
+        usbDevices: [],
+        mobileDevices: [],
+        networkSnapshot: "Active Eth0 / Wlan0 Scanning..."
+      })
+      setAwareness(data)
+      toast({ title: "Neural Strike Grid Synchronized", description: `${data.discoveredAI.length} local brains identified.` })
+    } catch (err) {
+      toast({ variant: "destructive", title: "Sync Failure", description: "Could not harvest local AI assets." })
+    } finally {
       setRefreshing(false)
-      toast({ title: "Strike Nodes Resynced" })
-    }, 2000)
+    }
   }
+
+  if (!mounted) return null;
 
   return (
     <div className="flex min-h-screen bg-black">
       <SidebarNav />
-      <main className="flex-1 ml-64 p-10 bg-[radial-gradient(circle_at_bottom_left,rgba(239,68,68,0.08),transparent)]">
+      <main className="flex-1 ml-64 p-10 bg-[radial-gradient(circle_at_bottom_left,rgba(239,68,68,0.08),transparent)] overflow-y-auto">
         <header className="flex justify-between items-center mb-16 relative z-10 animate-in fade-in slide-in-from-top-4 duration-1000">
           <div>
             <div className="flex items-center gap-3 mb-3">
-              <Badge className="bg-red-600/20 text-red-500 border-red-500/30 text-[11px] uppercase font-bold tracking-[0.4em] px-3 py-0.5 animate-pulse">Integrity Pulse</Badge>
-              <span className="text-[11px] text-muted-foreground uppercase font-bold tracking-[0.3em]">Alpha Node Health Engine</span>
+              <Badge className="bg-red-600/20 text-red-500 border-red-500/30 text-[11px] uppercase font-bold tracking-[0.4em] px-3 py-0.5 animate-pulse">Alpha Node Health</Badge>
+              <span className="text-[11px] text-muted-foreground uppercase font-bold tracking-[0.3em]">Predator v18.0 Resource Harvester</span>
             </div>
             <h2 className="text-6xl font-headline font-bold text-white mb-3 tracking-tighter italic drop-shadow-[0_0_20px_rgba(239,68,68,0.4)]">Sovereignty Status</h2>
-            <p className="text-muted-foreground max-w-2xl text-lg font-medium italic">Real-time monitoring of the Predator Core and distributed strike nodes.</p>
+            <p className="text-muted-foreground max-w-2xl text-lg font-medium italic">Discovering and orchestrating local AI brains and system assets.</p>
           </div>
-          <Button onClick={handleRefresh} disabled={refreshing} variant="outline" className="border-red-500/20 bg-red-600/5 rounded-2xl h-16 px-10 hover:bg-red-600/10 hover:border-red-600/40 transition-all text-xs font-bold uppercase tracking-[0.4em]">
+          <Button onClick={handleRefresh} disabled={refreshing} className="bg-red-600 hover:bg-red-700 text-white rounded-2xl h-16 px-10 shadow-2xl shadow-red-600/40 transition-all text-[11px] font-bold uppercase tracking-[0.4em]">
             {refreshing ? <Loader2 className="size-5 animate-spin mr-4" /> : <RefreshCcw className="size-5 mr-4" />}
-            Resync Strike Nodes
+            Harvest Local Assets
           </Button>
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 relative z-10">
           {[
-            { label: "Strike Force", value: "Locked", icon: Skull, status: "Lethal", color: "text-red-500" },
+            { label: "Active Brains", value: awareness?.discoveredAI?.length || "Scanning", icon: Brain, status: "Local", color: "text-red-500" },
             { label: "Alpha Temp", value: "31°C", icon: Zap, status: "Optimal", color: "text-red-400" },
             { label: "Strike Capacity", value: "98.4%", icon: Flame, status: "Extreme", color: "text-orange-500" },
             { label: "Neural Load", value: "92%", icon: Cpu, status: "Peak", color: "text-red-600" },
@@ -89,30 +103,36 @@ export default function SystemPage() {
             <Card className="glass-card border-red-600/20 overflow-hidden rounded-[3.5rem] shadow-2xl">
               <CardHeader className="bg-red-950/20 border-b border-red-600/20 p-10">
                 <CardTitle className="text-3xl text-white flex items-center gap-6 italic tracking-tighter uppercase">
-                  <Cpu className="size-8 text-red-600" /> Neural Strike Grid (Alpha)
+                  <Brain className="size-8 text-red-600" /> Discovered Brain Network
                 </CardTitle>
-                <CardDescription className="text-red-500/60 font-bold uppercase tracking-[0.4em] mt-2">Predator Workload Orchestration</CardDescription>
+                <CardDescription className="text-red-500/60 font-bold uppercase tracking-[0.4em] mt-2">Local & External AI Orchestration</CardDescription>
               </CardHeader>
-              <CardContent className="p-10 space-y-12">
-                {[
-                  { name: "Alpha Core (Qwen-3-Elite)", usage: 98, status: "Lethal", color: "bg-red-600" },
-                  { name: "DeepSeek Coder v2 (Forge)", usage: 42, status: "Active", color: "bg-red-400" },
-                  { name: "WhiteRabbitNeo-v3 (Attack)", usage: 88, status: "Engaged", color: "bg-orange-600" },
-                  { name: "Neural Router v18.0", usage: 100, status: "Synced", color: "bg-red-500" }
-                ].map((node, i) => (
-                  <div key={i} className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center gap-4">
-                        <div className={cn("size-2 rounded-full animate-pulse shadow-[0_0_10px_red]", node.color)} />
-                        <span className="text-lg font-bold text-white uppercase tracking-tight italic">{node.name}</span>
+              <CardContent className="p-10">
+                {awareness?.discoveredAI?.length > 0 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {awareness.discoveredAI.map((brain: any, i: number) => (
+                      <div key={i} className="p-6 rounded-[2rem] bg-black/60 border border-white/5 group hover:border-red-600/40 transition-all relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-20 transition-opacity">
+                          <Cpu className="size-16" />
+                        </div>
+                        <div className="flex items-center gap-4 mb-4">
+                          <div className="size-3 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_emerald]" />
+                          <span className="text-lg font-bold text-white uppercase italic tracking-tighter">{brain.name}</span>
+                        </div>
+                        <Badge variant="outline" className="text-[9px] uppercase border-red-500/20 text-red-500 font-bold tracking-widest">{brain.provider}</Badge>
+                        <div className="mt-6 flex justify-between items-center">
+                           <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">Status: READY_TO_STRIKE</span>
+                           <Button size="sm" variant="ghost" className="h-8 text-[9px] uppercase font-bold text-red-500 hover:bg-red-600/10">Bind Node</Button>
+                        </div>
                       </div>
-                      <span className="text-sm font-code text-red-500 font-bold">{node.usage}%</span>
-                    </div>
-                    <div className="h-2.5 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
-                      <div className={cn("h-full transition-all duration-1000 shadow-[0_0_15px_red]", node.color)} style={{ width: `${node.usage}%` }} />
-                    </div>
+                    ))}
                   </div>
-                ))}
+                ) : (
+                  <div className="text-center py-20 opacity-40">
+                    <Search className="size-16 mx-auto mb-6 text-red-600 animate-pulse" />
+                    <p className="text-xl italic">"No local brains detected. Relying on Alpha Cloud Matrix."</p>
+                  </div>
+                )}
               </CardContent>
             </Card>
 
@@ -138,7 +158,7 @@ export default function SystemPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                      <div className="space-y-6">
                         <p className="text-muted-foreground leading-relaxed italic text-lg font-medium">
-                          "The ultimate predator fallback. Encrypts and archives strike logic, evidence, and Alpha models into a sovereign core."
+                          "The ultimate predator fallback. Encrypts and archives strike logic, local AI models, and evidence into a sovereign core."
                         </p>
                         <div className="flex gap-6">
                            <div className="flex-1 p-6 rounded-[2rem] bg-black border border-white/5 shadow-inner">
@@ -176,8 +196,8 @@ export default function SystemPage() {
               </CardHeader>
               <CardContent className="p-8 space-y-6">
                 {[
-                  { event: "Alpha Node re-synced", time: "2m ago", type: "success" },
-                  { event: "Shadow Node #42 active", time: "1h ago", type: "success" },
+                  { event: "Local AI Harvester Active", time: "Just now", type: "success" },
+                  { event: `${awareness?.discoveredAI?.length || 0} local brains bound`, time: "2m ago", type: "success" },
                   { event: "Ark archive validated", time: "5h ago", type: "success" },
                   { event: "Unknown access attempt crushed", time: "12h ago", type: "critical" }
                 ].map((log, i) => (
@@ -193,9 +213,6 @@ export default function SystemPage() {
                     </div>
                   </div>
                 ))}
-                <Button variant="ghost" className="w-full mt-6 text-[10px] uppercase font-bold tracking-[0.4em] text-red-500 hover:bg-red-600/10 rounded-2xl h-14">
-                  Full Audit Log Strike
-                </Button>
               </CardContent>
             </Card>
 
