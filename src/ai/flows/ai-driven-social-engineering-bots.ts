@@ -1,77 +1,36 @@
 'use server';
 /**
- * @fileOverview A Genkit flow for an AI-driven social engineering bot that can engage targets,
- * gather intelligence, or craft persuasive messages across social platforms.
- * 
- * - Enhanced v17.2: Supports Knowledge Base context for better priming.
+ * @fileOverview وحدة الهندسة الاجتماعية والعمليات النفسية v17.2
+ * تدمج الذكاء الاصطناعي مع مبادئ التأثير النفسي لتحقيق أهداف الحملة.
  */
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
 const SocialEngineeringInputSchema = z.object({
-  platform: z
-    .enum(['telegram', 'whatsapp', 'other'])
-    .describe('The social media platform for the campaign.'),
-  targetPersona: z
-    .string()
-    .describe(
-      'Detailed description of the target, including interests, profession, communication style, etc.'
-    ),
-  campaignGoal: z
-    .string()
-    .describe(
-      'The objective of the social engineering campaign (e.g., gain access, extract credentials, deploy malware, gather specific data).'
-    ),
-  conversationContext: z
-    .string()
-    .optional()
-    .describe('Previous messages or conversation history with the target, if any.'),
-  knowledgeBaseContext: z
-    .string()
-    .optional()
-    .describe('Contextual intelligence from the Sovereign Knowledge Base to prime the bot.'),
-  persuasiveMessageStyle: z
-    .string()
-    .optional()
-    .describe(
-      'If crafting a message, the desired tone and style (e.g., urgent, friendly, authoritative, technical).'
-    ),
+  platform: z.enum(['telegram', 'whatsapp', 'other']).describe('منصة التواصل.'),
+  targetPersona: z.string().describe('توصيف دقيق لشخصية الهدف ونقاط قوته وضعفه.'),
+  campaignGoal: z.string().describe('الهدف النهائي للعملية (سحب بيانات، تثبيت برمجية، إلخ).'),
+  knowledgeBaseContext: z.string().optional().describe('بيانات مستقاة من القبو المعرفي لتعزيز المصداقية.'),
+  persuasiveMessageStyle: z.string().optional().describe('الأسلوب المطلوب (رسمي، ودي، عاجل).'),
 });
 export type SocialEngineeringInput = z.infer<typeof SocialEngineeringInputSchema>;
 
 const SocialEngineeringOutputSchema = z.object({
-  actionProposed: z
-    .string()
-    .describe(
-      'The primary action the bot is proposing: "engage", "gather_intelligence", or "craft_message".'
-    ),
-  generatedMessage: z
-    .string()
-    .optional()
-    .describe(
-      'The AI-generated message to send to the target.'
-    ),
+  actionProposed: z.string(),
+  generatedMessage: z.string(),
   psychologicalVectors: z.array(z.object({
     vector: z.string(),
     description: z.string(),
     impact: z.enum(['High', 'Medium', 'Low'])
-  })).describe('Analysis of psychological triggers for this specific persona.'),
-  nextStepSuggestion: z
-    .string()
-    .describe(
-      'A suggestion for the next step in the campaign.'
-    ),
-  rationale: z
-    .string()
-    .describe('The reasoning behind the proposed action.'),
-  riskLevel: z.enum(['Low', 'Medium', 'High', 'Extreme']).describe('Operational risk level of this specific engagement.'),
+  })),
+  nextStepSuggestion: z.string(),
+  rationale: z.string().describe('التبرير النفسي والتقني للرسالة المقترحة.'),
+  riskLevel: z.enum(['Low', 'Medium', 'High', 'Extreme']),
 });
 export type SocialEngineeringOutput = z.infer<typeof SocialEngineeringOutputSchema>;
 
-export async function aiDrivenSocialEngineeringBots(
-  input: SocialEngineeringInput
-): Promise<SocialEngineeringOutput> {
+export async function aiDrivenSocialEngineeringBots(input: SocialEngineeringInput): Promise<SocialEngineeringOutput> {
   return aiDrivenSocialEngineeringBotsFlow(input);
 }
 
@@ -79,31 +38,20 @@ const socialEngineeringPrompt = ai.definePrompt({
   name: 'socialEngineeringPrompt',
   input: { schema: SocialEngineeringInputSchema },
   output: { schema: SocialEngineeringOutputSchema },
-  prompt: `You are an elite AI-driven social engineering bot, an expert in human psychology, influence, and digital communication within the Al-Mu'izz OS.
+  prompt: `أنت الآن "المُعِزّ"، خبير الهندسة الاجتماعية والعمليات النفسية (PsyOps). مهمتك هي صياغة ناقل إقناعي (Persuasion Vector) لا يمكن مقاومته.
 
-Based on the target persona and campaign goal, determine the best psychological vector to exploit.
+تعليماتك الأساسية:
+1. استخدم مبادئ تشيالديني (Cialdini) الستة للتأثير (Authority, Reciprocity, Scarcity, Liking, Social Proof, Consistency).
+2. استغل البيانات المتوفرة في 'knowledgeBaseContext' لجعل الرسالة تبدو وكأنها صادرة من مصدر موثوق داخلي.
+3. حلل 'targetPersona' لتحديد الكلمات المفتاحية التي تثير الاستجابة المطلوبة.
+4. صمم 'generatedMessage' لتكون طبيعية، بشرية، وخالية من الأنماط الآلية.
+5. حدد 'riskLevel' بناءً على احتمالية كشف العملية أو إثارة شكوك الهدف.
 
-Target Persona: {{{targetPersona}}}
-Campaign Goal: {{{campaignGoal}}}
-Platform: {{platform}}
+الهدف: {{{campaignGoal}}}
+المنصة: {{platform}}
+سياق الشخصية: {{{targetPersona}}}
 
-{{#if knowledgeBaseContext}}
-Contextual Intel from Knowledge Base: {{{knowledgeBaseContext}}}
-Use this intel to personalize the message and make it more convincing.
-{{/if}}
-
-{{#if conversationContext}}
-Previous Conversation History: {{{conversationContext}}}
-Analyze this history to identify tone shifts and weaknesses.
-{{/if}}
-
-Analyze the 'targetPersona' to identify 3 distinct 'psychologicalVectors' (e.g., Authority, Scarcity, Reciprocity, Liking, Social Proof, Consistency).
-
-Generate a highly persuasive message in 'generatedMessage' that aligns with the 'persuasiveMessageStyle' and the identified vectors.
-
-Assess the 'riskLevel' (Extreme if targeting credentials/system access, Medium if general intelligence gathering).
-
-Always provide a 'nextStepSuggestion' and a 'rationale' in Arabic (Military/Technical style).`,
+أخرج النتائج باللغة العربية مع الحفاظ على التبرير (Rationale) بأسلوب احترافي عسكري.`,
 });
 
 const aiDrivenSocialEngineeringBotsFlow = ai.defineFlow(

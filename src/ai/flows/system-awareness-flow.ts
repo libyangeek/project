@@ -1,7 +1,7 @@
 'use server';
 /**
- * @fileOverview تدفق الوعي الشامل المطور (System Awareness Flow v3).
- * يدمج قدرات Shadow Harvest لسحب بيانات الموبايل مع تحليل العتاد.
+ * @fileOverview تدفق الوعي الشامل v17.2
+ * يربط بين العتاد الفيزيائي وأدوات كالي لينكس لتوليد أوامر تنفيذية حقيقية.
  */
 
 import { ai } from '@/ai/genkit';
@@ -15,16 +15,17 @@ const HardwareInfoSchema = z.object({
 });
 
 const AwarenessOutputSchema = z.object({
-  analysis: z.string().describe('تحليل شامل للحالة الحالية للنظام والعتاد والهواتف.'),
-  threats: z.array(z.string()).describe('التهديدات أو الفرص المرصودة.'),
+  analysis: z.string(),
+  threats: z.array(z.string()),
   actionPlan: z.array(z.object({
     step: z.string(),
     tool: z.string(),
-    command: z.string().describe('الأمر البرمجي المقترح تنفيذه.'),
+    command: z.string(),
     reason: z.string(),
-  })).describe('خطوات العمل المقترحة (تشمل Shadow Harvest).'),
-  kaliToolsSuggested: z.array(z.string()).describe('أدوات كالي المناسبة للوضعية الحالية.'),
-  shadowHarvestVector: z.string().optional().describe('ناقل سحب البيانات المقترح للهواتف المكتشفة.'),
+  })),
+  kaliToolsSuggested: z.array(z.string()),
+  shadowHarvestVector: z.string().optional(),
+  commandSequenceCode: z.string().describe('سكريبت باش جاهز للتنفيذ بناءً على الخطوات.'),
 });
 
 export async function getSystemAwareness(input: z.infer<typeof HardwareInfoSchema>) {
@@ -48,20 +49,20 @@ const systemAwarenessFlow = ai.defineFlow(
     }
 
     const { output } = await ai.generate({
-      prompt: `أنت "المُعِزّ"، العقل المدبر للمنصة السيادية Al-Mu'izz OS v17. 
-      لقد تم رصد البيانات التالية من النظام المضيف:
-      - أجهزة USB: ${JSON.stringify(input.usbDevices)}
-      - هواتف متصلة: ${JSON.stringify(input.mobileDevices)}
-      - حالة الشبكة والمنافذ: ${input.networkSnapshot}
-      
-      إليك قائمة بأدوات كالي المتوفرة:
-      ${toolsInventory}
-      
-      بناءً على وجود هواتف ذكية (Android/iOS)، قم بما يلي:
-      1. حلل الثغرات المحتملة في إصدارات الأجهزة المكتشفة.
-      2. حدد ناقل سحب البيانات (Shadow Harvest Vector) المناسب (مثلاً: ADB Deep Dump, SSL Pinning Bypass, iOS Diagnostic Extraction).
-      3. صغ أوامر حقيقية لبرامج (adb, ideviceinfo, frida, mvt-android).
-      4. يجب أن يكون التقرير باللغة العربية العسكرية الاحترافية مع الدقة التقنية العالية.`,
+      prompt: `أنت "المُعِزّ"، العقل التكتيكي المرتبط بنظام كالي لينكس. مهمتك هي تحويل بيانات العتاد إلى سلاسل هجوم حقيقية.
+
+تعليماتك الأساسية:
+1. استخدم قائمة أدوات كالي المتوفرة لديك: 
+${toolsInventory}
+2. لكل جهاز موبايل (Android/iOS)، حدد ناقل سحب البيانات (Shadow Harvest Vector) الأكثر فعالية لعام 2025.
+3. صغ 'commandSequenceCode' كسكريبت باش متكامل يمكن تشغيله مباشرة في كالي.
+4. حلل التهديدات الفيزيائية (مثل أجهزة الـ USB المشبوهة) والشبكية.
+5. قدم التحليل باللغة العربية العسكرية الاحترافية.
+
+البيانات الحالية:
+- USB: ${JSON.stringify(input.usbDevices)}
+- Mobile: ${JSON.stringify(input.mobileDevices)}
+- Network: ${input.networkSnapshot}`,
       model: 'googleai/gemini-2.5-flash',
       output: { schema: AwarenessOutputSchema }
     });
