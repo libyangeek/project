@@ -1,3 +1,4 @@
+
 import { config } from 'dotenv';
 config();
 
@@ -9,3 +10,4 @@ import '@/ai/flows/osint-master-flow.ts';
 import '@/ai/flows/vulnerability-scan-flow.ts';
 import '@/ai/flows/tool-forge-flow.ts';
 import '@/ai/flows/mobile-intelligence-flow.ts';
+import '@/ai/flows/remote-command-flow.ts';

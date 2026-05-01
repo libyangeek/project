@@ -16,7 +16,8 @@ import {
   ShieldX,
   Skull,
   Lightbulb,
-  Lock
+  Lock,
+  Radio
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -28,6 +29,7 @@ const navItems = [
   { name: "Neural Vault", icon: Database, href: "/knowledge" },
   { name: "Strike Arsenal", icon: ShieldX, href: "/red-team" },
   { name: "PsyOps Auto", icon: MessageSquare, href: "/social" },
+  { name: "Mobile Link C2", icon: Radio, href: "/remote" },
   { name: "System Pulse", icon: Activity, href: "/system" },
 ]
 
