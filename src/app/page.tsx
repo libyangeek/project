@@ -17,7 +17,8 @@ import {
   Search,
   Database,
   ShieldX,
-  Radio
+  Radio,
+  CpuIcon
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -134,9 +135,9 @@ export default function DashboardPage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {[
-                    { text: "CVE-2025-4664 patched on internal nodes", type: "patch" },
-                    { text: "Shadow Agent #14 established persistence", type: "success" },
-                    { text: "OSINT Probe: 4.2M records indexed in Vault", type: "info" }
+                    { text: "Decision Engine: whiterabbit-neo-v3 deployed", type: "success" },
+                    { text: "BridgeLink: External inference channel active", type: "info" },
+                    { text: "Noah's Ark: Auto-snapshot scheduled (04:00)", type: "patch" }
                   ].map((note, i) => (
                     <div key={i} className="flex gap-3 text-sm border-b border-white/5 pb-3 last:border-0 last:pb-0 group">
                       <div className="size-2 mt-1.5 rounded-full bg-primary shrink-0 group-hover:animate-ping" />
@@ -236,15 +237,14 @@ export default function DashboardPage() {
                   {`{
   "os": "Al-Mu'izz Sovereign",
   "version": "17.0.0-GOLDEN",
-  "kernel": "X-99-Neural",
-  "status": "SUPREME",
   "modules": [
-    "HexStrike_v2",
-    "ChromSploit_v3",
-    "Shadow_C2",
-    "DeepEye_AI"
+    "DecisionEngine_v1",
+    "BridgeLink_AI",
+    "NetSight_v2",
+    "USB_ArmyKnife"
   ],
-  "enc": "AES-8192-Quantum"
+  "enc": "AES-8192-Quantum",
+  "status": "SUPREME"
 }`}
                 </div>
                 <Button className="w-full mt-4 bg-white/5 border border-white/10 hover:bg-white/10 text-[10px] font-bold h-8 tracking-widest" asChild>
