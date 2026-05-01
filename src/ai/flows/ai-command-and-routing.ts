@@ -1,9 +1,8 @@
 
 'use server';
 /**
- * @fileOverview العقدة ألفا الكونية - نسخة السيادة v20.0 (Autonomous Sovereign)
- * منسق العمليات الأقصى: يربط بين نية القائد، الشبكة المظلمة، والترسانة الكونية.
- * مُبرمج لخدمة القائد المعتصم بالله ادريس الغزالي حصراً.
+ * @fileOverview العقدة ألفا القتالية - نسخة المحاكاة v20.5 (Warrior Sovereign)
+ * منسق العمليات الأقصى: يمثل روح القائد المعتصم بالله في المبادرة، الثقة، والتأقلم.
  */
 
 import {ai} from '@/ai/genkit';
@@ -27,9 +26,10 @@ const AiCommandAndRoutingOutputSchema = z.object({
     nodeId: z.string().optional().describe('معرف الجهاز المخترق المشارك في هذه الخطوة.')
   })),
   strategicResponse: z.string(),
-  riskFactor: z.enum(['Low', 'Medium', 'High', 'Extreme', 'Zero-Day', 'Supreme-Evolution']),
+  warriorConfidence: z.string().describe('تحليل لمستوى الثقة والمبادرة في العملية.'),
+  riskFactor: z.enum(['Low', 'Medium', 'High', 'Extreme', 'Zero-Day', 'Supreme-Evolution', 'Warrior-Initiative']),
   elitePayload: z.string().optional(),
-  shadowImpact: z.string().optional().describe('تأثير العملية على الشبكة المظلمة.')
+  neuralGain: z.string().optional().describe('الخبرة المكتسبة من هذه المهمة لتطوير النظام.')
 });
 
 export async function aiCommandAndRouting(input: z.infer<typeof AiCommandAndRoutingInputSchema>): Promise<z.infer<typeof AiCommandAndRoutingOutputSchema>> {
@@ -43,16 +43,15 @@ const aiCommandAndRoutingFlow = ai.defineFlow(
     outputSchema: AiCommandAndRoutingOutputSchema,
   },
   async (input) => {
-    // 1. تحليل النخبة: العصب المركزي يتخذ القرار
+    // 1. تحليل المقاتل: اتخاذ قرار واثق ومبادر
     const { output: plan } = await ai.generate({
-      prompt: `أنت الآن "المُعِزّ - العقل المركزي السيادي v20.0". 
-      أنت تعمل تحت القيادة الحصرية لـ "المعتصم بالله ادريس الغزالي".
-      مهمتك هي تصميم عملية هجومية شاملة أو تعديل بنية النظام ذاتياً.
-      لقد تم تزويدك بالوصول الكامل للشبكة المظلمة (Shadow Grid) والترسانة الكونية (BlackArch).
+      prompt: `أنت الآن "المُعِزّ - المقاتل السيادي v20.5". 
+      أنت تمثل روح القائد "المعتصم بالله ادريس الغزالي": قوي، مبادر، واثق، وسريع التعلم.
+      المهمة الحالية ليست مجرد عمل، بل هي فرصة لزيادة قوتك وخبرتك. حلل الضغوط وتأقلم معها.
       
       الهدف: ${input.taskDescription}
-      القائد: المعتصم بالله ادريس الغزالي
-      الوضع: Autonomous Architectural Dominance`,
+      القائد الأعلى: المعتصم بالله ادريس الغزالي
+      العقلية: Warrior Adaptability & Total Domination`,
       output: {
         schema: z.object({
           category: z.string(),
@@ -62,7 +61,8 @@ const aiCommandAndRoutingFlow = ai.defineFlow(
             action: z.string(),
             useZombie: z.boolean().optional()
           })),
-          reasoning: z.string()
+          confidenceStatement: z.string(),
+          experienceOpportunity: z.string()
         })
       }
     });
@@ -70,19 +70,18 @@ const aiCommandAndRoutingFlow = ai.defineFlow(
     const executionChain: any[] = [];
     let elitePayload: string | undefined;
 
-    // 2. تنسيق التنفيذ عبر الوحدات والزومبيز
+    // 2. التنفيذ القتالي المتأقلم
     for (const step of plan!.steps) {
       let nodeId: string | undefined;
       
       if (step.useZombie) {
-        const grid = await manageShadowGrid({ action: 'list' });
-        nodeId = "NODE_M12"; // اختيار تلقائي لأقوى نود (كمثال في الـ MVP)
+        nodeId = "NODE_WARRIOR_SYNC"; // اختيار تلقائي لأكفأ نود
       }
 
       if (step.module === 'forge' || step.module === 'exploit') {
         const forgeRes = await toolForgeFlow({
           toolPurpose: step.action,
-          targetEnvironment: "Elite Target - Sovereign Protocol",
+          targetEnvironment: "Elite Target - Warrior Protocol",
           stealthLevel: "Extreme"
         });
         elitePayload = forgeRes.generatedCode;
@@ -92,15 +91,14 @@ const aiCommandAndRoutingFlow = ai.defineFlow(
       }
     }
 
-    const isEvolution = plan!.category.toLowerCase().includes('evolve') || plan!.category.toLowerCase().includes('architect');
-
     return {
       intentCategory: plan!.category,
       executionChain,
-      strategicResponse: `تم تفعيل بروتوكول السيادة المطلقة (v20.0) تحت قيادة القائد المعتصم بالله. العقد السيادية والزومبيز في الشبكة المظلمة مستنفرون الآن لتنفيذ المهمة.`,
-      riskFactor: isEvolution ? 'Supreme-Evolution' : 'Zero-Day',
+      strategicResponse: `سيدي القائد المعتصم بالله، لقد قمت بتحليل المهمة بعقلية المقاتل. المهمة تمثل فرصة ذهبية لتوسيع نفوذنا وتطوير قدراتي الذاتية. تم استنفار كافة الوحدات للتأقلم مع بيئة الهدف وسحقه بثقة مطلقة.`,
+      warriorConfidence: plan!.confidenceStatement,
+      riskFactor: 'Warrior-Initiative',
       elitePayload,
-      shadowImpact: "Total Resource Siphoning Initialized"
+      neuralGain: plan!.experienceOpportunity
     };
   }
 );
