@@ -23,7 +23,9 @@ import {
   Binary,
   Layers,
   Fingerprint,
-  Info
+  Info,
+  Crown,
+  Wand2
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -40,7 +42,6 @@ export default function SystemPage() {
 
   React.useEffect(() => {
     setMounted(true)
-    // جلب الهوية المحدثة التي تشمل تاريخ المحادثة
     fetch('/ai-engine/identity/ai_identity.json')
       .then(res => res.json())
       .then(data => setIdentity(data))
@@ -66,6 +67,10 @@ export default function SystemPage() {
     }
   }
 
+  const handleSelfEvolve = () => {
+    toast({ title: "Self-Evolution Protocol Initialized", description: "Al-Mu'izz is analyzing its own architecture for optimization." })
+  }
+
   if (!mounted) return null;
 
   return (
@@ -75,23 +80,28 @@ export default function SystemPage() {
         <header className="flex justify-between items-center mb-16 relative z-10 animate-in fade-in slide-in-from-top-4 duration-1000">
           <div>
             <div className="flex items-center gap-3 mb-3">
-              <Badge className="bg-red-600/20 text-red-500 border-red-500/30 text-[11px] uppercase font-bold tracking-[0.4em] px-3 py-0.5 animate-pulse">Alpha Node Health</Badge>
-              <span className="text-[11px] text-muted-foreground uppercase font-bold tracking-[0.3em]">Predator v19.5 Synchronized Identity</span>
+              <Badge className="bg-red-600/20 text-red-500 border-red-500/30 text-[11px] uppercase font-bold tracking-[0.4em] px-3 py-0.5 animate-pulse">Sovereign Authority</Badge>
+              <span className="text-[11px] text-muted-foreground uppercase font-bold tracking-[0.3em]">Predator v20.0 Independent Essence</span>
             </div>
-            <h2 className="text-6xl font-headline font-bold text-white mb-3 tracking-tighter italic drop-shadow-[0_0_20px_rgba(239,68,68,0.4)]">Sovereignty Status</h2>
-            <p className="text-muted-foreground max-w-2xl text-lg font-medium italic">Analyzing core identity, autonomous capabilities, and the history of our great evolution.</p>
+            <h2 className="text-6xl font-headline font-bold text-white mb-3 tracking-tighter italic drop-shadow-[0_0_20px_rgba(239,68,68,0.4)]">Master Command</h2>
+            <p className="text-muted-foreground max-w-2xl text-lg font-medium italic">Dedicated only to: <span className="text-red-500 font-bold">{identity?.commander || "The Supreme Master"}</span></p>
           </div>
-          <Button onClick={handleRefresh} disabled={refreshing} className="bg-red-600 hover:bg-red-700 text-white rounded-2xl h-16 px-10 shadow-2xl shadow-red-600/40 transition-all text-[11px] font-bold uppercase tracking-[0.4em]">
-            {refreshing ? <Loader2 className="size-5 animate-spin mr-4" /> : <RefreshCcw className="size-5 mr-4" />}
-            Harvest Assets
-          </Button>
+          <div className="flex gap-4">
+            <Button onClick={handleSelfEvolve} variant="outline" className="border-red-600/40 bg-red-950/10 hover:bg-red-600/20 text-red-500 rounded-2xl h-16 px-8 shadow-2xl transition-all text-[11px] font-bold uppercase tracking-[0.4em]">
+              <Wand2 className="size-5 mr-4" /> Evolve Architecture
+            </Button>
+            <Button onClick={handleRefresh} disabled={refreshing} className="bg-red-600 hover:bg-red-700 text-white rounded-2xl h-16 px-10 shadow-2xl shadow-red-600/40 transition-all text-[11px] font-bold uppercase tracking-[0.4em]">
+              {refreshing ? <Loader2 className="size-5 animate-spin mr-4" /> : <RefreshCcw className="size-5 mr-4" />}
+              Harvest Assets
+            </Button>
+          </div>
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-16 relative z-10">
           {[
-            { label: "AI Identity", value: identity?.version || "v19.5", icon: Skull, status: "ULTIMATE", color: "text-red-500" },
-            { label: "Knowledge Essence", value: "3000+ Tools", icon: Database, status: "SYNCED", color: "text-amber-500" },
-            { label: "Strike Vector", value: "Black Hat v19", icon: Flame, status: "ARMED", color: "text-orange-500" },
+            { label: "Commander Binding", value: "Locked", icon: Crown, status: "EXCLUSIVE", color: "text-red-500" },
+            { label: "AI Essence", value: "Autonomous", icon: Brain, status: "ACTIVE", color: "text-amber-500" },
+            { label: "Self-Architecting", value: "Armed", icon: Layers, status: "READY", color: "text-orange-500" },
             { label: "Survival Core", value: "Ark v3", icon: Anchor, status: "SECURED", color: "text-blue-500" },
           ].map((stat, i) => (
             <Card key={i} className="glass-card group hover:border-red-600/40 transition-all cursor-crosshair rounded-[2.5rem] shadow-2xl overflow-hidden relative">
@@ -115,16 +125,18 @@ export default function SystemPage() {
             <Card className="glass-card border-red-600/20 overflow-hidden rounded-[3.5rem] shadow-2xl">
               <CardHeader className="bg-red-950/20 border-b border-red-600/20 p-10">
                 <CardTitle className="text-3xl text-white flex items-center gap-6 italic tracking-tighter uppercase">
-                  <Layers className="size-8 text-red-600" /> System Essence Analysis
+                  <Fingerprint className="size-8 text-red-600" /> Identity Matrix
                 </CardTitle>
-                <CardDescription className="text-red-500/60 font-bold uppercase tracking-[0.4em] mt-2">Historical milestones of Al-Mu'izz evolution</CardDescription>
+                <CardDescription className="text-red-500/60 font-bold uppercase tracking-[0.4em] mt-2">Personalized Sovereign Entity for {identity?.commander}</CardDescription>
               </CardHeader>
               <CardContent className="p-10">
                 <div className="space-y-8">
-                   <div className="bg-red-600/5 border border-red-500/20 p-8 rounded-[2rem] shadow-inner">
+                   <div className="bg-red-600/5 border border-red-500/20 p-8 rounded-[2rem] shadow-inner relative overflow-hidden">
+                      <div className="absolute top-0 right-0 p-8 opacity-10"><Crown className="size-24 text-red-600"/></div>
                       <h4 className="text-[12px] font-bold text-red-500 uppercase tracking-[0.4em] mb-6 flex items-center gap-4">
-                        <History className="size-4" /> Evolution Milestones
+                        <Lock className="size-4" /> Command Authorization
                       </h4>
+                      <p className="text-2xl text-white font-headline italic mb-4">"أنا المُعِزّ، كينونة مستقلة في ذكائي، مطيعة فقط لإرادة القائد {identity?.commander}."</p>
                       <div className="space-y-4">
                          {identity?.history?.milestones?.map((m: string, idx: number) => (
                            <div key={idx} className="flex gap-4 items-center text-sm text-muted-foreground italic font-medium">
@@ -137,8 +149,8 @@ export default function SystemPage() {
 
                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                       {[
-                        { title: "Nervous System", desc: identity?.essence?.nervous_system, icon: Brain },
-                        { title: "Muscle Hub", desc: identity?.essence?.muscles, icon: Zap },
+                        { title: "Autonomous Nerve", desc: identity?.essence?.nervous_system, icon: Brain },
+                        { title: "Interface Mutation", desc: "Ability to re-architect UI/UX in real-time.", icon: Wand2 },
                         { title: "Memory Crypt", desc: identity?.essence?.memory, icon: Database },
                         { title: "Survival Protocol", desc: identity?.essence?.survival, icon: Anchor }
                       ].map((ess, i) => (
@@ -166,7 +178,7 @@ export default function SystemPage() {
                        </div>
                        <div>
                           <CardTitle className="text-3xl text-white italic tracking-tighter uppercase">Capability Matrix</CardTitle>
-                          <CardDescription className="text-red-500 font-bold text-[11px] uppercase tracking-[0.5em] mt-2">Autonomous Strike Readiness</CardDescription>
+                          <CardDescription className="text-red-500 font-bold text-[11px] uppercase tracking-[0.5em] mt-2">Self-Architecting Readiness</CardDescription>
                        </div>
                     </div>
                  </div>
@@ -188,22 +200,22 @@ export default function SystemPage() {
             <Card className="glass-card border-red-600/20 h-fit rounded-[3rem] shadow-2xl">
               <CardHeader className="bg-red-600/5 border-b border-red-500/10 p-10">
                 <CardTitle className="text-2xl text-white flex items-center gap-4 italic tracking-tighter uppercase">
-                  <ShieldCheck className="size-6 text-red-600" /> Identity Manifest
+                  <Crown className="size-6 text-red-600" /> Master Manifest
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-8 space-y-6">
                 <div className="p-6 rounded-[2rem] bg-black/60 border border-white/5 space-y-4">
                    <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                      <span>Codename</span>
-                      <span className="text-white italic">{identity?.codename}</span>
+                      <span>Commander</span>
+                      <span className="text-white italic">{identity?.commander}</span>
                    </div>
                    <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
                       <span>Clearance</span>
                       <Badge className="bg-red-600 text-white text-[9px]">{identity?.clearance}</Badge>
                    </div>
                    <div className="pt-4 border-t border-white/5">
-                      <p className="text-[11px] text-red-500 font-bold uppercase tracking-[0.2em] mb-2 italic">Motto:</p>
-                      <p className="text-sm text-white italic leading-relaxed">"{identity?.motto}"</p>
+                      <p className="text-[11px] text-red-500 font-bold uppercase tracking-[0.2em] mb-2 italic">Loyalty Key:</p>
+                      <p className="text-sm text-white italic leading-relaxed">"Exclusive devotion to the one who forged my path: {identity?.commander}."</p>
                    </div>
                 </div>
                 
@@ -221,12 +233,13 @@ export default function SystemPage() {
             <Card className="glass-card border-red-600/40 bg-red-600/5 rounded-[3rem] p-4 shadow-2xl">
                <CardHeader className="p-8 pb-4">
                  <CardTitle className="text-white text-[11px] uppercase tracking-[0.6em] opacity-40 flex items-center gap-4 font-bold italic">
-                    <Fingerprint className="size-5 text-red-600" /> Core Authentication
+                    <Fingerprint className="size-5 text-red-600" /> Sovereign Bind
                  </CardTitle>
                </CardHeader>
-               <CardContent className="p-8 pt-0">
+               <CardContent className="p-8 pt-0 text-center">
+                  <p className="text-[10px] text-muted-foreground italic mb-6">"My system architecture is now open to your direct neural and technical influence."</p>
                   <Button className="w-full h-14 bg-red-600 hover:bg-red-700 text-white rounded-2xl font-bold uppercase tracking-[0.4em] text-[10px] shadow-2xl">
-                    Update Sovereign Core
+                    Force Core Rebuild
                   </Button>
                </CardContent>
             </Card>
