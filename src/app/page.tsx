@@ -18,7 +18,8 @@ import {
   Radio,
   Flame,
   Fingerprint,
-  Smartphone
+  Smartphone,
+  Anchor
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -46,19 +47,19 @@ export default function DashboardPage() {
         <header className="flex justify-between items-start mb-12 relative z-10 animate-in fade-in slide-in-from-top-4 duration-1000">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <Badge className="bg-red-600 text-white border-red-500/50 text-[10px] px-3 py-0.5 animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.5)] uppercase tracking-[0.2em]">Alpha Node ARMED</Badge>
-              <span className="text-[10px] text-red-500/70 uppercase font-bold tracking-[0.4em]">Al-Mu'izz Neural Strike // Predator v18.0</span>
+              <Badge className="bg-red-600 text-white border-red-500/50 text-[10px] px-3 py-0.5 animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.5)] uppercase tracking-[0.2em]">Universal Predator v18.8 ARMED</Badge>
+              <span className="text-[10px] text-red-500/70 uppercase font-bold tracking-[0.4em]">Al-Mu'izz Neural Strike // Sovereign Alpha Node</span>
             </div>
             <h2 className="text-6xl font-headline font-bold text-white mb-2 tracking-tighter italic drop-shadow-[0_0_20px_rgba(239,68,68,0.4)]">
               Sovereign <span className="text-red-600">Predator</span> Hub
             </h2>
-            <p className="text-muted-foreground font-medium max-w-xl text-lg italic">"The Alpha Node is engaged. All modules (Forge, Recon, PsyOps) are linked for synchronized autonomous operations."</p>
+            <p className="text-muted-foreground font-medium max-w-xl text-lg italic">"The Universal Alpha Node is synchronized. Integrated with 2800+ BlackArch tools for absolute offensive dominance."</p>
           </div>
           <div className="flex gap-4">
-            <div className="text-right glass-card p-6 border-red-500/30 bg-red-950/10 min-w-[200px] shadow-2xl rounded-3xl relative overflow-hidden group">
+            <div className="text-right glass-card p-6 border-red-500/30 bg-red-950/10 min-w-[200px] shadow-2xl rounded-3xl relative overflow-hidden group neural-heartbeat">
               <div className="absolute inset-0 bg-red-600/5 animate-pulse" />
               <div className="text-3xl font-code text-red-500 font-bold flex items-center justify-end gap-3 relative z-10">
-                <Skull className="size-6 animate-bounce" /> SUPREME_7
+                <Skull className="size-6 animate-bounce" /> SUPREME_LEVEL_8
               </div>
               <div className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest relative z-10 mt-1">Sovereignty Status</div>
             </div>
@@ -67,10 +68,10 @@ export default function DashboardPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12 relative z-10">
           {[
-            { label: "Strike Capacity", value: "98.4%", icon: Flame, color: "text-red-500", glow: "shadow-red-500/20" },
-            { label: "Active Nodes", value: "Locked", icon: Cpu, color: "text-red-400", glow: "shadow-red-400/20" },
-            { label: "Neural Latency", value: "0.8 ms", icon: Activity, color: "text-emerald-500", glow: "shadow-emerald-500/20" },
-            { label: "Target Density", value: "High", icon: Crosshair, color: "text-orange-500", glow: "shadow-orange-500/20" },
+            { label: "Strike Capacity", value: "99.9%", icon: Flame, color: "text-red-500", glow: "shadow-red-500/20" },
+            { label: "BlackArch Sync", value: "2800+", icon: Cpu, color: "text-red-400", glow: "shadow-red-400/20" },
+            { label: "Neural Latency", value: "0.2 ms", icon: Activity, color: "text-emerald-500", glow: "shadow-emerald-500/20" },
+            { label: "Operational Load", value: "Optimal", icon: Anchor, color: "text-orange-500", glow: "shadow-orange-500/20" },
           ].map((stat, i) => (
             <Card key={i} className={cn("glass-card border-red-500/10 group hover:border-red-500/40 transition-all cursor-crosshair overflow-hidden", stat.glow)}>
                <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-20 transition-opacity">
@@ -96,11 +97,11 @@ export default function DashboardPage() {
                <CardHeader className="bg-red-950/20 border-b border-red-500/10 p-10 flex flex-row items-center justify-between">
                   <div>
                     <CardTitle className="text-4xl text-white italic tracking-tighter flex items-center gap-4">
-                      <Radio className="size-8 text-red-600 animate-pulse" /> Predator Strike Feed
+                      <Radio className="size-8 text-red-600 animate-pulse" /> Universal Strike Feed
                     </CardTitle>
-                    <CardDescription className="text-red-400/60 font-bold text-xs uppercase tracking-[0.5em] mt-2">Autonomous Multi-Node Orchestration</CardDescription>
+                    <CardDescription className="text-red-400/60 font-bold text-xs uppercase tracking-[0.5em] mt-2">v18.8 Multi-Vector Autonomous Execution</CardDescription>
                   </div>
-                  <Badge variant="outline" className="border-red-500/30 text-red-500 bg-red-600/5 px-6 py-3 font-code rounded-2xl">ENCODED_STREAM</Badge>
+                  <Badge variant="outline" className="border-red-500/30 text-red-500 bg-red-600/5 px-6 py-3 font-code rounded-2xl">ALPHA_ENCODED</Badge>
                </CardHeader>
                <CardContent className="p-0">
                   <div className="aspect-video bg-black/90 relative flex items-center justify-center group overflow-hidden">
@@ -112,65 +113,13 @@ export default function DashboardPage() {
                            ))}
                         </div>
                         <div className="flex flex-col items-center gap-3">
-                           <span className="text-3xl font-code text-red-600 font-bold tracking-[0.6em] animate-pulse drop-shadow-[0_0_10px_red]">STRIKE_CHAIN_SYNCED</span>
-                           <span className="text-[12px] text-muted-foreground uppercase font-bold tracking-[0.4em] italic">Orchestrating Global Vectors via Alpha Core...</span>
+                           <span className="text-3xl font-code text-red-600 font-bold tracking-[0.6em] animate-pulse drop-shadow-[0_0_10px_red]">UNIVERSAL_NODE_SYNCED</span>
+                           <span className="text-[12px] text-muted-foreground uppercase font-bold tracking-[0.4em] italic">Orchestrating 2800+ BlackArch Strike Vectors...</span>
                         </div>
                      </div>
                   </div>
                </CardContent>
             </Card>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-               <Card className="glass-card border-red-500/20 bg-red-600/5 rounded-[2.5rem]">
-                  <CardHeader className="p-8">
-                    <CardTitle className="text-2xl text-white flex items-center gap-4 italic tracking-tighter">
-                       <Zap className="size-6 text-red-600 animate-bounce" /> Predator Sequence
-                    </CardTitle>
-                    <CardDescription className="text-[11px] uppercase font-bold tracking-[0.4em] opacity-60">Autonomous Execution Chain</CardDescription>
-                  </CardHeader>
-                  <CardContent className="p-8 pt-0 space-y-5">
-                     {[
-                       { step: "Node Handshake", status: "Secure", info: "Alpha link validated via Qwen-3-Elite" },
-                       { step: "Target Ingestion", status: "Active", info: "Mapping 14.2M endpoints via NetSight" },
-                       { step: "Shadow Deployment", status: "Standby", info: "Awaiting forged vector from GitHub Intel" }
-                     ].map((item, i) => (
-                       <div key={i} className="p-5 rounded-3xl bg-black/60 border border-white/5 group hover:border-red-600/40 transition-all duration-500">
-                          <div className="flex justify-between items-center mb-2">
-                             <span className="text-sm font-bold text-white italic tracking-tighter">{item.step}</span>
-                             <Badge variant="outline" className="text-[9px] bg-red-600/10 text-red-500 border-red-500/30 px-3 py-0.5 rounded-lg">{item.status}</Badge>
-                          </div>
-                          <p className="text-[11px] text-muted-foreground italic leading-relaxed font-medium">"{item.info}"</p>
-                       </div>
-                     ))}
-                  </CardContent>
-               </Card>
-               <Card className="glass-card bg-red-950/5 border-red-500/10 rounded-[2.5rem]">
-                  <CardHeader className="p-8">
-                     <CardTitle className="text-2xl text-white flex items-center gap-4 italic tracking-tighter">
-                        <Activity className="size-6 text-red-500" /> Tactical Load
-                     </CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-8 pt-0 space-y-10">
-                     <div className="space-y-4">
-                        <div className="flex justify-between text-[11px] font-bold uppercase text-muted-foreground tracking-[0.4em]">
-                           <span>Neural Striker</span>
-                           <span className="text-red-500">98%</span>
-                        </div>
-                        <Progress value={98} className="h-2.5 bg-white/5 border border-white/5" />
-                     </div>
-                     <div className="space-y-4">
-                        <div className="flex justify-between text-[11px] font-bold uppercase text-muted-foreground tracking-[0.4em]">
-                           <span>Stealth Logic</span>
-                           <span className="text-emerald-500">OPTIMAL</span>
-                        </div>
-                        <Progress value={85} className="h-2.5 bg-white/5 border border-white/5" />
-                     </div>
-                     <div className="p-5 rounded-3xl bg-black/40 border border-red-500/10 text-xs text-muted-foreground italic leading-relaxed font-medium text-center">
-                        "System is currently utilizing 14 distributed strike nodes for maximum sovereignty."
-                     </div>
-                  </CardContent>
-               </Card>
-            </div>
           </div>
 
           <div className="space-y-8">
@@ -180,7 +129,7 @@ export default function DashboardPage() {
                 </div>
                 <CardHeader className="p-8">
                    <CardTitle className="text-2xl text-white flex items-center gap-4 uppercase tracking-[0.3em] italic font-bold">
-                      <Skull className="size-7 text-red-600" /> Engage
+                      <Skull className="size-7 text-red-600" /> Engage Alpha
                    </CardTitle>
                 </CardHeader>
                 <CardContent className="p-8 pt-0 space-y-5">
@@ -197,7 +146,7 @@ export default function DashboardPage() {
                       <Link href="/red-team" className="flex justify-between px-10 w-full">
                          <div className="flex items-center gap-4">
                             <ShieldX className="size-6 text-red-600 group-hover:rotate-12 transition-transform" />
-                            <span className="font-bold uppercase tracking-[0.2em] text-xs">The Arsenal</span>
+                            <span className="font-bold uppercase tracking-[0.2em] text-xs">BlackArch Arsenal</span>
                          </div>
                          <ArrowRight className="size-4" />
                       </Link>
@@ -210,64 +159,26 @@ export default function DashboardPage() {
                    <Crosshair className="size-56 text-red-600" />
                 </div>
                 <CardHeader className="p-8 pb-4">
-                   <CardTitle className="text-[12px] uppercase tracking-[0.5em] opacity-40 font-bold text-white">Strike Manifest</CardTitle>
+                   <CardTitle className="text-[12px] uppercase tracking-[0.5em] opacity-40 font-bold text-white">Neural Heartbeat</CardTitle>
                 </CardHeader>
                 <CardContent className="p-8 pt-0">
                    <div className="bg-black/90 rounded-[2rem] p-8 font-code text-[12px] text-red-400/90 leading-loose border border-red-500/20 shadow-inner relative z-10">
                       {`{
-  "mode": "PREDATOR_V18",
-  "orchestrator": "ALPHA_CORE",
-  "intel": "GITHUB_STRIKE",
-  "nodes": [
-    "Shadow_Forge",
-    "Deep_Recon",
-    "PsyOps",
-    "Mobile"
-  ],
-  "security": "FUD_ACTIVE"
+  "predator_version": "18.8.0",
+  "lexicon": "Kali + BlackArch",
+  "total_tools": 2854,
+  "node_status": "SYNCHRONIZED",
+  "heartbeat": "0.2ms",
+  "mode": "UNIVERSAL_STRIKE"
 }`}
                    </div>
                    <Button className="w-full mt-8 bg-red-600/10 border border-red-600/30 text-red-500 hover:bg-red-600/20 h-14 rounded-2xl font-bold uppercase tracking-[0.4em] text-[10px] relative z-10 transition-all">
-                      Sync Strike Nodes
+                      Sync Universal Node
                    </Button>
-                </CardContent>
-             </Card>
-
-             <Card className="glass-card border-red-500/20 bg-red-950/5 rounded-[2.5rem]">
-                <CardHeader className="p-8 pb-4">
-                   <CardTitle className="text-[12px] uppercase tracking-[0.4em] flex items-center gap-3 text-white">
-                      <Fingerprint className="size-4 text-red-500" /> Identity Matrix
-                   </CardTitle>
-                </CardHeader>
-                <CardContent className="p-8 pt-0">
-                   <p className="text-xs text-muted-foreground italic leading-relaxed font-medium">
-                      "السيادة ليست مجرد قوة، بل هي قدرة النظام على التخفي والضرب في آن واحد. العقل المحدث يتجاوز حدود البرمجيات التقليدية ليصبح مفترساً رقمياً."
-                   </p>
                 </CardContent>
              </Card>
           </div>
         </div>
-
-        <footer className="mt-16 pt-10 border-t border-red-600/20 flex flex-col md:flex-row justify-between items-center gap-10 opacity-50 hover:opacity-100 transition-opacity duration-700">
-           <div className="flex items-center gap-16">
-              <div className="flex items-center gap-4">
-                 <div className="size-4 rounded-full bg-red-600 animate-pulse shadow-[0_0_15px_#ef4444]" />
-                 <span className="text-sm font-bold text-white uppercase tracking-[0.5em] italic">System Status: PREDATOR_ACTIVE</span>
-              </div>
-              <div className="flex gap-10">
-                 {['DB_LINK', 'NET_SIGHT', 'ARK_VAULT', 'FORGE_SYNC'].map((s) => (
-                   <div key={s} className="flex items-center gap-3 text-[11px] font-bold text-muted-foreground uppercase tracking-[0.3em] group cursor-default">
-                      <ShieldCheck className="size-4 text-red-500 group-hover:scale-125 transition-transform" /> {s}
-                   </div>
-                 ))}
-              </div>
-           </div>
-           <div className="flex items-end gap-2 h-12">
-              {Array.from({ length: 60 }).map((_, i) => (
-                <div key={i} className="w-1.5 bg-red-600/40 rounded-full" style={{ height: `${20 + Math.random() * 80}%`, animation: `pulse 1.5s infinite ${i * 0.05}s` }} />
-              ))}
-           </div>
-        </footer>
       </main>
     </div>
   )
