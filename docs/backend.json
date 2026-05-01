@@ -4,7 +4,7 @@
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "Operation",
       "type": "object",
-      "description": "Represents a single execution or task performed by the Sovereign AI Platform, tracking its lifecycle, input parameters, and basic outcomes.",
+      "description": "Represents a single execution or task performed by the Sovereign AI Platform.",
       "properties": {
         "id": { "type": "string" },
         "userId": { "type": "string" },
@@ -23,7 +23,7 @@
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "Report",
       "type": "object",
-      "description": "Represents a generated report, summarizing findings, operations, or knowledge.",
+      "description": "Represents a generated report.",
       "properties": {
         "id": { "type": "string" },
         "userId": { "type": "string" },
@@ -39,7 +39,7 @@
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "KnowledgeItem",
       "type": "object",
-      "description": "Represents an individual piece of structured or unstructured knowledge ingested into the platform's Multi-KB RAG system.",
+      "description": "Represents an individual piece of knowledge.",
       "properties": {
         "id": { "type": "string" },
         "userId": { "type": "string" },
@@ -55,14 +55,33 @@
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "SystemIdentity",
       "type": "object",
-      "description": "Stores the core identity and self-awareness configuration of the Al-Mu'izz platform.",
+      "description": "Stores the core identity of Al-Mu'izz.",
       "properties": {
         "version": { "type": "string" },
         "codename": { "type": "string" },
+        "commander": { "type": "string" },
         "clearance": { "type": "string" },
         "capabilities": { "type": "object" },
         "lastRebirth": { "type": "string", "format": "date-time" }
       }
+    },
+    "ShadowSession": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ShadowSession",
+      "type": "object",
+      "description": "Represents a compromised device session and its available resources.",
+      "properties": {
+        "id": { "type": "string" },
+        "targetName": { "type": "string" },
+        "ipAddress": { "type": "string" },
+        "platform": { "type": "string" },
+        "status": { "type": "string", "enum": ["ACTIVE", "ZOMBIE", "HARVESTING", "LOST"] },
+        "cpuPower": { "type": "number", "description": "Ghz contribution" },
+        "ramAvailable": { "type": "number", "description": "MB contribution" },
+        "location": { "type": "string" },
+        "lastBeacon": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "targetName", "platform", "status"]
     }
   },
   "auth": {
@@ -84,7 +103,11 @@
       },
       {
         "path": "/system/core",
-        "definition": { "entityName": "SystemIdentity", "schema": { "$ref": "#/backend/entities/SystemIdentity" }, "description": "Global system identity and awareness." }
+        "definition": { "entityName": "SystemIdentity", "schema": { "$ref": "#/backend/entities/SystemIdentity" }, "description": "Global system identity." }
+      },
+      {
+        "path": "/users/{userId}/shadowSessions/{sessionId}",
+        "definition": { "entityName": "ShadowSession", "schema": { "$ref": "#/backend/entities/ShadowSession" }, "description": "Compromised device sessions." }
       }
     ]
   }
