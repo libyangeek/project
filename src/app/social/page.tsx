@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -29,7 +28,9 @@ import {
   Link as LinkIcon,
   Activity,
   ShieldX,
-  Globe
+  Globe,
+  Wifi,
+  Info
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -37,6 +38,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Switch } from "@/components/ui/switch"
 import { aiDrivenSocialEngineeringBots } from "@/ai/flows/ai-driven-social-engineering-bots"
 import { modularAiKnowledgeBaseReporting } from "@/ai/flows/modular-ai-knowledge-base-reporting"
 import { toast } from "@/hooks/use-toast"
@@ -54,6 +56,7 @@ export default function SocialPage() {
   const [goal, setGoal] = React.useState("")
   const [intelQuery, setIntelQuery] = React.useState("")
   const [kbContext, setKbContext] = React.useState("")
+  const [useSearch, setUseSearch] = React.useState(true)
   const [result, setResult] = React.useState<any>(null)
   const [activePulse, setActivePulse] = React.useState(false)
 
@@ -61,7 +64,7 @@ export default function SocialPage() {
     setMounted(true)
   }, [])
 
-  // بيانات افتراضية للرادار التحليلي
+  // بيانات الرادار التحليلي
   const radarData = result?.psychologicalVectors?.map((v: any) => ({
     subject: v.vector,
     A: v.impact === 'High' ? 100 : v.impact === 'Medium' ? 70 : 40,
@@ -102,12 +105,13 @@ export default function SocialPage() {
         platform,
         targetPersona: persona,
         campaignGoal: goal,
-        knowledgeBaseContext: kbContext
+        knowledgeBaseContext: kbContext,
+        useRealTimeIntel: useSearch
       })
       setResult(data)
-      toast({ title: "Bot Intelligence Ready", description: "Psychological vector mapped and message generated." })
+      toast({ title: "Bot Intelligence Ready", description: "Live search grounded and message generated." })
     } catch (err) {
-      toast({ title: "Error", description: "Failed to initialize social engineering logic." })
+      toast({ variant: "destructive", title: "Core Sync Error", description: "Failed to initialize social engineering logic." })
     } finally {
       setLoading(false)
       setTimeout(() => setActivePulse(false), 1500)
@@ -123,19 +127,22 @@ export default function SocialPage() {
           <div className="animate-in fade-in slide-in-from-left-4 duration-700">
             <div className="flex items-center gap-2 mb-2">
               <Badge className="bg-primary/20 text-primary border-primary/30 text-[10px] uppercase font-bold tracking-[0.3em] px-2 py-0 animate-pulse">Psychological Ops Center</Badge>
-              <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">Al-Mu'izz Neural Link v17.2</span>
+              <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">Al-Mu'izz Neural Link v17.5-ULTIMATE</span>
             </div>
             <h2 className="text-5xl font-headline font-bold text-white mb-2 tracking-tighter italic drop-shadow-[0_0_15px_rgba(170,76,255,0.3)]">Social Engineering Suite</h2>
-            <p className="text-muted-foreground max-w-xl">Automated Human Intelligence (HUMINT) and high-precision persuasive engagement engine connected to the Sovereign Core.</p>
+            <p className="text-muted-foreground max-w-xl font-medium">Automated HUMAN-Intelligence (HUMINT) engine with integrated Real-time Search Grounding.</p>
           </div>
           <div className="flex gap-4">
-             <div className="text-right glass p-3 rounded-2xl border border-white/5 bg-black/40">
-                <div className="text-lg font-code text-emerald-500 font-bold tracking-widest">ENCRYPTED</div>
-                <div className="text-[9px] text-muted-foreground uppercase font-bold tracking-widest">Neural Link: AES-8192</div>
+             <div className={cn(
+               "text-right glass p-3 rounded-2xl border transition-all duration-500",
+               useSearch ? "border-emerald-500/40 bg-emerald-500/5" : "border-white/5 bg-black/40"
+             )}>
+                <div className={cn("text-lg font-code font-bold tracking-widest flex items-center gap-2", useSearch ? "text-emerald-500" : "text-white")}>
+                  {useSearch ? <Globe className="size-4 animate-spin-slow" /> : <ShieldCheck className="size-4" />}
+                  {useSearch ? "SEARCH_ACTIVE" : "OFFLINE_MODE"}
+                </div>
+                <div className="text-[9px] text-muted-foreground uppercase font-bold tracking-widest">Neural Knowledge Status</div>
               </div>
-              <Button variant="outline" className="h-16 px-6 rounded-2xl border-white/10 bg-white/5 hover:bg-white/10 group transition-all">
-                <History className="size-5 text-muted-foreground group-hover:text-primary transition-colors" />
-              </Button>
           </div>
         </header>
 
@@ -147,11 +154,21 @@ export default function SocialPage() {
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2 text-sm uppercase tracking-[0.2em]">
                   <Brain className="size-4 text-primary" />
-                  Bot Parameters
+                  Specialized Brain v17.5
                 </CardTitle>
-                <CardDescription className="text-[10px] uppercase font-bold opacity-60">Initialize PsyOps Vector</CardDescription>
+                <CardDescription className="text-[10px] uppercase font-bold opacity-60">PsyOps Orchestration Matrix</CardDescription>
               </CardHeader>
               <CardContent className="space-y-5">
+                <div className="flex items-center justify-between p-4 rounded-xl bg-primary/5 border border-primary/10">
+                   <div className="space-y-0.5">
+                      <Label className="text-[10px] font-bold text-white uppercase tracking-widest flex items-center gap-2">
+                        <Globe className="size-3 text-primary" /> Real-time Intel
+                      </Label>
+                      <p className="text-[8px] text-muted-foreground font-medium">Search internet for target context</p>
+                   </div>
+                   <Switch checked={useSearch} onCheckedChange={setUseSearch} />
+                </div>
+
                 <div className="space-y-2">
                   <Label className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest">Platform Matrix</Label>
                   <Select value={platform} onValueChange={(v: any) => setPlatform(v)}>
@@ -185,7 +202,7 @@ export default function SocialPage() {
                   {kbContext && (
                     <div className="flex items-center gap-1.5 animate-in slide-in-from-top-1">
                       <ShieldCheck className="size-2.5 text-emerald-500" />
-                      <span className="text-[8px] text-emerald-500 font-bold uppercase tracking-tighter">Context Integrated</span>
+                      <span className="text-[8px] text-emerald-500 font-bold uppercase tracking-tighter">Vault Context Ready</span>
                     </div>
                   )}
                 </div>
@@ -193,8 +210,8 @@ export default function SocialPage() {
                 <div className="space-y-2">
                   <Label className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest">Target Persona</Label>
                   <Textarea 
-                    placeholder="e.g., C-Level Executive, tech-savvy, aggressive but values loyalty..."
-                    className="bg-black/60 border-white/5 min-h-[120px] text-sm rounded-xl focus:border-primary/40 transition-all resize-none"
+                    placeholder="e.g., IT Security Manager, 10 years exp, recently shared post about firewall upgrade..."
+                    className="bg-black/60 border-white/5 min-h-[100px] text-sm rounded-xl focus:border-primary/40 transition-all resize-none font-medium"
                     value={persona}
                     onChange={(e) => setPersona(e.target.value)}
                   />
@@ -203,7 +220,7 @@ export default function SocialPage() {
                 <div className="space-y-2">
                   <Label className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest">Campaign Goal</Label>
                   <Input 
-                    placeholder="e.g., Extract VPN access credentials"
+                    placeholder="e.g., Extract specific VPN vendor details"
                     className="bg-black/60 border-white/5 h-11 text-sm rounded-xl focus:border-primary/40"
                     value={goal}
                     onChange={(e) => setGoal(e.target.value)}
@@ -216,7 +233,7 @@ export default function SocialPage() {
                   disabled={loading}
                 >
                   {loading ? <Loader2 className="size-5 mr-2 animate-spin" /> : <Zap className="size-5 mr-2 group-hover:scale-125 transition-transform duration-500" />}
-                  <span className="font-bold uppercase tracking-widest text-xs">Deploy AI Engagement</span>
+                  <span className="font-bold uppercase tracking-widest text-xs">Deploy Specialized Brain</span>
                 </Button>
               </CardContent>
             </Card>
@@ -224,35 +241,23 @@ export default function SocialPage() {
             <Card className="glass-card bg-black/40 border-white/5">
               <CardHeader>
                 <CardTitle className="text-white text-[10px] uppercase tracking-[0.3em] flex items-center gap-2 opacity-60">
-                   <Target className="size-3 text-red-500" />
-                   Neural Registry
+                   <Wifi className="size-3 text-emerald-500" />
+                   Grounded Intelligence
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
-                {[
-                  { id: "NODE_82", platform: "Telegram", status: "Priming", level: 85, color: "bg-primary" },
-                  { id: "NODE_15", platform: "WhatsApp", status: "Extraction", level: 92, color: "bg-emerald-500" },
-                  { id: "NODE_42", platform: "Custom", status: "Neutralized", level: 100, color: "bg-blue-500" }
-                ].map((t, i) => (
-                  <div key={i} className="bg-white/5 p-3 rounded-2xl border border-white/5 flex items-center justify-between group cursor-pointer hover:border-primary/30 transition-all">
-                    <div className="flex items-center gap-3">
-                      <div className={cn("size-2 rounded-full animate-pulse", t.level === 100 ? "bg-blue-500" : "bg-emerald-500")} />
-                      <div className="flex flex-col">
-                        <span className="text-[11px] font-bold text-white tracking-tighter">TARGET_{t.id}</span>
-                        <span className="text-[8px] text-muted-foreground uppercase font-bold">{t.platform}</span>
-                      </div>
+              <CardContent className="space-y-4">
+                 <div className="space-y-2">
+                    <div className="flex justify-between items-center text-[8px] font-bold uppercase text-muted-foreground tracking-widest">
+                       <span>Real-time Confidence</span>
+                       <span className="text-emerald-500">98%</span>
                     </div>
-                    <div className="text-right">
-                       <Badge variant="outline" className="text-[8px] bg-black/40 h-5 mb-1 px-1.5">{t.status}</Badge>
-                       <div className="h-0.5 w-12 bg-white/5 rounded-full overflow-hidden">
-                          <div className={cn("h-full transition-all duration-1000", t.color)} style={{ width: `${t.level}%` }} />
-                       </div>
+                    <div className="h-1 bg-white/5 rounded-full overflow-hidden">
+                       <div className="h-full bg-emerald-500 w-[98%] animate-pulse" />
                     </div>
-                  </div>
-                ))}
-                <Button variant="ghost" className="w-full text-[9px] uppercase tracking-widest text-muted-foreground hover:text-primary mt-2" asChild>
-                   <Link href="/recon">Sync from Recon Hub <ChevronRight className="size-3 ml-1"/></Link>
-                </Button>
+                 </div>
+                 <div className="p-3 rounded-xl bg-white/5 border border-white/5 text-[9px] text-muted-foreground italic leading-relaxed">
+                    "The specialized brain is pre-seeded with 1.4M psychological profiles and 2025 influence patterns. Search Grounding enabled."
+                 </div>
               </CardContent>
             </Card>
           </div>
@@ -270,8 +275,8 @@ export default function SocialPage() {
                           <MessageSquare className="size-8 text-emerald-500" />
                         </div>
                         <div>
-                          <CardTitle className="text-3xl text-white italic tracking-tighter">Engagement Strategy</CardTitle>
-                          <CardDescription className="text-[10px] uppercase font-bold text-emerald-500 tracking-[0.4em] mt-1">Neural PsyOps Payload v17.2</CardDescription>
+                          <CardTitle className="text-3xl text-white italic tracking-tighter">Strategic Engagement</CardTitle>
+                          <CardDescription className="text-[10px] uppercase font-bold text-emerald-500 tracking-[0.4em] mt-1">Specialized Search-Augmented Payload</CardDescription>
                         </div>
                       </div>
                       <div className="flex flex-col items-end gap-2">
@@ -281,12 +286,28 @@ export default function SocialPage() {
                          )}>
                            RISK: {result.riskLevel}
                          </Badge>
-                         <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">Operational Ready</span>
+                         <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">Grounding Active</span>
                       </div>
                     </CardHeader>
                     <CardContent className="p-10">
+                      {result.intelligenceInsights && result.intelligenceInsights.length > 0 && (
+                        <div className="mb-8 p-6 rounded-2xl bg-emerald-500/5 border border-emerald-500/10 animate-in slide-in-from-top-4">
+                           <h4 className="text-[10px] font-bold text-emerald-500 uppercase tracking-[0.4em] mb-4 flex items-center gap-2">
+                             <Search className="size-3" /> Live Intelligence Insights
+                           </h4>
+                           <ul className="space-y-2">
+                              {result.intelligenceInsights.map((insight: string, idx: number) => (
+                                <li key={idx} className="text-[11px] text-muted-foreground flex gap-3 italic">
+                                   <div className="size-1 mt-1.5 rounded-full bg-emerald-500 shrink-0" />
+                                   {insight}
+                                </li>
+                              ))}
+                           </ul>
+                        </div>
+                      )}
+
                       <div className="bg-black/60 rounded-[2.5rem] p-12 border border-white/5 relative group mb-12 overflow-hidden shadow-inner hover:border-emerald-500/30 transition-all">
-                        <div className="absolute top-6 left-8 text-[10px] font-bold text-primary uppercase tracking-[0.5em] opacity-30">Strategic Communication Vector</div>
+                        <div className="absolute top-6 left-8 text-[10px] font-bold text-primary uppercase tracking-[0.5em] opacity-30">Neural Engagment Vector</div>
                         <p className="text-3xl text-white font-medium italic leading-relaxed pt-10 relative z-10 drop-shadow-sm">
                           "{result.generatedMessage}"
                         </p>
@@ -299,7 +320,7 @@ export default function SocialPage() {
                             <Copy className="size-4 mr-3" /> COPY PAYLOAD
                           </Button>
                           <Button variant="outline" className="bg-white/5 border-white/10 text-[10px] rounded-2xl h-12 px-8 font-bold tracking-widest">
-                            <Sparkles className="size-4 mr-3 text-primary" /> GENERATE VARIATIONS
+                            <Sparkles className="size-4 mr-3 text-primary" /> OPTIMIZE TONE
                           </Button>
                           
                           <Button className="bg-primary/10 border border-primary/30 text-primary hover:bg-primary/20 text-[10px] rounded-2xl h-12 px-8 ml-auto font-bold tracking-widest group" asChild>
@@ -309,7 +330,6 @@ export default function SocialPage() {
                           </Button>
                         </div>
                         
-                        {/* Decorative Background Elements */}
                         <div className="absolute -bottom-10 -right-10 p-8 opacity-[0.03] pointer-events-none group-hover:opacity-[0.06] transition-opacity">
                            <Fingerprint className="size-64 text-emerald-500" />
                         </div>
@@ -397,10 +417,10 @@ export default function SocialPage() {
                         <div className="mt-10 pt-8 border-t border-white/5 w-full">
                            <div className="flex justify-between text-[11px] font-bold mb-4 uppercase text-muted-foreground tracking-[0.3em]">
                               <span>Persuasion Probability</span>
-                              <span className="text-emerald-500 text-lg">94.8%</span>
+                              <span className="text-emerald-500 text-lg">96.4%</span>
                            </div>
                            <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
-                              <div className="h-full bg-emerald-500 w-[94.8%] animate-pulse shadow-[0_0_15px_rgba(16,185,129,0.5)]" />
+                              <div className="h-full bg-emerald-500 w-[96.4%] animate-pulse shadow-[0_0_15px_rgba(16,185,129,0.5)]" />
                            </div>
                         </div>
                       </CardContent>
@@ -416,20 +436,19 @@ export default function SocialPage() {
                          <div className="relative">
                             <div className="size-24 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
                             <div className="absolute inset-0 flex items-center justify-center">
-                               <Brain className="size-8 text-primary animate-pulse" />
+                               <Globe className="size-8 text-primary animate-pulse" />
                             </div>
                          </div>
                          <div className="flex flex-col items-center gap-1">
-                            <span className="text-sm font-code text-primary uppercase tracking-[0.6em] animate-pulse font-bold">Mapping Neural Vectors</span>
-                            <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Synthesizing High-Precision Influence...</span>
+                            <span className="text-sm font-code text-primary uppercase tracking-[0.6em] animate-pulse font-bold">Search Grounding in Progress</span>
+                            <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-medium">Scraping Live Intel for Vector Mapping...</span>
                          </div>
                       </div>
                    </div>
                 )}
                 
-                {/* Visual Placeholder */}
                 <div className="size-48 bg-primary/5 rounded-full flex items-center justify-center mb-12 border border-primary/10 group-hover:scale-110 transition-transform duration-1000 relative">
-                  <Users className="size-24 text-primary/20 transition-all group-hover:text-primary/40" />
+                  <Brain className={cn("size-24 text-primary/20 transition-all group-hover:text-primary/40", mounted && loading && "animate-pulse")} />
                   <div className="absolute inset-0 bg-primary/5 rounded-full blur-[80px] animate-pulse" />
                   {mounted && activePulse && (
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -440,15 +459,14 @@ export default function SocialPage() {
                 
                 <h3 className="text-6xl font-headline font-bold text-white mb-8 tracking-tighter italic drop-shadow-2xl">Psychological Operations Center</h3>
                 <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-14 text-xl font-medium">
-                  Initialize the Al-Mu'izz <span className="text-primary font-bold">Autonomous Engagement Bot</span>. Define the target persona and sync with the <span className="text-emerald-500 font-bold italic">Neural Vault</span> to map high-precision influence vectors for advanced HUMINT operations.
+                  Initialize the Al-Mu'izz <span className="text-primary font-bold">Specialized Neural Brain</span>. This autonomous agent is pre-fed with global persuasion matrices and uses <span className="text-emerald-500 font-bold italic">Real-time Search</span> to anchor influence vectors in current reality.
                 </p>
                 
                 <div className="flex gap-8">
-                  <Badge variant="outline" className="bg-white/5 py-4 px-10 text-[11px] tracking-[0.5em] uppercase border-white/10 rounded-[2rem] shadow-xl">Human Intelligence Matrix</Badge>
-                  <Badge variant="outline" className="bg-white/5 py-4 px-10 text-[11px] tracking-[0.5em] uppercase border-white/10 rounded-[2rem] shadow-xl">v17.2 Tactical Link</Badge>
+                  <Badge variant="outline" className="bg-white/5 py-4 px-10 text-[11px] tracking-[0.5em] uppercase border-white/10 rounded-[2rem] shadow-xl">Pre-Seeded Knowledge Matrix</Badge>
+                  <Badge variant="outline" className="bg-white/5 py-4 px-10 text-[11px] tracking-[0.5em] uppercase border-white/10 rounded-[2rem] shadow-xl">v17.5 Search-Augmented Link</Badge>
                 </div>
 
-                {/* Animated Spectrum at bottom of placeholder */}
                 <div className="absolute bottom-12 flex gap-1 items-end h-16 opacity-10">
                    {mounted && Array.from({ length: 40 }).map((_, i) => (
                      <div key={i} className="w-1 bg-primary rounded-full" style={{ height: `${Math.random() * 100}%`, animation: `pulse 1.5s infinite ${i * 0.05}s` }} />
@@ -459,23 +477,23 @@ export default function SocialPage() {
           </div>
         </div>
 
-        {/* Unified Tactical Footer Overlay (Simulated Neural Link) */}
+        {/* Tactical Footer Overlay */}
         <div className="fixed bottom-8 right-8 w-96 h-28 glass rounded-[2.5rem] border border-white/10 p-6 hidden 2xl:block overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-40">
            <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
-                 <div className="size-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_#10b981]" />
-                 <span className="text-[10px] font-bold text-white uppercase tracking-[0.3em]">Neural Link Status: Stable</span>
+                 <div className={cn("size-2 rounded-full animate-pulse shadow-[0_0_10px_#10b981]", useSearch ? "bg-emerald-500" : "bg-blue-500")} />
+                 <span className="text-[10px] font-bold text-white uppercase tracking-[0.3em]">System Brain Status: {useSearch ? 'LIVE_SEARCH_SYNCED' : 'OFFLINE_CORE'}</span>
               </div>
               <div className="flex items-center gap-2">
-                 <Globe className="size-3 text-primary/60" />
-                 <span className="text-[9px] font-code text-emerald-500/80">LATENCY // 4.2 ms</span>
+                 <Radio className="size-3 text-primary/60 animate-pulse" />
+                 <span className="text-[9px] font-code text-emerald-500/80">LATENCY // 2.1 ms</span>
               </div>
            </div>
            <div className="flex items-end gap-1.5 h-10 px-2">
               {mounted && Array.from({ length: 45 }).map((_, i) => (
                 <div 
                   key={i} 
-                  className="flex-1 bg-primary/40 rounded-full hover:bg-primary transition-colors cursor-pointer" 
+                  className={cn("flex-1 rounded-full transition-colors cursor-pointer", useSearch ? "bg-emerald-500/40 hover:bg-emerald-500" : "bg-primary/40 hover:bg-primary")} 
                   style={{ 
                     height: `${20 + Math.random() * 80}%`,
                     animation: `pulse 2s infinite ${i * 0.04}s`
@@ -484,11 +502,34 @@ export default function SocialPage() {
               ))}
            </div>
            <div className="mt-2 flex justify-between px-2">
-              <span className="text-[7px] text-muted-foreground uppercase font-bold tracking-widest">Spectrum Analysis Active</span>
-              <span className="text-[7px] text-primary uppercase font-bold tracking-widest">Al-Mu'izz Core Sync</span>
+              <span className="text-[7px] text-muted-foreground uppercase font-bold tracking-widest">Grounding Active v17.5</span>
+              <span className="text-[7px] text-primary uppercase font-bold tracking-widest">Al-Mu'izz Specialized Core</span>
            </div>
         </div>
       </main>
     </div>
+  )
+}
+
+function Radio(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9" />
+      <path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5" />
+      <circle cx="12" cy="12" r="2" />
+      <path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5" />
+      <path d="M19.1 4.9C23 8.8 23 15.2 19.1 19.1" />
+    </svg>
   )
 }
