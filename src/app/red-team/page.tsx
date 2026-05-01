@@ -36,7 +36,8 @@ import {
   Sword,
   Shield,
   TrendingUp,
-  Crown
+  Crown,
+  Brain
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
