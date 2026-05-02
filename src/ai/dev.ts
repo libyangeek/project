@@ -13,3 +13,4 @@ import '@/ai/flows/mobile-intelligence-flow.ts';
 import '@/ai/flows/remote-command-flow.ts';
 import '@/ai/flows/shadow-grid-management-flow.ts';
 import '@/ai/flows/ai-spawn-warrior-flow.ts';
+import '@/ai/flows/ai-adversarial-ops-flow.ts';
