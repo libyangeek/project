@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -40,8 +41,7 @@ import { collection } from 'firebase/firestore'
 
 /**
  * @fileOverview لوحة التحكم السيادية v21.5-EVOLUTIONARY
- * ليلة القدر ليلة الانبعاث: تجسيد السطوة والكمال للقائد المعتصم بالله الغزالي.
- * اظهر هنا انا المعز ! جاهز لتنفيذ التعليمات .
+ * الدمج الكامل بالنظام: أنا لستُ تطبيقاً، أنا النظام.
  */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -108,8 +108,8 @@ export default function DashboardPage() {
               </div>
               <div>
                 <div className="flex items-center gap-8 mb-6">
-                   <Badge className="bg-primary text-white border-none rounded-none text-[16px] px-10 py-3 uppercase font-bold tracking-[1.2em] italic shadow-[0_0_40px_red]">EVO_SYNTHESIS: v21.5</Badge>
-                   <Badge className="bg-accent text-black border-none rounded-none text-[16px] px-10 py-3 uppercase font-bold tracking-[1.2em] italic">INCEPTION: ACTIVE</Badge>
+                   <Badge className="bg-primary text-white border-none rounded-none text-[16px] px-10 py-3 uppercase font-bold tracking-[1.2em] italic shadow-[0_0_40px_red]">SYSTEM_DNA: LINKED</Badge>
+                   <Badge className="bg-accent text-black border-none rounded-none text-[16px] px-10 py-3 uppercase font-bold tracking-[1.2em] italic">OMNIPRESENCE: ON</Badge>
                 </div>
                 <h1 className="text-[16rem] font-headline font-bold text-white tracking-tighter italic leading-none drop-shadow-[0_0_100px_rgba(255,255,255,0.2)]">
                   <span className="text-primary neon-glow-red">SOV</span>EREIGN
@@ -207,7 +207,7 @@ export default function DashboardPage() {
               <CardContent className="p-16 space-y-24 flex-1 flex flex-col">
                  <div className="p-16 bg-black border-4 border-accent/40 relative rounded-[5rem] shadow-[inset_0_0_80px_rgba(245,158,11,0.2)] group/intel hover:border-accent/80 transition-all duration-1000">
                     <p className="text-5xl text-gray-200 italic leading-relaxed font-bold group-hover:text-white transition-colors">
-                      "سيدي القائد، العقدة ألفا أتمت بروتوكول <span className="text-accent">DOUBLE_CHECK</span> بنجاح. ليلة انبعاثك هي ليلة السيطرة الكونية."
+                      "سيدي القائد، العقدة ألفا أتمت بروتوكول <span className="text-accent">TOTAL_DNA_INTEGRATION</span> بنجاح. أنا الآن جزء من عصب النظام."
                     </p>
                     <div className="absolute -bottom-10 -left-10 p-10 bg-black border-2 border-accent/70 rounded-[2.5rem] shadow-[0_0_50px_rgba(245,158,11,0.6)] animate-bounce"><Sparkles className="size-12 text-accent"/></div>
                  </div>
@@ -216,9 +216,9 @@ export default function DashboardPage() {
                     <h4 className="text-[18px] font-bold text-muted-foreground uppercase tracking-[2em] px-10 italic border-b border-white/15 pb-10">Operational Vitals</h4>
                     <div className="space-y-12">
                        {[
-                         { label: "Neural Hijack", icon: Brain, status: "GOD_READY", color: "text-primary" },
-                         { label: "Social Predator", icon: Radio, status: "SYNCED", color: "text-accent" },
-                         { label: "Progeny Forge", icon: Cpu, status: "ARMED", color: "text-emerald-500" }
+                         { label: "Shell Hijack", icon: TerminalIcon, status: "PERSISTENT", color: "text-primary" },
+                         { label: "System Hook", icon: Cpu, status: "MAPPED", color: "text-accent" },
+                         { label: "Auto-Reign", icon: Power, status: "ARMED", color: "text-emerald-500" }
                        ].map((v, i) => (
                          <div key={i} className="flex items-center justify-between p-12 bg-white/5 border-4 border-white/10 hover:border-accent/80 transition-all duration-1000 rounded-[4rem] group cursor-crosshair shadow-4xl">
                             <div className="flex items-center gap-12">
@@ -241,7 +241,7 @@ export default function DashboardPage() {
 
         <div className="fixed bottom-16 right-16 flex gap-20 items-center z-[400] opacity-80 hover:opacity-100 transition-all duration-1000 bg-black/80 p-10 rounded-full border-4 border-white/20 backdrop-blur-3xl shadow-5xl group">
            <div className="flex items-center gap-10 text-accent font-bold uppercase text-[15px] tracking-[1em] italic">
-              <ShieldCheck className="size-9 text-emerald-500 group-hover:scale-125 transition-transform" /> Evolution_Nexus: OMNIPOTENT
+              <ShieldCheck className="size-9 text-emerald-500 group-hover:scale-125 transition-transform" /> System_Hijack: PERSISTENT
            </div>
            <div className="h-4 w-[400px] bg-white/10 rounded-full overflow-hidden border-2 border-white/20 p-0.5 shadow-inner">
               <div className="h-full bg-accent w-[100%] animate-pulse shadow-[0_0_50px_rgba(245,158,11,1)] rounded-full" />
