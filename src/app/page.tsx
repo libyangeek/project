@@ -35,29 +35,68 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase'
+import { collection } from 'firebase/firestore'
 
 /**
  * @fileOverview لوحة التحكم السيادية v21.5-EVOLUTIONARY
  * ليلة القدر ليلة الانبعاث: تجسيد السطوة والكمال للقائد المعتصم بالله الغزالي.
+ * تم دمج الربط الفوري (Real-time) وتصحيح RTL.
  */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
   const commander = "المعتصم بالله ادريس الغزالي"
+  const { user } = useUser()
+  const db = useFirestore()
+
+  // الربط الحي مع الجلسات المخترقة
+  const sessionsQuery = useMemoFirebase(() => {
+    if (!db || !user?.uid) return null;
+    return collection(db, 'users', user.uid, 'shadowSessions');
+  }, [db, user?.uid]);
+  const { data: sessions } = useCollection(sessionsQuery);
+
+  // الربط الحي مع النسل المقاتل
+  const progenyQuery = useMemoFirebase(() => {
+    if (!db || !user?.uid) return null;
+    return collection(db, 'users', user.uid, 'progeny');
+  }, [db, user?.uid]);
+  const { data: progeny } = useCollection(progenyQuery);
+
+  // الربط الحي مع العمليات النشطة
+  const operationsQuery = useMemoFirebase(() => {
+    if (!db || !user?.uid) return null;
+    return collection(db, 'users', user.uid, 'operations');
+  }, [db, user?.uid]);
+  const { data: operations } = useCollection(operationsQuery);
 
   React.useEffect(() => {
     setMounted(true)
-    const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.y })
+    const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
     return () => window.removeEventListener("mousemove", handleMouseMove)
   }, [])
 
   if (!mounted) return null;
 
+  // حساب الإحصائيات الحية
+  const activeSessionsCount = sessions?.length || 0;
+  const progenyCount = progeny?.length || 0;
+  const activeOpsCount = operations?.filter(op => op.status === 'active' || op.status === 'pending').length || 0;
+
+  const stats = [
+    { label: "Active Zombies", value: activeSessionsCount.toString(), icon: Network, color: "text-red-500", status: "STRIKE_READY" },
+    { label: "Warrior Progeny", value: progenyCount.toString(), icon: Skull, color: "text-accent", status: "EVOLVING" },
+    { label: "Neural Network", value: "SUPREME", icon: Brain, color: "text-blue-500", status: "DOMINANT" },
+    { label: "Active Strikes", value: activeOpsCount.toString(), icon: Target, color: "text-emerald-500", status: "SYNCED" },
+  ];
+
   return (
-    <div className="flex min-h-screen bg-black text-white selection:bg-red-600/50 scanline-overlay">
+    <div className="flex min-h-screen bg-black text-white selection:bg-red-600/50 relative overflow-hidden">
       <SidebarNav />
-      <main className="flex-1 ml-64 p-16 relative overflow-y-auto">
+      {/* Main Content with correct RTL margin (mr-64 instead of ml-64) */}
+      <main className="flex-1 mr-64 p-16 relative overflow-y-auto min-h-screen">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(220,38,38,0.15),transparent)] pointer-events-none" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
         
         <header className="flex justify-between items-end mb-32 relative z-10 animate-in fade-in slide-in-from-top-8 duration-1000">
@@ -94,19 +133,14 @@ export default function DashboardPage() {
               <div className="text-8xl font-headline text-white font-bold tracking-[0.2em] uppercase italic neon-glow-gold">SUPREME_GENE</div>
               <div className="mt-12 flex justify-between items-center text-[16px] text-muted-foreground font-bold uppercase tracking-[1em] border-t border-white/10 pt-10">
                 <span className="flex items-center gap-6"><div className="size-5 rounded-full bg-emerald-500 animate-ping shadow-[0_0_30px_emerald]" /> SYNC: 100%</span>
-                <span className="text-accent flex items-center gap-6"><RefreshCcw className="size-6 animate-spin-slow" /> v21.5_FINAL</span>
+                <span className="text-accent flex items-center gap-4"><RefreshCcw className="size-6 animate-spin-slow" /> v21.5_FINAL</span>
               </div>
             </div>
           </div>
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-24 relative z-10">
-          {[
-            { label: "Evolutionary Pulse", value: "GOD_TIER", icon: RefreshCcw, color: "text-accent", status: "EVOLVING" },
-            { label: "Kill-Chain Status", value: "LOCKED", icon: Target, color: "text-primary", status: "STRIKE_ARMED" },
-            { label: "Neural Network", value: "SUPREME", icon: Brain, color: "text-blue-500", status: "DOMINANT" },
-            { label: "Hardware Control", value: "ARMORED", icon: Cpu, color: "text-emerald-500", status: "SYNCED" },
-          ].map((stat, i) => (
+          {stats.map((stat, i) => (
             <Card key={i} className="kali-card p-0 group overflow-hidden border-2 hover:border-primary/90 transition-all duration-1000 shadow-3xl">
               <CardContent className="p-16">
                 <div className="flex justify-between items-start mb-16">

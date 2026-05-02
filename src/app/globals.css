@@ -32,7 +32,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-code antialiased selection:bg-primary/40 overflow-hidden;
+    @apply bg-background text-foreground font-code antialiased selection:bg-primary/40 overflow-x-hidden;
     background-image: 
       radial-gradient(circle at 50% 50%, rgba(220, 38, 38, 0.05), transparent),
       linear-gradient(rgba(0, 0, 0, 0.98), rgba(0, 0, 0, 0.98)),

@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import Link from "next/link"
+import Link from "next/navigation"
 import { usePathname } from "next/navigation"
 import { 
   LayoutDashboard, 
@@ -57,7 +57,7 @@ export function SidebarNav() {
           <h1 className="text-3xl font-headline font-bold text-white tracking-[0.25em] uppercase italic leading-none neon-glow-red">
             AL-MUIZZ
           </h1>
-          <Badge className="bg-primary text-white border-none rounded-none text-[12px] font-bold tracking-[0.8em] mt-4 py-2 px-6 uppercase italic shadow-2xl">v21.0-EVO</Badge>
+          <Badge className="bg-primary text-white border-none rounded-none text-[12px] font-bold tracking-[0.8em] mt-4 py-2 px-6 uppercase italic shadow-2xl">v21.5-EVO</Badge>
         </div>
       </div>
       
