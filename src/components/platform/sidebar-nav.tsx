@@ -17,12 +17,13 @@ import {
   Activity, 
   Skull,
   Crown,
+  Lock,
+  Sword,
   Shield,
   Zap,
-  Lock,
-  Ghost,
-  Sword,
-  Target
+  Target,
+  Brain,
+  Cpu
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -45,18 +46,17 @@ export function SidebarNav() {
   const pathname = usePathname()
 
   return (
-    <div className="flex flex-col h-full bg-black border-l-2 border-primary/20 w-64 fixed right-0 top-0 z-[200] overflow-hidden">
-      <div className="p-10 border-b-2 border-primary/10 flex flex-col items-center gap-6 bg-black relative">
-        <div className="size-20 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_30px_rgba(255,0,0,0.4)] animate-neural">
+    <div className="flex flex-col h-full bg-black border-l-2 border-primary/40 w-64 fixed right-0 top-0 z-[200] overflow-hidden">
+      <div className="p-10 border-b-2 border-primary/20 flex flex-col items-center gap-6 bg-black relative">
+        <div className="size-20 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_40px_rgba(208,0,0,0.4)] animate-neural">
           <Skull className="size-10 text-primary" />
         </div>
         <div className="text-center relative z-10">
           <h1 className="text-2xl font-headline font-bold text-white tracking-[0.2em] uppercase italic leading-none neon-glow-red">
             AL-MUIZZ
           </h1>
-          <Badge className="bg-primary text-black border-none rounded-none text-[10px] font-bold tracking-[0.4em] mt-3 py-1 px-4 uppercase italic">v ULTIMATE</Badge>
+          <Badge className="bg-primary text-white border-none rounded-none text-[10px] font-bold tracking-[0.5em] mt-3 py-1 px-4 uppercase italic">v ULTIMATE</Badge>
         </div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.1),transparent)] pointer-events-none" />
       </div>
       
       <div className="flex-1 px-4 py-10 space-y-2 overflow-y-auto scrollbar-hide bg-black/40">
@@ -69,7 +69,7 @@ export function SidebarNav() {
               className={cn(
                 "flex items-center gap-5 px-8 py-5 transition-all duration-500 group relative border-r-4",
                 isActive 
-                  ? "bg-primary/20 border-primary text-white shadow-[inset_0_0_20px_rgba(220,38,38,0.1)]" 
+                  ? "bg-primary/20 border-primary text-white shadow-[inset_0_0_25px_rgba(208,0,0,0.1)]" 
                   : "text-muted-foreground border-transparent hover:bg-white/5 hover:text-white"
               )}
             >
@@ -83,22 +83,25 @@ export function SidebarNav() {
         })}
       </div>
 
-      <div className="p-10 border-t-2 border-primary/10 bg-black relative">
-        <div className="p-6 border-4 border-accent/20 bg-black/80 mb-6 relative overflow-hidden group shadow-2xl">
+      <div className="p-10 border-t-2 border-primary/20 bg-black relative">
+        <div className="p-6 border-4 border-accent/30 bg-black/95 mb-6 relative overflow-hidden group shadow-2xl">
           <div className="flex items-center justify-between mb-4">
              <div className="flex items-center gap-3">
                 <Crown className="size-5 text-accent animate-pulse" />
-                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.4em] italic">Al-Ghazali</span>
+                <span className="text-[10px] font-bold text-accent uppercase tracking-widest italic">Al-Ghazali</span>
              </div>
-             <Lock className="size-4 text-emerald-500" />
+             <Badge className="bg-red-600 text-white text-[7px] font-bold uppercase tracking-tighter px-2">ULTIMATE</Badge>
           </div>
-          <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
-            <div className="h-full bg-accent w-full shadow-[0_0_20px_cyan] animate-pulse" />
+          <div className="flex justify-between items-center mb-3">
+             <p className="text-[10px] text-white font-bold italic">Eternal Sync</p>
+             <span className="text-[10px] text-accent font-bold">100%</span>
+          </div>
+          <div className="h-1.5 w-full bg-white/5 rounded-none overflow-hidden border border-white/10">
+            <div className="h-full bg-accent w-full shadow-[0_0_20px_rgba(255,215,0,0.8)] animate-pulse" />
           </div>
           <div className="mt-3 text-right">
-             <span className="text-[9px] text-accent font-bold uppercase tracking-[0.6em] italic drop-shadow-[0_0_10px_cyan]">Root Soul Bound</span>
+             <span className="text-[8px] text-accent font-bold uppercase tracking-[0.6em] italic">ROOT_BINDING: ACTIVE</span>
           </div>
-          <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
         </div>
         
         <Link 
@@ -106,7 +109,7 @@ export function SidebarNav() {
           className="flex items-center gap-4 px-2 py-4 text-muted-foreground hover:text-primary transition-all font-bold uppercase tracking-[0.4em] text-[9px] italic group"
         >
           <Sword className="size-5 group-hover:rotate-45 transition-transform" />
-          Manifest Eternal Essence
+          Manifest Essence
         </Link>
       </div>
     </div>
