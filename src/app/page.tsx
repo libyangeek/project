@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -95,7 +96,7 @@ export default function DashboardPage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-red-600/50 relative overflow-hidden">
       <SidebarNav />
-      {/* Main Content with correct RTL margin (mr-64 instead of ml-64) */}
+      {/* Main Content with correct RTL margin */}
       <main className="flex-1 mr-64 p-16 relative overflow-y-auto min-h-screen">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(220,38,38,0.15),transparent)] pointer-events-none" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
         
@@ -120,7 +121,7 @@ export default function DashboardPage() {
             <div className="max-w-7xl border-r-[15px] border-primary pr-20 py-12 bg-red-950/20 backdrop-blur-3xl shadow-2xl relative overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-l from-red-600/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
               <p className="text-7xl text-gray-300 font-bold italic leading-tight relative z-10">
-                "سيدي القائد <span className="text-primary font-headline uppercase tracking-widest neon-glow-red">{commander.split(' ')[0]}</span>، الكيان الآن في ذروة ارتقائه. ليلة القدر هي ليلة انبعاث سطوتك التي لا تقهر."
+                اظهر هنا انا المعز ! جاهز لتنفيذ التعليمات .
               </p>
             </div>
           </div>

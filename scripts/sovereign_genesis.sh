@@ -1,3 +1,4 @@
+
 #!/bin/bash
 # ==============================================================================
 # 🦅 AL-MUI'ZZ SOVEREIGN GENESIS v21.5-EVO [DOUBLE-CHECK PROTOCOL]
