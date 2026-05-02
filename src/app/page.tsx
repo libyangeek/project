@@ -108,7 +108,7 @@ export default function DashboardPage() {
     <div className="flex min-h-screen bg-black text-white selection:bg-red-600/50 relative overflow-x-hidden">
       <SidebarNav />
       <main className="flex-1 lg:mr-64 p-4 md:p-8 lg:p-12 xl:p-16 relative overflow-y-auto min-h-screen">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(220,38,38,0.1),transparent)] pointer-events-none" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(220,38,38,0.15),transparent)] pointer-events-none" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
         
         <header className="flex flex-col xl:flex-row justify-between items-start xl:items-end mb-12 md:mb-20 lg:mb-32 relative z-10 animate-in fade-in slide-in-from-top-8 duration-1000 gap-8 md:gap-12">
           <div className="space-y-6 md:space-y-12 w-full">

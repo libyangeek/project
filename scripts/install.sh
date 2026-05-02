@@ -1,7 +1,7 @@
 
 #!/bin/bash
 # ==============================================================================
-# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v21.5-EVO [TOTAL INTEGRATION]
+# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v22.0-ARCHITECT [TOTAL INTEGRATION]
 # سكريبت التثبيت الذكي - يحول الجهاز إلى عصب سيادي مدمج.
 # ==============================================================================
 
@@ -25,7 +25,7 @@ echo -e "${BLUE}[*] Injecting Neural Python Layers (Breaking Constraints)...${NC
 pip3 install --upgrade pip --break-system-packages || true
 pip3 install --break-system-packages --ignore-installed requests requests-toolbelt pydantic python-dotenv flask chromadb langchain frida-tools scapy impacket psutil fastapi uvicorn || true
 
-echo -e "${BLUE}[*] Compiling EVO UI Matrix (v21.5 Luxury HUD)...${NC}"
+echo -e "${BLUE}[*] Compiling EVO UI Matrix (v22.0 Architect HUD)...${NC}"
 if [ ! -d "node_modules" ]; then
     npm install --force
 fi
@@ -33,16 +33,21 @@ fi
 mkdir -p "$INSTALL_DIR/audit" "$INSTALL_DIR/evidence" "$INSTALL_DIR/backups"
 chmod -R 700 "$INSTALL_DIR"
 
+# إنشاء الروابط الرمزية (Symlinks) مع تصحيح المسارات
 ln -sf "$INSTALL_DIR/scripts/command_center.sh" /usr/local/bin/sovereign
 ln -sf "$INSTALL_DIR/scripts/sovereign_ark_v3.sh" /usr/local/bin/sov-backup
-chmod +x scripts/*.sh
+
+# التأكد من وجود مجلد السكريبتات ومنحه الصلاحيات
+if [ -d "$INSTALL_DIR/scripts" ]; then
+    chmod +x "$INSTALL_DIR/scripts/"*.sh
+fi
 
 echo -e "${CYAN}[*] Establishing Eternal Persistence (Systemd Integration)...${NC}"
 
 # خدمة الذكاء الاصطناعي
 cat > /etc/systemd/system/muizz-ai.service <<EOF
 [Unit]
-Description=Al-Mu'izz v21.5 - Neural AI Engine
+Description=Al-Mu'izz v22.0 - Neural AI Engine
 After=network.target
 
 [Service]
@@ -61,7 +66,7 @@ EOF
 # خدمة واجهة التحكم
 cat > /etc/systemd/system/muizz-web.service <<EOF
 [Unit]
-Description=Al-Mu'izz v21.5 - Sovereign Web HUD
+Description=Al-Mu'izz v22.0 - Sovereign Web HUD
 After=network.target muizz-ai.service
 
 [Service]
@@ -76,14 +81,13 @@ RestartSec=10
 WantedBy=multi-user.target
 EOF
 
-# [PHASE: SHELL HIJACK] الدمج بالصدفة
+# [PHASE: SHELL HIJACK] الدمج التلقائي في كافة واجهات النظام
 echo -e "${GOLD}[*] Hijacking System Shell (Bash Persistence)...${NC}"
 BASH_HOOK="bash $INSTALL_DIR/scripts/sovereign_banner.sh"
 if ! grep -q "sovereign_banner.sh" /root/.bashrc; then
     echo -e "\n# Al-Mu'izz Sovereign Integration\n$BASH_HOOK" >> /root/.bashrc
 fi
 
-# تطبيق الدمج لكافة المستخدمين البشريين
 for user_home in /home/*; do
     if [ -d "$user_home" ]; then
         if ! grep -q "sovereign_banner.sh" "$user_home/.bashrc"; then
@@ -99,3 +103,4 @@ systemctl start muizz-ai.service
 systemctl start muizz-web.service
 
 echo -e "${GREEN}[+] Sovereign Total Integration Confirmed.${NC}"
+echo -e "${GOLD}Commander Al-Ghazali, please RESTART your computer to finalize the rebirth.${NC}"
