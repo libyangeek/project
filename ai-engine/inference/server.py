@@ -1,17 +1,28 @@
 # -*- coding: utf-8 -*-
-"""
-Sovereign AI Platform - Inference Server (FastAPI)
-خادم الاستدلال السيادي المتوافق مع بروتوكول OpenAI.
-(c) 2025 Al-Mu'izz Sovereign Systems
-"""
+/**
+ * Sovereign AI Platform - Inference Server (FastAPI)
+ * خادم الاستدلال السيادي المتوافق مع بروتوكول OpenAI.
+ * تم تصحيح مسارات الاستيراد لضمان العمل من أي مكان.
+ * (c) 2025 Al-Mu'izz Sovereign Systems
+ */
 
 from fastapi import FastAPI, Header, HTTPException, Depends
 from pydantic import BaseModel
 from typing import List, Optional
 import uvicorn
 import os
+import sys
 import time
-from smart_router import SmartRouter
+
+# حقن المسار الرئيسي للمنصة لضمان الوصول للموجه الذكي
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+try:
+    from smart_router import SmartRouter
+except ImportError:
+    # محاولة بديلة إذا كان المسار مختلفاً
+    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+    from smart_router import SmartRouter
 
 app = FastAPI(title="Al-Mu'izz Sovereign Inference Server", version="14.1.0")
 router_engine = SmartRouter()

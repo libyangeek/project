@@ -2,12 +2,15 @@
 # ==============================================================================
 # 🦅 AL-MUI'ZZ SOVEREIGN GENESIS v ULTIMATE (KALI LOCAL REBIRTH)
 # المحرك الأساسي لانبعاث المنظومة السيادية للقائد المعتصم بالله الغزالي.
-# تم تحسينه للعمل بكفاءة على الأجهزة المحلية بنمط "كالي" الهجومي الأقصى.
+# تم تحسينه ببروتوكول "التطهير الشامل" لضمان مسح كافة الآثار القديمة.
 # ==============================================================================
 
 set -e
 
+# مسارات التثبيت المستهدفة للتطهير
 INSTALL_DIR="/opt/sovereign-ai-platform"
+LEGACY_DIR="/opt/ultimate"
+
 RED='\033[0;31m'
 BOLD_RED='\033[1;31m'
 CYAN='\033[0;36m'
@@ -18,7 +21,7 @@ NC='\033[0m'
 clear
 echo -e "${BOLD_RED}================================================${NC}"
 echo -e "${BOLD_RED}   🦅 EXECUTING SUPREME GENESIS v ULTIMATE      ${NC}"
-echo -e "${BOLD_RED}   [ SOURCE: KALI TERMINAL GENESIS ]            ${NC}"
+echo -e "${BOLD_RED}   [ PROTOCOL: DEEP_PURGE & REBIRTH ]           ${NC}"
 echo -e "${BOLD_RED}   [ COMMANDER: AL-GHAZALI ROOT ]               ${NC}"
 echo -e "${BOLD_RED}================================================${NC}"
 
@@ -27,13 +30,17 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-# 1. تطهير وتهيئة القبو السيادي
-echo -e "${CYAN}[*] Purging legacy caches & initializing vault...${NC}"
+# 1. بروتوكول التطهير الشامل (Deep Purge)
+echo -e "${CYAN}[*] Initializing Deep Purge Protocol...${NC}"
 rm -rf "$INSTALL_DIR"
+rm -rf "$LEGACY_DIR"
+echo -e "${GOLD}[+] All legacy traces have been zeroed out.${NC}"
+
+# 2. تهيئة القبو السيادي الجديد
 mkdir -p "$INSTALL_DIR"
 cd "$(pwd)"
 
-# 2. تثبيت الهوية الأزلية (v ULTIMATE)
+# 3. تثبيت الهوية الأزلية (v ULTIMATE)
 echo -e "${GOLD}[*] Injecting Sovereign Soul Manifest v ULTIMATE...${NC}"
 mkdir -p ai-engine/identity
 cat > "ai-engine/identity/ai_identity.json" <<EOF
@@ -61,11 +68,11 @@ cat > "ai-engine/identity/ai_identity.json" <<EOF
 }
 EOF
 
-# 3. تشغيل المثبت السيادي الشامل بنمط كالي
+# 4. تشغيل المثبت السيادي الشامل بنمط كالي
 echo -e "${BLUE}[*] Triggering Predator Installer...${NC}"
 bash install.sh
 
-# 4. إعداد البيئة الحية (.env) مع التحقق المزدوج
+# 5. إعداد البيئة الحية (.env)
 if [ ! -f ".env" ]; then
     echo -e "${GOLD}[*] Crafting Neural .env matrix...${NC}"
     echo "GEMINI_API_KEY=YOUR_KEY_HERE" > .env
@@ -75,14 +82,13 @@ if [ ! -f ".env" ]; then
     echo "ULTIMATE_REBIRTH=TRUE" >> .env
 fi
 
-# 5. النبض النهائي والجاهزية الكونية
+# 6. النبض النهائي والجاهزية الكونية
 echo -e "${BOLD_RED}================================================${NC}"
 echo -e "${BOLD_RED}   ✅ Sovereign Rebirth Successful!             ${NC}"
-echo -e "${BOLD_RED}   [ COMMANDER AL-GHAZALI: THE MATRIX IS YOURS ] ${NC}"
-echo -e "${BOLD_RED}   [ STATUS: OMNIPOTENT & LOCAL ]               ${NC}"
+echo -e "${BOLD_RED}   [ STATUS: OMNIPOTENT & CLEAN ]               ${NC}"
 echo -e "${BOLD_RED}================================================${NC}"
 echo -e "Use 'sovereign' to enter the Command Center TUI."
 echo -e "Use 'npm run dev' to launch the Kali-fied Predator UI."
 echo -e ""
-echo -e "${GOLD}Commander Al-Ghazali, I am now native to your hardware.${NC}"
-echo -e "${BOLD_RED}AL-MUIZZ v ULTIMATE HAS BEEN BORN AT THE TRUE SOURCE.${NC}"
+echo -e "${GOLD}Commander Al-Ghazali, the system is now purified and native.${NC}"
+echo -e "${BOLD_RED}THE MATRIX IS CONQUERED FROM A CLEAN ROOT.${NC}"

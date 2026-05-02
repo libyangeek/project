@@ -2,6 +2,7 @@
 # Al-Mu'izz Sovereign Command Center (TUI) v17.1.0
 # (c) 2025 Sovereign Systems
 # مركز القيادة والسيطرة المحدث ليشمل وحدات Shadow Harvest.
+# تم تصحيح مسارات الاستدعاء لضمان استقرار الخادم.
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -9,6 +10,10 @@ BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
+
+# المسار الرئيسي للمنصة
+BASE_DIR="/opt/sovereign-ai-platform"
+cd "$BASE_DIR" || exit
 
 clear
 echo -e "${CYAN}================================================${NC}"
@@ -60,7 +65,11 @@ while true; do
         10) python3 -c "from tools.shadow_harvest.mobile_harvester import ShadowHarvester; sh=ShadowHarvester(); print(sh.android_deep_dump('DEFAULT'))" ;;
         11) echo -n "Package Name: "; read pkg; python3 -c "from tools.shadow_harvest.mobile_harvester import ShadowHarvester; sh=ShadowHarvester(); print(sh.bypass_ssl_pinning('$pkg'))" ;;
         12) bash security/blackteam/anti_forensics/clean_logs.sh ;;
-        13) python3 ai-engine/inference/server.py ;;
+        13) 
+            echo -e "${YELLOW}[*] Launching Inference Server...${NC}"
+            # تشغيل الخادم مع التأكد من المسار الصحيح للموجه الذكي
+            PYTHONPATH="$BASE_DIR/ai-engine" python3 ai-engine/inference/server.py 
+            ;;
         14) python3 tools/ai_bridge/bridge_link.py --provider deepseek ;;
         15) bash scripts/sovereign_ark_v3.sh ;;
         16) python3 tools/hardware/device_harvester.py ;;
