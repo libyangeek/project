@@ -4,89 +4,88 @@
 
 @layer base {
   :root {
-    --background: 240 10% 2%; /* أسود كالي عميق */
+    --background: 240 10% 2%; /* أسود كالي كربوني */
     --foreground: 0 0% 100%;
     --card: 240 10% 3%;
     --card-foreground: 0 0% 100%;
     --popover: 240 10% 2%;
     --popover-foreground: 0 0% 100%;
-    --primary: 0 100% 50%; /* نيون أحمر غاضب */
+    --primary: 0 100% 45%; /* أحمر دموي ملكي */
     --primary-foreground: 0 0% 100%;
-    --secondary: 240 10% 10%;
+    --secondary: 240 10% 8%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 240 5% 15%;
-    --muted-foreground: 0 0% 60%;
-    --accent: 190 100% 50%; /* سيان كالي السيبري */
+    --muted: 240 5% 12%;
+    --muted-foreground: 0 0% 50%;
+    --accent: 185 100% 50%; /* سيان كالي السيبراني */
     --accent-foreground: 0 0% 0%;
     --destructive: 0 100% 30%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 100% 20%;
-    --input: 240 10% 5%;
+    --border: 0 100% 15%;
+    --input: 240 10% 4%;
     --ring: 0 100% 50%;
-    --radius: 0.1rem; /* حواف حادة بنمط صناعي */
+    --radius: 0.15rem;
   }
 }
 
 @layer base {
   * {
-    @apply border-border cursor-crosshair;
+    @apply border-border cursor-cell;
   }
   body {
-    @apply bg-background text-foreground font-code antialiased selection:bg-primary/50;
+    @apply bg-background text-foreground font-code antialiased selection:bg-primary/40;
     background-image: 
-      linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
-      url('https://www.transparenttextures.com/patterns/stardust.png');
+      linear-gradient(rgba(0, 0, 0, 0.96), rgba(0, 0, 0, 0.96)),
+      url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+    background-attachment: fixed;
   }
 }
 
 @layer components {
   .kali-card {
-    @apply bg-black border-2 border-primary/30 shadow-[0_0_20px_rgba(255,0,0,0.1)] hover:border-primary hover:shadow-[0_0_30px_rgba(255,0,0,0.2)] transition-all duration-300;
+    @apply bg-black border-2 border-primary/20 shadow-[0_0_40px_rgba(255,0,0,0.05)] hover:border-primary/60 hover:shadow-[0_0_60px_rgba(255,0,0,0.15)] transition-all duration-700 relative overflow-hidden;
+  }
+  .kali-card::before {
+    content: "";
+    @apply absolute inset-0 pointer-events-none opacity-5;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 2px, 3px 100%;
   }
   .terminal-button {
-    @apply bg-black text-primary border-2 border-primary font-bold uppercase tracking-widest hover:bg-primary hover:text-black transition-all duration-300 px-8 py-3 active:scale-95;
+    @apply bg-black text-primary border-2 border-primary/40 font-bold uppercase tracking-[0.4em] hover:bg-primary hover:text-black hover:border-primary shadow-[0_0_20px_rgba(255,0,0,0.1)] transition-all duration-500 px-10 py-4 active:scale-95 text-[11px] italic;
   }
   .neon-glow-red {
-    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.5);
+    text-shadow: 0 0 15px rgba(255, 0, 0, 0.9), 0 0 30px rgba(255, 0, 0, 0.4);
   }
   .neon-glow-cyan {
-    text-shadow: 0 0 10px rgba(0, 242, 255, 0.8), 0 0 20px rgba(0, 242, 255, 0.5);
+    text-shadow: 0 0 15px rgba(0, 242, 255, 0.9), 0 0 30px rgba(0, 242, 255, 0.4);
   }
   .scanline-effect {
     @apply relative overflow-hidden;
   }
-  .scanline-effect::before {
+  .scanline-effect::after {
     content: " ";
-    @apply absolute inset-0 w-full h-full pointer-events-none z-50;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-    background-size: 100% 2px, 3px 100%;
+    @apply absolute inset-0 w-full h-full pointer-events-none z-[100] opacity-[0.03];
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.1), rgba(0, 255, 0, 0.05), rgba(0, 0, 255, 0.1));
+    background-size: 100% 3px, 3px 100%;
   }
 }
 
-@keyframes flicker {
-  0% { opacity: 0.27861; }
-  5% { opacity: 0.34769; }
-  10% { opacity: 0.23604; }
-  15% { opacity: 0.90626; }
-  20% { opacity: 0.18128; }
-  25% { opacity: 0.83891; }
-  30% { opacity: 0.65583; }
-  35% { opacity: 0.57807; }
-  40% { opacity: 0.26559; }
-  45% { opacity: 0.84693; }
-  50% { opacity: 0.96019; }
-  55% { opacity: 0.08594; }
-  60% { opacity: 0.20313; }
-  65% { opacity: 0.71988; }
-  70% { opacity: 0.53455; }
-  75% { opacity: 0.37288; }
-  80% { opacity: 0.71428; }
-  85% { opacity: 0.70419; }
-  90% { opacity: 0.7003; }
-  95% { opacity: 0.36108; }
-  100% { opacity: 0.24387; }
+@keyframes neural-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4); }
+  70% { box-shadow: 0 0 0 20px rgba(255, 0, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
 }
 
-.animate-flicker {
-  animation: flicker 0.15s infinite;
+.animate-neural {
+  animation: neural-pulse 2s infinite;
+}
+
+.flicker-text {
+  animation: flicker 0.2s infinite;
+}
+
+@keyframes flicker {
+  0% { opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { opacity: 0.9; }
 }
