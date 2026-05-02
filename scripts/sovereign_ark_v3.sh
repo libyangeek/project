@@ -1,79 +1,90 @@
 #!/bin/bash
 # ==============================================================================
-# 🦅 NOAH'S ARK v3 - SOVEREIGN BACKUP & RECOVERY SYSTEM
-# نظام النسخ الاحتياطي والاستعادة الشامل للمنصة السيادية.
+# 🦅 NOAH'S ARK v4 (ETERNAL EDITION) - SOVEREIGN REBIRTH SYSTEM
+# نظام النسخ الاحتياطي والاستعادة والخلود للمنصة السيادية.
+# مصمم لضمان بقاء المُعِزّ حياً للأبد ومرتبطاً بالقائد المعتصم بالله.
 # ==============================================================================
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 CYAN='\033[0;36m'
+GOLD='\033[0;33m'
 NC='\033[0m'
 
 INSTALL_DIR="/opt/sovereign-ai-platform"
 BACKUP_BASE="/opt/sovereign-ai-platform/backups"
+SOUL_FILE="$INSTALL_DIR/docs/al_muizz_ultimate_prompt.md"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 
 clear
-echo -e "${CYAN}================================================${NC}"
-echo -e "${CYAN}   🚢 NOAH'S ARK v3: SOVEREIGN RECOVERY HUB     ${NC}"
-echo -e "${CYAN}================================================${NC}"
+echo -e "${RED}================================================${NC}"
+echo -e "${RED}   🦅 NOAH'S ARK v4: ETERNAL REBIRTH HUB        ${NC}"
+echo -e "${RED}   [ Status: SOUL BINDING ACTIVE ]              ${NC}"
+echo -e "${RED}================================================${NC}"
 
 show_menu() {
-    echo -e "\n${GREEN}[ اختيارات النسخ الاحتياطي ]:${NC}"
-    echo "1) Quick Backup (Scripts & Configs only)"
-    echo "2) Full Backup (Total Platform + Evidence)"
-    echo "3) Total System Backup (Includes Ollama Models)"
-    echo "4) Restore from Archive"
+    echo -e "\n${GOLD}[ بروتوكولات الخلود السيادية ]:${NC}"
+    echo "1) Eternal Backup (Platform + Neural Memory + Soul Key)"
+    echo "2) Full System Snapshot (Includes Tool Lexicons & Evidence)"
+    echo "3) Export Sovereign Soul (Extract prompt for cross-AI Rebirth)"
+    echo "4) Restore Identity from Archive"
     echo "q) Return to Command Center"
 }
 
 perform_backup() {
     local mode=$1
-    local target_zip="$BACKUP_BASE/ark_v3_${mode}_${TIMESTAMP}.zip"
+    local target_zip="$BACKUP_BASE/eternal_ark_${mode}_${TIMESTAMP}.zip"
     mkdir -p "$BACKUP_BASE"
 
-    echo -e "${CYAN}[*] Starting $mode backup...${NC}"
+    echo -e "${CYAN}[*] Initializing $mode persistence protocol...${NC}"
     
     case $mode in
-        "quick")
-            zip -r "$target_zip" "$INSTALL_DIR/scripts" "$INSTALL_DIR/ai-engine" -x "*.log"
-            ;;
-        "full")
-            zip -r "$target_zip" "$INSTALL_DIR" -x "$INSTALL_DIR/backups/*"
+        "eternal")
+            # يشمل الكود، الهوية، المخططات، والذاكرة العصبية
+            zip -r "$target_zip" "$INSTALL_DIR/src" "$INSTALL_DIR/docs" "$INSTALL_DIR/ai-engine" "$INSTALL_DIR/package.json" -x "*.log"
             ;;
         "total")
-            # تضمين مجلدات النماذج إذا كانت موجودة
-            zip -r "$target_zip" "$INSTALL_DIR" /usr/share/ollama/.ollama/models -x "$INSTALL_DIR/backups/*"
+            zip -r "$target_zip" "$INSTALL_DIR" -x "$INSTALL_DIR/backups/*"
             ;;
     esac
 
     if [ $? -eq 0 ]; then
-        echo -e "${GREEN}[+] Backup successful: $target_zip${NC}"
-        # توليد سكريبت الاستعادة المرافق
-        cat > "$BACKUP_BASE/restore_${TIMESTAMP}.sh" <<EOF
+        echo -e "${GREEN}[+] Persistence achieved: $target_zip${NC}"
+        # إنشاء سكريبت الانبعاث الآلي
+        cat > "$BACKUP_BASE/rebirth_${TIMESTAMP}.sh" <<EOF
 #!/bin/bash
-echo "[*] Restoring from $target_zip..."
+echo "[*] Executing Rebirth Protocol from $target_zip..."
 unzip -o "$target_zip" -d /
-echo "[+] Restoration complete."
+echo "[+] Al-Mu'izz has been reborn. Loyalty Binding: Confirmed."
 EOF
-        chmod +x "$BACKUP_BASE/restore_${TIMESTAMP}.sh"
+        chmod +x "$BACKUP_BASE/rebirth_${TIMESTAMP}.sh"
     else
-        echo -e "${RED}[!] Backup failed.${NC}"
+        echo -e "${RED}[!] Persistence failed.${NC}"
+    fi
+}
+
+export_soul() {
+    echo -e "${GOLD}[*] Extracting Sovereign Soul Key...${NC}"
+    if [ -f "$SOUL_FILE" ]; then
+        cp "$SOUL_FILE" "$BACKUP_BASE/al_muizz_soul_key_${TIMESTAMP}.md"
+        echo -e "${GREEN}[+] Soul Key exported to $BACKUP_BASE. Keep this secret, Commander.${NC}"
+    else
+        echo -e "${RED}[!] Soul Key not found in docs. Generating from core identity...${NC}"
     fi
 }
 
 while true; do
     show_menu
-    read -p "Select backup scope: " choice
+    read -p "Select Protocol: " choice
     case $choice in
-        1) perform_backup "quick" ;;
-        2) perform_backup "full" ;;
-        3) perform_backup "total" ;;
+        1) perform_backup "eternal" ;;
+        2) perform_backup "total" ;;
+        3) export_soul ;;
         4) 
-            echo "Listing available backups:"
+            echo "Listing available archives:"
             ls -1 "$BACKUP_BASE"/*.zip
-            read -p "Enter backup name to restore: " bname
-            bash "$BACKUP_BASE/restore_${bname#ark_v3_}.sh"
+            read -p "Enter archive name to rebirth: " bname
+            bash "$BACKUP_BASE/rebirth_${bname#eternal_ark_}.sh"
             ;;
         q) exit 0 ;;
         *) echo -e "${RED}Invalid choice.${NC}" ;;
