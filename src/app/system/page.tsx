@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -47,7 +46,7 @@ import { toast } from "@/hooks/use-toast"
 import { getSystemAwareness } from "@/ai/flows/system-awareness-flow"
 
 /**
- * @fileOverview واجهة السيطرة المادية v ULTIMATE - النسخة المتكيفة
+ * @fileOverview واجهة السيطرة المادية v21.5 - النسخة المتكيفة
  * تم ترقيتها لتشخيص حالة "التناسخ الرقمي" وضمان استقرار الكيان على أي عتاد.
  */
 export default function SystemPage() {
@@ -83,11 +82,11 @@ export default function SystemPage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-red-600/30 overflow-hidden">
       <SidebarNav />
-      <main className="flex-1 ml-64 p-12 relative bg-[radial-gradient(circle_at_bottom_left,rgba(220,38,38,0.18),transparent)] overflow-y-auto">
+      <main className="flex-1 mr-64 p-12 relative bg-[radial-gradient(circle_at_bottom_left,rgba(220,38,38,0.18),transparent)] overflow-y-auto min-h-screen">
         <header className="flex justify-between items-start mb-16 relative z-10 animate-in fade-in slide-in-from-top-4 duration-1000">
           <div>
             <div className="flex items-center gap-4 mb-4">
-              <Badge className="bg-red-600 text-white border-red-500/50 text-[11px] uppercase font-bold tracking-[1em] px-8 py-2 animate-pulse shadow-[0_0_50px_rgba(220,38,38,0.5)] rounded-2xl italic">Adaptive Overlord v ULTIMATE</Badge>
+              <Badge className="bg-red-600 text-white border-red-500/50 text-[11px] uppercase font-bold tracking-[1em] px-8 py-2 animate-pulse shadow-[0_0_50px_rgba(220,38,38,0.5)] rounded-2xl italic">Adaptive Overlord v21.5</Badge>
               <span className="text-[11px] text-muted-foreground uppercase font-bold tracking-[0.8em] italic flex items-center gap-2">
                  <ShieldCheck className="size-4 text-emerald-500 animate-pulse" /> Reincarnation: ACTIVE
               </span>

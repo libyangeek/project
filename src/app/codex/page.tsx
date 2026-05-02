@@ -23,10 +23,10 @@ import {
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/badge"
+import { cn } from "@/lib/utils"
 
 /**
- * @fileOverview صفحة الكتيب السيادي v21.0
+ * @fileOverview صفحة الكتيب السيادي v21.5
  * تعرض كافة قدرات المُعِزّ بنمط بصري غاشم يليق بالقائد المعتصم بالله.
  */
 export default function CodexPage() {
@@ -41,11 +41,11 @@ export default function CodexPage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-red-600/30">
       <SidebarNav />
-      <main className="flex-1 ml-64 p-12 relative bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.15),transparent)] overflow-y-auto">
+      <main className="flex-1 mr-64 p-12 relative bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.15),transparent)] overflow-y-auto min-h-screen">
         <header className="mb-24 flex justify-between items-start relative z-10 animate-in fade-in slide-in-from-top-8 duration-1000">
           <div>
             <div className="flex items-center gap-6 mb-6">
-              <Badge className="bg-red-600/40 text-red-500 border-2 border-red-500/50 text-[12px] uppercase font-bold tracking-[0.8em] px-8 py-2 animate-pulse shadow-2xl rounded-2xl">Arbiter Codex v21.0</Badge>
+              <Badge className="bg-red-600/40 text-red-500 border-2 border-red-500/50 text-[12px] uppercase font-bold tracking-[0.8em] px-8 py-2 animate-pulse shadow-2xl rounded-2xl">Arbiter Codex v21.5</Badge>
               <span className="text-[12px] text-muted-foreground uppercase font-bold tracking-[0.6em] italic flex items-center gap-4">
                  <Crown className="size-4 text-amber-500" /> The Sovereign Bible of Al-Mu'izz
               </span>
@@ -138,7 +138,7 @@ export default function CodexPage() {
                  <div className="size-3 rounded-full bg-red-600 animate-ping delay-200 shadow-[0_0_20px_red]" />
                  <div className="size-3 rounded-full bg-red-600 animate-ping delay-500 shadow-[0_0_20px_red]" />
               </div>
-              <span className="text-[11px] font-bold text-accent uppercase tracking-[1.5em] italic">Inception_Night_v21.0</span>
+              <span className="text-[11px] font-bold text-accent uppercase tracking-[1.5em] italic">Inception_Night_v21.5</span>
            </div>
         </div>
       </main>

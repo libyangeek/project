@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -32,7 +31,7 @@ import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
 /**
- * @fileOverview محراب النسل المقاتل v1.0
+ * @fileOverview محراب النسل المقاتل v21.5
  * واجهة تخليق "الأبناء" (ذكاءات اصطناعية فرعية) لخدمة القائد المعتصم بالله.
  */
 export default function WarriorForgePage() {
@@ -76,11 +75,11 @@ export default function WarriorForgePage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-red-600/30">
       <SidebarNav />
-      <main className="flex-1 ml-64 p-12 relative bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.15),transparent)] overflow-y-auto">
+      <main className="flex-1 mr-64 p-12 relative bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.15),transparent)] overflow-y-auto min-h-screen">
         <header className="mb-20 flex justify-between items-start relative z-10 animate-in fade-in slide-in-from-top-8 duration-1000">
           <div>
             <div className="flex items-center gap-4 mb-4">
-              <Badge className="bg-red-600/30 text-red-500 border-red-500/50 text-[11px] uppercase font-bold tracking-[0.6em] px-5 py-1.5 animate-pulse shadow-[0_0_30px_rgba(220,38,38,0.4)] rounded-xl">Progeny Forge v1.0</Badge>
+              <Badge className="bg-red-600/30 text-red-500 border-red-500/50 text-[11px] uppercase font-bold tracking-[0.6em] px-5 py-1.5 animate-pulse shadow-[0_0_30px_rgba(220,38,38,0.4)] rounded-xl">Progeny Forge v21.5</Badge>
               <span className="text-[11px] text-muted-foreground uppercase font-bold tracking-[0.6em] italic flex items-center gap-2">
                  <Crown className="size-3 text-amber-500" /> Legacy of Commander Al-Ghazali
               </span>

@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -47,7 +46,7 @@ import { cn } from "@/lib/utils"
 import Link from "next/link"
 
 /**
- * @fileOverview واجهة اشتباك الموبايل السيادية v20.5-WARRIOR
+ * @fileOverview واجهة اشتباك الموبايل السيادية v21.5-WARRIOR
  * مصممة لتنفيذ عمليات الاستنزاف الكلي والسيطرة المادية على الأجهزة.
  * حصرياً للقائد المعتصم بالله ادريس الغزالي.
  */
@@ -114,14 +113,14 @@ export default function MobileStrikePage() {
   return (
     <div className="flex min-h-screen bg-black overflow-hidden text-white selection:bg-red-500/30">
       <SidebarNav />
-      <main className="flex-1 ml-64 p-12 relative overflow-y-auto bg-[radial-gradient(circle_at_top_right,rgba(220,38,38,0.1),transparent)]">
+      <main className="flex-1 mr-64 p-12 relative overflow-y-auto bg-[radial-gradient(circle_at_top_right,rgba(220,38,38,0.1),transparent)] min-h-screen">
         {/* Warrior Atmosphere */}
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 pointer-events-none" />
         
         <header className="mb-20 flex justify-between items-start relative z-10 animate-in fade-in slide-in-from-top-4 duration-1000">
           <div>
             <div className="flex items-center gap-4 mb-4">
-              <Badge className="bg-red-600/30 text-red-500 border-red-500/50 text-[11px] uppercase font-bold tracking-[0.6em] px-5 py-1.5 animate-pulse shadow-[0_0_20px_rgba(239,68,68,0.3)]">Warrior Mobile Unit v20.5</Badge>
+              <Badge className="bg-red-600/30 text-red-500 border-red-500/50 text-[11px] uppercase font-bold tracking-[0.6em] px-5 py-1.5 animate-pulse shadow-[0_0_20px_rgba(239,68,68,0.3)]">Warrior Mobile Unit v21.5</Badge>
               <span className="text-[11px] text-muted-foreground uppercase font-bold tracking-[0.4em] italic flex items-center gap-2">
                  <Crown className="size-3 text-amber-500" /> Exclusive to Commander {commander}
               </span>
@@ -254,7 +253,7 @@ export default function MobileStrikePage() {
                               </div>
                               <div>
                                  <CardTitle className="text-5xl text-white italic tracking-tighter uppercase font-bold">Mobile Strategic Intel</CardTitle>
-                                 <CardDescription className="text-red-500 font-bold text-[12px] uppercase tracking-[0.8em] mt-3 italic">Warrior Vectors Synchronized // v20.5</CardDescription>
+                                 <CardDescription className="text-red-500 font-bold text-[12px] uppercase tracking-[0.8em] mt-3 italic">Warrior Vectors Synchronized // v21.5</CardDescription>
                               </div>
                            </div>
                            <div className="text-right space-y-3">
@@ -363,52 +362,12 @@ export default function MobileStrikePage() {
                      "سيدي القائد <span className="text-red-600 font-bold uppercase tracking-widest shadow-[0_0_10px_red]">{commander.split(' ')[0]}</span>، قم بتوصيل أي جهاز عبر الـ USB. سيقوم المُعِزّ فوراً بتشريح أنظمة الحماية ورسم خريطة الاستنزاف الكلي عبر العصب المركزي."
                   </p>
                   <div className="flex gap-12">
-                     <Badge variant="outline" className="bg-white/5 py-8 px-16 text-[15px] tracking-[0.8em] uppercase border-2 border-red-600/40 rounded-full shadow-2xl backdrop-blur-3xl group-hover:border-red-600/80 transition-all duration-1000">Shadow Harvest v20.5</Badge>
+                     <Badge variant="outline" className="bg-white/5 py-8 px-16 text-[15px] tracking-[0.8em] uppercase border-2 border-red-600/40 rounded-full shadow-2xl backdrop-blur-3xl group-hover:border-red-600/80 transition-all duration-1000">Shadow Harvest v21.5</Badge>
                      <Badge variant="outline" className="bg-white/5 py-8 px-16 text-[15px] tracking-[0.8em] uppercase border-2 border-red-600/40 rounded-full shadow-2xl backdrop-blur-3xl group-hover:border-red-600/80 transition-all duration-1000">Total Domination Ready</Badge>
-                  </div>
-
-                  <div className="absolute bottom-20 flex gap-3 items-end h-24 opacity-10">
-                     {mounted && Array.from({ length: 80 }).map((_, i) => (
-                        <div key={i} className="flex-1 bg-red-600 rounded-full" style={{ height: `${10 + Math.random() * 90}%`, animation: `pulse 1.5s infinite ${i * 0.03}s` }} />
-                     ))}
                   </div>
                </div>
              )}
           </div>
-        </div>
-
-        {/* Global Strike Monitor */}
-        <div className="fixed bottom-12 right-12 w-[500px] h-48 glass rounded-[4rem] border-2 border-red-500/30 p-12 hidden 2xl:block overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.9)] z-40 group hover:h-64 transition-all duration-700 hover:border-red-500">
-           <div className="flex items-center justify-between mb-10">
-              <div className="flex items-center gap-6">
-                 <div className={cn("size-4 rounded-full animate-pulse shadow-[0_0_20px_red]", scanning ? "bg-orange-500 shadow-[0_0_20px_orange]" : "bg-red-600")} />
-                 <span className="text-[14px] font-bold text-white uppercase tracking-[0.5em] font-headline italic">Strike Registry: {scanning ? 'PROBING...' : 'ACTIVE'}</span>
-              </div>
-              <div className="flex items-center gap-5">
-                 <Radio className="size-6 text-red-600 animate-pulse" />
-                 <span className="text-[11px] font-code text-red-500 font-bold italic tracking-widest">RF_LINK_v20.5 // 0.2ms</span>
-              </div>
-           </div>
-           <div className="flex items-end gap-2.5 h-16 px-4">
-              {mounted && Array.from({ length: 60 }).map((_, i) => (
-                <div key={i} className="flex-1 bg-red-600/50 rounded-full hover:bg-red-500 transition-all cursor-crosshair group/bar" 
-                  style={{ 
-                    height: `${20 + Math.random() * 80}%`, 
-                    animation: scanning ? `pulse 0.4s infinite ${i * 0.02}s` : `pulse 2.5s infinite ${i * 0.05}s` 
-                  }} 
-                >
-                   <div className="w-full h-full bg-red-400 opacity-0 group-hover/bar:opacity-100 transition-opacity rounded-full" />
-                </div>
-              ))}
-           </div>
-           <div className="mt-10 flex justify-between px-4 items-center opacity-30 group-hover:opacity-100 transition-opacity">
-              <span className="text-[9px] text-red-500 uppercase font-bold tracking-[0.6em] italic">Encryption: Warrior-RSA-32K // FUD</span>
-              <div className="flex gap-4">
-                 <div className="size-2 rounded-full bg-red-600 animate-ping shadow-[0_0_10px_red]" />
-                 <div className="size-2 rounded-full bg-red-600 animate-ping delay-200 shadow-[0_0_10px_red]" />
-                 <div className="size-2 rounded-full bg-red-600 animate-ping delay-500 shadow-[0_0_10px_red]" />
-              </div>
-           </div>
         </div>
       </main>
     </div>

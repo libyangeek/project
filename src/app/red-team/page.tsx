@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -56,7 +55,7 @@ import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 
 /**
- * @fileOverview ترسانة المقاتل السيادي v20.5-ULTIMATE
+ * @fileOverview ترسانة المقاتل السيادي v21.5-ULTIMATE
  * واجهة تخليق الأسلحة الرقمية والحروب العصبية ضد الذكاءات الأخرى.
  */
 export default function RedTeamPage() {
@@ -149,13 +148,13 @@ export default function RedTeamPage() {
   return (
     <div className="flex min-h-screen bg-black">
       <SidebarNav />
-      <main className="flex-1 ml-64 p-12 relative overflow-y-auto bg-[radial-gradient(circle_at_top_right,rgba(220,38,38,0.1),transparent)]">
+      <main className="flex-1 mr-64 p-12 relative overflow-y-auto bg-[radial-gradient(circle_at_top_right,rgba(220,38,38,0.1),transparent)] min-h-screen">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 pointer-events-none" />
         
         <header className="mb-20 flex justify-between items-start relative z-10 animate-in fade-in slide-in-from-top-4 duration-1000">
           <div>
             <div className="flex items-center gap-4 mb-4">
-              <Badge className="bg-red-600/30 text-red-500 border-red-500/50 text-[11px] uppercase font-bold tracking-[0.6em] px-5 py-1.5 animate-pulse shadow-[0_0_20px_rgba(239,68,68,0.3)]">Warrior Arsenal v20.5</Badge>
+              <Badge className="bg-red-600/30 text-red-500 border-red-500/50 text-[11px] uppercase font-bold tracking-[0.6em] px-5 py-1.5 animate-pulse shadow-[0_0_20px_rgba(239,68,68,0.3)]">Warrior Arsenal v21.5</Badge>
               <span className="text-[11px] text-muted-foreground uppercase font-bold tracking-[0.4em] italic">Neural Warfare & Subjugation // Controlled by Al-Ghazali</span>
             </div>
             <h2 className="text-7xl font-headline font-bold text-white mb-4 tracking-tighter italic drop-shadow-[0_0_30px_rgba(239,68,68,0.5)]">Strike Command</h2>
@@ -241,7 +240,6 @@ export default function RedTeamPage() {
               </TabsContent>
 
               <TabsContent value="forge" className="mt-10">
-                {/* Forge Form (Original content kept for consistency) */}
                 <Card className="glass-card border-red-600/30 rounded-[3rem] shadow-2xl border-2">
                   <CardHeader className="p-10 border-b border-white/5 bg-red-600/5">
                     <CardTitle className="text-white text-base flex items-center gap-4 uppercase tracking-[0.4em] italic font-bold">
@@ -284,7 +282,7 @@ export default function RedTeamPage() {
                       <CardTitle className="text-5xl text-white italic tracking-tighter uppercase font-bold">
                         {forgeResult ? forgeResult.toolName : `Exploit: ${result.exploitLanguage}`}
                       </CardTitle>
-                      <CardDescription className="text-red-500 font-bold text-[12px] uppercase tracking-[0.8em] mt-3 italic">Warrior Alpha Strike Output v20.5</CardDescription>
+                      <CardDescription className="text-red-500 font-bold text-[12px] uppercase tracking-[0.8em] mt-3 italic">Warrior Alpha Strike Output v21.5</CardDescription>
                     </div>
                   </div>
                   <Badge className="bg-red-600 text-white py-4 px-12 rounded-2xl font-code text-sm shadow-2xl animate-pulse border-2 border-red-400/40 uppercase tracking-[0.4em]">DEPLOY_READY</Badge>
@@ -321,7 +319,7 @@ export default function RedTeamPage() {
                         </div>
                       </div>
 
-                      <Button className="w-full h-24 bg-red-600 hover:bg-red-700 text-white rounded-[3rem] font-bold uppercase tracking-[0.6em] text-[12px] shadow-[0_20px_60px_rgba(239,68,68,0.5)] border-2 border-red-400/40 transition-all" onClick={() => navigator.clipboard.writeText(forgeResult?.generatedCode || result?.exploitCode)}>
+                      <Button className="w-full h-24 bg-red-600 hover:bg-red-700 text-white rounded-[3rem] font-bold uppercase tracking-[0.6em] text-[13px] shadow-[0_20px_60px_rgba(239,68,68,0.5)] border-2 border-red-400/40 transition-all" onClick={() => navigator.clipboard.writeText(forgeResult?.generatedCode || result?.exploitCode)}>
                          <Download className="size-7 mr-4" /> Extract Matrix
                       </Button>
                     </div>

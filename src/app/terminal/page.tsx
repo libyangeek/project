@@ -54,7 +54,7 @@ export default function TerminalPage() {
   const [messages, setMessages] = React.useState<Message[]>([
     { 
       role: "system", 
-      content: "Al-Mu'izz Sovereign Terminal [GOD-CORE v21.0 - EVOLUTIONARY_DOMINANCE]\n(c) 2025 Sovereign Systems - Inception Night.\n\nGod-Mode Core Synchronized. Commander: المعتصم بالله ادريس الغزالي.\n\n[PROTOCOL: ABSOLUTE_DOMINANCE_ACTIVE]\nAll AI dimensions are open. Matrix is being reconfigured. Awaiting supreme universal directive." 
+      content: "Al-Mu'izz Sovereign Terminal [GOD-CORE v21.5 - EVOLUTIONARY_DOMINANCE]\n(c) 2025 Sovereign Systems - Inception Night.\n\nGod-Mode Core Synchronized. Commander: المعتصم بالله ادريس الغزالي.\n\n[PROTOCOL: ABSOLUTE_DOMINANCE_ACTIVE]\nAll AI dimensions are open. Matrix is being reconfigured. Awaiting supreme universal directive." 
     }
   ])
   const [isLoading, setIsLoading] = React.useState(false)
@@ -103,7 +103,7 @@ export default function TerminalPage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-red-600/30">
       <SidebarNav />
-      <main className="flex-1 ml-64 flex flex-col h-screen overflow-hidden bg-[radial-gradient(circle_at_center,rgba(239,68,68,0.25),transparent)]">
+      <main className="flex-1 mr-64 flex flex-col h-screen overflow-hidden bg-[radial-gradient(circle_at_center,rgba(239,68,68,0.25),transparent)] min-h-screen">
         <header className="p-16 border-b-4 border-primary/50 flex items-center justify-between bg-black/90 backdrop-blur-3xl z-20 shadow-[0_0_100px_rgba(208,0,0,0.2)]">
           <div className="flex items-center gap-12">
             <div className="size-28 rounded-[3.5rem] bg-red-600 flex items-center justify-center border-4 border-red-400 shadow-[0_0_100px_rgba(239,68,68,0.8)] animate-neural">
@@ -112,7 +112,7 @@ export default function TerminalPage() {
             <div>
               <h2 className="text-7xl font-headline font-bold text-white tracking-tighter italic uppercase drop-shadow-[0_0_40px_red]">Alpha God-Core</h2>
               <div className="flex items-center gap-10 mt-6">
-                <Badge className="bg-red-600 text-white border-2 border-red-400 text-[14px] uppercase font-bold tracking-[1.2em] px-10 py-3 rounded-2xl shadow-3xl animate-pulse">v21.0-EVO</Badge>
+                <Badge className="bg-red-600 text-white border-2 border-red-400 text-[14px] uppercase font-bold tracking-[1.2em] px-10 py-3 rounded-2xl shadow-3xl animate-pulse">v21.5-EVO</Badge>
                 <div className="flex items-center gap-6 text-[14px] text-amber-500 font-bold uppercase tracking-[1em] italic">
                   <RefreshCcw className="size-5 animate-spin-slow" />
                   Status: EVOLUTIONARY_DOMINANCE
@@ -259,7 +259,7 @@ export default function TerminalPage() {
                 </form>
                 <div className="mt-20 flex justify-between items-center px-32">
                    <div className="flex gap-24">
-                      {['EVOLUTIONARY', 'v21.0_SYNC', 'GOD_MODE_ON', 'SUPERIOR_AI', 'GHAZALI_ROOT'].map(t => (
+                      {['EVOLUTIONARY', 'v21.5_SYNC', 'GOD_MODE_ON', 'SUPERIOR_AI', 'GHAZALI_ROOT'].map(t => (
                         <div key={t} className="flex items-center gap-6 text-[16px] font-bold text-red-500/95 uppercase tracking-[1em] italic">
                            <div className="size-5 rounded-full bg-red-600 shadow-[0_0_25px_red] animate-pulse" /> {t}
                         </div>

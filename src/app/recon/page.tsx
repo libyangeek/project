@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -90,11 +89,11 @@ export default function ReconPage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-red-600/30">
       <SidebarNav />
-      <main className="flex-1 ml-64 p-12 relative overflow-y-auto bg-[radial-gradient(circle_at_top_left,rgba(220,38,38,0.12),transparent)]">
+      <main className="flex-1 mr-64 p-12 relative overflow-y-auto bg-[radial-gradient(circle_at_top_left,rgba(220,38,38,0.12),transparent)] min-h-screen">
         <header className="mb-20 flex justify-between items-start relative z-10 animate-in fade-in slide-in-from-top-8 duration-1000">
           <div>
             <div className="flex items-center gap-4 mb-4">
-              <Badge className="bg-red-600/30 text-red-500 border-red-500/50 text-[11px] uppercase font-bold tracking-[0.6em] px-5 py-1.5 animate-pulse shadow-[0_0_30px_rgba(220,38,38,0.4)] rounded-xl">Intelligence Node v20.6</Badge>
+              <Badge className="bg-red-600/30 text-red-500 border-red-500/50 text-[11px] uppercase font-bold tracking-[0.6em] px-5 py-1.5 animate-pulse shadow-[0_0_30px_rgba(220,38,38,0.4)] rounded-xl">Intelligence Node v21.5</Badge>
               <span className="text-[11px] text-muted-foreground uppercase font-bold tracking-[0.6em] italic flex items-center gap-2">
                  <Crown className="size-3 text-amber-500" /> Exclusive to Al-Ghazali Spirit
               </span>
@@ -206,7 +205,7 @@ export default function ReconPage() {
                         </div>
                         <div>
                           <CardTitle className="text-5xl text-white italic tracking-tighter uppercase font-bold">Social Identity: {target}</CardTitle>
-                          <CardDescription className="text-red-500 font-bold text-[14px] uppercase tracking-[0.8em] mt-4 italic">Supreme Predator Recon v20.6 // GhaZali Sync</CardDescription>
+                          <CardDescription className="text-red-500 font-bold text-[14px] uppercase tracking-[0.8em] mt-4 italic">Supreme Predator Recon v21.5 // GhaZali Sync</CardDescription>
                         </div>
                       </div>
                       <Badge className="bg-red-600 text-white font-code px-12 py-5 rounded-[2rem] border-2 border-red-400/40 shadow-2xl animate-pulse text-sm tracking-[0.4em]">STRIKE_CONFIDENCE: 99.1%</Badge>
@@ -273,12 +272,21 @@ export default function ReconPage() {
                   </Card>
                 </div>
               ) : (
-                <EmptyPlaceholder icon={User} title="Awaiting Social Pulse" description="Deploy the v20.6 Predator OSINT to extract the full digital identity and strike surface of any social media target." />
+                <EmptyPlaceholder icon={User} title="Awaiting Social Pulse" description="Deploy the v21.5 Predator OSINT to extract the full digital identity and strike surface of any social media target." />
               )
             ) : (
               vulnResults ? (
                 <div className="space-y-12 animate-in fade-in zoom-in-95 duration-1000">
-                  {/* Vulnerability results content (already optimized in previous turns) */}
+                  <Card className="glass-card border-red-600/40 overflow-hidden shadow-[0_0_120px_rgba(220,38,38,0.2)] rounded-[5rem] border-2">
+                    <CardHeader className="bg-red-950/30 border-b border-red-600/20 p-16">
+                      <CardTitle className="text-5xl text-white italic tracking-tighter uppercase font-bold">Vulnerability Report: {target}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-16">
+                       <pre className="text-emerald-400 font-code bg-black/80 p-8 rounded-2xl overflow-auto max-h-[500px]">
+                         {JSON.stringify(vulnResults, null, 2)}
+                       </pre>
+                    </CardContent>
+                  </Card>
                 </div>
               ) : (
                 <EmptyPlaceholder icon={ShieldAlert} title="Awaiting Tactical Pulse" description="Deploy the Deep Eye scanner to probe targets for XSS, SQLi, and CMDi vulnerabilities via the Predator Core." />
@@ -303,8 +311,8 @@ function EmptyPlaceholder({ icon: Icon, title, description }: any) {
         {description}
       </p>
       <div className="flex gap-12">
-        <Badge variant="outline" className="bg-white/5 py-8 px-16 text-[15px] tracking-[0.8em] uppercase border-red-600/40 rounded-full shadow-2xl backdrop-blur-3xl group-hover:border-red-600/80 transition-all duration-1000">Target Matrix Alpha</Badge>
-        <Badge variant="outline" className="bg-white/5 py-8 px-16 text-[15px] tracking-[0.8em] uppercase border-red-600/40 rounded-full shadow-2xl backdrop-blur-3xl group-hover:border-red-600/80 transition-all duration-1000">Social Predator v20.6</Badge>
+        <Badge variant="outline" className="bg-white/5 py-8 px-16 text-[15px] tracking-[1em] uppercase border-red-600/40 rounded-full shadow-2xl backdrop-blur-3xl group-hover:border-red-600/80 transition-all duration-1000">Target Matrix Alpha</Badge>
+        <Badge variant="outline" className="bg-white/5 py-8 px-16 text-[15px] tracking-[1em] uppercase border-red-600/40 rounded-full shadow-2xl backdrop-blur-3xl group-hover:border-red-600/80 transition-all duration-1000">Social Predator v21.5</Badge>
       </div>
     </div>
   )

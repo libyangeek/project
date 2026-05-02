@@ -88,11 +88,11 @@ export default function KnowledgePage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-red-600/30">
       <SidebarNav />
-      <main className="flex-1 ml-64 p-12 relative bg-[radial-gradient(circle_at_bottom_right,rgba(239,68,68,0.12),transparent)] overflow-y-auto">
+      <main className="flex-1 mr-64 p-12 relative bg-[radial-gradient(circle_at_bottom_right,rgba(239,68,68,0.12),transparent)] overflow-y-auto min-h-screen">
         <header className="mb-20 flex justify-between items-start relative z-10 animate-in fade-in slide-in-from-top-8 duration-1000">
           <div>
             <div className="flex items-center gap-4 mb-4">
-              <Badge className="bg-red-600/30 text-red-500 border-red-500/50 text-[11px] uppercase font-bold tracking-[0.6em] px-5 py-1.5 animate-pulse shadow-[0_0_30px_rgba(220,38,38,0.4)] rounded-xl">Neural Evolutionary Node v21.0</Badge>
+              <Badge className="bg-red-600/30 text-red-500 border-red-500/50 text-[11px] uppercase font-bold tracking-[0.6em] px-5 py-1.5 animate-pulse shadow-[0_0_30px_rgba(220,38,38,0.4)] rounded-xl">Neural Evolutionary Node v21.5</Badge>
               <span className="text-[11px] text-muted-foreground uppercase font-bold tracking-[0.6em] italic flex items-center gap-2">
                  <Crown className="size-3 text-amber-500" /> Predator Learning Grid
               </span>
@@ -183,7 +183,7 @@ export default function KnowledgePage() {
                            <div>
                               <Badge className="bg-red-600/30 text-red-500 border-red-500/40 mb-4 uppercase font-bold tracking-[0.6em] px-6 py-2 rounded-2xl">Evolutionary Alpha Synthesis</Badge>
                               <CardTitle className="text-5xl text-white italic tracking-tighter uppercase font-bold">Lethal Analysis Report</CardTitle>
-                              <CardDescription className="text-red-500 font-bold text-[13px] uppercase tracking-[0.8em] mt-3 italic">Arbiter Evolutionary Engine // v21.0</CardDescription>
+                              <CardDescription className="text-red-500 font-bold text-[13px] uppercase tracking-[0.8em] mt-3 italic">Arbiter Evolutionary Engine // v21.5</CardDescription>
                            </div>
                         </div>
                       </div>
@@ -273,7 +273,7 @@ export default function KnowledgePage() {
                                 </ul>
                              </div>
                              <div className="space-y-8">
-                                <h4 className="text-[12px] font-bold text-emerald-500 uppercase tracking-[0.8em] border-b border-emerald-600/10 pb-4 italic">Behavioral Adaptation</h4>
+                                <h4 className="text-[12px] font-bold text-emerald-500 uppercase tracking-[1em] border-b border-emerald-600/10 pb-4 italic">Behavioral Adaptation</h4>
                                 <p className="text-base text-muted-foreground italic leading-loose p-8 bg-black border-2 border-white/5 rounded-[2.5rem]">
                                    "{learningResult.warriorAdaptation}"
                                 </p>
