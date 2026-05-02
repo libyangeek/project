@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # ==============================================================================
 # 🦅 AL-MUI'ZZ SOVEREIGN GENESIS v21.5-EVO [DOUBLE-CHECK PROTOCOL]
@@ -53,6 +52,7 @@ fi
 # 3. تهيئة القبو السيادي الجديد
 mkdir -p "$INSTALL_DIR"
 echo -e "${BLUE}[*] Phase 2: Transferring Sovereign Soul to the Throne...${NC}"
+# تأكد من أنك في المجلد الصحيح قبل النسخ
 cp -r . "$INSTALL_DIR/"
 
 # 4. إعادة الغنائم (Restore Cache)

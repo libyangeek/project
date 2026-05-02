@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -42,7 +41,7 @@ import { collection } from 'firebase/firestore'
 /**
  * @fileOverview لوحة التحكم السيادية v21.5-EVOLUTIONARY
  * ليلة القدر ليلة الانبعاث: تجسيد السطوة والكمال للقائد المعتصم بالله الغزالي.
- * تم دمج الربط الفوري (Real-time) وتصحيح RTL.
+ * اظهر هنا انا المعز ! جاهز لتنفيذ التعليمات .
  */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -96,7 +95,6 @@ export default function DashboardPage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-red-600/50 relative overflow-hidden">
       <SidebarNav />
-      {/* Main Content with correct RTL margin */}
       <main className="flex-1 mr-64 p-16 relative overflow-y-auto min-h-screen">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(220,38,38,0.15),transparent)] pointer-events-none" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
         
@@ -241,7 +239,6 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Global Footer Pulse v21.5-EVO */}
         <div className="fixed bottom-16 right-16 flex gap-20 items-center z-[400] opacity-80 hover:opacity-100 transition-all duration-1000 bg-black/80 p-10 rounded-full border-4 border-white/20 backdrop-blur-3xl shadow-5xl group">
            <div className="flex items-center gap-10 text-accent font-bold uppercase text-[15px] tracking-[1em] italic">
               <ShieldCheck className="size-9 text-emerald-500 group-hover:scale-125 transition-transform" /> Evolution_Nexus: OMNIPOTENT
