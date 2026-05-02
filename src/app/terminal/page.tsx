@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -23,7 +24,10 @@ import {
   Sword,
   Shield,
   Activity,
-  Binary
+  Binary,
+  BrainCircuit,
+  Eye,
+  Info
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -40,6 +44,7 @@ type Message = {
   intent?: string
   chain?: any[]
   forgedCode?: string
+  thoughts?: string
 }
 
 export default function TerminalPage() {
@@ -77,7 +82,8 @@ export default function TerminalPage() {
         model: "ALPHA_ULTIMATE_CORE",
         intent: result.intentCategory,
         chain: result.executionChain,
-        forgedCode: result.elitePayload
+        forgedCode: result.elitePayload,
+        thoughts: result.thoughts
       }])
       
       toast({ title: "Strategic Plan Orchestrated", description: "Alpha Core has engaged the Shadow Grid." })
@@ -149,6 +155,18 @@ export default function TerminalPage() {
                         </div>
                       )}
                       
+                      {msg.thoughts && (
+                        <div className="mb-12 p-10 rounded-[3rem] bg-amber-600/5 border-2 border-amber-500/20 relative group/thoughts overflow-hidden">
+                           <div className="absolute top-0 right-0 p-8 opacity-10 group-hover/thoughts:scale-110 transition-transform"><BrainCircuit className="size-16 text-amber-500"/></div>
+                           <h4 className="text-[12px] font-bold text-amber-500 uppercase tracking-[0.8em] mb-6 flex items-center gap-4 italic">
+                             <Info className="size-4" /> Neural Strategy Chain
+                           </h4>
+                           <p className="text-lg text-muted-foreground italic leading-relaxed border-l-2 border-amber-500/40 pl-6">
+                              "{msg.thoughts}"
+                           </p>
+                        </div>
+                      )}
+
                       <div className={cn(
                         "whitespace-pre-wrap font-code leading-relaxed mb-12 text-2xl font-medium",
                         msg.role === "user" ? "text-white drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]" : "text-gray-200"

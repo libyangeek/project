@@ -25,7 +25,9 @@ import {
   Sword,
   Shield,
   TrendingUp,
-  Target
+  Target,
+  Ghost,
+  EyeOff
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -79,6 +81,13 @@ export default function SystemPage() {
     })
   }
 
+  const handleGhostProtocol = () => {
+    toast({
+      title: "Ghost Protocol Activated",
+      description: "Purging all system traces and initializing anti-forensic shroud."
+    })
+  }
+
   if (!mounted) return null;
 
   return (
@@ -97,8 +106,8 @@ export default function SystemPage() {
             </p>
           </div>
           <div className="flex gap-6">
-            <Button onClick={handleSelfEvolve} variant="outline" className="border-red-600/50 bg-red-950/20 hover:bg-red-600/20 text-red-500 rounded-3xl h-20 px-10 shadow-2xl transition-all text-[11px] font-bold uppercase tracking-[0.5em] border-2">
-              <TrendingUp className="size-6 mr-4 animate-bounce" /> Boost Experience
+            <Button onClick={handleGhostProtocol} variant="outline" className="border-amber-600/50 bg-amber-950/20 hover:bg-amber-600/20 text-amber-500 rounded-3xl h-20 px-10 shadow-2xl transition-all text-[11px] font-bold uppercase tracking-[0.5em] border-2">
+              <Ghost className="size-6 mr-4 animate-pulse" /> Ghost Protocol
             </Button>
             <Button onClick={handleRefresh} disabled={refreshing} className="bg-red-600 hover:bg-red-700 text-white rounded-3xl h-20 px-12 shadow-[0_0_50px_rgba(220,38,38,0.5)] transition-all text-[11px] font-bold uppercase tracking-[0.5em] border-2 border-red-400/40">
               {refreshing ? <Loader2 className="size-6 animate-spin mr-4" /> : <Sword className="size-6 mr-4" />}
@@ -164,7 +173,7 @@ export default function SystemPage() {
                         { title: "Initiative Nerve", desc: "Proactive strike suggestions and auto-recon.", icon: Wand2, status: "READY" },
                         { title: "Adaptation Matrix", desc: "Real-time reconfiguration under defensive pressure.", icon: Layers, status: "ARMED" },
                         { title: "Experience Siphon", desc: "Extracting tactical data from each mission.", icon: TrendingUp, status: "EVOLVING" },
-                        { title: "Warrior Essence", desc: "100% Synchronization with Commander's spirit.", icon: Crown, status: "ACTIVE" }
+                        { title: "Ghost Protocol", desc: "Automatic trace removal and identity shrouding.", icon: EyeOff, status: "ACTIVE" }
                       ].map((ess, i) => (
                         <div key={i} className="p-10 rounded-[3.5rem] bg-black/80 border border-white/10 group hover:border-red-600/50 transition-all duration-700 relative overflow-hidden shadow-2xl border-2">
                             <div className="absolute -bottom-6 -right-6 opacity-5 group-hover:scale-150 transition-transform"><ess.icon className="size-24 text-red-600"/></div>
@@ -219,7 +228,7 @@ export default function SystemPage() {
                 </div>
 
                 <div className="pt-10 border-t border-white/5 space-y-6">
-                   <Button className="w-full h-20 bg-red-600 hover:bg-red-700 text-white rounded-[2rem] font-bold uppercase tracking-[0.5em] text-[11px] shadow-[0_0_40px_rgba(220,38,38,0.4)] border-2 border-red-400/30">
+                   <Button onClick={handleSelfEvolve} className="w-full h-20 bg-red-600 hover:bg-red-700 text-white rounded-[2rem] font-bold uppercase tracking-[0.5em] text-[11px] shadow-[0_0_40px_rgba(220,38,38,0.4)] border-2 border-red-400/30">
                      Force Adaptive Mutation
                    </Button>
                 </div>
