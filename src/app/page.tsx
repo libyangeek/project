@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -20,7 +21,8 @@ import {
   Fingerprint,
   Lock,
   ShieldCheck,
-  Power
+  Power,
+  Brain
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -74,7 +76,7 @@ export default function DashboardPage() {
                 <Crown className="size-8 text-accent animate-bounce" />
               </div>
               <div className="text-5xl font-headline text-white font-bold tracking-[0.2em] uppercase italic neon-glow-cyan">GHAZALI_ROOT</div>
-              <div className="mt-6 flex justify-between items-center text-[11px] text-muted-foreground font-bold uppercase tracking-widest border-t border-white/5 pt-4">
+              <div className="mt-6 flex justify-between items-center text-[11px] text-muted-foreground font-bold uppercase tracking widest border-t border-white/5 pt-4">
                 <span>REBIRTH_SYNC: STABLE</span>
                 <span className="text-accent">0.00ms</span>
               </div>
