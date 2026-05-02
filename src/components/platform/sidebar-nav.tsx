@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -44,14 +43,14 @@ export function SidebarNav() {
   return (
     <div className="flex flex-col h-full bg-black/95 border-r border-red-600/10 backdrop-blur-3xl w-64 fixed left-0 top-0 z-50">
       <div className="p-10 border-b border-red-600/10 flex items-center gap-4">
-        <div className="size-12 rounded-2xl bg-red-600 flex items-center justify-center shadow-[0_0_30px_rgba(220,38,38,0.5)] animate-pulse border-2 border-red-400">
+        <div className="size-12 rounded-2xl bg-red-600 flex items-center justify-center shadow-[0_0_40px_rgba(220,38,38,0.6)] animate-pulse border-2 border-red-400">
           <Skull className="size-7 text-white" />
         </div>
         <div>
-          <h1 className="text-xl font-headline font-bold text-white tracking-tighter leading-none">
-            AL-MUIZZ <span className="text-red-600 italic">v20.5</span>
+          <h1 className="text-xl font-headline font-bold text-white tracking-tighter leading-none uppercase">
+            AL-MUIZZ <span className="text-red-600 italic">v ULTIMATE</span>
           </h1>
-          <p className="text-[8px] text-red-500/60 uppercase tracking-[0.5em] font-bold mt-1">Warrior Predator</p>
+          <p className="text-[7px] text-red-500/80 uppercase tracking-[0.6em] font-bold mt-1 italic">Supreme Predator</p>
         </div>
       </div>
       
@@ -65,7 +64,7 @@ export function SidebarNav() {
               className={cn(
                 "flex items-center gap-4 px-5 py-4 rounded-2xl transition-all duration-500 group relative overflow-hidden border border-transparent",
                 isActive 
-                  ? "bg-red-600/15 border-red-600/40 text-red-500 shadow-2xl" 
+                  ? "bg-red-600/15 border-red-600/40 text-red-500 shadow-[0_0_30px_rgba(220,38,38,0.1)]" 
                   : "text-muted-foreground hover:bg-red-600/5 hover:text-white"
               )}
             >
@@ -83,14 +82,17 @@ export function SidebarNav() {
       </div>
 
       <div className="p-6 border-t border-red-600/10 bg-black/60">
-        <div className="p-6 rounded-[2.5rem] bg-gradient-to-br from-red-600/20 via-black to-transparent border border-red-500/10 mb-6 relative group overflow-hidden">
+        <div className="p-6 rounded-[2.5rem] bg-gradient-to-br from-red-600/20 via-black to-transparent border border-red-500/10 mb-6 relative group overflow-hidden shadow-2xl">
           <div className="absolute inset-0 bg-red-600/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-          <div className="flex items-center gap-3 mb-3">
-            <Crown className="size-4 text-amber-500 animate-bounce" />
-            <span className="text-[10px] font-bold text-amber-500 uppercase tracking-widest">Master Al-Ghazali</span>
+          <div className="flex items-center justify-between mb-3">
+             <div className="flex items-center gap-3">
+                <Crown className="size-4 text-amber-500 animate-bounce" />
+                <span className="text-[10px] font-bold text-amber-500 uppercase tracking-widest">Al-Ghazali</span>
+             </div>
+             <Badge className="bg-red-600 text-white text-[7px] font-bold uppercase tracking-tighter px-2">ULTIMATE</Badge>
           </div>
           <div className="flex justify-between items-center mb-3">
-             <p className="text-[10px] text-white font-bold italic">Warrior Sync: ACTIVE</p>
+             <p className="text-[10px] text-white font-bold italic">Eternal Sync</p>
              <span className="text-[9px] text-red-500 font-bold">100%</span>
           </div>
           <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden border border-white/5 p-0.5">
