@@ -1,15 +1,16 @@
 {
-  "name": "nextn",
-  "version": "0.1.0",
+  "name": "al-muizz-ultimate-platform",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack -p 9002",
-    "genkit:dev": "genkit start -- tsx src/ai/dev.ts",
-    "genkit:watch": "genkit start -- tsx --watch src/ai/dev.ts",
-    "build": "NODE_ENV=production next build",
-    "start": "next start",
+    "dev": "next dev -p 9002",
+    "build": "next build",
+    "start": "next start -p 9002",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "sovereign:genesis": "sudo bash scripts/sovereign_genesis.sh",
+    "sovereign:backup": "bash scripts/sovereign_ark_v3.sh",
+    "sovereign:ui": "genkit start -- tsx --watch src/ai/dev.ts"
   },
   "dependencies": {
     "@genkit-ai/google-genai": "^1.28.0",
