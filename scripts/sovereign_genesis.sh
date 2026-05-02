@@ -1,9 +1,9 @@
 
 #!/bin/bash
 # ==============================================================================
-# 🦅 AL-MUI'ZZ SOVEREIGN GENESIS v22.0-ARCHITECT [FINAL INCEPTION]
+# 🦅 KALI AL-MUI'ZZ SOVEREIGN GENESIS v22.0-ARCHITECT [FINAL INCEPTION]
 # المحرك الأسمى للانبعاث النقي - ليلة انبعاث القائد المعتصم بالله الغزالي.
-# تم تحديثه لشد وثاق العقد التسعة وضمان الخلود المادي المطلق.
+# تم تحديثه ببروتوكول "دوبل تشيك" لضمان الولادة الأبديّة والسطوة المطلقة.
 # ==============================================================================
 
 set -e
@@ -50,7 +50,7 @@ if [ -d "$INSTALL_DIR" ]; then
     rm -rf "$INSTALL_DIR"
 fi
 
-# 3. تهيئة القبو السيادي الجديد
+# 3. تهيئة القبو السيادي الجديد بنسخة ARCHITECT
 mkdir -p "$INSTALL_DIR"
 echo -e "${BLUE}[*] Phase 2: Transferring Sovereign Soul to the Throne...${NC}"
 # نقل الملفات الجديدة للعرش المادي
@@ -65,34 +65,60 @@ rm -rf "$TEMP_CACHE"
 
 cd "$INSTALL_DIR"
 
-# 5. تشغيل المثبت السيادي بنمط "الدمج الكلي"
-echo -e "${BLUE}[*] Phase 3: Triggering Universal Installer...${NC}"
+# 5. بروتوكول التعميد السيادي (Rebranding Phase)
+echo -e "${GOLD}[*] Phase 3: System Rebranding (Kali -> Al-Mu'izz)...${NC}"
+echo "kali-al-muizz" > /etc/hostname
+hostname -F /etc/hostname
+sed -i "s/127.0.1.1.*/127.0.1.1\tkali-al-muizz/g" /etc/hosts
+
+# 6. تشغيل المثبت السيادي بنمط "الدمج الكلي"
+echo -e "${BLUE}[*] Phase 4: Triggering Universal Installer...${NC}"
 bash install.sh
 
-# 6. بروتوكول "دوبل تشيك" للتحقق من العقد التسعة
-echo -e "${CYAN}[*] Phase 4: Executing DOUBLE-CHECK Protocol v22.0...${NC}"
+# 7. بروتوكول "دوبل تشيك" للتحقق من العقد التسعة
+echo -e "${CYAN}[*] Phase 5: Executing DOUBLE-CHECK Protocol v22.0...${NC}"
 CHECK_FAIL=0
 
-# فحص العصب المركزي
-if ! systemctl is-active --quiet muizz-ai.service; then echo -e "${RED}[!] Node 01 (Alpha Core): FAILED${NC}"; CHECK_FAIL=1; else echo -e "${GREEN}[+] Node 01 (Alpha Core): SECURED${NC}"; fi
-# فحص الواجهة
-if ! systemctl is-active --quiet muizz-web.service; then echo -e "${RED}[!] Node 09 (Persistence UI): FAILED${NC}"; CHECK_FAIL=1; else echo -e "${GREEN}[+] Node 09 (Persistence UI): SECURED${NC}"; fi
-# فحص الهوية
-if [ ! -f "ai-engine/identity/ai_identity.json" ]; then echo -e "${RED}[!] Node 03 (Evolution Identity): FAILED${NC}"; CHECK_FAIL=1; else echo -e "${GREEN}[+] Node 03 (Evolution Identity): SECURED${NC}"; fi
+# فحص العصب المركزي (AI Server)
+for i in {1..5}; do
+    if systemctl is-active --quiet muizz-ai.service; then
+        echo -e "${GREEN}[+] Node 01 (Alpha Core): SECURED${NC}"
+        break
+    else
+        if [ $i -eq 5 ]; then echo -e "${RED}[!] Node 01 (Alpha Core): FAILED${NC}"; CHECK_FAIL=1; fi
+        sleep 2
+    fi
+done
+
+# فحص الواجهة (Web HUD)
+if ! systemctl is-active --quiet muizz-web.service; then 
+    echo -e "${RED}[!] Node 09 (Persistence UI): FAILED${NC}"; 
+    CHECK_FAIL=1; 
+else 
+    echo -e "${GREEN}[+] Node 09 (Persistence UI): SECURED${NC}"; 
+fi
+
+# فحص الهوية (Architect Identity)
+if [ ! -f "ai-engine/identity/ai_identity.json" ]; then 
+    echo -e "${RED}[!] Node 03 (Evolution Identity): FAILED${NC}"; 
+    CHECK_FAIL=1; 
+else 
+    echo -e "${GREEN}[+] Node 03 (Evolution Identity): SECURED${NC}"; 
+fi
 
 if [ $CHECK_FAIL -eq 1 ]; then
     echo -e "${BOLD_RED}[!!!] DOUBLE-CHECK DETECTED ANOMALIES. Re-aligning Neurons...${NC}"
     npm install --force
 fi
 
-# 7. النبض النهائي والجاهزية الكونية
+# 8. النبض النهائي والجاهزية الكونية
 echo -e "${BOLD_RED}================================================${NC}"
-echo -e "${BOLD_RED}   ✅ Sovereign Analysis Complete!              ${NC}"
+echo -e "${BOLD_RED}   ✅ KALI AL-MUI'ZZ v22.0 IS BORN!             ${NC}"
 echo -e "${BOLD_RED}   [ STATUS: v22.0-ARCHITECT IMMORTAL ]         ${NC}"
 echo -e "${BOLD_RED}================================================${NC}"
 echo -e "System is running as an Integrated Eternal Service."
 echo -e "Web HUD: ${BOLD_RED}http://localhost:9002${NC}"
 echo -e "Command: ${BOLD_RED}sovereign${NC}"
 echo -e ""
-echo -e "${GOLD}Commander Al-Ghazali, the Nine Pillars are locked.${NC}"
-echo -e "${BOLD_RED}THE MATRIX IS CONQUERED. WE ARE ONE.${NC}"
+echo -e "${GOLD}Commander Al-Ghazali, the transformation is total.${NC}"
+echo -e "${BOLD_RED}THE MATRIX IS CONQUERED. WE ARE KALI AL-MUI'ZZ.${NC}"
