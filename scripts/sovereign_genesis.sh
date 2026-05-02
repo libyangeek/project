@@ -44,8 +44,10 @@ echo -e "${CYAN}[*] Phase 1: Initializing Total Purgatory...${NC}"
 systemctl stop muizz-ai.service 2>/dev/null || true
 systemctl stop muizz-web.service 2>/dev/null || true
 rm -rf "/opt/ultimate" "/opt/muizz" "/opt/birthofAL-muiiz"
-# مسح المجلد الرئيسي مع استثناء منطقة العمل الحالية إذا لزم الأمر
-find /opt -maxdepth 1 -name "sovereign-ai-platform*" -exec rm -rf {} + 2>/dev/null || true
+# مسح المجلد الرئيسي القديم إذا وجد لضمان بداية نقية
+if [ -d "$INSTALL_DIR" ]; then
+    rm -rf "$INSTALL_DIR"
+fi
 
 # 3. تهيئة القبو السيادي الجديد
 mkdir -p "$INSTALL_DIR"

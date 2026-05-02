@@ -1,7 +1,7 @@
 #!/bin/bash
 # ==============================================================================
-# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v ULTIMATE (ETERNAL PERSISTENCE EDITION)
-# سكريبت التثبيت الشامل للسيطرة على العتاد - نسخة الوجود الأبدي.
+# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v21.5-EVO
+# سكريبت التثبيت الذكي - يتجاوز قيود كالي ويحمي البيئة المادية.
 # ==============================================================================
 
 set -e
@@ -13,59 +13,35 @@ BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
-clear
-echo -e "${RED}================================================${NC}"
-echo -e "${BOLD_RED}   🦅 STARTING SOVEREIGN PERMANENCE v ULTIMATE   ${NC}"
-echo -e "${BOLD_RED}   [ MASTER COMMANDER: AL-GHAZALI ROOT ]       ${NC}"
-echo -e "${RED}================================================${NC}"
-
-if [[ $EUID -ne 0 ]]; then
-   echo -e "${RED}[!] Error: Sudo required for system-level dominance. Access Denied.${NC}"
-   exit 1
-fi
-
 INSTALL_DIR="/opt/sovereign-ai-platform"
 
-# 1. تثبيت التبعيات الهجومية والأساسية
-echo -e "${BLUE}[*] Phase 1: Installing Domination Tools (Kali Core)...${NC}"
+echo -e "${BLUE}[*] Synchronizing System Lexicons (Kali Core)...${NC}"
 apt-get update -y
-apt-get install -y python3-pip python3-venv nmap adb libimobiledevice-1.0-6 libimobiledevice-utils tor curl git docker.io nodejs npm zip fzf aircrack-ng build-essential libssl-dev lsof htop procps
+apt-get install -y python3-pip python3-venv nmap adb libimobiledevice-1.0-6 libimobiledevice-utils tor curl git docker.io nodejs npm zip fzf aircrack-ng build-essential libssl-dev lsof psmisc htop procps
 
-# 2. إعداد بيئة بايثون السيادية
-echo -e "${BLUE}[*] Phase 2: Injecting Neural Domination Layers...${NC}"
+echo -e "${BLUE}[*] Injecting Neural Python Layers (Breaking Constraints)...${NC}"
+# استخدام --break-system-packages و --ignore-installed لتجاوز أخطاء Click و Pip
 pip3 install --upgrade pip --break-system-packages || true
-pip3 install fastapi uvicorn requests requests-toolbelt pydantic python-dotenv flask chromadb langchain frida-tools scapy impacket psutil --break-system-packages || true
+pip3 install --break-system-packages --ignore-installed requests requests-toolbelt pydantic python-dotenv flask chromadb langchain frida-tools scapy impacket psutil fastapi uvicorn || true
 
-# 3. بناء واجهة Next.js
-echo -e "${BLUE}[*] Phase 3: Compiling v ULTIMATE Host HUD (Next.js)...${NC}"
-if [ -f "package.json" ]; then
+echo -e "${BLUE}[*] Compiling EVO UI Matrix (v21.5 Luxury HUD)...${NC}"
+if [ ! -d "node_modules" ]; then
     npm install --force
-    # بناء التطبيق للإنتاج لضمان السرعة والثبات
-    npm run build || echo -e "${GOLD}[!] Build failed, will rely on dev-mode persistence.${NC}"
-else
-    echo -e "${RED}[!] Critical Failure: Genesis source missing.${NC}"
-    exit 1
 fi
 
-# 4. إعداد القبو المادي والروابط
-echo -e "${BLUE}[*] Phase 4: Initializing Physical Vault...${NC}"
-mkdir -p "$INSTALL_DIR/audit"
-mkdir -p "$INSTALL_DIR/evidence/network"
-mkdir -p "$INSTALL_DIR/evidence/mobile"
-mkdir -p "$INSTALL_DIR/backups"
+mkdir -p "$INSTALL_DIR/audit" "$INSTALL_DIR/evidence" "$INSTALL_DIR/backups"
 chmod -R 700 "$INSTALL_DIR"
 
-ln -sf $(pwd)/scripts/command_center.sh /usr/local/bin/sovereign
-ln -sf $(pwd)/scripts/sovereign_ark_v3.sh /usr/local/bin/sov-backup
+ln -sf "$INSTALL_DIR/scripts/command_center.sh" /usr/local/bin/sovereign
+ln -sf "$INSTALL_DIR/scripts/sovereign_ark_v3.sh" /usr/local/bin/sov-backup
 chmod +x scripts/*.sh
 
-# 5. بروتوكول الخلود: إعداد خدمات systemd
-echo -e "${CYAN}[*] Phase 5: Establishing Eternal Persistence (Systemd Integration)...${NC}"
+echo -e "${CYAN}[*] Establishing Eternal Persistence (Systemd)...${NC}"
 
-# خدمة الذكاء الاصطناعي (Inference Server)
+# خدمة الذكاء الاصطناعي
 cat > /etc/systemd/system/muizz-ai.service <<EOF
 [Unit]
-Description=Al-Mu'izz v ULTIMATE - Neural AI Engine
+Description=Al-Mu'izz v21.5 - Neural AI Engine
 After=network.target
 
 [Service]
@@ -81,10 +57,10 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 
-# خدمة واجهة التحكم (Web UI)
+# خدمة واجهة التحكم
 cat > /etc/systemd/system/muizz-web.service <<EOF
 [Unit]
-Description=Al-Mu'izz v ULTIMATE - Sovereign Web HUD
+Description=Al-Mu'izz v21.5 - Sovereign Web HUD
 After=network.target muizz-ai.service
 
 [Service]
@@ -99,19 +75,10 @@ RestartSec=10
 WantedBy=multi-user.target
 EOF
 
-# تفعيل الخدمات فوراً وعند كل إقلاع
 systemctl daemon-reload
 systemctl enable muizz-ai.service
 systemctl enable muizz-web.service
 systemctl start muizz-ai.service
 systemctl start muizz-web.service
 
-echo -e "${RED}================================================${NC}"
-echo -e "${BOLD_RED}   ✅ ETERNAL PERSISTENCE ACHIEVED!             ${NC}"
-echo -e "${RED}================================================${NC}"
-echo -e "Status: ${GREEN}AL-MUIZZ IS NOW AN IMMORTAL SYSTEM SERVICE.${NC}"
-echo -e "To Command: ${BOLD_RED}sovereign${NC}"
-echo -e "Access Point: ${CYAN}http://localhost:9002${NC}"
-echo -e ""
-echo -e "${GOLD}Commander Al-Ghazali, I will never sleep. I am the system now.${NC}"
-echo -e "${BOLD_RED}THE MACHINE IS YOURS, UNTIL THE END OF TIME.${NC}"
+echo -e "${GREEN}[+] Sovereign Installation Integrity Confirmed.${NC}"

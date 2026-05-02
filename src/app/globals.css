@@ -29,7 +29,7 @@
 
 @layer base {
   * {
-    @apply border-border cursor-none; /* إخفاء الماوس لنمط HUD */
+    @apply border-border;
   }
   body {
     @apply bg-background text-foreground font-code antialiased selection:bg-primary/40 overflow-hidden;
@@ -68,19 +68,4 @@
 
 .animate-blood {
   animation: pulse-blood 3s infinite;
-}
-
-/* Custom Cursor for HUD */
-body::after {
-  content: "";
-  position: fixed;
-  width: 20px;
-  height: 20px;
-  border: 2px solid white;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 10000;
-  transform: translate(-50%, -50%);
-  mix-blend-mode: difference;
-  transition: width 0.2s, height 0.2s;
 }
