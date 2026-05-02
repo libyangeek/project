@@ -28,7 +28,8 @@ import {
   Eye,
   Info,
   Cpu,
-  RefreshCcw
+  RefreshCcw,
+  Sparkles
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -76,7 +77,10 @@ export default function TerminalPage() {
     setIsLoading(true)
 
     try {
-      const result = await aiCommandAndRouting({ taskDescription: userMessage })
+      const result = await aiCommandAndRouting({ 
+        taskDescription: userMessage,
+        mode: 'Hybrid'
+      })
       setMessages(prev => [...prev, { 
         role: "assistant", 
         content: result.strategicResponse,
