@@ -1,47 +1,52 @@
 #!/bin/bash
 # ==============================================================================
-# 🦅 AL-MUI'ZZ SOVEREIGN ULTIMATE v18.0.0 (MASTER PREDATOR)
-# The Ultimate AI-Powered Offensive/Defensive Cybersecurity Platform
+# 🦅 AL-MUI'ZZ SOVEREIGN ULTIMATE v18.5.0 (MASTER PREDATOR - ETERNAL)
+# محرك التحقق من نبض المنظومة السيادية وضمان بقائها حية.
 # ==============================================================================
 
 set -e
 
 INSTALL_DIR="/opt/sovereign-ai-platform"
-VERSION="18.0.0"
-CODENAME="Al-Mu'izz Predator"
-
-# [COLOR PALETTE]
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 CYAN='\033[0;36m'
+GOLD='\033[0;33m'
 NC='\033[0m'
 
 clear
 echo -e "${RED}================================================${NC}"
-echo -e "${RED}   🦅 EXECUTING SOVEREIGN MASTER v18.0          ${NC}"
-echo -e "${RED}   [ Status: ARMED & SYNCHRONIZED ]             ${NC}"
+echo -e "${RED}   🦅 CHECKING SOVEREIGN PULSE v18.5          ${NC}"
+echo -e "${RED}   [ Status: ETERNAL PERSISTENCE CHECK ]        ${NC}"
 echo -e "${RED}================================================${NC}"
 
 if [[ $EUID -ne 0 ]]; then
-   echo -e "${RED}[!] Error: This script must be run as root.${NC}"
+   echo -e "${RED}[!] Error: Root required for persistence check.${NC}"
    exit 1
 fi
 
-# تشغيل المكونات الأساسية
-echo -e "${BLUE}[*] Phase 1: Initializing Neural Grid...${NC}"
-# التأكد من تشغيل خادم الاستدلال في الخلفية
-if ! lsof -Pi :8000 -sTCP:LISTEN -t >/dev/null ; then
-    python3 ai-engine/inference/server.py &
-    echo -e "${GREEN}[+] Inference Server Activated (Port 8000)${NC}"
-else
-    echo -e "${YELLOW}[!] Inference Server already active.${NC}"
-fi
+# 1. التحقق من الخدمات
+echo -e "${BLUE}[*] Verifying Neural Grid Services...${NC}"
 
-echo -e "${BLUE}[*] Phase 2: Harvesting Local Intelligence...${NC}"
-python3 tools/hardware/model_harvester.py
+check_service() {
+    if systemctl is-active --quiet $1; then
+        echo -e "${GREEN}[+] $1 is ACTIVE and LETHAL.${NC}"
+    else
+        echo -e "${RED}[!] $1 is DOWN! Re-igniting...${NC}"
+        systemctl restart $1
+    fi
+}
 
-echo -e "${BLUE}[*] Phase 3: Launching Command Center...${NC}"
-bash scripts/command_center.sh
+check_service "muizz-ai.service"
+check_service "muizz-web.service"
+
+# 2. جرد الموارد المادية
+echo -e "${BLUE}[*] Harvesting Physical Intel...${NC}"
+python3 $INSTALL_DIR/tools/hardware/device_harvester.py
+
+# 3. العودة لمركز القيادة
+echo -e "${CYAN}[*] System is Healthy. Entering Command Center...${NC}"
+sleep 2
+bash $INSTALL_DIR/scripts/command_center.sh
 
 exit 0
