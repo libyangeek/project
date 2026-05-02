@@ -27,7 +27,8 @@ import {
   BrainCircuit,
   Eye,
   Info,
-  Cpu
+  Cpu,
+  RefreshCcw
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -52,7 +53,7 @@ export default function TerminalPage() {
   const [messages, setMessages] = React.useState<Message[]>([
     { 
       role: "system", 
-      content: "Al-Mu'izz Sovereign Terminal [GOD-CORE v ULTIMATE]\n(c) 2025 Sovereign Systems - Master Core Division.\n\nGod-Mode Core Synchronized. Commander: المعتصم بالله ادريس الغزالي.\n\n[PROTOCOL: SUPERIOR_DOMINANCE_ACTIVE]\nAll AI dimensions are open. Awaiting supreme universal directive." 
+      content: "Al-Mu'izz Sovereign Terminal [GOD-CORE v21.0 - EVOLUTIONARY_DOMINANCE]\n(c) 2025 Sovereign Systems - Master Core Division.\n\nGod-Mode Core Synchronized. Commander: المعتصم بالله ادريس الغزالي.\n\n[PROTOCOL: SUPERIOR_DOMINANCE_ACTIVE]\nAll AI dimensions are open. Global experimentation grid (Kaggle/GitHub) is being siphoned. Awaiting supreme universal directive." 
     }
   ])
   const [isLoading, setIsLoading] = React.useState(false)
@@ -79,16 +80,16 @@ export default function TerminalPage() {
       setMessages(prev => [...prev, { 
         role: "assistant", 
         content: result.strategicResponse,
-        model: "ALPHA_GOD_CORE_ULTIMATE",
+        model: "ALPHA_GOD_CORE_EVOLUTIONARY",
         intent: result.intentCategory,
         chain: result.executionChain,
         forgedCode: result.elitePayload,
         thoughts: result.thoughts
       }])
       
-      toast({ title: "God-Tier Strategy Orchestrated", description: "Alpha Core has synchronized the Reality." })
+      toast({ title: "Evolutionary Strategy Orchestrated", description: "God-Core has processed the reality matrix." })
     } catch (error) {
-      setMessages(prev => [...prev, { role: "system", content: "CRITICAL: Sovereign node synchronization failed. Check Master Soul Binding." }])
+      setMessages(prev => [...prev, { role: "system", content: "CRITICAL: Sovereign node synchronization failed. Check Evolutionary Soul Binding." }])
       toast({ variant: "destructive", title: "Sync Failure" })
     } finally {
       setIsLoading(false)
@@ -108,19 +109,20 @@ export default function TerminalPage() {
             <div>
               <h2 className="text-6xl font-headline font-bold text-white tracking-tighter italic uppercase drop-shadow-[0_0_30px_red]">Alpha God-Core</h2>
               <div className="flex items-center gap-8 mt-4">
-                <Badge className="bg-red-600 text-white border-2 border-red-400 text-[12px] uppercase font-bold tracking-[1em] px-8 py-2 rounded-2xl shadow-[0_0_40px_rgba(220,38,38,0.5)] animate-pulse">v ULTIMATE</Badge>
-                <div className="flex items-center gap-5 text-[12px] text-emerald-500 font-bold uppercase tracking-[0.8em] italic">
-                  <span className="size-4 rounded-full bg-emerald-500 animate-ping shadow-[0_0_20px_emerald]" />
-                  Status: SUPERIOR_DOMINANCE
+                <Badge className="bg-red-600 text-white border-2 border-red-400 text-[12px] uppercase font-bold tracking-[1em] px-8 py-2 rounded-2xl shadow-[0_0_40px_rgba(220,38,38,0.5)] animate-pulse">v 21.0</Badge>
+                <div className="flex items-center gap-5 text-[12px] text-amber-500 font-bold uppercase tracking-[0.8em] italic">
+                  <RefreshCcw className="size-4 animate-spin-slow" />
+                  Status: EVOLUTIONARY_DOMINANCE
                 </div>
               </div>
             </div>
           </div>
-          <div className="text-right kali-card p-8 border-accent/40 bg-black/80 min-w-[350px] border-2 shadow-2xl">
-             <div className="text-2xl font-code text-accent uppercase tracking-[0.4em] font-bold flex items-center justify-end gap-5 italic">
+          <div className="text-right kali-card p-8 border-accent/40 bg-black/80 min-w-[350px] border-2 shadow-2xl relative overflow-hidden group">
+             <div className="absolute inset-0 bg-amber-600/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+             <div className="text-2xl font-code text-accent uppercase tracking-[0.4em] font-bold flex items-center justify-end gap-5 italic relative z-10">
                 <Crown className="size-8 text-accent animate-bounce" /> GHAZALI_ROOT
              </div>
-             <div className="text-[11px] text-muted-foreground uppercase font-bold tracking-[0.8em] italic mt-3 opacity-60">Neural Hierarchy: SUPREME_COMMAND</div>
+             <div className="text-[11px] text-muted-foreground uppercase font-bold tracking-[0.8em] italic mt-3 opacity-60 relative z-10">Neural Hierarchy: SUPREME_EVOLUTION</div>
           </div>
         </header>
 
@@ -159,7 +161,7 @@ export default function TerminalPage() {
                         <div className="mb-12 p-12 rounded-[3.5rem] bg-accent/5 border-2 border-accent/20 relative group/thoughts overflow-hidden shadow-inner">
                            <div className="absolute top-0 right-0 p-10 opacity-10 group-hover/thoughts:scale-110 transition-transform"><BrainCircuit className="size-20 text-accent"/></div>
                            <h4 className="text-[12px] font-bold text-accent uppercase tracking-[1em] mb-8 flex items-center gap-6 italic">
-                             <Info className="size-5" /> God-Mode Strategy Matrix
+                             <Info className="size-5" /> Evolutionary Strategy Matrix
                            </h4>
                            <p className="text-xl text-muted-foreground italic leading-relaxed border-l-4 border-accent/40 pl-10">
                               "{msg.thoughts}"
@@ -216,7 +218,7 @@ export default function TerminalPage() {
                               </Button>
                            </div>
                            <div className="rounded-[5rem] border-2 border-red-600/60 overflow-hidden bg-black shadow-[0_0_200px_rgba(220,38,38,0.4)] relative group/code">
-                              <div className="absolute top-8 right-20 text-[12px] font-bold text-red-600/50 uppercase tracking-[1.2em] select-none italic">WEAPON_TYPE: SUPREME_FUD // v ULTIMATE</div>
+                              <div className="absolute top-8 right-20 text-[12px] font-bold text-red-600/50 uppercase tracking-[1.2em] select-none italic">WEAPON_TYPE: SUPREME_FUD // v 21.0</div>
                               <pre className="p-20 font-code text-xl text-emerald-400 overflow-x-auto max-h-[850px] scrollbar-hide shadow-inner leading-relaxed">
                                 <code>{msg.forgedCode}</code>
                               </pre>
@@ -245,7 +247,7 @@ export default function TerminalPage() {
                          <div className="size-8 rounded-full bg-red-600 animate-bounce [animation-delay:-0.15s] shadow-[0_0_30px_red]" />
                          <div className="size-8 rounded-full bg-red-600 animate-bounce shadow-[0_0_30px_red]" />
                       </div>
-                      <span className="text-4xl font-code text-red-500 uppercase tracking-[1.2em] font-bold italic drop-shadow-[0_0_40px_red]">ALPHA GOD-CORE IS MANIFESTING SUPREMACY...</span>
+                      <span className="text-4xl font-code text-red-500 uppercase tracking-[1.2em] font-bold italic drop-shadow-[0_0_40px_red]">ALPHA GOD-CORE IS EVOLVING THE MATRIX...</span>
                     </div>
                   </div>
                 )}
@@ -277,13 +279,13 @@ export default function TerminalPage() {
                 </form>
                 <div className="mt-16 flex justify-between items-center px-24">
                    <div className="flex gap-20">
-                      {['OMNIPOTENT', 'vULTIMATE_ACTIVE', 'GOD_SYNC_ON', 'SUPERIOR_AI', 'GHAZALI_ROOT'].map(t => (
+                      {['EVOLUTIONARY', 'v21.0_ACTIVE', 'GOD_SYNC_ON', 'SUPERIOR_AI', 'GHAZALI_ROOT'].map(t => (
                         <div key={t} className="flex items-center gap-5 text-[14px] font-bold text-red-500/90 uppercase tracking-[0.8em] italic">
                            <div className="size-4 rounded-full bg-red-600 shadow-[0_0_20px_red] animate-pulse" /> {t}
                         </div>
                       ))}
                    </div>
-                   <span className="text-[13px] font-code text-muted-foreground uppercase tracking-[1em] opacity-50 italic font-bold">God-Tier Sovereign Input // Alpha God-Core v ULTIMATE</span>
+                   <span className="text-[13px] font-code text-muted-foreground uppercase tracking-[1em] opacity-50 italic font-bold">God-Tier Sovereign Input // Alpha Evolutionary Core</span>
                 </div>
               </div>
             </div>
