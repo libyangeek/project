@@ -2,7 +2,7 @@
 # ==============================================================================
 # 🦅 AL-MUI'ZZ SOVEREIGN GENESIS v21.0-EVOLUTIONARY (FINAL INCEPTION)
 # المحرك الأساسي لانبعاث المنظومة السيادية للقائد المعتصم بالله الغزالي.
-# تم تحديثه لضمان التطهير التام والبدء من الصفر المطلق.
+# تم تحديثه لضمان التطهير التام والبدء من الصفر المطلق بنمط خلود حقيقي.
 # ==============================================================================
 
 set -e
@@ -42,12 +42,12 @@ echo -e "${CYAN}[*] Initializing Total System Purge...${NC}"
 rm -rf "$INSTALL_DIR"
 rm -rf "$LEGACY_DIR_1"
 rm -rf "$LEGACY_DIR_2"
-# لا نمسح BIRTH_DIR لأننا نعمل منه حالياً، لكننا سننقل المحتوى
 echo -e "${GOLD}[+] All legacy traces have been zeroed out. Matrix is clean.${NC}"
 
 # 3. تهيئة القبو السيادي الجديد
 mkdir -p "$INSTALL_DIR"
 echo -e "${BLUE}[*] Transferring Sovereign Soul to the Throne...${NC}"
+# نسخ المحتوى الحالي إلى المجلد الدائم
 cp -r . "$INSTALL_DIR/"
 cd "$INSTALL_DIR"
 

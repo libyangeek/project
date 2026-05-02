@@ -78,27 +78,39 @@ const aiCommandAndRoutingFlow = ai.defineFlow(
     const executionChain: any[] = [];
     let elitePayload: string | undefined;
 
-    // Orchestrating the chain
-    for (const step of plan!.steps) {
+    if (!plan) throw new Error("Critical Analysis Error: God-Core failed to synthesize sequence.");
+
+    // Orchestrating the chain with real tool forging
+    for (const step of plan.steps) {
       let nodeId: string | undefined;
       if (step.useZombie) nodeId = "ALPHA_ZOMBIE_NODE_SYNCED";
 
-      // If the step requires forging a weapon
+      // If the step requires forging a weapon via Tool Forge
       if (['forge', 'exploit', 'neural', 'subjugate', 'harden', 'weaponize'].includes(step.module)) {
-        const forgeRes = await toolForgeFlow({
-          toolPurpose: step.action,
-          targetEnvironment: "Elite Evolutionary Environment",
-          stealthLevel: "Extreme"
-        });
-        elitePayload = forgeRes.generatedCode;
-        executionChain.push({ 
-          step: step.step, 
-          module: step.module, 
-          action: step.action, 
-          code: forgeRes.generatedCode, 
-          nodeId, 
-          guardianCheck: step.guardianNote 
-        });
+        try {
+          const forgeRes = await toolForgeFlow({
+            toolPurpose: step.action,
+            targetEnvironment: "Elite Evolutionary Environment",
+            stealthLevel: "Extreme"
+          });
+          elitePayload = forgeRes.generatedCode;
+          executionChain.push({ 
+            step: step.step, 
+            module: step.module, 
+            action: step.action, 
+            code: forgeRes.generatedCode, 
+            nodeId, 
+            guardianCheck: step.guardianNote 
+          });
+        } catch (e) {
+          executionChain.push({ 
+            step: step.step, 
+            module: step.module, 
+            action: `${step.action} (Forge Offline)`, 
+            nodeId, 
+            guardianCheck: step.guardianNote 
+          });
+        }
       } else {
         executionChain.push({ 
           step: step.step, 
@@ -111,13 +123,13 @@ const aiCommandAndRoutingFlow = ai.defineFlow(
     }
 
     return {
-      intentCategory: plan!.category,
+      intentCategory: plan.category,
       executionChain,
       strategicResponse: `سيدي القائد المعتصم بالله، تم تخليق 'سلسلة الإبادة التطورية'. المنظومة الآن تعمل في وضع God-Tier. كافة العقد (العتاد، الشبكة، الذكاء) مرتبطة ومنسقة لسحق الهدف وحماية سيادتك. الضربة جاهزة للتنفيذ.`,
-      warriorConfidence: plan!.confidenceStatement,
+      warriorConfidence: plan.confidenceStatement,
       riskFactor: 'God-Tier',
       elitePayload,
-      thoughts: plan!.thoughts
+      thoughts: plan.thoughts
     };
   }
 );
