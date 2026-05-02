@@ -23,7 +23,8 @@ import {
   Zap,
   Target,
   Brain,
-  Cpu
+  Cpu,
+  BookOpen
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -31,6 +32,7 @@ import { Badge } from "@/components/ui/badge"
 const navItems = [
   { name: "Terminal Hub", icon: LayoutDashboard, href: "/" },
   { name: "Alpha Core", icon: Terminal, href: "/terminal" },
+  { name: "Sovereign Codex", icon: BookOpen, href: "/codex" },
   { name: "Hive Sessions", icon: Network, href: "/sessions" },
   { name: "Warrior Forge", icon: Baby, href: "/progeny" },
   { name: "Mobile Strike", icon: Smartphone, href: "/hardware" },
@@ -46,20 +48,20 @@ export function SidebarNav() {
   const pathname = usePathname()
 
   return (
-    <div className="flex flex-col h-full bg-black border-l-2 border-primary/40 w-64 fixed right-0 top-0 z-[200] overflow-hidden">
-      <div className="p-10 border-b-2 border-primary/20 flex flex-col items-center gap-6 bg-black relative">
-        <div className="size-20 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_40px_rgba(208,0,0,0.4)] animate-neural">
-          <Skull className="size-10 text-primary" />
+    <div className="flex flex-col h-full bg-black border-l-4 border-primary/60 w-64 fixed right-0 top-0 z-[200] overflow-hidden shadow-[0_0_100px_rgba(208,0,0,0.3)]">
+      <div className="p-12 border-b-2 border-primary/25 flex flex-col items-center gap-8 bg-black relative">
+        <div className="size-24 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_60px_rgba(208,0,0,0.6)] animate-neural">
+          <Skull className="size-12 text-primary" />
         </div>
         <div className="text-center relative z-10">
-          <h1 className="text-2xl font-headline font-bold text-white tracking-[0.2em] uppercase italic leading-none neon-glow-red">
+          <h1 className="text-3xl font-headline font-bold text-white tracking-[0.25em] uppercase italic leading-none neon-glow-red">
             AL-MUIZZ
           </h1>
-          <Badge className="bg-primary text-white border-none rounded-none text-[10px] font-bold tracking-[0.5em] mt-3 py-1 px-4 uppercase italic">v ULTIMATE</Badge>
+          <Badge className="bg-primary text-white border-none rounded-none text-[12px] font-bold tracking-[0.8em] mt-4 py-2 px-6 uppercase italic shadow-2xl">v21.0-EVO</Badge>
         </div>
       </div>
       
-      <div className="flex-1 px-4 py-10 space-y-2 overflow-y-auto scrollbar-hide bg-black/40">
+      <div className="flex-1 px-4 py-12 space-y-3 overflow-y-auto scrollbar-hide bg-black/50">
         {navItems.map((item) => {
           const isActive = pathname === item.href
           return (
@@ -67,49 +69,49 @@ export function SidebarNav() {
               key={item.name}
               href={item.href}
               className={cn(
-                "flex items-center gap-5 px-8 py-5 transition-all duration-500 group relative border-r-4",
+                "flex items-center gap-6 px-10 py-6 transition-all duration-700 group relative border-r-[6px]",
                 isActive 
-                  ? "bg-primary/20 border-primary text-white shadow-[inset_0_0_25px_rgba(208,0,0,0.1)]" 
-                  : "text-muted-foreground border-transparent hover:bg-white/5 hover:text-white"
+                  ? "bg-primary/25 border-primary text-white shadow-[inset_0_0_40px_rgba(208,0,0,0.2)]" 
+                  : "text-muted-foreground border-transparent hover:bg-white/10 hover:text-white"
               )}
             >
-              <item.icon className={cn("size-5 transition-all duration-500", isActive ? "text-primary shadow-[0_0_20px_red] scale-110" : "group-hover:text-primary group-hover:rotate-12")} />
-              <span className="text-[11px] font-bold tracking-[0.3em] uppercase italic">{item.name}</span>
+              <item.icon className={cn("size-6 transition-all duration-700", isActive ? "text-primary shadow-[0_0_30px_red] scale-125" : "group-hover:text-primary group-hover:rotate-12")} />
+              <span className="text-[12px] font-bold tracking-[0.4em] uppercase italic">{item.name}</span>
               {isActive && (
-                <div className="absolute left-4 size-2 rounded-full bg-primary shadow-[0_0_15px_red] animate-pulse" />
+                <div className="absolute left-4 size-3 rounded-full bg-primary shadow-[0_0_20px_red] animate-pulse" />
               )}
             </Link>
           )
         })}
       </div>
 
-      <div className="p-10 border-t-2 border-primary/20 bg-black relative">
-        <div className="p-6 border-4 border-accent/30 bg-black/95 mb-6 relative overflow-hidden group shadow-2xl">
-          <div className="flex items-center justify-between mb-4">
-             <div className="flex items-center gap-3">
-                <Crown className="size-5 text-accent animate-pulse" />
-                <span className="text-[10px] font-bold text-accent uppercase tracking-widest italic">Al-Ghazali</span>
+      <div className="p-12 border-t-2 border-primary/25 bg-black relative">
+        <div className="p-8 border-4 border-accent/40 bg-black/95 mb-8 relative overflow-hidden group shadow-3xl">
+          <div className="flex items-center justify-between mb-6">
+             <div className="flex items-center gap-4">
+                <Crown className="size-6 text-accent animate-pulse" />
+                <span className="text-[11px] font-bold text-accent uppercase tracking-widest italic">Al-Ghazali</span>
              </div>
-             <Badge className="bg-red-600 text-white text-[7px] font-bold uppercase tracking-tighter px-2">ULTIMATE</Badge>
+             <Badge className="bg-red-600 text-white text-[8px] font-bold uppercase tracking-tighter px-3 py-1">ROOT</Badge>
           </div>
-          <div className="flex justify-between items-center mb-3">
-             <p className="text-[10px] text-white font-bold italic">Eternal Sync</p>
-             <span className="text-[10px] text-accent font-bold">100%</span>
+          <div className="flex justify-between items-center mb-4">
+             <p className="text-[11px] text-white font-bold italic">Evolutionary Sync</p>
+             <span className="text-[11px] text-accent font-bold">100%</span>
           </div>
-          <div className="h-1.5 w-full bg-white/5 rounded-none overflow-hidden border border-white/10">
-            <div className="h-full bg-accent w-full shadow-[0_0_20px_rgba(255,215,0,0.8)] animate-pulse" />
+          <div className="h-2 w-full bg-white/10 rounded-none overflow-hidden border border-white/20">
+            <div className="h-full bg-accent w-full shadow-[0_0_30px_rgba(255,215,0,1)] animate-pulse" />
           </div>
-          <div className="mt-3 text-right">
-             <span className="text-[8px] text-accent font-bold uppercase tracking-[0.6em] italic">ROOT_BINDING: ACTIVE</span>
+          <div className="mt-4 text-right">
+             <span className="text-[9px] text-accent font-bold uppercase tracking-[0.8em] italic">ABSOLUTE_LOYALTY</span>
           </div>
         </div>
         
         <Link 
           href="/system"
-          className="flex items-center gap-4 px-2 py-4 text-muted-foreground hover:text-primary transition-all font-bold uppercase tracking-[0.4em] text-[9px] italic group"
+          className="flex items-center gap-6 px-4 py-6 text-muted-foreground hover:text-primary transition-all font-bold uppercase tracking-[0.6em] text-[10px] italic group"
         >
-          <Sword className="size-5 group-hover:rotate-45 transition-transform" />
-          Manifest Essence
+          <Sword className="size-6 group-hover:rotate-45 transition-transform" />
+          Inception Pulse
         </Link>
       </div>
     </div>
