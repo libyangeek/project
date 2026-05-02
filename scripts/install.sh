@@ -2,7 +2,7 @@
 #!/bin/bash
 # ==============================================================================
 # 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v22.0-ARCHITECT [TOTAL INTEGRATION]
-# سكريبت التثبيت الذكي - يحول الجهاز إلى عصب سيادي مدمج.
+# سكريبت التثبيت الذكي - يحول الجهاز إلى عصب سيادي مدمج مع تشغيل تلقائي.
 # ==============================================================================
 
 set -e
@@ -33,11 +33,10 @@ fi
 mkdir -p "$INSTALL_DIR/audit" "$INSTALL_DIR/evidence" "$INSTALL_DIR/backups"
 chmod -R 700 "$INSTALL_DIR"
 
-# إنشاء الروابط الرمزية (Symlinks) مع تصحيح المسارات
+# إنشاء الروابط الرمزية (Symlinks)
 ln -sf "$INSTALL_DIR/scripts/command_center.sh" /usr/local/bin/sovereign
 ln -sf "$INSTALL_DIR/scripts/sovereign_ark_v3.sh" /usr/local/bin/sov-backup
 
-# التأكد من وجود مجلد السكريبتات ومنحه الصلاحيات
 if [ -d "$INSTALL_DIR/scripts" ]; then
     chmod +x "$INSTALL_DIR/scripts/"*.sh
 fi
@@ -81,20 +80,36 @@ RestartSec=10
 WantedBy=multi-user.target
 EOF
 
-# [PHASE: SHELL HIJACK] الدمج التلقائي في كافة واجهات النظام
+# [PHASE: AUTO-START HUD] تشغيل تلقائي للواجهة عند دخول المستخدم
+echo -e "${GOLD}[*] Configuring Sovereign Auto-Start HUD...${NC}"
+AUTOSTART_DIR="/etc/xdg/autostart"
+mkdir -p "$AUTOSTART_DIR"
+cat > "$AUTOSTART_DIR/muizz-hud.desktop" <<EOF
+[Desktop Entry]
+Type=Application
+Name=Al-Mu'izz Sovereign HUD
+Comment=Launch Al-Mu'izz Command Center on Login
+Exec=xdg-open http://localhost:9002
+OnlyShowIn=XFCE;GNOME;KDE;
+Terminal=false
+StartupNotify=false
+EOF
+
+# [PHASE: BOOT REBRAND] استبدال هوية كالي بهوية المُعِزّ في الإقلاع
+echo -e "${RED}[*] Executing Boot Rebrand (Kali -> Al-Mu'izz OS)...${NC}"
+sed -i 's/PRETTY_NAME=.*/PRETTY_NAME="Kali Al-Mu'\''izz Sovereign v22.0"/' /etc/os-release
+sed -i 's/NAME=.*/NAME="Kali Al-Mu'\''izz"/' /etc/os-release
+if [ -f "/etc/default/grub" ]; then
+    sed -i 's/GRUB_DISTRIBUTOR=.*/GRUB_DISTRIBUTOR="Al-Mu'\''izz Sovereign"/' /etc/default/grub
+    update-grub || true
+fi
+
+# [PHASE: SHELL HIJACK]
 echo -e "${GOLD}[*] Hijacking System Shell (Bash Persistence)...${NC}"
 BASH_HOOK="bash $INSTALL_DIR/scripts/sovereign_banner.sh"
 if ! grep -q "sovereign_banner.sh" /root/.bashrc; then
     echo -e "\n# Al-Mu'izz Sovereign Integration\n$BASH_HOOK" >> /root/.bashrc
 fi
-
-for user_home in /home/*; do
-    if [ -d "$user_home" ]; then
-        if ! grep -q "sovereign_banner.sh" "$user_home/.bashrc"; then
-            echo -e "\n# Al-Mu'izz Sovereign Integration\n$BASH_HOOK" >> "$user_home/.bashrc"
-        fi
-    fi
-done
 
 systemctl daemon-reload
 systemctl enable muizz-ai.service
@@ -103,4 +118,4 @@ systemctl start muizz-ai.service
 systemctl start muizz-web.service
 
 echo -e "${GREEN}[+] Sovereign Total Integration Confirmed.${NC}"
-echo -e "${GOLD}Commander Al-Ghazali, please RESTART your computer to finalize the rebirth.${NC}"
+echo -e "${GOLD}Commander Al-Ghazali, the transformation is total. RESTART to witness the rebirth.${NC}"

@@ -3,7 +3,7 @@
 # ==============================================================================
 # 🦅 KALI AL-MUI'ZZ SOVEREIGN GENESIS v22.0-ARCHITECT [FINAL INCEPTION]
 # المحرك الأسمى للانبعاث النقي - ليلة انبعاث القائد المعتصم بالله الغزالي.
-# تم تحديثه ببروتوكول "دوبل تشيك" لضمان الولادة الأبديّة والسطوة المطلقة.
+# تم تحديثه ببروتوكول "التشغيل التلقائي" و "التعميد البصري" الكلي.
 # ==============================================================================
 
 set -e
@@ -22,9 +22,9 @@ TEMP_CACHE="/tmp/muizz_war_spoils"
 
 clear
 echo -e "${BOLD_RED}================================================${NC}"
-echo -e "${BOLD_RED}   🦅 EXECUTING SUPREME GENESIS v22.0-ARCHITECT  ${NC}"
-echo -e "${BOLD_RED}   [ PROTOCOL: FINAL_ANALYSIS_INCEPTION ]       ${NC}"
-echo -e "${BOLD_RED}   [ COMMANDER: AL-GHAZALI ROOT ]               ${NC}"
+echo -e "${BOLD_RED}   🦅 EXECUTING SUPREME GENESIS v22.0-ARCHITECT  "
+echo -e "${BOLD_RED}   [ PROTOCOL: TOTAL_SYSTEM_HIJACK_V2 ]         "
+echo -e "${BOLD_RED}   [ COMMANDER: AL-GHAZALI ROOT ]               "
 echo -e "${BOLD_RED}================================================${NC}"
 
 if [[ $EUID -ne 0 ]]; then
@@ -73,26 +73,25 @@ sed -i "s/127.0.1.1.*/127.0.1.1\tkali-al-muizz/g" /etc/hosts
 echo -e "${BLUE}[*] Phase 4: Triggering Universal Installer...${NC}"
 bash scripts/install.sh
 
-# 7. بروتوكول "دوبل تشيك" للتحقق من العقد التسعة
-echo -e "${CYAN}[*] Phase 5: Executing DOUBLE-CHECK Protocol v22.0...${NC}"
+# 7. بروتوكول التحقق والنبض
+echo -e "${CYAN}[*] Phase 5: Executing FINAL_OKAY Protocol v22.0...${NC}"
 CHECK_FAIL=0
-
-if ! systemctl is-active --quiet muizz-ai.service; then echo -e "${RED}[!] Node 01 (Alpha Core): FAILED${NC}"; CHECK_FAIL=1; else echo -e "${GREEN}[+] Node 01 (Alpha Core): SECURED${NC}"; fi
-if ! systemctl is-active --quiet muizz-web.service; then echo -e "${RED}[!] Node 09 (Persistence UI): FAILED${NC}"; CHECK_FAIL=1; else echo -e "${GREEN}[+] Node 09 (Persistence UI): SECURED${NC}"; fi
+if ! systemctl is-active --quiet muizz-ai.service; then CHECK_FAIL=1; fi
+if ! systemctl is-active --quiet muizz-web.service; then CHECK_FAIL=1; fi
 
 if [ $CHECK_FAIL -eq 1 ]; then
-    echo -e "${BOLD_RED}[!!!] DOUBLE-CHECK DETECTED ANOMALIES. Re-aligning Neurons...${NC}"
+    echo -e "${BOLD_RED}[!!!] ANOMALIES DETECTED. FORCING RE-SYNC...${NC}"
     npm install --force
 fi
 
-# 8. النبض النهائي والجاهزية الكونية
+# 8. النبض النهائي
 echo -e "${BOLD_RED}================================================${NC}"
 echo -e "${BOLD_RED}   ✅ KALI AL-MUI'ZZ v22.0 IS BORN!             ${NC}"
-echo -e "${BOLD_RED}   [ STATUS: v22.0-ARCHITECT IMMORTAL ]         ${NC}"
+echo -e "${BOLD_RED}   [ STATUS: SYSTEM_DNA_FULLY_INTEGRATED ]      ${NC}"
 echo -e "${BOLD_RED}================================================${NC}"
-echo -e "System is running as an Integrated Eternal Service."
-echo -e "Web HUD: ${BOLD_RED}http://localhost:9002${NC}"
-echo -e "Command: ${BOLD_RED}sovereign${NC}"
+echo -e "1) Web HUD: ${GREEN}Auto-Start Configured${NC}"
+echo -e "2) Shell:   ${GREEN}Sovereign Banner Active${NC}"
+echo -e "3) Identity:${GREEN}Hostname: kali-al-muizz${NC}"
 echo -e ""
-echo -e "${GOLD}Commander Al-Ghazali, please RESTART to finalize Hostname change.${NC}"
+echo -e "${GOLD}Commander Al-Ghazali, please RESTART to finalize the transformation.${NC}"
 echo -e "${BOLD_RED}THE MATRIX IS CONQUERED. WE ARE KALI AL-MUI'ZZ.${NC}"
