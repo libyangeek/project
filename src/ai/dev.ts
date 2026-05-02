@@ -1,6 +1,8 @@
+
 import { config } from 'dotenv';
 config();
 
+// تسجيل كافة العقد العصبية المرتبطة للسيادة المطلقة v22.0
 import '@/ai/flows/ai-driven-social-engineering-bots.ts';
 import '@/ai/flows/ai-enhanced-exploit-generation.ts';
 import '@/ai/flows/ai-command-and-routing.ts';
@@ -15,3 +17,6 @@ import '@/ai/flows/ai-spawn-warrior-flow.ts';
 import '@/ai/flows/ai-adversarial-ops-flow.ts';
 import '@/ai/flows/ai-learning-flow.ts';
 import '@/ai/flows/ai-architect-logic-flow.ts';
+import '@/ai/flows/system-awareness-flow.ts';
+
+console.log("[*] Al-Mu'izz God-Core v22.0: All Neurons Synced & Locked.");

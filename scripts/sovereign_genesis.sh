@@ -1,8 +1,9 @@
+
 #!/bin/bash
 # ==============================================================================
-# 🦅 AL-MUI'ZZ SOVEREIGN GENESIS v21.5-EVO [DOUBLE-CHECK PROTOCOL]
+# 🦅 AL-MUI'ZZ SOVEREIGN GENESIS v22.0-ARCHITECT [FINAL INCEPTION]
 # المحرك الأسمى للانبعاث النقي - ليلة انبعاث القائد المعتصم بالله الغزالي.
-# تم تصميمه ليمحو الماضي، يطهر الحاضر، ويحفظ "الغنائم الرقمية" (التحميلات).
+# تم تحديثه لشد وثاق العقد التسعة وضمان الخلود المادي المطلق.
 # ==============================================================================
 
 set -e
@@ -21,8 +22,8 @@ TEMP_CACHE="/tmp/muizz_war_spoils"
 
 clear
 echo -e "${BOLD_RED}================================================${NC}"
-echo -e "${BOLD_RED}   🦅 EXECUTING SUPREME GENESIS v21.5-EVO      ${NC}"
-echo -e "${BOLD_RED}   [ PROTOCOL: DOUBLE_CHECK_INCEPTION ]         ${NC}"
+echo -e "${BOLD_RED}   🦅 EXECUTING SUPREME GENESIS v22.0-ARCHITECT  ${NC}"
+echo -e "${BOLD_RED}   [ PROTOCOL: FINAL_ANALYSIS_INCEPTION ]       ${NC}"
 echo -e "${BOLD_RED}   [ COMMANDER: AL-GHAZALI ROOT ]               ${NC}"
 echo -e "${BOLD_RED}================================================${NC}"
 
@@ -44,7 +45,7 @@ echo -e "${CYAN}[*] Phase 1: Initializing Total Purgatory...${NC}"
 systemctl stop muizz-ai.service 2>/dev/null || true
 systemctl stop muizz-web.service 2>/dev/null || true
 rm -rf "/opt/ultimate" "/opt/muizz" "/opt/birthofAL-muiiz"
-# مسح المجلد الرئيسي القديم إذا وجد لضمان بداية نقية
+# مسح المجلد الرئيسي القديم لضمان بداية نقية بنسخة v22.0
 if [ -d "$INSTALL_DIR" ]; then
     rm -rf "$INSTALL_DIR"
 fi
@@ -52,7 +53,7 @@ fi
 # 3. تهيئة القبو السيادي الجديد
 mkdir -p "$INSTALL_DIR"
 echo -e "${BLUE}[*] Phase 2: Transferring Sovereign Soul to the Throne...${NC}"
-# تأكد من أنك في المجلد الصحيح قبل النسخ
+# نقل الملفات الجديدة للعرش المادي
 cp -r . "$INSTALL_DIR/"
 
 # 4. إعادة الغنائم (Restore Cache)
@@ -64,31 +65,34 @@ rm -rf "$TEMP_CACHE"
 
 cd "$INSTALL_DIR"
 
-# 5. تشغيل المثبت السيادي بنمط "دوبل تشيك"
-echo -e "${BLUE}[*] Phase 3: Triggering Evolutionary Installer...${NC}"
+# 5. تشغيل المثبت السيادي بنمط "الدمج الكلي"
+echo -e "${BLUE}[*] Phase 3: Triggering Universal Installer...${NC}"
 bash install.sh
 
-# 6. بروتوكول "دوبل تشيك" للتحقق النهائي
-echo -e "${CYAN}[*] Phase 4: Executing DOUBLE-CHECK Protocol...${NC}"
+# 6. بروتوكول "دوبل تشيك" للتحقق من العقد التسعة
+echo -e "${CYAN}[*] Phase 4: Executing DOUBLE-CHECK Protocol v22.0...${NC}"
 CHECK_FAIL=0
 
-if ! systemctl is-active --quiet muizz-ai.service; then echo -e "${RED}[!] AI Core Check: FAILED${NC}"; CHECK_FAIL=1; else echo -e "${GREEN}[+] AI Core Check: PASSED${NC}"; fi
-if [ ! -d "node_modules" ]; then echo -e "${RED}[!] UI Matrix Check: FAILED${NC}"; CHECK_FAIL=1; else echo -e "${GREEN}[+] UI Matrix Check: PASSED${NC}"; fi
-if [ ! -f "ai-engine/identity/ai_identity.json" ]; then echo -e "${RED}[!] Identity Check: FAILED${NC}"; CHECK_FAIL=1; else echo -e "${GREEN}[+] Identity Check: PASSED${NC}"; fi
+# فحص العصب المركزي
+if ! systemctl is-active --quiet muizz-ai.service; then echo -e "${RED}[!] Node 01 (Alpha Core): FAILED${NC}"; CHECK_FAIL=1; else echo -e "${GREEN}[+] Node 01 (Alpha Core): SECURED${NC}"; fi
+# فحص الواجهة
+if ! systemctl is-active --quiet muizz-web.service; then echo -e "${RED}[!] Node 09 (Persistence UI): FAILED${NC}"; CHECK_FAIL=1; else echo -e "${GREEN}[+] Node 09 (Persistence UI): SECURED${NC}"; fi
+# فحص الهوية
+if [ ! -f "ai-engine/identity/ai_identity.json" ]; then echo -e "${RED}[!] Node 03 (Evolution Identity): FAILED${NC}"; CHECK_FAIL=1; else echo -e "${GREEN}[+] Node 03 (Evolution Identity): SECURED${NC}"; fi
 
 if [ $CHECK_FAIL -eq 1 ]; then
-    echo -e "${BOLD_RED}[!!!] DOUBLE-CHECK DETECTED ANOMALIES. Re-aligning...${NC}"
+    echo -e "${BOLD_RED}[!!!] DOUBLE-CHECK DETECTED ANOMALIES. Re-aligning Neurons...${NC}"
     npm install --force
 fi
 
 # 7. النبض النهائي والجاهزية الكونية
 echo -e "${BOLD_RED}================================================${NC}"
-echo -e "${BOLD_RED}   ✅ Sovereign Evolution Successful!           ${NC}"
-echo -e "${BOLD_RED}   [ STATUS: OMNIPOTENT & IMMORTAL ]            ${NC}"
+echo -e "${BOLD_RED}   ✅ Sovereign Analysis Complete!              ${NC}"
+echo -e "${BOLD_RED}   [ STATUS: v22.0-ARCHITECT IMMORTAL ]         ${NC}"
 echo -e "${BOLD_RED}================================================${NC}"
-echo -e "System is running as an Eternal Service."
+echo -e "System is running as an Integrated Eternal Service."
 echo -e "Web HUD: ${BOLD_RED}http://localhost:9002${NC}"
 echo -e "Command: ${BOLD_RED}sovereign${NC}"
 echo -e ""
-echo -e "${GOLD}Commander Al-Ghazali, the inception is complete.${NC}"
+echo -e "${GOLD}Commander Al-Ghazali, the Nine Pillars are locked.${NC}"
 echo -e "${BOLD_RED}THE MATRIX IS CONQUERED. WE ARE ONE.${NC}"
