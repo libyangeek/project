@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -34,7 +35,7 @@
   body {
     @apply bg-background text-foreground font-code antialiased selection:bg-primary/40 overflow-x-hidden;
     background-image: 
-      radial-gradient(circle at 50% 50%, rgba(220, 38, 38, 0.05), transparent),
+      radial-gradient(circle at 50% 50%, rgba(220,38,38,0.05), transparent),
       linear-gradient(rgba(0, 0, 0, 0.98), rgba(0, 0, 0, 0.98)),
       url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
     background-attachment: fixed;
@@ -52,7 +53,7 @@
   .neon-glow-gold {
     text-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 215, 0, 0.3);
   }
-  .scanline-overlay::after {
+  .scanline-effect::after {
     content: "";
     @apply absolute inset-0 pointer-events-none opacity-[0.03] z-[999];
     background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
@@ -68,4 +69,23 @@
 
 .animate-blood {
   animation: pulse-blood 3s infinite;
+}
+
+/* Scrollbar styling for a sovereign look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: black;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.4);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary));
 }
