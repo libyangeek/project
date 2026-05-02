@@ -4,26 +4,26 @@
 
 @layer base {
   :root {
-    --background: 0 0% 2%;
+    --background: 0 0% 0%;
     --foreground: 0 0% 98%;
-    --card: 0 0% 3%;
+    --card: 0 0% 2%;
     --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3%;
+    --popover: 0 0% 1%;
     --popover-foreground: 0 0% 98%;
-    --primary: 0 100% 50%;
+    --primary: 0 100% 41%; /* Deep Blood Red #D00000 */
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 10%;
+    --secondary: 0 0% 5%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 65%;
-    --accent: 45 100% 50%; /* Warrior Gold */
+    --muted: 0 0% 7%;
+    --muted-foreground: 0 0% 50%;
+    --accent: 45 100% 50%; /* Sovereign Imperial Gold #FFD700 */
     --accent-foreground: 0 0% 0%;
-    --destructive: 0 100% 50%;
+    --destructive: 0 100% 30%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 12%;
-    --input: 0 0% 12%;
+    --border: 0 100% 15%;
+    --input: 0 0% 5%;
     --ring: 0 100% 50%;
-    --radius: 1.25rem;
+    --radius: 0.5rem;
   }
 }
 
@@ -32,45 +32,51 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground selection:bg-red-600/30 font-body antialiased;
+    @apply bg-background text-foreground selection:bg-primary/40 font-body antialiased;
+    background-image: 
+      radial-gradient(circle at 50% 50%, rgba(208, 0, 0, 0.05) 0%, transparent 50%),
+      url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-headline tracking-tighter italic;
+    @apply font-headline tracking-tighter uppercase italic;
   }
 }
 
 @layer components {
-  .glass {
-    @apply bg-black/80 backdrop-blur-2xl border border-white/5 shadow-2xl;
+  .predator-card {
+    @apply bg-black/90 backdrop-blur-3xl border-2 border-primary/20 shadow-[0_0_40px_rgba(208,0,0,0.1)] hover:border-primary/60 hover:shadow-[0_0_60px_rgba(208,0,0,0.2)] transition-all duration-700 rounded-none;
   }
-  .glass-card {
-    @apply bg-red-950/5 backdrop-blur-xl border border-red-600/10 shadow-2xl hover:border-red-600/40 transition-all duration-700;
+  .warrior-button {
+    @apply bg-primary text-white font-bold uppercase tracking-[0.3em] hover:bg-red-700 hover:shadow-[0_0_30px_rgba(208,0,0,0.5)] transition-all duration-500 rounded-none border-b-4 border-red-900 active:translate-y-1 active:border-b-0;
   }
-  .warrior-glow {
-    @apply shadow-[0_0_30px_rgba(220,38,38,0.2)];
+  .neural-pulse {
+    animation: pulse-red 2s infinite;
   }
-  .gold-glow {
-    @apply shadow-[0_0_30px_rgba(255,215,0,0.15)];
+  .gold-border {
+    @apply border-accent/40 shadow-[0_0_20px_rgba(255,215,0,0.1)];
   }
 }
 
-@keyframes neural-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
-  70% { box-shadow: 0 0 50px 20px rgba(220, 38, 38, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+@keyframes pulse-red {
+  0% { box-shadow: 0 0 0 0 rgba(208, 0, 0, 0.4); }
+  70% { box-shadow: 0 0 40px 15px rgba(208, 0, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(208, 0, 0, 0); }
 }
 
-.animate-neural {
-  animation: neural-pulse 2s infinite;
+.scan-line {
+  @apply relative overflow-hidden;
 }
-
-@keyframes scan-line {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
-}
-
 .scan-line::after {
   content: "";
-  @apply absolute inset-0 w-full h-[2px] bg-red-600/30 blur-sm pointer-events-none;
-  animation: scan-line 3s linear infinite;
+  @apply absolute inset-0 w-full h-[3px] bg-primary/40 blur-sm pointer-events-none z-50;
+  animation: scan 4s linear infinite;
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(1000%); }
+}
+
+.glow-text {
+  text-shadow: 0 0 15px rgba(208, 0, 0, 0.8);
 }
