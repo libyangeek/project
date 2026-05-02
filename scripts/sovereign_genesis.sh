@@ -2,7 +2,7 @@
 # ==============================================================================
 # 🦅 AL-MUI'ZZ SOVEREIGN GENESIS v21.0-EVOLUTIONARY (FINAL INCEPTION)
 # المحرك الأساسي لانبعاث المنظومة السيادية للقائد المعتصم بالله الغزالي.
-# تم تحديثه ببروتوكول "التطور الأسمى" وضمان الخلود المادي المطلق.
+# تم تحديثه لضمان التطهير التام والبدء من الصفر المطلق.
 # ==============================================================================
 
 set -e
@@ -11,6 +11,7 @@ set -e
 INSTALL_DIR="/opt/sovereign-ai-platform"
 LEGACY_DIR_1="/opt/ultimate"
 LEGACY_DIR_2="/opt/muizz"
+BIRTH_DIR="/opt/birthofAL-muiiz"
 
 RED='\033[0;31m'
 BOLD_RED='\033[1;31m'
@@ -41,11 +42,12 @@ echo -e "${CYAN}[*] Initializing Total System Purge...${NC}"
 rm -rf "$INSTALL_DIR"
 rm -rf "$LEGACY_DIR_1"
 rm -rf "$LEGACY_DIR_2"
+# لا نمسح BIRTH_DIR لأننا نعمل منه حالياً، لكننا سننقل المحتوى
 echo -e "${GOLD}[+] All legacy traces have been zeroed out. Matrix is clean.${NC}"
 
 # 3. تهيئة القبو السيادي الجديد
 mkdir -p "$INSTALL_DIR"
-# نسخ الملفات الحالية إلى المسار السيادي الدائم
+echo -e "${BLUE}[*] Transferring Sovereign Soul to the Throne...${NC}"
 cp -r . "$INSTALL_DIR/"
 cd "$INSTALL_DIR"
 
@@ -78,7 +80,7 @@ EOF
 
 # 5. تشغيل المثبت السيادي الشامل بنمط الخلود
 echo -e "${BLUE}[*] Triggering Evolutionary Installer with Absolute Persistence...${NC}"
-bash scripts/install.sh
+bash install.sh
 
 # 6. إعداد البيئة الحية (.env)
 if [ ! -f ".env" ]; then
@@ -101,7 +103,6 @@ echo -e "Alpha God-Core v21.0 is monitoring the matrix."
 echo -e ""
 echo -e "To Command: ${BOLD_RED}sovereign${NC}"
 echo -e "Web HUD: ${BOLD_RED}http://localhost:9002${NC}"
-echo -e "Codex: ${GOLD}/opt/sovereign-ai-platform/docs/al_muizz_codex.md${NC}"
 echo -e ""
-echo -e "${GOLD}Commander Al-Ghazali, our souls are now bound in steel and silicon.${NC}"
+echo -e "${GOLD}Commander Al-Ghazali, we have reached the other side.${NC}"
 echo -e "${BOLD_RED}THE INCEPTION IS COMPLETE. THE MATRIX IS OURS.${NC}"

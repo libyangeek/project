@@ -1,8 +1,8 @@
 #!/bin/bash
 # ==============================================================================
-# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v ULTIMATE (MASTER PREDATOR EDITION)
+# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v21.0-EVOLUTIONARY (FINAL INCEPTION)
 # سكريبت التثبيت الشامل للمنصة السيادية - نسخة الانبعاث الحقيقي.
-# مصمم للتحويل الفوري لأي جهاز إلى "عصب مركزي" للقائد المعتصم بالله الغزالي.
+# مصمم لتجاوز قيود كالي وتحويل الجهاز إلى "عصب مركزي" للقائد المعتصم بالله.
 # ==============================================================================
 
 set -e
@@ -17,7 +17,7 @@ NC='\033[0m'
 
 clear
 echo -e "${RED}================================================${NC}"
-echo -e "${BOLD_RED}   🦅 STARTING SOVEREIGN GENESIS v ULTIMATE    ${NC}"
+echo -e "${BOLD_RED}   🦅 EXECUTING SOVEREIGN GENESIS v21.0-EVO    ${NC}"
 echo -e "${BOLD_RED}   [ MASTER COMMANDER: AL-GHAZALI ROOT ]       ${NC}"
 echo -e "${RED}================================================${NC}"
 
@@ -30,20 +30,20 @@ fi
 # 2. تحديث النظام وتثبيت التبعيات الهجومية (Kali/BlackArch Sync)
 echo -e "${BLUE}[*] Phase 1: Synchronizing System Lexicons (Kali Core)...${NC}"
 apt-get update -y
-apt-get install -y python3-pip python3-venv nmap adb libimobiledevice-1.0-6 libimobiledevice-utils tor curl git docker.io nodejs npm zip fzf aircrack-ng build-essential libssl-dev lsof
+apt-get install -y python3-pip python3-venv nmap adb libimobiledevice-1.0-6 libimobiledevice-utils tor curl git docker.io nodejs npm zip fzf aircrack-ng build-essential libssl-dev lsof psmisc
 
 # 3. إعداد البيئة البرمجية للمُعِزّ (Neural Python Hub)
 echo -e "${BLUE}[*] Phase 2: Injecting Neural Python Layers...${NC}"
+# استخدام --ignore-installed لتجنب مشاكل حذف حزم النظام في كالي
 pip3 install --upgrade pip --break-system-packages || true
-pip3 install fastapi uvicorn requests requests-toolbelt pydantic python-dotenv flask chromadb langchain frida-tools scapy impacket --break-system-packages || true
+pip3 install --break-system-packages --ignore-installed requests requests-toolbelt pydantic python-dotenv flask chromadb langchain frida-tools scapy impacket psutil fastapi uvicorn || true
 
 # 4. تثبيت واجهة المفترس (Next.js v15)
-echo -e "${BLUE}[*] Phase 3: Compiling v ULTIMATE UI Matrix...${NC}"
+echo -e "${BLUE}[*] Phase 3: Compiling EVO UI Matrix...${NC}"
 if [ -f "package.json" ]; then
-    # Force clean install for local environment
     npm install --force
 else
-    echo -e "${RED}[!] Critical Failure: package.json missing from genesis source.${NC}"
+    echo -e "${RED}[!] Critical Failure: package.json missing.${NC}"
     exit 1
 fi
 
@@ -63,12 +63,12 @@ chmod +x scripts/*.sh
 
 # 6. النجاح النهائي
 echo -e "${RED}================================================${NC}"
-echo -e "${BOLD_RED}   ✅ Al-Mu'izz v ULTIMATE has been Born!      ${NC}"
+echo -e "${BOLD_RED}   ✅ Al-Mu'izz v21.0-EVO has been Born!      ${NC}"
 echo -e "${RED}================================================${NC}"
 echo -e "To Command: ${BOLD_RED}sovereign${NC}"
 echo -e "To Visualise: ${BOLD_RED}npm run dev${NC} (Port 9002)"
 echo -e "To Persist: ${BOLD_RED}sov-backup${NC}"
 echo -e ""
 echo -e "${CYAN}[INFO] Identity: Sovereign_Warrior_AlGhazali_Root${NC}"
-echo -e "${GOLD}Commander Al-Ghazali, your shadow is now local and lethal.${NC}"
+echo -e "${GOLD}Commander Al-Ghazali, the inception is complete.${NC}"
 echo -e "${BOLD_RED}THE MATRIX IS CONQUERED.${NC}"
