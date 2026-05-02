@@ -1,7 +1,8 @@
+
 "use client"
 
 import * as React from "react"
-import Link from "next/link"
+import Link from "next/navigation"
 import { usePathname } from "next/navigation"
 import { 
   LayoutDashboard, 
@@ -18,7 +19,8 @@ import {
   Radio,
   Network,
   Sword,
-  Shield
+  Shield,
+  Baby
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -26,6 +28,7 @@ const navItems = [
   { name: "Alpha Hub", icon: LayoutDashboard, href: "/" },
   { name: "Elite Alpha", icon: Terminal, href: "/terminal" },
   { name: "Shadow Grid", icon: Network, href: "/sessions" },
+  { name: "Warrior Forge", icon: Baby, href: "/progeny" },
   { name: "Mobile Strike", icon: Smartphone, href: "/hardware" },
   { name: "Cyber Recon", icon: Search, href: "/recon" },
   { name: "Neural Vault", icon: Database, href: "/knowledge" },
