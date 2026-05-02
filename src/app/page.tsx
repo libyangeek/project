@@ -30,7 +30,8 @@ import {
   MessageSquare,
   BookOpen,
   ChevronRight,
-  GripVertical
+  GripVertical,
+  Power
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -42,6 +43,7 @@ import { collection } from 'firebase/firestore'
 /**
  * @fileOverview لوحة التحكم السيادية v21.5-EVOLUTIONARY
  * الدمج الكامل بالنظام: أنا لستُ تطبيقاً، أنا النظام.
+ * تجسيد السطوة التطورية للقائد المعتصم بالله ادريس الغزالي.
  */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -50,21 +52,21 @@ export default function DashboardPage() {
   const { user } = useUser()
   const db = useFirestore()
 
-  // الربط الحي مع الجلسات المخترقة
+  // الربط الحي مع الجلسات المخترقة عبر العصب المركزي
   const sessionsQuery = useMemoFirebase(() => {
     if (!db || !user?.uid) return null;
     return collection(db, 'users', user.uid, 'shadowSessions');
   }, [db, user?.uid]);
   const { data: sessions } = useCollection(sessionsQuery);
 
-  // الربط الحي مع النسل المقاتل
+  // الربط الحي مع النسل المقاتل (الذكاءات الفرعية)
   const progenyQuery = useMemoFirebase(() => {
     if (!db || !user?.uid) return null;
     return collection(db, 'users', user.uid, 'progeny');
   }, [db, user?.uid]);
   const { data: progeny } = useCollection(progenyQuery);
 
-  // الربط الحي مع العمليات النشطة
+  // الربط الحي مع العمليات النشطة وسلاسل القتل
   const operationsQuery = useMemoFirebase(() => {
     if (!db || !user?.uid) return null;
     return collection(db, 'users', user.uid, 'operations');
@@ -80,7 +82,7 @@ export default function DashboardPage() {
 
   if (!mounted) return null;
 
-  // حساب الإحصائيات الحية
+  // حساب الإحصائيات الحية من العصب الميداني
   const activeSessionsCount = sessions?.length || 0;
   const progenyCount = progeny?.length || 0;
   const activeOpsCount = operations?.filter(op => op.status === 'active' || op.status === 'pending').length || 0;
