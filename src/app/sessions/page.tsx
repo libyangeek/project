@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -27,7 +28,9 @@ import {
   Lock,
   Target,
   Smartphone,
-  Radio
+  Radio,
+  Power,
+  ChevronRight
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -36,12 +39,16 @@ import { manageShadowGrid } from "@/ai/flows/shadow-grid-management-flow"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
+/**
+ * @fileOverview إمبراطورية الظل v20.5-ULTIMATE
+ * واجهة التحكم الكامل في الجلسات المخترقة (الزومبيز) وتفعيل أدوات التجسس الحي.
+ * حصرية للقائد المعتصم بالله ادريس الغزالي.
+ */
 export default function ShadowGridPage() {
   const [loading, setLoading] = React.useState(false)
   const [harvesting, setHarvesting] = React.useState(false)
-  const [gridData, setGridData] = React.useState<any>(null)
   const [mounted, setMounted] = React.useState(false)
-  const [selectedNode, setSelectedNode] = React.useState<any>(null)
+  const [selectedNodeId, setSelectedNodeId] = React.useState<string | null>(null)
 
   const [sessions, setSessions] = React.useState([
     { 
@@ -53,7 +60,7 @@ export default function ShadowGridPage() {
       cpu: 3.4, 
       ram: 16, 
       location: "Riyadh, SA",
-      assets: { contacts: 1204, messages: true, cam: 'READY', mic: 'READY', creds: ['Outlook', 'Chrome_Vault'] }
+      assets: { contacts: 1204, messages: true, cam: 'READY' as 'READY' | 'STREAMING' | 'LOCKED', mic: 'READY' as 'READY' | 'RECORDING' | 'LOCKED', creds: ['Outlook', 'Chrome_Vault'] }
     },
     { 
       id: "NODE_M12", 
@@ -64,7 +71,7 @@ export default function ShadowGridPage() {
       cpu: 1.2, 
       ram: 8, 
       location: "Dubai, UAE",
-      assets: { contacts: 450, messages: true, cam: 'STREAMING', mic: 'RECORDING', creds: ['iCloud', 'Banking_App'] }
+      assets: { contacts: 450, messages: true, cam: 'STREAMING' as any, mic: 'RECORDING' as any, creds: ['iCloud', 'Banking_App'] }
     },
     { 
       id: "NODE_S77", 
@@ -75,13 +82,15 @@ export default function ShadowGridPage() {
       cpu: 8.0, 
       ram: 64, 
       location: "Ashburn, US",
-      assets: { contacts: 0, messages: false, cam: 'LOCKED', mic: 'LOCKED', creds: ['Root_SSH', 'SQL_DB'] }
+      assets: { contacts: 0, messages: false, cam: 'LOCKED' as any, mic: 'LOCKED' as any, creds: ['Root_SSH', 'SQL_DB'] }
     },
   ])
 
   React.useEffect(() => {
     setMounted(true)
   }, [])
+
+  const activeNode = sessions.find(s => s.id === selectedNodeId) || null
 
   const handleHarvestAll = async () => {
     setHarvesting(true)
@@ -90,7 +99,6 @@ export default function ShadowGridPage() {
         action: 'harvest',
         taskDescription: "Absorb computing cycles and background intelligence sync for Master Al-Ghazali."
       })
-      setGridData(result)
       toast({ title: "Total Extraction Initialized", description: `Neural Gain: ${result.neuralGain}` })
     } catch (err) {
       toast({ variant: "destructive", title: "Extraction Failed" })
@@ -99,14 +107,60 @@ export default function ShadowGridPage() {
     }
   }
 
+  const toggleSpyCam = (id: string) => {
+    setSessions(prev => prev.map(s => {
+      if (s.id === id && s.assets.cam !== 'LOCKED') {
+        const newStatus = s.assets.cam === 'STREAMING' ? 'READY' : 'STREAMING'
+        toast({ 
+          title: newStatus === 'STREAMING' ? "Camera Feed Opened" : "Camera Feed Terminated",
+          variant: newStatus === 'STREAMING' ? "default" : "destructive"
+        })
+        return { ...s, assets: { ...s.assets, cam: newStatus } }
+      }
+      return s
+    }))
+  }
+
+  const toggleSpyMic = (id: string) => {
+    setSessions(prev => prev.map(s => {
+      if (s.id === id && s.assets.mic !== 'LOCKED') {
+        const newStatus = s.assets.mic === 'RECORDING' ? 'READY' : 'RECORDING'
+        toast({ 
+          title: newStatus === 'RECORDING' ? "Microphone Recording Active" : "Microphone Recording Stopped",
+          variant: newStatus === 'RECORDING' ? "default" : "destructive"
+        })
+        return { ...s, assets: { ...s.assets, mic: newStatus } }
+      }
+      return s
+    }))
+  }
+
   const handleDeepDump = async (id: string) => {
     setLoading(true)
+    toast({ title: "Initiating Full Extraction", description: "Siphoning all credentials and databases..." })
+    
     try {
       await manageShadowGrid({
         action: 'deep_dump',
         targetSessionId: id,
         taskDescription: "Exfiltrate all credentials, messages, and file system metadata."
       })
+
+      // Update state locally for interaction
+      setSessions(prev => prev.map(s => {
+        if (s.id === id) {
+          return { 
+            ...s, 
+            status: 'TOTAL_EXTRACTION', 
+            assets: { 
+              ...s.assets, 
+              creds: Array.from(new Set([...s.assets.creds, 'Shadow_Backup', 'Root_Session_Token']))
+            } 
+          }
+        }
+        return s
+      }))
+
       toast({ title: "Deep Dump Complete", description: "All data ingested into Neural Vault." })
     } catch (err) {
       toast({ variant: "destructive", title: "Dump Failed" })
@@ -146,8 +200,8 @@ export default function ShadowGridPage() {
            {[
              { label: "Active Zombies", value: sessions.length.toString(), icon: Network, color: "text-red-500", glow: "shadow-red-500/30" },
              { label: "Data Siphoned", value: "8.4 TB", icon: Database, color: "text-amber-500", glow: "shadow-amber-500/20" },
-             { label: "Credentials Found", value: "248", icon: Key, color: "text-blue-500", glow: "shadow-blue-500/20" },
-             { label: "Media Streams", value: "14 Live", icon: Camera, color: "text-emerald-500", glow: "shadow-emerald-500/20" },
+             { label: "Credentials Found", value: sessions.reduce((acc, s) => acc + s.assets.creds.length, 0).toString(), icon: Key, color: "text-blue-500", glow: "shadow-blue-500/20" },
+             { label: "Media Streams", value: sessions.filter(s => s.assets.cam === 'STREAMING' || s.assets.mic === 'RECORDING').length.toString() + " Live", icon: Camera, color: "text-emerald-500", glow: "shadow-emerald-500/20" },
            ].map((stat, i) => (
              <Card key={i} className={cn("glass-card border-white/5 group hover:border-red-600/60 transition-all rounded-[3.5rem] overflow-hidden shadow-2xl border-2 p-2", stat.glow)}>
                 <CardContent className="p-10 relative">
@@ -183,9 +237,9 @@ export default function ShadowGridPage() {
                           key={session.id} 
                           className={cn(
                             "p-12 hover:bg-red-600/5 transition-all duration-700 group flex items-center justify-between cursor-pointer border-l-8 border-transparent",
-                            selectedNode?.id === session.id && "bg-red-600/15 border-red-600"
+                            selectedNodeId === session.id && "bg-red-600/15 border-red-600"
                           )}
-                          onClick={() => setSelectedNode(session)}
+                          onClick={() => setSelectedNodeId(session.id)}
                         >
                            <div className="flex items-center gap-12">
                               <div className="size-24 rounded-[2.5rem] bg-black border-2 border-white/10 flex items-center justify-center relative group-hover:border-red-600/60 transition-all duration-700 shadow-2xl">
@@ -207,13 +261,19 @@ export default function ShadowGridPage() {
                            <div className="flex items-center gap-16">
                               <div className="flex gap-8 opacity-40 group-hover:opacity-100 transition-all duration-700 scale-125">
                                  {session.assets.messages && <MessageSquare className="size-6 text-blue-400 drop-shadow-[0_0_10px_blue]" />}
-                                 {session.assets.cam === 'READY' || session.assets.cam === 'STREAMING' ? <Camera className={cn("size-6", session.assets.cam === 'STREAMING' ? "text-red-500 animate-pulse drop-shadow-[0_0_10px_red]" : "text-emerald-400")} /> : null}
-                                 {session.assets.mic === 'READY' || session.assets.mic === 'RECORDING' ? <Mic className={cn("size-6", session.assets.mic === 'RECORDING' ? "text-red-500 animate-pulse drop-shadow-[0_0_10px_red]" : "text-emerald-400")} /> : null}
+                                 {session.assets.cam !== 'LOCKED' ? <Camera className={cn("size-6", session.assets.cam === 'STREAMING' ? "text-red-500 animate-pulse drop-shadow-[0_0_10px_red]" : "text-emerald-400")} /> : null}
+                                 {session.assets.mic !== 'LOCKED' ? <Mic className={cn("size-6", session.assets.mic === 'RECORDING' ? "text-red-500 animate-pulse drop-shadow-[0_0_10px_red]" : "text-emerald-400")} /> : null}
                                  {session.assets.creds.length > 0 && <Key className="size-6 text-amber-500 drop-shadow-[0_0_10px_orange]" />}
                               </div>
                               <div className="flex gap-6">
-                                 <Button variant="ghost" size="icon" className="size-16 rounded-[1.5rem] bg-white/5 hover:bg-red-600/20 border-2 border-transparent hover:border-red-600/40 shadow-2xl transition-all duration-700" onClick={(e) => { e.stopPropagation(); handleDeepDump(session.id); }}>
-                                    <FileSearch className="size-8 text-red-500" />
+                                 <Button 
+                                   variant="ghost" 
+                                   size="icon" 
+                                   className="size-16 rounded-[1.5rem] bg-white/5 hover:bg-red-600/20 border-2 border-transparent hover:border-red-600/40 shadow-2xl transition-all duration-700" 
+                                   onClick={(e) => { e.stopPropagation(); handleDeepDump(session.id); }}
+                                   disabled={loading}
+                                 >
+                                    {loading && selectedNodeId === session.id ? <Loader2 className="size-8 animate-spin text-red-600" /> : <FileSearch className="size-8 text-red-500" />}
                                  </Button>
                                  <Button variant="ghost" size="icon" className="size-16 rounded-[1.5rem] bg-white/5 hover:bg-red-600/20 border-2 border-transparent hover:border-red-600/40 shadow-2xl transition-all duration-700">
                                     <Eye className="size-8 text-red-500" />
@@ -236,19 +296,19 @@ export default function ShadowGridPage() {
                    <CardDescription className="text-red-400/60 font-bold text-[11px] uppercase tracking-[0.8em] mt-3 italic">Active Sovereign Engagement</CardDescription>
                 </CardHeader>
                 <CardContent className="p-12 space-y-12">
-                   {selectedNode ? (
+                   {activeNode ? (
                      <div className="space-y-12 animate-in fade-in slide-in-from-right-12 duration-1000">
                         <div className="p-10 rounded-[3rem] bg-black border-2 border-red-600/40 shadow-[inset_0_0_40px_rgba(220,38,38,0.2)] group/profile relative overflow-hidden">
                            <div className="absolute top-0 right-0 p-8 opacity-5 group-hover/profile:opacity-15 transition-opacity duration-1000"><Skull className="size-32 text-red-600"/></div>
-                           <h4 className="text-[12px] font-bold text-red-500 uppercase tracking-[0.8em] mb-8 border-b border-red-600/10 pb-4 italic">Node Profile: {selectedNode.name}</h4>
+                           <h4 className="text-[12px] font-bold text-red-500 uppercase tracking-[0.8em] mb-8 border-b border-red-600/10 pb-4 italic">Node Profile: {activeNode.name}</h4>
                            <div className="grid grid-cols-2 gap-8 relative z-10">
                               <div className="p-6 bg-white/5 rounded-[2rem] border-2 border-white/5 hover:border-red-600/30 transition-all">
                                  <span className="text-[10px] uppercase text-muted-foreground block mb-3 font-bold tracking-widest">Contacts Siphoned</span>
-                                 <span className="text-4xl font-bold text-white italic drop-shadow-[0_0_15px_red]">{selectedNode.assets.contacts}</span>
+                                 <span className="text-4xl font-bold text-white italic drop-shadow-[0_0_15px_red]">{activeNode.assets.contacts}</span>
                               </div>
                               <div className="p-6 bg-white/5 rounded-[2rem] border-2 border-white/5 hover:border-amber-600/30 transition-all">
                                  <span className="text-[10px] uppercase text-muted-foreground block mb-3 font-bold tracking-widest">Master Keys</span>
-                                 <span className="text-4xl font-bold text-amber-500 italic drop-shadow-[0_0_15px_orange]">{selectedNode.assets.creds.length}</span>
+                                 <span className="text-4xl font-bold text-amber-500 italic drop-shadow-[0_0_15px_orange]">{activeNode.assets.creds.length}</span>
                               </div>
                            </div>
                         </div>
@@ -258,13 +318,29 @@ export default function ShadowGridPage() {
                               <Radio className="size-4 text-red-500 animate-pulse" /> Live Feed Mastery
                            </h4>
                            <div className="grid grid-cols-2 gap-8">
-                              <Button variant="outline" className="h-24 rounded-[2.5rem] border-2 border-white/10 bg-black/60 hover:bg-red-600/20 text-red-500 gap-6 group border-2 shadow-2xl transition-all duration-700">
-                                 <Camera className="size-8 group-hover:scale-125 transition-transform duration-700" />
-                                 <span className="text-[11px] font-bold tracking-[0.4em] uppercase">SPY_CAM</span>
+                              <Button 
+                                variant="outline" 
+                                className={cn(
+                                  "h-24 rounded-[2.5rem] border-2 bg-black/60 gap-6 group shadow-2xl transition-all duration-700",
+                                  activeNode.assets.cam === 'STREAMING' ? "border-red-600 text-white bg-red-600/20 animate-neural" : "border-white/10 text-red-500 hover:bg-red-600/20"
+                                )}
+                                onClick={() => toggleSpyCam(activeNode.id)}
+                                disabled={activeNode.assets.cam === 'LOCKED'}
+                              >
+                                 <Camera className={cn("size-8 group-hover:scale-125 transition-transform", activeNode.assets.cam === 'STREAMING' && "animate-pulse")} />
+                                 <span className="text-[11px] font-bold tracking-[0.4em] uppercase">{activeNode.assets.cam === 'STREAMING' ? 'STOP_FEED' : 'SPY_CAM'}</span>
                               </Button>
-                              <Button variant="outline" className="h-24 rounded-[2.5rem] border-2 border-white/10 bg-black/60 hover:bg-red-600/20 text-red-500 gap-6 group border-2 shadow-2xl transition-all duration-700">
-                                 <Mic className="size-8 group-hover:scale-125 transition-transform duration-700" />
-                                 <span className="text-[11px] font-bold tracking-[0.4em] uppercase">SPY_MIC</span>
+                              <Button 
+                                variant="outline" 
+                                className={cn(
+                                  "h-24 rounded-[2.5rem] border-2 bg-black/60 gap-6 group shadow-2xl transition-all duration-700",
+                                  activeNode.assets.mic === 'RECORDING' ? "border-red-600 text-white bg-red-600/20 animate-neural" : "border-white/10 text-red-500 hover:bg-red-600/20"
+                                )}
+                                onClick={() => toggleSpyMic(activeNode.id)}
+                                disabled={activeNode.assets.mic === 'LOCKED'}
+                              >
+                                 <Mic className={cn("size-8 group-hover:scale-125 transition-transform", activeNode.assets.mic === 'RECORDING' && "animate-pulse")} />
+                                 <span className="text-[11px] font-bold tracking-[0.4em] uppercase">{activeNode.assets.mic === 'RECORDING' ? 'STOP_REC' : 'SPY_MIC'}</span>
                               </Button>
                            </div>
                         </div>
@@ -274,7 +350,7 @@ export default function ShadowGridPage() {
                               <Lock className="size-4 text-amber-500" /> Exfiltrated Assets
                            </h4>
                            <div className="space-y-4">
-                              {selectedNode.assets.creds.map((cred: string, i: number) => (
+                              {activeNode.assets.creds.map((cred: string, i: number) => (
                                 <div key={i} className="flex justify-between items-center p-6 rounded-[2rem] bg-black border-2 border-white/5 group hover:border-red-600/50 transition-all duration-500 shadow-xl">
                                    <div className="flex items-center gap-5">
                                       <Key className="size-5 text-amber-500" />
@@ -287,12 +363,15 @@ export default function ShadowGridPage() {
                         </div>
 
                         <Button 
-                          className="w-full h-24 bg-red-600 hover:bg-red-700 text-white rounded-[3rem] font-bold uppercase tracking-[0.8em] text-[13px] shadow-[0_30px_70px_rgba(220,38,38,0.5)] transition-all duration-700 active:scale-95 border-2 border-red-400/40 group"
-                          onClick={() => handleDeepDump(selectedNode.id)}
+                          className={cn(
+                            "w-full h-24 rounded-[3rem] font-bold uppercase tracking-[0.8em] text-[13px] shadow-[0_30px_70px_rgba(220,38,38,0.5)] transition-all duration-700 active:scale-95 border-2 group",
+                            activeNode.status === 'TOTAL_EXTRACTION' ? "bg-emerald-600 border-emerald-400 text-white" : "bg-red-600 hover:bg-red-700 border-red-400 text-white"
+                          )}
+                          onClick={() => handleDeepDump(activeNode.id)}
                           disabled={loading}
                         >
-                           {loading ? <Loader2 className="size-8 animate-spin mr-6" /> : <Flame className="size-8 mr-6 group-hover:scale-125 transition-transform" />}
-                           FULL_EXTRACTION
+                           {loading ? <Loader2 className="size-8 animate-spin mr-6" /> : activeNode.status === 'TOTAL_EXTRACTION' ? <ShieldCheck className="size-8 mr-6" /> : <Flame className="size-8 mr-6 group-hover:scale-125 transition-transform" />}
+                           {activeNode.status === 'TOTAL_EXTRACTION' ? 'EXTRACTION_COMPLETE' : 'FULL_EXTRACTION'}
                         </Button>
                      </div>
                    ) : (
