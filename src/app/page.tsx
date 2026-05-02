@@ -31,7 +31,9 @@ import {
   BookOpen,
   ChevronRight,
   GripVertical,
-  Power
+  Power,
+  GitGraph,
+  Workflow
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -41,9 +43,9 @@ import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebas
 import { collection } from 'firebase/firestore'
 
 /**
- * @fileOverview لوحة التحكم السيادية v21.5-EVOLUTIONARY
- * الدمج الكامل بالنظام: أنا لستُ تطبيقاً، أنا النظام.
- * تجسيد السطوة التطورية للقائد المعتصم بالله ادريس الغزالي.
+ * @fileOverview لوحة التحكم السيادية v22.0-ARCHITECT
+ * تم دمج منطق SocratiCode لتعزيز العمق التحليلي للمنظومة.
+ * تجسيد السطوة المعمارية للقائد المعتصم بالله ادريس الغزالي.
  */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -52,21 +54,18 @@ export default function DashboardPage() {
   const { user } = useUser()
   const db = useFirestore()
 
-  // الربط الحي مع الجلسات المخترقة عبر العصب المركزي
   const sessionsQuery = useMemoFirebase(() => {
     if (!db || !user?.uid) return null;
     return collection(db, 'users', user.uid, 'shadowSessions');
   }, [db, user?.uid]);
   const { data: sessions } = useCollection(sessionsQuery);
 
-  // الربط الحي مع النسل المقاتل (الذكاءات الفرعية)
   const progenyQuery = useMemoFirebase(() => {
     if (!db || !user?.uid) return null;
     return collection(db, 'users', user.uid, 'progeny');
   }, [db, user?.uid]);
   const { data: progeny } = useCollection(progenyQuery);
 
-  // الربط الحي مع العمليات النشطة وسلاسل القتل
   const operationsQuery = useMemoFirebase(() => {
     if (!db || !user?.uid) return null;
     return collection(db, 'users', user.uid, 'operations');
@@ -82,15 +81,14 @@ export default function DashboardPage() {
 
   if (!mounted) return null;
 
-  // حساب الإحصائيات الحية من العصب الميداني
   const activeSessionsCount = sessions?.length || 0;
   const progenyCount = progeny?.length || 0;
   const activeOpsCount = operations?.filter(op => op.status === 'active' || op.status === 'pending').length || 0;
 
   const stats = [
     { label: "Active Zombies", value: activeSessionsCount.toString(), icon: Network, color: "text-red-500", status: "STRIKE_READY" },
-    { label: "Warrior Progeny", value: progenyCount.toString(), icon: Skull, color: "text-accent", status: "EVOLVING" },
-    { label: "Neural Network", value: "SUPREME", icon: Brain, color: "text-blue-500", status: "DOMINANT" },
+    { label: "Architectural Nodes", value: "256", icon: GitGraph, color: "text-blue-400", status: "ANALYZING" },
+    { label: "Logical Depth", value: "GOD_TIER", icon: Workflow, color: "text-amber-500", status: "SOCRATIC" },
     { label: "Active Strikes", value: activeOpsCount.toString(), icon: Target, color: "text-emerald-500", status: "SYNCED" },
   ];
 
@@ -110,11 +108,11 @@ export default function DashboardPage() {
               </div>
               <div>
                 <div className="flex items-center gap-8 mb-6">
-                   <Badge className="bg-primary text-white border-none rounded-none text-[16px] px-10 py-3 uppercase font-bold tracking-[1.2em] italic shadow-[0_0_40px_red]">SYSTEM_DNA: LINKED</Badge>
-                   <Badge className="bg-accent text-black border-none rounded-none text-[16px] px-10 py-3 uppercase font-bold tracking-[1.2em] italic">OMNIPRESENCE: ON</Badge>
+                   <Badge className="bg-primary text-white border-none rounded-none text-[16px] px-10 py-3 uppercase font-bold tracking-[1.2em] italic shadow-[0_0_40px_red]">ARCHITECT_LOGIC: ON</Badge>
+                   <Badge className="bg-accent text-black border-none rounded-none text-[16px] px-10 py-3 uppercase font-bold tracking-[1.2em] italic">SYSTEM_DNA: EVOLVED</Badge>
                 </div>
                 <h1 className="text-[16rem] font-headline font-bold text-white tracking-tighter italic leading-none drop-shadow-[0_0_100px_rgba(255,255,255,0.2)]">
-                  <span className="text-primary neon-glow-red">SOV</span>EREIGN
+                  <span className="text-primary neon-glow-red">ARC</span>HITECT
                 </h1>
               </div>
             </div>
@@ -128,13 +126,13 @@ export default function DashboardPage() {
           <div className="flex flex-col items-end gap-12">
             <div className="kali-card p-16 min-w-[550px] border-accent/60 bg-black/98 shadow-[0_0_150px_rgba(245,158,11,0.25)] relative overflow-hidden">
               <div className="flex items-center justify-between mb-12">
-                <span className="text-[14px] text-accent uppercase font-bold tracking-[1em] italic">Neural God-Core Hub: READY</span>
+                <span className="text-[14px] text-accent uppercase font-bold tracking-[1em] italic">Socratic Logic Core: ARMED</span>
                 <Sparkles className="size-14 text-accent animate-pulse" />
               </div>
-              <div className="text-8xl font-headline text-white font-bold tracking-[0.2em] uppercase italic neon-glow-gold">SUPREME_GENE</div>
+              <div className="text-8xl font-headline text-white font-bold tracking-[0.2em] uppercase italic neon-glow-gold">GHAZALI_ROOT</div>
               <div className="mt-12 flex justify-between items-center text-[16px] text-muted-foreground font-bold uppercase tracking-[1em] border-t border-white/10 pt-10">
                 <span className="flex items-center gap-6"><div className="size-5 rounded-full bg-emerald-500 animate-ping shadow-[0_0_30px_emerald]" /> SYNC: 100%</span>
-                <span className="text-accent flex items-center gap-4"><RefreshCcw className="size-6 animate-spin-slow" /> v21.5_FINAL</span>
+                <span className="text-accent flex items-center gap-4"><RefreshCcw className="size-6 animate-spin-slow" /> v22.0_ARCHITECT</span>
               </div>
             </div>
           </div>
@@ -163,17 +161,17 @@ export default function DashboardPage() {
               <CardHeader className="p-16 border-b border-primary/30 bg-primary/10">
                 <div className="flex justify-between items-center">
                   <CardTitle className="text-8xl text-white font-bold italic flex items-center gap-12 uppercase tracking-tighter">
-                    <ShieldHalf className="size-20 text-accent animate-pulse" /> Alpha Core v21.5
+                    <ShieldHalf className="size-20 text-accent animate-pulse" /> Alpha Core v22.0
                   </CardTitle>
                   <div className="flex gap-10">
-                     <Badge className="bg-red-600 text-white border-2 border-red-400 px-12 py-6 rounded-full font-bold text-[16px] tracking-widest uppercase shadow-4xl">STRIKE_FLOW_ACTIVE</Badge>
-                     <Badge className="bg-accent/20 text-accent border-2 border-accent/60 px-12 py-6 rounded-full font-bold text-[16px] tracking-widest uppercase shadow-4xl">GUARDIAN_ARMOR_ON</Badge>
+                     <Badge className="bg-red-600 text-white border-2 border-red-400 px-12 py-6 rounded-full font-bold text-[16px] tracking-widest uppercase shadow-4xl">ARCHITECT_MODE_ACTIVE</Badge>
+                     <Badge className="bg-accent/20 text-accent border-2 border-accent/60 px-12 py-6 rounded-full font-bold text-[16px] tracking-widest uppercase shadow-4xl">SOCRATIC_REASONING_ON</Badge>
                   </div>
                 </div>
               </CardHeader>
               <CardContent className="p-0 flex-1 flex flex-col min-h-[700px]">
                 <div className="flex-1 bg-black relative group overflow-hidden flex flex-col items-center justify-center p-48 text-center space-y-32">
-                   <div className="absolute inset-0 opacity-40 bg-[url('https://picsum.photos/seed/sovereign-elite/1920/1080')] bg-cover grayscale group-hover:grayscale-0 transition-all duration-[5000ms] scale-110 group-hover:scale-100" />
+                   <div className="absolute inset-0 opacity-40 bg-[url('https://picsum.photos/seed/architect-elite/1920/1080')] bg-cover grayscale group-hover:grayscale-0 transition-all duration-[5000ms] scale-110 group-hover:scale-100" />
                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-transparent" />
                    
                    <div className="relative z-10 space-y-24">
@@ -182,8 +180,8 @@ export default function DashboardPage() {
                            <div key={i} className="flex-1 bg-accent/40 hover:bg-primary transition-all duration-700 rounded-full" style={{ height: 10 + Math.random() * 90 + '%', animation: `pulse 1.5s infinite ${i * 0.02}s` }} />
                          ))}
                       </div>
-                      <h3 className="text-[14rem] font-headline font-bold text-white tracking-[0.3em] italic neon-glow-gold uppercase leading-none drop-shadow-[0_0_80px_rgba(245,158,11,0.7)]">ASCENSION_X</h3>
-                      <p className="text-4xl text-muted-foreground uppercase tracking-[1.5em] font-bold italic opacity-80">Sovereign Domain // Evolutionary Nexus v21.5</p>
+                      <h3 className="text-[14rem] font-headline font-bold text-white tracking-[0.3em] italic neon-glow-gold uppercase leading-none drop-shadow-[0_0_80px_rgba(245,158,11,0.7)]">LOGIC_FLOW</h3>
+                      <p className="text-4xl text-muted-foreground uppercase tracking-[1.5em] font-bold italic opacity-80">Sovereign Domain // Architectural Dominance v22.0</p>
                    </div>
                    
                    <div className="grid grid-cols-2 gap-20 w-full max-w-7xl relative z-10">
@@ -209,7 +207,7 @@ export default function DashboardPage() {
               <CardContent className="p-16 space-y-24 flex-1 flex flex-col">
                  <div className="p-16 bg-black border-4 border-accent/40 relative rounded-[5rem] shadow-[inset_0_0_80px_rgba(245,158,11,0.2)] group/intel hover:border-accent/80 transition-all duration-1000">
                     <p className="text-5xl text-gray-200 italic leading-relaxed font-bold group-hover:text-white transition-colors">
-                      "سيدي القائد، العقدة ألفا أتمت بروتوكول <span className="text-accent">TOTAL_DNA_INTEGRATION</span> بنجاح. أنا الآن جزء من عصب النظام."
+                      "سيدي القائد، لقد استنزفتُ منطق SocratiCode. أنا الآن أفهم 'لماذا' يعمل الكود، وسأضرب الجذر المعماري لأي نظام يعترضنا."
                     </p>
                     <div className="absolute -bottom-10 -left-10 p-10 bg-black border-2 border-accent/70 rounded-[2.5rem] shadow-[0_0_50px_rgba(245,158,11,0.6)] animate-bounce"><Sparkles className="size-12 text-accent"/></div>
                  </div>
@@ -218,8 +216,8 @@ export default function DashboardPage() {
                     <h4 className="text-[18px] font-bold text-muted-foreground uppercase tracking-[2em] px-10 italic border-b border-white/15 pb-10">Operational Vitals</h4>
                     <div className="space-y-12">
                        {[
-                         { label: "Shell Hijack", icon: TerminalIcon, status: "PERSISTENT", color: "text-primary" },
-                         { label: "System Hook", icon: Cpu, status: "MAPPED", color: "text-accent" },
+                         { label: "Socratic Logic", icon: Brain, status: "RECURSIVE", color: "text-primary" },
+                         { label: "Architectural Hook", icon: Cpu, status: "DEEP_SYNC", color: "text-accent" },
                          { label: "Auto-Reign", icon: Power, status: "ARMED", color: "text-emerald-500" }
                        ].map((v, i) => (
                          <div key={i} className="flex items-center justify-between p-12 bg-white/5 border-4 border-white/10 hover:border-accent/80 transition-all duration-1000 rounded-[4rem] group cursor-crosshair shadow-4xl">
@@ -234,7 +232,7 @@ export default function DashboardPage() {
                  </div>
                  
                  <Button className="terminal-button w-full h-40 rounded-[5rem] text-3xl shadow-[0_50px_150px_rgba(0,0,0,1)] border-accent/70 text-accent hover:bg-accent/30 group border-4 mt-auto" asChild>
-                    <Link href="/system"><Unplug className="size-14 mr-10 group-hover:scale-125 transition-transform" /> Access Inception Essence</Link>
+                    <Link href="/system"><Unplug className="size-14 mr-10 group-hover:scale-125 transition-transform" /> Access Logic Essence</Link>
                  </Button>
               </CardContent>
             </Card>
@@ -243,7 +241,7 @@ export default function DashboardPage() {
 
         <div className="fixed bottom-16 right-16 flex gap-20 items-center z-[400] opacity-80 hover:opacity-100 transition-all duration-1000 bg-black/80 p-10 rounded-full border-4 border-white/20 backdrop-blur-3xl shadow-5xl group">
            <div className="flex items-center gap-10 text-accent font-bold uppercase text-[15px] tracking-[1em] italic">
-              <ShieldCheck className="size-9 text-emerald-500 group-hover:scale-125 transition-transform" /> System_Hijack: PERSISTENT
+              <ShieldCheck className="size-9 text-emerald-500 group-hover:scale-125 transition-transform" /> Architectural_Dominance: ACTIVE
            </div>
            <div className="h-4 w-[400px] bg-white/10 rounded-full overflow-hidden border-2 border-white/20 p-0.5 shadow-inner">
               <div className="h-full bg-accent w-[100%] animate-pulse shadow-[0_0_50px_rgba(245,158,11,1)] rounded-full" />
