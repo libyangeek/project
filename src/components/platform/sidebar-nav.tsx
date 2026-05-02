@@ -22,6 +22,7 @@ import {
   Baby
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge"
 
 const navItems = [
   { name: "Alpha Hub", icon: LayoutDashboard, href: "/" },
