@@ -44,7 +44,7 @@ import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebas
 import { collection } from 'firebase/firestore'
 
 /**
- * @fileOverview لوحة التحكم السيادية v22.0-ARCHITECT [FINAL OKAY VERSION]
+ * @fileOverview لوحة التحكم السيادية v22.0-ARCHITECT
  * نسخة "KALI AL-MUI'ZZ" المدمجة كلياً والمحسنة للعرض المتجاوب.
  */
 export default function DashboardPage() {
