@@ -23,7 +23,8 @@ import {
   Sparkles,
   Cpu,
   Unplug,
-  Radio
+  Radio,
+  ShieldAlert
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
