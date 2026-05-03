@@ -26,11 +26,11 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-# 1. تعزيز التبعيات (GEPA Requirements)
+# 1. تعزيز التبعيات (GEPA + GPU Requirements)
 echo -e "${BLUE}[1/5] Strengthening Neural Dependencies (ChromaDB + Transformers)...${NC}"
 source "$VENV_DIR/bin/activate" || python3 -m venv "$VENV_DIR"
 pip install --upgrade pip --break-system-packages 2>/dev/null || true
-pip install --break-system-packages --ignore-installed chromadb sentence-transformers requests fastapi uvicorn jwt 2>/dev/null || true
+pip install --break-system-packages --ignore-installed chromadb sentence-transformers requests fastapi uvicorn jwt bitsandbytes optimum accelerate 2>/dev/null || true
 
 # 2. تفعيل عصب الشفاء الذاتي (GEPA v2.0)
 echo -e "${CYAN}[2/5] Igniting GEPA v2.0 Self-Healing Engine...${NC}"
@@ -75,10 +75,11 @@ case "$1" in
     webui) $VP "$I/webui/app.py" ;;
     ask) shift; $VP "$I/ai-engine/smart_router.py" "$@" ;;
     heal) $VP "$I/ai-engine/gepa_fixer.py" --auto ;;
+    harvest) $VP "$I/tools/hardware/model_harvester.py" ;;
     identity) cat "$I/ai-engine/identity/ai_identity.json" ;;
     pulse) bash "$I/scripts/check_pulse.sh" ;;
     status) systemctl status sovereign-* --no-pager ;;
-    *) echo "Commands: center | webui | ask | heal | identity | pulse | status" ;;
+    *) echo "Commands: center | webui | ask | heal | harvest | identity | pulse | status" ;;
 esac
 CLIEOF
 chmod +x /usr/local/bin/sovereign

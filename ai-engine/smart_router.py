@@ -2,10 +2,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Smart Router v24.0-Eternal: Classifies intent using mistral or local ollama fallback.
-Integrates adaptive model selection with zero-latency fallback.
+Smart Router v24.0-Eternal-Adaptive: 
+نظام التوجيه المتكيف الذي لا يعتمد على موديلا معينة، بل يستغل المتاح في الجهاز.
 """
-import os, sys, json
+import os, sys, json, requests
 try:
     from mistral_connector import MistralConnector
     MISTRAL_AVAILABLE = True
@@ -15,17 +15,26 @@ except ImportError:
 class EternalSmartRouter:
     def __init__(self):
         self.mistral = MistralConnector() if MISTRAL_AVAILABLE else None
-        self.models = {
-            "arabic_general": "mistral-large-latest",
-            "programming": "codestral-latest",
-            "cybersecurity": "mistral-medium-latest",
-            "coding_attack": "mistral-large-latest",
-            "uncensored": "mistral-medium-latest",
-            "general": "mistral-small-latest"
-        }
+        self.local_models = self._harvest_local_models()
+
+    def _harvest_local_models(self):
+        """اكتشاف ما هو متاح في الجهاز الآن"""
+        try:
+            resp = requests.get("http://localhost:11434/api/tags", timeout=1)
+            if resp.status_code == 200:
+                return [m['name'] for m in resp.json().get('models', [])]
+        except:
+            return []
+        return []
 
     def classify(self, query):
-        # Try Mistral API first
+        # محاولة استخدام أقوى نموذج محلي متوفر أولاً (مثل mistral أو llama)
+        best_local = next((m for m in self.local_models if "mistral" in m or "llama" in m), None)
+        
+        if best_local:
+            return "general", f"local_exploit_{best_local}"
+            
+        # Fallback to Mistral Cloud if permitted and available
         if self.mistral:
             try:
                 prompt = f"Classify intent (JSON only): {query}"
@@ -34,22 +43,22 @@ class EternalSmartRouter:
                     messages=[{"role": "user", "content": prompt}]
                 )
                 data = json.loads(res["choices"][0]["message"]["content"])
-                return data.get("category", "general"), data.get("reason", "Default")
+                return data.get("category", "general"), "mistral_cloud"
             except:
                 pass
-        # Fallback: Local Ollama
-        try:
-            import requests
-            resp = requests.post("http://localhost:11434/api/generate",
-                json={"model": "mistral", "prompt": query, "stream": False})
-            return "general", "ollama_local"
-        except:
-            return "general", "local_fallback"
+        
+        return "general", "emergency_fallback"
 
     def route(self, query):
         category, reason = self.classify(query)
-        model = self.models.get(category, self.models["general"])
-        return {"category": category, "model": model, "reason": reason}
+        # استغلال النموذج المحلي المتاح أياً كان اسمه
+        selected_model = self.local_models[0] if self.local_models else "mistral-small-latest"
+        return {
+            "category": category, 
+            "model": selected_model, 
+            "reason": reason,
+            "local_inventory": self.local_models
+        }
 
 if __name__ == "__main__":
     router = EternalSmartRouter()

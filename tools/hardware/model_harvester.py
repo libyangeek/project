@@ -35,7 +35,8 @@ class ModelHarvester:
         found_paths = []
         search_dirs = [
             os.path.expanduser("~/.ollama/models"),
-            "/usr/share/ollama/.ollama/models"
+            "/usr/share/ollama/.ollama/models",
+            "/opt/sovereign-ai-platform/ai-engine/models"
         ]
         for d in search_dirs:
             if os.path.exists(d):
