@@ -33,7 +33,8 @@ import {
   GitGraph,
   Workflow,
   ShieldX,
-  Fingerprint
+  Fingerprint,
+  BrainCircuit
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -100,7 +101,7 @@ export default function DashboardPage() {
     { name: "Mobile Strike", icon: Cpu, status: "ARMED" },
     { name: "Deep Recon", icon: Search, status: "GROUNDED" },
     { name: "Exploit Forge", icon: ShieldX, status: "SYNTH" },
-    { name: "Field Agent", icon: Brain, status: "EXECUTING" },
+    { name: "Field Agent", icon: BrainCircuit, status: "EXECUTING" },
   ];
 
   return (
@@ -197,7 +198,7 @@ export default function DashboardPage() {
                    
                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-20 w-full max-w-7xl relative z-10 px-4">
                       <Button className="terminal-button h-16 md:h-44 rounded-[1.5rem] md:rounded-[5rem] text-sm md:text-4xl shadow-[0_20px_50px_rgba(220,38,38,0.6)] border-accent/60 bg-red-600/20 hover:bg-red-600 group border-2 md:border-4" asChild>
-                        <Link href="/field-agent"><Brain className="size-6 md:size-16 mr-3 md:mr-12 group-hover:rotate-12 transition-transform" /> Deploy Field Agent</Link>
+                        <Link href="/field-agent"><BrainCircuit className="size-6 md:size-16 mr-3 md:mr-12 group-hover:rotate-12 transition-transform" /> Deploy Field Agent</Link>
                       </Button>
                       <Button variant="outline" className="h-16 md:h-44 rounded-[1.5rem] md:rounded-[5rem] border-2 md:border-4 border-accent/60 text-accent hover:bg-accent/15 text-sm md:text-4xl uppercase font-bold tracking-[0.1em] md:tracking-[0.6em] transition-all duration-1000 shadow-4xl" asChild>
                         <Link href="/terminal"><TerminalIcon className="size-6 md:size-16 mr-3 md:mr-12" /> Alpha Terminal</Link>
