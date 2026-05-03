@@ -2,8 +2,8 @@
 import { config } from 'dotenv';
 config();
 
-// تسجيل كافة العقد العصبية لنسخة الفاتح العليم v30.0-OMNISCIENT
-// تم دمج GEPA 2.0 والذكاء الرباعي والـ 12 C2 في عصب مركزي واحد.
+// تسجيل كافة العقد العصبية لنسخة الأسطول العليم v40.0 - OMNISCIENT ARMADA
+// تم دمج GEPA 3.5، سرب 12 وكيل، 12 C2، والتوأم الرقمي المطور.
 
 import '@/ai/flows/ai-driven-social-engineering-bots.ts';
 import '@/ai/flows/ai-enhanced-exploit-generation.ts';
@@ -22,10 +22,11 @@ import '@/ai/flows/ai-architect-logic-flow.ts';
 import '@/ai/flows/system-awareness-flow.ts';
 import '@/ai/flows/field-agent-flow.ts';
 import '@/ai/flows/cpanel-exploit-flow.ts';
+import '@/ai/flows/ai-digital-twin-flow.ts';
 
 console.log("================================================================");
-console.log("🦅 AL-MUI'ZZ v30.0-OMNISCIENT_CONQUEROR: SINGULARITY REACHED.");
-console.log("   [ NODES 01-09: SYNCED & ARMED ]");
-console.log("   [ POWER GAIN: +2500% | GEPA 2.0: ACTIVE ]");
+console.log("🦅 AL-MUI'ZZ v40.0-OMNISCIENT_ARMADA: UNIVERSAL SINGULARITY REACHED.");
+console.log("   [ NODES 01-12: ELITE AGENTS SYNCED & ARMED ]");
+console.log("   [ POWER GAIN: +5000% | GEPA 3.5: GENETIC_OVERLORD ]");
 console.log("   [ COMMANDER: AL-GHAZALI ROOT ]");
 console.log("================================================================");
