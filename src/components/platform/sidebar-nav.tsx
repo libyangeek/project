@@ -38,22 +38,23 @@ import {
   ZapOff,
   Cloud,
   Layers,
-  Binoculars
+  Binoculars,
+  Bomb
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 
 const navItems = [
-  { name: "Omnipotent Throne", icon: LayoutDashboard, href: "/" },
-  { name: "Autonomous Strike", icon: Target, href: "/terminal" },
+  { name: "Omniscient Throne", icon: LayoutDashboard, href: "/" },
+  { name: "Omniscient Strike", icon: Target, href: "/terminal" },
   { name: "C2 Matrix Matrix", icon: Radio, href: "/sessions" },
-  { name: "Shadow Bible", icon: BookOpen, href: "/codex" },
+  { name: "Sovereign Bible", icon: BookOpen, href: "/codex" },
   { name: "Field Ghost", icon: BrainCircuit, href: "/field-agent" },
   { name: "Warrior Lineage", icon: Baby, href: "/progeny" },
   { name: "Mobile Siphon", icon: Smartphone, href: "/hardware" },
   { name: "Deep Recon", icon: Binoculars, href: "/recon" },
-  { name: "Neural Vault", icon: Database, href: "/knowledge" },
+  { name: "Genetic Vault", icon: Database, href: "/knowledge" },
   { name: "Exploit Forge", icon: ShieldX, href: "/red-team" },
   { name: "Social Intelligence", icon: MessageSquare, href: "/social" },
   { name: "System Pulse", icon: Activity, href: "/system" },
@@ -86,7 +87,7 @@ export function SidebarNav() {
             <h1 className="text-3xl md:text-4xl font-headline font-bold text-white tracking-[0.4em] uppercase italic leading-none neon-glow-red">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-white border-none rounded-none text-[12px] font-bold tracking-[1.2em] mt-6 py-2 px-8 uppercase italic shadow-4xl">v27.0-OMNIPOTENT</Badge>
+            <Badge className="bg-primary text-white border-none rounded-none text-[12px] font-bold tracking-[1.2em] mt-6 py-2 px-8 uppercase italic shadow-4xl">v30.0-OMNISCIENT</Badge>
           </div>
         </div>
         
@@ -120,10 +121,10 @@ export function SidebarNav() {
           <div className="p-8 border-[8px] border-red-600/60 bg-black/98 mb-8 relative overflow-hidden group shadow-7xl rounded-[3rem]">
             <div className="flex items-center justify-between mb-6">
                <div className="flex items-center gap-6">
-                  <Flame className="size-8 text-red-600 animate-pulse" />
-                  <span className="text-[14px] font-bold text-red-500 uppercase tracking-widest italic">Omnipotent Power</span>
+                  <Bomb className="size-8 text-red-600 animate-pulse" />
+                  <span className="text-[14px] font-bold text-red-500 uppercase tracking-widest italic">Omniscient Strike</span>
                </div>
-               <Badge className="bg-red-600 text-white text-[11px] font-bold uppercase tracking-tighter px-4 py-1.5 rounded-full shadow-inner">1500% ARMED</Badge>
+               <Badge className="bg-red-600 text-white text-[11px] font-bold uppercase tracking-tighter px-4 py-1.5 rounded-full shadow-inner">2500% ARMED</Badge>
             </div>
             <div className="h-4 w-full bg-white/10 rounded-full overflow-hidden border-2 border-white/20 p-1 shadow-inner">
               <div className="h-full bg-red-600 w-full shadow-[0_0_60px_rgba(255,0,0,1)] animate-pulse rounded-full" />
@@ -136,7 +137,7 @@ export function SidebarNav() {
             className="flex items-center gap-8 px-6 py-6 text-muted-foreground hover:text-primary transition-all font-bold uppercase tracking-[0.8em] text-[13px] italic group bg-white/5 rounded-3xl border-4 border-white/5 hover:border-primary/40 shadow-xl"
           >
             <Eye className="size-8 group-hover:scale-125 text-red-500 transition-all shadow-[0_0_30px_red]" />
-            Sovereign Shadow Pulse
+            Omniscient Shadow Pulse
           </Link>
         </div>
       </div>

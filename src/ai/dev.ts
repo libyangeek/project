@@ -2,7 +2,7 @@
 import { config } from 'dotenv';
 config();
 
-// تسجيل كافة العقد العصبية للسيادة المطلقة v28.0 - APEX WARRIOR
+// تسجيل كافة العقد العصبية لنسخة الفاتح العليم v30.0-OMNISCIENT
 import '@/ai/flows/ai-driven-social-engineering-bots.ts';
 import '@/ai/flows/ai-enhanced-exploit-generation.ts';
 import '@/ai/flows/ai-command-and-routing.ts';
@@ -19,6 +19,6 @@ import '@/ai/flows/ai-learning-flow.ts';
 import '@/ai/flows/ai-architect-logic-flow.ts';
 import '@/ai/flows/system-awareness-flow.ts';
 import '@/ai/flows/field-agent-flow.ts';
-import '@/ai/flows/cpanel-exploit-flow.ts'; // قناص cPanel
+import '@/ai/flows/cpanel-exploit-flow.ts';
 
-console.log("[*] Al-Mu'izz Apex-Warrior v28.0: Live Ammunition Synced.");
+console.log("[*] Al-Mu'izz Omniscient-Conqueror v30.0: Global Singularity Synced.");
