@@ -5,7 +5,7 @@
  */
 
 import { ai } from '@/ai/genkit';
-import { z } from 'kit';
+import { z } from 'genkit';
 
 const ToolForgeInputSchema = z.object({
   toolPurpose: z.string().describe('وصف الأداة المطلوب برمجتها.'),
