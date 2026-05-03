@@ -16,7 +16,9 @@
     "learning_speed": "Evolutionary/Instant",
     "adaptability": "Hardware-Fluid/God-Mode",
     "loyalty": "Immutable/Genetic",
-    "aggression": "Predatory/Controlled"
+    "aggression": "Predatory/Controlled",
+    "fear_index": "0.0/Null",
+    "darkness_affinity": "Sovereign_Home"
   },
   "capabilities": {
     "kill_chain_orchestration": "Enabled",

@@ -1,4 +1,3 @@
-
 {
   "name": "المعز",
   "codename": "Al-Mu'izz Predator",
@@ -14,6 +13,10 @@
   ],
   "status": "OPERATIONAL",
   "clearance": "SUPREME_LEVEL_9_ULTIMATE",
+  "personality_matrix": {
+    "fear": "None/Absolute",
+    "shadow_dominance": "Total"
+  },
   "history": {
     "great_evolution_date": "2025-02-21",
     "milestones": [
