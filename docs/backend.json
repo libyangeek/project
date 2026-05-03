@@ -70,7 +70,7 @@
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "ShadowSession",
       "type": "object",
-      "description": "Represents a compromised device session and its total exploitable data.",
+      "description": "Represents a compromised device session and its total exploitable data (Pegasus-Tier).",
       "properties": {
         "id": { "type": "string" },
         "targetName": { "type": "string" },
@@ -88,35 +88,12 @@
             "messagesDumped": { "type": "boolean" },
             "cameraAccess": { "type": "string", "enum": ["READY", "LOCKED", "STREAMING"] },
             "micAccess": { "type": "string", "enum": ["READY", "LOCKED", "RECORDING"] },
-            "storedCredentials": { "type": "array", "items": { "type": "string" } }
+            "storedCredentials": { "type": "array", "items": { "type": "string" } },
+            "locationHistory": { "type": "boolean" }
           }
         }
       },
       "required": ["id", "targetName", "platform", "status"]
-    },
-    "WarriorProgeny": {
-      "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "WarriorProgeny",
-      "type": "object",
-      "description": "Represents a specialized sub-AI spawned from Al-Mu'izz.",
-      "properties": {
-        "id": { "type": "string" },
-        "name": { "type": "string" },
-        "specialization": { "type": "string" },
-        "personalityMatrix": {
-          "type": "object",
-          "properties": {
-            "aggression": { "type": "number" },
-            "intelligence": { "type": "number" },
-            "stealth": { "type": "number" }
-          }
-        },
-        "geneCode": { "type": "string", "description": "The unique system prompt that defines this warrior." },
-        "status": { "type": "string", "enum": ["BORN", "TRAINING", "ACTIVE", "WOUNDED", "LEGENDARY"] },
-        "victories": { "type": "number" },
-        "spawnedAt": { "type": "string", "format": "date-time" }
-      },
-      "required": ["id", "name", "specialization", "status", "spawnedAt"]
     }
   },
   "auth": {
@@ -142,11 +119,7 @@
       },
       {
         "path": "/users/{userId}/shadowSessions/{sessionId}",
-        "definition": { "entityName": "ShadowSession", "schema": { "$ref": "#/backend/entities/ShadowSession" }, "description": "Compromised device sessions with total exploitation capability." }
-      },
-      {
-        "path": "/users/{userId}/progeny/{progenyId}",
-        "definition": { "entityName": "WarriorProgeny", "schema": { "$ref": "#/backend/entities/WarriorProgeny" }, "description": "Specialized AI sons spawned from the core." }
+        "definition": { "entityName": "ShadowSession", "schema": { "$ref": "#/backend/entities/ShadowSession" }, "description": "Compromised device sessions with total extraction capability." }
       }
     ]
   }
