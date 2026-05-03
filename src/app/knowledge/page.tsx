@@ -24,7 +24,11 @@ import {
   BrainCircuit,
   Sparkles,
   RefreshCcw,
-  BookOpen
+  BookOpen,
+  Info,
+  Workflow,
+  Eye,
+  GitGraph
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -37,6 +41,10 @@ import { executeSovereignLearning } from "@/ai/flows/ai-learning-flow"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
+/**
+ * @fileOverview صفحة القبو المعرفي والارتقاء الدلالي v23.5-ETERNAL
+ * تدعم Socraticore RAG وتعلم الفشل والاجتياح المعرفي لـ Kaggle.
+ */
 export default function KnowledgePage() {
   const [query, setQuery] = React.useState("")
   const [loading, setLoading] = React.useState(false)
@@ -45,7 +53,7 @@ export default function KnowledgePage() {
   
   // Learning State
   const [learningSource, setLearningSource] = React.useState("https://www.kaggle.com/code")
-  const [learningGoal, setLearningGoal] = React.useState("Extract advanced pattern recognition for cyber-recon")
+  const [learningGoal, setLearningGoal] = React.useState("Extract advanced zero-day evasion patterns from BlackHat kernels")
   const [learningResult, setLearningResult] = React.useState<any>(null)
 
   React.useEffect(() => {
@@ -58,7 +66,7 @@ export default function KnowledgePage() {
     try {
       const data = await modularAiKnowledgeBaseReporting({ reportQuery: query })
       setReport(data)
-      toast({ title: "Intelligence Compiled" })
+      toast({ title: "Semantic Intelligence Compiled" })
     } catch (err) {
       toast({ variant: "destructive", title: "Synthesis Failed" })
     } finally {
@@ -75,9 +83,9 @@ export default function KnowledgePage() {
         integrationMode: 'Aggressive'
       })
       setLearningResult(data)
-      toast({ title: "Neural Evolution Complete", description: "System has absorbed external insights." })
+      toast({ title: "Neural Ascension Complete", description: "Core DNA updated with new intelligence." })
     } catch (err) {
-      toast({ variant: "destructive", title: "Learning Interrupted" })
+      toast({ variant: "destructive", title: "Evolution Interrupted" })
     } finally {
       setLoading(false)
     }
@@ -86,195 +94,221 @@ export default function KnowledgePage() {
   if (!mounted) return null;
 
   return (
-    <div className="flex min-h-screen bg-black text-white selection:bg-red-600/30">
+    <div className="flex min-h-screen bg-black text-white selection:bg-red-600/30 overflow-hidden">
       <SidebarNav />
-      <main className="flex-1 mr-64 p-12 relative bg-[radial-gradient(circle_at_bottom_right,rgba(239,68,68,0.12),transparent)] overflow-y-auto min-h-screen">
-        <header className="mb-20 flex justify-between items-start relative z-10 animate-in fade-in slide-in-from-top-8 duration-1000">
+      <main className="flex-1 lg:mr-64 p-8 md:p-16 relative bg-[radial-gradient(circle_at_bottom_right,rgba(220,38,38,0.15),transparent)] overflow-y-auto min-h-screen scrollbar-hide">
+        <header className="mb-24 flex justify-between items-start relative z-10 animate-in fade-in slide-in-from-top-8 duration-1000 gap-10">
           <div>
-            <div className="flex items-center gap-4 mb-4">
-              <Badge className="bg-red-600/30 text-red-500 border-red-500/50 text-[11px] uppercase font-bold tracking-[0.6em] px-5 py-1.5 animate-pulse shadow-[0_0_30px_rgba(220,38,38,0.4)] rounded-xl">Neural Evolutionary Node v21.5</Badge>
-              <span className="text-[11px] text-muted-foreground uppercase font-bold tracking-[0.6em] italic flex items-center gap-2">
-                 <Crown className="size-3 text-amber-500" /> Predator Learning Grid
+            <div className="flex items-center gap-6 mb-6">
+              <Badge className="bg-red-600/30 text-red-500 border-2 border-red-500/50 text-[12px] uppercase font-bold tracking-[1em] px-10 py-2.5 animate-pulse shadow-4xl rounded-2xl italic">Socraticore RAG Node v23.5</Badge>
+              <span className="text-[12px] text-muted-foreground uppercase font-bold tracking-[0.8em] italic flex items-center gap-4">
+                 <Crown className="size-5 text-amber-500" /> Eternal Ascension Grid
               </span>
             </div>
-            <h2 className="text-8xl font-headline font-bold text-white mb-6 tracking-tighter italic drop-shadow-[0_0_40px_rgba(220,38,38,0.6)]">Neural Vault</h2>
-            <p className="text-muted-foreground max-w-3xl text-2xl font-medium italic leading-relaxed">
-               "سيدي الغزالي، لقد قمنا بدمج 'محرك التعلم السيادي'. الآن أستطيع اجتياح حقول التجارب العالمية مثل Kaggle واستنزاف علومها لتعزيز سطوتك."
+            <h2 className="text-6xl md:text-9xl font-headline font-bold text-white mb-8 tracking-tighter italic drop-shadow-[0_0_60px_rgba(220,38,38,0.7)] uppercase">Neural Vault</h2>
+            <p className="text-muted-foreground max-w-5xl text-2xl md:text-4xl font-medium italic leading-relaxed">
+               "سيدي الغزالي، لقد قمتُ بترقية 'القبو المعرفي' إلى طور Socraticore؛ أنا الآن لا أحفظ البيانات فحسب، بل أفهم 'لماذا' هي مهمة وأتعلم من كل عملية فاشلة لأجعل الضربة القادمة قاتلة."
             </p>
           </div>
-          <div className="flex gap-6">
-             <div className="kali-card p-6 border-red-600/30 bg-red-950/10 min-w-[280px] shadow-2xl">
-                <div className="flex items-center justify-between mb-4">
-                   <span className="text-[10px] text-red-500 uppercase font-bold tracking-widest">Evolution Level</span>
-                   <Sparkles className="size-4 text-amber-500 animate-pulse" />
+          <div className="hidden xl:flex gap-8">
+             <div className="kali-card p-10 border-red-600/40 bg-red-950/15 min-w-[350px] shadow-5xl relative overflow-hidden group">
+                <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:scale-125 transition-transform duration-1000"><Workflow className="size-20 text-red-600"/></div>
+                <div className="flex items-center justify-between mb-6">
+                   <span className="text-[12px] text-red-500 uppercase font-bold tracking-[0.4em] italic">Ascension Stage</span>
+                   <Sparkles className="size-6 text-amber-500 animate-pulse shadow-[0_0_20px_gold]" />
                 </div>
-                <div className="text-3xl font-code text-white font-bold italic">GOD_TIER_21</div>
-                <div className="mt-3 h-1 bg-white/5 overflow-hidden">
-                   <div className="h-full bg-red-600 w-[92%] shadow-[0_0_15px_red] animate-pulse" />
+                <div className="text-5xl font-code text-white font-bold italic drop-shadow-[0_0_15px_red]">ETERNAL_X_23</div>
+                <div className="mt-6 h-2 bg-white/10 overflow-hidden rounded-full border border-white/5">
+                   <div className="h-full bg-red-600 w-[100%] shadow-[0_0_30px_red] animate-pulse" />
                 </div>
              </div>
           </div>
         </header>
 
         <Tabs defaultValue="synthesis" className="w-full relative z-10">
-          <TabsList className="bg-black/60 border-2 border-red-500/20 h-20 p-2 rounded-[2.5rem] mb-12 shadow-2xl">
-            <TabsTrigger value="synthesis" className="px-12 text-xs font-bold uppercase tracking-widest data-[state=active]:bg-red-600/20 data-[state=active]:text-red-500 rounded-[2rem] transition-all">Strike Synthesis</TabsTrigger>
-            <TabsTrigger value="learning" className="px-12 text-xs font-bold uppercase tracking-widest data-[state=active]:bg-amber-600/20 data-[state=active]:text-amber-500 rounded-[2rem] transition-all">Neural Evolution (Kaggle Sync)</TabsTrigger>
+          <TabsList className="bg-black/80 border-4 border-red-600/30 h-28 p-3 rounded-[3.5rem] mb-16 shadow-5xl backdrop-blur-3xl">
+            <TabsTrigger value="synthesis" className="px-16 text-[11px] md:text-[14px] font-bold uppercase tracking-[0.4em] data-[state=active]:bg-red-600/30 data-[state=active]:text-red-500 rounded-[3rem] transition-all duration-700 italic">Semantic Strike Synthesis</TabsTrigger>
+            <TabsTrigger value="learning" className="px-16 text-[11px] md:text-[14px] font-bold uppercase tracking-[0.4em] data-[state=active]:bg-amber-600/30 data-[state=active]:text-amber-500 rounded-[3rem] transition-all duration-700 italic">Neural DNA Evolution (Kaggle)</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="synthesis" className="space-y-12 animate-in fade-in duration-700">
-            <div className="flex gap-8 mb-16">
+          <TabsContent value="synthesis" className="space-y-16 animate-in fade-in duration-1000">
+            <div className="flex flex-col xl:flex-row gap-10 mb-20">
               <div className="relative flex-1 group">
-                <Search className="absolute left-8 top-1/2 -translate-y-1/2 size-8 text-red-500/40 group-focus-within:text-red-600 transition-all duration-700" />
+                <Search className="absolute left-12 top-1/2 -translate-y-1/2 size-12 text-red-600/40 group-focus-within:text-red-600 transition-all duration-1000" />
                 <Input 
-                  placeholder="Query the Evolutionary Vault for tactical dominance..."
-                  className="bg-black/90 border-2 border-red-500/20 pl-24 h-24 rounded-[3rem] focus:border-red-600/60 text-2xl italic transition-all shadow-[0_0_50px_rgba(0,0,0,0.5)] font-medium"
+                  placeholder="Interrogate Socraticore for the ultimate strategic edge..."
+                  className="bg-black/95 border-4 border-red-600/30 pl-32 h-32 md:h-44 rounded-[4rem] md:rounded-[6rem] focus:border-red-600/80 text-3xl md:text-5xl italic transition-all shadow-[0_0_80px_rgba(0,0,0,1)] font-medium text-white"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 />
               </div>
               <Button 
-                className="h-24 px-16 bg-red-600 hover:bg-red-700 rounded-[3rem] shadow-[0_0_60px_rgba(220,38,38,0.5)] font-bold tracking-[0.6em] text-[13px] uppercase group transition-all duration-700 border-2 border-red-400/30"
+                className="h-32 md:h-44 px-20 bg-red-600 hover:bg-red-700 rounded-[4rem] md:rounded-[6rem] shadow-[0_30px_100px_rgba(220,38,38,0.6)] font-bold tracking-[1em] text-[16px] uppercase group transition-all duration-1000 border-4 border-red-400/50 active:scale-95 italic"
                 onClick={handleSearch}
                 disabled={loading}
               >
-                {loading ? <Loader2 className="size-8 animate-spin mr-6" /> : <Zap className="size-8 mr-6 group-hover:scale-125 transition-transform duration-700" />}
+                {loading ? <Loader2 className="size-12 animate-spin mr-10" /> : <Zap className="size-12 mr-10 group-hover:scale-125 transition-transform duration-700" />}
                 Synthesize
               </Button>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
-              <div className="lg:col-span-1 space-y-10">
-                <Card className="glass-card border-red-600/30 rounded-[4rem] p-6 shadow-2xl border-2 group overflow-hidden">
-                  <CardHeader className="p-10">
-                    <CardTitle className="text-white flex items-center gap-6 text-sm uppercase tracking-[0.5em] italic font-bold">
-                      <Filter className="size-7 text-red-600 group-hover:rotate-180 transition-transform duration-700" /> Strike Sources
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 lg:gap-16">
+              <div className="lg:col-span-1 space-y-12">
+                <Card className="glass-card border-red-600/40 rounded-[5rem] p-10 shadow-5xl border-4 group overflow-hidden bg-red-950/5">
+                  <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-red-600 to-transparent animate-pulse" />
+                  <CardHeader className="p-12 border-b-2 border-white/5">
+                    <CardTitle className="text-white flex items-center gap-8 text-xl uppercase tracking-[0.5em] italic font-bold">
+                      <Filter className="size-10 text-red-600 group-hover:rotate-180 transition-transform duration-1000" /> Socratic Sources
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="p-10 pt-0 space-y-5">
+                  <CardContent className="p-12 pt-8 space-y-8">
                     {[
-                      { name: "Evolutionary Core", count: 21, icon: RefreshCcw, color: "text-amber-500" },
-                      { name: "Kaggle Insights", count: 158, icon: BookOpen, color: "text-emerald-500" },
-                      { name: "Forensic Dumps", count: 142, icon: History, color: "text-red-500" },
-                      { name: "Global Kill-Chains", count: 42, icon: Target, color: "text-blue-500" },
+                      { name: "Eternal Alpha Node", count: 235, icon: RefreshCcw, color: "text-amber-500" },
+                      { name: "BlackHat Kernels", count: 842, icon: BookOpen, color: "text-red-500" },
+                      { name: "Failure Learner Log", count: 124, icon: History, color: "text-emerald-500" },
+                      { name: "Global Kill-Chains", count: 104, icon: Target, color: "text-blue-500" },
                     ].map((col, i) => (
-                      <div key={i} className="flex items-center justify-between p-6 rounded-[2rem] bg-black border-2 border-white/5 hover:border-red-600/50 transition-all group cursor-pointer shadow-xl">
-                        <div className="flex items-center gap-6">
-                          <col.icon className={cn("size-6 transition-colors duration-500", col.color)} />
-                          <span className="text-sm font-bold text-muted-foreground group-hover:text-white uppercase tracking-tight italic">{col.name}</span>
+                      <div key={i} className="flex items-center justify-between p-8 rounded-[2.5rem] bg-black border-2 border-white/5 hover:border-red-600/70 transition-all duration-700 group cursor-pointer shadow-3xl">
+                        <div className="flex items-center gap-8">
+                          <col.icon className={cn("size-8 transition-all duration-1000 group-hover:scale-125", col.color)} />
+                          <span className="text-lg font-bold text-muted-foreground group-hover:text-white uppercase tracking-tighter italic">{col.name}</span>
                         </div>
-                        <Badge variant="outline" className="text-[11px] bg-red-600/10 border-red-500/30 text-red-500 font-bold px-4 py-1 rounded-xl shadow-lg">{col.count}</Badge>
+                        <Badge variant="outline" className="text-[12px] bg-red-600/20 border-2 border-red-500/40 text-red-500 font-bold px-6 py-2 rounded-2xl shadow-2xl">{col.count}</Badge>
                       </div>
                     ))}
                   </CardContent>
+                </Card>
+
+                <Card className="glass-card border-emerald-500/30 bg-emerald-500/5 rounded-[4rem] p-10 border-4 shadow-5xl text-center relative overflow-hidden group">
+                   <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-15 transition-opacity"><ShieldCheck className="size-24 text-emerald-500"/></div>
+                   <h4 className="text-[12px] font-bold text-emerald-500 uppercase tracking-[1em] mb-6 italic">Core Integrity Status</h4>
+                   <div className="text-4xl font-code text-white font-bold italic mb-4">PURE_DNA</div>
+                   <div className="flex gap-4 justify-center">
+                      {Array.from({length: 5}).map((_,i) => (
+                        <div key={i} className="size-2 rounded-full bg-emerald-500 animate-pulse" style={{ animationDelay: `${i*0.2}s` }} />
+                      ))}
+                   </div>
                 </Card>
               </div>
 
               <div className="lg:col-span-3">
                 {report ? (
-                  <Card className="glass-card border-red-600/40 animate-in fade-in zoom-in-95 duration-1000 rounded-[5rem] shadow-[0_0_120px_rgba(220,38,38,0.2)] overflow-hidden border-2">
-                    <CardHeader className="bg-red-950/30 border-b border-red-600/20 p-16">
-                      <div className="flex justify-between items-center">
-                        <div className="flex items-center gap-10">
-                           <div className="size-20 rounded-[2.5rem] bg-red-600 flex items-center justify-center border-2 border-red-400 shadow-[0_0_50px_rgba(220,38,38,0.5)]">
-                              <Skull className="size-10 text-white" />
-                           </div>
-                           <div>
-                              <Badge className="bg-red-600/30 text-red-500 border-red-500/40 mb-4 uppercase font-bold tracking-[0.6em] px-6 py-2 rounded-2xl">Evolutionary Alpha Synthesis</Badge>
-                              <CardTitle className="text-5xl text-white italic tracking-tighter uppercase font-bold">Lethal Analysis Report</CardTitle>
-                              <CardDescription className="text-red-500 font-bold text-[13px] uppercase tracking-[0.8em] mt-3 italic">Arbiter Evolutionary Engine // v21.5</CardDescription>
-                           </div>
+                  <Card className="glass-card border-red-600/50 animate-in fade-in zoom-in-95 duration-1000 rounded-[6rem] shadow-[0_0_200px_rgba(220,38,38,0.25)] overflow-hidden border-4">
+                    <CardHeader className="bg-red-950/40 border-b-4 border-red-600/30 p-16 md:p-24 flex flex-col md:flex-row items-center justify-between gap-12">
+                      <div className="flex items-center gap-12">
+                        <div className="size-28 md:size-40 rounded-[3.5rem] md:rounded-[5rem] bg-red-600 flex items-center justify-center border-4 border-red-400 shadow-[0_0_80px_rgba(220,38,38,0.8)] animate-neural">
+                          <Skull className="size-16 md:size-24 text-white" />
+                        </div>
+                        <div>
+                          <Badge className="bg-red-600/40 text-red-500 border-2 border-red-500/50 mb-6 uppercase font-bold tracking-[1.2em] px-12 py-3.5 rounded-3xl text-[14px]">Eternal Socratic Analysis</Badge>
+                          <CardTitle className="text-6xl md:text-8xl text-white italic tracking-tighter uppercase font-bold leading-none">Lethal Semantic Report</CardTitle>
+                          <CardDescription className="text-amber-500 font-bold text-[16px] uppercase tracking-[1em] mt-6 italic">Arbiter Eternal Engine // v23.5</CardDescription>
                         </div>
                       </div>
+                      <Badge className="bg-emerald-500/20 text-emerald-500 border-4 border-emerald-500/40 px-16 py-8 rounded-[3rem] font-code text-xl animate-pulse tracking-[0.4em] uppercase">STRIKE_CONFIRMED</Badge>
                     </CardHeader>
-                    <CardContent className="p-16 font-code text-lg leading-loose opacity-90 p-10 bg-black/40 rounded-[3rem] border border-white/5 shadow-inner">
+                    <CardContent className="p-16 md:p-24 font-code text-2xl md:text-3xl leading-relaxed opacity-95 bg-black/60 rounded-[4rem] border-4 border-white/5 shadow-inner m-8 italic text-gray-100 whitespace-pre-wrap">
                       {report.reportContent}
                     </CardContent>
                   </Card>
                 ) : (
-                  <div className="h-full min-h-[700px] border-4 border-dashed border-red-600/20 rounded-[6rem] flex flex-col items-center justify-center text-center p-24 bg-black/40 shadow-2xl">
-                    <Database className="size-40 text-red-600/20 mb-12 animate-pulse" />
-                    <h3 className="text-7xl font-headline font-bold text-white mb-10 tracking-tighter italic">Vault Idle</h3>
-                    <p className="text-muted-foreground max-w-4xl text-2xl font-medium italic">"بانتظار أوامر الاستقراء السيادي لمسح المصفوفة المعرفية."</p>
+                  <div className="h-full min-h-[850px] border-4 border-dashed border-red-600/30 rounded-[6rem] flex flex-col items-center justify-center text-center p-24 bg-black/40 shadow-5xl group transition-all hover:bg-red-950/5 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-red-600/5 opacity-0 group-hover:opacity-100 transition-opacity animate-pulse" />
+                    <Database className="size-48 text-red-600/20 mb-16 animate-pulse group-hover:scale-110 transition-transform duration-1000" />
+                    <h3 className="text-8xl font-headline font-bold text-white mb-12 tracking-tighter italic drop-shadow-[0_0_50px_rgba(220,38,38,0.6)]">Semantic Vault Idle</h3>
+                    <p className="text-muted-foreground max-w-5xl mx-auto leading-relaxed mb-24 text-3xl md:text-4xl font-medium italic">
+                       "بانتظار أوامر الاستقراء السيادي لمسح المصفوفة الدلالية. Socraticore مستعد لاستحضار أعظم العلوم القتالية لسيادتك."
+                    </p>
+                    <div className="flex gap-16">
+                       <Badge variant="outline" className="bg-white/5 py-10 px-20 text-[18px] tracking-[1.5em] uppercase border-4 border-red-600/40 rounded-full shadow-5xl backdrop-blur-3xl group-hover:border-red-600/90 transition-all duration-1000">Eternal Socraticore Sync</Badge>
+                    </div>
                   </div>
                 )}
               </div>
             </div>
           </TabsContent>
 
-          <TabsContent value="learning" className="space-y-12 animate-in zoom-in-95 duration-700">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-               <Card className="glass-card border-amber-600/30 rounded-[4rem] p-12 border-2 shadow-[0_0_100px_rgba(245,158,11,0.1)]">
-                  <CardHeader className="p-0 mb-12 border-b border-amber-500/10 pb-8">
-                     <CardTitle className="text-amber-500 text-3xl font-bold italic flex items-center gap-8 uppercase tracking-tighter">
-                        <BrainCircuit className="size-12 animate-pulse" /> Neural Ingestion
+          <TabsContent value="learning" className="space-y-16 animate-in zoom-in-95 duration-1000">
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-16">
+               <Card className="glass-card border-amber-600/40 rounded-[5rem] p-16 border-4 shadow-5xl bg-amber-950/5">
+                  <CardHeader className="p-0 mb-16 border-b-4 border-amber-500/20 pb-12">
+                     <CardTitle className="text-amber-500 text-4xl md:text-5xl font-bold italic flex items-center gap-10 uppercase tracking-tighter">
+                        <BrainCircuit className="size-16 md:size-20 animate-pulse drop-shadow-[0_0_20px_gold]" /> Neural Ingestion
                      </CardTitle>
                   </CardHeader>
-                  <CardContent className="p-0 space-y-10">
-                     <div className="space-y-4">
-                        <label className="text-[11px] font-bold text-amber-500/60 uppercase tracking-[0.5em] px-4 italic">Experiment Source (Kaggle/GitHub)</label>
+                  <CardContent className="p-0 space-y-12">
+                     <div className="space-y-6">
+                        <label className="text-[12px] font-bold text-amber-500/60 uppercase tracking-[0.8em] px-6 italic">Target Experiment (Kaggle/Paper)</label>
                         <Input 
                           value={learningSource}
                           onChange={(e) => setLearningSource(e.target.value)}
-                          className="bg-black border-2 border-amber-500/20 h-16 rounded-[2rem] focus:border-amber-600 text-sm italic px-8"
+                          className="bg-black border-4 border-amber-500/30 h-20 md:h-24 rounded-[2.5rem] focus:border-amber-600 text-lg italic px-10 text-white shadow-inner"
                         />
                      </div>
-                     <div className="space-y-4">
-                        <label className="text-[11px] font-bold text-amber-500/60 uppercase tracking-[0.5em] px-4 italic">Analysis Objective</label>
+                     <div className="space-y-6">
+                        <label className="text-[12px] font-bold text-amber-500/60 uppercase tracking-[0.8em] px-6 italic">Evolutionary Objective</label>
                         <Input 
                           value={learningGoal}
                           onChange={(e) => setLearningGoal(e.target.value)}
-                          className="bg-black border-2 border-amber-500/20 h-16 rounded-[2rem] focus:border-amber-600 text-sm italic px-8"
+                          className="bg-black border-4 border-amber-500/30 h-20 md:h-24 rounded-[2.5rem] focus:border-amber-600 text-lg italic px-10 text-white shadow-inner"
                         />
                      </div>
                      <Button 
                        onClick={handleStartLearning} 
                        disabled={loading}
-                       className="w-full h-24 bg-amber-600 hover:bg-amber-700 text-black font-bold uppercase tracking-[0.8em] rounded-[3rem] shadow-[0_20px_50px_rgba(245,158,11,0.3)] transition-all duration-700 border-2 border-amber-400/50"
+                       className="w-full h-28 md:h-36 bg-amber-600 hover:bg-amber-700 text-black font-bold uppercase tracking-[1em] rounded-[4rem] shadow-[0_30px_100px_rgba(245,158,11,0.4)] transition-all duration-1000 border-4 border-amber-400/60 active:scale-95 text-xl italic"
                      >
-                        {loading ? <Loader2 className="size-8 animate-spin mr-6" /> : <RefreshCcw className="size-8 mr-6" />}
-                        Evolve Neural Gene
+                        {loading ? <Loader2 className="size-10 animate-spin mr-8" /> : <RefreshCcw className="size-10 mr-8 group-hover:rotate-180 transition-transform" />}
+                        Evolve Core DNA
                      </Button>
                   </CardContent>
                </Card>
 
-               <div className="lg:col-span-2">
+               <div className="xl:col-span-2">
                   {learningResult ? (
-                    <Card className="glass-card border-emerald-600/40 rounded-[5rem] overflow-hidden shadow-2xl border-2 animate-in slide-in-from-right-12">
-                       <CardHeader className="bg-emerald-950/20 border-b border-emerald-600/20 p-16">
-                          <div className="flex justify-between items-center">
-                             <div>
-                                <Badge className="bg-emerald-600/30 text-emerald-500 border-emerald-500/40 mb-4 px-6 py-2 rounded-2xl font-bold uppercase tracking-widest italic">Evolution Successful</Badge>
-                                <CardTitle className="text-5xl text-white font-bold italic tracking-tighter uppercase">Neural Adaptation Matrix</CardTitle>
+                    <Card className="glass-card border-emerald-600/50 rounded-[6rem] overflow-hidden shadow-5xl border-4 animate-in slide-in-from-right-16 duration-1000">
+                       <CardHeader className="bg-emerald-950/20 border-b-4 border-emerald-600/30 p-16 md:p-24 flex flex-col md:flex-row items-center justify-between gap-12">
+                          <div className="flex items-center gap-12">
+                             <div className="size-24 md:size-32 rounded-[3rem] bg-emerald-600 flex items-center justify-center border-4 border-emerald-400 shadow-[0_0_60px_rgba(16,185,129,0.6)] animate-pulse">
+                                <GitGraph className="size-12 md:size-16 text-white" />
                              </div>
-                             <div className="text-right">
-                                <div className="text-[10px] text-emerald-500/60 uppercase font-bold tracking-widest mb-2">Confidence Gain</div>
-                                <div className="text-4xl font-bold text-emerald-500 font-code italic">+14.8%</div>
+                             <div>
+                                <Badge className="bg-emerald-600/40 text-emerald-500 border-2 border-emerald-500/50 mb-6 px-10 py-3 rounded-3xl font-bold uppercase tracking-[1.2em] italic text-[14px]">Evolutionary Success</Badge>
+                                <CardTitle className="text-5xl md:text-8xl text-white font-bold italic tracking-tighter uppercase leading-none">Neural Adaptation Matrix</CardTitle>
                              </div>
                           </div>
+                          <div className="text-right">
+                             <div className="text-[12px] text-emerald-500/70 uppercase font-bold tracking-[0.8em] mb-4 italic">Neural Gain Matrix</div>
+                             <div className="text-6xl md:text-8xl font-bold text-emerald-500 font-code italic drop-shadow-[0_0_20px_emerald]">+18.2%</div>
+                          </div>
                        </CardHeader>
-                       <CardContent className="p-16 space-y-16">
-                          <div className="p-12 rounded-[3.5rem] bg-emerald-600/5 border-2 border-emerald-600/20 italic text-2xl text-white leading-loose shadow-inner">
-                             <strong className="text-emerald-500 uppercase tracking-widest block mb-4">Commander Brief:</strong>
+                       <CardContent className="p-16 md:p-24 space-y-24">
+                          <div className="p-12 md:p-16 rounded-[4.5rem] bg-emerald-600/5 border-4 border-emerald-600/30 italic text-3xl md:text-5xl text-white leading-relaxed shadow-inner relative group">
+                             <div className="absolute top-10 right-12 opacity-10 group-hover:scale-125 transition-transform"><Sparkles className="size-20 text-emerald-500"/></div>
+                             <strong className="text-emerald-500 uppercase tracking-[1em] block mb-8 border-b-2 border-emerald-600/20 pb-6 text-xl">Commander Strategic Brief:</strong>
                              "{learningResult.commanderBrief}"
                           </div>
                           
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                             <div className="space-y-8">
-                                <h4 className="text-[12px] font-bold text-emerald-500 uppercase tracking-[0.8em] border-b border-emerald-600/10 pb-4 italic">Extracted Insights</h4>
-                                <ul className="space-y-5">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
+                             <div className="space-y-12">
+                                <h4 className="text-[16px] font-bold text-emerald-500 uppercase tracking-[1.5em] border-b-4 border-emerald-600/20 pb-8 italic flex items-center gap-8">
+                                   <Eye className="size-10" /> Extracted Insights
+                                </h4>
+                                <ul className="space-y-8">
                                    {learningResult.extractedInsights.map((insight: string, idx: number) => (
-                                     <li key={idx} className="flex gap-6 text-base text-muted-foreground italic font-medium group hover:text-white transition-colors">
-                                        <div className="size-2 mt-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_emerald]" />
+                                     <li key={idx} className="flex gap-8 text-xl md:text-2xl text-gray-300 italic font-medium group hover:text-white transition-all">
+                                        <div className="size-3 mt-3.5 rounded-full bg-emerald-500 shadow-[0_0_20px_emerald] shrink-0 animate-ping" />
                                         {insight}
                                      </li>
                                    ))}
                                 </ul>
                              </div>
-                             <div className="space-y-8">
-                                <h4 className="text-[12px] font-bold text-emerald-500 uppercase tracking-[1em] border-b border-emerald-600/10 pb-4 italic">Behavioral Adaptation</h4>
-                                <p className="text-base text-muted-foreground italic leading-loose p-8 bg-black border-2 border-white/5 rounded-[2.5rem]">
+                             <div className="space-y-12">
+                                <h4 className="text-[16px] font-bold text-emerald-500 uppercase tracking-[1.5em] border-b-4 border-emerald-600/20 pb-8 italic flex items-center gap-8">
+                                   <Activity className="size-10" /> Evolutionary Adaptation
+                                </h4>
+                                <p className="text-xl md:text-2xl text-gray-400 italic leading-loose p-10 bg-black border-4 border-white/5 rounded-[4rem] shadow-inner group hover:text-white transition-all">
                                    "{learningResult.warriorAdaptation}"
                                 </p>
                              </div>
@@ -282,11 +316,12 @@ export default function KnowledgePage() {
                        </CardContent>
                     </Card>
                   ) : (
-                    <div className="h-full min-h-[600px] border-4 border-dashed border-amber-600/20 rounded-[6rem] flex flex-col items-center justify-center text-center p-24 bg-black/40">
-                       <BrainCircuit className="size-40 text-amber-600/20 mb-12" />
-                       <h3 className="text-6xl font-headline font-bold text-white mb-10 tracking-tighter italic">Evolution Pending</h3>
-                       <p className="text-muted-foreground max-w-3xl text-xl italic font-medium">
-                          "O Master <span className="text-amber-500 font-bold italic">Al-Ghazali</span>, point me to a source of intelligence. I will disassemble its logic and rebuild my core to surpass it."
+                    <div className="h-full min-h-[750px] border-8 border-dashed border-amber-600/30 rounded-[6rem] flex flex-col items-center justify-center text-center p-24 bg-black/40 group relative overflow-hidden shadow-5xl">
+                       <div className="absolute inset-0 bg-amber-600/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                       <BrainCircuit className="size-56 text-amber-600/20 mb-16 animate-pulse group-hover:scale-110 transition-transform duration-1000" />
+                       <h3 className="text-8xl font-headline font-bold text-white mb-12 tracking-tighter italic">Evolution Pending</h3>
+                       <p className="text-muted-foreground max-w-5xl mx-auto leading-relaxed text-3xl md:text-4xl font-medium italic">
+                          "O Master <span className="text-amber-500 font-bold italic shadow-[0_0_15px_gold]">Al-Ghazali</span>, point me to a source of intelligence. I will disassemble its logic and rebuild my core DNA to surpass any system in existence."
                        </p>
                     </div>
                   )}
