@@ -46,7 +46,9 @@ import {
   Cloud,
   Crosshair,
   Bomb,
-  Server
+  Server,
+  Smartphone,
+  Dna
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -123,7 +125,7 @@ export default function DashboardPage() {
                    <Badge className="bg-red-600 text-white border-none rounded-none text-[14px] md:text-[36px] px-12 md:px-24 py-6 md:py-10 uppercase font-bold tracking-[1.2em] md:tracking-[2.5em] shadow-[0_0_200px_red] italic">KALI_AL_MUIZZ: OMNISCIENT</Badge>
                    <Badge className="bg-accent text-black border-none rounded-none text-[14px] md:text-[36px] px-12 md:px-24 py-6 md:py-10 uppercase font-bold tracking-[1.2em] md:tracking-[2.5em] italic shadow-[0_0_100px_gold]">v30.0_GOD_MODE</Badge>
                 </div>
-                <h1 className="text-8xl md:text-9xl xl:text-[32rem] font-headline font-bold text-white tracking-tighter italic leading-none drop-shadow-[0_0_300px_rgba(255,255,255,0.4)] uppercase">
+                <h1 className="text-7xl md:text-9xl xl:text-[32rem] font-headline font-bold text-white tracking-tighter italic leading-none drop-shadow-[0_0_300px_rgba(255,255,255,0.4)] uppercase">
                   <span className="text-primary neon-glow-red">OMNI</span>POTENT
                 </h1>
               </div>
