@@ -8,26 +8,27 @@ import {
   FileText, 
   Plus, 
   Filter, 
-  BarChart3,
-  TrendingUp,
-  History,
-  Loader2,
-  Skull,
-  Flame,
-  Zap,
-  Crown,
-  Lock,
-  Binary,
-  Target,
-  Sword,
-  Shield,
-  BrainCircuit,
-  Sparkles,
-  RefreshCcw,
-  BookOpen,
-  Info,
-  Workflow,
-  Eye,
+  BarChart3, 
+  TrendingUp, 
+  History, 
+  Loader2, 
+  Skull, 
+  Flame, 
+  Zap, 
+  Crown, 
+  Lock, 
+  Binary, 
+  Target, 
+  Sword, 
+  Shield, 
+  ShieldCheck,
+  BrainCircuit, 
+  Sparkles, 
+  RefreshCcw, 
+  BookOpen, 
+  Info, 
+  Workflow, 
+  Eye, 
   GitGraph
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
@@ -75,6 +76,7 @@ export default function KnowledgePage() {
   }
 
   const handleStartLearning = async () => {
+    if (!learningSource || !learningGoal) return
     setLoading(true)
     try {
       const data = await executeSovereignLearning({
