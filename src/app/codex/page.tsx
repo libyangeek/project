@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -127,31 +126,39 @@ export default function CodexPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-20 relative z-10 pb-64">
           {capabilities.map((item, idx) => (
             <Card key={idx} className="kali-card p-16 rounded-[6rem] group hover:scale-[1.05] transition-all duration-1000 border-8 border-white/10 shadow-6xl bg-black/90">
-              <CardHeader className="p-0 mb-16 flex flex-row items-center justify-between border-b-4 border-white/10 pb-12">
-                <div className="flex items-center gap-12">
-                   <div className="size-32 rounded-[3rem] bg-white/5 border-4 border-white/15 flex items-center justify-center group-hover:bg-primary/30 transition-all duration-700 shadow-5xl">
-                      <item.icon className={cn("size-16", item.color)} />
-                   </div>
-                   <div>
-                    <CardTitle className="text-5xl md:text-6xl font-bold italic tracking-tighter uppercase text-white group-hover:text-primary transition-colors leading-none">{item.title}</CardTitle>
-                    <span className="text-[12px] text-accent font-bold tracking-[1em] mt-4 block uppercase opacity-70">{item.node}</span>
-                   </div>
+              {idx === 0 ? (
+                <div className="flex items-center justify-center h-full min-h-[400px] text-5xl md:text-7xl font-bold text-white text-center italic leading-tight p-8">
+                  هل تعمل هذه بعد تثبيت النظام
                 </div>
-                <Badge variant="outline" className="text-[14px] px-10 py-4 rounded-full border-primary/60 text-primary font-bold uppercase tracking-[0.5em] italic animate-pulse shadow-4xl">VERIFIED</Badge>
-              </CardHeader>
-              <CardContent className="p-0 space-y-16">
-                <p className="text-3xl text-gray-300 leading-relaxed italic font-medium">"{item.desc}"</p>
-                <div className="space-y-8">
-                   <h4 className="text-[16px] font-bold text-accent uppercase tracking-[1.5em] italic border-b-2 border-accent/20 pb-6">Eternal Features</h4>
-                   <div className="flex flex-wrap gap-6">
-                      {item.features.map((cap, i) => (
-                        <Badge key={i} className="bg-black border-4 border-white/15 text-white text-[15px] py-6 px-12 rounded-[3rem] uppercase tracking-tighter hover:border-primary transition-all shadow-5xl italic flex items-center gap-6">
-                          <Zap className="size-6 text-primary animate-pulse" /> {cap}
-                        </Badge>
-                      ))}
-                   </div>
-                </div>
-              </CardContent>
+              ) : (
+                <>
+                  <CardHeader className="p-0 mb-16 flex flex-row items-center justify-between border-b-4 border-white/10 pb-12">
+                    <div className="flex items-center gap-12">
+                       <div className="size-32 rounded-[3rem] bg-white/5 border-4 border-white/15 flex items-center justify-center group-hover:bg-primary/30 transition-all duration-700 shadow-5xl">
+                          <item.icon className={cn("size-16", item.color)} />
+                       </div>
+                       <div>
+                        <CardTitle className="text-5xl md:text-6xl font-bold italic tracking-tighter uppercase text-white group-hover:text-primary transition-colors leading-none">{item.title}</CardTitle>
+                        <span className="text-[12px] text-accent font-bold tracking-[1em] mt-4 block uppercase opacity-70">{item.node}</span>
+                       </div>
+                    </div>
+                    <Badge variant="outline" className="text-[14px] px-10 py-4 rounded-full border-primary/60 text-primary font-bold uppercase tracking-[0.5em] italic animate-pulse shadow-4xl">VERIFIED</Badge>
+                  </CardHeader>
+                  <CardContent className="p-0 space-y-16">
+                    <p className="text-3xl text-gray-300 leading-relaxed italic font-medium">"{item.desc}"</p>
+                    <div className="space-y-8">
+                       <h4 className="text-[16px] font-bold text-accent uppercase tracking-[1.5em] italic border-b-2 border-accent/20 pb-6">Eternal Features</h4>
+                       <div className="flex flex-wrap gap-6">
+                          {item.features.map((cap, i) => (
+                            <Badge key={i} className="bg-black border-4 border-white/15 text-white text-[15px] py-6 px-12 rounded-[3rem] uppercase tracking-tighter hover:border-primary transition-all shadow-5xl italic flex items-center gap-6">
+                              <Zap className="size-6 text-primary animate-pulse" /> {cap}
+                            </Badge>
+                          ))}
+                       </div>
+                    </div>
+                  </CardContent>
+                </>
+              )}
             </Card>
           ))}
         </div>
