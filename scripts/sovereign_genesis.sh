@@ -3,7 +3,7 @@
 # ==============================================================================
 # 🦅 KALI AL-MUI'ZZ SOVEREIGN GENESIS v22.0-ARCHITECT [TOTAL SYSTEM REBIRTH]
 # المحرك الأسمى للانبعاث النقي - ليلة انبعاث القائد المعتصم بالله الغزالي.
-# تم تحديثه لتعميد النظام بهوية "KALI AL-MUI'ZZ" وسحق كافة الأشباح القديمة.
+# تم تحديثه لتعميد النظام بهوية "KALI AL-MUI'ZZ" وتحويله لسطح مكتب سيادي.
 # ==============================================================================
 
 set -e
@@ -42,11 +42,9 @@ fi
 
 # 2. بروتوكول التطهير الكلي (سحق الأشباح القديمة)
 echo -e "${CYAN}[*] Phase 1: Initializing Total Purgatory (Deleting Old Ghosts)...${NC}"
-# إيقاف وحذف خدمات المنصة القديمة إن وجدت
 systemctl stop muizz-ai.service muizz-web.service muizz-legacy.service 2>/dev/null || true
 systemctl disable muizz-ai.service muizz-web.service muizz-legacy.service 2>/dev/null || true
 
-# حذف المجلدات المتضاربة
 rm -rf "/opt/ultimate" "/opt/muizz" "/opt/birthofAL-muiiz" "/opt/sovereign-genesis"
 if [ -d "$INSTALL_DIR" ]; then
     rm -rf "$INSTALL_DIR"
@@ -66,16 +64,14 @@ rm -rf "$TEMP_CACHE"
 
 cd "$INSTALL_DIR"
 
-# 5. بروتوكول التعميد السيادي (Rebranding Kali -> Al-Mu'izz)
-echo -e "${GOLD}[*] Phase 3: System Rebranding (Kali -> Al-Mu'izz OS)...${NC}"
-# تحديث اسم المضيف (Hostname)
+# 5. بروتوكول التعميد السيادي (Rebranding Kali -> Al-Mu'izz OS)
+echo -e "${GOLD}[*] Phase 3: System Rebranding (Identity Transformation)...${NC}"
 echo "kali-al-muizz" > /etc/hostname
 hostname -F /etc/hostname
 sed -i "s/127.0.1.1.*/127.0.1.1\tkali-al-muizz/g" /etc/hosts
 
-# تحديث مسمى النظام في ملفات التعريف لتعميد الـ Boot والشاشة
 cat > /etc/os-release <<EOF
-PRETTY_NAME="Kali Al-Mu'izz Sovereign v22.0-ARCHITECT"
+PRETTY_NAME="Kali Al-Mu'izz Sovereign OS v22.0-ARCHITECT"
 NAME="Kali Al-Mu'izz"
 ID=kali
 ID_LIKE=debian
@@ -90,14 +86,14 @@ EOF
 
 cp /etc/os-release /usr/lib/os-release
 
-# تحديث الـ GRUB لإظهار الاسم الجديد في قائمة البوت
+# تحديث الـ GRUB لإظهار اسم المعز في قائمة البوت
 if [ -f "/etc/default/grub" ]; then
-    sed -i 's/GRUB_DISTRIBUTOR=.*/GRUB_DISTRIBUTOR="Al-Mu'\''izz Sovereign"/' /etc/default/grub
+    sed -i 's/GRUB_DISTRIBUTOR=.*/GRUB_DISTRIBUTOR="Al-Mu'\''izz Sovereign OS"/' /etc/default/grub
     update-grub || true
 fi
 
 # 6. تشغيل المثبت السيادي المدمج
-echo -e "${BLUE}[*] Phase 4: Triggering Universal Installer...${NC}"
+echo -e "${BLUE}[*] Phase 4: Triggering Universal Desktop Installer...${NC}"
 bash scripts/install.sh
 
 # 7. بروتوكول التحقق والنبض (DOUBLE-CHECK)
@@ -113,13 +109,13 @@ fi
 
 # 8. النبض النهائي
 echo -e "${BOLD_RED}================================================${NC}"
-echo -e "${BOLD_RED}   ✅ KALI AL-MUI'ZZ v22.0 IS BORN!             ${NC}"
-echo -e "${BOLD_RED}   [ STATUS: OS_DNA_FULLY_INTEGRATED ]      ${NC}"
+echo -e "${BOLD_RED}   ✅ KALI AL-MUI'ZZ OS v22.0 IS BORN!          ${NC}"
+echo -e "${BOLD_RED}   [ STATUS: DESKTOP_HIJACK_COMPLETE ]          ${NC}"
 echo -e "${BOLD_RED}================================================${NC}"
-echo -e "1) Architect HUD: ${GREEN}http://localhost:9002 (Primary)${NC}"
-echo -e "2) Legacy Hub:    ${GOLD}http://localhost:5000 (Backup)${NC}"
-echo -e "3) Shell:        ${GREEN}Sovereign Banner Active${NC}"
-echo -e "4) Identity:     ${GREEN}Hostname: kali-al-muizz${NC}"
+echo -e "1) Sovereign Desktop Entry: Created"
+echo -e "2) Auto-Start HUD:         Armed"
+echo -e "3) System Hostname:        kali-al-muizz"
+echo -e "4) Web HUD Port:           9002"
 echo -e ""
-echo -e "${GOLD}Commander Al-Ghazali, please RESTART to witnesses the total rebirth.${NC}"
-echo -e "${BOLD_RED}THE MATRIX IS CONQUERED. WE ARE KALI AL-MUI'ZZ.${NC}"
+echo -e "${GOLD}Commander Al-Ghazali, please RESTART to see your Sovereign Desktop.${NC}"
+echo -e "${BOLD_RED}THE MATRIX IS CONQUERED. WE ARE KALI AL-MUI'ZZ OS. EXECUTE REBOOT NOW.${NC}"

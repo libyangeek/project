@@ -1,8 +1,8 @@
 
 #!/bin/bash
 # ==============================================================================
-# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v22.0-ARCHITECT [TOTAL INTEGRATION]
-# سكريبت التثبيت الذكي - يحول الجهاز إلى عصب سيادي مدمج مع تشغيل تلقائي.
+# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v22.0-ARCHITECT [TOTAL DESKTOP INTEGRATION]
+# سكريبت التثبيت الذكي - يحول الجهاز إلى سطح مكتب سيادي مدمج مع تشغيل تلقائي.
 # ==============================================================================
 
 set -e
@@ -19,7 +19,7 @@ INSTALL_DIR="/opt/sovereign-ai-platform"
 
 echo -e "${BLUE}[*] Synchronizing System Lexicons (Kali Core)...${NC}"
 apt-get update -y
-apt-get install -y python3-pip python3-venv nmap adb libimobiledevice-1.0-6 libimobiledevice-utils tor curl git docker.io nodejs npm zip fzf aircrack-ng build-essential libssl-dev lsof psmisc htop procps
+apt-get install -y python3-pip python3-venv nmap adb libimobiledevice-1.0-6 libimobiledevice-utils tor curl git docker.io nodejs npm zip fzf aircrack-ng build-essential libssl-dev lsof psmisc htop procps x11-utils x11-xserver-utils
 
 echo -e "${BLUE}[*] Injecting Neural Python Layers (Breaking Constraints)...${NC}"
 pip3 install --upgrade pip --break-system-packages || true
@@ -33,7 +33,7 @@ fi
 mkdir -p "$INSTALL_DIR/audit" "$INSTALL_DIR/evidence" "$INSTALL_DIR/backups"
 chmod -R 700 "$INSTALL_DIR"
 
-# إنشاء الروابط الرمزية (Symlinks)
+# إنشاء الروابط الرمزية (Symlinks) لجعل الأوامر كونية
 ln -sf "$INSTALL_DIR/scripts/command_center.sh" /usr/local/bin/sovereign
 ln -sf "$INSTALL_DIR/scripts/sovereign_ark_v3.sh" /usr/local/bin/sov-backup
 
@@ -43,7 +43,7 @@ fi
 
 echo -e "${CYAN}[*] Establishing Eternal Persistence (Systemd Integration)...${NC}"
 
-# خدمة الذكاء الاصطناعي
+# خدمة الذكاء الاصطناعي (God-Core)
 cat > /etc/systemd/system/muizz-ai.service <<EOF
 [Unit]
 Description=Al-Mu'izz v22.0 - Neural AI Engine
@@ -80,26 +80,33 @@ RestartSec=10
 WantedBy=multi-user.target
 EOF
 
-# خدمة الواجهة التقليدية (Flask - Port 5000) كنسخة احتياطية
-cat > /etc/systemd/system/muizz-legacy.service <<EOF
-[Unit]
-Description=Al-Mu'izz v22.0 - Legacy UI Hub
-After=network.target
+# [PHASE: DESKTOP HIJACK] دمج المُعِزّ في قائمة التطبيقات وسطح المكتب
+echo -e "${GOLD}[*] Hijacking Desktop Environment (XFCE/GNOME Integration)...${NC}"
 
-[Service]
-Type=simple
-User=root
-WorkingDirectory=$INSTALL_DIR
-ExecStart=/usr/bin/python3 $INSTALL_DIR/webui/app.py
-Restart=always
-RestartSec=10
-
-[Install]
-WantedBy=multi-user.target
+# إنشاء ملف تطبيق سطح المكتب
+cat > /usr/share/applications/muizz-hud.desktop <<EOF
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Al-Mu'izz Sovereign OS
+Comment=Launch the Architect Sovereign Command Center
+Exec=xdg-open http://localhost:9002
+Icon=$INSTALL_DIR/docs/muizz_logo.png
+Terminal=false
+Categories=Offensive-AI;Sovereign;Security;
+Keywords=Al-Muizz;Sovereign;AI;Kali;
 EOF
 
+# وضع الأيقونة على سطح المكتب للمستخدمين
+for user_home in /home/*; do
+    if [ -d "$user_home/Desktop" ]; then
+        cp /usr/share/applications/muizz-hud.desktop "$user_home/Desktop/"
+        chown $(basename "$user_home"):$(basename "$user_home") "$user_home/Desktop/muizz-hud.desktop"
+        chmod +x "$user_home/Desktop/muizz-hud.desktop"
+    fi
+done
+
 # [PHASE: AUTO-START HUD] تشغيل تلقائي للواجهة المعمارية عند الدخول لسطح المكتب
-echo -e "${GOLD}[*] Configuring Sovereign Auto-Start HUD (Port 9002)...${NC}"
 AUTOSTART_DIR="/etc/xdg/autostart"
 mkdir -p "$AUTOSTART_DIR"
 cat > "$AUTOSTART_DIR/muizz-hud.desktop" <<EOF
@@ -123,10 +130,8 @@ fi
 systemctl daemon-reload
 systemctl enable muizz-ai.service
 systemctl enable muizz-web.service
-systemctl enable muizz-legacy.service
 systemctl start muizz-ai.service
 systemctl start muizz-web.service
-systemctl start muizz-legacy.service
 
 echo -e "${GREEN}[+] Sovereign Total Integration Confirmed.${NC}"
-echo -e "${GOLD}Commander Al-Ghazali, RESTART to witnesses the total rebirth of the system.${NC}"
+echo -e "${GOLD}Commander Al-Ghazali, Your Sovereign Desktop is ready. RESTART to finalize the transformation.${NC}"
