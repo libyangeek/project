@@ -1,7 +1,8 @@
+
 import { config } from 'dotenv';
 config();
 
-// تسجيل كافة العقد العصبية المرتبطة للسيادة المطلقة v22.0
+// تسجيل كافة العقد العصبية للسيادة المطلقة v28.0 - APEX WARRIOR
 import '@/ai/flows/ai-driven-social-engineering-bots.ts';
 import '@/ai/flows/ai-enhanced-exploit-generation.ts';
 import '@/ai/flows/ai-command-and-routing.ts';
@@ -17,6 +18,7 @@ import '@/ai/flows/ai-adversarial-ops-flow.ts';
 import '@/ai/flows/ai-learning-flow.ts';
 import '@/ai/flows/ai-architect-logic-flow.ts';
 import '@/ai/flows/system-awareness-flow.ts';
-import '@/ai/flows/field-agent-flow.ts'; // الوكيل الميداني التنفيذي
+import '@/ai/flows/field-agent-flow.ts';
+import '@/ai/flows/cpanel-exploit-flow.ts'; // قناص cPanel
 
-console.log("[*] Al-Mu'izz God-Core v22.0: All Neurons Synced & Locked.");
+console.log("[*] Al-Mu'izz Apex-Warrior v28.0: Live Ammunition Synced.");
