@@ -88,7 +88,7 @@ export default function DashboardPage() {
   const stats = [
     { label: "Active Nodes", value: activeSessionsCount.toString(), icon: Network, color: "text-red-500", status: "STRIKE_READY" },
     { label: "Warrior Lineage", value: progenyCount.toString(), icon: Shield, color: "text-blue-400", status: "SYNCED" },
-    { label: "Logical Depth", value: "GOD_TIER", icon: Workflow, color: "text-amber-500", status: "SOCRATIC" },
+    { label: "Logical Depth", value: "98.7%", icon: Workflow, color: "text-amber-500", status: "SOCRATIC" },
     { label: "Active Strikes", value: activeOpsCount.toString(), icon: Target, color: "text-emerald-500", status: "EXECUTING" },
   ];
 
@@ -138,7 +138,7 @@ export default function DashboardPage() {
           <div className="flex flex-col items-center xl:items-end gap-8 md:gap-12 w-full xl:w-auto mt-8 xl:mt-0">
             <div className="kali-card p-6 md:p-16 min-w-full md:min-w-[550px] border-accent/60 bg-black/98 shadow-[0_0_100px_rgba(245,158,11,0.2)] relative overflow-hidden">
               <div className="flex items-center justify-between mb-6 md:mb-12">
-                <span className="text-[8px] md:text-[14px] text-accent uppercase font-bold tracking-[0.4em] md:tracking-[1em] italic">The Nine Pillars: LOCKED</span>
+                <span className="text-[8px] md:text-[14px] text-accent uppercase font-bold tracking-[0.4em] md:tracking-[1em] italic">Inception Pulse: 98.7%</span>
                 <Sparkles className="size-6 md:size-14 text-accent animate-pulse" />
               </div>
               <div className="text-2xl md:text-6xl lg:text-8xl font-headline text-white font-bold tracking-[0.1em] md:tracking-[0.2em] uppercase italic neon-glow-gold">GHAZALI_ROOT</div>
