@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -41,7 +40,8 @@ import {
   Binoculars,
   Bomb,
   Server,
-  Dna
+  Dna,
+  SmartphoneNfc
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -50,6 +50,7 @@ import { Button } from "@/components/ui/button"
 const navItems = [
   { name: "Omniscient Throne", icon: LayoutDashboard, href: "/" },
   { name: "Omniscient Strike", icon: Target, href: "/terminal" },
+  { name: "Mobile C2 Link", icon: SmartphoneNfc, href: "/remote" },
   { name: "C2 Matrix Grid", icon: Radio, href: "/sessions" },
   { name: "Sovereign Bible", icon: BookOpen, href: "/codex" },
   { name: "Field Agent Omni", icon: BrainCircuit, href: "/field-agent" },

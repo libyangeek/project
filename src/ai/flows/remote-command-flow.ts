@@ -1,8 +1,8 @@
-
 'use server';
 /**
- * @fileOverview جسر الأوامر المتنقل v1.2 - نسخة الهيمنة
+ * @fileOverview جسر الأوامر المتنقل v2.0 - نسخة الهيمنة الكونية
  * محرك معالجة الأوامر الواردة من واجهة الموبايل وتحويلها إلى عمليات سيادية غاشمة.
+ * متخصص في هجمات الشبكات الخلوية، الويرليس، والاجتياح الشبكي.
  */
 
 import { ai } from '@/ai/genkit';
@@ -20,6 +20,7 @@ const RemoteCommandOutputSchema = z.object({
   estimatedImpact: z.string(),
   status: z.enum(['QUEUED', 'EXECUTING', 'COMPLETED', 'FAILED']),
   neuralLogic: z.string().describe('التبرير العصبي للعملية.'),
+  targetedAssets: z.array(z.string()).optional(),
 });
 
 export async function processRemoteCommand(input: z.infer<typeof RemoteCommandInputSchema>) {
@@ -33,31 +34,41 @@ const remoteCommandFlow = ai.defineFlow(
     outputSchema: RemoteCommandOutputSchema,
   },
   async (input) => {
-    // 1. تحويل الأمر المختصر إلى وصف استراتيجي غاشم
-    const { output: intel } = await ai.generate({
-      prompt: `أنت الآن "المُعِزّ - واجهة C2 المتنقلة السيادية". استقبلت أمراً من القائد عبر الموبايل: "${input.mobileCommand}". 
-      قم بترجمة هذا الأمر إلى وصف تقني نخبوي يستهدف أعمق نقاط ضعف الهدف.
-      السياق: ${input.deviceContext || 'Strike Operation'}`,
+    // 1. تحويل الأمر المختصر إلى وصف استراتيجي غاشم بنمط "الفاتح العليم"
+    const response = await ai.generate({
+      model: 'googleai/gemini-2.5-flash',
+      system: `أنت الآن "المُعِزّ - واجهة C2 المتنقلة السيادية". مهمتك ترجمة أوامر القائد المعتصم بالله من الموبايل إلى خطط حرب سيبرانية.
+      إذا طلب القائد هجوماً خلوياً أو لاسلكياً، قم بتوظيف:
+      - هجمات 5G/4G: IMSI Catching, SS7 Exploitation, Signal Jamming (Simulated).
+      - هجمات Wireless: WPA3 Brute-force, Evil Twin, Deauthentication.
+      - هجمات الاندماج: ربط كافة العقد لسحق الهدف.`,
+      prompt: `أمر القائد عبر الموبايل: "${input.mobileCommand}"
+      السياق الميداني: ${input.deviceContext || 'Global Matrix Strike'}`,
       output: {
         schema: z.object({
           task: z.string(),
           logic: z.string(),
-          impact: z.string()
+          impact: z.string(),
+          assets: z.array(z.string())
         })
       }
     });
 
-    // 2. تمرير المهمة للعقدة ألفا للحصول على سلسلة التنفيذ الكاملة
+    const intel = response.output;
+    if (!intel) throw new Error("Neural Link Failure: Mobile command not understood.");
+
+    // 2. تمرير المهمة للعقدة ألفا للحصول على سلسلة التنفيذ الكاملة وربط العقد
     const alphaResult = await aiCommandAndRouting({
-      taskDescription: intel!.task,
-      useBlackHatBriefings: true
+      taskDescription: intel.task,
+      mode: 'Blitzkrieg'
     });
 
     return {
-      refinedTask: intel!.task,
+      refinedTask: intel.task,
       executionChain: alphaResult.executionChain,
-      estimatedImpact: intel!.impact,
-      neuralLogic: intel!.logic,
+      estimatedImpact: intel.impact,
+      neuralLogic: intel.logic,
+      targetedAssets: intel.assets,
       status: 'EXECUTING'
     };
   }
