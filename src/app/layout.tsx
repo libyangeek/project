@@ -1,11 +1,12 @@
+
 import type {Metadata} from 'next';
 import './globals.css';
 import { FirebaseClientProvider } from '@/firebase';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'AL-MUIZZ v21.5-EVO | Sovereign Command',
-  description: 'The Absolute Neural Sovereign Platform for Commander Al-Ghazali.',
+  title: 'AL-MUIZZ v40.0 | OMNISCIENT ARMADA',
+  description: 'The Final Inception: Absolute Neural Sovereign Platform for Commander Al-Ghazali.',
 };
 
 export default function RootLayout({
