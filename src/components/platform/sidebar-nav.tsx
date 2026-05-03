@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -28,7 +29,7 @@ import {
   Menu,
   X,
   BrainCircuit,
-  Wand2
+  Eye
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -56,7 +57,6 @@ export function SidebarNav() {
 
   return (
     <>
-      {/* Mobile Toggle Button */}
       <Button
         variant="ghost"
         size="icon"
@@ -78,7 +78,7 @@ export function SidebarNav() {
             <h1 className="text-xl font-headline font-bold text-white tracking-[0.2em] uppercase italic leading-none neon-glow-red">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-white border-none rounded-none text-[8px] font-bold tracking-[0.6em] mt-2 py-1 px-3 uppercase italic shadow-2xl">v22.0-ARC</Badge>
+            <Badge className="bg-primary text-white border-none rounded-none text-[8px] font-bold tracking-[0.6em] mt-2 py-1 px-3 uppercase italic shadow-2xl">v23.0-IMM</Badge>
           </div>
         </div>
         
@@ -126,13 +126,12 @@ export function SidebarNav() {
             onClick={() => setIsOpen(false)}
             className="flex items-center gap-4 px-2 py-3 text-muted-foreground hover:text-primary transition-all font-bold uppercase tracking-[0.4em] text-[9px] italic group"
           >
-            <Sword className="size-5 group-hover:rotate-45 transition-transform" />
-            Architect Pulse
+            <Eye className="size-5 group-hover:scale-125 text-emerald-500 transition-all" />
+            Immortal Pulse
           </Link>
         </div>
       </div>
       
-      {/* Overlay for Mobile */}
       {isOpen && (
         <div 
           className="lg:hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[240]"
