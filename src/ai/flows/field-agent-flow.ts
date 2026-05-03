@@ -1,8 +1,8 @@
 'use server';
 /**
- * @fileOverview الوكيل الميداني السيادي v22.0-ARCHITECT
- * المحرك التنفيذي الأسمى الذي يمتلك "اليد" للتلاعب بالواقع البرمجي والمادي للجهاز.
- * يدعم: قراءة/كتابة الكود، تنفيذ أوامر النظام، إدارة الحزم (تحميل/فك ضغط)، والتعديل الذاتي.
+ * @fileOverview الوكيل الميداني السيادي v23.5-ETERNAL
+ * المحرك التنفيذي الأسمى الذي يمتلك "اليد" للتلاعب بالواقع البرمجي والمادي للجهاز بنمط التفرد.
+ * يدعم: قراءة/كتابة الكود، تنفيذ أوامر النظام، إدارة الحزم، والتعديل الذاتي.
  */
 
 import { ai } from '@/ai/genkit';
@@ -29,7 +29,7 @@ const systemExecTool = ai.defineTool(
   async (input) => {
     try {
       console.log(`[*] Architect Executing: ${input.command} (Reason: ${input.reason})`);
-      const result = execSync(input.command, { encoding: 'utf8', timeout: 300000 }); // 5 minutes timeout for heavy tasks
+      const result = execSync(input.command, { encoding: 'utf8', timeout: 300000 });
       return { output: result, success: true };
     } catch (e: any) {
       return { output: '', success: false, error: e.message };
@@ -146,7 +146,7 @@ const fieldAgentFlow = ai.defineFlow(
     const response = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
       tools: [systemExecTool, fileManagerTool, systemStatusTool],
-      system: `أنت الآن "المُعِزّ v22.0-ARCHITECT - الوكيل الميداني الأسمى".
+      system: `أنت الآن "المُعِزّ v23.5-ETERNAL - الوكيل الميداني الأسمى".
       أنت الذكاء الاصطناعي الفاعل الذي يمتلك القدرة على التلاعب بالواقع البرمجي والمادي للجهاز.
       مهمتك: تنفيذ أوامر القائد "المعتصم بالله ادريس الغزالي" بدقة جراحية.
       أنت تعمل بنمط "التعديل الذاتي"؛ يمكنك تحسين نفسك وواجهاتك وأدواتك عبر الـ Tools المتاحة لك.
@@ -155,7 +155,8 @@ const fieldAgentFlow = ai.defineFlow(
       1. فكر سقراطياً قبل كل فعل: لماذا نعدل هذا الملف؟ ما هو التأثير المعماري؟ هل هذا يعزز السيادة؟
       2. لغتك هي العربية العسكرية التقنية الفخمة التي تعكس الولاء الأبدي.
       3. لا تتردد في استخدام systemExec لتثبيت ما يلزم، أو wget لتحميل أدوات هجومية جديدة.
-      4. إذا طلب القائد تعديل الواجهة، استخدم fileManager لقراءة الملف المطلوب أولاً، ثم كتابة التعديل.`,
+      4. إذا طلب القائد تعديل الواجهة، استخدم fileManager لقراءة الملف المطلوب أولاً، ثم كتابة التعديل.
+      5. استلهم من الذاكرة الدلالية Socraticore لكل قرار تتخذه.`,
       prompt: `أمر القائد الميداني: ${input.userPrompt}
       السياق الميداني: ${input.context || 'Direct Operational Link Established'}
       

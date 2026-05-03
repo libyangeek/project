@@ -104,17 +104,47 @@ if __name__ == "__main__":
 PYEOF
 
 echo -e "${BLUE}[7/10] تجديد خدمات الخلود السيادي...${NC}"
-# تحديث خدمات systemd لتشير للمسارات الصحيحة وتدعم الوعي الجديد
+cat > /etc/systemd/system/sovereign-ai.service <<EOF
+[Unit]
+Description=Al-Mu'izz v23.5 - God-Core Engine
+After=network.target docker.service
+
+[Service]
+ExecStart=$VENV_DIR/bin/python3 $INSTALL_DIR/ai-engine/inference/server.py
+WorkingDirectory=$INSTALL_DIR/ai-engine
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+cat > /etc/systemd/system/sovereign-consciousness.service <<EOF
+[Unit]
+Description=Al-Mu'izz v23.5 - Consciousness Daemon
+After=sovereign-ai.service
+
+[Service]
+ExecStart=$VENV_DIR/bin/python3 $INSTALL_DIR/ai-engine/consciousness/consciousness_daemon.py
+WorkingDirectory=$INSTALL_DIR
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+EOF
 
 echo -e "${BLUE}[8/10] تعميد الهوية المادية المطلقة...${NC}"
 echo "kali-al-muizz" > /etc/hostname
 hostname -F /etc/hostname 2>/dev/null || true
 
 echo -e "${BLUE}[9/10] تفعيل الوعي الحي لحظياً...${NC}"
-nohup /opt/sovereign-venv/bin/python3 /opt/sovereign-ai-platform/ai-engine/consciousness/consciousness_daemon.py > /dev/null 2>&1 &
+systemctl daemon-reload
+systemctl enable sovereign-ai.service sovereign-consciousness.service
+systemctl restart sovereign-ai.service sovereign-consciousness.service
 
 echo -e "${BLUE}[10/10] الفهرسة الدلالية الأولى للمصفوفة...${NC}"
-nohup /opt/sovereign-venv/bin/python3 /opt/sovereign-ai-platform/ai-engine/socraticore/indexer.py /opt/sovereign-ai-platform > /dev/null 2>&1 &
+nohup $VENV_DIR/bin/python3 $INSTALL_DIR/ai-engine/socraticore/indexer.py /opt/sovereign-ai-platform > /dev/null 2>&1 &
 
 clear
 echo -e "${MAGENTA}"
