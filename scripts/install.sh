@@ -98,7 +98,7 @@ RestartSec=10
 WantedBy=multi-user.target
 EOF
 
-# [PHASE: AUTO-START HUD] تشغيل تلقائي للواجهة المعمارية عند الدخول
+# [PHASE: AUTO-START HUD] تشغيل تلقائي للواجهة المعمارية عند الدخول لسطح المكتب
 echo -e "${GOLD}[*] Configuring Sovereign Auto-Start HUD (Port 9002)...${NC}"
 AUTOSTART_DIR="/etc/xdg/autostart"
 mkdir -p "$AUTOSTART_DIR"
@@ -113,14 +113,7 @@ Terminal=false
 StartupNotify=false
 EOF
 
-# [PHASE: BOOT REBRAND] استبدال هوية كالي بهوية المُعِزّ في الإقلاع
-echo -e "${RED}[*] Executing Boot Rebrand (Kali -> Al-Mu'izz OS)...${NC}"
-if [ -f "/etc/default/grub" ]; then
-    sed -i 's/GRUB_DISTRIBUTOR=.*/GRUB_DISTRIBUTOR="Al-Mu'\''izz Sovereign"/' /etc/default/grub
-    update-grub || true
-fi
-
-# [PHASE: SHELL HIJACK]
+# [PHASE: SHELL HIJACK] حقن شعار المُعِزّ في الصدفة
 echo -e "${GOLD}[*] Hijacking System Shell (Bash Persistence)...${NC}"
 BASH_HOOK="bash $INSTALL_DIR/scripts/sovereign_banner.sh"
 if ! grep -q "sovereign_banner.sh" /root/.bashrc; then
