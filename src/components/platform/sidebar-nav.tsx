@@ -30,25 +30,26 @@ import {
   X,
   BrainCircuit,
   Eye,
-  HeartPulse
+  HeartPulse,
+  Flame,
+  Grip
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 
 const navItems = [
-  { name: "Terminal Hub", icon: LayoutDashboard, href: "/" },
-  { name: "Omni-Core", icon: Terminal, href: "/terminal" },
-  { name: "Field Agent", icon: BrainCircuit, href: "/field-agent" },
-  { name: "Sovereign Codex", icon: BookOpen, href: "/codex" },
-  { name: "Hive Sessions", icon: Network, href: "/sessions" },
-  { name: "Warrior Forge", icon: Baby, href: "/progeny" },
-  { name: "Mobile Strike", icon: Smartphone, href: "/hardware" },
+  { name: "Sovereign Throne", icon: LayoutDashboard, href: "/" },
+  { name: "Autonomous Strike", icon: Target, href: "/terminal" },
+  { name: "C2 Matrix", icon: Radio, href: "/sessions" },
+  { name: "Field Ghost", icon: BrainCircuit, href: "/field-agent" },
+  { name: "Shadow Codex", icon: BookOpen, href: "/codex" },
+  { name: "Warrior Lineage", icon: Baby, href: "/progeny" },
+  { name: "Mobile Siphon", icon: Smartphone, href: "/hardware" },
   { name: "Deep Recon", icon: Search, href: "/recon" },
   { name: "Neural Vault", icon: Database, href: "/knowledge" },
-  { name: "Exploit Lab", icon: ShieldX, href: "/red-team" },
-  { name: "Social Intel", icon: MessageSquare, href: "/social" },
-  { name: "C2 Mobile", icon: Radio, href: "/remote" },
+  { name: "Exploit Forge", icon: ShieldX, href: "/red-team" },
+  { name: "Social Intelligence", icon: MessageSquare, href: "/social" },
   { name: "System Pulse", icon: Activity, href: "/system" },
 ]
 
@@ -79,7 +80,7 @@ export function SidebarNav() {
             <h1 className="text-xl font-headline font-bold text-white tracking-[0.2em] uppercase italic leading-none neon-glow-red">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-white border-none rounded-none text-[8px] font-bold tracking-[0.6em] mt-2 py-1 px-3 uppercase italic shadow-2xl">v24.0-SOV</Badge>
+            <Badge className="bg-primary text-white border-none rounded-none text-[8px] font-bold tracking-[0.6em] mt-2 py-1 px-3 uppercase italic shadow-2xl">v25.0-OMNI</Badge>
           </div>
         </div>
         
@@ -109,16 +110,16 @@ export function SidebarNav() {
         </div>
 
         <div className="p-6 border-t-2 border-primary/25 bg-black relative">
-          <div className="p-4 border-4 border-emerald-500/40 bg-black/95 mb-4 relative overflow-hidden group shadow-3xl">
+          <div className="p-4 border-4 border-red-600/40 bg-black/95 mb-4 relative overflow-hidden group shadow-3xl">
             <div className="flex items-center justify-between mb-3">
                <div className="flex items-center gap-2">
-                  <HeartPulse className="size-4 text-emerald-500 animate-pulse" />
-                  <span className="text-[9px] font-bold text-emerald-500 uppercase tracking-widest italic">GEPA Healing</span>
+                  <Flame className="size-4 text-red-600 animate-pulse" />
+                  <span className="text-[9px] font-bold text-red-500 uppercase tracking-widest italic">Omnipotent Power</span>
                </div>
-               <Badge className="bg-emerald-600 text-white text-[7px] font-bold uppercase tracking-tighter px-2 py-0.5">ON</Badge>
+               <Badge className="bg-red-600 text-white text-[7px] font-bold uppercase tracking-tighter px-2 py-0.5">500%</Badge>
             </div>
             <div className="h-1.5 w-full bg-white/10 rounded-none overflow-hidden border border-white/20">
-              <div className="h-full bg-emerald-500 w-full shadow-[0_0_20px_rgba(16,185,129,1)] animate-pulse" />
+              <div className="h-full bg-red-600 w-full shadow-[0_0_20px_rgba(239,68,68,1)] animate-pulse" />
             </div>
           </div>
           
@@ -128,7 +129,7 @@ export function SidebarNav() {
             className="flex items-center gap-4 px-2 py-3 text-muted-foreground hover:text-primary transition-all font-bold uppercase tracking-[0.4em] text-[9px] italic group"
           >
             <Eye className="size-5 group-hover:scale-125 text-red-500 transition-all" />
-            Eternal Pulse
+            Sovereign Ghost Pulse
           </Link>
         </div>
       </div>
