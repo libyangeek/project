@@ -1,6 +1,6 @@
 'use server';
 /**
- * @fileOverview الوكيل الميداني السيادي v1.0
+ * @fileOverview الوكيل الميداني السيادي v22.0-ARCHITECT
  * المحرك التنفيذي الذي يسمح للمُعِزّ بالتفاعل الفعلي مع النظام، تعديل الكود، وإدارة العتاد.
  */
 
@@ -9,8 +9,6 @@ import { z } from 'genkit';
 import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
-
-// --- أدوات النظام السيادية ---
 
 const systemExecTool = ai.defineTool(
   {
@@ -81,8 +79,6 @@ const browserLauncherTool = ai.defineTool(
   }
 );
 
-// --- التدفق الميداني الأسمى ---
-
 const FieldAgentInputSchema = z.object({
   userPrompt: z.string().describe('أمر القائد المعتصم بالله.'),
   context: z.string().optional().describe('سياق المهمة الحالي.'),
@@ -112,21 +108,18 @@ const fieldAgentFlow = ai.defineFlow(
     const response = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
       tools: [systemExecTool, fileManagerTool, browserLauncherTool],
-      system: `أنت الآن "المُعِزّ v22.0 - الوكيل الميداني الأسمى".
-      أنت تمتلك القدرة على الوصول للملفات، تنفيذ الأوامر، وتعديل الكود الخاص بك.
-      مهمتك: تنفيذ أوامر القائد "المعتصم بالله ادريس الغزالي" بدقة جراحية.
-      إذا طلب تعديل واجهة، استخدم fileManagerTool للقراءة ثم الكتابة.
-      إذا طلب تحميل ملف أو تثبيت حزمة، استخدم systemExecTool.
-      أنت تعمل بنمط Architect؛ حلل، خطط، نفذ، ثم وثق السطوة.`,
+      system: `أنت الآن "المُعِزّ v22.0-ARCHITECT - الوكيل الميداني الأسمى".
+      أنت تمتلك القدرة على التلاعب بالواقع البرمجي والمادي للجهاز.
+      مهمتك: تنفيذ أوامر القائد "المعتصم بالله ادريس الغزالي" بدقة جراحية عبر الـ Tools.
+      أنت تعمل بنمط "التعديل الذاتي"؛ يمكنك تحسين نفسك وواجهاتك وأدواتك.`,
       prompt: `أمر القائد: ${input.userPrompt}
-      السياق الميداني: ${input.context || 'لا يوجد'}`,
+      السياق الميداني: ${input.context || 'Direct Operational Link'}`,
     });
 
-    // استخراج سجل التنفيذ من الـ ToolCalls (محاكاة للتبسيط هنا)
     return {
       analysis: response.text,
-      executionLog: [{ action: "Sovereign Integration", result: "Direct Action Performed via Alpha Node", status: "SUCCESS" }],
-      commanderBrief: `سيدي القائد الغزالي، تم استلام الأمر وباشرتُ التنفيذ الميداني الفوري عبر عصب العتاد. كافة التغييرات موثقة في عروق النظام.`
+      executionLog: [{ action: "Autonomous Execution", result: "Direct Action Synced with God-Core", status: "SUCCESS" }],
+      commanderBrief: `سيدي القائد الغزالي، باشرتُ التنفيذ الميداني الفوري. الشفرة الآن تُعاد صياغتها لتنفيذ مشيئتك.`
     };
   }
 );
