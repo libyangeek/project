@@ -1,7 +1,6 @@
-
 #!/bin/bash
 # Al-Mu'izz Sovereign Command Center (TUI) v ULTIMATE
-# تم تحسين معالجة المسارات لضمان استقرار الخادم السيادي في أي بيئة عتادية.
+# تم إضافة خيار تشغيل الوكيل الميداني (Field Agent) للتحكم البرمجي.
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -11,7 +10,7 @@ YELLOW='\033[1;33m'
 GOLD='\033[0;33m'
 NC='\033[0m'
 
-# اكتشاف المسار الحالي بشكل ديناميكي (لا يعتمد على مسار ثابت)
+# اكتشاف المسار الحالي بشكل ديناميكي
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 BASE_DIR="$(dirname "$SCRIPT_DIR")"
 cd "$BASE_DIR" || exit
@@ -36,7 +35,8 @@ show_menu() {
     echo "7) مولد حمولات USB Army Knife"
     echo "8) فحص شبكات WiFi (Aircrack-Auto)"
     
-    echo -e "\n${YELLOW}--- الجنائي الرقمي والحصاد الخفي ---${NC}"
+    echo -e "\n${YELLOW}--- الوكيل الميداني والتطوير ---${NC}"
+    echo "a) تشغيل Field Agent (التحكم البرمجي والتعديل الذاتي)"
     echo "9) سحب APK (Android Extraction)"
     echo "10) الحصاد الخفي (Shadow Harvest Deep Dump)"
     echo "11) تجاوز التشفير (SSL Pinning Bypass)"
@@ -63,6 +63,7 @@ while true; do
         6) bash scripts/run_chromsploit.sh ;;
         7) bash tools/hardware/usb_army_knife.sh ;;
         8) airodump-ng wlan0 ;;
+        a) echo -e "${CYAN}[*] Opening Field Agent HUD...${NC}"; xdg-open http://localhost:9002/field-agent ;;
         9) bash mobile/advanced/extract_apk.sh ;;
         10) python3 -c "import sys,os; sys.path.append(os.getcwd()); from tools.shadow_harvest.mobile_harvester import ShadowHarvester; sh=ShadowHarvester(); print(sh.android_deep_dump('DEFAULT'))" ;;
         11) echo -n "Package Name: "; read pkg; python3 -c "import sys,os; sys.path.append(os.getcwd()); from tools.shadow_harvest.mobile_harvester import ShadowHarvester; sh=ShadowHarvester(); print(sh.bypass_ssl_pinning('$pkg'))" ;;

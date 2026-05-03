@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -27,7 +26,9 @@ import {
   Cpu,
   BookOpen,
   Menu,
-  X
+  X,
+  BrainCircuit,
+  Wand2
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -36,6 +37,7 @@ import { Button } from "@/components/ui/button"
 const navItems = [
   { name: "Terminal Hub", icon: LayoutDashboard, href: "/" },
   { name: "Alpha Core", icon: Terminal, href: "/terminal" },
+  { name: "Field Agent", icon: BrainCircuit, href: "/field-agent" },
   { name: "Sovereign Codex", icon: BookOpen, href: "/codex" },
   { name: "Hive Sessions", icon: Network, href: "/sessions" },
   { name: "Warrior Forge", icon: Baby, href: "/progeny" },

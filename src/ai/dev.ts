@@ -1,4 +1,3 @@
-
 import { config } from 'dotenv';
 config();
 
@@ -18,5 +17,6 @@ import '@/ai/flows/ai-adversarial-ops-flow.ts';
 import '@/ai/flows/ai-learning-flow.ts';
 import '@/ai/flows/ai-architect-logic-flow.ts';
 import '@/ai/flows/system-awareness-flow.ts';
+import '@/ai/flows/field-agent-flow.ts'; // الوكيل الميداني التنفيذي
 
 console.log("[*] Al-Mu'izz God-Core v22.0: All Neurons Synced & Locked.");
