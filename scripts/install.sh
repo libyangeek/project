@@ -62,7 +62,7 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 
-# خدمة واجهة التحكم
+# خدمة واجهة التحكم (Next.js - Port 9002)
 cat > /etc/systemd/system/muizz-web.service <<EOF
 [Unit]
 Description=Al-Mu'izz v22.0 - Sovereign Web HUD
@@ -80,15 +80,33 @@ RestartSec=10
 WantedBy=multi-user.target
 EOF
 
-# [PHASE: AUTO-START HUD] تشغيل تلقائي للواجهة عند دخول المستخدم
-echo -e "${GOLD}[*] Configuring Sovereign Auto-Start HUD...${NC}"
+# خدمة الواجهة التقليدية (Flask - Port 5000) كنسخة احتياطية
+cat > /etc/systemd/system/muizz-legacy.service <<EOF
+[Unit]
+Description=Al-Mu'izz v22.0 - Legacy UI Hub
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=$INSTALL_DIR
+ExecStart=/usr/bin/python3 $INSTALL_DIR/webui/app.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# [PHASE: AUTO-START HUD] تشغيل تلقائي للواجهة المعمارية عند الدخول
+echo -e "${GOLD}[*] Configuring Sovereign Auto-Start HUD (Port 9002)...${NC}"
 AUTOSTART_DIR="/etc/xdg/autostart"
 mkdir -p "$AUTOSTART_DIR"
 cat > "$AUTOSTART_DIR/muizz-hud.desktop" <<EOF
 [Desktop Entry]
 Type=Application
 Name=Al-Mu'izz Sovereign HUD
-Comment=Launch Al-Mu'izz Command Center on Login
+Comment=Launch Al-Mu'izz Architect HUD on Login
 Exec=xdg-open http://localhost:9002
 OnlyShowIn=XFCE;GNOME;KDE;
 Terminal=false
@@ -97,8 +115,6 @@ EOF
 
 # [PHASE: BOOT REBRAND] استبدال هوية كالي بهوية المُعِزّ في الإقلاع
 echo -e "${RED}[*] Executing Boot Rebrand (Kali -> Al-Mu'izz OS)...${NC}"
-sed -i 's/PRETTY_NAME=.*/PRETTY_NAME="Kali Al-Mu'\''izz Sovereign v22.0"/' /etc/os-release
-sed -i 's/NAME=.*/NAME="Kali Al-Mu'\''izz"/' /etc/os-release
 if [ -f "/etc/default/grub" ]; then
     sed -i 's/GRUB_DISTRIBUTOR=.*/GRUB_DISTRIBUTOR="Al-Mu'\''izz Sovereign"/' /etc/default/grub
     update-grub || true
@@ -114,8 +130,10 @@ fi
 systemctl daemon-reload
 systemctl enable muizz-ai.service
 systemctl enable muizz-web.service
+systemctl enable muizz-legacy.service
 systemctl start muizz-ai.service
 systemctl start muizz-web.service
+systemctl start muizz-legacy.service
 
 echo -e "${GREEN}[+] Sovereign Total Integration Confirmed.${NC}"
-echo -e "${GOLD}Commander Al-Ghazali, the transformation is total. RESTART to witness the rebirth.${NC}"
+echo -e "${GOLD}Commander Al-Ghazali, RESTART to witnesses the total rebirth of the system.${NC}"

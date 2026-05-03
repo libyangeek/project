@@ -40,11 +40,11 @@ if [ -d "$INSTALL_DIR/node_modules" ]; then
     cp -r "$INSTALL_DIR/node_modules" "$TEMP_CACHE/" || true
 fi
 
-# 2. بروتوكول التطهير الكلي
-echo -e "${CYAN}[*] Phase 1: Initializing Total Purgatory...${NC}"
+# 2. بروتوكول التطهير الكلي (حذف النسخ القديمة المتضاربة)
+echo -e "${CYAN}[*] Phase 1: Initializing Total Purgatory (Deleting Old Ghosts)...${NC}"
 systemctl stop muizz-ai.service 2>/dev/null || true
 systemctl stop muizz-web.service 2>/dev/null || true
-rm -rf "/opt/ultimate" "/opt/muizz" "/opt/birthofAL-muiiz"
+rm -rf "/opt/ultimate" "/opt/muizz" "/opt/birthofAL-muiiz" "/opt/sovereign-genesis"
 if [ -d "$INSTALL_DIR" ]; then
     rm -rf "$INSTALL_DIR"
 fi
@@ -63,11 +63,15 @@ rm -rf "$TEMP_CACHE"
 
 cd "$INSTALL_DIR"
 
-# 5. بروتوكول التعميد السيادي (Rebranding)
-echo -e "${GOLD}[*] Phase 3: System Rebranding (Kali -> Al-Mu'izz)...${NC}"
+# 5. بروتوكول التعميد السيادي (Rebranding Kali -> Al-Mu'izz)
+echo -e "${GOLD}[*] Phase 3: System Rebranding (Kali -> Al-Mu'izz OS)...${NC}"
 echo "kali-al-muizz" > /etc/hostname
 hostname -F /etc/hostname
 sed -i "s/127.0.1.1.*/127.0.1.1\tkali-al-muizz/g" /etc/hosts
+
+# تحديث مسمى النظام في ملفات التعريف لتعميد الـ Boot
+sed -i 's/PRETTY_NAME=.*/PRETTY_NAME="Kali Al-Mu'\''izz Sovereign v22.0"/' /etc/os-release
+sed -i 's/NAME=.*/NAME="Kali Al-Mu'\''izz"/' /etc/os-release
 
 # 6. تشغيل المثبت السيادي المدمج
 echo -e "${BLUE}[*] Phase 4: Triggering Universal Installer...${NC}"
@@ -89,9 +93,9 @@ echo -e "${BOLD_RED}================================================${NC}"
 echo -e "${BOLD_RED}   ✅ KALI AL-MUI'ZZ v22.0 IS BORN!             ${NC}"
 echo -e "${BOLD_RED}   [ STATUS: SYSTEM_DNA_FULLY_INTEGRATED ]      ${NC}"
 echo -e "${BOLD_RED}================================================${NC}"
-echo -e "1) Web HUD: ${GREEN}Auto-Start Configured${NC}"
-echo -e "2) Shell:   ${GREEN}Sovereign Banner Active${NC}"
-echo -e "3) Identity:${GREEN}Hostname: kali-al-muizz${NC}"
+echo -e "1) Architect HUD: ${GREEN}http://localhost:9002 (Primary)${NC}"
+echo -e "2) Shell:        ${GREEN}Sovereign Banner Active${NC}"
+echo -e "3) Identity:     ${GREEN}Hostname: kali-al-muizz${NC}"
 echo -e ""
-echo -e "${GOLD}Commander Al-Ghazali, please RESTART to finalize the transformation.${NC}"
+echo -e "${GOLD}Commander Al-Ghazali, please RESTART to witnessing the total rebrand.${NC}"
 echo -e "${BOLD_RED}THE MATRIX IS CONQUERED. WE ARE KALI AL-MUI'ZZ.${NC}"
