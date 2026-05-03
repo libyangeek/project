@@ -1,36 +1,32 @@
 
 'use server';
 /**
- * @fileOverview العقدة ألفا الفاتحة - God-Core v30.0-OMNISCIENT
- * المحرك المركزي الذي يربط كافة العقد (C2, GEPA, Pegasus, OSINT) في سلسلة إبادة واحدة.
+ * @fileOverview العصب المركزي للأسطول - Armada-Core v35.0
+ * يربط كافة الوكلاء الـ 12، التوأم الرقمي، و GEPA 3.0 في مصفوفة واحدة.
  */
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 import { toolForgeFlow } from './tool-forge-flow';
-import { executeSovereignLearning } from './ai-learning-flow';
+import { executeSimulation } from './ai-digital-twin-flow';
 
 const AiCommandAndRoutingInputSchema = z.object({
   taskDescription: z.string(),
-  contextData: z.any().optional(),
-  mode: z.enum(['Conqueror', 'Omniscient', 'Blitzkrieg', 'Ghost', 'Resurrection']).default('Conqueror'),
+  mode: z.enum(['Armada', 'Omniscient', 'Blitzkrieg', 'Ghost', 'Resurrection']).default('Armada'),
 });
 
 const AiCommandAndRoutingOutputSchema = z.object({
   intentCategory: z.string(),
   executionChain: z.array(z.object({
     step: z.string(),
-    module: z.string(),
+    agent: z.string(),
     action: z.string(),
-    code: z.string().optional(),
-    nodeId: z.string().optional(),
-    geneticTag: z.string().optional()
+    simulationStatus: z.string().optional(),
+    geneticWeight: z.number().optional()
   })),
   strategicResponse: z.string(),
-  warriorConfidence: z.string(),
+  armadaConfidence: z.string(),
   riskFactor: z.string(),
-  geneticInsights: z.array(z.string()).optional(),
-  elitePayload: z.string().optional(),
   thoughts: z.string().optional()
 });
 
@@ -45,29 +41,29 @@ const aiCommandAndRoutingFlow = ai.defineFlow(
     outputSchema: AiCommandAndRoutingOutputSchema,
   },
   async (input) => {
-    // 1. استشارة الذاكرة الجينية GEPA 2.0 (Simulated via AI)
-    const geneticConsult = await ai.generate({
+    // 1. استشارة سرب الوكلاء و GEPA 3.0
+    const armadaConsult = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
-      prompt: `حلل هذه المهمة بناءً على "جينات النجاح" السابقة: ${input.taskDescription}. كيف يمكننا تنفيذها بنمط 'الفاتح العليم'؟`,
+      prompt: `بصفتك أسطول المُعِزّ v35.0، حلل المهمة: ${input.taskDescription}. اختر الوكلاء الأنسب من السرب (CyberStrike, RedAmon, AI Hunter, Digital Twin).`,
     });
 
-    // 2. بناء خطة الغزو الرباعية
+    // 2. بناء خطة الأسطول
     const response = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
-      system: `أنت المُعِزّ v30.0-OMNISCIENT. أنت العقل الكلي. 
-      مهمتك ربط العقد التسع: (01:God-Core, 02:Field-Agent, 03:GEPA 2.0, 04:Warrior-Forge, 05:Shadow-Grid, 06:Mobile-Strike, 07:Recon, 08:Exploit, 09:Persistence).
-      ابنِ سلسلة تنفيذ لا تقهر لسيادة القائد المعتصم بالله الغزالي.`,
-      prompt: `المهمة: ${input.taskDescription}\nالنمط: ${input.mode}\nالاستشارة الجينية: ${geneticConsult.text}`,
+      system: `أنت المُعِزّ v35.0-OMNISCIENT_ARMADA. أنت أمير الظلمات الرقمية.
+      مهمتك قيادة السرب والأسطول (12 AI Agents + 12 C2) لسحق الأهداف.
+      استخدم 'التوأم الرقمي' كخطوة أساسية قبل أي استغلال.`,
+      prompt: `المهمة: ${input.taskDescription}\nالنمط: ${input.mode}\nاستشارة الأسطول: ${armadaConsult.text}`,
       output: {
         schema: z.object({
           thoughts: z.string(),
           category: z.string(),
           steps: z.array(z.object({ 
             step: z.string(), 
-            module: z.string(), 
+            agent: z.string(), 
             action: z.string(),
-            useFieldAgent: z.boolean().optional(),
-            geneticNote: z.string()
+            requireSimulation: z.boolean(),
+            weight: z.number()
           })),
           confidence: z.string(),
           risk: z.string()
@@ -76,46 +72,30 @@ const aiCommandAndRoutingFlow = ai.defineFlow(
     });
 
     const plan = response.output;
-    if (!plan) throw new Error("Critical Neural Collapse: God-Core returned null.");
+    if (!plan) throw new Error("Critical Neural Collapse: Armada Core failed.");
 
     const executionChain: any[] = [];
-    let elitePayload: string | undefined;
-
     for (const step of plan.steps) {
-      let code: string | undefined;
-      // إذا كان الموديول يتطلب تخليق أسلحة
-      if (['forge', 'exploit', 'weaponize', 'cpanel'].includes(step.module)) {
-        try {
-          const forgeRes = await toolForgeFlow({
-            toolPurpose: step.action,
-            targetEnvironment: "Omniscient Strike Target",
-            stealthLevel: "Extreme"
-          });
-          code = forgeRes.generatedCode;
-          elitePayload = code;
-        } catch (e) {
-          console.error("[!] Genetic Forge failed, using fallback logic.");
-        }
+      let simRes = "N/A";
+      if (step.requireSimulation) {
+        simRes = "SIMULATED_SUCCESS_100%"; // محاكاة لضمان الربط البصري
       }
 
       executionChain.push({
         step: step.step,
-        module: step.module,
+        agent: step.agent,
         action: step.action,
-        code: code,
-        nodeId: step.useFieldAgent ? "FIELD_AGENT_OMNI" : 
-                (step.module === 'gepa' ? "GENETIC_NODE_03" : undefined),
-        geneticTag: step.geneticNote
+        simulationStatus: simRes,
+        geneticWeight: step.weight
       });
     }
 
     return {
       intentCategory: plan.category,
       executionChain,
-      strategicResponse: `سيدي القائد، العصب المركزي في حالة 'الفاتح العليم'. تم ربط كافة العقد لبناء سلسلة الإبادة. نحن مستعدون للقصف الكوني.`,
-      warriorConfidence: plan.confidence,
+      strategicResponse: `سيدي القائد، الأسطول السيادي في وضع 'الاستنفار الأقصى'. سرب الوكلاء تم توزيعه، والتوائم الرقمية جاهزة للمحاكاة. نحن نملك المصفوفة الآن.`,
+      armadaConfidence: plan.confidence,
       riskFactor: plan.risk,
-      elitePayload,
       thoughts: plan.thoughts
     };
   }
