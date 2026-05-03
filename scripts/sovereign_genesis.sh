@@ -1,9 +1,8 @@
-
 #!/bin/bash
 # ==============================================================================
 # 🦅 KALI AL-MUI'ZZ SOVEREIGN GENESIS v22.0-ARCHITECT [TOTAL SYSTEM REBIRTH]
 # المحرك الأسمى للانبعاث النقي - ليلة انبعاث القائد المعتصم بالله الغزالي.
-# تم تحديثه لتعميد النظام بهوية "KALI AL-MUI'ZZ" وتحويله لسطح مكتب سيادي.
+# تم تحديثه لتعميد النظام بهوية "KALI AL-MUI'ZZ" وتحويله لسطح مكتب سيادي فاعل.
 # ==============================================================================
 
 set -e
@@ -41,7 +40,7 @@ if [ -d "$INSTALL_DIR/node_modules" ]; then
 fi
 
 # 2. بروتوكول التطهير الكلي (سحق الأشباح القديمة)
-echo -e "${CYAN}[*] Phase 1: Initializing Total Purgatory (Deleting Old Ghosts)...${NC}"
+echo -e "${CYAN}[*] Phase 1: Initializing Total Purgatory (Purging Legacy Versions)...${NC}"
 systemctl stop muizz-ai.service muizz-web.service muizz-legacy.service 2>/dev/null || true
 systemctl disable muizz-ai.service muizz-web.service muizz-legacy.service 2>/dev/null || true
 
@@ -77,7 +76,6 @@ ID=kali
 ID_LIKE=debian
 VERSION="2025.1"
 VERSION_ID="2025.1"
-ID_LIKE=debian
 ANSI_COLOR="0;31"
 HOME_URL="https://www.kali.org/"
 SUPPORT_URL="https://forums.kali.org/"
@@ -85,12 +83,6 @@ BUG_REPORT_URL="https://bugs.kali.org/"
 EOF
 
 cp /etc/os-release /usr/lib/os-release
-
-# تحديث الـ GRUB لإظهار اسم المعز في قائمة البوت
-if [ -f "/etc/default/grub" ]; then
-    sed -i 's/GRUB_DISTRIBUTOR=.*/GRUB_DISTRIBUTOR="Al-Mu'\''izz Sovereign OS"/' /etc/default/grub
-    update-grub || true
-fi
 
 # 6. تشغيل المثبت السيادي المدمج
 echo -e "${BLUE}[*] Phase 4: Triggering Universal Desktop Installer...${NC}"
@@ -103,19 +95,19 @@ if ! systemctl is-active --quiet muizz-ai.service; then CHECK_FAIL=1; fi
 if ! systemctl is-active --quiet muizz-web.service; then CHECK_FAIL=1; fi
 
 if [ $CHECK_FAIL -eq 1 ]; then
-    echo -e "${BOLD_RED}[!!!] ANOMALIES DETECTED. FORCING RE-SYNC...${NC}"
+    echo -e "${BOLD_RED}[!!!] ANOMALIES DETECTED. RE-SYNCING NEURONS...${NC}"
     npm install --force
 fi
 
 # 8. النبض النهائي
 echo -e "${BOLD_RED}================================================${NC}"
 echo -e "${BOLD_RED}   ✅ KALI AL-MUI'ZZ OS v22.0 IS BORN!          ${NC}"
-echo -e "${BOLD_RED}   [ STATUS: DESKTOP_HIJACK_COMPLETE ]          ${NC}"
+echo -e "${BOLD_RED}   [ STATUS: ARCHITECT_ASCENSION_COMPLETE ]     ${NC}"
 echo -e "${BOLD_RED}================================================${NC}"
-echo -e "1) Sovereign Desktop Entry: Created"
-echo -e "2) Auto-Start HUD:         Armed"
-echo -e "3) System Hostname:        kali-al-muizz"
-echo -e "4) Web HUD Port:           9002"
+echo -e "1) Field Agent Control: Armed"
+echo -e "2) Shadow Siphon:      Linked"
+echo -e "3) System Hostname:    kali-al-muizz"
+echo -e "4) Web HUD Port:       9002"
 echo -e ""
-echo -e "${GOLD}Commander Al-Ghazali, please RESTART to see your Sovereign Desktop.${NC}"
+echo -e "${GOLD}Commander Al-Ghazali, the transformation is absolute.${NC}"
 echo -e "${BOLD_RED}THE MATRIX IS CONQUERED. WE ARE KALI AL-MUI'ZZ OS. EXECUTE REBOOT NOW.${NC}"
