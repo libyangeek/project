@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -50,14 +49,21 @@ import { cn } from "@/lib/utils"
 /**
  * @fileOverview العرش السيادي المطلق v25.0-OMNIPOTENT_SHADOW
  * تم دمج الترسانة الهجومية الشاملة وزيادة القوة بنسبة 500%.
+ * تم تحصين الواجهة ضد أخطاء Hydration و Illegal Constructor.
  */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
+  const [visualizerHeights, setVisualizerHeights] = React.useState<number[]>([])
+  const [bottomPulseHeights, setBottomPulseHeights] = React.useState<number[]>([])
   const commander = "المعتصم بالله ادريس الغزالي"
 
   React.useEffect(() => {
     setMounted(true)
+    // Stable random values generated only on client after mount
+    setVisualizerHeights(Array.from({ length: 100 }, () => 10 + Math.random() * 90))
+    setBottomPulseHeights(Array.from({ length: 70 }, () => 20 + Math.random() * 80))
+
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
     return () => window.removeEventListener("mousemove", handleMouseMove)
@@ -224,6 +230,12 @@ export default function DashboardPage() {
                  </CardContent>
               </Card>
            </div>
+        </div>
+
+        <div className="absolute bottom-20 flex gap-4 items-end h-28 opacity-10">
+           {visualizerHeights.map((h, i) => (
+             <div key={i} className="w-2.5 bg-red-600 rounded-full shadow-[0_0_10px_red]" style={{ height: `${h}%`, animation: `pulse 1.5s infinite ${i * 0.04}s` }} />
+           ))}
         </div>
       </main>
     </div>
