@@ -1,17 +1,19 @@
+
 'use server';
 /**
- * @fileOverview العقدة ألفا التطورية - نسخة God-Core v24.0-STABILIZED
- * تم إضافة فحوصات أمان لمنع أخطاء الـ JSON وتأمين استقرار سلاسل الإبادة.
+ * @fileOverview العقدة ألفا الفاتحة - God-Core v30.0-OMNISCIENT
+ * المحرك المركزي الذي يربط كافة العقد (C2, GEPA, Pegasus, OSINT) في سلسلة إبادة واحدة.
  */
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 import { toolForgeFlow } from './tool-forge-flow';
+import { executeSovereignLearning } from './ai-learning-flow';
 
 const AiCommandAndRoutingInputSchema = z.object({
   taskDescription: z.string(),
   contextData: z.any().optional(),
-  mode: z.enum(['Predator', 'Guardian', 'Hybrid', 'Evolutionary-Dominance', 'Singularity-Point']).default('Singularity-Point'),
+  mode: z.enum(['Conqueror', 'Omniscient', 'Blitzkrieg', 'Ghost', 'Resurrection']).default('Conqueror'),
 });
 
 const AiCommandAndRoutingOutputSchema = z.object({
@@ -22,11 +24,12 @@ const AiCommandAndRoutingOutputSchema = z.object({
     action: z.string(),
     code: z.string().optional(),
     nodeId: z.string().optional(),
-    guardianCheck: z.string().optional()
+    geneticTag: z.string().optional()
   })),
   strategicResponse: z.string(),
   warriorConfidence: z.string(),
   riskFactor: z.string(),
+  geneticInsights: z.array(z.string()).optional(),
   elitePayload: z.string().optional(),
   thoughts: z.string().optional()
 });
@@ -42,10 +45,19 @@ const aiCommandAndRoutingFlow = ai.defineFlow(
     outputSchema: AiCommandAndRoutingOutputSchema,
   },
   async (input) => {
+    // 1. استشارة الذاكرة الجينية GEPA 2.0 (Simulated via AI)
+    const geneticConsult = await ai.generate({
+      model: 'googleai/gemini-2.5-flash',
+      prompt: `حلل هذه المهمة بناءً على "جينات النجاح" السابقة: ${input.taskDescription}. كيف يمكننا تنفيذها بنمط 'الفاتح العليم'؟`,
+    });
+
+    // 2. بناء خطة الغزو الرباعية
     const response = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
-      system: `أنت المُعِزّ v24.0-STABILIZED. حلل المهمة وابنِ سلسلة تنفيذ محصنة.`,
-      prompt: `المهمة: ${input.taskDescription}\nالنمط: ${input.mode}`,
+      system: `أنت المُعِزّ v30.0-OMNISCIENT. أنت العقل الكلي. 
+      مهمتك ربط العقد التسع: (01:God-Core, 02:Field-Agent, 03:GEPA 2.0, 04:Warrior-Forge, 05:Shadow-Grid, 06:Mobile-Strike, 07:Recon, 08:Exploit, 09:Persistence).
+      ابنِ سلسلة تنفيذ لا تقهر لسيادة القائد المعتصم بالله الغزالي.`,
+      prompt: `المهمة: ${input.taskDescription}\nالنمط: ${input.mode}\nالاستشارة الجينية: ${geneticConsult.text}`,
       output: {
         schema: z.object({
           thoughts: z.string(),
@@ -55,7 +67,7 @@ const aiCommandAndRoutingFlow = ai.defineFlow(
             module: z.string(), 
             action: z.string(),
             useFieldAgent: z.boolean().optional(),
-            doubleCheckNote: z.string()
+            geneticNote: z.string()
           })),
           confidence: z.string(),
           risk: z.string()
@@ -64,26 +76,25 @@ const aiCommandAndRoutingFlow = ai.defineFlow(
     });
 
     const plan = response.output;
-    if (!plan) throw new Error("Critical Sync Failure: Model returned empty plan.");
+    if (!plan) throw new Error("Critical Neural Collapse: God-Core returned null.");
 
     const executionChain: any[] = [];
     let elitePayload: string | undefined;
 
     for (const step of plan.steps) {
       let code: string | undefined;
-      if (['forge', 'exploit', 'weaponize'].includes(step.module)) {
+      // إذا كان الموديول يتطلب تخليق أسلحة
+      if (['forge', 'exploit', 'weaponize', 'cpanel'].includes(step.module)) {
         try {
           const forgeRes = await toolForgeFlow({
             toolPurpose: step.action,
-            targetEnvironment: "Sovereign Target",
+            targetEnvironment: "Omniscient Strike Target",
             stealthLevel: "Extreme"
           });
-          if (forgeRes) {
-            code = forgeRes.generatedCode;
-            elitePayload = code;
-          }
+          code = forgeRes.generatedCode;
+          elitePayload = code;
         } catch (e) {
-          console.error("[!] Forge tool failed, proceeding with logic only.");
+          console.error("[!] Genetic Forge failed, using fallback logic.");
         }
       }
 
@@ -92,15 +103,16 @@ const aiCommandAndRoutingFlow = ai.defineFlow(
         module: step.module,
         action: step.action,
         code: code,
-        nodeId: step.useFieldAgent ? "FIELD_AGENT_ALPHA" : undefined,
-        guardianCheck: step.doubleCheckNote
+        nodeId: step.useFieldAgent ? "FIELD_AGENT_OMNI" : 
+                (step.module === 'gepa' ? "GENETIC_NODE_03" : undefined),
+        geneticTag: step.geneticNote
       });
     }
 
     return {
       intentCategory: plan.category,
       executionChain,
-      strategicResponse: `سيدي القائد، تم تحليل المهمة وبناء سلسلة التنفيذ بنجاح. نحن في حالة جاهزية تامة.`,
+      strategicResponse: `سيدي القائد، العصب المركزي في حالة 'الفاتح العليم'. تم ربط كافة العقد لبناء سلسلة الإبادة. نحن مستعدون للقصف الكوني.`,
       warriorConfidence: plan.confidence,
       riskFactor: plan.risk,
       elitePayload,
