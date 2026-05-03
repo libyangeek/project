@@ -29,7 +29,8 @@ import {
   Menu,
   X,
   BrainCircuit,
-  Eye
+  Eye,
+  HeartPulse
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -37,7 +38,7 @@ import { Button } from "@/components/ui/button"
 
 const navItems = [
   { name: "Terminal Hub", icon: LayoutDashboard, href: "/" },
-  { name: "Alpha Core", icon: Terminal, href: "/terminal" },
+  { name: "Omni-Core", icon: Terminal, href: "/terminal" },
   { name: "Field Agent", icon: BrainCircuit, href: "/field-agent" },
   { name: "Sovereign Codex", icon: BookOpen, href: "/codex" },
   { name: "Hive Sessions", icon: Network, href: "/sessions" },
@@ -71,14 +72,14 @@ export function SidebarNav() {
         !isOpen && "translate-x-full lg:translate-x-0"
       )}>
         <div className="p-8 border-b-2 border-primary/25 flex flex-col items-center gap-4 bg-black relative">
-          <div className="size-16 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_40px_rgba(208,0,0,0.6)] animate-neural shrink-0">
+          <div className="size-16 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_50px_rgba(208,0,0,0.8)] animate-neural shrink-0">
             <Skull className="size-8 text-primary" />
           </div>
           <div className="text-center relative z-10">
             <h1 className="text-xl font-headline font-bold text-white tracking-[0.2em] uppercase italic leading-none neon-glow-red">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-white border-none rounded-none text-[8px] font-bold tracking-[0.6em] mt-2 py-1 px-3 uppercase italic shadow-2xl">v23.0-IMM</Badge>
+            <Badge className="bg-primary text-white border-none rounded-none text-[8px] font-bold tracking-[0.6em] mt-2 py-1 px-3 uppercase italic shadow-2xl">v24.0-SOV</Badge>
           </div>
         </div>
         
@@ -108,16 +109,16 @@ export function SidebarNav() {
         </div>
 
         <div className="p-6 border-t-2 border-primary/25 bg-black relative">
-          <div className="p-4 border-4 border-accent/40 bg-black/95 mb-4 relative overflow-hidden group shadow-3xl">
+          <div className="p-4 border-4 border-emerald-500/40 bg-black/95 mb-4 relative overflow-hidden group shadow-3xl">
             <div className="flex items-center justify-between mb-3">
                <div className="flex items-center gap-2">
-                  <Crown className="size-4 text-accent animate-pulse" />
-                  <span className="text-[9px] font-bold text-accent uppercase tracking-widest italic">Al-Ghazali</span>
+                  <HeartPulse className="size-4 text-emerald-500 animate-pulse" />
+                  <span className="text-[9px] font-bold text-emerald-500 uppercase tracking-widest italic">GEPA Healing</span>
                </div>
-               <Badge className="bg-red-600 text-white text-[7px] font-bold uppercase tracking-tighter px-2 py-0.5">ROOT</Badge>
+               <Badge className="bg-emerald-600 text-white text-[7px] font-bold uppercase tracking-tighter px-2 py-0.5">ON</Badge>
             </div>
             <div className="h-1.5 w-full bg-white/10 rounded-none overflow-hidden border border-white/20">
-              <div className="h-full bg-accent w-full shadow-[0_0_20px_rgba(255,215,0,1)] animate-pulse" />
+              <div className="h-full bg-emerald-500 w-full shadow-[0_0_20px_rgba(16,185,129,1)] animate-pulse" />
             </div>
           </div>
           
@@ -126,8 +127,8 @@ export function SidebarNav() {
             onClick={() => setIsOpen(false)}
             className="flex items-center gap-4 px-2 py-3 text-muted-foreground hover:text-primary transition-all font-bold uppercase tracking-[0.4em] text-[9px] italic group"
           >
-            <Eye className="size-5 group-hover:scale-125 text-emerald-500 transition-all" />
-            Immortal Pulse
+            <Eye className="size-5 group-hover:scale-125 text-red-500 transition-all" />
+            Eternal Pulse
           </Link>
         </div>
       </div>

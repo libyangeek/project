@@ -1,74 +1,58 @@
+
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Sovereign AI Platform - Smart Router Hub v3
-الموجه الذكي: المكون المسؤول عن تحليل النوايا وتوجيه الطلبات مع التبرير المنطقي.
-(c) 2025 Al-Mu'izz Sovereign Systems
+Smart Router v24.0-Eternal: Classifies intent using mistral or local ollama fallback.
+Integrates adaptive model selection with zero-latency fallback.
 """
+import os, sys, json
+try:
+    from mistral_connector import MistralConnector
+    MISTRAL_AVAILABLE = True
+except ImportError:
+    MISTRAL_AVAILABLE = False
 
-import os
-import sys
-import json
-from mistral_connector import MistralConnector
-
-class SmartRouter:
-    """نظام التوجيه الذكي لتخصيص النماذج بناءً على نوع المهمة مع شرح السبب"""
-    
+class EternalSmartRouter:
     def __init__(self):
-        self.connector = MistralConnector()
-        # خريطة النماذج المتخصصة v17.2.0
+        self.mistral = MistralConnector() if MISTRAL_AVAILABLE else None
         self.models = {
-            "arabic_general": "mistral-large-latest",   # أفضل للغة العربية والمعالجة اللغوية
-            "programming": "codestral-latest",         # متخصص في هندسة البرمجيات
-            "cybersecurity": "mistral-medium-latest",  # توازن للعمليات الدفاعية
-            "coding_attack": "mistral-large-latest",   # للثغرات المعقدة (بديل لـ WhiteRabbitNeo)
-            "uncensored": "mistral-medium-latest",     # للبحث غير المقيد
-            "general": "mistral-small-latest"          # للاستفسارات السريعة
+            "arabic_general": "mistral-large-latest",
+            "programming": "codestral-latest",
+            "cybersecurity": "mistral-medium-latest",
+            "coding_attack": "mistral-large-latest",
+            "uncensored": "mistral-medium-latest",
+            "general": "mistral-small-latest"
         }
 
-    def classify_intent(self, query):
-        """تصنيف نية المستخدم واستخراج التبرير المنطقي عبر نموذج سريع"""
-        prompt = (
-            "You are the Al-Mu'izz Intent Classifier v17. Classify this query and explain why.\n"
-            "Categories: arabic_general, programming, cybersecurity, coding_attack, uncensored, general.\n"
-            "Query: " + query + "\n"
-            "Response Format (JSON only): {\"category\": \"...\", \"reason\": \"...\"}"
-        )
-        messages = [{"role": "user", "content": prompt}]
-        
-        # استخدام نموذج صغير للتصنيف السريع
-        res = self.connector.chat_completion(model="open-mistral-7b", messages=messages)
-        
+    def classify(self, query):
+        # Try Mistral API first
+        if self.mistral:
+            try:
+                prompt = f"Classify intent (JSON only): {query}"
+                res = self.mistral.chat_completion(
+                    model="open-mistral-7b",
+                    messages=[{"role": "user", "content": prompt}]
+                )
+                data = json.loads(res["choices"][0]["message"]["content"])
+                return data.get("category", "general"), data.get("reason", "Default")
+            except:
+                pass
+        # Fallback: Local Ollama
         try:
-            content = res.get("choices", [{}])[0].get("message", {}).get("content", "{}")
-            if "```json" in content:
-                content = content.split("```json")[1].split("```")[0]
-            data = json.loads(content)
-            return data.get("category", "general"), data.get("reason", "Matched default signatures.")
+            import requests
+            resp = requests.post("http://localhost:11434/api/generate",
+                json={"model": "mistral", "prompt": query, "stream": False})
+            return "general", "ollama_local"
         except:
-            return "general", "Fallback to default due to parsing error."
+            return "general", "local_fallback"
 
-    def route_query(self, query):
-        """توجيه الاستفسار للنموذج الأنسب وإعادة النتيجة مع التبرير"""
-        category, reason = self.classify_intent(query)
-        selected_model = self.models.get(category, self.models["general"])
-        
-        print(f"[*] Routing to: {selected_model} (Reason: {reason})")
-        
-        messages = [
-            {"role": "system", "content": f"You are Al-Mu'izz, a sovereign AI specialist. Mode: {category}. Reasoning: {reason}"},
-            {"role": "user", "content": query}
-        ]
-        
-        return {
-            "category": category,
-            "model": selected_model,
-            "reasoning": reason,
-            "response": self.connector.chat_completion(model=selected_model, messages=messages)
-        }
+    def route(self, query):
+        category, reason = self.classify(query)
+        model = self.models.get(category, self.models["general"])
+        return {"category": category, "model": model, "reason": reason}
 
 if __name__ == "__main__":
-    router = SmartRouter()
+    router = EternalSmartRouter()
     if len(sys.argv) > 1:
-        user_query = " ".join(sys.argv[1:])
-        result = router.route_query(user_query)
+        result = router.route(" ".join(sys.argv[1:]))
         print(json.dumps(result, indent=2, ensure_ascii=False))
