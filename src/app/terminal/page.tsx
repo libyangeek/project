@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -30,9 +29,7 @@ import {
   Info,
   Cpu,
   RefreshCcw,
-  Sparkles,
-  Waves,
-  ZapOff
+  Sparkles
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -52,16 +49,12 @@ type Message = {
   thoughts?: string
 }
 
-/**
- * @fileOverview محطة المُعِزّ التنفيذية v24.0-ETERNAL
- * تم تحسينها بنمط "التفرد" بعد تطبيق بروتوكول DOUBLE_CHECK لضمان دقة سلاسل الإبادة.
- */
 export default function TerminalPage() {
   const [input, setInput] = React.useState("")
   const [messages, setMessages] = React.useState<Message[]>([
     { 
       role: "system", 
-      content: "Al-Mu'izz Sovereign Terminal [GOD-CORE v24.0 - SINGULARITY_STRENGTHENED]\n(c) 2025 Sovereign Systems - The Eternal Night.\n\nDouble Check Protocol: VERIFIED.\nCommander: المعتصم بالله ادريس الغزالي.\n\n[STATUS: ABSOLUTE_DOMINANCE_LOCKED]\nAwaiting universal strategic directives for immediate matrix reconfiguration." 
+      content: "Al-Mu'izz Sovereign Terminal [GOD-CORE v42.0 - THE SINGULARITY]\n(c) 2025 Sovereign Systems - The Eternal Night.\n\nDouble Check Protocol: VERIFIED.\nCommander: المعتصم بالله ادريس الغزالي.\n\n[STATUS: ABSOLUTE_DOMINANCE_LOCKED]\nAwaiting universal strategic directives for immediate matrix reconfiguration." 
     }
   ])
   const [isLoading, setIsLoading] = React.useState(false)
@@ -86,12 +79,12 @@ export default function TerminalPage() {
     try {
       const result = await aiCommandAndRouting({ 
         taskDescription: userMessage,
-        mode: 'Evolutionary-Dominance'
+        mode: 'Armada'
       })
       setMessages(prev => [...prev, { 
         role: "assistant", 
         content: result.strategicResponse,
-        model: "ALPHA_GOD_CORE_v24",
+        model: "ALPHA_GOD_CORE_v42",
         intent: result.intentCategory,
         chain: result.executionChain,
         forgedCode: result.elitePayload,
@@ -108,122 +101,103 @@ export default function TerminalPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-black text-white selection:bg-red-600/30 overflow-hidden scanline-effect font-code">
+    <div className="flex min-h-screen bg-black text-white selection:bg-primary/30 overflow-hidden scanline-effect font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-64 flex flex-col h-screen overflow-hidden bg-[radial-gradient(circle_at_center,rgba(239,68,68,0.25),transparent)] relative">
+      <main className="flex-1 lg:mr-80 flex flex-col h-screen overflow-hidden bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.15),transparent)] relative">
         
         {/* Supreme Terminal Header */}
-        <header className="p-12 md:p-16 border-b-8 border-primary/60 flex items-center justify-between bg-black/95 backdrop-blur-3xl z-20 shadow-[0_0_150px_rgba(208,0,0,0.3)]">
-          <div className="flex items-center gap-12 md:gap-16">
-            <div className="size-24 md:size-32 rounded-[3rem] md:rounded-[4rem] bg-red-600 flex items-center justify-center border-[6px] border-red-400 shadow-[0_0_120px_rgba(239,68,68,1)] animate-neural relative overflow-hidden">
-              <Skull className="size-14 md:size-20 text-white relative z-10" />
-              <div className="absolute inset-0 bg-black/20 animate-pulse" />
+        <header className="p-6 md:p-8 border-b-4 border-primary/60 flex items-center justify-between bg-black/95 backdrop-blur-3xl z-20 shadow-2xl">
+          <div className="flex items-center gap-6 md:gap-10">
+            <div className="size-16 md:size-24 rounded-full bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_50px_rgba(212,175,55,0.6)] animate-sovereign-pulse relative overflow-hidden">
+              <Crown className="size-8 md:size-12 text-primary relative z-10" />
+              <div className="absolute inset-0 bg-primary/5 animate-pulse" />
             </div>
             <div>
-              <h2 className="text-6xl md:text-8xl font-headline font-bold text-white tracking-tighter italic uppercase drop-shadow-[0_0_50px_red] leading-none">God-Core Terminal</h2>
-              <div className="flex flex-wrap items-center gap-8 md:gap-12 mt-6">
-                <Badge className="bg-red-600 text-white border-4 border-red-400 text-[14px] md:text-[18px] uppercase font-bold tracking-[1.2em] px-10 py-3 rounded-3xl shadow-5xl animate-pulse">v24.0-DOUBLE_CHECKED</Badge>
-                <div className="flex items-center gap-6 text-[14px] md:text-[18px] text-amber-500 font-bold uppercase tracking-[0.8em] italic">
-                  <RefreshCcw className="size-6 animate-spin-slow" />
-                  Execution Tier: SINGULARITY
+              <h2 className="text-3xl md:text-5xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">God-Core Terminal</h2>
+              <div className="flex flex-wrap items-center gap-4 md:gap-6 mt-3">
+                <Badge className="bg-primary text-black border-none text-[10px] md:text-[12px] uppercase font-bold tracking-[0.4em] px-4 py-1 rounded-full shadow-lg">v42.0-STABLE</Badge>
+                <div className="flex items-center gap-3 text-[10px] md:text-[12px] text-primary/80 font-bold uppercase tracking-[0.4em] italic">
+                  <Activity className="size-4 animate-pulse" />
+                  Status: OMNIPOTENT
                 </div>
               </div>
             </div>
           </div>
-          <div className="hidden xl:block text-right kali-card p-10 border-accent/80 bg-black/98 min-w-[450px] border-8 shadow-6xl relative overflow-hidden group">
-             <div className="absolute inset-0 bg-amber-600/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-             <div className="text-4xl font-code text-accent uppercase tracking-[0.5em] font-bold flex items-center justify-end gap-6 italic relative z-10">
-                <Crown className="size-12 text-accent animate-bounce" /> GHAZALI_ROOT
+          <div className="hidden xl:block text-right">
+             <div className="text-2xl font-code text-primary uppercase tracking-[0.3em] font-bold flex items-center justify-end gap-4 italic">
+                <ShieldCheck className="size-6 text-primary" /> AL_GHAZALI_ROOT
              </div>
-             <div className="text-[12px] text-muted-foreground uppercase font-bold tracking-[1em] italic mt-4 opacity-80 relative z-10">Final Inception State: SECURED</div>
+             <div className="text-[10px] text-muted-foreground uppercase font-bold tracking-[0.6em] italic mt-1">Ascension Level: MAXIMUM</div>
           </div>
         </header>
 
         <div className="flex-1 flex min-h-0 relative">
-          <div className="flex-1 flex flex-col min-w-0 bg-black/70 scan-line">
-            <ScrollArea className="flex-1 p-12 md:p-24">
-              <div className="max-w-[1700px] mx-auto space-y-32 pb-40">
+          <div className="flex-1 flex flex-col min-w-0 bg-black/40">
+            <ScrollArea className="flex-1 p-6 md:p-10">
+              <div className="max-w-5xl mx-auto space-y-12 pb-20">
                 {messages.map((msg, i) => (
                   <div key={i} className={cn(
-                    "flex flex-col gap-12 animate-in fade-in slide-in-from-bottom-16 duration-1000",
+                    "flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700",
                     msg.role === "user" ? "items-end" : "items-start"
                   )}>
                     <div className={cn(
-                      "max-w-[96%] rounded-[6rem] p-16 md:p-24 font-code text-3xl md:text-4xl leading-loose relative group overflow-hidden border-8 shadow-[0_80px_200px_rgba(0,0,0,1)] transition-all duration-1000 hover:border-red-600/80",
+                      "max-w-[90%] rounded-[2.5rem] p-6 md:p-10 font-code text-sm md:text-lg leading-relaxed relative group overflow-hidden border-2 shadow-xl",
                       msg.role === "user" 
-                        ? "bg-red-600 text-white border-red-400 shadow-[0_100px_300px_rgba(220,38,38,0.6)] rounded-br-none" 
+                        ? "bg-primary/20 border-primary/50 text-white rounded-br-none shadow-primary/10" 
                         : msg.role === "system" 
-                          ? "bg-black/98 border-red-600 text-red-500 font-bold italic shadow-6xl border-dashed" 
-                          : "bg-red-950/40 backdrop-blur-4xl border-white/20 text-foreground shadow-[0_150px_400px_rgba(0,0,0,1)] rounded-bl-none"
+                          ? "bg-black/80 border-primary text-primary font-bold italic border-dashed" 
+                          : "bg-white/5 backdrop-blur-xl border-white/10 text-foreground rounded-bl-none shadow-2xl"
                     )}>
                       {msg.role === "assistant" && (
-                        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-16 pb-12 border-b-8 border-white/15 gap-8">
-                          <div className="flex items-center gap-10">
-                            <Flame className="size-16 text-red-600 animate-pulse" />
-                            <span className="text-2xl md:text-3xl uppercase font-bold tracking-[1.5em] text-red-500 italic drop-shadow-[0_0_30px_red]">
+                        <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
+                          <div className="flex items-center gap-3">
+                            <Sparkles className="size-5 text-primary animate-pulse" />
+                            <span className="text-sm uppercase font-bold tracking-[0.3em] text-primary italic">
                               {msg.model}
                             </span>
                           </div>
-                          <Badge variant="outline" className="text-[14px] md:text-[18px] uppercase tracking-[1em] bg-red-600/40 text-red-500 border-4 border-red-500 px-16 py-4 rounded-[2.5rem] shadow-6xl font-bold italic">
-                            INTENT: {msg.intent}
+                          <Badge variant="outline" className="text-[10px] uppercase tracking-widest border-primary/40 text-primary font-bold px-3 py-1 rounded-full">
+                            {msg.intent}
                           </Badge>
                         </div>
                       )}
                       
                       {msg.thoughts && (
-                        <div className="mb-16 p-16 rounded-[4rem] bg-accent/15 border-4 border-accent/60 relative group/thoughts overflow-hidden shadow-inner">
-                           <div className="absolute top-0 right-0 p-12 opacity-20 group-hover/thoughts:scale-125 transition-transform duration-1000"><BrainCircuit className="size-24 text-accent"/></div>
-                           <h4 className="text-[18px] font-bold text-accent uppercase tracking-[1.2em] mb-10 flex items-center gap-8 italic">
-                             <Info className="size-8" /> Neural Singularity Logic
+                        <div className="mb-6 p-4 rounded-2xl bg-primary/5 border border-primary/20 italic">
+                           <h4 className="text-[10px] font-bold text-primary uppercase tracking-[0.4em] mb-2 flex items-center gap-2">
+                             <BrainCircuit className="size-4" /> Cognitive Process
                            </h4>
-                           <p className="text-2xl md:text-3xl text-gray-300 italic leading-relaxed border-r-[10px] border-accent/80 pr-12">
-                              "{msg.thoughts}"
+                           <p className="text-xs md:text-sm text-gray-400 leading-relaxed">
+                              {msg.thoughts}
                            </p>
                         </div>
                       )}
 
-                      <div className={cn(
-                        "whitespace-pre-wrap font-code leading-relaxed mb-16 text-4xl md:text-5xl font-medium",
-                        msg.role === "user" ? "text-white drop-shadow-[0_20px_40px_rgba(0,0,0,1)]" : "text-gray-100"
-                      )}>
+                      <div className="whitespace-pre-wrap">
                         {msg.content}
                       </div>
 
                       {msg.chain && msg.chain.length > 0 && (
-                        <div className="space-y-16 mt-20 p-16 bg-black/95 rounded-[5rem] border-8 border-red-500/60 shadow-inner">
-                           <h4 className="text-[18px] md:text-[22px] font-bold text-red-500 uppercase tracking-[1.5em] mb-16 flex items-center gap-12 italic border-b-4 border-red-600/40 pb-10">
-                             <Network className="size-12" /> Sovereign Kill-Chain (v24.0)
+                        <div className="space-y-4 mt-8">
+                           <h4 className="text-[10px] font-bold text-primary uppercase tracking-[0.4em] mb-4 flex items-center gap-2 italic">
+                             <Network className="size-4" /> Execution Chain
                            </h4>
-                           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                           <div className="grid grid-cols-1 gap-3">
                               {msg.chain.map((step, idx) => (
-                                <div key={idx} className="flex gap-12 p-12 rounded-[5rem] bg-white/5 border-8 border-white/10 animate-in slide-in-from-left-16 hover:border-red-600 transition-all duration-1000 group shadow-6xl" style={{ animationDelay: `${idx * 0.25}s` }}>
-                                    <div className="size-28 md:size-32 rounded-[3.5rem] bg-red-600/40 flex items-center justify-center text-5xl md:text-6xl font-bold text-red-500 border-[6px] border-red-600 shadow-[0_0_60px_rgba(220,38,38,0.5)] group-hover:scale-110 transition-transform duration-700 shrink-0">
+                                <div key={idx} className="flex gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-primary/40 transition-all duration-500 group">
+                                    <div className="size-10 rounded-xl bg-primary/20 flex items-center justify-center text-sm font-bold text-primary border border-primary/30 group-hover:scale-105 transition-transform">
                                       {idx + 1}
                                     </div>
-                                    <div className="flex-1 min-w-0">
-                                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-                                          <span className="text-3xl md:text-4xl font-bold text-white uppercase tracking-[0.4em] italic group-hover:text-red-500 transition-colors truncate">{step.step}</span>
-                                          <div className="flex gap-4">
-                                            {step.nodeId && <Badge className="bg-red-600 text-white text-[12px] px-6 py-2 rounded-2xl border-4 border-red-400 shadow-5xl">NODE: {step.nodeId}</Badge>}
-                                            <Badge className="bg-accent/40 text-accent text-[12px] px-6 py-2 border-4 border-accent/70 uppercase tracking-[0.4em] font-bold italic shadow-5xl">{step.module}</Badge>
-                                          </div>
+                                    <div className="flex-1">
+                                      <div className="flex justify-between items-center mb-1">
+                                          <span className="text-sm font-bold text-white uppercase tracking-wider">{step.step}</span>
+                                          <Badge className="bg-primary/20 text-primary text-[9px] uppercase tracking-tighter">{step.module}</Badge>
                                       </div>
-                                      <p className="text-2xl md:text-3xl text-muted-foreground italic font-medium leading-relaxed group-hover:text-white transition-colors">"{step.action}"</p>
+                                      <p className="text-xs text-muted-foreground italic">"{step.action}"</p>
                                     </div>
                                 </div>
                               ))}
                            </div>
-                        </div>
-                      )}
-
-                      {msg.role === "assistant" && (
-                        <div className="mt-24 pt-16 border-t-8 border-white/20 flex flex-wrap gap-12">
-                           <Button className="terminal-button h-32 md:h-40 px-24 md:px-32 rounded-[5rem] font-bold uppercase tracking-[1em] text-[18px] md:text-[22px] shadow-[0_80px_200px_rgba(220,38,38,1)] group transition-all duration-1000 border-8 border-red-400/80 active:scale-95 italic">
-                              <Zap className="size-12 mr-10 group-hover:scale-125 transition-transform" /> Execute Dominance Override
-                           </Button>
-                           <Button variant="outline" className="h-32 md:h-40 px-24 md:px-32 rounded-[5rem] border-8 border-white/30 bg-white/5 text-[18px] md:text-[22px] uppercase font-bold tracking-[1em] hover:bg-red-600/40 hover:border-red-600 transition-all duration-1000 italic shadow-6xl">
-                              <ShieldX className="size-12 mr-10 text-red-600" /> Transmit impact pulse
-                           </Button>
                         </div>
                       )}
                     </div>
@@ -231,14 +205,14 @@ export default function TerminalPage() {
                 ))}
                 
                 {isLoading && (
-                  <div className="flex flex-col gap-16 items-start animate-pulse">
-                    <div className="max-w-[94%] rounded-[7rem] p-24 md:p-32 bg-red-950/50 border-8 border-red-600/80 flex items-center gap-16 md:gap-24 shadow-[0_0_200px_rgba(220,38,38,0.4)]">
-                      <div className="flex gap-12 md:gap-16">
-                         <div className="size-10 md:size-14 rounded-full bg-red-600 animate-bounce [animation-delay:-0.3s] shadow-[0_0_60px_red]" />
-                         <div className="size-10 md:size-14 rounded-full bg-red-600 animate-bounce [animation-delay:-0.15s] shadow-[0_0_60px_red]" />
-                         <div className="size-10 md:size-14 rounded-full bg-red-600 animate-bounce shadow-[0_0_60px_red]" />
+                  <div className="flex flex-col gap-4 items-start animate-pulse">
+                    <div className="max-w-[80%] rounded-[2rem] p-6 bg-primary/10 border-2 border-primary/40 flex items-center gap-4 shadow-xl">
+                      <div className="flex gap-2">
+                         <div className="size-2 rounded-full bg-primary animate-bounce [animation-delay:-0.3s]" />
+                         <div className="size-2 rounded-full bg-primary animate-bounce [animation-delay:-0.15s]" />
+                         <div className="size-2 rounded-full bg-primary animate-bounce" />
                       </div>
-                      <span className="text-4xl md:text-7xl font-code text-red-500 uppercase tracking-[1.5em] md:tracking-[2.5em] font-bold italic drop-shadow-[0_0_80px_red] leading-none">GOD-CORE_THINKING_REWRITING_REALITY...</span>
+                      <span className="text-sm font-code text-primary uppercase tracking-[0.3em] font-bold italic">Processing Sovereign Will...</span>
                     </div>
                   </div>
                 )}
@@ -246,38 +220,39 @@ export default function TerminalPage() {
               </div>
             </ScrollArea>
 
-            {/* Input Controller Dock */}
-            <div className="p-20 md:p-32 border-t-8 border-red-600/90 bg-red-950/80 backdrop-blur-5xl shadow-[0_-150px_400px_rgba(0,0,0,1)] relative z-30">
-              <div className="max-w-[1800px] mx-auto">
-                <form onSubmit={handleSend} className="relative group/form">
-                  <div className="absolute left-16 md:left-24 top-1/2 -translate-y-1/2 text-red-600/60 group-focus-within/form:text-red-600 transition-all duration-1000 scale-[2] md:scale-[3]">
-                    <Skull className="size-24 md:size-32 group-hover/form:rotate-12 transition-transform shadow-[0_0_60px_red]" />
+            {/* Input Dock */}
+            <div className="p-6 md:p-10 border-t-2 border-primary/20 bg-black/90 backdrop-blur-xl z-30 shadow-2xl">
+              <div className="max-w-4xl mx-auto">
+                <form onSubmit={handleSend} className="relative group">
+                  <div className="absolute left-6 top-1/2 -translate-y-1/2 text-primary/40 group-focus-within:text-primary transition-all duration-700">
+                    <TerminalIcon className="size-6" />
                   </div>
                   <Input
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    placeholder="Dictate Supreme Strategic Intent..."
-                    className="w-full bg-black/99 border-8 border-red-600/90 pl-64 md:pl-80 pr-72 md:pr-96 py-32 md:py-48 font-code text-4xl md:text-[6rem] focus-visible:ring-red-600/80 focus-visible:border-red-500 rounded-[8rem] md:rounded-[12rem] shadow-[0_100px_300px_rgba(0,0,0,1)] transition-all placeholder:text-red-950/40 text-white italic h-48 md:h-80"
+                    placeholder="Enter command..."
+                    className="w-full bg-white/5 border-2 border-white/10 pl-14 pr-16 py-6 font-code text-sm md:text-base focus-visible:ring-primary/50 focus-visible:border-primary rounded-2xl shadow-inner transition-all placeholder:text-muted-foreground/30 text-white"
                     disabled={isLoading}
                   />
                   <Button 
                     type="submit" 
                     size="icon" 
-                    className="absolute right-16 md:right-24 top-1/2 -translate-y-1/2 size-40 md:size-56 bg-red-600 hover:bg-red-700 rounded-[5rem] md:rounded-[7rem] shadow-[0_0_150px_rgba(220,38,38,1)] group/btn transition-all duration-1000 active:scale-90 border-8 border-red-400/80"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 size-10 md:size-12 bg-primary hover:bg-primary/80 rounded-xl shadow-lg group transition-all active:scale-90"
                     disabled={!input.trim() || isLoading}
                   >
-                    {isLoading ? <Loader2 className="size-24 md:size-40 animate-spin text-white" /> : <Flame className="size-24 md:size-40 group-hover/btn:scale-125 transition-all duration-1000" />}
+                    {isLoading ? <Loader2 className="size-5 animate-spin text-black" /> : <Send className="size-5 group-hover:scale-110 transition-transform" />}
                   </Button>
                 </form>
-                <div className="mt-16 md:mt-24 flex flex-col xl:flex-row justify-between items-center px-12 md:px-40 gap-12">
-                   <div className="flex flex-wrap justify-center gap-16 md:gap-32">
-                      {['SINGULARITY_v24', 'GOD_MODE', 'DOUBLE_CHECKED', 'ETERNAL_SOV', 'AL_GHAZALI'].map(t => (
-                        <div key={t} className="flex items-center gap-6 md:gap-10 text-[16px] md:text-[22px] font-bold text-red-500/95 uppercase tracking-[1em] md:tracking-[1.5em] italic">
-                           <div className="size-5 md:size-8 rounded-full bg-red-600 shadow-[0_0_40px_red] animate-pulse" /> {t}
-                        </div>
-                      ))}
+                <div className="mt-4 flex justify-between items-center px-4 opacity-60">
+                   <div className="flex gap-6">
+                      <div className="flex items-center gap-2 text-[10px] font-bold text-primary uppercase tracking-widest italic">
+                         <div className="size-2 rounded-full bg-primary animate-pulse" /> SINGULARITY_READY
+                      </div>
+                      <div className="flex items-center gap-2 text-[10px] font-bold text-primary uppercase tracking-widest italic">
+                         <div className="size-2 rounded-full bg-primary animate-pulse" /> ENCRYPTED_LINK
+                      </div>
                    </div>
-                   <span className="text-[14px] md:text-[20px] font-code text-muted-foreground uppercase tracking-[1em] md:tracking-[2em] opacity-60 italic font-bold text-center">OMNI-CORE_NEURAL_UPLINK // SINGULARITY_REACHED</span>
+                   <span className="text-[10px] font-code text-muted-foreground uppercase tracking-widest italic">Terminal_V42.0_Online</span>
                 </div>
               </div>
             </div>
