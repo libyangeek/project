@@ -4,26 +4,26 @@
 
 @layer base {
   :root {
-    --background: 0 0% 0%; /* أسود مطلق للمساحات العميقة */
-    --foreground: 0 0% 100%;
-    --card: 0 0% 2%;
-    --card-foreground: 0 0% 100%;
-    --popover: 0 0% 1%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 0 100% 45%; /* أحمر قتالي متوهج */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 8%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 50%;
-    --accent: 45 100% 50%; /* ذهب سيادي نقي */
+    --background: 0 0% 3%; /* أسود ملكي عميق */
+    --foreground: 45 20% 98%;
+    --card: 0 0% 5%;
+    --card-foreground: 45 20% 98%;
+    --popover: 0 0% 3%;
+    --popover-foreground: 45 20% 98%;
+    --primary: 45 100% 58%; /* ذهب سيادي مشع */
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 45 100% 58%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 45 10% 65%;
+    --accent: 48 100% 50%; /* ذهب ساطع */
     --accent-foreground: 0 0% 0%;
-    --destructive: 0 100% 30%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 15%;
-    --input: 0 0% 5%;
-    --ring: 0 100% 50%;
-    --radius: 1rem;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 45 20% 20%;
+    --input: 45 20% 15%;
+    --ring: 45 100% 58%;
+    --radius: 1.5rem;
   }
 }
 
@@ -32,41 +32,45 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-code antialiased selection:bg-primary/40 overflow-x-hidden;
+    @apply bg-background text-foreground font-code antialiased selection:bg-primary/30 overflow-x-hidden;
     background-image: 
-      radial-gradient(circle at 50% 50%, rgba(220,38,38,0.1), transparent),
-      linear-gradient(rgba(0, 0, 0, 0.98), rgba(0, 0, 0, 0.98)),
-      url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+      radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.15), transparent 50%),
+      linear-gradient(rgba(0, 0, 0, 0.98), rgba(0, 0, 0, 0.98));
     background-attachment: fixed;
   }
 }
 
 @layer components {
   .kali-card {
-    @apply bg-black/80 border-2 border-white/5 shadow-2xl backdrop-blur-3xl hover:border-primary/60 transition-all duration-700 relative overflow-hidden;
-    clip-path: polygon(5% 0, 100% 0, 100% 95%, 95% 100%, 0 100%, 0 5%);
+    @apply bg-black/60 border border-primary/20 shadow-xl backdrop-blur-xl hover:border-primary/60 transition-all duration-700 relative overflow-hidden;
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.05);
   }
-  .neon-glow-red {
-    text-shadow: 0 0 30px rgba(220, 38, 38, 0.8), 0 0 60px rgba(220, 38, 38, 0.4);
+  
+  .gold-glow {
+    text-shadow: 0 0 15px rgba(212, 175, 55, 0.7), 0 0 30px rgba(212, 175, 55, 0.4);
   }
-  .neon-glow-gold {
-    text-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 215, 0, 0.3);
+
+  .light-radiance {
+    box-shadow: 0 0 50px rgba(255, 255, 255, 0.1), 0 0 100px rgba(212, 175, 55, 0.1);
   }
+
   .scanline-effect::after {
     content: "";
-    @apply absolute inset-0 pointer-events-none opacity-[0.05] z-[999];
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    @apply absolute inset-0 pointer-events-none opacity-[0.03] z-[999];
+    background: linear-gradient(rgba(212, 175, 55, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(212, 175, 55, 0.03), rgba(255, 255, 255, 0.01), rgba(212, 175, 55, 0.03));
     background-size: 100% 4px, 4px 100%;
   }
-  .animate-neural {
-    animation: neural-pulse 2s infinite;
+
+  .animate-sovereign-pulse {
+    animation: gold-pulse 3s infinite;
   }
 }
 
-@keyframes neural-pulse {
-  0% { transform: scale(1); opacity: 0.8; filter: drop-shadow(0 0 10px red); }
-  50% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 30px red); }
-  100% { transform: scale(1); opacity: 0.8; filter: drop-shadow(0 0 10px red); }
+@keyframes gold-pulse {
+  0% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5)); }
+  50% { transform: scale(1.02); filter: drop-shadow(0 0 25px rgba(212, 175, 55, 0.8)); }
+  100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5)); }
 }
 
 @keyframes spin-slow {
@@ -75,16 +79,16 @@
 }
 
 .animate-spin-slow {
-  animation: spin-slow 15s linear infinite;
+  animation: spin-slow 25s linear infinite;
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: black;
+  background: #050505;
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #ff0000, #ffaa00);
+  background: linear-gradient(to bottom, #d4af37, #f4c430);
   border-radius: 10px;
 }
