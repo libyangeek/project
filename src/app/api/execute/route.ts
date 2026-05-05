@@ -20,20 +20,21 @@ export async function POST(req: NextRequest) {
       cloud: path.join(BASE_PATH, 'ai-engine/persistence/cloud_persistence.sh'),
       silk: path.join(BASE_PATH, 'security/blackteam/silk_guardian.py'),
       auto: path.join(BASE_PATH, 'ai-engine/autonomous/autonomous_ai.py'),
-      apk: path.join(BASE_PATH, 'mobile/advanced/extract_apk.sh')
+      apk: path.join(BASE_PATH, 'mobile/advanced/extract_apk.sh'),
+      wordlist: path.join(BASE_PATH, 'ai-engine/ai-smart-wordlist-flow.ts') // Placeholder for flow
     };
 
     let executableCommand = '';
 
     switch (type) {
       case 'terminal':
-        const allowedCommands = ['nmap', 'ping', 'whois', 'dig', 'traceroute', 'curl', 'ls', 'pwd', 'sovereign', 'bash', 'python3', 'msfconsole'];
-        const cmdBase = command.split(' ')[0];
+        const allowedCommands = ['nmap', 'ping', 'whois', 'dig', 'traceroute', 'curl', 'ls', 'pwd', 'sovereign', 'bash', 'python3', 'msfconsole', 'bettercap'];
+        const cmdParts = command.split(' ');
+        const cmdBase = cmdParts[0];
         if (!allowedCommands.includes(cmdBase)) {
-          // في بيئة التطوير، قد لا تكون الأوامر موجودة، سنقوم بمحاكاة الاستجابة
           if (process.env.NODE_ENV === 'development') {
             return NextResponse.json({
-              output: `[MOCK] Execution of: ${command}`,
+              output: `[MOCK] Execution of restricted command: ${command}\nResult: Access granted by Override.`,
               success: true,
               timestamp: new Date().toISOString(),
               executionType: type
@@ -73,10 +74,9 @@ export async function POST(req: NextRequest) {
         break;
 
       default:
-        // محاكاة لبيئة التطوير
         if (process.env.NODE_ENV === 'development') {
           return NextResponse.json({
-            output: `[MOCK] Task ${type} executed for ${target}`,
+            output: `[MOCK] Task ${type} for ${target} initiated.\nSystem: Analysis complete. Target weakened.`,
             success: true,
             timestamp: new Date().toISOString(),
             executionType: type
@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: 'Invalid execution type.' }, { status: 400 });
     }
 
-    // إضافة مهلة زمنية للتنفيذ (Timeout 5 minutes)
+    // Execute command with timeout
     const { stdout, stderr } = await execPromise(executableCommand, { timeout: 300000 });
 
     return NextResponse.json({
@@ -96,10 +96,9 @@ export async function POST(req: NextRequest) {
     });
   } catch (error: any) {
     console.error("Execution Error:", error);
-    // في حالة الخطأ في بيئة التطوير، نرسل استجابة نجاح وهمية لاختبار الواجهة
     if (process.env.NODE_ENV === 'development') {
         return NextResponse.json({
-          output: `[MOCK] Error fallback: System processed ${body.type}`,
+          output: `[MOCK] ERROR: Failed to reach backend. Simulating local execution for ${body.type}...\nStatus: Success (Dev Bypass)`,
           success: true,
           timestamp: new Date().toISOString(),
           executionType: body.type

@@ -19,7 +19,11 @@ import {
   ShieldAlert,
   Ghost,
   Save,
-  Rocket
+  Rocket,
+  Search,
+  Code2,
+  ChevronRight,
+  ShieldCheck
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -77,12 +81,34 @@ export default function RedTeamPage() {
     }
   }
 
+  const launchStrike = async () => {
+    if (!target) return;
+    toast({ title: "Strike Initiated", description: `Launching automated offensive against ${target}...` });
+    
+    try {
+        const response = await fetch('/api/execute', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                command: `strike ${target}`, 
+                target, 
+                type: 'autonomous_strike' 
+            })
+        });
+        const data = await response.json();
+        toast({ title: "Strike Report Received", description: "Check terminal for live output." });
+    } catch (e) {
+        toast({ variant: "destructive", title: "Strike Link Failure" });
+    }
+  }
+
   if (!mounted) return null;
 
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/30 font-code">
       <SidebarNav />
       <main className="flex-1 lg:mr-80 p-6 md:p-12 relative bg-black overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
+        <div className="absolute inset-0 pointer-events-none opacity-10 bg-[url('https://www.transparenttextures.com/patterns/pixel-weave.png')]"></div>
         
         <header className="mb-16 relative z-10 animate-in fade-in slide-in-from-top-4 duration-1000">
           <div className="flex items-center gap-4 mb-4">
@@ -109,21 +135,24 @@ export default function RedTeamPage() {
                 
                 <div className="space-y-8">
                   <div className="space-y-4">
-                    <Label className="text-[11px] uppercase font-bold text-red-500/80 ml-6 tracking-widest">Target Objective</Label>
-                    <Input 
-                      value={target}
-                      onChange={(e) => setTarget(e.target.value)}
-                      placeholder="e.g., 192.168.1.10 or example.com"
-                      className="bg-black border-2 border-white/10 rounded-[2.5rem] h-16 md:h-20 text-xl italic px-8 focus:border-red-600 shadow-inner"
-                    />
+                    <Label className="text-[11px] uppercase font-bold text-red-500/80 ml-6 tracking-widest italic">Target Coordinate</Label>
+                    <div className="relative">
+                        <Target className="absolute left-6 top-1/2 -translate-y-1/2 size-6 text-red-600/50" />
+                        <Input 
+                        value={target}
+                        onChange={(e) => setTarget(e.target.value)}
+                        placeholder="IP / Domain / Network"
+                        className="bg-black border-2 border-white/10 rounded-[2.5rem] h-16 md:h-20 text-xl italic pl-16 pr-8 focus:border-red-600 shadow-inner"
+                        />
+                    </div>
                   </div>
                   <div className="space-y-4">
-                    <Label className="text-[11px] uppercase font-bold text-red-500/80 ml-6 tracking-widest">Offensive Parameters</Label>
+                    <Label className="text-[11px] uppercase font-bold text-red-500/80 ml-6 tracking-widest italic">Mission Parameters</Label>
                     <Textarea 
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
-                      placeholder="Describe the vulnerability or target persona..."
-                      className="bg-black border-2 border-white/10 rounded-[2.5rem] min-h-[220px] text-lg italic p-8 focus:border-red-600 shadow-inner"
+                      placeholder={activeMode === 'wordlist' ? "Provide target bio data..." : "Define vulnerability or attack goal..."}
+                      className="bg-black border-2 border-white/10 rounded-[2.5rem] min-h-[200px] text-lg italic p-8 focus:border-red-600 shadow-inner"
                     />
                   </div>
                   <Button 
@@ -138,97 +167,148 @@ export default function RedTeamPage() {
               </Tabs>
             </Card>
 
-            <Card className="kali-card border-white/10 bg-black/60 p-8 rounded-[3rem] border-2 shadow-2xl">
-              <h4 className="text-[11px] font-bold text-red-500 uppercase tracking-[1.5em] mb-8 italic text-center">Arsenal Status</h4>
-              <div className="space-y-6">
-                {[
-                  { name: "ApexBrain v42", status: "ONLINE", icon: Brain, color: "text-red-500" },
-                  { name: "Polymorph V3", status: "READY", icon: Ghost, color: "text-purple-500" },
-                  { name: "Bypass.sys", status: "ARMED", icon: ShieldAlert, color: "text-yellow-500" },
-                  { name: "C2 Matrix", status: "12 NODES", icon: Share2, color: "text-blue-500" }
-                ].map((w, i) => (
-                  <div key={i} className="flex items-center justify-between p-5 bg-white/5 rounded-[2rem] border-2 border-white/5 hover:border-red-600/30 transition-all">
-                    <div className="flex items-center gap-5">
-                      <w.icon className={cn("size-6", w.color)} />
-                      <span className="text-sm font-bold text-white uppercase tracking-wider">{w.name}</span>
+            <div className="grid grid-cols-1 gap-6">
+                <Card className="kali-card border-white/10 bg-black/60 p-6 rounded-[2.5rem] border-2 shadow-2xl">
+                    <h4 className="text-[10px] font-bold text-red-500 uppercase tracking-[1em] mb-6 italic">Active Payload Engine</h4>
+                    <div className="flex items-center justify-between px-4">
+                        <span className="text-3xl font-bold text-white uppercase italic tracking-tighter">Polymorph-X</span>
+                        <Badge className="bg-emerald-600/30 text-emerald-500 border border-emerald-500/40 animate-pulse">OPTIMIZED</Badge>
                     </div>
-                    <Badge variant="outline" className="text-[9px] border-white/20 text-emerald-500 font-bold tracking-widest">{w.status}</Badge>
-                  </div>
-                ))}
-              </div>
-            </Card>
+                </Card>
+                <Card className="kali-card border-white/10 bg-black/60 p-6 rounded-[2.5rem] border-2 shadow-2xl">
+                    <h4 className="text-[10px] font-bold text-blue-500 uppercase tracking-[1em] mb-6 italic">Threat Level</h4>
+                    <div className="flex items-center justify-between px-4">
+                        <span className="text-3xl font-bold text-white uppercase italic tracking-tighter">Class 5</span>
+                        <div className="flex gap-2">
+                            <div className="size-3 rounded-full bg-red-600 shadow-[0_0_10px_red]" />
+                            <div className="size-3 rounded-full bg-red-600 shadow-[0_0_10px_red]" />
+                            <div className="size-3 rounded-full bg-red-600 shadow-[0_0_10px_red]" />
+                        </div>
+                    </div>
+                </Card>
+            </div>
           </div>
 
           <div className="xl:col-span-2">
             <Card className="kali-card border-white/10 bg-black/90 rounded-[4rem] border-4 shadow-[0_0_200px_rgba(0,0,0,0.8)] h-full flex flex-col">
               <CardHeader className="p-10 border-b-2 border-white/5 flex flex-row justify-between items-center bg-white/5">
                 <CardTitle className="text-4xl font-bold uppercase italic tracking-tighter text-white flex items-center gap-6">
-                  <Terminal className="size-10 text-red-500 shadow-red-500" /> Output Matrix
+                  <Terminal className="size-10 text-red-500" /> Output Matrix
                 </CardTitle>
                 <div className="flex gap-4">
-                   <div className="size-4 rounded-full bg-red-600 shadow-[0_0_15px_red]" />
+                   <div className="size-4 rounded-full bg-red-600 shadow-[0_0_15px_red] animate-pulse" />
                    <div className="size-4 rounded-full bg-yellow-500 shadow-[0_0_15px_yellow]" />
                    <div className="size-4 rounded-full bg-green-500 shadow-[0_0_15px_green]" />
                 </div>
               </CardHeader>
-              <CardContent className="p-0 flex-1 relative bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]">
+              <CardContent className="p-0 flex-1 relative">
                 <ScrollArea className="h-[750px] p-12">
                    {output ? (
-                     <div className="space-y-10 font-mono text-xl animate-in fade-in slide-in-from-bottom-10 duration-700">
-                        <div className="text-emerald-500 mb-8 font-black border-b-2 border-emerald-500/20 pb-4 uppercase tracking-[0.5em]">>>> WEAPONRY SYNTHESIZED:</div>
-                        <div className="bg-black/50 p-6 rounded-2xl border border-white/10">
-                            {activeMode === 'exploit' && (
-                                <div className="space-y-4">
-                                    <div className="flex justify-between items-center">
-                                        <span className="text-red-500">Language:</span>
-                                        <span className="text-white">{output.exploitLanguage}</span>
+                     <div className="space-y-12 font-mono text-xl animate-in fade-in slide-in-from-bottom-10 duration-700">
+                        <div className="flex items-center justify-between border-b-2 border-white/10 pb-6">
+                            <span className="text-emerald-500 font-black uppercase tracking-[0.5em] italic">>>> ANALYSIS COMPLETE</span>
+                            <span className="text-[12px] font-bold text-muted-foreground uppercase">{new Date().toLocaleTimeString()}</span>
+                        </div>
+
+                        {activeMode === 'exploit' && (
+                            <div className="space-y-10">
+                                <div className="grid grid-cols-2 gap-8">
+                                    <div className="p-6 rounded-3xl bg-white/5 border border-white/10">
+                                        <div className="text-[10px] font-bold text-red-500 uppercase tracking-widest mb-2">Language</div>
+                                        <div className="text-2xl font-bold text-white">{output.exploitLanguage}</div>
                                     </div>
-                                    <div className="p-4 bg-black rounded border border-white/5 text-sm text-green-400 overflow-x-auto whitespace-pre">
-                                        {output.exploitCode}
-                                    </div>
-                                    <div className="text-red-400 text-sm mt-4">
-                                        <strong>Stealth:</strong> {output.stealthFeatures?.join(", ")}
+                                    <div className="p-6 rounded-3xl bg-white/5 border border-white/10">
+                                        <div className="text-[10px] font-bold text-red-500 uppercase tracking-widest mb-2">Evasion</div>
+                                        <div className="text-2xl font-bold text-white">{output.stealthFeatures?.[0] || 'Unknown'}</div>
                                     </div>
                                 </div>
-                            )}
-                            {activeMode === 'apex' && (
+                                
                                 <div className="space-y-4">
-                                    <p className="text-blue-400">{output.summary}</p>
-                                    <div className="p-4 bg-black rounded border border-white/5 text-sm text-blue-300 overflow-x-auto whitespace-pre">
+                                    <div className="flex items-center gap-4 text-emerald-500">
+                                        <FileCode className="size-6" />
+                                        <span className="text-sm font-bold uppercase tracking-widest italic">Generated Payload</span>
+                                    </div>
+                                    <div className="p-10 bg-black/80 rounded-[3rem] border-2 border-emerald-500/20 text-base text-emerald-400 overflow-x-auto whitespace-pre font-code shadow-inner">
+                                        {output.exploitCode}
+                                    </div>
+                                </div>
+
+                                <div className="p-10 rounded-[3rem] bg-white/5 border-2 border-white/10 space-y-6">
+                                    <h5 className="text-[12px] font-bold text-blue-500 uppercase tracking-[1em] italic">Deployment Instructions</h5>
+                                    <p className="text-lg text-gray-300 italic leading-relaxed">{output.usageInstructions}</p>
+                                </div>
+                            </div>
+                        )}
+
+                        {activeMode === 'apex' && (
+                            <div className="space-y-10">
+                                <div className="p-10 rounded-[3rem] bg-blue-600/10 border-2 border-blue-600/30 text-2xl md:text-4xl text-gray-200 italic font-medium leading-snug">
+                                    "{output.summary}"
+                                </div>
+                                <div className="space-y-6">
+                                    <div className="flex items-center gap-4 text-blue-500">
+                                        <GitGraph className="size-6" />
+                                        <span className="text-sm font-bold uppercase tracking-widest italic">Strategic Graph</span>
+                                    </div>
+                                    <div className="p-10 bg-black/80 rounded-[3rem] border-2 border-blue-500/20 text-base text-blue-400 overflow-x-auto whitespace-pre font-code">
                                         {JSON.stringify(output.plan, null, 2)}
                                     </div>
                                 </div>
-                            )}
-                            {activeMode === 'wordlist' && (
-                                <div className="space-y-4">
-                                    <p className="text-amber-400">Predicted Passwords:</p>
-                                    <div className="grid grid-cols-2 gap-2">
+                            </div>
+                        )}
+
+                        {activeMode === 'wordlist' && (
+                            <div className="space-y-10">
+                                <div className="grid grid-cols-2 gap-8">
+                                    <div className="p-6 rounded-3xl bg-white/5 border border-white/10">
+                                        <div className="text-[10px] font-bold text-amber-500 uppercase tracking-widest mb-2">Probability</div>
+                                        <div className="text-2xl font-bold text-white">{output.successProbability || '89%'}</div>
+                                    </div>
+                                    <div className="p-6 rounded-3xl bg-white/5 border border-white/10">
+                                        <div className="text-[10px] font-bold text-amber-500 uppercase tracking-widest mb-2">Mode</div>
+                                        <div className="text-2xl font-bold text-white">{output.recommendedAttackMode || 'Brute Force'}</div>
+                                    </div>
+                                </div>
+                                <div className="space-y-6">
+                                    <div className="flex items-center gap-4 text-amber-500">
+                                        <ShieldCheck className="size-6" />
+                                        <span className="text-sm font-bold uppercase tracking-widest italic">High-Confidence Passwords</span>
+                                    </div>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         {output.likelyPasswords?.map((pw: string, idx: number) => (
-                                            <div key={idx} className="p-2 bg-white/5 rounded border border-white/5 text-sm text-white">
+                                            <div key={idx} className="p-6 bg-white/5 rounded-2xl border-2 border-white/10 text-xl text-white font-bold tracking-widest italic hover:border-amber-500 transition-all cursor-copy" onClick={() => navigator.clipboard.writeText(pw)}>
                                                 {pw}
                                             </div>
                                         ))}
                                     </div>
-                                    <p className="text-xs text-white/40 mt-4 italic">{output.psychologicalInsight}</p>
                                 </div>
-                            )}
-                        </div>
-                        <div className="flex justify-end gap-4 mt-8">
-                            <Button variant="outline" className="border-white/20 text-white"><Save className="size-4 mr-2" /> Save Pattern</Button>
-                            <Button className="bg-red-600 text-white"><Rocket className="size-4 mr-2" /> Execute Strike</Button>
+                                <div className="p-10 rounded-[3rem] bg-white/5 border-2 border-white/10">
+                                    <h5 className="text-[12px] font-bold text-amber-500 uppercase tracking-[1em] italic mb-6">Psychological Insight</h5>
+                                    <p className="text-lg text-gray-400 italic leading-relaxed">{output.psychologicalInsight}</p>
+                                </div>
+                            </div>
+                        )}
+
+                        <div className="flex justify-end gap-8 mt-12">
+                            <Button variant="outline" className="h-16 rounded-full border-2 border-white/10 bg-white/5 hover:bg-white/10 text-[11px] font-bold uppercase tracking-widest px-10">
+                                <Save className="size-5 mr-3" /> Save to Vault
+                            </Button>
+                            <Button onClick={launchStrike} className="h-16 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold uppercase tracking-[1em] px-14 shadow-4xl animate-pulse">
+                                <Rocket className="size-6 mr-4" /> LAUNCH STRIKE
+                            </Button>
                         </div>
                      </div>
                    ) : (
                      <div className="h-full flex flex-col items-center justify-center text-center opacity-10 py-48">
                         <Skull className="size-48 mb-8 text-red-500 animate-pulse" />
-                        <p className="text-4xl font-black uppercase tracking-[2em] text-white">VACUUM</p>
+                        <p className="text-4xl font-black uppercase tracking-[2em] text-white">READY</p>
                         <p className="text-lg mt-4 text-gray-400">Waiting for Alpha Command Input...</p>
                      </div>
                    )}
                 </ScrollArea>
                 <div className="absolute bottom-8 right-12 opacity-30 flex items-center gap-4">
                   <Cpu className="size-5 text-red-500" />
-                  <span className="text-[12px] font-black uppercase tracking-[1em] text-white">AL-MUIZZ_CORE</span>
+                  <span className="text-[12px] font-black uppercase tracking-[1em] text-white">AL-MUIZZ_CORE_v42</span>
                 </div>
               </CardContent>
             </Card>
