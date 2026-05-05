@@ -144,7 +144,7 @@ export default function SystemPage() {
 
                     <div className="space-y-8">
                        <h4 className="text-[14px] font-bold text-muted-foreground uppercase tracking-[0.8em] px-6 italic flex items-center gap-4">
-                          <Chip className="size-5 text-primary" /> GPU Acceleration Matrix
+                          <Cpu className="size-5 text-primary" /> GPU Acceleration Matrix
                        </h4>
                        <div className="p-10 rounded-[3rem] bg-primary/5 border-2 border-primary/20 italic text-2xl text-muted-foreground leading-relaxed shadow-inner">
                           "O Master, CUDA Cores have been detected. I am offloading 95% of the neural inference to the GPU, reducing latency to 0.1ms. We are now processing reality at warp speed."

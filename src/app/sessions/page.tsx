@@ -24,7 +24,8 @@ import {
   Smartphone,
   ChevronRight,
   Flame,
-  ZapOff
+  ZapOff,
+  Sparkles
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -103,7 +104,7 @@ export default function ShadowGridPage() {
         const newStatus = s.assets.cam === 'STREAMING' ? 'READY' : 'STREAMING'
         toast({ 
           title: newStatus === 'STREAMING' ? "Pegasus Eye Opened" : "Cam Link Purged",
-          variant: newStatus === 'STREAMING' ? "default" : "destructive"
+          description: `Node ${id} camera access updated.`
         })
         return { ...s, assets: { ...s.assets, cam: newStatus } }
       }
