@@ -22,7 +22,10 @@ import {
   Sparkles,
   Atom,
   Globe,
-  Wifi
+  Wifi,
+  Radio,
+  Signal,
+  Network
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -39,6 +42,7 @@ type Message = {
   command?: string
   strategicInsight?: string
   isBroadcasting?: boolean
+  clusterData?: string[]
 }
 
 /**
@@ -150,7 +154,8 @@ export default function TerminalPage() {
         timestamp: new Date().toLocaleTimeString(),
         command: data.command,
         strategicInsight: strategicInsight || undefined,
-        isBroadcasting: type === 'global_broadcast'
+        isBroadcasting: type === 'global_broadcast',
+        clusterData: type === 'neural_sync' ? ['Riyadh', 'Cairo', 'London', 'Dubai', 'Tokyo', 'New York'] : undefined
       }])
     } catch (error) {
       setMessages(prev => [...prev, { role: "system", content: "CRITICAL FAILURE: Global link severed.", timestamp: new Date().toLocaleTimeString() }])
@@ -231,6 +236,17 @@ export default function TerminalPage() {
                     {msg.role === "user" && <span className="text-primary mr-6 shadow-primary font-black italic">❯</span>}
                     {msg.content}
                   </div>
+
+                  {msg.clusterData && (
+                    <div className="mt-6 flex flex-wrap gap-4">
+                        {msg.clusterData.map((city, idx) => (
+                            <Badge key={idx} variant="outline" className="bg-emerald-500/10 border-emerald-500/30 text-emerald-400 py-2 px-6 rounded-full italic font-bold">
+                                <Network className="size-3 mr-2" /> {city}_SYNCED
+                            </Badge>
+                        ))}
+                    </div>
+                  )}
+
                   {msg.strategicInsight && (
                     <div className="mt-10 p-8 rounded-[2rem] bg-primary/10 border-2 border-primary/40 animate-in zoom-in-95 duration-1000 relative group overflow-hidden">
                         <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:scale-125 transition-transform"><BrainCircuit className="size-16 text-primary"/></div>

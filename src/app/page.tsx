@@ -117,8 +117,8 @@ export default function DashboardPage() {
     { city: "Riyadh", type: "Alpha-1", status: "ONLINE", latency: "0.1ms" },
     { city: "Cairo", type: "Beta-2", status: "SYNCED", latency: "2.4ms" },
     { city: "Dubai", type: "Gamma-3", status: "ONLINE", latency: "1.1ms" },
-    { city: "Casablanca", type: "Delta-4", status: "PENDING", latency: "12ms" },
     { city: "London", type: "Epsilon-5", status: "ONLINE", latency: "8.5ms" },
+    { city: "New York", type: "Zeta-6", status: "SYNCED", latency: "14ms" },
   ];
 
   React.useEffect(() => {
@@ -206,7 +206,7 @@ export default function DashboardPage() {
                     <CardDescription className="text-primary/50 font-bold uppercase tracking-[0.4em] mt-2 italic text-[10px]">Neural Sync across 14 Global Clusters</CardDescription>
                  </div>
                  <div className="flex gap-4">
-                    <Badge className="bg-primary/20 text-primary border-2 border-primary/40 px-6 py-2 rounded-full font-bold uppercase tracking-widest text-xs italic">Sync: 99.99%</Badge>
+                    <Badge className="bg-primary/20 text-primary border-2 border-primary/40 px-6 py-2 rounded-full font-bold uppercase tracking-widest text-xs italic">Sync: {syncStatus.toFixed(2)}%</Badge>
                     <Badge variant="outline" className="border-emerald-500/50 text-emerald-500 font-black px-4 py-1 text-xs">LETHAL</Badge>
                  </div>
               </div>
@@ -215,7 +215,7 @@ export default function DashboardPage() {
                  <div className="relative overflow-hidden rounded-[2.5rem] bg-black/40 border-2 border-white/5 p-6 shadow-inner">
                     <div className="absolute inset-0 opacity-20 pointer-events-none bg-[url('https://picsum.photos/seed/map/800/400')] bg-cover bg-center grayscale" />
                     <h4 className="text-[12px] font-bold text-primary uppercase tracking-[0.5em] mb-4 relative z-10 italic">Cluster Status</h4>
-                    <div className="space-y-4 relative z-10">
+                    <div className="space-y-4 relative z-10 overflow-y-auto max-h-64 scrollbar-hide">
                        {globalNodes.map((n, i) => (
                          <div key={i} className="flex justify-between items-center p-3 bg-black/60 rounded-xl border border-white/5 hover:border-primary transition-all">
                             <div className="flex items-center gap-3">
