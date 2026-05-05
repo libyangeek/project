@@ -24,7 +24,8 @@ import {
   Power,
   Boxes,
   Atom,
-  Link2
+  Link2,
+  Infinity as InfinityIcon
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -242,7 +243,7 @@ export default function FieldAgentPage() {
               <div className="flex gap-20 flex-wrap justify-center">
                  {[
                    { label: 'HIVE_SYNC_100', icon: Boxes },
-                   { label: 'NODE_13_BIND', icon: Infinity },
+                   { label: 'NODE_13_BIND', icon: InfinityIcon },
                    { label: 'FRACTAL_RW', icon: Binary },
                    { label: 'SOVEREIGN_OS', icon: Power }
                  ].map(t => (
