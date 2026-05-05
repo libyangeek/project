@@ -22,13 +22,7 @@ import {
   Boxes,
   Anchor,
   Brain,
-  ShieldHalf,
-  Terminal,
-  Lock,
   Workflow,
-  Radio,
-  Fingerprint,
-  ZapOff,
   Cloud,
   ChevronRight
 } from "lucide-react"

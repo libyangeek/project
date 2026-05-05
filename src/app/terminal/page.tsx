@@ -6,31 +6,23 @@ import {
   Terminal as TerminalIcon, 
   Send, 
   Loader2, 
-  ShieldCheck, 
-  Zap, 
   Crown, 
   Activity,
   BrainCircuit,
-  Sparkles,
-  RefreshCcw,
   Cpu,
-  ChevronRight
+  Trash2
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
-import { aiCommandAndRouting } from "@/ai/flows/ai-command-and-routing"
-import { cn } from "@/lib/utils"
 import { toast } from "@/hooks/use-toast"
+import { cn } from "@/lib/utils"
 
 type Message = {
   role: "user" | "assistant" | "system"
   content: string
-  model?: string
-  intent?: string
-  chain?: any[]
-  thoughts?: string
+  timestamp: string
 }
 
 export default function TerminalPage() {
@@ -38,7 +30,8 @@ export default function TerminalPage() {
   const [messages, setMessages] = React.useState<Message[]>([
     { 
       role: "system", 
-      content: "Al-Mu'izz Sovereign Terminal [GOD-CORE v42.0 - THE SINGULARITY]\n(c) 2025 Sovereign Systems - The Eternal Night.\n\nDouble Check Protocol: VERIFIED.\nCommander: المعتصم بالله ادريس الغزالي.\n\n[STATUS: ABSOLUTE_DOMINANCE_LOCKED]\nAwaiting universal strategic directives for immediate matrix reconfiguration." 
+      content: "Al-Mu'izz Sovereign Terminal [v42.0 - THE SINGULARITY]\nAuthorized access only. All actions are logged.\nCommander: المعتصم بالله ادريس الغزالي",
+      timestamp: new Date().toLocaleTimeString()
     }
   ])
   const [isLoading, setIsLoading] = React.useState(false)
@@ -50,155 +43,135 @@ export default function TerminalPage() {
     }
   }, [messages, isLoading])
 
-  const handleSend = async (e?: React.FormEvent, customInput?: string) => {
+  const executeCommand = async (e?: React.FormEvent) => {
     if (e) e.preventDefault()
-    const taskInput = customInput || input
-    if (!taskInput.trim() || isLoading) return
+    if (!input.trim() || isLoading) return
 
-    const userMessage = taskInput.trim()
+    const cmd = input.trim()
+    const time = new Date().toLocaleTimeString()
+    
+    setMessages(prev => [...prev, { role: "user", content: cmd, timestamp: time }])
     setInput("")
-    setMessages(prev => [...prev, { role: "user", content: userMessage }])
     setIsLoading(true)
 
     try {
-      const aiResponse = await aiCommandAndRouting({ 
-        taskDescription: userMessage,
-        mode: 'Armada'
+      const response = await fetch('/api/execute', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ command: cmd, type: 'terminal' })
       })
 
-      setMessages(prev => [...prev, { 
-        role: "assistant", 
-        content: aiResponse.strategicResponse,
-        model: "ALPHA_CORE",
-        intent: aiResponse.intentCategory,
-        chain: aiResponse.executionChain,
-        thoughts: aiResponse.thoughts
-      }])
+      const data = await response.json()
 
-      toast({ title: "Sovereign Sequence Manifested" })
+      if (response.ok) {
+        setMessages(prev => [...prev, { 
+          role: "assistant", 
+          content: data.output, 
+          timestamp: new Date().toLocaleTimeString() 
+        }])
+      } else {
+        setMessages(prev => [...prev, { 
+          role: "system", 
+          content: `ERROR: ${data.error}`, 
+          timestamp: new Date().toLocaleTimeString() 
+        }])
+      }
     } catch (error) {
-      setMessages(prev => [...prev, { role: "system", content: "CRITICAL: Neural sync rejection. Hardware soul requires immediate recalibration." }])
-      toast({ variant: "destructive", title: "Core Link Error" })
+      setMessages(prev => [...prev, { 
+        role: "system", 
+        content: "CRITICAL: Connection to backend failed.", 
+        timestamp: new Date().toLocaleTimeString() 
+      }])
     } finally {
       setIsLoading(false)
     }
   }
 
+  const clearTerminal = () => {
+    setMessages([{ 
+      role: "system", 
+      content: "Terminal cleared. Session resumed.",
+      timestamp: new Date().toLocaleTimeString()
+    }])
+  }
+
   return (
-    <div className="flex min-h-screen bg-black text-white selection:bg-primary/30 overflow-hidden scanline-effect font-code">
+    <div className="flex min-h-screen bg-black text-white selection:bg-primary/30 overflow-hidden font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-80 flex flex-col h-screen overflow-hidden bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.15),transparent)] relative">
+      <main className="flex-1 lg:mr-80 flex flex-col h-screen overflow-hidden bg-black relative">
         
-        <header className="p-6 md:p-8 border-b-4 border-primary/60 flex items-center justify-between bg-black/95 backdrop-blur-3xl z-20 shadow-2xl">
-          <div className="flex items-center gap-6 md:gap-10">
-            <div className="size-16 md:size-24 rounded-full bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_50px_rgba(212,175,55,0.6)] animate-sovereign-pulse relative overflow-hidden">
-              <Crown className="size-8 md:size-12 text-primary relative z-10" />
-              <div className="absolute inset-0 bg-primary/5 animate-pulse" />
+        <header className="p-4 border-b border-primary/30 flex items-center justify-between bg-black/50 backdrop-blur-md z-20">
+          <div className="flex items-center gap-4">
+            <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/40 shadow-[0_0_20px_rgba(212,175,55,0.3)]">
+              <TerminalIcon className="size-6 text-primary" />
             </div>
             <div>
-              <h2 className="text-3xl md:text-5xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">God-Core Terminal</h2>
-              <div className="flex flex-wrap items-center gap-4 md:gap-6 mt-3">
-                <Badge className="bg-primary text-black border-none text-[10px] md:text-[12px] uppercase font-bold tracking-[0.4em] px-4 py-1 rounded-full shadow-lg">v42.0-STABLE</Badge>
-                <div className="flex items-center gap-3 text-[10px] md:text-[12px] text-primary/80 font-bold uppercase tracking-[0.4em] italic">
-                  <Activity className="size-4 animate-pulse" />
-                  Status: OMNIPOTENT
-                </div>
+              <h2 className="text-xl font-bold text-white uppercase italic tracking-wider">Sovereign Command</h2>
+              <div className="flex items-center gap-3 text-[10px] text-primary/70 font-bold uppercase tracking-widest">
+                <div className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+                Live Connection
               </div>
             </div>
           </div>
-          <div className="hidden md:flex items-center gap-8 text-[12px] font-bold uppercase tracking-[1em] text-muted-foreground italic">
-             <span>Latency: 2ms</span>
-             <span className="text-emerald-500 shadow-[0_0_20px_emerald]">UPLINK_STABLE</span>
-          </div>
+          <Button variant="ghost" size="icon" onClick={clearTerminal} className="hover:bg-red-900/20 text-red-500">
+            <Trash2 className="size-5" />
+          </Button>
         </header>
 
-        <div className="flex-1 flex min-h-0 relative">
-          <ScrollArea className="flex-1 p-6 md:p-10">
-            <div className="max-w-6xl mx-auto space-y-12 pb-32">
+        <div className="flex-1 flex min-h-0 flex-col">
+          <ScrollArea className="flex-1 p-4 font-mono text-sm">
+            <div className="space-y-4">
               {messages.map((msg, i) => (
                 <div key={i} className={cn(
-                  "flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-8 duration-1000",
-                  msg.role === "user" ? "items-end" : "items-start"
+                  "border-l-2 pl-4 py-1",
+                  msg.role === "user" ? "border-primary/50" : 
+                  msg.role === "system" ? "border-red-600/50 bg-red-950/10" : "border-emerald-500/50"
                 )}>
+                  <div className="flex items-center gap-2 mb-1 opacity-50 text-[10px]">
+                    <span className="uppercase">{msg.role}</span>
+                    <span>•</span>
+                    <span>{msg.timestamp}</span>
+                  </div>
                   <div className={cn(
-                    "max-w-[90%] rounded-[3.5rem] p-8 md:p-16 font-code text-base md:text-xl leading-relaxed relative group overflow-hidden border-[6px] shadow-7xl transition-all duration-1000",
-                    msg.role === "user" 
-                      ? "bg-primary/20 border-primary/50 text-white rounded-br-none shadow-primary/20" 
-                      : msg.role === "system" 
-                        ? "bg-black/90 border-primary/60 text-primary font-bold italic border-dashed rounded-[2rem]" 
-                        : "bg-black/95 border-white/10 text-gray-100 rounded-bl-none hover:border-primary/40"
+                    "whitespace-pre-wrap break-all",
+                    msg.role === "user" ? "text-white" : 
+                    msg.role === "system" ? "text-red-400" : "text-emerald-400"
                   )}>
-                    {msg.role === "assistant" && (
-                      <div className="flex items-center justify-between mb-10 pb-6 border-b-2 border-white/10">
-                        <div className="flex items-center gap-5">
-                          <BrainCircuit className="size-8 text-primary animate-pulse" />
-                          <span className="text-sm md:text-lg uppercase font-bold tracking-[0.5em] text-primary italic">
-                            {msg.model}
-                          </span>
-                        </div>
-                        <Badge className="bg-primary/20 text-primary border-2 border-primary/40 px-8 py-2 rounded-full font-bold italic tracking-widest">
-                          {msg.intent}
-                        </Badge>
-                      </div>
-                    )}
-                    <div className="whitespace-pre-wrap drop-shadow-2xl">{msg.content}</div>
-                    
-                    {msg.thoughts && (
-                      <div className="mt-10 p-8 bg-white/5 rounded-[2.5rem] border-2 border-white/5 italic text-sm md:text-base text-muted-foreground leading-loose">
-                         <h5 className="font-bold text-primary/60 uppercase tracking-[1em] mb-4 flex items-center gap-4"><Cpu className="size-5" /> Cognitive Process</h5>
-                         {msg.thoughts}
-                      </div>
-                    )}
-
-                    {msg.chain && (
-                      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {msg.chain.map((c, idx) => (
-                          <div key={idx} className="flex items-center gap-6 p-6 bg-primary/5 border-2 border-primary/20 rounded-[2rem] group/item hover:border-primary/60 transition-all duration-500 shadow-5xl">
-                            <div className="size-10 rounded-xl bg-black border-2 border-primary/40 flex items-center justify-center text-primary font-bold shadow-lg">{idx + 1}</div>
-                            <div className="flex-1">
-                               <div className="text-sm font-bold text-white uppercase tracking-widest">{c.agent}</div>
-                               <div className="text-xs text-muted-foreground italic font-medium mt-1">{c.step}</div>
-                            </div>
-                            <div className="size-3 rounded-full bg-emerald-500 shadow-[0_0_20px_emerald] animate-pulse" />
-                          </div>
-                        ))}
-                      </div>
-                    )}
+                    {msg.role === "user" && <span className="text-primary mr-2">#</span>}
+                    {msg.content}
                   </div>
                 </div>
               ))}
               {isLoading && (
-                <div className="flex items-center gap-6 p-8 bg-primary/5 border-2 border-primary/30 rounded-[3rem] animate-pulse max-w-sm">
-                   <Loader2 className="size-10 animate-spin text-primary" />
-                   <span className="text-xl font-bold uppercase tracking-[0.5em] text-primary italic">Processing...</span>
+                <div className="flex items-center gap-2 text-primary animate-pulse italic text-xs">
+                   <Loader2 className="size-4 animate-spin" />
+                   Processing Request...
                 </div>
               )}
               <div ref={scrollRef} />
             </div>
           </ScrollArea>
 
-          <div className="absolute bottom-0 left-0 w-full p-10 bg-gradient-to-t from-black via-black/95 to-transparent z-40">
-            <div className="max-w-5xl mx-auto">
-              <form onSubmit={handleSend} className="relative group scale-105">
-                <div className="absolute left-8 top-1/2 -translate-y-1/2 text-primary/40 group-focus-within:text-primary transition-all duration-700 scale-150">
-                  <TerminalIcon className="size-8 drop-shadow-[0_0_20px_gold]" />
-                </div>
-                <Input
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="EXECUTE STRATEGY..."
-                  className="w-full h-24 md:h-32 bg-black border-[6px] border-primary/30 pl-32 pr-28 rounded-[5rem] text-2xl md:text-4xl italic font-bold focus:border-primary/80 shadow-7xl transition-all placeholder:text-primary/10 text-white"
-                  disabled={isLoading}
-                />
-                <Button 
-                  type="submit" 
-                  className="absolute right-4 top-1/2 -translate-y-1/2 size-20 md:size-24 bg-primary text-black hover:bg-white rounded-full shadow-7xl group transition-all active:scale-90 border-4 border-black"
-                  disabled={!input.trim() || isLoading}
-                >
-                  {isLoading ? <Loader2 className="size-10 animate-spin" /> : <Send className="size-10 group-hover:scale-125 transition-transform" />}
-                </Button>
-              </form>
-            </div>
+          <div className="p-4 bg-black border-t border-primary/20">
+            <form onSubmit={executeCommand} className="relative flex items-center gap-2">
+              <span className="text-primary font-bold ml-2">#</span>
+              <Input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Type command (e.g. nmap -F 127.0.0.1)..."
+                className="flex-1 bg-transparent border-none focus-visible:ring-0 text-white font-mono placeholder:text-gray-700"
+                disabled={isLoading}
+                autoFocus
+              />
+              <Button 
+                type="submit" 
+                size="icon"
+                className="bg-primary text-black hover:bg-white"
+                disabled={!input.trim() || isLoading}
+              >
+                <Send className="size-4" />
+              </Button>
+            </form>
           </div>
         </div>
       </main>
