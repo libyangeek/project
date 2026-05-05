@@ -1,15 +1,19 @@
-
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { SidebarNav } from "@/components/platform/sidebar-nav"
-import { Share2, Zap, ShieldCheck, Activity, Globe, Wifi, Settings, Power, Bot, Lock } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { SidebarNav } from "@/components/platform/sidebar-nav";
+import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Share2, Activity, Wifi, Settings, Power, Bot, Lock, Zap } from 'lucide-react';
 
+/**
+ * @fileOverview واجهة جسر MCP v42.0
+ * تتيح مراقبة الاتصال مع خوادم MCP الخارجية والتحكم فيها.
+ */
 export default function MCPBridgePage() {
-  const [status, setStatus] = useState<string>("جاري الفحص...");
+  const [status, setStatus] = useState<string>("تحميل...");
   const [serverUrl, setServerUrl] = useState("http://localhost:9999");
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
@@ -23,9 +27,9 @@ export default function MCPBridgePage() {
     try {
       const res = await fetch(`${serverUrl}/task/test-agent`);
       if (res.ok) setStatus("مُتصل بنجاح");
-      else setStatus("بانتظار الاستجابة");
+      else setStatus("فشل الاتصال");
     } catch {
-      setStatus("غير متصل (الخادم مغلق)");
+      setStatus("الخادم غير متاح");
     }
   };
 
@@ -78,12 +82,12 @@ export default function MCPBridgePage() {
                     type="text"
                     value={serverUrl}
                     onChange={(e) => setServerUrl(e.target.value)}
-                    className="w-full p-6 bg-black border-2 border-white/10 rounded-[2rem] text-xl font-code text-primary focus:border-primary/60 transition-all outline-none"
+                    className="w-full p-2 bg-black border-2 border-white/10 rounded-[2rem] text-xl font-code text-primary focus:border-primary/60 transition-all outline-none px-6 py-4"
                     placeholder="http://localhost:9999"
                   />
                 </div>
                 <Button onClick={checkConnection} className="w-full h-20 bg-primary text-black font-bold uppercase tracking-[1em] rounded-[2rem] shadow-2xl active:scale-95 transition-all">
-                  RE-SYNC BRIDGE
+                   <Zap className="size-6 mr-2" /> RE-SYNC BRIDGE
                 </Button>
               </div>
             </CardContent>
