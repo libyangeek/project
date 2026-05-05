@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Share2, Activity, Wifi, Settings, Power, Bot, Lock, Zap } from 'lucide-react';
+import { Share2, Activity, Wifi, Settings, Power, Bot, Lock, Zap, ShieldCheck } from 'lucide-react';
 
 /**
  * @fileOverview واجهة جسر MCP v42.0
@@ -43,7 +43,7 @@ export default function MCPBridgePage() {
       <SidebarNav />
       <main className="flex-1 lg:mr-80 p-8 md:p-16 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
         <div 
-          className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.08),transparent 40%)] pointer-events-none transition-all duration-300 z-0" 
+          className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.12),transparent 40%)] pointer-events-none transition-all duration-300 z-0" 
           style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} 
         />
 
