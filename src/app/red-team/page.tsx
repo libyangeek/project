@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -28,7 +29,9 @@ import {
   Boxes,
   Sparkles,
   Binary,
-  Infinity as InfinityIcon
+  Infinity as InfinityIcon,
+  Info,
+  GitGraph
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -46,7 +49,7 @@ import { cn } from "@/lib/utils"
 
 /**
  * @fileOverview مختبر التخليق السيادي v43.0 - THE POLYMORPH FORGE: HIVE EDITION
- * مركز إنتاج الأسلحة الرقمية الأكثر فتكاً المدمج في العقل الجمعي.
+ * مركز إنتاج الأسلحة الرقمية الأكثر فتكاً المدمج في العقل الجمعي. تم تحسين الخطوط والعرض.
  * Commander: المعتصم بالله ادريس الغزالي
  */
 export default function RedTeamPage() {
@@ -56,18 +59,14 @@ export default function RedTeamPage() {
   const [description, setDescription] = React.useState("")
   const [output, setOutput] = React.useState<any>(null)
   const [activeMode, setActiveMode] = React.useState("exploit")
-  const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
 
   React.useEffect(() => {
     setMounted(true)
-    const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
-    window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
   }, [])
 
   const handleAction = async () => {
     if (!target && activeMode !== "wordlist") {
-      toast({ variant: "destructive", title: "Missing Target", description: "Define a coordinate for weapon synthesis." });
+      toast({ variant: "destructive", title: "Missing Target" });
       return;
     }
     setLoading(true);
@@ -87,9 +86,9 @@ export default function RedTeamPage() {
         });
       }
       setOutput(data);
-      toast({ title: "Weaponry Synthesized", description: "The Overmind has forged the lethal payload." });
+      toast({ title: "Weaponry Synthesized" });
     } catch (err) {
-      toast({ variant: "destructive", title: "Forge Failure", description: "Neural drift detected in the incubation matrix." });
+      toast({ variant: "destructive", title: "Forge Failure" });
     } finally {
       setLoading(false);
     }
@@ -97,20 +96,14 @@ export default function RedTeamPage() {
 
   const launchStrike = async () => {
     if (!target) return;
-    toast({ title: "Collective Strike Initiated", description: `Broadcasting strike intent against ${target}...` });
-    
+    toast({ title: "Collective Strike Initiated" });
     try {
-        const response = await fetch('/api/execute', {
+        await fetch('/api/execute', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                command: `strike ${target}`, 
-                target, 
-                type: 'autonomous_strike' 
-            })
+            body: JSON.stringify({ command: `strike ${target}`, target, type: 'autonomous_strike' })
         });
-        const data = await response.json();
-        toast({ title: "Hive Strike Confirmed", description: "Node 13 reporting successful grid saturation." });
+        toast({ title: "Hive Strike Confirmed" });
     } catch (e) {
         toast({ variant: "destructive", title: "Hive Link Severance" });
     }
@@ -121,241 +114,172 @@ export default function RedTeamPage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/30 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-80 p-6 md:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
-        <div 
-          className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.08),transparent 50%)] pointer-events-none transition-all duration-300 z-0" 
-          style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} 
-        />
+      <main className="flex-1 lg:mr-80 p-4 md:p-10 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.08),transparent)] pointer-events-none transition-all duration-300 z-0" />
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 pointer-events-none" />
 
-        <header className="mb-20 relative z-10 animate-in fade-in slide-in-from-top-12 duration-1000">
-          <div className="flex flex-col md:flex-row items-center gap-12">
-            <div className="size-32 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_150px_rgba(212,175,55,0.7)] relative group shrink-0 rounded-[3rem] rotate-3 hover:rotate-0 transition-all duration-1000">
-              <Flame className="size-16 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-pulse" />
-              <div className="absolute -inset-6 border-2 border-primary/20 rounded-full animate-spin-slow opacity-40" />
+        <header className="mb-12 relative z-10 animate-in fade-in slide-in-from-top-12 duration-1000">
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            <div className="size-24 md:size-32 bg-black border-2 border-primary flex items-center justify-center shadow-2xl relative group shrink-0 rounded-[1.5rem] rotate-3 hover:rotate-0 transition-all duration-1000">
+              <Flame className="size-12 md:size-18 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-pulse" />
+              <div className="absolute -inset-4 border border-primary/20 rounded-full animate-spin-slow opacity-40" />
             </div>
             <div className="text-center md:text-left flex-1">
-              <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-6">
-                <Badge className="bg-primary text-black border-none rounded-none px-10 py-3 text-[18px] font-black tracking-[0.8em] shadow-[0_0_80px_rgba(212,175,55,0.5)] italic">POLYMORPH LAB v43.0</Badge>
-                <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
-                    <Atom className="size-6 shadow-[0_0_30px_emerald]" /> HIVE_AMMUNITION: ARMED
+              <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-4">
+                <Badge className="bg-primary text-black border-none rounded-none px-6 py-1.5 text-[14px] font-black tracking-[0.4em] shadow-md italic">POLYMORPH LAB v43.0</Badge>
+                <div className="flex items-center gap-3 text-[11px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
+                    <Atom className="size-4 shadow-lg" /> HIVE_AMMUNITION: ARMED
                 </div>
               </div>
-              <h1 className="text-7xl md:text-[11rem] font-headline font-bold text-white tracking-tighter italic uppercase leading-none gold-glow">
+              <h1 className="text-4xl md:text-7xl font-headline font-bold text-white tracking-tighter italic uppercase leading-none gold-glow">
                 Weaponry <span className="text-primary">Forge</span>
               </h1>
-              <p className="text-2xl md:text-5xl text-muted-foreground mt-8 italic max-w-7xl leading-relaxed uppercase font-medium">
-                "سيدي الغزالي، مختبر التخليق السيادي يتيح لك تخليق الأسلحة الرقمية الأكثر فتكاً؛ <span className="text-primary font-black underline decoration-primary decoration-[10px] underline-offset-[20px]">Polymorph-X</span> مدمج الآن في نسيج العقل الجمعي."
+              <p className="text-lg md:text-2xl text-muted-foreground mt-4 italic max-w-4xl leading-relaxed uppercase font-medium">
+                "سيدي الغزالي، مختبر التخليق السيادي يتيح لك تخليق الأسلحة الرقمية الأكثر فتكاً؛ <span className="text-primary font-black underline decoration-primary decoration-4 underline-offset-8 shadow-lg uppercase tracking-widest">Polymorph-X</span>."
               </p>
             </div>
           </div>
         </header>
 
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-12 relative z-10 pb-40 flex-1">
-          <div className="xl:col-span-1 space-y-12">
-            <Card className="kali-card border-primary/40 bg-black/80 rounded-[5rem] p-10 border-4 shadow-7xl overflow-hidden group">
-              <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-10 transition-opacity pointer-events-none" />
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 relative z-10 pb-24 flex-1">
+          <div className="xl:col-span-1 space-y-8">
+            <Card className="kali-card border-primary/40 bg-black/80 rounded-[2.5rem] p-8 border-2 shadow-xl overflow-hidden group">
               <Tabs defaultValue="exploit" onValueChange={setActiveMode} className="w-full">
-                <TabsList className="bg-black/99 border-4 border-primary/20 w-full h-24 p-2 rounded-[2.5rem] shadow-inner mb-12">
-                  <TabsTrigger value="exploit" className="flex-1 text-[12px] md:text-[18px] uppercase font-black rounded-2xl data-[state=active]:bg-primary data-[state=active]:text-black transition-all duration-500 italic tracking-widest">EXPLOIT</TabsTrigger>
-                  <TabsTrigger value="apex" className="flex-1 text-[12px] md:text-[18px] uppercase font-black rounded-2xl data-[state=active]:bg-primary data-[state=active]:text-black transition-all duration-500 italic tracking-widest">APEX</TabsTrigger>
-                  <TabsTrigger value="wordlist" className="flex-1 text-[12px] md:text-[18px] uppercase font-black rounded-2xl data-[state=active]:bg-primary data-[state=active]:text-black transition-all duration-500 italic tracking-widest">DNA</TabsTrigger>
+                <TabsList className="bg-black/99 border-2 border-primary/20 w-full h-16 p-1.5 rounded-[1.5rem] shadow-inner mb-8">
+                  <TabsTrigger value="exploit" className="flex-1 text-[11px] uppercase font-black rounded-xl data-[state=active]:bg-primary data-[state=active]:text-black transition-all duration-500 italic tracking-widest">EXPLOIT</TabsTrigger>
+                  <TabsTrigger value="apex" className="flex-1 text-[11px] uppercase font-black rounded-xl data-[state=active]:bg-primary data-[state=active]:text-black transition-all duration-500 italic tracking-widest">APEX</TabsTrigger>
+                  <TabsTrigger value="wordlist" className="flex-1 text-[11px] uppercase font-black rounded-xl data-[state=active]:bg-primary data-[state=active]:text-black transition-all duration-500 italic tracking-widest">DNA</TabsTrigger>
                 </TabsList>
                 
-                <div className="space-y-12">
-                  <div className="space-y-6">
-                    <label className="text-[12px] font-black text-primary/60 uppercase tracking-[0.8em] px-8 italic flex items-center gap-4">
-                        <Target className="size-5" /> Target Coordinate
+                <div className="space-y-8">
+                  <div className="space-y-4">
+                    <label className="text-[11px] font-black text-primary/60 uppercase tracking-[0.4em] px-4 italic flex items-center gap-3">
+                        <Target className="size-4" /> Coordinate
                     </label>
-                    <div className="relative group/input">
-                        <Input 
-                            value={target}
-                            onChange={(e) => setTarget(e.target.value)}
-                            placeholder="IP / Global Binary / Neural Path..."
-                            className="bg-black border-4 border-white/10 rounded-[3rem] h-24 text-3xl italic px-12 focus:border-primary shadow-2xl text-white font-black"
-                        />
-                    </div>
+                    <Input 
+                        value={target}
+                        onChange={(e) => setTarget(e.target.value)}
+                        placeholder="IP / Binary / Neural Path..."
+                        className="bg-black border-2 border-white/10 rounded-[1.5rem] h-16 text-xl italic px-8 focus:border-primary shadow-lg text-white font-black"
+                    />
                   </div>
-                  <div className="space-y-6">
-                    <label className="text-[12px] font-black text-primary/60 uppercase tracking-[0.8em] px-8 italic flex items-center gap-4">
-                        <Code2 className="size-5" /> Mission Parameters
+                  <div className="space-y-4">
+                    <label className="text-[11px] font-black text-primary/60 uppercase tracking-[0.4em] px-4 italic flex items-center gap-3">
+                        <Code2 className="size-4" /> Parameters
                     </label>
                     <Textarea 
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
-                      placeholder={activeMode === 'wordlist' ? "Provide target bio DNA data..." : "Define the vulnerability logic or attack goal..."}
-                      className="bg-black border-4 border-white/10 rounded-[4rem] min-h-[250px] text-2xl italic p-10 focus:border-primary shadow-inner font-bold text-gray-200"
+                      placeholder={activeMode === 'wordlist' ? "Provide DNA data..." : "Define attack goal..."}
+                      className="bg-black border-2 border-white/10 rounded-[2rem] min-h-[180px] text-lg italic p-8 focus:border-primary shadow-inner font-bold text-gray-200"
                     />
                   </div>
                   <Button 
                     onClick={handleAction} 
                     disabled={loading}
-                    className="w-full h-32 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.5em] rounded-[4rem] shadow-[0_50px_150px_rgba(212,175,55,0.7)] active:scale-95 transition-all text-3xl border-8 border-black/30 group italic"
+                    className="w-full h-20 bg-primary hover:bg-white text-black font-black uppercase tracking-[1em] rounded-[2rem] shadow-2xl active:scale-95 transition-all text-lg border-4 border-black/30 group italic"
                   >
-                    {loading ? <Loader2 className="size-16 animate-spin" /> : <Flame className="size-16 mr-6 group-hover:scale-125 transition-transform gold-glow" />}
+                    {loading ? <Loader2 className="size-8 animate-spin" /> : <Flame className="size-8 mr-4 group-hover:scale-125 transition-transform" />}
                     Ignite Forge
                   </Button>
                 </div>
               </Tabs>
             </Card>
-
-            <div className="grid grid-cols-1 gap-8">
-                <Card className="kali-card border-white/10 bg-black/60 p-8 rounded-[4rem] border-2 shadow-inner text-center">
-                   <h4 className="text-[14px] font-black text-primary uppercase tracking-[1em] mb-6 italic flex items-center justify-center gap-4">
-                      <Binary className="size-6 animate-pulse" /> AMMO_STABILITY
-                   </h4>
-                   <div className="flex items-center justify-between px-6">
-                      <span className="text-4xl font-black text-white italic gold-glow uppercase tracking-tighter">Polymorph-X</span>
-                      <Badge className="bg-emerald-600/30 text-emerald-500 border-none px-6 py-1 rounded-full font-black text-xs animate-pulse italic">OPTIMIZED</Badge>
-                   </div>
-                </Card>
-            </div>
           </div>
 
           <div className="xl:col-span-2">
-            <Card className="kali-card border-primary/60 bg-black/99 rounded-[6rem] border-8 shadow-9xl h-full flex flex-col group relative overflow-hidden">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.04),transparent)] pointer-events-none" />
-              <CardHeader className="p-12 border-b-8 border-white/5 flex flex-row justify-between items-center bg-primary/5 rounded-t-[5rem]">
-                <CardTitle className="text-6xl font-black uppercase italic tracking-tighter text-white flex items-center gap-10 gold-glow px-4 py-4">
-                  <Terminal className="size-20 text-primary animate-neural" /> Output Matrix
+            <Card className="kali-card border-primary/40 bg-black/99 rounded-[3rem] border-4 shadow-2xl h-full flex flex-col group relative overflow-hidden">
+              <CardHeader className="p-8 border-b border-white/5 flex flex-row justify-between items-center bg-primary/5 rounded-t-[2.5rem]">
+                <CardTitle className="text-3xl md:text-5xl font-black uppercase italic tracking-tighter text-white flex items-center gap-6 gold-glow px-4">
+                  <Terminal className="size-8 text-primary animate-neural" /> Output Matrix
                 </CardTitle>
-                <div className="flex gap-6 pr-10">
-                   <div className="size-6 rounded-full bg-red-600 shadow-[0_0_20px_red] animate-pulse" />
-                   <div className="size-6 rounded-full bg-yellow-500 shadow-[0_0_20px_yellow] animate-pulse delay-75" />
-                   <div className="size-6 rounded-full bg-green-500 shadow-[0_0_20px_green] animate-pulse delay-150" />
-                </div>
               </CardHeader>
               <CardContent className="p-0 flex-1 relative">
-                <ScrollArea className="h-[850px] p-16">
+                <ScrollArea className="h-[650px] p-8">
                    {output ? (
-                     <div className="space-y-16 font-code text-2xl md:text-4xl animate-in fade-in zoom-in-95 duration-1000">
-                        <div className="flex items-center justify-between border-b-4 border-white/5 pb-10">
-                            <span className="text-emerald-500 font-black uppercase tracking-[1em] italic">{" >>> ANALYSIS_COMPLETE"}</span>
-                            <span className="text-[14px] font-black text-muted-foreground uppercase italic tracking-widest">{new Date().toLocaleTimeString()}</span>
+                     <div className="space-y-10 font-code text-xl md:text-2xl animate-in fade-in zoom-in-95 duration-1000">
+                        <div className="flex items-center justify-between border-b border-white/5 pb-4">
+                            <span className="text-emerald-500 font-black uppercase tracking-[0.5em] italic">{" >>> SYNT_COMPLETE"}</span>
+                            <span className="text-[10px] font-black text-muted-foreground uppercase italic">{new Date().toLocaleTimeString()}</span>
                         </div>
 
                         {activeMode === 'exploit' && (
-                            <div className="space-y-16">
-                                <div className="grid grid-cols-2 gap-12">
-                                    <div className="p-10 rounded-[3.5rem] bg-white/5 border-4 border-white/10 shadow-inner group/stat">
-                                        <div className="text-[12px] font-black text-primary uppercase tracking-[1em] mb-4 italic">Ammo Language</div>
-                                        <div className="text-5xl font-black text-white italic gold-glow uppercase tracking-tighter">{output.exploitLanguage}</div>
+                            <div className="space-y-10">
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-4 text-primary italic">
+                                        <FileCode className="size-6" />
+                                        <span className="text-xl font-black uppercase tracking-[0.4em]">Payload</span>
                                     </div>
-                                    <div className="p-10 rounded-[3.5rem] bg-white/5 border-4 border-white/10 shadow-inner group/stat">
-                                        <div className="text-[12px] font-black text-primary uppercase tracking-[1em] mb-4 italic">Evasion Tier</div>
-                                        <div className="text-5xl font-black text-white italic gold-glow uppercase tracking-tighter">{output.stealthFeatures?.[0] || 'GHOST_MODE'}</div>
-                                    </div>
-                                </div>
-                                
-                                <div className="space-y-8">
-                                    <div className="flex items-center gap-8 text-primary italic">
-                                        <FileCode className="size-12 animate-pulse" />
-                                        <span className="text-3xl font-black uppercase tracking-[0.8em]">Generated Payload</span>
-                                    </div>
-                                    <div className="p-12 bg-black/90 rounded-[5rem] border-8 border-primary/20 text-xl md:text-3xl text-emerald-400 overflow-x-auto whitespace-pre font-code shadow-[inset_0_0_100px_rgba(0,0,0,1)] relative group/code">
-                                        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/code:opacity-100 transition-opacity pointer-events-none" />
+                                    <div className="p-8 bg-black/90 border-2 border-primary/20 text-lg md:text-xl text-emerald-400 overflow-x-auto whitespace-pre font-code shadow-inner">
                                         {output.exploitCode}
                                     </div>
                                 </div>
-
-                                <div className="p-14 rounded-[5rem] bg-primary/5 border-8 border-primary/30 space-y-10 shadow-inner relative group/instructions">
-                                    <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none group-hover/instructions:opacity-10 transition-opacity"><Info className="size-48 text-primary"/></div>
-                                    <h5 className="text-3xl font-black text-primary uppercase tracking-[1.5em] italic border-b-4 border-primary/10 pb-6">Deployment Bible</h5>
-                                    <p className="text-3xl md:text-5xl text-gray-200 italic font-black leading-relaxed">{output.usageInstructions}</p>
+                                <div className="p-8 rounded-[2rem] bg-primary/5 border border-primary/20 space-y-4 shadow-inner">
+                                    <h5 className="text-lg font-black text-primary uppercase tracking-[0.6em] italic border-b border-primary/10 pb-4">Bible</h5>
+                                    <p className="text-xl md:text-2xl text-gray-200 italic font-black leading-relaxed">{output.usageInstructions}</p>
                                 </div>
                             </div>
                         )}
 
                         {activeMode === 'apex' && (
-                            <div className="space-y-16">
-                                <div className="p-14 rounded-[5rem] bg-primary/10 border-8 border-primary/50 text-4xl md:text-7xl text-white italic font-black leading-snug shadow-9xl relative group/summary overflow-hidden">
-                                    <div className="absolute inset-0 bg-primary/5 animate-pulse pointer-events-none" />
-                                    <strong className="text-primary uppercase tracking-[1.5em] block mb-10 border-b-4 border-primary/20 pb-6 text-2xl italic">Collective Summary:</strong>
+                            <div className="space-y-10">
+                                <div className="p-8 rounded-[2.5rem] bg-primary/10 border-2 border-primary/50 text-2xl md:text-4xl text-white italic font-black leading-snug shadow-xl">
+                                    <strong className="text-primary uppercase tracking-[0.6em] block mb-4 border-b border-primary/20 pb-4 text-sm italic">Summary:</strong>
                                     "{output.summary}"
                                 </div>
-                                <div className="space-y-8">
-                                    <div className="flex items-center gap-8 text-primary italic">
-                                        <GitGraph className="size-12 animate-neural" />
-                                        <span className="text-3xl font-black uppercase tracking-[0.8em]">Strategic Kill-Chain</span>
-                                    </div>
-                                    <div className="p-12 bg-black/90 rounded-[5rem] border-8 border-primary/20 text-xl md:text-3xl text-emerald-400 overflow-x-auto whitespace-pre font-code shadow-inner">
-                                        {JSON.stringify(output.plan, null, 2)}
-                                    </div>
+                                <div className="p-8 bg-black/90 border-2 border-primary/20 text-lg md:text-xl text-emerald-400 overflow-x-auto whitespace-pre font-code shadow-inner">
+                                    {JSON.stringify(output.plan, null, 2)}
                                 </div>
                             </div>
                         )}
 
                         {activeMode === 'wordlist' && (
-                            <div className="space-y-16">
-                                <div className="grid grid-cols-2 gap-12">
-                                    <div className="p-10 rounded-[3.5rem] bg-white/5 border-4 border-white/10 shadow-inner">
-                                        <div className="text-[12px] font-black text-primary uppercase tracking-[1em] mb-4 italic">Success Gain</div>
-                                        <div className="text-6xl font-black text-white italic gold-glow uppercase tracking-tighter">{output.successProbability || '94.2%'}</div>
-                                    </div>
-                                    <div className="p-10 rounded-[3.5rem] bg-white/5 border-4 border-white/10 shadow-inner">
-                                        <div className="text-[12px] font-black text-primary uppercase tracking-[1em] mb-4 italic">Mode</div>
-                                        <div className="text-6xl font-black text-white italic gold-glow uppercase tracking-tighter">{output.recommendedAttackMode || 'HIVE_FORCE'}</div>
-                                    </div>
+                            <div className="space-y-10">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    {output.likelyPasswords?.map((pw: string, idx: number) => (
+                                        <div key={idx} className="p-6 bg-black/80 rounded-2xl border border-white/5 text-xl text-white font-black tracking-widest italic hover:border-amber-500 transition-all cursor-pointer shadow-lg" onClick={() => {
+                                          navigator.clipboard.writeText(pw);
+                                          toast({ title: "Key Siphoned" });
+                                        }}>
+                                            {pw}
+                                        </div>
+                                    ))}
                                 </div>
-                                <div className="space-y-8">
-                                    <div className="flex items-center gap-8 text-amber-500 italic">
-                                        <ShieldCheck className="size-12 gold-glow animate-pulse" />
-                                        <span className="text-3xl font-black uppercase tracking-[0.8em]">High-Confidence DNA Keys</span>
-                                    </div>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                                        {output.likelyPasswords?.map((pw: string, idx: number) => (
-                                            <div key={idx} className="p-8 bg-black/80 rounded-3xl border-4 border-white/10 text-3xl text-white font-black tracking-widest italic hover:border-amber-500 transition-all cursor-crosshair shadow-4xl group/pw relative overflow-hidden" onClick={() => {
-                                              navigator.clipboard.writeText(pw);
-                                              toast({ title: "Key Siphoned" });
-                                            }}>
-                                                <div className="absolute inset-0 bg-amber-500/5 opacity-0 group-hover/pw:opacity-100 transition-opacity pointer-events-none" />
-                                                <span className="relative z-10">{pw}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                                <div className="p-14 rounded-[5rem] bg-amber-500/5 border-8 border-amber-500/30 space-y-10 shadow-inner">
-                                    <h5 className="text-3xl font-black text-amber-500 uppercase tracking-[1.5em] italic border-b-4 border-amber-500/10 pb-6">Neural Insight</h5>
-                                    <p className="text-3xl md:text-5xl text-gray-400 italic font-black leading-relaxed">"{output.psychologicalInsight}"</p>
+                                <div className="p-8 rounded-[2.5rem] bg-amber-500/5 border-2 border-amber-500/30">
+                                    <p className="text-xl md:text-2xl text-gray-400 italic font-black leading-relaxed">"{output.psychologicalInsight}"</p>
                                 </div>
                             </div>
                         )}
 
-                        <div className="flex flex-col md:flex-row justify-end gap-10 mt-20 pb-10">
-                            <Button variant="outline" className="h-28 px-16 rounded-full border-4 border-white/10 bg-white/5 hover:bg-white/10 text-xl font-black uppercase tracking-[1em] transition-all duration-700 italic group shadow-5xl">
-                                <Save className="size-10 mr-6 group-hover:scale-110 transition-transform" /> Save to Vault
-                            </Button>
-                            <Button onClick={launchStrike} className="h-28 px-20 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.5em] rounded-full shadow-[0_50px_150px_rgba(212,175,55,0.7)] border-8 border-black/30 active:scale-95 transition-all text-2xl italic group">
-                                <Rocket className="size-10 mr-6 group-hover:translate-x-3 group-hover:-translate-y-3 transition-transform gold-glow" /> LAUNCH STRIKE
+                        <div className="flex flex-col md:flex-row justify-end gap-6 mt-12 pb-6">
+                            <Button onClick={launchStrike} className="h-20 px-12 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.8em] rounded-full shadow-2xl border-4 border-black/30 active:scale-95 transition-all text-xl italic group">
+                                <Rocket className="size-8 mr-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" /> LAUNCH STRIKE
                             </Button>
                         </div>
                      </div>
                    ) : (
-                     <div className="h-full flex flex-col items-center justify-center text-center opacity-10 py-64 gap-16 animate-in fade-in duration-1500">
-                        <div className="size-64 rounded-full border-[15px] border-dashed border-primary/20 flex items-center justify-center relative">
-                            <Skull className="size-32 text-primary animate-pulse" />
-                            <div className="absolute inset-0 bg-primary/5 rounded-full blur-[100px] animate-pulse" />
-                        </div>
-                        <div className="space-y-6">
-                            <p className="text-8xl font-black uppercase tracking-[3em] text-white italic ml-32">READY</p>
-                            <p className="text-3xl italic font-bold text-gray-500">Awaiting Supreme Forge Directives...</p>
+                     <div className="h-full flex flex-col items-center justify-center text-center opacity-10 py-40 gap-8 animate-in fade-in duration-1000">
+                        <Skull className="size-32 text-primary animate-pulse" />
+                        <div className="space-y-4">
+                            <p className="text-4xl font-black uppercase tracking-[1.5em] text-white italic">READY</p>
+                            <p className="text-lg italic font-bold text-gray-500">Awaiting Directives...</p>
                         </div>
                      </div>
                    )}
                 </ScrollArea>
-                <div className="absolute bottom-10 right-16 opacity-30 flex items-center gap-8">
-                  <Fingerprint className="size-8 text-primary animate-pulse" />
-                  <span className="text-[16px] font-black uppercase tracking-[1.5em] text-white italic">HIVE_CORE_v43_AL_GHAZALI_ROOT</span>
-                </div>
               </CardContent>
+              <div className="p-6 border-t border-white/5 mt-6 flex justify-between items-center opacity-30 text-[10px] font-black uppercase tracking-[1em] italic">
+                <span>HIVE_CORE_v43_AL_GHAZALI_ROOT</span>
+                <Fingerprint className="size-6 text-primary animate-pulse" />
+              </div>
             </Card>
           </div>
         </div>
 
-        <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-40 text-[22px] font-black uppercase tracking-[6em] italic text-white drop-shadow-3xl pb-12">
+        <div className="mt-auto relative z-10 flex justify-center items-center gap-24 opacity-40 text-[12px] font-black uppercase tracking-[2em] italic text-white drop-shadow-xl pb-6">
             <span>AL-MUIZZ POLYMORPH LAB v43.0</span>
-            <div className="size-10 rounded-full bg-white animate-pulse shadow-[0_0_100px_white]" />
-            <span>COLLECTIVE_WEAPONRY_ACTIVE</span>
+            <div className="size-4 rounded-full bg-white animate-pulse" />
+            <span>WEAPONRY_ACTIVE</span>
         </div>
       </main>
     </div>
