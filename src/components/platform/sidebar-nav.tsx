@@ -22,7 +22,19 @@ import {
   Share2,
   Boxes,
   Zap,
-  ShieldAlert
+  ShieldAlert,
+  Globe,
+  RefreshCcw,
+  Lock,
+  Cloud,
+  Infinity,
+  Skull,
+  Ghost,
+  Binary,
+  Mic,
+  BrainCircuit,
+  Flame,
+  Anchor
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -30,19 +42,22 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
 const navItems = [
-  { name: "The Throne", icon: LayoutDashboard, href: "/" },
-  { name: "Divine Strike", icon: Target, href: "/terminal" },
-  { name: "Armada Swarm", icon: Users, href: "/sessions" },
-  { name: "MCP Bridge", icon: Share2, href: "/mcp-bridge" },
-  { name: "Voice Command", icon: SmartphoneNfc, href: "/remote" },
-  { name: "Sovereign Bible", icon: BookOpen, href: "/codex" },
-  { name: "Digital Twin", icon: Workflow, href: "/digital-twin" },
-  { name: "Field Agent", icon: ShieldAlert, href: "/field-agent" },
-  { name: "Warrior Lineage", icon: Baby, href: "/progeny" },
-  { name: "Mobile Siphon", icon: Smartphone, href: "/hardware" },
-  { name: "Omniscient Recon", icon: Binoculars, href: "/recon" },
-  { name: "Genetic Vault", icon: Database, href: "/knowledge" },
-  { name: "Polymorph Lab", icon: ShieldX, href: "/red-team" },
+  { name: "The Throne", icon: LayoutDashboard, href: "/", knot: 1 },
+  { name: "Divine Strike", icon: Target, href: "/terminal", knot: 2 },
+  { name: "Armada Swarm", icon: Users, href: "/sessions", knot: 3 },
+  { name: "MCP Bridge", icon: Share2, href: "/mcp-bridge", knot: 4 },
+  { name: "Whisper Voice", icon: Mic, href: "/remote", knot: 5 },
+  { name: "Sovereign Bible", icon: BookOpen, href: "/codex", knot: 6 },
+  { name: "Swarm Simulator", icon: Workflow, href: "/digital-twin", knot: 7 },
+  { name: "Field Agent", icon: ShieldAlert, href: "/field-agent", knot: 8 },
+  { name: "Warrior Forge", icon: Baby, href: "/progeny", knot: 9 },
+  { name: "Mobile Siphon", icon: Smartphone, href: "/hardware", knot: 10 },
+  { name: "Omniscient Recon", icon: Binoculars, href: "/recon", knot: 11 },
+  { name: "Genetic Vault", icon: Database, href: "/knowledge", knot: 12 },
+  { name: "Polymorph Lab", icon: ShieldX, href: "/red-team", knot: 13 },
+  { name: "Cloud Dominion", icon: Cloud, href: "/system" },
+  { name: "Fractal Rebirth", icon: RefreshCcw, href: "/system" },
+  { name: "Silk Guardian", icon: Lock, href: "/system" },
   { name: "Social Intel", icon: MessageSquare, href: "/social" },
   { name: "System Pulse", icon: Activity, href: "/system" },
 ]
@@ -75,11 +90,12 @@ export function SidebarNav() {
             <h1 className="text-2xl font-headline font-bold text-white tracking-widest uppercase italic leading-none gold-glow">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-bold tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-xl">v42.0 SINGULARITY</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-bold tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-xl">v43.0 OVERMIND</Badge>
           </div>
         </div>
         
         <div className="flex-1 px-6 py-8 space-y-1 overflow-y-auto scrollbar-hide bg-black/95">
+          <div className="mb-4 px-6 text-[10px] font-black text-primary/40 uppercase tracking-[0.4em] italic">The 13 Sovereign Knots</div>
           {navItems.map((item) => {
             const isActive = pathname === item.href
             const Icon = item.icon;
@@ -94,7 +110,12 @@ export function SidebarNav() {
                     : "text-muted-foreground border-transparent hover:bg-white/5 hover:text-white"
                 )}
               >
-                <Icon className={cn("size-5 transition-all duration-500", isActive ? "text-primary gold-glow" : "group-hover:text-primary group-hover:rotate-6")} />
+                <div className="relative">
+                  <Icon className={cn("size-5 transition-all duration-500", isActive ? "text-primary gold-glow" : "group-hover:text-primary group-hover:rotate-6")} />
+                  {item.knot && (
+                    <span className="absolute -top-2 -right-2 text-[8px] font-black text-primary/50 group-hover:text-primary transition-colors">{item.knot}</span>
+                  )}
+                </div>
                 <span className="text-sm font-bold tracking-widest uppercase italic truncate">{item.name}</span>
                 {isActive && (
                   <div className="absolute left-6 size-2 rounded-full bg-primary shadow-xl animate-pulse" />
@@ -108,10 +129,10 @@ export function SidebarNav() {
           <div className="p-4 border-2 border-primary/40 bg-black/60 mb-4 relative overflow-hidden group rounded-2xl shadow-xl">
             <div className="flex items-center justify-between mb-2">
                <div className="flex items-center gap-4">
-                  <Share2 className="size-4 text-primary animate-pulse" />
-                  <span className="text-[10px] font-bold text-primary uppercase tracking-widest italic">MCP Bridge</span>
+                  <Infinity className="size-4 text-primary animate-pulse" />
+                  <span className="text-[10px] font-bold text-primary uppercase tracking-widest italic">Eternal Echo</span>
                </div>
-               <Badge className="bg-primary text-black text-[9px] font-bold uppercase px-3 py-0.5 rounded-full">LIVE</Badge>
+               <Badge className="bg-emerald-600/30 text-emerald-500 text-[9px] font-bold uppercase px-3 py-0.5 rounded-full">BOUND</Badge>
             </div>
             <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden border border-white/10 p-0.5 shadow-inner">
               <div className="h-full bg-primary w-full shadow-xl animate-pulse rounded-full" />
@@ -123,7 +144,7 @@ export function SidebarNav() {
             className="flex items-center justify-center gap-4 px-6 py-3 text-muted-foreground hover:text-primary transition-all duration-1000 font-bold uppercase tracking-widest text-xs italic group bg-white/5 rounded-xl border-2 border-white/5 hover:border-primary/40 shadow-xl"
           >
             <Zap className="size-5 group-hover:scale-110 text-primary transition-all" />
-            INITIATE
+            INITIATE HIVE
           </Link>
         </div>
       </div>

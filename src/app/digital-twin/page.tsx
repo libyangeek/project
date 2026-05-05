@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -16,21 +17,35 @@ import {
   RefreshCcw,
   Bug,
   Settings,
-  Loader2
+  Loader2,
+  Globe,
+  Skull,
+  Atom,
+  Boxes,
+  Users,
+  Binary
 } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
 import { toast } from "@/hooks/use-toast"
+import { cn } from "@/lib/utils"
 
+/**
+ * @fileOverview محرك محاكاة السرب v43.0 - SWARM SIMULATION ROOM
+ * يتيح للقائد محاكاة الضربات عبر الـ 14 عنقوداً عالمياً قبل التنفيذ الحي.
+ */
 export default function DigitalTwinPage() {
   const [mounted, setMounted] = React.useState(false)
   const [isSimulating, setIsSimulating] = React.useState(false)
   const [progress, setProgress] = React.useState(0)
   const [target, setTarget] = React.useState("")
-  const [log, setLog] = React.useState<string[]>([])
+  const [log, setLog] = React.useState<{msg: string, node: string}[]>([])
+  const [selectedClusters, setSelectedClusters] = React.useState<string[]>(["Riyadh", "Cairo", "London"])
+
+  const clusters = ["Riyadh", "Cairo", "London", "Dubai", "New York", "Tokyo", "Berlin", "Singapore", "Sydney", "Moscow", "Paris", "Toronto", "Seoul", "Mumbai"]
 
   React.useEffect(() => {
     setMounted(true)
@@ -38,128 +53,173 @@ export default function DigitalTwinPage() {
 
   const startSimulation = () => {
     if (!target) {
-        toast({ variant: "destructive", title: "Missing Target", description: "Please enter a target to simulate." })
+        toast({ variant: "destructive", title: "Missing Coordinate", description: "Define a target for the swarm simulation." })
         return
     }
     setIsSimulating(true)
     setProgress(0)
-    setLog(["Initializing Sandboxed Environment...", "Booting QEMU Instance...", "Mirroring Target Architecture..."])
+    setLog([{ msg: "Initializing Overmind Virtualization...", node: "Alpha-Core" }])
     
     const interval = setInterval(() => {
         setProgress(prev => {
             if (prev >= 100) {
                 clearInterval(interval)
                 setIsSimulating(false)
-                setLog(l => [...l, "Simulation Complete: Vulnerability Confirmed at 0x41414141", "Generating Mitigation Report..."])
-                toast({ title: "Simulation Success", description: "Attack vector validated in sandbox." })
+                setLog(l => [...l, { msg: "Swarm Consensus: ATTACK VECTORS VALIDATED.", node: "HIVE" }])
+                toast({ title: "Simulation 100% Success", description: "All clusters report synchronized strike readiness." })
                 return 100
             }
-            if (prev % 20 === 0) {
-                setLog(l => [...l, `Probing layers... ${prev}%`])
+            const currentCluster = selectedClusters[Math.floor((prev/100) * selectedClusters.length)] || "HIVE"
+            if (prev % 10 === 0) {
+                setLog(l => [...l, { msg: `Cluster ${currentCluster} mirroring target layers...`, node: currentCluster }])
             }
-            return prev + 5
+            return prev + 2
         })
-    }, 200)
+    }, 150)
   }
 
   if (!mounted) return null
 
   return (
-    <div className="flex min-h-screen bg-black text-white selection:bg-primary/30 font-code">
+    <div className="flex min-h-screen bg-black text-white selection:bg-primary/30 font-code overflow-x-hidden">
       <SidebarNav />
-      <main className="flex-1 lg:mr-80 p-8 md:p-16 relative bg-[radial-gradient(circle_at_top,rgba(0,150,255,0.1),transparent)] overflow-y-auto min-h-screen scrollbar-hide flex flex-col">
-        <header className="mb-12">
+      <main className="flex-1 lg:mr-80 p-6 md:p-12 relative bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.08),transparent)] overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 pointer-events-none" />
+        
+        <header className="mb-16 relative z-10 animate-in fade-in slide-in-from-top-8 duration-1000">
             <div className="flex items-center gap-4 mb-4">
-                <Badge className="bg-cyan-600 text-white border-none rounded-full px-6 py-1.5 text-xs font-bold tracking-[0.4em] shadow-lg italic">VIRTUAL WAR-ROOM</Badge>
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-cyan-400">
-                    <Activity className="size-4 animate-pulse" /> SIMULATION ENGINE ACTIVE
+                <Badge className="bg-primary text-black border-none px-10 py-3 text-[18px] font-black tracking-[0.8em] shadow-[0_0_100px_rgba(212,175,55,0.5)] italic rounded-full">SWARM SIM ROOM v43.0</Badge>
+                <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
+                    <Atom className="size-6 shadow-[0_0_30px_emerald]" /> HIVE_MIRRORING: ACTIVE
                 </div>
             </div>
-            <h1 className="text-6xl md:text-8xl font-headline font-bold text-white tracking-tighter italic uppercase">Digital <span className="text-cyan-500">Twin</span></h1>
-            <p className="text-xl text-muted-foreground mt-4 italic max-w-3xl">
-                "مختبر المحاكاة: اختبر استراتيجياتك في عالم افتراضي يطابق الواقع قبل شن الهجوم الحقيقي."
+            <h1 className="text-7xl md:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Global <span className="text-primary">Mirror</span></h1>
+            <p className="text-2xl md:text-5xl text-muted-foreground mt-8 italic max-w-6xl leading-relaxed uppercase">
+                "سيدي الغزالي، محرك <span className="text-primary font-black underline decoration-primary decoration-[10px] underline-offset-[20px]">Global Mirror</span> يتيح لك محاكاة الضربة عبر الـ 14 عنقوداً عالمياً بآن واحد لضمان الانهيار التام للهدف."
             </p>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <Card className="kali-card border-cyan-500/30 bg-black/60 p-8 rounded-[3rem] border-2 shadow-2xl col-span-1">
-                <CardHeader className="p-0 mb-8 border-b border-cyan-500/10 pb-6">
-                    <CardTitle className="text-3xl text-cyan-400 flex items-center gap-4 font-bold uppercase italic">
-                        <Settings className="size-8" /> Config
-                    </CardTitle>
-                </CardHeader>
-                <CardContent className="p-0 space-y-8">
-                    <div className="space-y-4">
-                        <label className="text-[10px] font-bold text-cyan-500/60 uppercase tracking-[0.5em] px-4">Target Identity</label>
-                        <Input 
-                            value={target}
-                            onChange={(e) => setTarget(e.target.value)}
-                            placeholder="IP or Binary Path..." 
-                            className="bg-black border-2 border-cyan-500/20 h-16 rounded-[2rem] text-xl italic px-6 focus:border-cyan-500"
-                        />
-                    </div>
-                    <Button 
-                        disabled={isSimulating}
-                        onClick={startSimulation}
-                        className="w-full h-20 bg-cyan-600 hover:bg-cyan-700 text-white font-bold uppercase tracking-[1em] rounded-[2rem] shadow-2xl active:scale-95 transition-all"
-                    >
-                        {isSimulating ? <Loader2 className="size-8 animate-spin" /> : <Play className="size-8 mr-2" />}
-                        START SIM
-                    </Button>
-                </CardContent>
-            </Card>
-
-            <Card className="kali-card border-white/10 bg-black/80 rounded-[3rem] p-8 border-2 shadow-2xl col-span-2">
-                <CardHeader className="p-0 mb-8 border-b border-white/10 pb-6">
-                    <CardTitle className="text-3xl text-white flex items-center gap-4 font-bold uppercase italic">
-                        <TerminalIcon className="size-8 text-cyan-500" /> Simulation Log
-                    </CardTitle>
-                </CardHeader>
-                <CardContent className="p-0 space-y-6">
-                    {isSimulating && (
-                        <div className="space-y-2 mb-8">
-                            <div className="flex justify-between text-xs font-bold text-cyan-400 uppercase tracking-widest">
-                                <span>Simulating...</span>
-                                <span>{progress}%</span>
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-12 flex-1 pb-40">
+            <div className="space-y-12">
+                <Card className="kali-card border-primary/40 bg-black/80 p-10 rounded-[5rem] border-4 shadow-7xl">
+                    <CardHeader className="p-0 mb-10 border-b-4 border-primary/10 pb-6">
+                        <CardTitle className="text-4xl text-primary flex items-center gap-6 font-black uppercase italic gold-glow">
+                            <Settings className="size-12 animate-spin-slow" /> Swarm Config
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-0 space-y-12">
+                        <div className="space-y-6">
+                            <label className="text-[14px] font-black text-primary uppercase tracking-[0.8em] px-6 italic">Target Coordinate</label>
+                            <Input 
+                                value={target}
+                                onChange={(e) => setTarget(e.target.value)}
+                                placeholder="IP / Global Binary / Neural Path..." 
+                                className="bg-black/99 border-4 border-primary/20 h-24 rounded-[3rem] text-4xl italic px-10 focus:border-primary shadow-inner text-white font-black"
+                            />
+                        </div>
+                        
+                        <div className="space-y-6">
+                            <label className="text-[14px] font-black text-primary uppercase tracking-[0.8em] px-6 italic">Simulation Clusters</label>
+                            <div className="flex flex-wrap gap-4 px-4">
+                                {clusters.slice(0, 8).map(c => (
+                                    <Badge 
+                                        key={c}
+                                        onClick={() => setSelectedClusters(prev => prev.includes(c) ? prev.filter(x => x !== c) : [...prev, c])}
+                                        variant="outline" 
+                                        className={cn(
+                                            "cursor-pointer px-6 py-3 rounded-full text-[12px] font-black uppercase tracking-widest border-2 transition-all",
+                                            selectedClusters.includes(c) ? "bg-primary text-black border-primary shadow-3xl scale-105" : "text-muted-foreground border-white/10 hover:border-primary/40"
+                                        )}
+                                    >
+                                        {c}_NODE
+                                    </Badge>
+                                ))}
                             </div>
-                            <Progress value={progress} className="h-2 bg-white/5 [&>div]:bg-cyan-500" />
+                        </div>
+
+                        <Button 
+                            disabled={isSimulating}
+                            onClick={startSimulation}
+                            className="w-full h-32 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.5em] rounded-[4rem] shadow-[0_50px_150px_rgba(212,175,55,0.7)] active:scale-95 transition-all text-3xl border-8 border-black/30 group italic"
+                        >
+                            {isSimulating ? <Loader2 className="size-16 animate-spin" /> : <Play className="size-16 mr-6 group-hover:scale-125 transition-transform gold-glow" />}
+                            IGNITE SIM
+                        </Button>
+                    </CardContent>
+                </Card>
+
+                <Card className="kali-card border-white/10 bg-black/60 p-8 rounded-[4rem] border-2 shadow-inner">
+                   <h4 className="text-[14px] font-black text-primary uppercase tracking-[1em] mb-6 italic flex items-center gap-4">
+                      <Binary className="size-6" /> QEMU_HIVE_ENGINE
+                   </h4>
+                   <div className="flex justify-between items-center px-4">
+                      <span className="text-4xl font-black text-white italic gold-glow uppercase tracking-tighter">PARALLEL_v43</span>
+                      <div className="flex gap-4">
+                         <div className="size-4 rounded-full bg-primary animate-ping shadow-[0_0_20px_primary]" />
+                         <div className="size-4 rounded-full bg-primary animate-ping delay-500 shadow-[0_0_20px_primary]" />
+                      </div>
+                   </div>
+                </Card>
+            </div>
+
+            <Card className="kali-card border-primary/60 bg-black/99 rounded-[7rem] p-12 border-8 shadow-8xl col-span-2 flex flex-col group overflow-hidden">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.03),transparent)] pointer-events-none" />
+                <CardHeader className="p-0 mb-12 border-b-4 border-white/5 pb-8 bg-primary/5 rounded-t-[5rem]">
+                    <CardTitle className="text-6xl text-white flex items-center gap-8 font-black uppercase italic gold-glow px-10 py-6">
+                        <TerminalIcon className="size-16 text-primary animate-pulse" /> Virtual War-Log
+                    </CardTitle>
+                </CardHeader>
+                <CardContent className="p-0 flex-1 flex flex-col space-y-10">
+                    {isSimulating && (
+                        <div className="space-y-4 mb-12 px-10">
+                            <div className="flex justify-between text-[16px] font-black text-primary uppercase tracking-[2em] italic">
+                                <span>{"Mirroring_Global_Matrix..."}</span>
+                                <span className="gold-glow">{progress}%</span>
+                            </div>
+                            <div className="h-6 bg-white/5 rounded-full overflow-hidden border-4 border-white/10 p-1 shadow-inner">
+                               <div className="h-full bg-primary shadow-[0_0_80px_rgba(212,175,55,1)] animate-pulse rounded-full transition-all duration-300" style={{ width: `${progress}%` }} />
+                            </div>
                         </div>
                     )}
-                    <div className="bg-black/90 p-6 rounded-[2rem] font-code text-sm h-[300px] overflow-y-auto border border-cyan-500/10">
+                    <div className="flex-1 bg-black/80 p-12 rounded-[5rem] font-code text-2xl h-[600px] overflow-y-auto border-4 border-white/5 scrollbar-hide shadow-inner relative group/log">
                         {log.map((line, i) => (
-                            <div key={i} className="mb-2">
-                                <span className="text-cyan-600 mr-4">[{new Date().toLocaleTimeString()}]</span>
-                                <span className="text-white/80">{line}</span>
+                            <div key={i} className="mb-8 flex gap-10 animate-in slide-in-from-left-6 duration-1000 group-hover/log:translate-x-4 transition-transform">
+                                <span className="text-primary/40 font-black italic select-none">[{line.node}]</span>
+                                <span className="text-gray-100 font-bold italic leading-relaxed group-hover/log:text-primary transition-colors">
+                                  {">>> "} {line.msg}
+                                </span>
                             </div>
                         ))}
-                        {log.length === 0 && <div className="text-white/20 italic uppercase tracking-widest text-center mt-20">Ready for Simulation</div>}
+                        {log.length === 0 && (
+                           <div className="h-full flex flex-col items-center justify-center text-white/5 italic uppercase tracking-[4em] opacity-50">
+                              <Boxes className="size-64 mb-10 animate-spin-slow" />
+                              HIVE_IDLE
+                           </div>
+                        )}
+                    </div>
+                    
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-12 px-6 pb-6">
+                        {[
+                          { label: "FUD_SCAN", icon: ShieldCheck, status: "READY" },
+                          { label: "HEAP_PROBE", icon: Bug, status: "LINKED" },
+                          { label: "HIVE_MESH", icon: Globe, status: "BOUND" },
+                          { label: "OVERMIND", icon: Skull, status: "ACTIVE" }
+                        ].map((stat, i) => (
+                           <div key={i} className="p-8 rounded-[3.5rem] bg-white/5 border-4 border-white/5 flex flex-col items-center gap-4 hover:border-primary transition-all duration-1000 shadow-5xl">
+                              <stat.icon className="size-12 text-primary/60 gold-glow" />
+                              <span className="text-[12px] font-black uppercase tracking-widest text-white/70">{stat.label}</span>
+                              <Badge className="bg-primary/20 text-primary border-none font-black text-[10px]">{stat.status}</Badge>
+                           </div>
+                        ))}
                     </div>
                 </CardContent>
             </Card>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-8 rounded-[3rem] bg-cyan-900/10 border-2 border-cyan-500/20 flex items-center gap-6">
-                <Cpu className="size-12 text-cyan-500" />
-                <div>
-                    <h4 className="font-bold uppercase text-white">QEMU Engine</h4>
-                    <p className="text-xs text-muted-foreground">Virtualizing Target</p>
-                </div>
-            </div>
-            <div className="p-8 rounded-[3rem] bg-cyan-900/10 border-2 border-cyan-500/20 flex items-center gap-6">
-                <Bug className="size-12 text-cyan-500" />
-                <div>
-                    <h4 className="font-bold uppercase text-white">Debugger</h4>
-                    <p className="text-xs text-muted-foreground">Monitoring Heaps</p>
-                </div>
-            </div>
-            <div className="p-8 rounded-[3rem] bg-cyan-900/10 border-2 border-cyan-500/20 flex items-center gap-6">
-                <ShieldCheck className="size-12 text-cyan-500" />
-                <div>
-                    <h4 className="font-bold uppercase text-white">FUD Check</h4>
-                    <p className="text-xs text-muted-foreground">Evasion Verified</p>
-                </div>
-            </div>
+        <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-40 text-[22px] font-black uppercase tracking-[6em] italic text-white drop-shadow-3xl pb-12">
+            <span>AL-MUIZZ SWARM SIMULATOR v43.0</span>
+            <div className="size-10 rounded-full bg-white animate-pulse shadow-[0_0_100px_white]" />
+            <span>COLLECTIVE_RESONANCE_OK</span>
         </div>
       </main>
     </div>
