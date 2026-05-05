@@ -69,6 +69,12 @@ export default function DashboardPage() {
   }, [db, user?.uid]);
   const { data: sessions } = useCollection(sessionsQuery);
 
+  const opsQuery = useMemoFirebase(() => {
+    if (!db || !user?.uid) return null;
+    return collection(db, 'users', user.uid, 'operations');
+  }, [db, user?.uid]);
+  const { data: operations } = useCollection(opsQuery);
+
   const logs = [
     "Initializing neural uplink...",
     "Scanning satellite nodes...",
@@ -174,7 +180,7 @@ export default function DashboardPage() {
                     <h3 className="text-xl font-bold text-white uppercase tracking-tighter group-hover:text-primary transition-colors">{node.name}</h3>
                     <p className="text-[10px] text-muted-foreground mt-2 line-clamp-1">{node.desc}</p>
                     <div className="flex justify-between items-end mt-4 pt-4 border-t border-white/5">
-                      <span className="text-[10px] text-primary font-bold tracking-widest">{node.node}</span>
+                      <span className="text-[10px] text-white/20">{node.node}</span>
                       <div className="size-2 rounded-full bg-emerald-500 animate-ping shadow-[0_0_15px_emerald]" />
                     </div>
                  </Card>
@@ -196,13 +202,12 @@ export default function DashboardPage() {
                       <span className="text-xl font-bold text-white">{sessions?.length || 0}</span>
                     </div>
                     <div className="flex flex-col items-end">
-                      <span className="text-[10px] text-muted-foreground uppercase font-bold">Threat Level</span>
-                      <span className="text-xl font-bold text-red-500">OMEGA</span>
+                      <span className="text-[10px] text-muted-foreground uppercase font-bold">Total Operations</span>
+                      <span className="text-xl font-bold text-white">{operations?.length || 0}</span>
                     </div>
                   </div>
                 </div>
                 
-                {/* Live Logs Component */}
                 <div className="bg-black/90 p-6 rounded-2xl border border-primary/20 font-mono text-sm h-48 overflow-hidden relative">
                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black to-transparent pointer-events-none opacity-50" />
                    {liveLogs.map((log, i) => (
@@ -233,11 +238,11 @@ export default function DashboardPage() {
                   </div>
                 </div>
                 <div className="mt-8 pt-8 border-t border-white/5 flex gap-4">
-                   <Button className="bg-primary/10 border-2 border-primary/40 text-primary hover:bg-primary/20 rounded-2xl px-8 font-bold uppercase tracking-widest text-xs h-12 italic">
-                     Launch Global Strike
+                   <Button className="bg-primary/10 border-2 border-primary/40 text-primary hover:bg-primary/20 rounded-2xl px-8 font-bold uppercase tracking-widest text-xs h-12 italic" asChild>
+                     <Link href="/terminal">Launch Global Strike</Link>
                    </Button>
-                   <Button variant="outline" className="border-white/10 bg-white/5 hover:bg-white/10 rounded-2xl px-8 font-bold uppercase tracking-widest text-xs h-12 italic">
-                     System Diagnostics
+                   <Button variant="outline" className="border-white/10 bg-white/5 hover:bg-white/10 rounded-2xl px-8 font-bold uppercase tracking-widest text-xs h-12 italic" asChild>
+                     <Link href="/system">System Diagnostics</Link>
                    </Button>
                 </div>
             </Card>

@@ -16,18 +16,18 @@ export async function POST(req: NextRequest) {
       apex: path.join(BASE_PATH, 'ai-engine/offensive/apex_brain.py'),
       osint: path.join(BASE_PATH, 'osint/osint_master.py'),
       gepa: path.join(BASE_PATH, 'ai-engine/gepa.py'),
-      polymorph: path.join(BASE_PATH, 'ai-engine/gepa_fixer.py'),
-      cloud_persistence: path.join(BASE_PATH, 'ai-engine/persistence/cloud_persistence.sh'),
-      silk_guardian: path.join(BASE_PATH, 'security/blackteam/silk_guardian.py'),
-      autonomous: path.join(BASE_PATH, 'ai-engine/autonomous/autonomous_ai.py')
+      gepa_fixer: path.join(BASE_PATH, 'ai-engine/gepa_fixer.py'),
+      cloud: path.join(BASE_PATH, 'ai-engine/persistence/cloud_persistence.sh'),
+      silk: path.join(BASE_PATH, 'security/blackteam/silk_guardian.py'),
+      auto: path.join(BASE_PATH, 'ai-engine/autonomous/autonomous_ai.py'),
+      apk: path.join(BASE_PATH, 'mobile/advanced/extract_apk.sh')
     };
 
     let executableCommand = '';
 
     switch (type) {
       case 'terminal':
-        // قائمة بيضاء بالأوامr المسموح بها من الواجهة
-        const allowedCommands = ['nmap', 'ping', 'whois', 'dig', 'traceroute', 'curl', 'ls', 'pwd', 'sovereign', 'bash', 'python3'];
+        const allowedCommands = ['nmap', 'ping', 'whois', 'dig', 'traceroute', 'curl', 'ls', 'pwd', 'sovereign', 'bash', 'python3', 'msfconsole'];
         const cmdBase = command.split(' ')[0];
         if (!allowedCommands.includes(cmdBase)) {
           return NextResponse.json({ error: 'Command not authorized by Sovereign Core.' }, { status: 403 });
@@ -48,15 +48,19 @@ export async function POST(req: NextRequest) {
         break;
 
       case 'autonomous_strike':
-        executableCommand = `python3 ${SCRIPTS.autonomous} ${target}`;
+        executableCommand = `python3 ${SCRIPTS.auto} ${target}`;
         break;
 
       case 'cloud':
-        executableCommand = `bash ${SCRIPTS.cloud_persistence}`;
+        executableCommand = `bash ${SCRIPTS.cloud}`;
         break;
       
       case 'silk_guardian':
-        executableCommand = `python3 ${SCRIPTS.silk_guardian}`;
+        executableCommand = `python3 ${SCRIPTS.silk}`;
+        break;
+
+      case 'extract_apk':
+        executableCommand = `bash ${SCRIPTS.apk}`;
         break;
 
       default:
@@ -74,6 +78,10 @@ export async function POST(req: NextRequest) {
     });
   } catch (error: any) {
     console.error("Execution Error:", error);
-    return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ 
+      error: error.message || 'Internal Server Error',
+      stdout: error.stdout,
+      stderr: error.stderr
+    }, { status: 500 });
   }
 }
