@@ -1,3 +1,4 @@
+
 import { NextRequest, NextResponse } from 'next/server';
 import { exec } from 'child_process';
 import { promisify } from 'util';
@@ -5,12 +6,16 @@ import path from 'path';
 
 const execPromise = promisify(exec);
 
+/**
+ * @fileOverview الجسر التنفيذي السيادي v42.1
+ * يعالج الأوامر المباشرة والسكريبتات الهجومية بنمط "الفاتح العليم".
+ */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { command, target, args, type } = body;
 
-    // المسارات الأساسية في بيئة كالي
+    // المسارات الأساسية في بيئة كالي السيادية
     const BASE_PATH = '/opt/sovereign-ai-platform';
     const SCRIPTS = {
       apex: path.join(BASE_PATH, 'ai-engine/offensive/apex_brain.py'),
@@ -21,20 +26,22 @@ export async function POST(req: NextRequest) {
       silk: path.join(BASE_PATH, 'security/blackteam/silk_guardian.py'),
       auto: path.join(BASE_PATH, 'ai-engine/autonomous/autonomous_ai.py'),
       apk: path.join(BASE_PATH, 'mobile/advanced/extract_apk.sh'),
-      wordlist: path.join(BASE_PATH, 'ai-engine/ai-smart-wordlist-flow.ts') // Placeholder for flow
+      stealth: path.join(BASE_PATH, 'security/blackteam/anti_forensics/clean_logs.sh')
     };
 
     let executableCommand = '';
 
     switch (type) {
       case 'terminal':
-        const allowedCommands = ['nmap', 'ping', 'whois', 'dig', 'traceroute', 'curl', 'ls', 'pwd', 'sovereign', 'bash', 'python3', 'msfconsole', 'bettercap'];
+        // قائمة الأوامر المسموح بها في الوضع السيادي
+        const allowedCommands = ['nmap', 'ping', 'whois', 'dig', 'traceroute', 'curl', 'ls', 'pwd', 'sovereign', 'bash', 'python3', 'msfconsole', 'bettercap', 'sqlmap', 'hydra', 'nuclei'];
         const cmdParts = command.split(' ');
         const cmdBase = cmdParts[0];
+        
         if (!allowedCommands.includes(cmdBase)) {
           if (process.env.NODE_ENV === 'development') {
             return NextResponse.json({
-              output: `[MOCK] Execution of restricted command: ${command}\nResult: Access granted by Override.`,
+              output: `[MOCK] EXECUTION OVERRIDE: Executing restricted command: ${command}\nStatus: Access granted via Singularity Bypass.`,
               success: true,
               timestamp: new Date().toISOString(),
               executionType: type
@@ -72,11 +79,15 @@ export async function POST(req: NextRequest) {
       case 'extract_apk':
         executableCommand = `bash ${SCRIPTS.apk}`;
         break;
+      
+      case 'stealth_purge':
+        executableCommand = `bash ${SCRIPTS.stealth}`;
+        break;
 
       default:
         if (process.env.NODE_ENV === 'development') {
           return NextResponse.json({
-            output: `[MOCK] Task ${type} for ${target} initiated.\nSystem: Analysis complete. Target weakened.`,
+            output: `[MOCK] Node ${type} against ${target || 'Global Matrix'} initiated.\nSystem: DNA Analysis complete. Target weakened. Node status: ASCENDED.`,
             success: true,
             timestamp: new Date().toISOString(),
             executionType: type
@@ -85,25 +96,29 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: 'Invalid execution type.' }, { status: 400 });
     }
 
-    // Execute command with timeout
-    const { stdout, stderr } = await execPromise(executableCommand, { timeout: 300000 });
+    // التنفيذ الفعلي مع مهلة زمنية 5 دقائق
+    try {
+        const { stdout, stderr } = await execPromise(executableCommand, { timeout: 300000 });
+        return NextResponse.json({
+            output: stdout || stderr,
+            success: true,
+            timestamp: new Date().toISOString(),
+            executionType: type
+        });
+    } catch (execError: any) {
+        if (process.env.NODE_ENV === 'development') {
+            return NextResponse.json({
+                output: `[MOCK] Command execution simulated: ${executableCommand}\nResult: Success (Dev Bypass Mode)`,
+                success: true,
+                timestamp: new Date().toISOString(),
+                executionType: type
+            });
+        }
+        throw execError;
+    }
 
-    return NextResponse.json({
-      output: stdout || stderr,
-      success: true,
-      timestamp: new Date().toISOString(),
-      executionType: type
-    });
   } catch (error: any) {
     console.error("Execution Error:", error);
-    if (process.env.NODE_ENV === 'development') {
-        return NextResponse.json({
-          output: `[MOCK] ERROR: Failed to reach backend. Simulating local execution for ${body.type}...\nStatus: Success (Dev Bypass)`,
-          success: true,
-          timestamp: new Date().toISOString(),
-          executionType: body.type
-        });
-    }
     return NextResponse.json({ 
       error: error.message || 'Internal Server Error',
       stdout: error.stdout,
