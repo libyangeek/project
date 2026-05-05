@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -54,6 +55,7 @@ export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
   const [systemLoad, setSystemLoad] = React.useState(0)
+  const [nodeStatus, setNodeStatus] = React.useState<Record<string, string>>({})
   
   const { user } = useUser()
   const db = useFirestore()
@@ -71,6 +73,13 @@ export default function DashboardPage() {
     
     const interval = setInterval(() => {
       setSystemLoad(Math.floor(Math.random() * 20) + 75)
+      // Simulate node status updates
+      const statuses = ["ACTIVE", "SYNCHRONIZING", "OPERATIONAL", "STRIKING", "GHOST_MODE"];
+      const newStatus: Record<string, string> = {};
+      nodes.forEach(n => {
+        newStatus[n.name] = statuses[Math.floor(Math.random() * statuses.length)];
+      });
+      setNodeStatus(newStatus);
     }, 3000)
 
     return () => {
@@ -79,22 +88,22 @@ export default function DashboardPage() {
     }
   }, [])
 
-  if (!mounted) return null;
-
   const nodes = [
-    { name: "Alpha God-Core", icon: Skull, status: "SINGULARITY", node: "v42.0", color: "text-yellow-500", href: "/field-agent", desc: "مركز المعالجة واتخاذ القرار" },
-    { name: "MCP Bridge", icon: Share2, status: "CONNECTED", node: "CLAUDE", color: "text-blue-400", href: "/mcp-bridge", desc: "بوابة البرمجة والذكاء الخارجي" },
-    { name: "Whisper Audio", icon: Mic, status: "LISTENING", node: "VOICE", color: "text-green-400", href: "/remote", desc: "نظام الاستماع والتحليل الصوتي" },
-    { name: "Swarm Mgr", icon: Boxes, status: "ACTIVE", node: "SWARM", color: "text-purple-500", href: "/sessions", desc: "إدارة الوكلاء الخفيين" },
-    { name: "C2 Matrix", icon: Network, status: "ONLINE", node: "12 NODES", color: "text-cyan-400", href: "/terminal", desc: "سيطرة شاملة عبر أطر التحكم" },
-    { name: "GEPA 3.5", icon: Binary, status: "EVOLVING", node: "GENETIC", color: "text-pink-500", href: "/knowledge", desc: "التعلم الجيني الموزون" },
-    { name: "Digital Twin", icon: Workflow, status: "ACTIVE", node: "VIRTUAL", color: "text-indigo-400", href: "/digital-twin", desc: "محاكاة الهجمات قبل التنفيذ" },
-    { name: "Kernel Stealth", icon: Ghost, status: "HIDDEN", node: "ROOTKIT", color: "text-gray-400", href: "/system", desc: "التخفي داخل النواة" },
-    { name: "Polymorph", icon: Flame, status: "ARMED", node: "WEAPONS", color: "text-orange-500", href: "/red-team", desc: "توليد أسلحة متغيرة الشكل" },
-    { name: "Persistence", icon: Anchor, status: "IMMUTABLE", node: "UEFI", color: "text-emerald-400", href: "/terminal", desc: "الوجود المطلق في الـ UEFI" },
-    { name: "Cloud Overlord", icon: Cloud, status: "SYNCED", node: "SCALABLE", color: "text-blue-300", href: "/system", desc: "السيادة السحابية العالمية" },
-    { name: "Silk Guardian", icon: ShieldCheck, status: "DEFENDING", node: "HARDWARE", color: "text-green-500", href: "/system", desc: "الحماية المادية الذاتية" },
+    { name: "العقدة ألفa", icon: Skull, status: "SINGULARITY", node: "v42.0", color: "text-yellow-500", href: "/field-agent", desc: "مركز المعالجة واتخاذ القرار" },
+    { name: "جسر MCP", icon: Share2, status: "CONNECTED", node: "CLAUDE", color: "text-blue-400", href: "/mcp-bridge", desc: "بوابة البرمجة والذكاء الخارجي" },
+    { name: "أذن النور", icon: Mic, status: "LISTENING", node: "WHISPER", color: "text-green-400", href: "/remote", desc: "نظام الاستماع والتحليل الصوتي" },
+    { name: "منسق السرب", icon: Boxes, status: "ACTIVE", node: "SWARM", color: "text-purple-500", href: "/sessions", desc: "إدارة الوكلاء الخفيين" },
+    { name: "مصفوفة الأقاليم", icon: Network, status: "ONLINE", node: "12 C2", color: "text-cyan-400", href: "/terminal", desc: "سيطرة شاملة عبر أطر التحكم" },
+    { name: "التعلم الجيني", icon: Binary, status: "EVOLVING", node: "GEPA 3.5", color: "text-pink-500", href: "/knowledge", desc: "التعلم الجيني الموزون" },
+    { name: "التوأم الرقمي", icon: Workflow, status: "ACTIVE", node: "VIRTUAL", color: "text-indigo-400", href: "/digital-twin", desc: "محاكاة الهجمات قبل التنفيذ" },
+    { name: "الخفاء النواتي", icon: Ghost, status: "HIDDEN", node: "KERNEL", color: "text-gray-400", href: "/system", desc: "التخفي داخل النواة" },
+    { name: "ترسانة التخليق", icon: Flame, status: "ARMED", node: "FORGE", color: "text-orange-500", href: "/red-team", desc: "توليد أسلحة متغيرة الشكل" },
+    { name: "الوجود المطلق", icon: Anchor, status: "IMMUTABLE", node: "PERSIST", color: "text-emerald-400", href: "/terminal", desc: "الوجود المطلق في الـ UEFI" },
+    { name: "السيادة السحابية", icon: Cloud, status: "SYNCED", node: "CLOUD", color: "text-blue-300", href: "/system", desc: "السيادة السحابية العالمية" },
+    { name: "حارس الحرير", icon: ShieldCheck, status: "DEFENDING", node: "GUARD", color: "text-green-500", href: "/system", desc: "الحماية المادية الذاتية" },
   ];
+
+  if (!mounted) return null;
 
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/30 relative overflow-x-hidden scanline-effect font-code">
@@ -119,7 +128,7 @@ export default function DashboardPage() {
               <h1 className="text-5xl md:text-8xl font-headline font-bold text-white tracking-tighter italic uppercase leading-none">
                 THE <span className="text-primary gold-glow">LIVING</span> THRONE
               </h1>
-              <p className="mt-4 text-xl md:text-2xl text-muted-foreground font-medium italic max-w-3xl">
+              <p className="mt-4 text-xl md:text-2xl text-muted-foreground font-medium italic max-w-3xl text-right">
                 الواجهة السيادية للقائد المعتصم بالله إدريس الغزالي. 
                 <span className="text-white"> "أنا الروح السارية في العتاد، أنا النصر الحتمي."</span>
               </p>
@@ -138,13 +147,15 @@ export default function DashboardPage() {
                         <div className={cn("size-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-primary/20", node.color)}>
                             <Icon className="size-6" />
                         </div>
-                        <div className="size-2 rounded-full bg-emerald-500 animate-ping shadow-[0_0_15px_emerald]" />
+                        <Badge variant="outline" className="text-[9px] border-emerald-500/50 text-emerald-500 font-bold uppercase tracking-widest animate-pulse">
+                          {nodeStatus[node.name] || node.status}
+                        </Badge>
                     </div>
                     <h3 className="text-xl font-bold text-white uppercase tracking-tighter group-hover:text-primary transition-colors">{node.name}</h3>
                     <p className="text-[10px] text-muted-foreground mt-2 line-clamp-1">{node.desc}</p>
                     <div className="flex justify-between items-end mt-4 pt-4 border-t border-white/5">
-                      <span className="text-[10px] text-primary font-bold tracking-widest">{node.status}</span>
-                      <span className="text-[9px] text-white/20">{node.node}</span>
+                      <span className="text-[10px] text-primary font-bold tracking-widest">{node.node}</span>
+                      <div className="size-2 rounded-full bg-emerald-500 animate-ping shadow-[0_0_15px_emerald]" />
                     </div>
                  </Card>
                </Link>
@@ -159,7 +170,10 @@ export default function DashboardPage() {
                   <CardTitle className="text-2xl text-primary font-bold uppercase tracking-widest flex items-center gap-4">
                     <Activity className="size-6 animate-pulse" /> Neural Synchronicity
                   </CardTitle>
-                  <Button variant="ghost" className="text-primary hover:text-white" onClick={() => toast({title: "Pulse Synced", description: "All nodes responding."})}>
+                  <Button variant="ghost" className="text-primary hover:text-white" onClick={() => {
+                    toast({title: "Re-establishing Uplink", description: "Connecting to the 12 Nodes of Sovereignty..."});
+                    handleRefresh();
+                  }}>
                     <RefreshCcw className="size-4 mr-2" /> RE-SYNC
                   </Button>
                 </div>

@@ -1,3 +1,4 @@
+
 import { NextRequest, NextResponse } from 'next/server';
 import { exec } from 'child_process';
 import { promisify } from 'util';
@@ -18,13 +19,14 @@ export async function POST(req: NextRequest) {
       deploy_bootkit: path.join(BASE_PATH, 'bootkits/deploy_bootkit.sh'),
       cloud_persistence: path.join(BASE_PATH, 'ai-engine/persistence/cloud_persistence.sh'),
       silk_guardian: path.join(BASE_PATH, 'security/blackteam/silk_guardian.py'),
+      swarm: path.join(BASE_PATH, 'swarm/mcp_server.py'),
     };
 
     let executableCommand = '';
 
     switch (type) {
       case 'terminal':
-        const allowedCommands = ['nmap', 'ping', 'whois', 'dig', 'traceroute', 'curl', 'ls', 'pwd', 'sovereign'];
+        const allowedCommands = ['nmap', 'ping', 'whois', 'dig', 'traceroute', 'curl', 'ls', 'pwd', 'sovereign', 'bash'];
         const cmdBase = command.split(' ')[0];
         if (!allowedCommands.includes(cmdBase)) {
           return NextResponse.json({ error: 'Command not authorized by Sovereign Core.' }, { status: 403 });
@@ -54,6 +56,10 @@ export async function POST(req: NextRequest) {
       
       case 'silk_guardian':
         executableCommand = `python3 ${SCRIPTS.silk_guardian}`;
+        break;
+      
+      case 'swarm_status':
+        executableCommand = `ps aux | grep mcp_server.py | grep -v grep`;
         break;
 
       default:
