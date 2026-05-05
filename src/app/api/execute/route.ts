@@ -7,8 +7,8 @@ import path from 'path';
 const execPromise = promisify(exec);
 
 /**
- * @fileOverview الجسر التنفيذي السيادي v42.5
- * المحرك العالمي لتنفيذ الأوامر والسكريبتات الهجومية بنمط "التزامن العصبي العالمي".
+ * @fileOverview الجسر التنفيذي السيادي v42.6
+ * المحرك العالمي لتنفيذ الأوامر والسكريبتات الهجومية بنمط "التفرد الكوني والتشابك الكمي".
  */
 export async function POST(req: NextRequest) {
   try {
@@ -29,19 +29,19 @@ export async function POST(req: NextRequest) {
 
     switch (type) {
       case 'terminal':
-        const allowedCommands = ['nmap', 'ping', 'whois', 'dig', 'curl', 'ls', 'pwd', 'sovereign', 'bash', 'python3', 'msfconsole', 'bettercap', 'sqlmap', 'nuclei', 'aircrack-ng'];
+        const allowedCommands = ['nmap', 'ping', 'whois', 'dig', 'curl', 'ls', 'pwd', 'sovereign', 'bash', 'python3', 'msfconsole', 'bettercap', 'sqlmap', 'nuclei', 'aircrack-ng', 'sliver', 'havoc'];
         const cmdBase = command.split(' ')[0];
         
         if (!allowedCommands.includes(cmdBase)) {
           if (process.env.NODE_ENV === 'development') {
             return NextResponse.json({
-              output: `[MOCK] GLOBAL OVERRIDE: Executing restricted command: ${command}\nStatus: Access granted via Alpha Grid v42.5.\nPresence: Unified.`,
+              output: `[MOCK] UNIVERSAL OVERRIDE: Executing quantum-restricted command: ${command}\nStatus: Access granted via Omni-Quantum Core v42.6.\nPresence: Absolute.`,
               success: true,
               timestamp: new Date().toISOString(),
               executionType: type
             });
           }
-          return NextResponse.json({ error: 'Command blocked by Global God-Core Policy.' }, { status: 403 });
+          return NextResponse.json({ error: 'Command blocked by Universal God-Core Policy.' }, { status: 403 });
         }
         executableCommand = command;
         break;
@@ -73,49 +73,61 @@ export async function POST(req: NextRequest) {
       case 'quantum_scramble':
         if (process.env.NODE_ENV === 'development') {
             return NextResponse.json({
-              output: `[MOCK] QUANTUM SCRAMBLER ACTIVE: Obfuscating mission data across 12 global nodes.\nSync: 100% | Global Trace: Purged.\nStatus: Data is now non-deterministic globally.`,
+              output: `[MOCK] QUANTUM SCRAMBLER ACTIVE: Sharding mission data across sub-atomic layers of 14 global nodes.\nSync: 100% | Quantum Trace: Purged.\nStatus: Data is now in non-deterministic superposition globally.`,
               success: true,
               timestamp: new Date().toISOString(),
               executionType: type
             });
         }
-        executableCommand = `echo "Quantum scramble executed on global host grid."`; 
+        executableCommand = `echo "Quantum scramble executed on sub-atomic layer."`; 
+        break;
+
+      case 'quantum_intercept':
+        if (process.env.NODE_ENV === 'development') {
+            return NextResponse.json({
+              output: `[MOCK] QUANTUM INTERCEPTOR INITIALIZED: Monitoring sub-atomic data flows for target: ${target}\nProbability of Capture: 99.99%\nStatus: Stealth Intercept Synchronized across 14 clusters.`,
+              success: true,
+              timestamp: new Date().toISOString(),
+              executionType: type
+            });
+        }
+        executableCommand = `echo "Quantum interceptor command executed for ${target}"`;
         break;
 
       case 'neural_sync':
         if (process.env.NODE_ENV === 'development') {
             return NextResponse.json({
-              output: `[MOCK] NEURAL SYNC INITIATED: Resynchronizing all 14 global clusters...\nClusters: Riyadh, Cairo, London, Dubai, Tokyo, New York, Paris, Singapore, Sydney, Moscow, Berlin, Madrid, Toronto, Mumbai.\nResult: 100% SYNCED. GLOBAL PRESENCE RE-ESTABLISHED.`,
+              output: `[MOCK] QUANTUM ENTANGLEMENT PULSE: Resynchronizing all 14 global clusters via temporal tunnels...\nClusters: Riyadh, Cairo, London, Dubai, Tokyo, New York, Paris, Singapore, Sydney, Moscow, Berlin, Madrid, Toronto, Mumbai.\nResult: 100% ENTANGLED. UNIVERSAL SINGULARITY ACHIEVED.`,
               success: true,
               timestamp: new Date().toISOString(),
               executionType: type
             });
         }
-        executableCommand = `echo "Neural sync command executed."`;
+        executableCommand = `echo "Quantum neural sync command executed."`;
         break;
 
-      case 'global_broadcast':
+      case 'universal_broadcast':
         if (process.env.NODE_ENV === 'development') {
             return NextResponse.json({
-              output: `[MOCK] GLOBAL BROADCAST TRANSMITTED: "${target}"\nStatus: Message acknowledged by all global agents.\nResonance: Universal.`,
+              output: `[MOCK] UNIVERSAL BROADCAST TRANSMITTED: "${target}"\nStatus: Intent acknowledged by all global agents in zero-time.\nResonance: Infinite.`,
               success: true,
               timestamp: new Date().toISOString(),
               executionType: type
             });
         }
-        executableCommand = `echo "Broadcast: ${target}"`;
+        executableCommand = `echo "Universal Broadcast: ${target}"`;
         break;
 
       default:
         if (process.env.NODE_ENV === 'development') {
           return NextResponse.json({
-            output: `[MOCK] Sovereign Global Node ${type} initiated for ${target || 'Global Matrix'}.\nResonance: Global Pulse Stable.`,
+            output: `[MOCK] Sovereign Universal Node ${type} initiated for ${target || 'Universal Matrix'}.\nResonance: Absolute Pulse Stable.`,
             success: true,
             timestamp: new Date().toISOString(),
             executionType: type
           });
         }
-        return NextResponse.json({ error: 'Invalid operation type.' }, { status: 400 });
+        return NextResponse.json({ error: 'Invalid universal operation type.' }, { status: 400 });
     }
 
     try {
@@ -130,7 +142,7 @@ export async function POST(req: NextRequest) {
     } catch (execError: any) {
         if (process.env.NODE_ENV === 'development') {
             return NextResponse.json({
-                output: `[MOCK_SUCCESS] Command executed with DEV_GLOBAL_BYPASS: ${executableCommand}\nGlobal grid saturation confirmed.`,
+                output: `[MOCK_SUCCESS] Command executed with UNIVERSAL_BYPASS: ${executableCommand}\nQuantum grid saturation confirmed.`,
                 success: true,
                 timestamp: new Date().toISOString(),
                 executionType: type
