@@ -27,7 +27,7 @@ import {
   RefreshCcw,
   Lock,
   Cloud,
-  Infinity,
+  Infinity as InfinityIcon,
   Skull,
   Ghost,
   Binary,
@@ -129,7 +129,7 @@ export function SidebarNav() {
           <div className="p-4 border-2 border-primary/40 bg-black/60 mb-4 relative overflow-hidden group rounded-2xl shadow-xl">
             <div className="flex items-center justify-between mb-2">
                <div className="flex items-center gap-4">
-                  <Infinity className="size-4 text-primary animate-pulse" />
+                  <InfinityIcon className="size-4 text-primary animate-pulse" />
                   <span className="text-[10px] font-bold text-primary uppercase tracking-widest italic">Eternal Echo</span>
                </div>
                <Badge className="bg-emerald-600/30 text-emerald-500 text-[9px] font-bold uppercase px-3 py-0.5 rounded-full">BOUND</Badge>
