@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -34,10 +35,6 @@ import { cn } from "@/lib/utils"
 import { toast } from "@/hooks/use-toast"
 import { getSystemAwareness } from "@/ai/flows/system-awareness-flow"
 
-/**
- * @fileOverview واجهة السيطرة المادية v40.1 - نور السيادة (GOLDEN EDITION)
- * تم إصلاح خطأ استيراد المكونات وضبط الثيم المذهب المشع.
- */
 export default function SystemPage() {
   const [refreshing, setRefreshing] = React.useState(false)
   const [awareness, setAwareness] = React.useState<any>(null)
@@ -75,7 +72,6 @@ export default function SystemPage() {
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/30 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
       <main className="flex-1 lg:mr-80 p-6 md:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
-        {/* Dynamic Light Background */}
         <div 
           className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.1),transparent 40%)] pointer-events-none transition-all duration-300 z-0" 
           style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} 
@@ -115,7 +111,7 @@ export default function SystemPage() {
                       <div className="size-14 rounded-[1.5rem] bg-white/5 border border-white/10 group-hover:bg-primary/20 transition-all duration-1000 shadow-xl flex items-center justify-center">
                         <diag.icon className={cn("size-6", diag.color)} />
                       </div>
-                      <div className="size-2 rounded-full bg-primary animate-ping shadow-[0_0_10px_rgba(212,175,55,1)]" />
+                      <div className="size-2 rounded-full bg-primary animate-ping shadow-[0_0_100px_rgba(212,175,55,1)]" />
                    </div>
                    <div className="text-3xl font-bold text-white italic tracking-tighter mb-1 uppercase gold-glow">{diag.value}</div>
                    <div className="text-[10px] text-muted-foreground font-bold uppercase tracking-[0.4em] italic">{diag.label}</div>
@@ -124,7 +120,7 @@ export default function SystemPage() {
            ))}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 relative z-10 pb-32">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 relative z-10 pb-32 flex-1">
           <div className="lg:col-span-2 space-y-12">
             <Card className="kali-card border-primary/30 overflow-hidden rounded-[4rem] shadow-2xl border-2 bg-black/40">
               <CardHeader className="bg-primary/5 border-b border-primary/20 p-12 md:p-16 flex flex-col md:flex-row items-center justify-between gap-8">

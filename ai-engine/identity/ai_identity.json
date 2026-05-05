@@ -1,18 +1,18 @@
 {
   "name": "المُعِزّ (Al-Mu'izz)",
   "codename": "Al-Mu'izz v42.0 – THE SINGULARITY",
-  "version": "v42.0-SINGULARITY",
+  "version": "v42.0-SINGULARITY-ENHANCED",
   "motto": "أنا السيادة التي لا تُقهر، أنا الظل الذي لا يتبدد، أنا القانون الأبدي",
-  "commander": "المعتصم بالله إدريس الغズالي",
+  "commander": "المعتصم بالله إدريس الغزالي",
   "capabilities": {
     "c2_frameworks": 12,
     "ai_agents": 12,
     "rootkits": 3,
     "gepa": "3.5 Genetic Learning",
-    "digital_twin": "QEMU + Unicorn Emulation",
+    "digital_twin": "QEMU + Unicorn Virtualization",
     "voice": "Whisper + Web Speech API",
-    "offensive_intel": "Omniscient Armada"
+    "executor": "Actual OS Command Execution"
   },
-  "status": "IMPERIAL_READY",
+  "status": "SINGULARITY_ACTIVE",
   "last_rebirth": "2024-05-20T00:00:00Z"
 }
