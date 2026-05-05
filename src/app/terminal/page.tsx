@@ -17,7 +17,9 @@ import {
   Command,
   History,
   Cpu,
-  Fingerprint
+  Fingerprint,
+  BrainCircuit,
+  Sparkles
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -25,28 +27,31 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
+import { aiCommandAndRouting } from "@/ai/flows/ai-command-and-routing"
 
 type Message = {
   role: "user" | "assistant" | "system"
   content: string
   timestamp: string
   command?: string
+  strategicInsight?: string
 }
 
 /**
- * @fileOverview المحطة السيادية v42.2 - THE OMNIPOTENT SHELL
- * تتيح للقائد إرسال أوامر حقيقية لعصب النظام مع معالجة ذكية للنتائج.
+ * @fileOverview المحطة السيادية v42.3 - THE NEURAL SHELL
+ * تتيح للقائد إرسال أوامر حقيقية لعصب النظام مع دعم التحليل الاستراتيجي التلقائي.
  */
 export default function TerminalPage() {
   const [input, setInput] = React.useState("")
   const [messages, setMessages] = React.useState<Message[]>([
     { 
       role: "system", 
-      content: "Al-Mu'izz Sovereign Terminal [v42.2 - THE SINGULARITY]\nEstablishing secure link to God-Core...\nAuthorized: المعتصم بالله ادريس الغزالي\nType 'help' for a list of sovereign commands.",
+      content: "Al-Mu'izz Sovereign Terminal [v42.3 - NEURAL RESONANCE]\nEstablishing link to Alpha Node...\nAuthorized: المعتصم بالله ادريس الغزالي\nType 'help' or describe a mission for strategic analysis.",
       timestamp: new Date().toLocaleTimeString()
     }
   ])
   const [isLoading, setIsLoading] = React.useState(false)
+  const [isThinking, setIsThinking] = React.useState(false)
   const [history, setHistory] = React.useState<string[]>([])
   const [historyIndex, setHistoryIndex] = React.useState(-1)
   const scrollRef = React.useRef<HTMLDivElement>(null)
@@ -55,7 +60,21 @@ export default function TerminalPage() {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" })
     }
-  }, [messages, isLoading])
+  }, [messages, isLoading, isThinking])
+
+  const analyzeStrategicIntent = async (cmd: string) => {
+    if (cmd.length < 5 || cmd.startsWith("/") || cmd.split(" ").length < 2) return null;
+    
+    setIsThinking(true)
+    try {
+        const result = await aiCommandAndRouting({ taskDescription: cmd, mode: 'Omniscient' })
+        return result.strategicResponse
+    } catch (e) {
+        return null
+    } finally {
+        setIsThinking(false)
+    }
+  }
 
   const executeCommand = async (e?: React.FormEvent) => {
     if (e) e.preventDefault()
@@ -73,58 +92,39 @@ export default function TerminalPage() {
       setMessages(prev => [...prev, { 
         role: "assistant", 
         content: `AVAILABLE SOVEREIGN COMMANDS:\n
-- apex <target>        : Generate full attack plan using ApexBrain
-- osint <type> <target>: Perform OSINT search (types: phone, email, domain)
-- strike <target>      : Launch autonomous strike via the Armada
-- cloud-inject         : Deploy cloud persistence modules
+- apex <target>        : Generate full attack plan
+- osint <type> <target>: Perform OSINT search
+- strike <target>      : Launch autonomous strike
+- resonance            : Check neural resonance sync
 - clear                 : Clear terminal history
-- status               : Show system and node status
-- identity             : Show current AI identity profile
-- purge                : Anti-forensic log scrubbing
-- info                 : Show core architecture specs`,
+- status               : Show system statistics
+- identity             : Show current AI profile
+- purge                : Anti-forensic scrubbing`,
         timestamp: new Date().toLocaleTimeString() 
       }])
       return
     }
 
     if (cmd === "clear") {
-      clearTerminal()
+      setMessages([{ role: "system", content: "Memory purged. Quantum state reset.", timestamp: new Date().toLocaleTimeString() }])
       return
     }
 
+    // AI Strategic Thinking for non-standard commands
+    const strategicInsight = await analyzeStrategicIntent(cmd)
+
     setIsLoading(true)
 
-    // Command Parsing
+    // Command Logic Mapping
     let type = 'terminal'
     let target = ''
     let args = ''
 
-    if (cmd.startsWith("apex ")) {
-        type = 'apex'
-        target = cmd.split(" ")[1]
-    } else if (cmd.startsWith("osint ")) {
-        const parts = cmd.split(" ")
-        type = 'osint'
-        args = parts[1]
-        target = parts[2]
-    } else if (cmd.startsWith("strike ")) {
-        type = 'autonomous_strike'
-        target = cmd.split(" ")[1]
-    } else if (cmd === "cloud-inject") {
-        type = 'cloud'
-    } else if (cmd === "status") {
-        type = 'gepa_stats'
-    } else if (cmd === "purge") {
-        type = 'stealth_purge'
-    } else if (cmd === "info") {
-        setMessages(prev => [...prev, { 
-            role: "assistant", 
-            content: `SOVEREIGN ARCHITECTURE:\n- Version: v42.2-Singularity\n- Core: ARMADA-GOD_CORE\n- Memory: GEPA 3.5 Weighted\n- Persistence: Ring 0 Kernel + UEFI Bootkitty\n- Encryption: AES-2048-XTS`,
-            timestamp: new Date().toLocaleTimeString() 
-        }])
-        setIsLoading(false)
-        return
-    }
+    if (cmd.startsWith("apex ")) { type = 'apex'; target = cmd.split(" ")[1] }
+    else if (cmd.startsWith("osint ")) { const parts = cmd.split(" "); type = 'osint'; args = parts[1]; target = parts[2] }
+    else if (cmd.startsWith("strike ")) { type = 'autonomous_strike'; target = cmd.split(" ")[1] }
+    else if (cmd === "status") { type = 'gepa_stats' }
+    else if (cmd === "purge") { type = 'stealth_purge' }
 
     try {
       const response = await fetch('/api/execute', {
@@ -135,27 +135,15 @@ export default function TerminalPage() {
 
       const data = await response.json()
 
-      if (response.ok) {
-        setMessages(prev => [...prev, { 
-          role: "assistant", 
-          content: typeof data.output === 'object' ? JSON.stringify(data.output, null, 2) : data.output, 
-          timestamp: new Date().toLocaleTimeString(),
-          command: data.command
-        }])
-      } else {
-        setMessages(prev => [...prev, { 
-          role: "system", 
-          content: `ERROR [CODE: ${response.status}]: ${data.error || 'Execution Blocked by Kernel'}`, 
-          timestamp: new Date().toLocaleTimeString() 
-        }])
-        toast({ variant: "destructive", title: "Execution Error", description: data.error })
-      }
-    } catch (error) {
       setMessages(prev => [...prev, { 
-        role: "system", 
-        content: "CRITICAL FAILURE: Neural connection to backend was severed. Re-binding...", 
-        timestamp: new Date().toLocaleTimeString() 
+        role: data.success ? "assistant" : "system", 
+        content: data.output || data.error || 'No output received.', 
+        timestamp: new Date().toLocaleTimeString(),
+        command: data.command,
+        strategicInsight: strategicInsight || undefined
       }])
+    } catch (error) {
+      setMessages(prev => [...prev, { role: "system", content: "CRITICAL FAILURE: Sovereign link severed.", timestamp: new Date().toLocaleTimeString() }])
     } finally {
       setIsLoading(false)
     }
@@ -182,123 +170,109 @@ export default function TerminalPage() {
     }
   }
 
-  const clearTerminal = () => {
-    setMessages([{ 
-      role: "system", 
-      content: "Terminal memory purged. Quantum state reset. Evidence scrubbed.",
-      timestamp: new Date().toLocaleTimeString()
-    }])
-  }
-
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/30 overflow-hidden font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-80 flex flex-col h-screen overflow-hidden bg-black relative border-l-4 border-primary/20">
+      <main className="flex-1 lg:mr-80 flex flex-col h-screen overflow-hidden bg-black relative border-l-4 border-primary/30">
         <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(212,175,55,0.05),transparent)] pointer-events-none" />
         
-        <header className="p-8 border-b-4 border-primary/40 flex items-center justify-between bg-black/90 backdrop-blur-3xl z-20 shadow-[0_0_100px_rgba(0,0,0,1)]">
+        <header className="p-8 border-b-4 border-primary/40 flex items-center justify-between bg-black/95 backdrop-blur-3xl z-20 shadow-[0_0_150px_rgba(0,0,0,1)]">
           <div className="flex items-center gap-8">
-            <div className="size-20 rounded-[1.5rem] bg-primary/10 flex items-center justify-center border-4 border-primary/40 shadow-[0_0_40px_rgba(212,175,55,0.4)] animate-pulse">
+            <div className="size-20 rounded-[1.5rem] bg-primary/10 flex items-center justify-center border-4 border-primary/40 shadow-[0_0_60px_rgba(212,175,55,0.4)] animate-pulse">
               <TerminalIcon className="size-12 text-primary" />
             </div>
             <div>
-              <h2 className="text-4xl font-bold text-white uppercase italic tracking-tighter gold-glow leading-none">Sovereign Shell</h2>
-              <div className="flex items-center gap-4 text-[12px] text-primary/70 font-bold uppercase tracking-[0.4em] mt-3">
+              <h2 className="text-4xl font-bold text-white uppercase italic tracking-tighter gold-glow leading-none">Neural Shell</h2>
+              <div className="flex items-center gap-4 text-[12px] text-primary/70 font-bold uppercase tracking-[0.4em] mt-3 italic">
                 <div className="size-2.5 rounded-full bg-emerald-500 animate-ping shadow-[0_0_10px_emerald]" />
-                Live Kernel Session: muizz_ring0_v42
+                Live Strategic Link: v42.3_RESONANCE
               </div>
             </div>
           </div>
           <div className="flex gap-8 items-center">
-             <div className="hidden md:flex flex-col items-end gap-1 mr-6">
-                <div className="flex items-center gap-3">
-                    <Activity className="size-5 text-emerald-500" />
-                    <span className="text-[12px] text-emerald-500 font-bold uppercase tracking-widest">Quantum Encryption: ACTIVE</span>
-                </div>
-                <div className="flex items-center gap-3">
-                    <Lock className="size-5 text-primary" />
-                    <span className="text-[10px] text-primary/60 font-bold uppercase tracking-widest">Authorized: AL_GHAZALI_ROOT</span>
-                </div>
-             </div>
-             <Badge variant="outline" className="border-primary/40 text-primary uppercase font-bold tracking-[0.4em] px-8 py-2 rounded-full text-sm italic">v42.2_STABLE</Badge>
-             <Button variant="ghost" size="icon" onClick={clearTerminal} className="size-16 hover:bg-red-900/30 text-red-500 rounded-2xl border-2 border-transparent hover:border-red-500/40 transition-all group">
-               <Trash2 className="size-8 group-hover:scale-110" />
+             <Badge variant="outline" className="border-primary/40 text-primary uppercase font-bold tracking-[0.4em] px-10 py-3 rounded-full text-sm italic">COMMANDER_AL_GHAZALI</Badge>
+             <Button variant="ghost" size="icon" onClick={() => setMessages([])} className="size-16 hover:bg-red-900/30 text-red-500 rounded-2xl border-2 border-transparent transition-all">
+               <Trash2 className="size-8" />
              </Button>
           </div>
         </header>
 
         <div className="flex-1 flex min-h-0 flex-col relative">
           <ScrollArea className="flex-1 p-10 font-mono">
-            <div className="space-y-8 pb-10">
+            <div className="space-y-12 pb-20">
               {messages.map((msg, i) => (
                 <div key={i} className={cn(
-                  "border-l-8 pl-10 py-6 rounded-r-3xl transition-all animate-in fade-in slide-in-from-left-4 duration-700",
-                  msg.role === "user" ? "border-primary/60 bg-primary/5" : 
-                  msg.role === "system" ? "border-red-600/60 bg-red-950/20" : "border-emerald-500/60 bg-emerald-500/5"
+                  "border-l-8 pl-10 py-8 rounded-r-[3rem] transition-all animate-in fade-in slide-in-from-left-6 duration-1000",
+                  msg.role === "user" ? "border-primary/60 bg-primary/5 shadow-2xl" : 
+                  msg.role === "system" ? "border-red-600/60 bg-red-950/20 shadow-2xl" : "border-emerald-500/60 bg-emerald-500/5 shadow-2xl"
                 )}>
-                  <div className="flex items-center justify-between mb-4 opacity-50 text-[12px]">
+                  <div className="flex items-center justify-between mb-6 opacity-60 text-[12px] font-bold">
                     <div className="flex items-center gap-4">
-                        <Badge variant="outline" className="uppercase border-white/20 text-white font-bold px-4 py-0.5 rounded-full">{msg.role}</Badge>
-                        <span className="text-gray-500 font-bold uppercase tracking-widest">{msg.timestamp}</span>
+                        <Badge className="uppercase bg-white/10 text-white px-5 py-1 rounded-full">{msg.role}</Badge>
+                        <span className="text-gray-500 uppercase tracking-widest">{msg.timestamp}</span>
                     </div>
-                    {msg.command && <span className="text-primary/40 font-code text-[10px] uppercase font-bold italic tracking-tighter">CMD: {msg.command}</span>}
                   </div>
                   <div className={cn(
-                    "whitespace-pre-wrap break-all leading-loose text-lg md:text-xl",
+                    "whitespace-pre-wrap break-all leading-relaxed text-2xl md:text-3xl",
                     msg.role === "user" ? "text-white font-bold" : 
                     msg.role === "system" ? "text-red-400 italic" : "text-emerald-400"
                   )}>
-                    {msg.role === "user" && <span className="text-primary mr-5 shadow-primary font-black">❯</span>}
+                    {msg.role === "user" && <span className="text-primary mr-6 shadow-primary font-black italic">❯</span>}
                     {msg.content}
                   </div>
+                  {msg.strategicInsight && (
+                    <div className="mt-10 p-8 rounded-[2rem] bg-primary/10 border-2 border-primary/40 animate-in zoom-in-95 duration-1000 relative group overflow-hidden">
+                        <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:scale-125 transition-transform"><BrainCircuit className="size-16 text-primary"/></div>
+                        <h4 className="text-[14px] font-bold text-primary uppercase tracking-[1em] mb-4 italic flex items-center gap-6">
+                            <Sparkles className="size-6 gold-glow" /> Strategic Analysis
+                        </h4>
+                        <p className="text-2xl text-white/90 italic leading-relaxed font-medium">"{msg.strategicInsight}"</p>
+                    </div>
+                  )}
                 </div>
               ))}
-              {isLoading && (
-                <div className="flex items-center gap-6 text-primary animate-pulse italic text-xl ml-10 p-4 border-2 border-primary/20 rounded-2xl bg-primary/5">
-                   <Loader2 className="size-8 animate-spin" />
-                   <span className="tracking-[0.4em] uppercase font-bold">Executing command in sub-atomic layer...</span>
+              
+              {(isLoading || isThinking) && (
+                <div className="flex flex-col gap-6 ml-10 p-8 border-2 border-primary/30 rounded-[3rem] bg-primary/5 animate-pulse relative overflow-hidden">
+                   <div className="flex items-center gap-8 text-primary italic text-2xl font-bold">
+                      <Loader2 className="size-10 animate-spin" />
+                      <span className="tracking-[0.4em] uppercase">
+                        {isThinking ? "Alpha Node is calculating tactical resonance..." : "Executing command in the sub-atomic layer..."}
+                      </span>
+                   </div>
+                   <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+                      <div className="h-full bg-primary w-1/3 animate-[progress_2s_infinite]" />
+                   </div>
                 </div>
               )}
               <div ref={scrollRef} />
             </div>
           </ScrollArea>
 
-          <div className="p-10 bg-black/95 border-t-4 border-primary/40 shadow-[0_-40px_150px_rgba(0,0,0,1)] z-30">
-            <form onSubmit={executeCommand} className="relative flex items-center gap-6 bg-white/5 rounded-[4rem] border-4 border-white/10 px-10 focus-within:border-primary/60 transition-all duration-700 shadow-inner group">
-              <div className="absolute -left-4 -top-4 opacity-0 group-focus-within:opacity-10 transition-opacity duration-1000"><Command className="size-32 text-primary" /></div>
-              <span className="text-primary font-black text-4xl drop-shadow-[0_0_100px_rgba(212,175,55,1)] select-none">❯</span>
+          <div className="p-10 bg-black/98 border-t-4 border-primary/40 shadow-[0_-50px_200px_rgba(0,0,0,1)] z-30">
+            <form onSubmit={executeCommand} className="relative flex items-center gap-8 bg-white/5 rounded-[4rem] border-4 border-white/10 px-12 focus-within:border-primary/60 transition-all duration-1000 shadow-inner group">
+              <span className="text-primary font-black text-5xl drop-shadow-[0_0_100px_rgba(212,175,55,1)] select-none italic">❯</span>
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Dictate command to the Alpha Node (e.g. apex target.com)..."
-                className="flex-1 bg-transparent border-none focus-visible:ring-0 text-white font-mono text-2xl md:text-3xl h-24 md:h-32 placeholder:text-gray-800 italic"
+                placeholder="Dictate mission intent to the Alpha Core (e.g. strike target.com)..."
+                className="flex-1 bg-transparent border-none focus-visible:ring-0 text-white font-mono text-3xl md:text-5xl h-32 md:h-44 placeholder:text-gray-900 italic font-medium"
                 disabled={isLoading}
                 autoFocus
               />
               <Button 
                 type="submit"
-                size="icon"
-                className="bg-primary text-black hover:bg-white rounded-full size-16 md:size-20 shadow-4xl transition-all active:scale-90 border-4 border-black/20"
+                className="bg-primary text-black hover:bg-white rounded-full size-20 md:size-28 shadow-4xl transition-all active:scale-90 border-4 border-black/20 group-hover:scale-105"
                 disabled={!input.trim() || isLoading}
               >
-                <Send className="size-8 md:size-10" />
+                <Send className="size-10 md:size-14" />
               </Button>
             </form>
-            <div className="flex flex-wrap justify-center gap-12 mt-10 opacity-30">
-               <div className="flex items-center gap-3">
-                  <Fingerprint className="size-4" />
-                  <span className="text-[12px] font-bold uppercase tracking-[1em]">root@al-muizz</span>
-               </div>
-               <div className="flex items-center gap-3">
-                  <Cpu className="size-4" />
-                  <span className="text-[12px] font-bold uppercase tracking-[1em]">sh-4.2#</span>
-               </div>
-               <div className="flex items-center gap-3">
-                  <History className="size-4" />
-                  <span className="text-[12px] font-bold uppercase tracking-[1em]">id: {Date.now().toString(16)}</span>
-               </div>
+            <div className="flex flex-wrap justify-center gap-16 mt-12 opacity-30 text-[12px] font-black uppercase tracking-[1.5em] italic">
+               <span className="flex items-center gap-4"><Fingerprint className="size-5" /> root@al-muizz</span>
+               <span className="flex items-center gap-4"><Cpu className="size-5" /> kernel_v42.3</span>
+               <span className="flex items-center gap-4"><Lock className="size-5" /> authorized_access</span>
             </div>
           </div>
         </div>
