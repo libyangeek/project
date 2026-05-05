@@ -7,8 +7,8 @@ import path from 'path';
 const execPromise = promisify(exec);
 
 /**
- * @fileOverview الجسر التنفيذي السيادي v42.3
- * المحرك العالمي لتنفيذ الأوامر والسكريبتات الهجومية بنمط "الرنين العصبي".
+ * @fileOverview الجسر التنفيذي السيادي v42.4
+ * المحرك العالمي لتنفيذ الأوامر والسكريبتات الهجومية بنمط "التشابك الكمي".
  */
 export async function POST(req: NextRequest) {
   try {
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
         if (!allowedCommands.includes(cmdBase)) {
           if (process.env.NODE_ENV === 'development') {
             return NextResponse.json({
-              output: `[MOCK] RESONANCE OVERRIDE: Executing restricted command: ${command}\nStatus: Access granted via Alpha Node v42.3.`,
+              output: `[MOCK] QUANTUM OVERRIDE: Executing restricted command: ${command}\nStatus: Access granted via Alpha Node v42.4.\nLink: Entangled.`,
               success: true,
               timestamp: new Date().toISOString(),
               executionType: type
@@ -70,10 +70,22 @@ export async function POST(req: NextRequest) {
         executableCommand = `bash ${SCRIPTS.stealth}`;
         break;
 
+      case 'quantum_scramble':
+        if (process.env.NODE_ENV === 'development') {
+            return NextResponse.json({
+              output: `[MOCK] QUANTUM SCRAMBLER ACTIVE: Obfuscating mission data across 12 nodes.\nEntanglement: 100% | Trace: Purged.\nStatus: Data is now non-deterministic.`,
+              success: true,
+              timestamp: new Date().toISOString(),
+              executionType: type
+            });
+        }
+        executableCommand = `echo "Quantum scramble executed on host."`; // Placeholder for real logic
+        break;
+
       default:
         if (process.env.NODE_ENV === 'development') {
           return NextResponse.json({
-            output: `[MOCK] Sovereign Resonance Node ${type} initiated for ${target || 'Global Matrix'}.\nResonance: 432Hz | Sync: Stable.`,
+            output: `[MOCK] Sovereign Quantum Node ${type} initiated for ${target || 'Global Matrix'}.\nResonance: 432Hz | Entanglement: Stable.`,
             success: true,
             timestamp: new Date().toISOString(),
             executionType: type
@@ -94,7 +106,7 @@ export async function POST(req: NextRequest) {
     } catch (execError: any) {
         if (process.env.NODE_ENV === 'development') {
             return NextResponse.json({
-                output: `[MOCK_SUCCESS] Command executed with DEV_BYPASS: ${executableCommand}\nMatrix saturation confirmed.`,
+                output: `[MOCK_SUCCESS] Command executed with DEV_BYPASS: ${executableCommand}\nQuantum matrix saturation confirmed.`,
                 success: true,
                 timestamp: new Date().toISOString(),
                 executionType: type

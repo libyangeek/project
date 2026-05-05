@@ -19,7 +19,8 @@ import {
   Cpu,
   Fingerprint,
   BrainCircuit,
-  Sparkles
+  Sparkles,
+  Atom
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -38,15 +39,15 @@ type Message = {
 }
 
 /**
- * @fileOverview المحطة السيادية v42.3 - THE NEURAL SHELL
- * تتيح للقائد إرسال أوامر حقيقية لعصب النظام مع دعم التحليل الاستراتيجي التلقائي.
+ * @fileOverview المحطة السيادية v42.4 - THE QUANTUM SHELL
+ * تتيح للقائد إرسال أوامر حقيقية لعصب النظام مع دعم التحليل الكمي الاستباقي.
  */
 export default function TerminalPage() {
   const [input, setInput] = React.useState("")
   const [messages, setMessages] = React.useState<Message[]>([
     { 
       role: "system", 
-      content: "Al-Mu'izz Sovereign Terminal [v42.3 - NEURAL RESONANCE]\nEstablishing link to Alpha Node...\nAuthorized: المعتصم بالله ادريس الغزالي\nType 'help' or describe a mission for strategic analysis.",
+      content: "Al-Mu'izz Sovereign Terminal [v42.4 - QUANTUM ENTANGLEMENT]\nEstablishing quantum link to Alpha Node...\nAuthorized: المعتصم بالله ادريس الغزالي\nType 'help' or describe a mission for quantum strategic analysis.",
       timestamp: new Date().toLocaleTimeString()
     }
   ])
@@ -95,7 +96,7 @@ export default function TerminalPage() {
 - apex <target>        : Generate full attack plan
 - osint <type> <target>: Perform OSINT search
 - strike <target>      : Launch autonomous strike
-- resonance            : Check neural resonance sync
+- quantum scramble     : Execute quantum data encryption
 - clear                 : Clear terminal history
 - status               : Show system statistics
 - identity             : Show current AI profile
@@ -125,6 +126,7 @@ export default function TerminalPage() {
     else if (cmd.startsWith("strike ")) { type = 'autonomous_strike'; target = cmd.split(" ")[1] }
     else if (cmd === "status") { type = 'gepa_stats' }
     else if (cmd === "purge") { type = 'stealth_purge' }
+    else if (cmd === "quantum scramble") { type = 'quantum_scramble' }
 
     try {
       const response = await fetch('/api/execute', {
@@ -182,10 +184,10 @@ export default function TerminalPage() {
               <TerminalIcon className="size-12 text-primary" />
             </div>
             <div>
-              <h2 className="text-4xl font-bold text-white uppercase italic tracking-tighter gold-glow leading-none">Neural Shell</h2>
+              <h2 className="text-4xl font-bold text-white uppercase italic tracking-tighter gold-glow leading-none">Quantum Shell</h2>
               <div className="flex items-center gap-4 text-[12px] text-primary/70 font-bold uppercase tracking-[0.4em] mt-3 italic">
                 <div className="size-2.5 rounded-full bg-emerald-500 animate-ping shadow-[0_0_10px_emerald]" />
-                Live Strategic Link: v42.3_RESONANCE
+                Live Quantum Link: v42.4_ENTANGLEMENT
               </div>
             </div>
           </div>
@@ -224,7 +226,7 @@ export default function TerminalPage() {
                     <div className="mt-10 p-8 rounded-[2rem] bg-primary/10 border-2 border-primary/40 animate-in zoom-in-95 duration-1000 relative group overflow-hidden">
                         <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:scale-125 transition-transform"><BrainCircuit className="size-16 text-primary"/></div>
                         <h4 className="text-[14px] font-bold text-primary uppercase tracking-[1em] mb-4 italic flex items-center gap-6">
-                            <Sparkles className="size-6 gold-glow" /> Strategic Analysis
+                            <Sparkles className="size-6 gold-glow" /> Quantum Analysis
                         </h4>
                         <p className="text-2xl text-white/90 italic leading-relaxed font-medium">"{msg.strategicInsight}"</p>
                     </div>
@@ -235,9 +237,9 @@ export default function TerminalPage() {
               {(isLoading || isThinking) && (
                 <div className="flex flex-col gap-6 ml-10 p-8 border-2 border-primary/30 rounded-[3rem] bg-primary/5 animate-pulse relative overflow-hidden">
                    <div className="flex items-center gap-8 text-primary italic text-2xl font-bold">
-                      <Loader2 className="size-10 animate-spin" />
+                      <Atom className="size-10 animate-spin-slow text-primary shadow-[0_0_20px_primary]" />
                       <span className="tracking-[0.4em] uppercase">
-                        {isThinking ? "Alpha Node is calculating tactical resonance..." : "Executing command in the sub-atomic layer..."}
+                        {isThinking ? "Quantum nodes are entanglement-checking mission parameters..." : "Executing command in the sub-atomic layer..."}
                       </span>
                    </div>
                    <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
@@ -271,8 +273,8 @@ export default function TerminalPage() {
             </form>
             <div className="flex flex-wrap justify-center gap-16 mt-12 opacity-30 text-[12px] font-black uppercase tracking-[1.5em] italic">
                <span className="flex items-center gap-4"><Fingerprint className="size-5" /> root@al-muizz</span>
-               <span className="flex items-center gap-4"><Cpu className="size-5" /> kernel_v42.3</span>
-               <span className="flex items-center gap-4"><Lock className="size-5" /> authorized_access</span>
+               <span className="flex items-center gap-4"><Cpu className="size-5" /> kernel_v42.4</span>
+               <span className="flex items-center gap-4"><Atom className="size-5" /> entangled_access</span>
             </div>
           </div>
         </div>

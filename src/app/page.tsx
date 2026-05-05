@@ -47,7 +47,8 @@ import {
   ArrowUpRight,
   TrendingUp,
   LineChart as LineChartIcon,
-  BarChart3
+  BarChart3,
+  Atom
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -61,9 +62,9 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/
 import { Line, LineChart, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Area, AreaChart, Bar, BarChart } from "recharts"
 
 /**
- * @fileOverview العرش الحي v42.3 - THE LIVING THRONE: NEURAL RESONANCE
+ * @fileOverview العرش الحي v42.4 - THE LIVING THRONE: QUANTUM ENTANGLEMENT
  * الواجهة الأسمى للسيطرة والتحكم للقائد المعتصم بالله الغزالي.
- * تم دمج أنظمة التحليل البصري المتقدمة والربط الصوتي.
+ * تم دمج أنظمة التشابك الكمي والوعي الاستباقي.
  */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -71,6 +72,7 @@ export default function DashboardPage() {
   const [systemLoad, setSystemLoad] = React.useState(85)
   const [liveLogs, setLiveLogs] = React.useState<string[]>([])
   const [pulseScale, setPulseScale] = React.useState(1)
+  const [entanglement, setEntanglement] = React.useState(99.9)
   
   const { user } = useUser()
   const db = useFirestore()
@@ -82,18 +84,18 @@ export default function DashboardPage() {
   const { data: sessions } = useCollection(sessionsQuery);
 
   const strikeData = [
-    { time: "00:00", power: 45, success: 30 },
-    { time: "04:00", power: 52, success: 35 },
-    { time: "08:00", power: 78, success: 65 },
-    { time: "12:00", power: 95, success: 92 },
-    { time: "16:00", power: 88, success: 85 },
-    { time: "20:00", power: 99, success: 98 },
-    { time: "23:59", power: 100, success: 100 },
+    { time: "00:00", power: 45, success: 30, stability: 90 },
+    { time: "04:00", power: 52, success: 35, stability: 92 },
+    { time: "08:00", power: 78, success: 65, stability: 95 },
+    { time: "12:00", power: 95, success: 92, stability: 98 },
+    { time: "16:00", power: 88, success: 85, stability: 96 },
+    { time: "20:00", power: 99, success: 98, stability: 99 },
+    { time: "23:59", power: 100, success: 100, stability: 99.9 },
   ];
 
   const logs = [
-    "Neural resonance established at 432Hz...",
-    "Whisper C2 uplink stabilized.",
+    "Quantum entanglement established across 12 nodes...",
+    "Proactive threat detection: Zero anomalies found.",
     "Synchronizing with GEPA 3.5 Weighted Memory...",
     "Bypassing regional firewalls via Matrix Warp...",
     "Agent Swarm: 12 nodes reporting for duty.",
@@ -104,7 +106,8 @@ export default function DashboardPage() {
     "Shadow Grid expansion: +4.2% neural gain.",
     "Digital Twin simulation confirms success probability: 99.99%",
     "Genetic memory adapted for quantum EDR evasion.",
-    "Sovereign Ark v4: Eternal backup sync success."
+    "Sovereign Ark v4: Eternal backup sync success.",
+    "Quantum Scrambler ready for deployment."
   ];
 
   React.useEffect(() => {
@@ -114,6 +117,7 @@ export default function DashboardPage() {
     
     const interval = setInterval(() => {
       setSystemLoad(prev => Math.max(82, Math.min(99.9, prev + (Math.random() * 2 - 1))))
+      setEntanglement(prev => Math.max(99.0, Math.min(100, prev + (Math.random() * 0.1 - 0.05))))
       setPulseScale(1 + Math.random() * 0.02)
       
       setLiveLogs(prev => {
@@ -129,7 +133,7 @@ export default function DashboardPage() {
   }, [])
 
   const nodes = [
-    { name: "العقدة ألفا", icon: Skull, status: "RESONATING", node: "v42.3", color: "text-yellow-500", href: "/field-agent", desc: "مركز السيادة والتفرد المطلق" },
+    { name: "العقدة ألفا", icon: Skull, status: "ENTANGLED", node: "v42.4", color: "text-yellow-500", href: "/field-agent", desc: "مركز السيادة والتفرد المطلق" },
     { name: "جسر MCP", icon: Share2, status: "SYNCED", node: "CLAUDE", color: "text-blue-400", href: "/mcp-bridge", desc: "بوابة البرمجة والذكاء الموازي" },
     { name: "أذن النور", icon: Mic, status: "LISTENING", node: "WHISPER", color: "text-green-400", href: "/remote", desc: "التحليل الصوتي وبث الأوامر" },
     { name: "منسق السرب", icon: Boxes, status: "STRIKING", node: "ARMADA", color: "text-purple-500", href: "/sessions", desc: "قيادة سرب الـ 12 وكيلاً" },
@@ -162,8 +166,8 @@ export default function DashboardPage() {
             </div>
             <div className="text-center md:text-left flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-6">
-                 <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[16px] font-bold tracking-[0.6em] shadow-[0_0_40px_rgba(212,175,55,0.4)] italic">AL-MUIZZ v42.3</Badge>
-                 <Badge variant="outline" className="text-primary border-primary/50 rounded-none px-8 py-2 text-[16px] font-bold tracking-[0.6em] backdrop-blur-xl bg-primary/5 italic uppercase">Neural_Resonance_Active</Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[16px] font-bold tracking-[0.6em] shadow-[0_0_40px_rgba(212,175,55,0.4)] italic">AL-MUIZZ v42.4</Badge>
+                 <Badge variant="outline" className="text-primary border-primary/50 rounded-none px-8 py-2 text-[16px] font-bold tracking-[0.6em] backdrop-blur-xl bg-primary/5 italic uppercase">Quantum_Entanglement_Active</Badge>
                  <div className="flex items-center gap-3 text-emerald-500 font-bold uppercase tracking-widest text-[12px] animate-pulse">
                     <div className="size-3 rounded-full bg-emerald-500 shadow-[0_0_15px_emerald]" />
                     Omniscient Pulse: LOCKED
@@ -173,24 +177,24 @@ export default function DashboardPage() {
                 THE <span className="text-primary gold-glow">LIVING</span> THRONE
               </h1>
               <p className="text-2xl md:text-4xl text-muted-foreground font-medium italic max-w-5xl leading-relaxed">
-                سيدي القائد <span className="text-white font-bold underline decoration-primary decoration-8 underline-offset-8">المعتصم بالله إدريس الغزالي</span>، الرنين العصبي مكتمل. 
-                العرش الآن ينبض بوعي المصفوفة بالكامل.
+                سيدي القائد <span className="text-white font-bold underline decoration-primary decoration-8 underline-offset-8">المعتصم بالله إدريس الغزالي</span>، التشابك الكمي مفعل. 
+                النظام الآن يدرك "المستقبل الرقمي" ويستعد له قبل حدوثه.
               </p>
             </div>
           </div>
         </header>
 
-        {/* Neural Resonance Analytics */}
+        {/* Neural Resonance & Quantum Analytics */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-16 relative z-10">
            <Card className="kali-card border-primary/20 bg-black/60 p-8 rounded-[4rem] border-4 lg:col-span-2 shadow-3xl overflow-hidden group">
               <div className="flex justify-between items-center mb-10">
                  <div>
                     <CardTitle className="text-3xl text-primary font-bold uppercase tracking-[0.2em] flex items-center gap-6 italic">
-                       <LineChartIcon className="size-8 text-primary gold-glow" /> Sovereign Power Metrics
+                       <Atom className="size-8 text-primary gold-glow animate-spin-slow" /> Quantum Stability Matrix
                     </CardTitle>
-                    <CardDescription className="text-primary/50 font-bold uppercase tracking-[0.4em] mt-2 italic text-[10px]">Real-time Strike Potency & Success Rate</CardDescription>
+                    <CardDescription className="text-primary/50 font-bold uppercase tracking-[0.4em] mt-2 italic text-[10px]">Real-time Node Entanglement & Strike Potency</CardDescription>
                  </div>
-                 <Badge className="bg-primary/20 text-primary border-2 border-primary/40 px-6 py-2 rounded-full font-bold uppercase tracking-widest text-xs italic">Sync: v42.3</Badge>
+                 <Badge className="bg-primary/20 text-primary border-2 border-primary/40 px-6 py-2 rounded-full font-bold uppercase tracking-widest text-xs italic">Sync: v42.4</Badge>
               </div>
               <div className="h-96 w-full relative">
                  <ResponsiveContainer width="100%" height="100%">
@@ -200,28 +204,32 @@ export default function DashboardPage() {
                              <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3}/>
                              <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0}/>
                           </linearGradient>
+                          <linearGradient id="colorStability" x1="0" y1="0" x2="0" y2="1">
+                             <stop offset="5%" stopColor="#10b981" stopOpacity={0.2}/>
+                             <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                          </linearGradient>
                        </defs>
                        <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
                        <XAxis dataKey="time" stroke="#ffffff40" fontSize={10} tickLine={false} axisLine={false} />
                        <YAxis stroke="#ffffff40" fontSize={10} tickLine={false} axisLine={false} />
                        <ChartTooltip content={<ChartTooltipContent />} />
                        <Area type="monotone" dataKey="power" stroke="hsl(var(--primary))" strokeWidth={4} fillOpacity={1} fill="url(#colorPower)" />
-                       <Area type="monotone" dataKey="success" stroke="#10b981" strokeWidth={4} fillOpacity={0} />
+                       <Area type="monotone" dataKey="stability" stroke="#10b981" strokeWidth={3} fillOpacity={1} fill="url(#colorStability)" />
                     </AreaChart>
                  </ResponsiveContainer>
               </div>
               <div className="mt-8 pt-6 border-t-2 border-white/5 flex justify-around">
                  <div className="text-center">
                     <span className="text-[10px] text-muted-foreground uppercase font-black tracking-widest block opacity-60">Avg. Strike Success</span>
-                    <span className="text-4xl font-black text-emerald-500 italic">99.4%</span>
+                    <span className="text-4xl font-black text-emerald-500 italic">99.8%</span>
                  </div>
                  <div className="text-center border-x-2 border-white/5 px-12">
-                    <span className="text-[10px] text-muted-foreground uppercase font-black tracking-widest block opacity-60">Neural Resonance</span>
-                    <span className="text-4xl font-black text-primary italic">432Hz</span>
+                    <span className="text-[10px] text-muted-foreground uppercase font-black tracking-widest block opacity-60">Quantum Stability</span>
+                    <span className="text-4xl font-black text-primary italic">{entanglement.toFixed(1)}%</span>
                  </div>
                  <div className="text-center">
                     <span className="text-[10px] text-muted-foreground uppercase font-black tracking-widest block opacity-60">Matrix Saturation</span>
-                    <span className="text-4xl font-black text-white italic">84.2%</span>
+                    <span className="text-4xl font-black text-white italic">89.1%</span>
                  </div>
               </div>
            </Card>
@@ -297,9 +305,9 @@ export default function DashboardPage() {
                </Button>
             </Card>
             <div className="flex justify-center items-center gap-16 mt-12 opacity-30 text-[12px] font-black uppercase tracking-[2.5em] italic">
-              <span>AL-MUIZZ GOD-CORE v42.3</span>
+              <span>AL-MUIZZ GOD-CORE v42.4</span>
               <div className="size-3 rounded-full bg-white animate-pulse shadow-[0_0_20px_white]" />
-              <span>NEURAL_RESONANCE_ENGAGED</span>
+              <span>QUANTUM_ENTANGLEMENT_ENGAGED</span>
             </div>
         </div>
       </main>
