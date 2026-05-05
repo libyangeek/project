@@ -21,13 +21,26 @@ import {
   Share2,
   Boxes,
   Anchor,
-  Brain,
-  Workflow,
   Cloud,
-  ChevronRight,
-  Terminal as TerminalIcon,
+  Ghost,
   ShieldAlert,
-  Ghost
+  Mic,
+  Radio,
+  Workflow,
+  Search,
+  MessageSquare,
+  BookOpen,
+  ChevronRight,
+  Power,
+  GitGraph,
+  Fingerprint,
+  BrainCircuit,
+  Eye,
+  HeartPulse,
+  Waves,
+  Grip,
+  Wifi,
+  Lock
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -35,11 +48,8 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase'
 import { collection } from 'firebase/firestore'
+import { toast } from "@/hooks/use-toast"
 
-/**
- * @fileOverview العرش الحي v42.0 - مركز السيادة والتحكم
- * تم دمج كافة العقد الـ 12 للسيادة في واجهة واحدة.
- */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
@@ -72,18 +82,18 @@ export default function DashboardPage() {
   if (!mounted) return null;
 
   const nodes = [
-    { name: "Alpha God-Core", icon: Skull, status: "SINGULARITY", node: "v42.0", color: "text-yellow-500", href: "/field-agent" },
-    { name: "MCP Bridge", icon: Share2, status: "CONNECTED", node: "CLAUDE", color: "text-blue-400", href: "/mcp-bridge" },
-    { name: "Whisper Audio", icon: Radio, status: "LISTENING", node: "VOICE", color: "text-green-400", href: "/remote" },
-    { name: "Swarm Orchestrator", icon: Boxes, status: "ACTIVE", node: "SWARM", color: "text-purple-500", href: "/sessions" },
-    { name: "C2 Matrix", icon: Network, status: "ONLINE", node: "12 NODES", color: "text-cyan-400", href: "/terminal" },
-    { name: "GEPA 3.5", icon: Binary, status: "EVOLVING", node: "GENETIC", color: "text-pink-500", href: "/knowledge" },
-    { name: "Digital Twin", icon: Workflow, status: "ACTIVE", node: "VIRTUAL", color: "text-indigo-400", href: "/digital-twin" },
-    { name: "Kernel Stealth", icon: Ghost, status: "HIDDEN", node: "ROOTKIT", color: "text-gray-400", href: "/system" },
-    { name: "Polymorph Forge", icon: Flame, status: "ARMED", node: "WEAPONS", color: "text-orange-500", href: "/red-team" },
-    { name: "Persistence", icon: Anchor, status: "IMMUTABLE", node: "UEFI", color: "text-emerald-400", href: "/terminal" },
-    { name: "Cloud Overlord", icon: Cloud, status: "SYNCED", node: "SCALABLE", color: "text-blue-300", href: "/system" },
-    { name: "Silk Guardian", icon: ShieldCheck, status: "DEFENDING", node: "HARDWARE", color: "text-green-500", href: "/system" },
+    { name: "Alpha God-Core", icon: Skull, status: "SINGULARITY", node: "v42.0", color: "text-yellow-500", href: "/field-agent", desc: "مركز المعالجة واتخاذ القرار" },
+    { name: "MCP Bridge", icon: Share2, status: "CONNECTED", node: "CLAUDE", color: "text-blue-400", href: "/mcp-bridge", desc: "بوابة البرمجة والذكاء الخارجي" },
+    { name: "Whisper Audio", icon: Mic, status: "LISTENING", node: "VOICE", color: "text-green-400", href: "/remote", desc: "نظام الاستماع والتحليل الصوتي" },
+    { name: "Swarm Mgr", icon: Boxes, status: "ACTIVE", node: "SWARM", color: "text-purple-500", href: "/sessions", desc: "إدارة الوكلاء الخفيين" },
+    { name: "C2 Matrix", icon: Network, status: "ONLINE", node: "12 NODES", color: "text-cyan-400", href: "/terminal", desc: "سيطرة شاملة عبر أطر التحكم" },
+    { name: "GEPA 3.5", icon: Binary, status: "EVOLVING", node: "GENETIC", color: "text-pink-500", href: "/knowledge", desc: "التعلم الجيني الموزون" },
+    { name: "Digital Twin", icon: Workflow, status: "ACTIVE", node: "VIRTUAL", color: "text-indigo-400", href: "/digital-twin", desc: "محاكاة الهجمات قبل التنفيذ" },
+    { name: "Kernel Stealth", icon: Ghost, status: "HIDDEN", node: "ROOTKIT", color: "text-gray-400", href: "/system", desc: "التخفي داخل النواة" },
+    { name: "Polymorph", icon: Flame, status: "ARMED", node: "WEAPONS", color: "text-orange-500", href: "/red-team", desc: "توليد أسلحة متغيرة الشكل" },
+    { name: "Persistence", icon: Anchor, status: "IMMUTABLE", node: "UEFI", color: "text-emerald-400", href: "/terminal", desc: "الوجود المطلق في الـ UEFI" },
+    { name: "Cloud Overlord", icon: Cloud, status: "SYNCED", node: "SCALABLE", color: "text-blue-300", href: "/system", desc: "السيادة السحابية العالمية" },
+    { name: "Silk Guardian", icon: ShieldCheck, status: "DEFENDING", node: "HARDWARE", color: "text-green-500", href: "/system", desc: "الحماية المادية الذاتية" },
   ];
 
   return (
@@ -117,20 +127,23 @@ export default function DashboardPage() {
           </div>
         </header>
 
-        {/* Nodes Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 relative z-10 mb-12">
+        {/* 12 Nodes Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 relative z-10 mb-12">
            {nodes.map((node, i) => {
              const Icon = node.icon;
              return (
                <Link key={i} href={node.href}>
-                 <Card className="kali-card border-white/5 hover:border-primary/60 p-6 rounded-[2.5rem] bg-black/90 group transition-all duration-500 hover:scale-105 h-full border-2">
+                 <Card className="kali-card border-white/5 hover:border-primary/60 p-6 rounded-[1.5rem] bg-black/90 group transition-all duration-500 hover:scale-105 h-full border-2">
                     <div className="flex justify-between items-start mb-4">
-                        <Icon className={cn("size-8", node.color)} />
+                        <div className={cn("size-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-primary/20", node.color)}>
+                            <Icon className="size-6" />
+                        </div>
                         <div className="size-2 rounded-full bg-emerald-500 animate-ping shadow-[0_0_15px_emerald]" />
                     </div>
                     <h3 className="text-xl font-bold text-white uppercase tracking-tighter group-hover:text-primary transition-colors">{node.name}</h3>
-                    <div className="flex justify-between items-end mt-4">
-                      <span className="text-[10px] text-muted-foreground font-bold tracking-widest">{node.status}</span>
+                    <p className="text-[10px] text-muted-foreground mt-2 line-clamp-1">{node.desc}</p>
+                    <div className="flex justify-between items-end mt-4 pt-4 border-t border-white/5">
+                      <span className="text-[10px] text-primary font-bold tracking-widest">{node.status}</span>
                       <span className="text-[9px] text-white/20">{node.node}</span>
                     </div>
                  </Card>
@@ -139,49 +152,69 @@ export default function DashboardPage() {
            })}
         </div>
 
-        {/* System Vitals */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            <Card className="kali-card border-primary/20 bg-black/60 p-8 rounded-[3rem] border-2">
-                <CardTitle className="text-2xl text-primary font-bold uppercase tracking-widest mb-6 flex items-center gap-4">
-                  <Activity className="size-6 animate-pulse" /> Neural Synchronicity
-                </CardTitle>
-                <div className="space-y-6">
-                    <div className="flex justify-between text-[12px] font-bold uppercase tracking-widest">
-                        <span>Global Sync Status</span>
-                        <span className="text-emerald-500">100% SECURE</span>
-                    </div>
-                    <div className="h-3 bg-white/5 rounded-full overflow-hidden border border-white/10 p-0.5">
-                       <div className="h-full bg-emerald-500 w-full animate-pulse shadow-[0_0_20px_emerald]" />
-                    </div>
+        {/* System Vitals & Stats */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12 relative z-10">
+            <Card className="kali-card border-primary/20 bg-black/60 p-8 rounded-[3rem] border-2 lg:col-span-2">
+                <div className="flex justify-between items-center mb-8">
+                  <CardTitle className="text-2xl text-primary font-bold uppercase tracking-widest flex items-center gap-4">
+                    <Activity className="size-6 animate-pulse" /> Neural Synchronicity
+                  </CardTitle>
+                  <Button variant="ghost" className="text-primary hover:text-white" onClick={() => toast({title: "Pulse Synced", description: "All nodes responding."})}>
+                    <RefreshCcw className="size-4 mr-2" /> RE-SYNC
+                  </Button>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-4">
+                      <div className="flex justify-between text-[12px] font-bold uppercase tracking-widest">
+                          <span>Global Node Sync</span>
+                          <span className="text-emerald-500">100%</span>
+                      </div>
+                      <div className="h-2 bg-white/5 rounded-full overflow-hidden border border-white/10">
+                         <div className="h-full bg-emerald-500 w-full animate-pulse shadow-[0_0_20px_emerald]" />
+                      </div>
+                  </div>
+                  <div className="space-y-4">
+                      <div className="flex justify-between text-[12px] font-bold uppercase tracking-widest">
+                          <span>System Load</span>
+                          <span className="text-primary">{systemLoad}%</span>
+                      </div>
+                      <div className="h-2 bg-white/5 rounded-full overflow-hidden border border-white/10">
+                         <div className="h-full bg-primary transition-all duration-1000" style={{ width: `${systemLoad}%` }} />
+                      </div>
+                  </div>
                 </div>
             </Card>
 
             <Card className="kali-card border-red-600/20 bg-black/60 p-8 rounded-[3rem] border-2">
                 <CardTitle className="text-2xl text-red-500 font-bold uppercase tracking-widest mb-6 flex items-center gap-4">
-                  <ShieldAlert className="size-6" /> Threat Detection
+                  <ShieldAlert className="size-6" /> Security State
                 </CardTitle>
-                <div className="flex items-center justify-between">
-                    <p className="text-lg italic text-muted-foreground">"No active threats detected. Stealth protocols nominal."</p>
-                    <Ghost className="size-10 text-white/20" />
+                <div className="flex flex-col h-full justify-between">
+                    <p className="text-lg italic text-muted-foreground">"Stealth mode active. All traces auto-purged by Silk Guardian."</p>
+                    <div className="flex justify-center mt-4">
+                      <Ghost className="size-16 text-white/10 animate-bounce" />
+                    </div>
                 </div>
             </Card>
         </div>
 
-        {/* Footer Actions */}
-        <footer className="mt-auto grid grid-cols-2 md:grid-cols-4 gap-6 relative z-10 pb-12">
-            <Button className="h-20 rounded-[2.5rem] bg-primary text-black hover:bg-primary/80 font-bold uppercase tracking-[1em] shadow-2xl border-2 border-primary/50" asChild>
-                <Link href="/terminal">TERMINAL</Link>
-            </Button>
-            <Button variant="outline" className="h-20 rounded-[2.5rem] border-2 border-primary/40 text-primary hover:bg-primary/10 font-bold uppercase tracking-[1em]" asChild>
-                <Link href="/recon">RECON</Link>
-            </Button>
-            <Button variant="outline" className="h-20 rounded-[2.5rem] border-2 border-red-600/40 text-red-500 hover:bg-red-600/10 font-bold uppercase tracking-[1em]" asChild>
-                <Link href="/red-team">ARSENAL</Link>
-            </Button>
-            <Button variant="outline" className="h-20 rounded-[2.5rem] border-2 border-blue-500/40 text-blue-500 hover:bg-blue-500/10 font-bold uppercase tracking-[1em]" asChild>
-                <Link href="/mcp-bridge">BRIDGE</Link>
-            </Button>
-        </footer>
+        {/* Global Action Terminal */}
+        <div className="mt-auto relative z-10 pb-12">
+            <Card className="kali-card bg-black/95 p-2 rounded-full border-primary/40 shadow-7xl flex items-center">
+               <div className="px-6 flex items-center gap-4 border-r border-white/10 mr-4">
+                  <TerminalIcon className="size-6 text-primary" />
+                  <span className="text-xs font-bold text-primary uppercase tracking-widest">SOV-CLI</span>
+               </div>
+               <input 
+                type="text" 
+                placeholder="أمرك سيدي القائد..." 
+                className="flex-1 bg-transparent border-none outline-none text-lg italic text-white px-4"
+               />
+               <Button className="bg-primary text-black rounded-full px-8 font-bold uppercase tracking-widest mr-2">
+                  EXECUTE
+               </Button>
+            </Card>
+        </div>
       </main>
     </div>
   )

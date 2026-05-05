@@ -9,7 +9,6 @@ export async function POST(req: NextRequest) {
   try {
     const { command, target, args, type } = await req.json();
 
-    // مسارات السكريبتات في النظام السيادي
     const BASE_PATH = '/opt/sovereign-ai-platform';
     const SCRIPTS = {
       apex: path.join(BASE_PATH, 'ai-engine/offensive/apex_brain.py'),
@@ -17,15 +16,15 @@ export async function POST(req: NextRequest) {
       gepa: path.join(BASE_PATH, 'gepa/gepa_v35.py'),
       polymorph: path.join(BASE_PATH, 'evasion/polymorph_engine.py'),
       deploy_bootkit: path.join(BASE_PATH, 'bootkits/deploy_bootkit.sh'),
+      cloud_persistence: path.join(BASE_PATH, 'ai-engine/persistence/cloud_persistence.sh'),
+      silk_guardian: path.join(BASE_PATH, 'security/blackteam/silk_guardian.py'),
     };
 
     let executableCommand = '';
 
-    // توجيه الأوامر بناءً على النوع
     switch (type) {
       case 'terminal':
-        // حماية: السماح بأوامر محددة فقط أو تنفيذ مباشر تحت إشراف القائد
-        const allowedCommands = ['nmap', 'ping', 'whois', 'dig', 'traceroute', 'curl', 'ls', 'pwd'];
+        const allowedCommands = ['nmap', 'ping', 'whois', 'dig', 'traceroute', 'curl', 'ls', 'pwd', 'sovereign'];
         const cmdBase = command.split(' ')[0];
         if (!allowedCommands.includes(cmdBase)) {
           return NextResponse.json({ error: 'Command not authorized by Sovereign Core.' }, { status: 403 });
@@ -48,12 +47,19 @@ export async function POST(req: NextRequest) {
       case 'persistence':
         executableCommand = `bash ${SCRIPTS.deploy_bootkit}`;
         break;
+      
+      case 'cloud':
+        executableCommand = `bash ${SCRIPTS.cloud_persistence}`;
+        break;
+      
+      case 'silk_guardian':
+        executableCommand = `python3 ${SCRIPTS.silk_guardian}`;
+        break;
 
       default:
         return NextResponse.json({ error: 'Invalid execution type.' }, { status: 400 });
     }
 
-    // تنفيذ الأمر الفعلي
     const { stdout, stderr } = await execPromise(executableCommand);
 
     return NextResponse.json({
