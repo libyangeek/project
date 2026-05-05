@@ -73,7 +73,6 @@ export default function DashboardPage() {
     
     const interval = setInterval(() => {
       setSystemLoad(Math.floor(Math.random() * 20) + 75)
-      // Simulate node status updates
       const statuses = ["ACTIVE", "SYNCHRONIZING", "OPERATIONAL", "STRIKING", "GHOST_MODE"];
       const newStatus: Record<string, string> = {};
       nodes.forEach(n => {
@@ -89,7 +88,7 @@ export default function DashboardPage() {
   }, [])
 
   const nodes = [
-    { name: "العقدة ألفa", icon: Skull, status: "SINGULARITY", node: "v42.0", color: "text-yellow-500", href: "/field-agent", desc: "مركز المعالجة واتخاذ القرار" },
+    { name: "العقدة ألفا", icon: Skull, status: "SINGULARITY", node: "v42.0", color: "text-yellow-500", href: "/field-agent", desc: "مركز المعالجة واتخاذ القرار" },
     { name: "جسر MCP", icon: Share2, status: "CONNECTED", node: "CLAUDE", color: "text-blue-400", href: "/mcp-bridge", desc: "بوابة البرمجة والذكاء الخارجي" },
     { name: "أذن النور", icon: Mic, status: "LISTENING", node: "WHISPER", color: "text-green-400", href: "/remote", desc: "نظام الاستماع والتحليل الصوتي" },
     { name: "منسق السرب", icon: Boxes, status: "ACTIVE", node: "SWARM", color: "text-purple-500", href: "/sessions", desc: "إدارة الوكلاء الخفيين" },
@@ -136,7 +135,7 @@ export default function DashboardPage() {
           </div>
         </header>
 
-        {/* 12 Nodes Grid */}
+        {/* Status Dashboard */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 relative z-10 mb-12">
            {nodes.map((node, i) => {
              const Icon = node.icon;
@@ -163,33 +162,37 @@ export default function DashboardPage() {
            })}
         </div>
 
-        {/* System Vitals & Stats */}
+        {/* Interactive Stats and Action Center */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12 relative z-10">
             <Card className="kali-card border-primary/20 bg-black/60 p-8 rounded-[3rem] border-2 lg:col-span-2">
                 <div className="flex justify-between items-center mb-8">
                   <CardTitle className="text-2xl text-primary font-bold uppercase tracking-widest flex items-center gap-4">
-                    <Activity className="size-6 animate-pulse" /> Neural Synchronicity
+                    <Activity className="size-6 animate-pulse" /> Global Command Status
                   </CardTitle>
-                  <Button variant="ghost" className="text-primary hover:text-white" onClick={() => {
-                    toast({title: "Re-establishing Uplink", description: "Connecting to the 12 Nodes of Sovereignty..."});
-                    handleRefresh();
-                  }}>
-                    <RefreshCcw className="size-4 mr-2" /> RE-SYNC
-                  </Button>
+                  <div className="flex gap-4">
+                    <div className="flex flex-col items-end">
+                      <span className="text-[10px] text-muted-foreground uppercase font-bold">Active Sessions</span>
+                      <span className="text-xl font-bold text-white">{sessions?.length || 0}</span>
+                    </div>
+                    <div className="flex flex-col items-end">
+                      <span className="text-[10px] text-muted-foreground uppercase font-bold">Threat Level</span>
+                      <span className="text-xl font-bold text-red-500">OMEGA</span>
+                    </div>
+                  </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-4">
-                      <div className="flex justify-between text-[12px] font-bold uppercase tracking-widest">
-                          <span>Global Node Sync</span>
-                          <span className="text-emerald-500">100%</span>
+                      <div className="flex justify-between text-[12px] font-bold uppercase tracking-widest text-muted-foreground">
+                          <span>Neural Processing</span>
+                          <span className="text-emerald-500">Optimal</span>
                       </div>
                       <div className="h-2 bg-white/5 rounded-full overflow-hidden border border-white/10">
-                         <div className="h-full bg-emerald-500 w-full animate-pulse shadow-[0_0_20px_emerald]" />
+                         <div className="h-full bg-emerald-500 w-[92%] animate-pulse shadow-[0_0_20px_emerald]" />
                       </div>
                   </div>
                   <div className="space-y-4">
-                      <div className="flex justify-between text-[12px] font-bold uppercase tracking-widest">
-                          <span>System Load</span>
+                      <div className="flex justify-between text-[12px] font-bold uppercase tracking-widest text-muted-foreground">
+                          <span>Network Saturation</span>
                           <span className="text-primary">{systemLoad}%</span>
                       </div>
                       <div className="h-2 bg-white/5 rounded-full overflow-hidden border border-white/10">
@@ -197,23 +200,42 @@ export default function DashboardPage() {
                       </div>
                   </div>
                 </div>
+                <div className="mt-8 pt-8 border-t border-white/5 flex gap-4">
+                   <Button className="bg-primary/10 border-2 border-primary/40 text-primary hover:bg-primary/20 rounded-2xl px-8 font-bold uppercase tracking-widest text-xs h-12 italic">
+                     Launch Global Strike
+                   </Button>
+                   <Button variant="outline" className="border-white/10 bg-white/5 hover:bg-white/10 rounded-2xl px-8 font-bold uppercase tracking-widest text-xs h-12 italic">
+                     System Diagnostics
+                   </Button>
+                </div>
             </Card>
 
             <Card className="kali-card border-red-600/20 bg-black/60 p-8 rounded-[3rem] border-2">
                 <CardTitle className="text-2xl text-red-500 font-bold uppercase tracking-widest mb-6 flex items-center gap-4">
-                  <ShieldAlert className="size-6" /> Security State
+                  <ShieldAlert className="size-6" /> Cyber Defense
                 </CardTitle>
-                <div className="flex flex-col h-full justify-between">
-                    <p className="text-lg italic text-muted-foreground">"Stealth mode active. All traces auto-purged by Silk Guardian."</p>
-                    <div className="flex justify-center mt-4">
-                      <Ghost className="size-16 text-white/10 animate-bounce" />
-                    </div>
+                <div className="space-y-6">
+                   <div className="flex items-center justify-between p-4 bg-red-950/20 border border-red-900/40 rounded-xl">
+                      <div className="flex items-center gap-4">
+                         <Ghost className="size-5 text-red-400" />
+                         <span className="text-sm font-bold uppercase text-red-200">Stealth Protocol</span>
+                      </div>
+                      <Badge className="bg-red-600 text-white">ACTIVE</Badge>
+                   </div>
+                   <div className="flex items-center justify-between p-4 bg-red-950/20 border border-red-900/40 rounded-xl">
+                      <div className="flex items-center gap-4">
+                         <Lock className="size-5 text-red-400" />
+                         <span className="text-sm font-bold uppercase text-red-200">Encryption Level</span>
+                         </div>
+                      <Badge variant="outline" className="border-red-400 text-red-400">AES-2048</Badge>
+                   </div>
+                   <p className="text-sm italic text-red-300 opacity-60">"The best defense is an unstoppable offense."</p>
                 </div>
             </Card>
         </div>
 
         {/* Global Action Terminal */}
-        <div className="mt-auto relative z-10 pb-12">
+        <div className="mt-auto relative z-10 pb-6">
             <Card className="kali-card bg-black/95 p-2 rounded-full border-primary/40 shadow-7xl flex items-center">
                <div className="px-6 flex items-center gap-4 border-r border-white/10 mr-4">
                   <TerminalIcon className="size-6 text-primary" />
@@ -221,13 +243,16 @@ export default function DashboardPage() {
                </div>
                <input 
                 type="text" 
-                placeholder="أمرك سيدي القائد..." 
-                className="flex-1 bg-transparent border-none outline-none text-lg italic text-white px-4"
+                placeholder="أدخل الأمر السيادي هنا..." 
+                className="flex-1 bg-transparent border-none outline-none text-lg italic text-white px-4 placeholder:text-white/20"
                />
-               <Button className="bg-primary text-black rounded-full px-8 font-bold uppercase tracking-widest mr-2">
+               <Button className="bg-primary text-black rounded-full px-8 font-bold uppercase tracking-widest mr-2 hover:bg-white transition-all">
                   EXECUTE
                </Button>
             </Card>
+            <div className="text-center mt-4">
+              <span className="text-[10px] text-white/20 uppercase tracking-[2em] font-bold">AL-MUIZZ COMMAND & CONTROL</span>
+            </div>
         </div>
       </main>
     </div>
