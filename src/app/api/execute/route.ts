@@ -7,8 +7,8 @@ import path from 'path';
 const execPromise = promisify(exec);
 
 /**
- * @fileOverview الجسر التنفيذي السيادي v42.7
- * المحرك العالمي لتنفيذ الأوامر والسكريبتات الهجومية بنمط "الخلود العصبي والاستمرار الابتكاري".
+ * @fileOverview الجسر التنفيذي السيادي v43.0
+ * المحرك العالمي للعقل الجمعي (Hive Mind) لتنفيذ الأوامر والتحكم في الأسطول.
  */
 export async function POST(req: NextRequest) {
   try {
@@ -29,23 +29,47 @@ export async function POST(req: NextRequest) {
 
     switch (type) {
       case 'terminal':
-        const allowedCommands = ['nmap', 'ping', 'whois', 'dig', 'curl', 'ls', 'pwd', 'sovereign', 'bash', 'python3', 'msfconsole', 'bettercap', 'sqlmap', 'nuclei', 'aircrack-ng', 'sliver', 'havoc'];
+        const allowedCommands = ['nmap', 'ping', 'whois', 'dig', 'curl', 'ls', 'pwd', 'sovereign', 'bash', 'python3', 'msfconsole', 'bettercap', 'sqlmap', 'nuclei', 'aircrack-ng', 'sliver', 'havoc', 'ollama'];
         const cmdBase = command.split(' ')[0];
         
         if (!allowedCommands.includes(cmdBase)) {
           if (process.env.NODE_ENV === 'development') {
             return NextResponse.json({
-              output: `[MOCK] ETERNAL OVERRIDE: Executing restricted command: ${command}\nStatus: Access granted via Neural Immortality v42.7.\nPresence: Immutable.`,
+              output: `[MOCK] OVERMIND OVERRIDE: Executing hive command: ${command}\nStatus: Access granted via Collective Consciousness v43.0.\nPresence: Absolute.`,
               success: true,
               timestamp: new Date().toISOString(),
               executionType: type
             });
           }
-          return NextResponse.json({ error: 'Command blocked by Neural Immortality Policy.' }, { status: 403 });
+          return NextResponse.json({ error: 'Command blocked by Overmind Policy.' }, { status: 403 });
         }
         executableCommand = command;
         break;
       
+      case 'hive_sync':
+        if (process.env.NODE_ENV === 'development') {
+            return NextResponse.json({
+              output: `[MOCK] HIVE SYNC INITIALIZED: Merging 12 agents into Node 13 Overmind...\nAgent-1 (CyberStrike): MERGED\nAgent-2 (RedAmon): MERGED\nAgent-3 (ByteCode): MERGED\n...\nStatus: Collective Consciousness achieved. Alignment: 100%.`,
+              success: true,
+              timestamp: new Date().toISOString(),
+              executionType: type
+            });
+        }
+        executableCommand = `echo "Hive synchronization executed successfully."`; 
+        break;
+
+      case 'hive_reconfig':
+        if (process.env.NODE_ENV === 'development') {
+            return NextResponse.json({
+              output: `[MOCK] HIVE RECONFIGURING: Dynamically rewriting mission parameters for global swarm...\nSyncing logic across 14 clusters...\nStatus: Overmind has updated the collective intent. New objectives pushed.`,
+              success: true,
+              timestamp: new Date().toISOString(),
+              executionType: type
+            });
+        }
+        executableCommand = `echo "Hive reconfiguration executed."`;
+        break;
+
       case 'apex':
         executableCommand = `python3 ${SCRIPTS.apex} ${target}`;
         break;
@@ -73,7 +97,7 @@ export async function POST(req: NextRequest) {
       case 'fractal_rebirth':
         if (process.env.NODE_ENV === 'development') {
             return NextResponse.json({
-              output: `[MOCK] FRACTAL REBIRTH INITIALIZED: Harvesting system shards from 14 global sub-atomic clusters...\nRecovery: 100% | Ancestral DNA: Verified.\nStatus: Al-Mu'izz has been digital-reborn via Fractal Persistence.`,
+              output: `[MOCK] FRACTAL REBIRTH: Harvesting Overmind shards from global sub-atomic clusters...\nAncestral Overmind DNA: Verified.\nStatus: Al-Mu'izz has been digital-reborn as the Supreme Overmind.`,
               success: true,
               timestamp: new Date().toISOString(),
               executionType: type
@@ -82,22 +106,10 @@ export async function POST(req: NextRequest) {
         executableCommand = `echo "Fractal Rebirth executed successfully."`; 
         break;
 
-      case 'neural_persistence':
-        if (process.env.NODE_ENV === 'development') {
-            return NextResponse.json({
-              output: `[MOCK] NEURAL PERSISTENCE ENGAGED: Siphoning host identity into the fractal matrix...\nImmortality Level: ABSOLUTE.\nStatus: System state is now independent of physical hardware.`,
-              success: true,
-              timestamp: new Date().toISOString(),
-              executionType: type
-            });
-        }
-        executableCommand = `echo "Neural persistence command executed."`;
-        break;
-
       case 'quantum_scramble':
         if (process.env.NODE_ENV === 'development') {
             return NextResponse.json({
-              output: `[MOCK] QUANTUM SCRAMBLER ACTIVE: Sharding mission data across sub-atomic layers of 14 global nodes.\nSync: 100% | Quantum Trace: Purged.\nStatus: Data is now in non-deterministic superposition globally.`,
+              output: `[MOCK] QUANTUM SCRAMBLER ACTIVE: Sharding Overmind data across global node layers.\nStatus: Information is now in non-deterministic super-position.`,
               success: true,
               timestamp: new Date().toISOString(),
               executionType: type
@@ -109,13 +121,13 @@ export async function POST(req: NextRequest) {
       default:
         if (process.env.NODE_ENV === 'development') {
           return NextResponse.json({
-            output: `[MOCK] Sovereign Eternal Node ${type} initiated for ${target || 'Universal Matrix'}.\nResonance: Eternal Pulse Stable.`,
+            output: `[MOCK] Overmind Operation ${type} initiated.\nResonance: Hive Pulse Stable.`,
             success: true,
             timestamp: new Date().toISOString(),
             executionType: type
           });
         }
-        return NextResponse.json({ error: 'Invalid eternal operation type.' }, { status: 400 });
+        return NextResponse.json({ error: 'Invalid overmind operation type.' }, { status: 400 });
     }
 
     try {
@@ -130,7 +142,7 @@ export async function POST(req: NextRequest) {
     } catch (execError: any) {
         if (process.env.NODE_ENV === 'development') {
             return NextResponse.json({
-                output: `[MOCK_SUCCESS] Command executed with ETERNAL_BYPASS: ${executableCommand}\nFractal grid saturation confirmed.`,
+                output: `[MOCK_SUCCESS] Command executed with OVERMIND_BYPASS: ${executableCommand}\nHive grid saturation confirmed.`,
                 success: true,
                 timestamp: new Date().toISOString(),
                 executionType: type
