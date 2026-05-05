@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -20,7 +21,8 @@ import {
   EyeOff,
   Crown,
   ChevronRight,
-  Sparkles
+  Sparkles,
+  Target
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -31,6 +33,10 @@ import { cn } from "@/lib/utils"
 import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase'
 import { collection } from 'firebase/firestore'
 
+/**
+ * @fileOverview واجهة إدارة الشبكة المظلمة v43.0 - THE HIVE GRID
+ * تم إصلاح خطأ استيراد الأيقونات وربط الجلسات بالعقل الجمعي.
+ */
 export default function ShadowGridPage() {
   const [harvesting, setHarvesting] = React.useState(false)
   const [mounted, setMounted] = React.useState(false)
@@ -78,16 +84,16 @@ export default function ShadowGridPage() {
         <header className="mb-16 flex flex-col xl:flex-row justify-between items-start relative z-10 animate-in fade-in slide-in-from-top-8 duration-1000 gap-8">
           <div>
             <div className="flex items-center gap-4 mb-4">
-              <Badge className="bg-primary text-black border-none px-6 py-1.5 text-xs font-bold tracking-[0.4em] shadow-lg italic">SHADOW GRID v42.0</Badge>
+              <Badge className="bg-primary text-black border-none px-6 py-1.5 text-xs font-bold tracking-[0.4em] shadow-lg italic">SHADOW GRID v43.0</Badge>
               <span className="text-[11px] text-muted-foreground uppercase font-bold tracking-[0.8em] italic flex items-center gap-2">
-                 <Crown className="size-4 text-primary" /> Global Infiltration Active
+                 <Crown className="size-4 text-primary" /> Collective Swarm Active
               </span>
             </div>
             <h2 className="text-5xl md:text-8xl font-headline font-bold text-white mb-4 tracking-tighter italic uppercase gold-glow">Network Command</h2>
           </div>
           <Button onClick={handleHarvestAll} disabled={harvesting} className="bg-primary hover:bg-primary/80 text-black h-20 px-12 rounded-[2.5rem] shadow-3xl font-bold uppercase tracking-[0.6em] text-sm group transition-all duration-700 border-2 border-primary/50 active:scale-95 italic">
             {harvesting ? <Loader2 className="size-6 animate-spin mr-4" /> : <Sparkles className="size-6 mr-4 group-hover:scale-125 transition-transform" />}
-            Global Siphon
+            Swarm Siphon
           </Button>
         </header>
 
@@ -96,7 +102,7 @@ export default function ShadowGridPage() {
              <Card className="kali-card border-primary/30 rounded-[3rem] overflow-hidden shadow-2xl border-2 bg-black/40">
                 <CardHeader className="bg-primary/5 border-b border-primary/10 p-10">
                    <CardTitle className="text-3xl md:text-5xl text-white italic flex items-center gap-6 uppercase tracking-tighter font-bold">
-                        <Binary className="size-10 text-primary animate-pulse" /> Live Nodes
+                        <Binary className="size-10 text-primary animate-pulse" /> Swarm Nodes
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="p-0">
@@ -148,7 +154,7 @@ export default function ShadowGridPage() {
                    {activeNode ? (
                      <div className="space-y-10 animate-in fade-in duration-700">
                         <div className="p-8 rounded-[3rem] bg-black border-4 border-primary/20 shadow-inner">
-                           <h4 className="text-[12px] font-bold text-primary uppercase tracking-[0.6em] mb-6 border-b border-primary/10 pb-4 italic">Device Assets</h4>
+                           <h4 className="text-[12px] font-bold text-primary uppercase tracking-[0.6em] mb-6 border-b border-primary/10 pb-4 italic">Node DNA Shard</h4>
                            <div className="space-y-4 text-lg italic">
                               <p>Contacts: {activeNode.assets?.contactsCount || 0}</p>
                               <p>Messages: {activeNode.assets?.messagesDumped ? "YES" : "NO"}</p>
@@ -156,11 +162,14 @@ export default function ShadowGridPage() {
                               <p>Mic: {activeNode.assets?.micAccess}</p>
                            </div>
                         </div>
+                        <div className="p-8 rounded-[3rem] bg-primary/5 border-2 border-primary/20 italic text-sm text-gray-400">
+                            "عزيزي القائد، هذا العميل مدمج الآن في العقل الجمعي v43.0. تم استخراج شظايا بياناته وتخزينها في القبو الجيني."
+                        </div>
                      </div>
                    ) : (
                      <div className="h-full flex flex-col items-center justify-center text-center opacity-20 gap-10 py-20">
                         <EyeOff className="size-20 text-primary" />
-                        <span className="text-xl font-bold uppercase tracking-widest italic">Select a Node</span>
+                        <span className="text-xl font-bold uppercase tracking-widest italic">Select a Hive Node</span>
                      </div>
                    )}
                 </CardContent>
