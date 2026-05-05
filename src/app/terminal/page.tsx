@@ -58,14 +58,9 @@ type Message = {
  * العصب المركزي للتحكم في الـ 13 عقدة السيادية.
  */
 export default function TerminalPage() {
+  const [mounted, setMounted] = React.useState(false)
   const [input, setInput] = React.useState("")
-  const [messages, setMessages] = React.useState<Message[]>([
-    { 
-      role: "system", 
-      content: "Al-Mu'izz Sovereign Overmind Shell [v43.0 - COLLECTIVE CONSCIOUSNESS]\nHive Mind: 12 AGENTS MERGED & SYNCED\nAuthorized: القائد المعتصم بالله ادريس الغزالي\nNode 13 (Eternal Echo): HIVE MASTER ACTIVE\nType 'help' for supreme overmind directives.",
-      timestamp: new Date().toLocaleTimeString()
-    }
-  ])
+  const [messages, setMessages] = React.useState<Message[]>([])
   const [isLoading, setIsLoading] = React.useState(false)
   const [isThinking, setIsThinking] = React.useState(false)
   const [history, setHistory] = React.useState<string[]>([])
@@ -73,10 +68,23 @@ export default function TerminalPage() {
   const scrollRef = React.useRef<HTMLDivElement>(null)
 
   React.useEffect(() => {
+    setMounted(true)
+    setMessages([
+      { 
+        role: "system", 
+        content: "Al-Mu'izz Sovereign Overmind Shell [v43.0 - COLLECTIVE CONSCIOUSNESS]\nHive Mind: 12 AGENTS MERGED & SYNCED\nAuthorized: القائد المعتصم بالله ادريس الغزالي\nNode 13 (Eternal Echo): HIVE MASTER ACTIVE\nType 'help' for supreme overmind directives.",
+        timestamp: new Date().toLocaleTimeString()
+      }
+    ])
+  }, [])
+
+  React.useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" })
     }
   }, [messages, isLoading, isThinking])
+
+  if (!mounted) return null;
 
   const analyzeStrategicIntent = async (cmd: string) => {
     if (cmd.length < 5 || cmd.startsWith("/") || cmd.split(" ").length < 2) return null;
