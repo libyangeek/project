@@ -27,6 +27,7 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { aiEnhancedExploitGeneration } from "@/ai/flows/ai-enhanced-exploit-generation"
 import { generateSmartWordlist } from "@/ai/flows/ai-smart-wordlist-flow"
+import { getAttackPlan } from "@/ai/flows/apex-brain-flow"
 import { toast } from "@/hooks/use-toast"
 import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -45,7 +46,7 @@ export default function RedTeamPage() {
   }, [])
 
   const handleAction = async () => {
-    if (!target) {
+    if (!target && activeMode !== "wordlist") {
       toast({ variant: "destructive", title: "Missing Target", description: "Please enter a target." });
       return;
     }
@@ -57,13 +58,8 @@ export default function RedTeamPage() {
           vulnerabilityDescription: description,
           targetSystemDetails: target
         });
-      } else if (activeMode === "osint") {
-        const response = await fetch('/api/execute', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ target, type: 'apex' })
-        });
-        data = await response.json();
+      } else if (activeMode === "apex") {
+        data = await getAttackPlan({ target });
       } else if (activeMode === "wordlist") {
         data = await generateSmartWordlist({
           targetBio: description,
@@ -71,7 +67,7 @@ export default function RedTeamPage() {
         });
       }
       setOutput(data);
-      toast({ title: "Operation Complete", description: "Weapon synthesized in the forge." });
+      toast({ title: "Operation Complete", description: "Weaponry synthesized in the forge." });
     } catch (err) {
       toast({ variant: "destructive", title: "Forge Failure", description: "Failed to materialize the payload." });
     } finally {
@@ -105,7 +101,7 @@ export default function RedTeamPage() {
               <Tabs defaultValue="exploit" onValueChange={setActiveMode} className="w-full">
                 <TabsList className="grid grid-cols-3 gap-4 bg-white/5 p-2 rounded-[2rem] mb-8 border-2 border-white/5">
                   <TabsTrigger value="exploit" className="text-[11px] py-4 uppercase font-bold rounded-2xl data-[state=active]:bg-red-600 data-[state=active]:text-white">EXPLOIT</TabsTrigger>
-                  <TabsTrigger value="osint" className="text-[11px] py-4 uppercase font-bold rounded-2xl data-[state=active]:bg-red-600 data-[state=active]:text-white">APEX</TabsTrigger>
+                  <TabsTrigger value="apex" className="text-[11px] py-4 uppercase font-bold rounded-2xl data-[state=active]:bg-red-600 data-[state=active]:text-white">APEX</TabsTrigger>
                   <TabsTrigger value="wordlist" className="text-[11px] py-4 uppercase font-bold rounded-2xl data-[state=active]:bg-red-600 data-[state=active]:text-white">WORDLIST</TabsTrigger>
                 </TabsList>
                 

