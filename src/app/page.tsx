@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -19,22 +18,22 @@ import {
   RefreshCcw,
   Sparkles,
   Mic,
-  Cpu,
   Anchor,
   Share2,
-  Cpu as Chip,
   Boxes
 } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
+import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
   const [visualizerHeights, setVisualizerHeights] = React.useState<number[]>([])
+  const { toast } = useToast()
   
   React.useEffect(() => {
     setMounted(true)
@@ -94,7 +93,6 @@ export default function DashboardPage() {
           </div>
         </header>
 
-        {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-16 relative z-10">
           {stats.map((stat, i) => {
             const StatIcon = stat.icon;
@@ -115,7 +113,6 @@ export default function DashboardPage() {
           })}
         </div>
 
-        {/* Main Content Grid */}
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-12 relative z-10 pb-32 flex-1">
            <div className="xl:col-span-2 space-y-12">
               <Card className="kali-card border-primary/40 shadow-3xl bg-black/40 rounded-[4rem] border-2">
@@ -180,7 +177,7 @@ export default function DashboardPage() {
                     </div>
 
                     <div className="mt-auto space-y-8">
-                       <Button className="w-full h-24 rounded-[3rem] bg-black border-4 border-primary/40 text-primary hover:bg-primary/15 transition-all font-bold uppercase tracking-[1em] text-[18px] shadow-3xl group italic">
+                       <Button className="w-full h-24 rounded-[3rem] bg-black border-4 border-primary/40 text-primary hover:bg-primary/15 transition-all font-bold uppercase tracking-[1em] text-[18px] shadow-3xl group italic" onClick={() => toast({ title: "Singularity Synced", description: "All nodes reporting 100% efficiency." })}>
                           <Anchor className="size-8 mr-6 group-hover:scale-125 transition-transform" /> SYNC SINGULARITY
                        </Button>
                        <p className="text-[10px] text-center text-muted-foreground uppercase font-bold tracking-[2em] italic opacity-40">ETERNAL_SOVEREIGNTY</p>
