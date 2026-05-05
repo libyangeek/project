@@ -7,27 +7,26 @@ const execPromise = promisify(exec);
 
 export async function POST(req: NextRequest) {
   try {
-    const { command, target, args, type } = await req.json();
+    const body = await req.json();
+    const { command, target, args, type } = body;
 
     // المسارات الأساسية في بيئة كالي
     const BASE_PATH = '/opt/sovereign-ai-platform';
     const SCRIPTS = {
       apex: path.join(BASE_PATH, 'ai-engine/offensive/apex_brain.py'),
       osint: path.join(BASE_PATH, 'osint/osint_master.py'),
-      gepa: path.join(BASE_PATH, 'gepa/gepa_v35.py'),
-      polymorph: path.join(BASE_PATH, 'evasion/polymorph_engine.py'),
-      deploy_bootkit: path.join(BASE_PATH, 'bootkits/deploy_bootkit.sh'),
+      gepa: path.join(BASE_PATH, 'ai-engine/gepa.py'),
+      polymorph: path.join(BASE_PATH, 'ai-engine/gepa_fixer.py'),
       cloud_persistence: path.join(BASE_PATH, 'ai-engine/persistence/cloud_persistence.sh'),
       silk_guardian: path.join(BASE_PATH, 'security/blackteam/silk_guardian.py'),
-      swarm: path.join(BASE_PATH, 'swarm/mcp_server.py'),
-      actual_executor: path.join(BASE_PATH, 'ai/actual_executor.py')
+      autonomous: path.join(BASE_PATH, 'ai-engine/autonomous/autonomous_ai.py')
     };
 
     let executableCommand = '';
 
     switch (type) {
       case 'terminal':
-        // قائمة بيضاء بالأوامر المسموح بها من الواجهة
+        // قائمة بيضاء بالأوامr المسموح بها من الواجهة
         const allowedCommands = ['nmap', 'ping', 'whois', 'dig', 'traceroute', 'curl', 'ls', 'pwd', 'sovereign', 'bash', 'python3'];
         const cmdBase = command.split(' ')[0];
         if (!allowedCommands.includes(cmdBase)) {
@@ -44,14 +43,14 @@ export async function POST(req: NextRequest) {
         executableCommand = `python3 ${SCRIPTS.osint} ${args} ${target}`;
         break;
 
-      case 'polymorph':
-        executableCommand = `python3 ${SCRIPTS.polymorph} ${target}`;
+      case 'gepa_stats':
+        executableCommand = `python3 ${SCRIPTS.gepa}`;
         break;
-      
-      case 'persistence':
-        executableCommand = `bash ${SCRIPTS.deploy_bootkit}`;
+
+      case 'autonomous_strike':
+        executableCommand = `python3 ${SCRIPTS.autonomous} ${target}`;
         break;
-      
+
       case 'cloud':
         executableCommand = `bash ${SCRIPTS.cloud_persistence}`;
         break;
@@ -59,25 +58,13 @@ export async function POST(req: NextRequest) {
       case 'silk_guardian':
         executableCommand = `python3 ${SCRIPTS.silk_guardian}`;
         break;
-      
-      case 'swarm_status':
-        executableCommand = `ps aux | grep mcp_server.py | grep -v grep`;
-        break;
-
-      case 'actual':
-        executableCommand = `python3 ${SCRIPTS.actual_executor} ${target}`;
-        break;
 
       default:
         return NextResponse.json({ error: 'Invalid execution type.' }, { status: 400 });
     }
 
-    // إضافة مهلة زمنية للتنفيذ (Timeout)
+    // إضافة مهلة زمنية للتنفيذ (Timeout 5 minutes)
     const { stdout, stderr } = await execPromise(executableCommand, { timeout: 300000 });
-
-    if (stderr && !stdout) {
-        return NextResponse.json({ error: stderr }, { status: 500 });
-    }
 
     return NextResponse.json({
       output: stdout || stderr,

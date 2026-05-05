@@ -17,7 +17,9 @@ import {
   Share2,
   Cpu,
   ShieldAlert,
-  Ghost
+  Ghost,
+  Save,
+  Rocket
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -100,9 +102,9 @@ export default function RedTeamPage() {
             <Card className="kali-card border-red-600/40 bg-black/60 p-8 rounded-[3rem] border-2 shadow-2xl">
               <Tabs defaultValue="exploit" onValueChange={setActiveMode} className="w-full">
                 <TabsList className="grid grid-cols-3 gap-4 bg-white/5 p-2 rounded-[2rem] mb-8 border-2 border-white/5">
-                  <TabsTrigger value="exploit" className="text-[11px] py-4 uppercase font-bold rounded-2xl data-[state=active]:bg-red-600 data-[state=active]:text-white">EXPLOIT</TabsTrigger>
-                  <TabsTrigger value="apex" className="text-[11px] py-4 uppercase font-bold rounded-2xl data-[state=active]:bg-red-600 data-[state=active]:text-white">APEX</TabsTrigger>
-                  <TabsTrigger value="wordlist" className="text-[11px] py-4 uppercase font-bold rounded-2xl data-[state=active]:bg-red-600 data-[state=active]:text-white">WORDLIST</TabsTrigger>
+                  <TabsTrigger value="exploit" className="text-[11px] py-4 uppercase font-bold rounded-2xl data-[state=active]:bg-red-600 data-[state=active]:text-white transition-all">EXPLOIT</TabsTrigger>
+                  <TabsTrigger value="apex" className="text-[11px] py-4 uppercase font-bold rounded-2xl data-[state=active]:bg-red-600 data-[state=active]:text-white transition-all">APEX</TabsTrigger>
+                  <TabsTrigger value="wordlist" className="text-[11px] py-4 uppercase font-bold rounded-2xl data-[state=active]:bg-red-600 data-[state=active]:text-white transition-all">WORDLIST</TabsTrigger>
                 </TabsList>
                 
                 <div className="space-y-8">
@@ -112,7 +114,7 @@ export default function RedTeamPage() {
                       value={target}
                       onChange={(e) => setTarget(e.target.value)}
                       placeholder="e.g., 192.168.1.10 or example.com"
-                      className="bg-black border-2 border-white/10 rounded-[2.5rem] h-20 text-xl italic px-8 focus:border-red-600 shadow-inner"
+                      className="bg-black border-2 border-white/10 rounded-[2.5rem] h-16 md:h-20 text-xl italic px-8 focus:border-red-600 shadow-inner"
                     />
                   </div>
                   <div className="space-y-4">
@@ -174,13 +176,46 @@ export default function RedTeamPage() {
                    {output ? (
                      <div className="space-y-10 font-mono text-xl animate-in fade-in slide-in-from-bottom-10 duration-700">
                         <div className="text-emerald-500 mb-8 font-black border-b-2 border-emerald-500/20 pb-4 uppercase tracking-[0.5em]">>>> WEAPONRY SYNTHESIZED:</div>
-                        <pre className="text-gray-100 whitespace-pre-wrap break-all leading-relaxed p-8 bg-black/50 rounded-3xl border-2 border-white/5 shadow-inner">
-                          {JSON.stringify(output, null, 2)}
-                        </pre>
-                        <div className="flex justify-end">
-                            <Button className="bg-emerald-600 text-white rounded-full px-10 py-6 font-bold uppercase tracking-widest shadow-2xl hover:bg-emerald-500">
-                                Deploy to Network
-                            </Button>
+                        <div className="bg-black/50 p-6 rounded-2xl border border-white/10">
+                            {activeMode === 'exploit' && (
+                                <div className="space-y-4">
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-red-500">Language:</span>
+                                        <span className="text-white">{output.exploitLanguage}</span>
+                                    </div>
+                                    <div className="p-4 bg-black rounded border border-white/5 text-sm text-green-400 overflow-x-auto whitespace-pre">
+                                        {output.exploitCode}
+                                    </div>
+                                    <div className="text-red-400 text-sm mt-4">
+                                        <strong>Stealth:</strong> {output.stealthFeatures?.join(", ")}
+                                    </div>
+                                </div>
+                            )}
+                            {activeMode === 'apex' && (
+                                <div className="space-y-4">
+                                    <p className="text-blue-400">{output.summary}</p>
+                                    <div className="p-4 bg-black rounded border border-white/5 text-sm text-blue-300 overflow-x-auto whitespace-pre">
+                                        {JSON.stringify(output.plan, null, 2)}
+                                    </div>
+                                </div>
+                            )}
+                            {activeMode === 'wordlist' && (
+                                <div className="space-y-4">
+                                    <p className="text-amber-400">Predicted Passwords:</p>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        {output.likelyPasswords?.map((pw: string, idx: number) => (
+                                            <div key={idx} className="p-2 bg-white/5 rounded border border-white/5 text-sm text-white">
+                                                {pw}
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <p className="text-xs text-white/40 mt-4 italic">{output.psychologicalInsight}</p>
+                                </div>
+                            )}
+                        </div>
+                        <div className="flex justify-end gap-4 mt-8">
+                            <Button variant="outline" className="border-white/20 text-white"><Save className="size-4 mr-2" /> Save Pattern</Button>
+                            <Button className="bg-red-600 text-white"><Rocket className="size-4 mr-2" /> Execute Strike</Button>
                         </div>
                      </div>
                    ) : (

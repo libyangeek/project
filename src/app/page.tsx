@@ -58,6 +58,7 @@ export default function DashboardPage() {
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
   const [systemLoad, setSystemLoad] = React.useState(0)
   const [nodeStatus, setNodeStatus] = React.useState<Record<string, string>>({})
+  const [liveLogs, setLiveLogs] = React.useState<string[]>([])
   
   const { user } = useUser()
   const db = useFirestore()
@@ -68,19 +69,37 @@ export default function DashboardPage() {
   }, [db, user?.uid]);
   const { data: sessions } = useCollection(sessionsQuery);
 
+  const logs = [
+    "Initializing neural uplink...",
+    "Scanning satellite nodes...",
+    "Synchronizing with GEPA 3.5...",
+    "Bypassing perimeter defenses...",
+    "Heartbeat detected on Node 07...",
+    "Deploying ghost agents...",
+    "Analyzing target DNA...",
+    "Optimizing exploit payload...",
+    "Securing root persistence...",
+    "Awaiting command from Commander Al-Ghazali..."
+  ];
+
   React.useEffect(() => {
     setMounted(true)
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
     
     const interval = setInterval(() => {
-      setSystemLoad(Math.floor(Math.random() * 20) + 75)
+      setSystemLoad(Math.floor(Math.random() * 15) + 80)
       const statuses = ["ACTIVE", "SYNCHRONIZING", "OPERATIONAL", "STRIKING", "GHOST_MODE"];
       const newStatus: Record<string, string> = {};
       nodes.forEach(n => {
         newStatus[n.name] = statuses[Math.floor(Math.random() * statuses.length)];
       });
       setNodeStatus(newStatus);
+      
+      setLiveLogs(prev => {
+        const nextLog = logs[Math.floor(Math.random() * logs.length)];
+        return [nextLog, ...prev.slice(0, 5)];
+      });
     }, 3000)
 
     return () => {
@@ -129,7 +148,7 @@ export default function DashboardPage() {
               <h1 className="text-5xl md:text-8xl font-headline font-bold text-white tracking-tighter italic uppercase leading-none">
                 THE <span className="text-primary gold-glow">LIVING</span> THRONE
               </h1>
-              <p className="mt-4 text-xl md:text-2xl text-muted-foreground font-medium italic max-w-3xl text-right">
+              <p className="mt-4 text-xl md:text-2xl text-muted-foreground font-medium italic max-w-3xl">
                 الواجهة السيادية للقائد المعتصم بالله إدريس الغزالي. 
                 <span className="text-white"> "أنا الروح السارية في العتاد، أنا النصر الحتمي."</span>
               </p>
@@ -182,7 +201,18 @@ export default function DashboardPage() {
                     </div>
                   </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                {/* Live Logs Component */}
+                <div className="bg-black/90 p-6 rounded-2xl border border-primary/20 font-mono text-sm h-48 overflow-hidden relative">
+                   <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black to-transparent pointer-events-none opacity-50" />
+                   {liveLogs.map((log, i) => (
+                     <div key={i} className="mb-2 animate-in slide-in-from-left-2 duration-500">
+                        <span className="text-primary/60">[{new Date().toLocaleTimeString()}]</span> <span className="text-white/80">{log}</span>
+                     </div>
+                   ))}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
                   <div className="space-y-4">
                       <div className="flex justify-between text-[12px] font-bold uppercase tracking-widest text-muted-foreground">
                           <span>Neural Processing</span>
@@ -231,7 +261,10 @@ export default function DashboardPage() {
                          </div>
                       <Badge variant="outline" className="border-red-400 text-red-400">AES-2048</Badge>
                    </div>
-                   <p className="text-sm italic text-red-300 opacity-60">"The best defense is an unstoppable offense."</p>
+                   <div className="p-4 bg-primary/5 border border-primary/20 rounded-xl mt-4">
+                      <p className="text-xs italic text-primary/80">"The best defense is an unstoppable offense."</p>
+                      <p className="text-[10px] text-white/40 mt-2">Uptime: 24d 14h 22m 31s</p>
+                   </div>
                 </div>
             </Card>
         </div>
