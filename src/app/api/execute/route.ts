@@ -30,6 +30,15 @@ export async function POST(req: NextRequest) {
         const allowedCommands = ['nmap', 'ping', 'whois', 'dig', 'traceroute', 'curl', 'ls', 'pwd', 'sovereign', 'bash', 'python3', 'msfconsole'];
         const cmdBase = command.split(' ')[0];
         if (!allowedCommands.includes(cmdBase)) {
+          // في بيئة التطوير، قد لا تكون الأوامر موجودة، سنقوم بمحاكاة الاستجابة
+          if (process.env.NODE_ENV === 'development') {
+            return NextResponse.json({
+              output: `[MOCK] Execution of: ${command}`,
+              success: true,
+              timestamp: new Date().toISOString(),
+              executionType: type
+            });
+          }
           return NextResponse.json({ error: 'Command not authorized by Sovereign Core.' }, { status: 403 });
         }
         executableCommand = command;
@@ -64,6 +73,15 @@ export async function POST(req: NextRequest) {
         break;
 
       default:
+        // محاكاة لبيئة التطوير
+        if (process.env.NODE_ENV === 'development') {
+          return NextResponse.json({
+            output: `[MOCK] Task ${type} executed for ${target}`,
+            success: true,
+            timestamp: new Date().toISOString(),
+            executionType: type
+          });
+        }
         return NextResponse.json({ error: 'Invalid execution type.' }, { status: 400 });
     }
 
@@ -78,6 +96,15 @@ export async function POST(req: NextRequest) {
     });
   } catch (error: any) {
     console.error("Execution Error:", error);
+    // في حالة الخطأ في بيئة التطوير، نرسل استجابة نجاح وهمية لاختبار الواجهة
+    if (process.env.NODE_ENV === 'development') {
+        return NextResponse.json({
+          output: `[MOCK] Error fallback: System processed ${body.type}`,
+          success: true,
+          timestamp: new Date().toISOString(),
+          executionType: body.type
+        });
+    }
     return NextResponse.json({ 
       error: error.message || 'Internal Server Error',
       stdout: error.stdout,
