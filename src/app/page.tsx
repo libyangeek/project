@@ -29,7 +29,8 @@ import {
   Radio,
   Fingerprint,
   ZapOff,
-  Cloud
+  Cloud,
+  ChevronRight
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -37,7 +38,6 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase'
 import { collection } from 'firebase/firestore'
-import { toast } from "@/hooks/use-toast"
 
 /**
  * @fileOverview العرش الحي - واجهة السيادة المطلقة v42.0

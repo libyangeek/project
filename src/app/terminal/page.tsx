@@ -12,7 +12,9 @@ import {
   Activity,
   BrainCircuit,
   Sparkles,
-  RefreshCcw
+  RefreshCcw,
+  Cpu,
+  ChevronRight
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -59,7 +61,6 @@ export default function TerminalPage() {
     setIsLoading(true)
 
     try {
-      // الحصول على خطة العمل من الذكاء الاصطناعي
       const aiResponse = await aiCommandAndRouting({ 
         taskDescription: userMessage,
         mode: 'Armada'
@@ -74,15 +75,6 @@ export default function TerminalPage() {
         thoughts: aiResponse.thoughts
       }])
 
-      // تنفيذ الخطوة الأولى تلقائياً إذا كانت تقنية
-      if (aiResponse.executionChain && aiResponse.executionChain.length > 0) {
-        const firstStep = aiResponse.executionChain[0];
-        if (firstStep.module !== "Logic") {
-            toast({ title: "Executing: " + firstStep.step });
-            // هنا يمكن استدعاء الـ API الحقيقي لتنفيذ الأوامر
-        }
-      }
-      
       toast({ title: "Sovereign Sequence Manifested" })
     } catch (error) {
       setMessages(prev => [...prev, { role: "system", content: "CRITICAL: Neural sync rejection. Hardware soul requires immediate recalibration." }])
@@ -114,44 +106,60 @@ export default function TerminalPage() {
               </div>
             </div>
           </div>
+          <div className="hidden md:flex items-center gap-8 text-[12px] font-bold uppercase tracking-[1em] text-muted-foreground italic">
+             <span>Latency: 2ms</span>
+             <span className="text-emerald-500 shadow-[0_0_20px_emerald]">UPLINK_STABLE</span>
+          </div>
         </header>
 
         <div className="flex-1 flex min-h-0 relative">
           <ScrollArea className="flex-1 p-6 md:p-10">
-            <div className="max-w-5xl mx-auto space-y-12 pb-20">
+            <div className="max-w-6xl mx-auto space-y-12 pb-32">
               {messages.map((msg, i) => (
                 <div key={i} className={cn(
-                  "flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700",
+                  "flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-8 duration-1000",
                   msg.role === "user" ? "items-end" : "items-start"
                 )}>
                   <div className={cn(
-                    "max-w-[90%] rounded-[2.5rem] p-6 md:p-10 font-code text-sm md:text-lg leading-relaxed relative group overflow-hidden border-2 shadow-xl",
+                    "max-w-[90%] rounded-[3.5rem] p-8 md:p-16 font-code text-base md:text-xl leading-relaxed relative group overflow-hidden border-[6px] shadow-7xl transition-all duration-1000",
                     msg.role === "user" 
-                      ? "bg-primary/20 border-primary/50 text-white rounded-br-none shadow-primary/10" 
+                      ? "bg-primary/20 border-primary/50 text-white rounded-br-none shadow-primary/20" 
                       : msg.role === "system" 
-                        ? "bg-black/80 border-primary text-primary font-bold italic border-dashed" 
-                        : "bg-white/5 backdrop-blur-xl border-white/10 text-foreground rounded-bl-none shadow-2xl"
+                        ? "bg-black/90 border-primary/60 text-primary font-bold italic border-dashed rounded-[2rem]" 
+                        : "bg-black/95 border-white/10 text-gray-100 rounded-bl-none hover:border-primary/40"
                   )}>
                     {msg.role === "assistant" && (
-                      <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
-                        <div className="flex items-center gap-3">
-                          <Sparkles className="size-5 text-primary animate-pulse" />
-                          <span className="text-sm uppercase font-bold tracking-[0.3em] text-primary italic">
+                      <div className="flex items-center justify-between mb-10 pb-6 border-b-2 border-white/10">
+                        <div className="flex items-center gap-5">
+                          <BrainCircuit className="size-8 text-primary animate-pulse" />
+                          <span className="text-sm md:text-lg uppercase font-bold tracking-[0.5em] text-primary italic">
                             {msg.model}
                           </span>
                         </div>
-                        <Badge variant="outline" className="text-[10px] uppercase tracking-widest border-primary/40 text-primary font-bold px-3 py-1 rounded-full">
+                        <Badge className="bg-primary/20 text-primary border-2 border-primary/40 px-8 py-2 rounded-full font-bold italic tracking-widest">
                           {msg.intent}
                         </Badge>
                       </div>
                     )}
-                    <div className="whitespace-pre-wrap">{msg.content}</div>
+                    <div className="whitespace-pre-wrap drop-shadow-2xl">{msg.content}</div>
+                    
+                    {msg.thoughts && (
+                      <div className="mt-10 p-8 bg-white/5 rounded-[2.5rem] border-2 border-white/5 italic text-sm md:text-base text-muted-foreground leading-loose">
+                         <h5 className="font-bold text-primary/60 uppercase tracking-[1em] mb-4 flex items-center gap-4"><Cpu className="size-5" /> Cognitive Process</h5>
+                         {msg.thoughts}
+                      </div>
+                    )}
+
                     {msg.chain && (
-                      <div className="mt-8 space-y-4">
-                        <p className="text-xs font-bold text-primary uppercase tracking-widest">Planned Kill-Chain:</p>
+                      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
                         {msg.chain.map((c, idx) => (
-                          <div key={idx} className="text-xs text-gray-400 bg-white/5 p-3 rounded-lg border border-white/10">
-                            [{c.agent}] {c.step}
+                          <div key={idx} className="flex items-center gap-6 p-6 bg-primary/5 border-2 border-primary/20 rounded-[2rem] group/item hover:border-primary/60 transition-all duration-500 shadow-5xl">
+                            <div className="size-10 rounded-xl bg-black border-2 border-primary/40 flex items-center justify-center text-primary font-bold shadow-lg">{idx + 1}</div>
+                            <div className="flex-1">
+                               <div className="text-sm font-bold text-white uppercase tracking-widest">{c.agent}</div>
+                               <div className="text-xs text-muted-foreground italic font-medium mt-1">{c.step}</div>
+                            </div>
+                            <div className="size-3 rounded-full bg-emerald-500 shadow-[0_0_20px_emerald] animate-pulse" />
                           </div>
                         ))}
                       </div>
@@ -159,31 +167,35 @@ export default function TerminalPage() {
                   </div>
                 </div>
               ))}
-              {isLoading && <div className="text-primary animate-pulse italic">Thinking...</div>}
+              {isLoading && (
+                <div className="flex items-center gap-6 p-8 bg-primary/5 border-2 border-primary/30 rounded-[3rem] animate-pulse max-w-sm">
+                   <Loader2 className="size-10 animate-spin text-primary" />
+                   <span className="text-xl font-bold uppercase tracking-[0.5em] text-primary italic">Processing...</span>
+                </div>
+              )}
               <div ref={scrollRef} />
             </div>
           </ScrollArea>
 
-          <div className="p-6 md:p-10 border-t-2 border-primary/20 bg-black/90 backdrop-blur-xl z-30 shadow-2xl">
-            <div className="max-w-4xl mx-auto">
-              <form onSubmit={handleSend} className="relative group">
-                <div className="absolute left-6 top-1/2 -translate-y-1/2 text-primary/40 group-focus-within:text-primary transition-all duration-700">
-                  <TerminalIcon className="size-6" />
+          <div className="absolute bottom-0 left-0 w-full p-10 bg-gradient-to-t from-black via-black/95 to-transparent z-40">
+            <div className="max-w-5xl mx-auto">
+              <form onSubmit={handleSend} className="relative group scale-105">
+                <div className="absolute left-8 top-1/2 -translate-y-1/2 text-primary/40 group-focus-within:text-primary transition-all duration-700 scale-150">
+                  <TerminalIcon className="size-8 drop-shadow-[0_0_20px_gold]" />
                 </div>
                 <Input
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Enter command..."
-                  className="w-full bg-white/5 border-2 border-white/10 pl-14 pr-16 py-6 font-code text-sm md:text-base focus-visible:ring-primary/50 focus-visible:border-primary rounded-2xl shadow-inner transition-all placeholder:text-muted-foreground/30 text-white"
+                  placeholder="EXECUTE STRATEGY..."
+                  className="w-full h-24 md:h-32 bg-black border-[6px] border-primary/30 pl-32 pr-28 rounded-[5rem] text-2xl md:text-4xl italic font-bold focus:border-primary/80 shadow-7xl transition-all placeholder:text-primary/10 text-white"
                   disabled={isLoading}
                 />
                 <Button 
                   type="submit" 
-                  size="icon" 
-                  className="absolute right-2 top-1/2 -translate-y-1/2 size-10 md:size-12 bg-primary hover:bg-primary/80 rounded-xl shadow-lg group transition-all active:scale-90"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 size-20 md:size-24 bg-primary text-black hover:bg-white rounded-full shadow-7xl group transition-all active:scale-90 border-4 border-black"
                   disabled={!input.trim() || isLoading}
                 >
-                  {isLoading ? <Loader2 className="size-5 animate-spin text-black" /> : <Send className="size-5 group-hover:scale-110 transition-transform" />}
+                  {isLoading ? <Loader2 className="size-10 animate-spin" /> : <Send className="size-10 group-hover:scale-125 transition-transform" />}
                 </Button>
               </form>
             </div>
