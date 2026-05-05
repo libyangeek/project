@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from 'next/server';
 import { exec } from 'child_process';
 import { promisify } from 'util';
@@ -66,7 +65,6 @@ export async function POST(req: NextRequest) {
         break;
 
       case 'actual':
-        // تنفيذ عبر المحرك الجديد
         executableCommand = `python3 ${SCRIPTS.actual_executor} ${target}`;
         break;
 

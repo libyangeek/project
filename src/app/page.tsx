@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -41,11 +40,14 @@ import {
   Waves,
   Grip,
   Wifi,
-  Lock
+  Lock,
+  Terminal as TerminalIcon,
+  ShieldHalf
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Progress } from "@/components/ui/progress"
 import { cn } from "@/lib/utils"
 import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase'
 import { collection } from 'firebase/firestore'
