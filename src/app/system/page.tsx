@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -9,23 +8,12 @@ import {
   Database, 
   Zap,
   RefreshCcw,
-  Skull, 
-  Flame, 
-  Brain, 
-  Lock, 
-  Loader2, 
-  Crown, 
-  Binary, 
-  Fingerprint, 
   ShieldCheck, 
-  Server, 
-  Terminal, 
-  Power, 
   Monitor, 
-  HardDrive, 
-  Cpu as Chip, 
   Layers, 
-  HeartPulse 
+  HeartPulse,
+  BrainCircuit,
+  Loader2
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -103,7 +91,7 @@ export default function SystemPage() {
              { label: "CPU STRESS", value: awareness?.hostMetrics?.cpuUsage || "0%", icon: Activity, color: "text-primary" },
              { label: "RAM FLOW", value: awareness?.hostMetrics?.ramAvailable || "0/0", icon: Layers, color: "text-blue-500" },
              { label: "GPU POWER", value: "84% LOAD", icon: Zap, color: "text-amber-500" },
-             { label: "AI MODELS", value: "12 ARMED", icon: Brain, color: "text-primary" },
+             { label: "AI MODELS", value: "12 ARMED", icon: BrainCircuit, color: "text-primary" },
            ].map((diag, i) => (
              <Card key={i} className="kali-card group border-2 border-white/5 hover:border-primary/40 transition-all duration-700 rounded-[3rem] bg-black/40">
                 <CardContent className="p-8">
@@ -144,6 +132,14 @@ export default function SystemPage() {
                             </div>
                           ))}
                        </div>
+                    </div>
+
+                    <div className="space-y-8">
+                       <div className="flex justify-between items-center text-xs font-bold uppercase tracking-[0.6em] text-muted-foreground italic px-2">
+                          <span>GPU Power Distribution</span>
+                          <span className="text-primary italic drop-shadow-[0_0_15px_rgba(212,175,55,1)]">ACTIVE</span>
+                       </div>
+                       <Progress value={84} className="h-4 bg-white/5 [&>div]:bg-primary shadow-[0_0_20px_rgba(212,175,55,0.2)]" />
                     </div>
 
                     <div className="space-y-8">
