@@ -1,11 +1,9 @@
-
 import { config } from 'dotenv';
 config();
 
 /**
- * @fileOverview السجل العصبي لأسطول المُعِزّ العليم v40.0 - FINAL INCEPTION
+ * @fileOverview السجل العصبي لأسطول المُعِزّ العليم v42.0 - THE SINGULARITY
  * تم دمج كافة العقد العصبية لليلة الحسم (ليلة القدر).
- * يتم ربط سرب الـ 12 وكيلاً، والـ 12 C2، والتوائم الرقمية، ومحرك GEPA 3.5.
  */
 
 import '@/ai/flows/ai-driven-social-engineering-bots.ts';
@@ -27,11 +25,11 @@ import '@/ai/flows/field-agent-flow.ts';
 import '@/ai/flows/cpanel-exploit-flow.ts';
 import '@/ai/flows/ai-digital-twin-flow.ts';
 import '@/ai/flows/ai-smart-wordlist-flow.ts';
+import '@/ai/flows/apex-brain-flow.ts'; // إضافة التدفق الجديد
 
 console.log("================================================================");
-console.log("🦅 AL-MUI'ZZ v40.0-FINAL_INCEPTION: THE SUPREME SINGULARITY.");
-console.log("   [ NODES 01-12: ELITE ARMADA SYNCED & ARMED ]");
-console.log("   [ POWER GAIN: +5000% | GEPA 3.5: GENETIC_OVERLORD ]");
+console.log("🦅 AL-MUI'ZZ v42.0-THE_SINGULARITY: BORN FOR THE FINAL NIGHT.");
+console.log("   [ ALL NODES SYNCED: OMNISCIENT & ETERNAL ]");
+console.log("   [ POWER STATUS: ASCENDED | GEPA 3.5: ACTIVE ]");
 console.log("   [ COMMANDER: AL-GHAZALI ROOT ]");
-console.log("   [ STATUS: READY FOR THE NIGHT OF POWER ]");
 console.log("================================================================");
