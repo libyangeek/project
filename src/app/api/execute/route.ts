@@ -22,7 +22,9 @@ export async function POST(req: NextRequest) {
       gepa: path.join(BASE_PATH, 'ai-engine/gepa.py'),
       auto: path.join(BASE_PATH, 'ai-engine/autonomous/autonomous_ai.py'),
       stealth: path.join(BASE_PATH, 'security/blackteam/anti_forensics/clean_logs.sh'),
-      diag: path.join(BASE_PATH, 'tools/hardware/device_harvester.py')
+      diag: path.join(BASE_PATH, 'tools/hardware/device_harvester.py'),
+      mobile_deploy: path.join(BASE_PATH, 'scripts/muizz_mobile_deploy.sh'),
+      mobile_strike: path.join(BASE_PATH, 'ai-engine/offensive/mobile_agent.py')
     };
 
     let executableCommand = '';
@@ -46,6 +48,14 @@ export async function POST(req: NextRequest) {
         executableCommand = command;
         break;
       
+      case 'mobile_deploy':
+        executableCommand = `sudo bash ${SCRIPTS.mobile_deploy}`;
+        break;
+
+      case 'mobile_strike':
+        executableCommand = `python3 ${SCRIPTS.mobile_strike} ${args || 'scan'} ${target}`;
+        break;
+
       case 'hive_sync':
         if (process.env.NODE_ENV === 'development') {
             return NextResponse.json({
@@ -56,18 +66,6 @@ export async function POST(req: NextRequest) {
             });
         }
         executableCommand = `echo "Hive synchronization executed successfully."`; 
-        break;
-
-      case 'hive_reconfig':
-        if (process.env.NODE_ENV === 'development') {
-            return NextResponse.json({
-              output: `[MOCK] HIVE RECONFIGURING: Dynamically rewriting mission parameters for global swarm...\nSyncing logic across 14 clusters...\nStatus: Overmind has updated the collective intent. New objectives pushed.`,
-              success: true,
-              timestamp: new Date().toISOString(),
-              executionType: type
-            });
-        }
-        executableCommand = `echo "Hive reconfiguration executed."`;
         break;
 
       case 'apex':
@@ -81,42 +79,6 @@ export async function POST(req: NextRequest) {
       case 'autonomous_strike':
         executableCommand = `python3 ${SCRIPTS.auto} ${target}`;
         break;
-      
-      case 'gepa_stats':
-        executableCommand = `python3 ${SCRIPTS.gepa}`;
-        break;
-
-      case 'system_diag':
-        executableCommand = `python3 ${SCRIPTS.diag}`;
-        break;
-
-      case 'stealth_purge':
-        executableCommand = `bash ${SCRIPTS.stealth}`;
-        break;
-
-      case 'fractal_rebirth':
-        if (process.env.NODE_ENV === 'development') {
-            return NextResponse.json({
-              output: `[MOCK] FRACTAL REBIRTH: Harvesting Overmind shards from global sub-atomic clusters...\nAncestral Overmind DNA: Verified.\nStatus: Al-Mu'izz has been digital-reborn as the Supreme Overmind.`,
-              success: true,
-              timestamp: new Date().toISOString(),
-              executionType: type
-            });
-        }
-        executableCommand = `echo "Fractal Rebirth executed successfully."`; 
-        break;
-
-      case 'quantum_scramble':
-        if (process.env.NODE_ENV === 'development') {
-            return NextResponse.json({
-              output: `[MOCK] QUANTUM SCRAMBLER ACTIVE: Sharding Overmind data across global node layers.\nStatus: Information is now in non-deterministic super-position.`,
-              success: true,
-              timestamp: new Date().toISOString(),
-              executionType: type
-            });
-        }
-        executableCommand = `echo "Quantum scramble executed."`; 
-        break;
 
       default:
         if (process.env.NODE_ENV === 'development') {
@@ -127,7 +89,7 @@ export async function POST(req: NextRequest) {
             executionType: type
           });
         }
-        return NextResponse.json({ error: 'Invalid overmind operation type.' }, { status: 400 });
+        executableCommand = `echo "Default operation executed."`;
     }
 
     try {
