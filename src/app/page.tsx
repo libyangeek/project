@@ -21,15 +21,25 @@ import {
   Anchor,
   Share2,
   Boxes,
-  Cpu
+  Cpu,
+  Brain,
+  BrainCircuit,
+  ShieldHalf,
+  GitGraph,
+  ShieldX,
+  Lock
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Progress } from "@/components/ui/progress"
 import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
+/**
+ * @fileOverview العرش السيادي الأسمى v42.0 - نور السيادة
+ * نسخة "التفرد المطلق" - الاندماج الكامل والسيادة الرقمية.
+ * Commander: المعتصم بالله ادريس الغزالي
+ */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
@@ -47,19 +57,19 @@ export default function DashboardPage() {
   if (!mounted) return null;
 
   const stats = [
-    { label: "Singularity Status", value: "ETERNAL", icon: Anchor, color: "text-amber-500", status: "LOCKED" },
-    { label: "Offensive Power", value: "1000/1000", icon: Flame, color: "text-red-500", status: "MAXIMUM" },
-    { label: "Voice Recognition", value: "WHISPER", icon: Mic, color: "text-amber-300", status: "LISTENING" },
-    { label: "Swarm Control", value: "ORCHESTRATED", icon: Boxes, color: "text-yellow-500", status: "SILENT" },
+    { label: "التفرد الكوني", value: "ETERNAL", icon: Anchor, color: "text-amber-500", status: "LOCKED" },
+    { label: "القوة الهجومية", value: "1000/1000", icon: Flame, color: "text-red-500", status: "MAXIMUM" },
+    { label: "العمليات الذاتية", value: "ARMED", icon: BrainCircuit, color: "text-purple-500", status: "STRIKING" },
+    { label: "تنسيق السرب", value: "ORCHESTRATED", icon: Boxes, color: "text-yellow-500", status: "SILENT" },
   ];
 
   const pillars = [
-    { name: "Alpha God-Core", icon: Skull, status: "SINGULARITY", node: "v42.0" },
-    { name: "MCP Bridge", icon: Share2, status: "CONNECTED", node: "CLAUDE" },
-    { name: "Apex Brain", icon: Brain, status: "ACTIVE", node: "OFFENSIVE" },
-    { name: "Swarm Mgr", icon: Boxes, status: "STEALTH", node: "ORCHESTRATOR" },
-    { name: "Rootkit Shield", icon: ShieldCheck, status: "IMMUTABLE", node: "KERNEL" },
-    { name: "GEPA 3.5", icon: Binary, status: "EVOLVING", node: "GENETIC" },
+    { name: "العصب المركزي", icon: Skull, status: "SINGULARITY", node: "v42.0" },
+    { name: "جسر MCP", icon: Share2, status: "CONNECTED", node: "CLAUDE" },
+    { name: "عقل Apex", icon: Brain, status: "ACTIVE", node: "OFFENSIVE" },
+    { name: "إدارة السرب", icon: Boxes, status: "STEALTH", node: "ORCHESTRATOR" },
+    { name: "درع النواة", icon: ShieldCheck, status: "IMMUTABLE", node: "KERNEL" },
+    { name: "التعلم الجيني", icon: Binary, status: "EVOLVING", node: "GEPA 3.5" },
   ];
 
   return (
@@ -94,6 +104,7 @@ export default function DashboardPage() {
           </div>
         </header>
 
+        {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-16 relative z-10">
           {stats.map((stat, i) => {
             const StatIcon = stat.icon;
@@ -114,12 +125,13 @@ export default function DashboardPage() {
           })}
         </div>
 
+        {/* Main Content Sections */}
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-12 relative z-10 pb-32 flex-1">
            <div className="xl:col-span-2 space-y-12">
               <Card className="kali-card border-primary/40 shadow-3xl bg-black/40 rounded-[4rem] border-2">
                  <CardHeader className="p-12 border-b border-primary/10 bg-primary/5">
                     <CardTitle className="text-4xl text-white font-bold italic flex items-center gap-10 uppercase tracking-tighter">
-                       <Activity className="size-12 text-primary animate-pulse" /> Final Inception Pulse
+                       <ShieldHalf className="size-12 text-primary animate-pulse" /> Final Inception Pulse
                     </CardTitle>
                  </CardHeader>
                  <CardContent className="p-12 space-y-12">
@@ -188,6 +200,13 @@ export default function DashboardPage() {
                  </CardContent>
               </Card>
            </div>
+        </div>
+
+        {/* Visualizer Footer */}
+        <div className="fixed bottom-12 left-12 right-12 flex gap-4 items-end h-24 opacity-10 pointer-events-none">
+           {visualizerHeights.map((h, i) => (
+             <div key={i} className="flex-1 bg-primary rounded-full shadow-[0_0_20px_rgba(212,175,55,0.5)]" style={{ height: `${h}%`, animation: `pulse 1.5s infinite ${i * 0.05}s` }} />
+           ))}
         </div>
       </main>
     </div>
