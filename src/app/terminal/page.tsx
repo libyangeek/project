@@ -6,11 +6,10 @@ import {
   Terminal as TerminalIcon, 
   Send, 
   Loader2, 
-  Crown, 
-  Activity,
-  BrainCircuit,
-  Cpu,
-  Trash2
+  Trash2,
+  Lock,
+  Zap,
+  Activity
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -30,7 +29,7 @@ export default function TerminalPage() {
   const [messages, setMessages] = React.useState<Message[]>([
     { 
       role: "system", 
-      content: "Al-Mu'izz Sovereign Terminal [v42.0 - THE SINGULARITY]\nAuthorized access only. All actions are logged.\nCommander: المعتصم بالله ادريس الغزالي",
+      content: "Al-Mu'izz Sovereign Terminal [v42.0 - THE SINGULARITY]\nEstablishing secure link to God-Core...\nAuthorized: المعتصم بالله ادريس الغزالي",
       timestamp: new Date().toLocaleTimeString()
     }
   ])
@@ -54,11 +53,26 @@ export default function TerminalPage() {
     setInput("")
     setIsLoading(true)
 
+    // الكشف عن الكلمات المفتاحية لتوجيه الأوامر
+    let type = 'terminal'
+    let target = ''
+    let args = ''
+
+    if (cmd.startsWith("apex ")) {
+        type = 'apex'
+        target = cmd.split(" ")[1]
+    } else if (cmd.startsWith("osint ")) {
+        type = 'osint'
+        const parts = cmd.split(" ")
+        args = parts[1] // phone, email, social
+        target = parts[2]
+    }
+
     try {
       const response = await fetch('/api/execute', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ command: cmd, type: 'terminal' })
+        body: JSON.stringify({ command: cmd, target, args, type })
       })
 
       const data = await response.json()
@@ -66,7 +80,7 @@ export default function TerminalPage() {
       if (response.ok) {
         setMessages(prev => [...prev, { 
           role: "assistant", 
-          content: data.output, 
+          content: typeof data.output === 'object' ? JSON.stringify(data.output, null, 2) : data.output, 
           timestamp: new Date().toLocaleTimeString() 
         }])
       } else {
@@ -90,7 +104,7 @@ export default function TerminalPage() {
   const clearTerminal = () => {
     setMessages([{ 
       role: "system", 
-      content: "Terminal cleared. Session resumed.",
+      content: "Terminal memory purged. Quantum state reset.",
       timestamp: new Date().toLocaleTimeString()
     }])
   }
@@ -98,80 +112,87 @@ export default function TerminalPage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/30 overflow-hidden font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-80 flex flex-col h-screen overflow-hidden bg-black relative">
+      <main className="flex-1 lg:mr-80 flex flex-col h-screen overflow-hidden bg-black relative border-l border-primary/20">
         
-        <header className="p-4 border-b border-primary/30 flex items-center justify-between bg-black/50 backdrop-blur-md z-20">
-          <div className="flex items-center gap-4">
-            <div className="size-10 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/40 shadow-[0_0_20px_rgba(212,175,55,0.3)]">
-              <TerminalIcon className="size-6 text-primary" />
+        <header className="p-6 border-b border-primary/30 flex items-center justify-between bg-black/80 backdrop-blur-xl z-20 shadow-2xl">
+          <div className="flex items-center gap-6">
+            <div className="size-14 rounded-2xl bg-primary/10 flex items-center justify-center border-2 border-primary/40 shadow-[0_0_30px_rgba(212,175,55,0.4)]">
+              <TerminalIcon className="size-8 text-primary" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-white uppercase italic tracking-wider">Sovereign Command</h2>
-              <div className="flex items-center gap-3 text-[10px] text-primary/70 font-bold uppercase tracking-widest">
+              <h2 className="text-3xl font-bold text-white uppercase italic tracking-tighter gold-glow">Sovereign Command</h2>
+              <div className="flex items-center gap-3 text-[10px] text-primary/70 font-bold uppercase tracking-widest mt-1">
                 <div className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-                Live Connection
+                Live Kernel Session
               </div>
             </div>
           </div>
-          <Button variant="ghost" size="icon" onClick={clearTerminal} className="hover:bg-red-900/20 text-red-500">
-            <Trash2 className="size-5" />
-          </Button>
+          <div className="flex gap-4">
+             <Badge variant="outline" className="border-primary/40 text-primary uppercase font-bold tracking-widest px-4 py-1 rounded-full">v42.0_STABLE</Badge>
+             <Button variant="ghost" size="icon" onClick={clearTerminal} className="hover:bg-red-900/40 text-red-500 rounded-xl border border-transparent hover:border-red-500/50 transition-all">
+               <Trash2 className="size-6" />
+             </Button>
+          </div>
         </header>
 
-        <div className="flex-1 flex min-h-0 flex-col">
-          <ScrollArea className="flex-1 p-4 font-mono text-sm">
-            <div className="space-y-4">
+        <div className="flex-1 flex min-h-0 flex-col bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]">
+          <ScrollArea className="flex-1 p-8 font-mono text-lg">
+            <div className="space-y-6">
               {messages.map((msg, i) => (
                 <div key={i} className={cn(
-                  "border-l-2 pl-4 py-1",
-                  msg.role === "user" ? "border-primary/50" : 
-                  msg.role === "system" ? "border-red-600/50 bg-red-950/10" : "border-emerald-500/50"
+                  "border-l-4 pl-6 py-2 rounded-r-lg transition-all",
+                  msg.role === "user" ? "border-primary/60 bg-primary/5" : 
+                  msg.role === "system" ? "border-red-600/60 bg-red-950/20" : "border-emerald-500/60 bg-emerald-500/5"
                 )}>
-                  <div className="flex items-center gap-2 mb-1 opacity-50 text-[10px]">
-                    <span className="uppercase">{msg.role}</span>
-                    <span>•</span>
-                    <span>{msg.timestamp}</span>
+                  <div className="flex items-center gap-3 mb-2 opacity-50 text-xs">
+                    <Badge variant="outline" className="uppercase border-white/20 text-white font-bold">{msg.role}</Badge>
+                    <span className="text-gray-500">{msg.timestamp}</span>
                   </div>
                   <div className={cn(
-                    "whitespace-pre-wrap break-all",
-                    msg.role === "user" ? "text-white" : 
-                    msg.role === "system" ? "text-red-400" : "text-emerald-400"
+                    "whitespace-pre-wrap break-all leading-relaxed",
+                    msg.role === "user" ? "text-white font-bold" : 
+                    msg.role === "system" ? "text-red-400 italic" : "text-emerald-400"
                   )}>
-                    {msg.role === "user" && <span className="text-primary mr-2">#</span>}
+                    {msg.role === "user" && <span className="text-primary mr-3 shadow-primary">❯</span>}
                     {msg.content}
                   </div>
                 </div>
               ))}
               {isLoading && (
-                <div className="flex items-center gap-2 text-primary animate-pulse italic text-xs">
-                   <Loader2 className="size-4 animate-spin" />
-                   Processing Request...
+                <div className="flex items-center gap-4 text-primary animate-pulse italic text-sm ml-6">
+                   <Loader2 className="size-5 animate-spin" />
+                   <span className="tracking-widest uppercase font-bold">Executing command in sub-atomic layer...</span>
                 </div>
               )}
               <div ref={scrollRef} />
             </div>
           </ScrollArea>
 
-          <div className="p-4 bg-black border-t border-primary/20">
-            <form onSubmit={executeCommand} className="relative flex items-center gap-2">
-              <span className="text-primary font-bold ml-2">#</span>
+          <div className="p-8 bg-black/90 border-t-2 border-primary/30 shadow-[0_-20px_100px_rgba(0,0,0,0.8)]">
+            <form onSubmit={executeCommand} className="relative flex items-center gap-4 bg-white/5 rounded-[3rem] border-2 border-white/10 px-8 focus-within:border-primary/50 transition-all">
+              <span className="text-primary font-black text-2xl drop-shadow-[0_0_10px_rgba(212,175,55,0.8)]">❯</span>
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Type command (e.g. nmap -F 127.0.0.1)..."
-                className="flex-1 bg-transparent border-none focus-visible:ring-0 text-white font-mono placeholder:text-gray-700"
+                placeholder="Enter command or type 'help'..."
+                className="flex-1 bg-transparent border-none focus-visible:ring-0 text-white font-mono text-xl h-20 placeholder:text-gray-700"
                 disabled={isLoading}
                 autoFocus
               />
               <Button 
                 type="submit" 
                 size="icon"
-                className="bg-primary text-black hover:bg-white"
+                className="bg-primary text-black hover:bg-white rounded-full size-14 shadow-2xl transition-all active:scale-90"
                 disabled={!input.trim() || isLoading}
               >
-                <Send className="size-4" />
+                <Send className="size-6" />
               </Button>
             </form>
+            <div className="mt-4 flex justify-center gap-8 opacity-40 text-[10px] font-bold uppercase tracking-[1em] text-primary italic">
+                <span>Kernel_42.0</span>
+                <span>Encrypted_Session</span>
+                <span>Al_Ghazali_Authorized</span>
+            </div>
           </div>
         </div>
       </main>

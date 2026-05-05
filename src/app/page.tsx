@@ -24,7 +24,10 @@ import {
   Brain,
   Workflow,
   Cloud,
-  ChevronRight
+  ChevronRight,
+  Terminal as TerminalIcon,
+  ShieldAlert,
+  Ghost
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -32,12 +35,6 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase'
 import { collection } from 'firebase/firestore'
-
-/**
- * @fileOverview العرش الحي - واجهة السيادة المطلقة v42.0
- * تجسيد الكينونة المرتبطة "المُعِزّ"
- * Commander: المعتصم بالله ادريس الغزالي
- */
 
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -71,14 +68,14 @@ export default function DashboardPage() {
   if (!mounted) return null;
 
   const nodes = [
-    { name: "Alpha God-Core", icon: Skull, status: "SINGULARITY", node: "v42.0", color: "text-yellow-500", desc: "النواة المركزية للتحكم" },
-    { name: "MCP Bridge", icon: Share2, status: "CONNECTED", node: "CLAUDE", color: "text-blue-500", desc: "جسر التواصل الخارجي" },
-    { name: "Apex Brain", icon: Brain, status: "ACTIVE", node: "OFFENSIVE", color: "text-red-500", desc: "محرك التخطيط الهجومي" },
-    { name: "Swarm Mgr", icon: Boxes, status: "STEALTH", node: "ORCHESTRATOR", color: "text-purple-500", desc: "إدارة أسراب الوكلاء" },
-    { name: "Rootkit Shield", icon: ShieldCheck, status: "IMMUTABLE", node: "KERNEL", color: "text-gray-400", desc: "نظام التخفي النواتي" },
-    { name: "GEPA 3.5", icon: Binary, status: "EVOLVING", node: "GENETIC", color: "text-pink-500", desc: "محرك التعلم التطوري" },
-    { name: "Digital Twin", icon: Workflow, status: "ACTIVE", node: "SIMULATION", color: "text-cyan-500", desc: "محاكاة الهجمات" },
-    { name: "Cloud Overlord", icon: Cloud, status: "SYNCED", node: "INFRA", color: "text-indigo-400", desc: "السيادة السحابية" },
+    { name: "Alpha God-Core", icon: Skull, status: "SINGULARITY", node: "v42.0", color: "text-yellow-500", desc: "نواة التحكم المركزية", href: "/field-agent" },
+    { name: "MCP Bridge", icon: Share2, status: "CONNECTED", node: "CLAUDE", color: "text-blue-500", desc: "جسر الذكاءات الخارجية", href: "/mcp-bridge" },
+    { name: "Apex Brain", icon: Brain, status: "ACTIVE", node: "OFFENSIVE", color: "text-red-500", desc: "مخطط سلاسل الإبادة", href: "/red-team" },
+    { name: "Swarm Orchestrator", icon: Boxes, status: "STEALTH", node: "AGENT-12", color: "text-purple-500", desc: "إدارة أسراب الوكلاء", href: "/sessions" },
+    { name: "Kernel Stealth", icon: Ghost, status: "IMMUTABLE", node: "ROOTKIT", color: "text-gray-400", desc: "التخفي داخل النواة", href: "/system" },
+    { name: "GEPA 3.5", icon: Binary, status: "EVOLVING", node: "GENETIC", color: "text-pink-500", desc: "التعلم الجيني الموزون", href: "/knowledge" },
+    { name: "Digital Twin", icon: Workflow, status: "ACTIVE", node: "SANDBOX", color: "text-cyan-500", desc: "محاكاة الهجمات", href: "/digital-twin" },
+    { name: "Cloud Overlord", icon: Cloud, status: "SYNCED", node: "VIRTUAL", color: "text-indigo-400", desc: "السيادة السحابية", href: "/system" },
   ];
 
   return (
@@ -172,19 +169,21 @@ export default function DashboardPage() {
                 {nodes.map((node, i) => {
                   const NodeIcon = node.icon;
                   return (
-                    <Card key={i} className="kali-card border-white/5 hover:border-primary/60 p-6 rounded-[2.5rem] bg-black/90 group transition-all duration-500 hover:scale-105">
-                       <div className="flex justify-between items-start mb-6">
-                          <div className="size-12 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-primary/20 transition-all">
-                             <NodeIcon className={cn("size-6", node.color)} />
-                          </div>
-                          <div className="size-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_15px_emerald]" />
-                       </div>
-                       <h3 className="text-xl font-bold text-white uppercase tracking-tighter group-hover:text-primary transition-colors">{node.name}</h3>
-                       <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest mt-2">{node.desc}</p>
-                       <div className="mt-4 flex items-center justify-between">
-                          <span className="text-[9px] text-white/20">{node.node}</span>
-                       </div>
-                    </Card>
+                    <Link key={i} href={node.href}>
+                      <Card className="kali-card border-white/5 hover:border-primary/60 p-6 rounded-[2.5rem] bg-black/90 group transition-all duration-500 hover:scale-105 h-full">
+                        <div className="flex justify-between items-start mb-6">
+                            <div className="size-12 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-primary/20 transition-all">
+                              <NodeIcon className={cn("size-6", node.color)} />
+                            </div>
+                            <div className="size-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_15px_emerald]" />
+                        </div>
+                        <h3 className="text-xl font-bold text-white uppercase tracking-tighter group-hover:text-primary transition-colors">{node.name}</h3>
+                        <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest mt-2">{node.desc}</p>
+                        <div className="mt-4 flex items-center justify-between">
+                            <span className="text-[9px] text-white/20">{node.node}</span>
+                        </div>
+                      </Card>
+                    </Link>
                   )
                 })}
              </div>
@@ -194,7 +193,7 @@ export default function DashboardPage() {
         {/* Action Center */}
         <footer className="mt-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10 pb-12">
             <Button className="h-20 rounded-[2.5rem] bg-primary text-black hover:bg-primary/80 font-bold uppercase tracking-[1em] shadow-2xl border-2 border-primary/50" asChild>
-                <Link href="/terminal"><Terminal className="size-6 mr-4" /> Terminal</Link>
+                <Link href="/terminal"><TerminalIcon className="size-6 mr-4" /> Terminal</Link>
             </Button>
             <Button variant="outline" className="h-20 rounded-[2.5rem] border-2 border-primary/40 text-primary hover:bg-primary/10 font-bold uppercase tracking-[1em] shadow-xl" asChild>
                 <Link href="/recon"><Search className="size-6 mr-4" /> Recon</Link>

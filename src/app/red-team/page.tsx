@@ -14,7 +14,10 @@ import {
   Terminal,
   Target,
   FileCode,
-  Share2
+  Share2,
+  Cpu,
+  ShieldAlert,
+  Ghost
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -26,6 +29,7 @@ import { aiEnhancedExploitGeneration } from "@/ai/flows/ai-enhanced-exploit-gene
 import { generateSmartWordlist } from "@/ai/flows/ai-smart-wordlist-flow"
 import { toast } from "@/hooks/use-toast"
 import { Badge } from "@/components/ui/badge"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
 
 export default function RedTeamPage() {
@@ -67,9 +71,9 @@ export default function RedTeamPage() {
         });
       }
       setOutput(data);
-      toast({ title: "Operation Complete", description: "Data successfully generated." });
+      toast({ title: "Operation Complete", description: "Weapon synthesized in the forge." });
     } catch (err) {
-      toast({ variant: "destructive", title: "Error", description: "Failed to execute request." });
+      toast({ variant: "destructive", title: "Forge Failure", description: "Failed to materialize the payload." });
     } finally {
       setLoading(false);
     }
@@ -80,72 +84,77 @@ export default function RedTeamPage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/30 font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-80 p-6 md:p-12 relative bg-black overflow-y-auto min-h-screen scrollbar-hide flex flex-col">
-        <header className="mb-12">
+      <main className="flex-1 lg:mr-80 p-6 md:p-12 relative bg-black overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
+        
+        <header className="mb-16 relative z-10 animate-in fade-in slide-in-from-top-4 duration-1000">
           <div className="flex items-center gap-4 mb-4">
-            <Badge className="bg-red-600 text-white border-none rounded-full px-6 py-1.5 text-xs font-bold tracking-[0.4em] shadow-lg italic">CYBER WEAPONRY</Badge>
+            <Badge className="bg-red-600 text-white border-none rounded-full px-6 py-1.5 text-xs font-bold tracking-[0.4em] shadow-lg italic">CYBER WEAPONRY FORGE</Badge>
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-red-500">
-              <Flame className="size-4 animate-pulse" /> FORGE ACTIVE
+              <Flame className="size-4 animate-pulse" /> ENGINE AT 5000% CAPACITY
             </div>
           </div>
-          <h1 className="text-6xl md:text-7xl font-headline font-bold text-white tracking-tighter italic uppercase">Red <span className="text-red-600">Team</span></h1>
+          <h1 className="text-6xl md:text-8xl font-headline font-bold text-white tracking-tighter italic uppercase">Polymorph <span className="text-red-600">Lab</span></h1>
+          <p className="text-xl md:text-2xl text-muted-foreground mt-4 italic max-w-4xl leading-relaxed">
+            "مختبر التخليق السيادي: هنا تُصنع الأسلحة الرقمية الأكثر فتكاً. تجاوز الـ EDR، توليد الثغرات، وتدمير الدفاعات بذكاء متفرد."
+          </p>
         </header>
 
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 flex-1">
-          <div className="xl:col-span-1 space-y-6">
-            <Card className="kali-card border-red-600/40 bg-black/60 p-6 rounded-[3rem] border-2">
+          <div className="xl:col-span-1 space-y-8">
+            <Card className="kali-card border-red-600/40 bg-black/60 p-8 rounded-[3rem] border-2 shadow-2xl">
               <Tabs defaultValue="exploit" onValueChange={setActiveMode} className="w-full">
-                <TabsList className="grid grid-cols-3 gap-2 bg-white/5 p-1 rounded-2xl mb-6">
-                  <TabsTrigger value="exploit" className="text-[10px] uppercase font-bold rounded-xl data-[state=active]:bg-red-600">Exploit</TabsTrigger>
-                  <TabsTrigger value="osint" className="text-[10px] uppercase font-bold rounded-xl data-[state=active]:bg-red-600">Apex</TabsTrigger>
-                  <TabsTrigger value="wordlist" className="text-[10px] uppercase font-bold rounded-xl data-[state=active]:bg-red-600">Wordlist</TabsTrigger>
+                <TabsList className="grid grid-cols-3 gap-4 bg-white/5 p-2 rounded-[2rem] mb-8 border-2 border-white/5">
+                  <TabsTrigger value="exploit" className="text-[11px] py-4 uppercase font-bold rounded-2xl data-[state=active]:bg-red-600 data-[state=active]:text-white">EXPLOIT</TabsTrigger>
+                  <TabsTrigger value="osint" className="text-[11px] py-4 uppercase font-bold rounded-2xl data-[state=active]:bg-red-600 data-[state=active]:text-white">APEX</TabsTrigger>
+                  <TabsTrigger value="wordlist" className="text-[11px] py-4 uppercase font-bold rounded-2xl data-[state=active]:bg-red-600 data-[state=active]:text-white">WORDLIST</TabsTrigger>
                 </TabsList>
                 
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label className="text-[10px] uppercase font-bold text-red-500/60 ml-4">Target Node</Label>
+                <div className="space-y-8">
+                  <div className="space-y-4">
+                    <Label className="text-[11px] uppercase font-bold text-red-500/80 ml-6 tracking-widest">Target Objective</Label>
                     <Input 
                       value={target}
                       onChange={(e) => setTarget(e.target.value)}
-                      placeholder="IP / Domain / User"
-                      className="bg-black border-white/10 rounded-2xl h-14 italic"
+                      placeholder="e.g., 192.168.1.10 or example.com"
+                      className="bg-black border-2 border-white/10 rounded-[2.5rem] h-20 text-xl italic px-8 focus:border-red-600 shadow-inner"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label className="text-[10px] uppercase font-bold text-red-500/60 ml-4">Directives / Intel</Label>
+                  <div className="space-y-4">
+                    <Label className="text-[11px] uppercase font-bold text-red-500/80 ml-6 tracking-widest">Offensive Parameters</Label>
                     <Textarea 
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
-                      placeholder="Enter details for generation..."
-                      className="bg-black border-white/10 rounded-2xl min-h-[150px] italic"
+                      placeholder="Describe the vulnerability or target persona..."
+                      className="bg-black border-2 border-white/10 rounded-[2.5rem] min-h-[220px] text-lg italic p-8 focus:border-red-600 shadow-inner"
                     />
                   </div>
                   <Button 
                     onClick={handleAction} 
                     disabled={loading}
-                    className="w-full h-16 bg-red-600 hover:bg-red-700 text-white font-bold uppercase tracking-widest rounded-2xl shadow-lg"
+                    className="w-full h-24 bg-red-600 hover:bg-red-700 text-white font-black uppercase tracking-[0.8em] rounded-[3rem] shadow-[0_40px_100px_rgba(220,38,38,0.5)] border-4 border-red-400/40 active:scale-95 transition-all"
                   >
-                    {loading ? <Loader2 className="size-6 animate-spin" /> : <Zap className="size-6 mr-2" />}
-                    Initialize Strike
+                    {loading ? <Loader2 className="size-10 animate-spin" /> : <Flame className="size-10 mr-4" />}
+                    Ignite Forge
                   </Button>
                 </div>
               </Tabs>
             </Card>
 
-            <Card className="kali-card border-white/10 bg-black/60 p-6 rounded-[3rem] border-2">
-              <h4 className="text-[11px] font-bold text-red-500 uppercase tracking-widest mb-4">Weaponry Status</h4>
-              <div className="space-y-4">
+            <Card className="kali-card border-white/10 bg-black/60 p-8 rounded-[3rem] border-2 shadow-2xl">
+              <h4 className="text-[11px] font-bold text-red-500 uppercase tracking-[1.5em] mb-8 italic text-center">Arsenal Status</h4>
+              <div className="space-y-6">
                 {[
-                  { name: "Apex Brain", status: "ONLINE", icon: Brain },
-                  { name: "Polymorph", status: "READY", icon: Share2 },
-                  { name: "Bypass Kit", status: "ARMED", icon: Shield }
+                  { name: "ApexBrain v42", status: "ONLINE", icon: Brain, color: "text-red-500" },
+                  { name: "Polymorph V3", status: "READY", icon: Ghost, color: "text-purple-500" },
+                  { name: "Bypass.sys", status: "ARMED", icon: ShieldAlert, color: "text-yellow-500" },
+                  { name: "C2 Matrix", status: "12 NODES", icon: Share2, color: "text-blue-500" }
                 ].map((w, i) => (
-                  <div key={i} className="flex items-center justify-between p-3 bg-white/5 rounded-xl border border-white/5">
-                    <div className="flex items-center gap-3">
-                      <w.icon className="size-4 text-red-500" />
-                      <span className="text-xs font-bold text-white">{w.name}</span>
+                  <div key={i} className="flex items-center justify-between p-5 bg-white/5 rounded-[2rem] border-2 border-white/5 hover:border-red-600/30 transition-all">
+                    <div className="flex items-center gap-5">
+                      <w.icon className={cn("size-6", w.color)} />
+                      <span className="text-sm font-bold text-white uppercase tracking-wider">{w.name}</span>
                     </div>
-                    <span className="text-[10px] text-emerald-500 font-bold">{w.status}</span>
+                    <Badge variant="outline" className="text-[9px] border-white/20 text-emerald-500 font-bold tracking-widest">{w.status}</Badge>
                   </div>
                 ))}
               </div>
@@ -153,35 +162,42 @@ export default function RedTeamPage() {
           </div>
 
           <div className="xl:col-span-2">
-            <Card className="kali-card border-white/10 bg-black/90 rounded-[4rem] border-2 shadow-3xl h-full flex flex-col">
-              <CardHeader className="p-8 border-b border-white/5 flex flex-row justify-between items-center">
-                <CardTitle className="text-3xl font-bold uppercase italic tracking-tighter text-white flex items-center gap-4">
-                  <Terminal className="size-8 text-red-500" /> Output Terminal
+            <Card className="kali-card border-white/10 bg-black/90 rounded-[4rem] border-4 shadow-[0_0_200px_rgba(0,0,0,0.8)] h-full flex flex-col">
+              <CardHeader className="p-10 border-b-2 border-white/5 flex flex-row justify-between items-center bg-white/5">
+                <CardTitle className="text-4xl font-bold uppercase italic tracking-tighter text-white flex items-center gap-6">
+                  <Terminal className="size-10 text-red-500 shadow-red-500" /> Output Matrix
                 </CardTitle>
-                <div className="flex gap-2">
-                   <div className="size-3 rounded-full bg-red-500 animate-pulse" />
-                   <div className="size-3 rounded-full bg-yellow-500 animate-pulse delay-75" />
-                   <div className="size-3 rounded-full bg-green-500 animate-pulse delay-150" />
+                <div className="flex gap-4">
+                   <div className="size-4 rounded-full bg-red-600 shadow-[0_0_15px_red]" />
+                   <div className="size-4 rounded-full bg-yellow-500 shadow-[0_0_15px_yellow]" />
+                   <div className="size-4 rounded-full bg-green-500 shadow-[0_0_15px_green]" />
                 </div>
               </CardHeader>
-              <CardContent className="p-0 flex-1 relative">
-                <ScrollArea className="h-full max-h-[600px] p-8">
+              <CardContent className="p-0 flex-1 relative bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]">
+                <ScrollArea className="h-[750px] p-12">
                    {output ? (
-                     <div className="space-y-6 font-mono text-sm">
-                        <div className="text-emerald-500 mb-4 font-bold border-b border-emerald-500/20 pb-2">>>> EXECUTION RESULTS:</div>
-                        <pre className="text-gray-300 whitespace-pre-wrap break-all leading-relaxed">
+                     <div className="space-y-10 font-mono text-xl animate-in fade-in slide-in-from-bottom-10 duration-700">
+                        <div className="text-emerald-500 mb-8 font-black border-b-2 border-emerald-500/20 pb-4 uppercase tracking-[0.5em]">>>> WEAPONRY SYNTHESIZED:</div>
+                        <pre className="text-gray-100 whitespace-pre-wrap break-all leading-relaxed p-8 bg-black/50 rounded-3xl border-2 border-white/5 shadow-inner">
                           {JSON.stringify(output, null, 2)}
                         </pre>
+                        <div className="flex justify-end">
+                            <Button className="bg-emerald-600 text-white rounded-full px-10 py-6 font-bold uppercase tracking-widest shadow-2xl hover:bg-emerald-500">
+                                Deploy to Network
+                            </Button>
+                        </div>
                      </div>
                    ) : (
-                     <div className="h-full flex flex-col items-center justify-center text-center opacity-20 py-32">
-                        <FileCode className="size-20 mb-4" />
-                        <p className="text-xl font-bold uppercase tracking-widest">Awaiting Command...</p>
+                     <div className="h-full flex flex-col items-center justify-center text-center opacity-10 py-48">
+                        <Skull className="size-48 mb-8 text-red-500 animate-pulse" />
+                        <p className="text-4xl font-black uppercase tracking-[2em] text-white">VACUUM</p>
+                        <p className="text-lg mt-4 text-gray-400">Waiting for Alpha Command Input...</p>
                      </div>
                    )}
                 </ScrollArea>
-                <div className="absolute bottom-4 right-8 opacity-40">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-red-500">MUIZZ_OS_V42</span>
+                <div className="absolute bottom-8 right-12 opacity-30 flex items-center gap-4">
+                  <Cpu className="size-5 text-red-500" />
+                  <span className="text-[12px] font-black uppercase tracking-[1em] text-white">AL-MUIZZ_CORE</span>
                 </div>
               </CardContent>
             </Card>
