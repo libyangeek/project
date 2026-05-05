@@ -7,13 +7,13 @@ import path from 'path';
 const execPromise = promisify(exec);
 
 /**
- * @fileOverview الجسر التنفيذي السيادي v42.1
- * يعالج الأوامر المباشرة والسكريبتات الهجومية بنمط "الفاتح العليم".
+ * @fileOverview الجسر التنفيذي السيادي v42.2
+ * المحرك العالمي لتنفيذ الأوامر والسكريبتات الهجومية بنمط "الفاتح العليم".
  */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { command, target, args, type } = body;
+    const { command, target, args, type, params } = body;
 
     // المسارات الأساسية في بيئة كالي السيادية
     const BASE_PATH = '/opt/sovereign-ai-platform';
@@ -35,8 +35,7 @@ export async function POST(req: NextRequest) {
       case 'terminal':
         // قائمة الأوامر المسموح بها في الوضع السيادي
         const allowedCommands = ['nmap', 'ping', 'whois', 'dig', 'traceroute', 'curl', 'ls', 'pwd', 'sovereign', 'bash', 'python3', 'msfconsole', 'bettercap', 'sqlmap', 'hydra', 'nuclei'];
-        const cmdParts = command.split(' ');
-        const cmdBase = cmdParts[0];
+        const cmdBase = command.split(' ')[0];
         
         if (!allowedCommands.includes(cmdBase)) {
           if (process.env.NODE_ENV === 'development') {
@@ -103,26 +102,29 @@ export async function POST(req: NextRequest) {
             output: stdout || stderr,
             success: true,
             timestamp: new Date().toISOString(),
-            executionType: type
+            executionType: type,
+            command: executableCommand
         });
     } catch (execError: any) {
         if (process.env.NODE_ENV === 'development') {
             return NextResponse.json({
-                output: `[MOCK] Command execution simulated: ${executableCommand}\nResult: Success (Dev Bypass Mode)`,
+                output: `[MOCK] Command execution simulated: ${executableCommand}\nResult: Success (Dev Bypass Mode)\nOutput: ${execError.stdout || 'None'}`,
                 success: true,
                 timestamp: new Date().toISOString(),
                 executionType: type
             });
         }
-        throw execError;
+        return NextResponse.json({ 
+          error: execError.message, 
+          stdout: execError.stdout, 
+          stderr: execError.stderr 
+        }, { status: 500 });
     }
 
   } catch (error: any) {
     console.error("Execution Error:", error);
     return NextResponse.json({ 
-      error: error.message || 'Internal Server Error',
-      stdout: error.stdout,
-      stderr: error.stderr
+      error: error.message || 'Internal Server Error'
     }, { status: 500 });
   }
 }
