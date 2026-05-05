@@ -55,6 +55,7 @@ type Message = {
 /**
  * @fileOverview المحطة الأبدية v43.0 - THE SOVEREIGN SHELL: OVERMIND EDITION
  * تتيح للقائد إرسال أوامر للعقل الجمعي مع دعم تزامن السرب وإعادة التشكيل.
+ * العصب المركزي للتحكم في الـ 13 عقدة السيادية.
  */
 export default function TerminalPage() {
   const [input, setInput] = React.useState("")
