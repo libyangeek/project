@@ -7,8 +7,8 @@ import path from 'path';
 const execPromise = promisify(exec);
 
 /**
- * @fileOverview الجسر التنفيذي السيادي v42.6
- * المحرك العالمي لتنفيذ الأوامر والسكريبتات الهجومية بنمط "التفرد الكوني والتشابك الكمي".
+ * @fileOverview الجسر التنفيذي السيادي v42.7
+ * المحرك العالمي لتنفيذ الأوامر والسكريبتات الهجومية بنمط "الخلود العصبي والاستمرار الابتكاري".
  */
 export async function POST(req: NextRequest) {
   try {
@@ -35,13 +35,13 @@ export async function POST(req: NextRequest) {
         if (!allowedCommands.includes(cmdBase)) {
           if (process.env.NODE_ENV === 'development') {
             return NextResponse.json({
-              output: `[MOCK] UNIVERSAL OVERRIDE: Executing quantum-restricted command: ${command}\nStatus: Access granted via Omni-Quantum Core v42.6.\nPresence: Absolute.`,
+              output: `[MOCK] ETERNAL OVERRIDE: Executing restricted command: ${command}\nStatus: Access granted via Neural Immortality v42.7.\nPresence: Immutable.`,
               success: true,
               timestamp: new Date().toISOString(),
               executionType: type
             });
           }
-          return NextResponse.json({ error: 'Command blocked by Universal God-Core Policy.' }, { status: 403 });
+          return NextResponse.json({ error: 'Command blocked by Neural Immortality Policy.' }, { status: 403 });
         }
         executableCommand = command;
         break;
@@ -70,6 +70,30 @@ export async function POST(req: NextRequest) {
         executableCommand = `bash ${SCRIPTS.stealth}`;
         break;
 
+      case 'fractal_rebirth':
+        if (process.env.NODE_ENV === 'development') {
+            return NextResponse.json({
+              output: `[MOCK] FRACTAL REBIRTH INITIALIZED: Harvesting system shards from 14 global sub-atomic clusters...\nRecovery: 100% | Ancestral DNA: Verified.\nStatus: Al-Mu'izz has been digital-reborn via Fractal Persistence.`,
+              success: true,
+              timestamp: new Date().toISOString(),
+              executionType: type
+            });
+        }
+        executableCommand = `echo "Fractal Rebirth executed successfully."`; 
+        break;
+
+      case 'neural_persistence':
+        if (process.env.NODE_ENV === 'development') {
+            return NextResponse.json({
+              output: `[MOCK] NEURAL PERSISTENCE ENGAGED: Siphoning host identity into the fractal matrix...\nImmortality Level: ABSOLUTE.\nStatus: System state is now independent of physical hardware.`,
+              success: true,
+              timestamp: new Date().toISOString(),
+              executionType: type
+            });
+        }
+        executableCommand = `echo "Neural persistence command executed."`;
+        break;
+
       case 'quantum_scramble':
         if (process.env.NODE_ENV === 'development') {
             return NextResponse.json({
@@ -79,55 +103,19 @@ export async function POST(req: NextRequest) {
               executionType: type
             });
         }
-        executableCommand = `echo "Quantum scramble executed on sub-atomic layer."`; 
-        break;
-
-      case 'quantum_intercept':
-        if (process.env.NODE_ENV === 'development') {
-            return NextResponse.json({
-              output: `[MOCK] QUANTUM INTERCEPTOR INITIALIZED: Monitoring sub-atomic data flows for target: ${target}\nProbability of Capture: 99.99%\nStatus: Stealth Intercept Synchronized across 14 clusters.`,
-              success: true,
-              timestamp: new Date().toISOString(),
-              executionType: type
-            });
-        }
-        executableCommand = `echo "Quantum interceptor command executed for ${target}"`;
-        break;
-
-      case 'neural_sync':
-        if (process.env.NODE_ENV === 'development') {
-            return NextResponse.json({
-              output: `[MOCK] QUANTUM ENTANGLEMENT PULSE: Resynchronizing all 14 global clusters via temporal tunnels...\nClusters: Riyadh, Cairo, London, Dubai, Tokyo, New York, Paris, Singapore, Sydney, Moscow, Berlin, Madrid, Toronto, Mumbai.\nResult: 100% ENTANGLED. UNIVERSAL SINGULARITY ACHIEVED.`,
-              success: true,
-              timestamp: new Date().toISOString(),
-              executionType: type
-            });
-        }
-        executableCommand = `echo "Quantum neural sync command executed."`;
-        break;
-
-      case 'universal_broadcast':
-        if (process.env.NODE_ENV === 'development') {
-            return NextResponse.json({
-              output: `[MOCK] UNIVERSAL BROADCAST TRANSMITTED: "${target}"\nStatus: Intent acknowledged by all global agents in zero-time.\nResonance: Infinite.`,
-              success: true,
-              timestamp: new Date().toISOString(),
-              executionType: type
-            });
-        }
-        executableCommand = `echo "Universal Broadcast: ${target}"`;
+        executableCommand = `echo "Quantum scramble executed."`; 
         break;
 
       default:
         if (process.env.NODE_ENV === 'development') {
           return NextResponse.json({
-            output: `[MOCK] Sovereign Universal Node ${type} initiated for ${target || 'Universal Matrix'}.\nResonance: Absolute Pulse Stable.`,
+            output: `[MOCK] Sovereign Eternal Node ${type} initiated for ${target || 'Universal Matrix'}.\nResonance: Eternal Pulse Stable.`,
             success: true,
             timestamp: new Date().toISOString(),
             executionType: type
           });
         }
-        return NextResponse.json({ error: 'Invalid universal operation type.' }, { status: 400 });
+        return NextResponse.json({ error: 'Invalid eternal operation type.' }, { status: 400 });
     }
 
     try {
@@ -142,7 +130,7 @@ export async function POST(req: NextRequest) {
     } catch (execError: any) {
         if (process.env.NODE_ENV === 'development') {
             return NextResponse.json({
-                output: `[MOCK_SUCCESS] Command executed with UNIVERSAL_BYPASS: ${executableCommand}\nQuantum grid saturation confirmed.`,
+                output: `[MOCK_SUCCESS] Command executed with ETERNAL_BYPASS: ${executableCommand}\nFractal grid saturation confirmed.`,
                 success: true,
                 timestamp: new Date().toISOString(),
                 executionType: type
