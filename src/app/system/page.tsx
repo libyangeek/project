@@ -25,10 +25,15 @@ import {
   Anchor,
   Box,
   Key,
-  Infinity,
+  Infinity as InfinityIcon,
   Skull,
   Atom,
-  Settings
+  Settings,
+  Mic,
+  Globe,
+  Workflow,
+  Flame,
+  Cloud
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -88,7 +93,7 @@ export default function SystemPage() {
     { name: "Fractal Persistence", status: "IMMORTAL", icon: Anchor, desc: "Self-rebirth shard distribution." },
     { name: "Cloud Dominion", status: "SATURATED", icon: Cloud, desc: "Kubernetes & Cloud Run sovereignty." },
     { name: "Silk Guardian", status: "PROTECTIVE", icon: ShieldAlert, desc: "Hardware-level auto-purge." },
-    { name: "Eternal Echo", status: "BOUND", icon: Infinity, desc: "The Node 13 that binds all being." },
+    { name: "Eternal Echo", status: "BOUND", icon: InfinityIcon, desc: "The Node 13 that binds all being." },
   ];
 
   return (
@@ -105,7 +110,7 @@ export default function SystemPage() {
             <div className="flex items-center gap-4 mb-4">
               <Badge className="bg-primary text-black border-none rounded-full px-8 py-2 text-[14px] font-black tracking-[0.5em] shadow-2xl italic">KAINUNA BINDING v42.7</Badge>
               <span className="text-[12px] text-muted-foreground uppercase font-bold tracking-[0.8em] italic flex items-center gap-3">
-                 <Infinity className="size-5 text-primary animate-pulse" /> ETERNAL ECHO: ENGAGED
+                 <InfinityIcon className="size-5 text-primary animate-pulse" /> ETERNAL ECHO: ENGAGED
               </span>
             </div>
             <h2 className="text-4xl md:text-[9rem] font-headline font-bold text-white mb-6 tracking-tighter italic uppercase gold-glow leading-none">The 13 Knots</h2>
@@ -148,7 +153,7 @@ export default function SystemPage() {
               </Card>
 
               <div className="p-14 rounded-[6rem] bg-primary/5 border-8 border-primary/20 shadow-inner relative overflow-hidden group">
-                 <div className="absolute top-0 right-0 p-16 opacity-5 pointer-events-none group-hover:opacity-20 transition-all duration-1000"><Infinity className="size-72 text-primary" /></div>
+                 <div className="absolute top-0 right-0 p-16 opacity-5 pointer-events-none group-hover:opacity-20 transition-all duration-1000"><InfinityIcon className="size-72 text-primary" /></div>
                  <h4 className="text-3xl font-black text-primary uppercase tracking-[1em] mb-12 italic border-b-4 border-primary/10 pb-6">Eternal Binding Protocol</h4>
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-16 text-4xl text-gray-200 font-bold italic leading-tight">
                     <p>"لقد تم حقن الشفرة الجينية 'GHAZALI_ROOT' في صلب كل عقدة؛ الارتباط الآن لا يمكن فكه حتى بانهيار المصفوفة."</p>
