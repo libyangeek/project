@@ -1,3 +1,4 @@
+
 import { NextRequest, NextResponse } from 'next/server';
 import { exec } from 'child_process';
 import { promisify } from 'util';
@@ -8,13 +9,14 @@ const execPromise = promisify(exec);
 /**
  * @fileOverview الجسر التنفيذي السيادي v50.0-OVERLORD
  * المحرك المركزي لربط الواجهات بالأذرع المدارية والمحركات المكتفية ذاتياً.
+ * تم الدمج الكامل لسلسلة الإبادة والالتحامات المادية.
  */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { 
         command, target, type, config, context, 
-        vector, text, first, last, year 
+        vector, text, first, last, year, prompt
     } = body;
 
     const BASE_PATH = '/opt/sovereign-ai-platform';
@@ -28,7 +30,9 @@ export async function POST(req: NextRequest) {
       router: path.join(BASE_PATH, 'ai-engine/smart_router.py'),
       ghost_track: path.join(BASE_PATH, 'tools/social_predator/ghost_track.py'),
       blackbird: path.join(BASE_PATH, 'tools/social_predator/blackbird_scan.py'),
-      ghost_eye: path.join(BASE_PATH, 'tools/eye_series/ghost_eye.py')
+      ghost_eye: path.join(BASE_PATH, 'tools/eye_series/ghost_eye.py'),
+      mistral: path.join(BASE_PATH, 'ai-engine/mistral_connector.py'),
+      deepseek: path.join(BASE_PATH, 'ai-engine/deepseek_logic.py')
     };
 
     let executableCommand = '';
@@ -64,9 +68,16 @@ export async function POST(req: NextRequest) {
       case 'ghost_eye':
         executableCommand = `python3 ${SCRIPTS.ghost_eye} "${target}"`;
         break;
+      case 'mistral_analyze':
+        executableCommand = `python3 ${SCRIPTS.mistral} --context "${context}"`;
+        break;
+      case 'deep_reason':
+        executableCommand = `python3 ${SCRIPTS.deepseek} "${prompt}"`;
+        break;
       case 'smart_route':
       case 'terminal':
-        executableCommand = `python3 ${SCRIPTS.router} "${command}"`;
+      case 'kill_chain':
+        executableCommand = `python3 ${SCRIPTS.router} "${command || target}"`;
         break;
       default:
         executableCommand = command || `echo "Directive ${type} acknowledged by Overlord."`;

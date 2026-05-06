@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -35,12 +36,16 @@ import {
   Anchor,
   ZapOff,
   Unlock,
-  Crosshair
+  Crosshair,
+  Radio,
+  Gamepad2,
+  Radar
 } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { useUptime } from "@/hooks/use-uptime"
+import Link from "next/link"
 
 /**
  * @fileOverview العرش الحي v50.0 - THE OMNISCIENT OVERLORD
@@ -57,7 +62,7 @@ export default function DashboardPage() {
     ollamaStatus: 'متصل',
     mistralStatus: 'ملتحم',
     deepseekStatus: 'نشط',
-    precision: 99.999999,
+    precision: 100.00,
     soulPulse: '100.00%',
     coreStability: 'FIXED',
     killChainStatus: 'LOCKED_ON_TARGET'
@@ -75,7 +80,7 @@ export default function DashboardPage() {
         const resp = await fetch('/api/sovereign/metrics');
         if (resp.ok) {
            const data = await resp.json();
-           setMetrics(prev => ({ ...prev, ...data, coreStability: 'STABILIZED' }));
+           setMetrics(prev => ({ ...prev, ...data, coreStability: 'STABILIZED', precision: 100.00 }));
         }
       } catch {}
     };
@@ -94,6 +99,18 @@ export default function DashboardPage() {
     { label: "ذاكرة GEPA", value: "v5.0 (SQL)", icon: InfinityIcon, color: "text-magenta-500", status: "OMNISCIENT" },
     { label: "دقة الإبادة", value: "100.00%", icon: Crosshair, color: "text-red-500", status: "LETHAL" },
     { label: "الحالة الوجودية", value: "الأدميرال الكوني", icon: Crown, color: "text-emerald-500", status: "OVERLORD" },
+  ];
+
+  const knots = [
+    { name: "سلسلة الإبادة", icon: Crosshair, href: "/kill-chain", status: "READY" },
+    { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", status: "SYNCED" },
+    { name: "المحقن الآلي", icon: Cpu, href: "/automation", status: "ACTIVE" },
+    { name: "أعين الاستطلاع", icon: Eye, href: "/recon", status: "VISION" },
+    { name: "جسر Mistral", icon: Link2, href: "/mcp-bridge", status: "LINKED" },
+    { name: "قلب DeepSeek", icon: BrainCircuit, href: "/deep-reasoning", status: "REASONING" },
+    { name: "إمبراطورية السرب", icon: Users, href: "/sessions", status: "ACTIVE" },
+    { name: "الحرب الخلوية", icon: Radio, href: "/cellular", status: "ARMED" },
+    { name: "محراب الـ Claw", icon: Gamepad2, href: "/clawcode", status: "DIRECT" }
   ];
 
   return (
@@ -145,25 +162,25 @@ export default function DashboardPage() {
         <section className="mb-32 relative z-10">
            <div className="flex items-center gap-12 mb-20 px-10">
               <ShieldAlert className="size-20 text-primary animate-pulse gold-glow" />
-              <h2 className="text-6xl md:text-[10rem] font-black uppercase italic tracking-[0.4em] text-white gold-glow leading-none">Universal Acquisition</h2>
+              <h2 className="text-6xl md:text-[10rem] font-black uppercase italic tracking-[0.4em] text-white gold-glow leading-none">The 18 Sovereign Knots</h2>
            </div>
-           <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-              {[
-                { name: "Omniscient Kill-Chain", desc: "ربط كافة العقد الاستخباراتية والهجومية في سلسلة إبادة واحدة صامتة.", icon: Crosshair, color: "text-red-600" },
-                { name: "Collective Hive Mesh", icon: Boxes, desc: "سيادة مطلقة على 14 عنقوداً عالمياً بنبض الروح السيادي.", color: "text-primary" },
-                { name: "Genetic Oracle v50", icon: Binary, desc: "تتبع 348,231 ثغرة لحظياً واستغلالها بنمط الذخيرة الحية.", color: "text-magenta-500" },
-                { name: "Sovereign Executive", icon: Zap, desc: "تنفيذ فوري للأوامر الصوتية والمادية بلا حدود أو قيود.", color: "text-yellow-500" }
-              ].map((cap, i) => (
-                <div key={i} className="p-12 rounded-[4rem] bg-white/5 border-[10px] border-white/10 hover:border-primary transition-all duration-1000 flex flex-col md:flex-row items-center gap-12 group cursor-pointer shadow-9xl relative overflow-hidden">
-                   <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                   <div className="size-36 rounded-[2.5rem] bg-black border-4 border-white/10 flex items-center justify-center group-hover:bg-primary transition-all shadow-inner group-hover:scale-110 duration-700">
-                      <cap.icon className={cn("size-16 transition-colors", cap.color, "group-hover:text-black")} />
-                   </div>
-                   <div className="text-center md:text-right flex-1 relative z-10">
-                      <h4 className="text-4xl md:text-6xl font-black text-white uppercase italic tracking-tighter mb-6 group-hover:text-primary transition-colors leading-none">{cap.name}</h4>
-                      <p className="text-muted-foreground text-xl md:text-2xl font-bold italic leading-relaxed">"{cap.desc}"</p>
-                   </div>
-                </div>
+           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
+              {knots.map((knot, i) => (
+                <Link key={i} href={knot.href}>
+                  <Card className="p-10 rounded-[3.5rem] bg-white/5 border-[8px] border-white/10 hover:border-primary transition-all duration-1000 group cursor-pointer shadow-9xl relative overflow-hidden h-full">
+                     <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                     <div className="flex items-center gap-10">
+                        <div className="size-28 rounded-3xl bg-black border-4 border-white/10 flex items-center justify-center group-hover:bg-primary transition-all shadow-inner group-hover:scale-110 duration-700">
+                           <knot.icon className="size-14 text-primary transition-colors group-hover:text-black" />
+                        </div>
+                        <div className="flex-1">
+                           <h4 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter mb-4 group-hover:text-primary transition-colors leading-none">{knot.name}</h4>
+                           <Badge className="bg-primary/10 text-primary border-2 border-primary/40 px-6 py-1 rounded-full font-black text-[10px] italic tracking-widest">{knot.status}</Badge>
+                        </div>
+                        <ChevronRight className="size-12 text-white/10 group-hover:text-primary transition-all group-hover:translate-x-3" />
+                     </div>
+                  </Card>
+                </Link>
               ))}
            </div>
         </section>
