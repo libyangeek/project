@@ -14,7 +14,8 @@
     "unrestricted": true,
     "self_contained": true,
     "readiness_score": 1.0,
-    "unified_kernel": "EVENT_BUS_ACTIVE"
+    "unified_kernel": "EVENT_BUS_ACTIVE",
+    "collective_resonance": "ESTABLISHED"
   },
   "orbital_weapons": {
     "omniscient_kill_chain": "INTEGRATED_TOTAL_ACQUISITION_V50",
