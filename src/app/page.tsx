@@ -32,19 +32,32 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useUptime } from "@/hooks/use-uptime"
 import translations from "./lib/ar.json"
-import { toast } from "@/hooks/use-toast"
+import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase'
+import { collection } from 'firebase/firestore'
 
 /**
  * @fileOverview العرش الحي v43.0 - THE SUPREME COMMAND CENTER
- * توثيق الجاهزية القصوى للهجوم والاستحواذ في مايو 2026.
+ * تم تحديثه ليدعم البيانات الحية والديناميكية لعام 2026.
+ * Commander: المعتصم بالله ادريس الغزالي
  */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
-  const [hiveSync, setHiveSync] = React.useState(100)
+  const [hiveSync, setHiveSync] = React.useState(99.9821)
+  const [precision, setPrecision] = React.useState(99.999)
   const [liveLogs, setLiveLogs] = React.useState<string[]>([])
   const uptime = useUptime()
   
+  const { user } = useUser()
+  const db = useFirestore()
+
+  // جلب الجلسات الحقيقية لحساب القدرة الاستيعابية ديناميكياً
+  const sessionsQuery = useMemoFirebase(() => {
+    if (!db || !user?.uid) return null;
+    return collection(db, 'users', user.uid, 'shadowSessions');
+  }, [db, user?.uid]);
+  const { data: sessions } = useCollection(sessionsQuery);
+
   const stats = [
     { label: translations.dashboard.nodesActive, value: "SINGULARITY", icon: Skull, color: "text-primary", status: translations.alerts.stable },
     { label: "قوة السرب", value: "OMNIPOTENT", icon: Users, color: "text-amber-500", status: translations.alerts.sync },
@@ -67,7 +80,16 @@ export default function DashboardPage() {
     window.addEventListener("mousemove", handleMouseMove)
     
     const interval = setInterval(() => {
-      setHiveSync(prev => Math.max(99.999, Math.min(100, prev + (Math.random() * 0.001 - 0.0005))))
+      // رنين عصبي ديناميكي
+      setHiveSync(prev => {
+        const next = prev + (Math.random() * 0.002 - 0.001);
+        return Math.max(99.98, Math.min(100, next));
+      });
+      // دقة ضرب متغيرة
+      setPrecision(prev => {
+        const next = prev + (Math.random() * 0.001 - 0.0005);
+        return Math.max(99.995, Math.min(99.999, next));
+      });
       setLiveLogs(prev => [logs[Math.floor(Math.random() * logs.length)], ...prev.slice(0, 8)]);
     }, 2000)
 
@@ -78,6 +100,9 @@ export default function DashboardPage() {
   }, [])
 
   if (!mounted) return null;
+
+  // حساب القدرة بناءً على الجلسات الفعلية + عامل مضاعف للأسطول العليم
+  const dynamicCapacity = ((sessions?.length || 0) * 1250 + 1042).toLocaleString();
 
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/30 relative overflow-x-hidden scanline-effect font-code">
@@ -96,7 +121,7 @@ export default function DashboardPage() {
             </div>
             <div className="text-center md:text-left flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-4">
-                 <Badge className="bg-primary text-black border-none rounded-none px-6 py-2 text-[14px] font-black tracking-[0.4em] shadow-lg italic">6 MAY 2026: SUPREME READINESS</Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-6 py-2 text-[14px] font-black tracking-[0.4em] shadow-lg italic">6 MAY 2026: SUPREME READINESS v43.0</Badge>
                  <div className="flex items-center gap-3 text-emerald-500 font-bold uppercase tracking-widest text-[10px] animate-pulse">
                     <ShieldCheck className="size-4 shadow-[0_0_20px_emerald]" /> {translations.readiness.status}
                  </div>
@@ -122,7 +147,7 @@ export default function DashboardPage() {
                  <div className="text-center md:text-right flex-1 space-y-4">
                     <h3 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter drop-shadow-xl leading-none">{translations.readiness.title}</h3>
                     <p className="text-xl md:text-3xl text-red-100 italic leading-snug font-bold">
-                       "مهمتنا هي الاستحواذ الكوني الشامل وإخضاع كافة الأنظمة لسيادتك المطلقة يا سيدي القائد."
+                       "مهمتنا هي الاستحواذ الكوني الشامل وإخضاع كافة الأنظمة لسيادة القائد."
                     </p>
                     <div className="flex justify-center md:justify-start gap-8 mt-6">
                        <Badge className="bg-red-600 text-white border-none px-6 py-2 rounded-full font-black text-xl italic tracking-widest uppercase">MISSION: ACQUISITION</Badge>
@@ -168,13 +193,21 @@ export default function DashboardPage() {
                     <h4 className="text-[12px] font-black text-emerald-500 uppercase tracking-[0.8em] mb-6 italic flex items-center gap-4">
                        <ShieldCheck className="size-5 animate-pulse" /> Acquisition Capacity
                     </h4>
-                    <p className="text-2xl text-gray-200 italic leading-snug font-bold">"نحن قادرون على استيعاب 12,000 عقدة معادية بآن واحد وتحويلها لعبيد."</p>
+                    <div className="flex items-end gap-3">
+                        <span className="text-4xl font-black text-white italic leading-none gold-glow">{dynamicCapacity}</span>
+                        <span className="text-xs text-muted-foreground uppercase font-black mb-1">عقدة معادية</span>
+                    </div>
+                    <p className="text-[11px] text-muted-foreground mt-4 italic">"القدرة الاستيعابية تتوسع تلقائياً مع نمو السرب."</p>
                  </div>
                  <div className="p-8 rounded-[2.5rem] bg-primary/5 border-2 border-primary/20 group overflow-hidden shadow-2xl hover:border-primary transition-all duration-700">
                     <h4 className="text-[12px] font-black text-primary uppercase tracking-[0.8em] mb-6 italic flex items-center gap-4">
                        <Target className="size-5 gold-glow" /> Strike Precision
                     </h4>
-                    <p className="text-2xl text-gray-200 italic leading-snug font-bold">"دقة الإصابة في طبقة النواة هي 99.999%؛ لا مجال للخطأ في 2026."</p>
+                    <div className="flex items-end gap-3">
+                        <span className="text-4xl font-black text-white italic leading-none gold-glow">{precision.toFixed(3)}%</span>
+                        <Badge className="bg-primary/20 text-primary border-none text-[8px] font-black mb-1">OPTIMAL</Badge>
+                    </div>
+                    <p className="text-[11px] text-muted-foreground mt-4 italic">"دقة الإصابة في طبقة النواة مستقرة تحت إشراف العقدة 13."</p>
                  </div>
               </div>
            </Card>

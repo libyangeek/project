@@ -44,7 +44,7 @@ const navItems = [
   { name: "Divine Strike", icon: Target, href: "/terminal", knot: 2 },
   { name: "Armada Swarm", icon: Users, href: "/sessions", knot: 3 },
   { name: "MCP Bridge", icon: Share2, href: "/mcp-bridge", knot: 4 },
-  { name: "Whisper Voice", icon: Mic, href: "/remote", knot: 5 },
+  { name: "Whisper Voice", icon: Mic, href: "/remote", knot: 5 }, // الرابط الموحد للتحكم الصوتي والموبايل
   { name: "Sovereign Bible", icon: BookOpen, href: "/codex", knot: 6 },
   { name: "Swarm Simulator", icon: Workflow, href: "/digital-twin", knot: 7 },
   { name: "Field Agent", icon: Activity, href: "/field-agent", knot: 8 },
@@ -63,11 +63,14 @@ const navItems = [
 export function SidebarNav() {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = React.useState(false)
-  const [resonance, setResonance] = React.useState(100)
+  const [resonance, setResonance] = React.useState(99.98)
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      setResonance(prev => Math.max(99.99, Math.min(100, prev + (Math.random() * 0.01 - 0.005))))
+      setResonance(prev => {
+        const next = prev + (Math.random() * 0.01 - 0.005);
+        return Math.max(99.90, Math.min(100, next));
+      });
     }, 2000)
     return () => clearInterval(interval)
   }, [])

@@ -5,8 +5,8 @@ import { FirebaseClientProvider } from '@/firebase';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'AL-MUIZZ v40.0 | OMNISCIENT ARMADA',
-  description: 'The Final Inception: Absolute Neural Sovereign Platform for Commander Al-Ghazali.',
+  title: 'AL-MUIZZ v43.0 | THE SOVEREIGN OVERMIND',
+  description: 'The Sovereign Overmind: Universal Singularity & Hive Consciousness for Commander Al-Ghazali.',
 };
 
 export default function RootLayout({
