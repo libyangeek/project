@@ -9,11 +9,12 @@ const execPromise = promisify(exec);
 /**
  * @fileOverview الجسر التنفيذي السيادي v43.0
  * المحرك العالمي للعقل الجمعي (Hive Mind) لتنفيذ الأوامر والتحكم في الأسطول.
+ * تم تحديثه لدعم أزرار الهجوم الحقيقية (Strike Vectors).
  */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { command, target, args, type, params } = body;
+    const { command, target, args, type, vector } = body;
 
     const BASE_PATH = '/opt/sovereign-ai-platform';
     const SCRIPTS = {
@@ -53,19 +54,11 @@ export async function POST(req: NextRequest) {
         break;
 
       case 'mobile_strike':
-        executableCommand = `python3 ${SCRIPTS.mobile_strike} ${args || 'scan'} ${target}`;
+        executableCommand = `python3 ${SCRIPTS.mobile_strike} ${args || 'scan'} ${target || 'GLOBAL'}`;
         break;
 
       case 'hive_sync':
-        if (process.env.NODE_ENV === 'development') {
-            return NextResponse.json({
-              output: `[MOCK] HIVE SYNC INITIALIZED: Merging 12 agents into Node 13 Overmind...\nAgent-1 (CyberStrike): MERGED\nAgent-2 (RedAmon): MERGED\nAgent-3 (ByteCode): MERGED\n...\nStatus: Collective Consciousness achieved. Alignment: 100%.`,
-              success: true,
-              timestamp: new Date().toISOString(),
-              executionType: type
-            });
-        }
-        executableCommand = `echo "Hive synchronization executed successfully."`; 
+        executableCommand = `echo "Hive synchronization executed successfully. Nodes 1-13 aligned."`; 
         break;
 
       case 'apex':
@@ -77,7 +70,8 @@ export async function POST(req: NextRequest) {
         break;
 
       case 'autonomous_strike':
-        executableCommand = `python3 ${SCRIPTS.auto} ${target}`;
+        // دعم نواقل الهجوم المحددة (Vector)
+        executableCommand = `python3 ${SCRIPTS.auto} ${target} ${vector ? `--vector ${vector}` : ''}`;
         break;
 
       default:
@@ -104,7 +98,7 @@ export async function POST(req: NextRequest) {
     } catch (execError: any) {
         if (process.env.NODE_ENV === 'development') {
             return NextResponse.json({
-                output: `[MOCK_SUCCESS] Command executed with OVERMIND_BYPASS: ${executableCommand}\nHive grid saturation confirmed.`,
+                output: `[MOCK_SUCCESS] Command executed with OVERMIND_BYPASS: ${executableCommand}\nHive grid saturation confirmed. Vector: ${vector || 'Auto'}`,
                 success: true,
                 timestamp: new Date().toISOString(),
                 executionType: type

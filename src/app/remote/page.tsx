@@ -17,7 +17,10 @@ import {
   Volume2,
   Loader2,
   SmartphoneNfc,
-  GripVertical
+  GripVertical,
+  Zap,
+  VolumeX,
+  Volume1
 } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -30,7 +33,7 @@ import { VoiceCommand } from "@/components/platform/voice-command"
 
 /**
  * @fileOverview التحكم عن بعد v43.0 - HIVE RAT
- * تم دمج Whisper Voice للتحكم الصوتي وتوحيد الأبعاد السيادية.
+ * تم دمج Whisper Voice للتحكم الصوتي وتوحيد الأبعاد السيادية مع ضمان عمل كافة الأزرار.
  * Commander: المعتصم بالله ادريس الغزالي
  */
 export default function MobileRemotePage() {
@@ -39,6 +42,7 @@ export default function MobileRemotePage() {
   const [activeStrikes, setActiveStrikes] = React.useState<any[]>([])
   const [mounted, setMounted] = React.useState(false)
   const [hiveSync, setHiveSync] = React.useState(100)
+  const [isMuted, setIsMuted] = React.useState(false)
 
   React.useEffect(() => {
     setMounted(true)
@@ -93,6 +97,11 @@ export default function MobileRemotePage() {
     handleStrike(text);
   };
 
+  const toggleMute = () => {
+    setIsMuted(!isMuted);
+    toast({ title: isMuted ? "Audio Uplink Active" : "Audio Link Silent" });
+  };
+
   if (!mounted) return null
 
   return (
@@ -101,7 +110,7 @@ export default function MobileRemotePage() {
       
       <header className="p-4 md:p-5 flex justify-between items-center relative z-20 border-b-2 border-primary/40 bg-black/90 backdrop-blur-3xl shadow-xl">
         <div className="flex items-center gap-3">
-          <div className="size-10 md:size-12 rounded-xl bg-primary flex items-center justify-center border-2 border-white/20 animate-pulse">
+          <div className="size-10 md:size-12 rounded-xl bg-primary flex items-center justify-center border-2 border-white/20 animate-pulse shadow-[0_0_20px_rgba(212,175,55,0.5)]">
             <Boxes className="size-6 md:size-8 text-black" />
           </div>
           <div>
@@ -113,8 +122,10 @@ export default function MobileRemotePage() {
           </div>
         </div>
         <div className="flex items-center gap-3">
-           <Button size="icon" variant="ghost" className="rounded-xl border-2 border-primary/20 bg-primary/5 text-primary size-10"><Volume2 className="size-5" /></Button>
-           <Button size="icon" variant="ghost" className="rounded-xl border-2 border-white/10 bg-white/5 size-10" asChild>
+           <Button onClick={toggleMute} size="icon" variant="ghost" className="rounded-xl border-2 border-primary/20 bg-primary/5 text-primary size-10 shadow-lg transition-all active:scale-90">
+             {isMuted ? <VolumeX className="size-5" /> : <Volume2 className="size-5" />}
+           </Button>
+           <Button size="icon" variant="ghost" className="rounded-xl border-2 border-white/10 bg-white/5 size-10 shadow-lg" asChild>
              <Link href="/"><ArrowLeft className="size-6" /></Link>
            </Button>
         </div>
@@ -122,11 +133,11 @@ export default function MobileRemotePage() {
 
       <main className="flex-1 overflow-y-auto p-4 md:p-6 space-y-5 relative z-10 scrollbar-hide pb-40">
         <div className="grid grid-cols-2 gap-3">
-           <Card className="kali-card border-primary/40 bg-primary/5 rounded-2xl p-4 relative overflow-hidden shadow-xl">
+           <Card className="kali-card border-primary/40 bg-primary/5 rounded-2xl p-4 relative overflow-hidden shadow-xl group">
               <div className="absolute top-0 left-0 w-1 h-full bg-primary animate-pulse" />
               <div className="text-[8px] text-primary/60 uppercase font-black tracking-widest mb-1 italic">Swarm Alignment</div>
-              <div className="text-sm md:text-lg font-black text-white uppercase italic flex items-center gap-2">
-                 <Users className="size-3 text-primary gold-glow" /> {hiveSync.toFixed(3)}%
+              <div className="text-sm md:text-lg font-black text-white uppercase italic flex items-center gap-2 group-hover:gold-glow transition-all">
+                 <Users className="size-3 text-primary" /> {hiveSync.toFixed(3)}%
               </div>
            </Card>
            <Card className="kali-card border-white/10 bg-black/60 rounded-2xl p-4 shadow-xl">
@@ -178,6 +189,10 @@ export default function MobileRemotePage() {
         </div>
 
         <div className="space-y-3">
+           <div className="px-2 flex items-center gap-3">
+              <Zap className="size-3 text-primary animate-pulse" />
+              <span className="text-[9px] font-black text-primary uppercase tracking-[0.4em] italic">Strike Log</span>
+           </div>
            {activeStrikes.map((strike) => (
              <Card key={strike.id} className={cn(
                "kali-card rounded-2xl overflow-hidden animate-in slide-in-from-bottom-8 duration-1000 border-2 shadow-2xl",
@@ -197,7 +212,9 @@ export default function MobileRemotePage() {
                             <span className="text-[8px] text-muted-foreground font-bold uppercase italic">{strike.time}</span>
                          </div>
                       </div>
-                      <Badge className="bg-emerald-600/30 text-emerald-500 text-[9px] px-3 py-1 rounded-full shadow-2xl">{strike.status}</Badge>
+                      <Badge className={cn("text-[9px] px-3 py-1 rounded-full shadow-2xl border-none", strike.status === "EXECUTING" ? "bg-emerald-500/20 text-emerald-500" : "bg-red-500/20 text-red-500")}>
+                        {strike.status}
+                      </Badge>
                    </div>
                    <div className="p-3 bg-black/60 rounded-xl border border-white/10 shadow-inner">
                       <p className="text-[11px] text-gray-300 font-bold italic leading-relaxed">"{strike.logic}"</p>
@@ -205,24 +222,30 @@ export default function MobileRemotePage() {
                 </CardContent>
              </Card>
            ))}
+           {activeStrikes.length === 0 && (
+             <div className="py-20 text-center opacity-10">
+                <Radio className="size-16 mx-auto mb-4 animate-pulse" />
+                <p className="text-[10px] font-black uppercase tracking-widest italic">Awaiting Directives...</p>
+             </div>
+           )}
         </div>
       </main>
 
-      <div className="fixed bottom-0 left-0 w-full p-5 bg-black/95 backdrop-blur-3xl border-t-4 border-primary/60 z-30">
+      <div className="fixed bottom-0 left-0 w-full p-5 bg-black/95 backdrop-blur-3xl border-t-4 border-primary/60 z-30 shadow-[0_-20px_50px_rgba(0,0,0,0.8)]">
         <div className="max-w-xl mx-auto relative group">
            <Input 
              placeholder="Dictate supreme intent..." 
-             className="h-16 md:h-20 bg-primary/5 border-2 border-white/10 rounded-full pl-16 pr-20 text-lg italic font-black focus:border-primary text-white"
+             className="h-16 md:h-20 bg-primary/5 border-2 border-white/10 rounded-full pl-16 pr-20 text-lg italic font-black focus:border-primary text-white shadow-inner transition-all duration-700"
              value={command}
              onChange={(e) => setInput(e.target.value)}
              onKeyDown={(e) => e.key === 'Enter' && handleStrike()}
            />
            <Button 
-             className="absolute right-2 top-1/2 -translate-y-1/2 size-12 md:size-16 bg-primary rounded-full shadow-2xl transition-all active:scale-90"
+             className="absolute right-2 top-1/2 -translate-y-1/2 size-12 md:size-16 bg-primary hover:bg-white text-black rounded-full shadow-2xl transition-all active:scale-90 border-4 border-black/20 group"
              onClick={() => handleStrike()}
              disabled={loading || !command.trim()}
            >
-             {loading ? <Loader2 className="size-6 md:size-8 animate-spin" /> : <Send className="size-6 md:size-8 text-black" />}
+             {loading ? <Loader2 className="size-6 md:size-8 animate-spin" /> : <Send className="size-6 md:size-8 transition-transform group-hover:translate-x-1" />}
            </Button>
         </div>
       </div>

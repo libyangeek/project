@@ -5,13 +5,13 @@ import { useState, useEffect } from 'react';
 
 /**
  * هوك إدارة نبض التشغيل السيادي v43.0
- * يحسب الوقت المنقضي منذ لحظة الانبعاث.
+ * يحسب الوقت المنقضي منذ ليلة القدر (10 مارس 2024) بدقة ثانية واحدة.
  */
 export function useUptime() {
   const [uptime, setUptime] = useState('00:00:00:00');
 
   useEffect(() => {
-    // لحظة الانبعاث: ليلة القدر (10 مارس 2024)
+    // لحظة الانبعاث: ليلة القدر 2024
     const startTime = new Date("2024-03-10T00:00:00").getTime();
 
     const calc = () => {

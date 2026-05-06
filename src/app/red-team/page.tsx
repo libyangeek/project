@@ -25,7 +25,8 @@ import {
   Globe,
   Wifi,
   Radio,
-  Signal
+  Signal,
+  History
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -43,7 +44,7 @@ import translations from "../lib/ar.json"
 
 /**
  * @fileOverview مختبر التخليق v43.0 - THE POLYMORPH LAB
- * تم تفعيل أزرار الهجوم الحقيقية (Apex Strike) وإحكام الربط العصبي.
+ * تم تفعيل كافة أزرار الضرب الحقيقي (Attack Vectors) وربطها بالنبض التنفيذي.
  * Commander: المعتصم بالله ادريس الغزالي
  */
 export default function RedTeamPage() {
@@ -53,6 +54,7 @@ export default function RedTeamPage() {
   const [description, setDescription] = React.useState("")
   const [output, setOutput] = React.useState<any>(null)
   const [activeMode, setActiveMode] = React.useState("exploit")
+  const [strikeLog, setStrikeLog] = React.useState<string[]>([])
 
   React.useEffect(() => {
     setMounted(true)
@@ -60,7 +62,7 @@ export default function RedTeamPage() {
 
   const handleAction = async () => {
     if (!target && activeMode !== "wordlist") {
-      toast({ variant: "destructive", title: "Missing Target" });
+      toast({ variant: "destructive", title: "Target Missing" });
       return;
     }
     setLoading(true);
@@ -68,14 +70,14 @@ export default function RedTeamPage() {
       let data;
       if (activeMode === "exploit") {
         data = await aiEnhancedExploitGeneration({
-          vulnerabilityDescription: description,
+          vulnerabilityDescription: description || "Generic kernel exploitation research.",
           targetSystemDetails: target
         });
       } else if (activeMode === "apex") {
         data = await getAttackPlan({ target });
       } else if (activeMode === "wordlist") {
         data = await generateSmartWordlist({
-          targetBio: description,
+          targetBio: description || "Target Bio Data Missing",
           complexityLevel: 'Extreme'
         });
       }
@@ -90,11 +92,13 @@ export default function RedTeamPage() {
 
   const launchStrike = async (vectorId: string) => {
     if (!target) {
-        toast({ variant: "destructive", title: "Target Missing" });
+        toast({ variant: "destructive", title: "Coordinate Required" });
         return;
     }
     setLoading(true);
-    toast({ title: translations.actions.exploit, description: `Initiating ${vectorId} strike on ${target}...` });
+    const timestamp = new Date().toLocaleTimeString();
+    setStrikeLog(prev => [`[${timestamp}] ⚡ Initiating ${vectorId.toUpperCase()} strike on ${target}...`, ...prev]);
+    
     try {
         const response = await fetch('/api/execute', {
             method: 'POST',
@@ -108,11 +112,13 @@ export default function RedTeamPage() {
         
         const data = await response.json();
         if (data.success) {
-            toast({ title: translations.actions.exploit + " COMPLETED" });
+            setStrikeLog(prev => [`[${timestamp}] ✅ Success: Vector ${vectorId} saturated. System subjugated.`, ...prev]);
+            toast({ title: translations.actions.exploit + " SUCCESS" });
         } else {
             throw new Error(data.error);
         }
     } catch (e: any) {
+        setStrikeLog(prev => [`[${timestamp}] ❌ Failure: ${e.message}`, ...prev]);
         toast({ variant: "destructive", title: "STRIKE FAILURE", description: e.message });
     } finally {
         setLoading(false);
@@ -205,6 +211,7 @@ export default function RedTeamPage() {
                  <Button 
                    key={v.id}
                    variant="outline" 
+                   disabled={loading}
                    onClick={() => launchStrike(v.id)}
                    className="h-16 rounded-xl border-primary/20 bg-primary/5 text-primary font-black uppercase tracking-widest hover:bg-primary hover:text-black transition-all text-[10px] flex flex-col items-center justify-center gap-1 group"
                  >
@@ -221,9 +228,21 @@ export default function RedTeamPage() {
                 <CardTitle className="text-xl md:text-3xl font-black uppercase italic text-white flex items-center gap-4 gold-glow px-4">
                   <Terminal className="size-6 text-primary animate-neural" /> Output Matrix
                 </CardTitle>
+                <History className="size-6 text-primary/30" />
               </CardHeader>
               <CardContent className="p-0 flex-1 relative">
                 <ScrollArea className="h-[550px] p-6">
+                   {strikeLog.length > 0 && (
+                     <div className="mb-8 space-y-3 font-code text-[11px] text-emerald-500 animate-in fade-in duration-500">
+                        {strikeLog.map((log, i) => (
+                          <div key={i} className="flex gap-4">
+                            <span className="opacity-40 select-none">❯</span>
+                            <span className="font-bold italic">{log}</span>
+                          </div>
+                        ))}
+                     </div>
+                   )}
+
                    {output ? (
                      <div className="space-y-8 font-code text-sm md:text-base animate-in fade-in zoom-in-95 duration-1000">
                         <div className="flex items-center justify-between border-b border-white/5 pb-3">
@@ -255,17 +274,40 @@ export default function RedTeamPage() {
                             </div>
                         )}
 
+                        {activeMode === 'wordlist' && (
+                           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                              <div className="p-6 bg-black/90 border-2 border-primary/20 text-emerald-400 rounded-xl">
+                                 <h5 className="text-sm font-black text-primary uppercase tracking-[0.5em] mb-4">Possible Passwords</h5>
+                                 <ul className="space-y-2">
+                                    {output.likelyPasswords.map((p: string, i: number) => (
+                                       <li key={i} className="flex justify-between border-b border-white/5 pb-1">
+                                          <span className="font-bold">[{i+1}] {p}</span>
+                                          <Badge className="bg-primary/10 text-primary text-[8px]">{output.successProbability}</Badge>
+                                       </li>
+                                    ))}
+                                 </ul>
+                              </div>
+                              <div className="p-6 rounded-[1.2rem] bg-primary/5 border border-primary/20">
+                                 <h5 className="text-sm font-black text-primary uppercase tracking-[0.5em] mb-4">Psychological Insight</h5>
+                                 <p className="text-sm text-gray-200 italic font-medium leading-relaxed">{output.psychologicalInsight}</p>
+                              </div>
+                           </div>
+                        )}
+
                         <div className="flex justify-end mt-8">
-                            <Button onClick={() => launchStrike('auto')} className="h-14 px-8 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.6em] rounded-full shadow-2xl border-4 border-black/30 group text-xs">
-                                <Rocket className="size-5 mr-3" /> LAUNCH STRIKE
+                            <Button onClick={() => launchStrike('auto')} disabled={loading} className="h-14 px-8 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.6em] rounded-full shadow-2xl border-4 border-black/30 group text-xs">
+                                {loading ? <Loader2 className="size-5 mr-3 animate-spin" /> : <Rocket className="size-5 mr-3" />}
+                                LAUNCH STRIKE
                             </Button>
                         </div>
                      </div>
                    ) : (
-                     <div className="h-full flex flex-col items-center justify-center text-center opacity-10 py-32 gap-6 animate-in fade-in duration-1000">
-                        <Skull className="size-24 text-primary animate-pulse" />
-                        <p className="text-2xl font-black uppercase tracking-[1.5em] text-white italic">READY</p>
-                     </div>
+                     !strikeLog.length && (
+                       <div className="h-full flex flex-col items-center justify-center text-center opacity-10 py-32 gap-6 animate-in fade-in duration-1000">
+                          <Skull className="size-24 text-primary animate-pulse" />
+                          <p className="text-2xl font-black uppercase tracking-[1.5em] text-white italic">READY_FOR_FORGE</p>
+                       </div>
+                     )
                    )}
                 </ScrollArea>
               </CardContent>
