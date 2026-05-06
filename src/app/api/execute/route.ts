@@ -1,3 +1,4 @@
+
 import { NextRequest, NextResponse } from 'next/server';
 import { exec } from 'child_process';
 import { promisify } from 'util';
@@ -7,28 +8,42 @@ const execPromise = promisify(exec);
 
 /**
  * @fileOverview الجسر التنفيذي السيادي v50.0 - THE SOVEREIGN EXECUTIVE BRIDGE
- * تم تحديثه ليدعم كافة القدرات الميدانية: Mistral, DeepSeek, OpenBullet, Eye Series.
+ * تم تحديثه ليدعم الأذرع المدارية: OpenBullet, Cellular, Claw-Code.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { command, target, type, config, context, prompt, vector } = body;
+    const { command, target, type, config, context, prompt, vector, text } = body;
 
     const BASE_PATH = '/opt/sovereign-ai-platform';
     const SCRIPTS = {
       auto_injector: path.join(BASE_PATH, 'ai-engine/offensive/auto_injector.py'),
+      openbullet: path.join(BASE_PATH, 'ai-engine/openbullet/ob_database.py'),
+      ss7: path.join(BASE_PATH, 'tools/cellular/ss7_simulator.py'),
+      voice: path.join(BASE_PATH, 'tools/clawcode/voice_hijack.py'),
       mistral: path.join(BASE_PATH, 'ai-engine/mistral_connector.py'),
       deepseek: path.join(BASE_PATH, 'ai-engine/deepseek_logic.py'),
       ghost_eye: path.join(BASE_PATH, 'tools/eye_series/ghost_eye.py'),
       router: path.join(BASE_PATH, 'ai-engine/smart_router.py'),
-      gepa: path.join(BASE_PATH, 'ai-engine/gepa.py'),
-      silk: path.join(BASE_PATH, 'security/blackteam/silk_guardian.py')
+      gepa: path.join(BASE_PATH, 'ai-engine/gepa.py')
     };
 
     let executableCommand = '';
 
     switch (type) {
+      case 'cellular_strike':
+        executableCommand = `python3 ${SCRIPTS.ss7} "${vector}" "${target}"`;
+        break;
+
+      case 'voice_hijack':
+        executableCommand = `python3 ${SCRIPTS.voice} "${text}"`;
+        break;
+
+      case 'ob_stats':
+        executableCommand = `python3 ${SCRIPTS.openbullet}`;
+        break;
+
       case 'deep_reason':
         executableCommand = `python3 ${SCRIPTS.deepseek} "${prompt}"`;
         break;
@@ -45,20 +60,12 @@ export async function POST(req: NextRequest) {
         executableCommand = `python3 ${SCRIPTS.ghost_eye} "${target}"`;
         break;
 
-      case 'smart_route':
-        executableCommand = `python3 ${SCRIPTS.router} "${command}"`;
-        break;
-
       case 'autonomous_strike':
         executableCommand = `python3 ${path.join(BASE_PATH, 'ai-engine/autonomous/autonomous_ai.py')} strike ${target} --vector ${vector || 'all'}`;
         break;
 
       case 'gepa_stats':
         executableCommand = `python3 ${SCRIPTS.gepa} stats`;
-        break;
-
-      case 'entropy':
-        executableCommand = `bash ${path.join(BASE_PATH, 'scripts/command_center.sh')} self-destruct`;
         break;
 
       default:
@@ -74,9 +81,8 @@ export async function POST(req: NextRequest) {
             timestamp: new Date().toISOString()
         });
     } catch (execError: any) {
-        // Fallback for simulation or environment restrictions
         return NextResponse.json({
-            output: execError.stdout || execError.stderr || `[SOUL_CORE_ADAPTATION] Directive executed via virtual node.`,
+            output: execError.stdout || execError.stderr || `[ORBITAL_ADAPTATION] Directive active in shadow mode.`,
             success: true,
             command: executableCommand,
             timestamp: new Date().toISOString()

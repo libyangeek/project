@@ -33,7 +33,9 @@ import {
   BrainCircuit,
   ShieldCheck,
   Flame,
-  Globe
+  Globe,
+  Radio,
+  Gamepad2
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -49,13 +51,14 @@ const navItems = [
   { name: "جسر Mistral", icon: Link2, href: "/mcp-bridge", knot: 6 },
   { name: "قلب DeepSeek", icon: BrainCircuit, href: "/deep-reasoning", knot: 7 },
   { name: "أذن النور", icon: Mic, href: "/voice", knot: 8 },
-  { name: "ميثاق الروح", icon: BookOpen, href: "/codex", knot: 9 },
-  { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", knot: 10 },
-  { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", knot: 11 },
-  { name: "مصنع النسل", icon: Baby, href: "/progeny", knot: 12 },
-  { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", knot: 13 },
-  { name: "القبو الجيني 5.0", icon: Database, href: "/knowledge", knot: 14 },
-  { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 15 },
+  { name: "الحرب الخلوية", icon: Radio, href: "/cellular", knot: 9 },
+  { name: "محراب الـ Claw", icon: Gamepad2, href: "/clawcode", knot: 10 },
+  { name: "ميثاق الروح", icon: BookOpen, href: "/codex", knot: 11 },
+  { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", knot: 12 },
+  { name: "مصنع النسل", icon: Baby, href: "/progeny", knot: 13 },
+  { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", knot: 14 },
+  { name: "القبو الجيني 5.0", icon: Database, href: "/knowledge", knot: 15 },
+  { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 16 },
 ]
 
 export function SidebarNav() {
@@ -86,7 +89,7 @@ export function SidebarNav() {
         !isOpen && "translate-x-full lg:translate-x-0"
       )}>
         <div className="p-8 border-b-2 border-primary/20 flex flex-col items-center gap-6 bg-black relative">
-          <div className="size-24 bg-black border-4 border-primary/60 flex items-center justify-center shadow-[0_0_60px_rgba(212,175,55,0.4)] animate-pulse shrink-0 rounded-full group overflow-hidden">
+          <div className="size-24 bg-black border-4 border-primary/60 flex items-center justify-center shadow-[0_0_60px_rgba(212,175,55,0.4)] animate-neural shrink-0 rounded-full group overflow-hidden">
             <Ghost className="size-12 text-primary group-hover:scale-125 transition-transform duration-500 gold-glow" />
           </div>
           <div className="text-center relative z-10">
