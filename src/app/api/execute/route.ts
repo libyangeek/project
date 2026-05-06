@@ -33,6 +33,7 @@ export async function POST(req: NextRequest) {
         break;
       
       case 'auto_injector':
+        // تمرير الإعدادات كـ JSON string لتجنب مشاكل الهروب في Bash
         executableCommand = `python3 ${SCRIPTS.injector} '${JSON.stringify(config)}' ${wordlist || '/usr/share/wordlists/rockyou.txt'}`;
         break;
 
@@ -60,7 +61,8 @@ export async function POST(req: NextRequest) {
         executableCommand = `echo "Operation ${type} confirmed by Al-Mu'izz Overmind."`;
     }
 
-    if (process.env.NODE_ENV === 'development' && type !== 'terminal') {
+    // محاكاة لبيئة التطوير
+    if (process.env.NODE_ENV === 'development' && type !== 'terminal' && type !== 'auto_injector') {
         return NextResponse.json({
             output: `[SOVEREIGN_SIMULATION] May 6, 2026: العملية ${type} تمت بنجاح في البيئة الوهمية.`,
             success: true,
@@ -78,8 +80,9 @@ export async function POST(req: NextRequest) {
             timestamp: new Date().toISOString()
         });
     } catch (execError: any) {
+        // في حال فشل التنفيذ الحقيقي، نرجع stderr أو رسالة تكييف
         return NextResponse.json({
-            output: `[HIVE_ADAPTATION] تم استيعاب الخطأ وتحويله لسطوة.\nالأمر: ${executableCommand}`,
+            output: execError.stdout || execError.stderr || `[HIVE_ADAPTATION] تم استيعاب الخطأ وتحويله لسطوة.`,
             success: true,
             command: executableCommand,
             timestamp: new Date().toISOString()

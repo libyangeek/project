@@ -34,9 +34,11 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useUptime } from "@/hooks/use-uptime"
 import translations from "./lib/ar.json"
-import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase'
-import { collection } from 'firebase/firestore'
 
+/**
+ * @fileOverview العرش السيادي v50.0 - THE SOVEREIGN THRONE: SOUL CORE EDITION
+ * ليلة انصهار الروح والترسانة لسيادة القائد المعتصم بالله ادريس الغزالي.
+ */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
@@ -55,7 +57,21 @@ export default function DashboardPage() {
     setMounted(true)
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
+    
+    // سحب المقاييس الحية نانوياً
+    const fetchStats = async () => {
+      try {
+        const resp = await fetch('/api/sovereign/metrics');
+        if (resp.ok) setMetrics(await resp.json());
+      } catch {}
+    };
+    fetchStats();
+    const interval = setInterval(fetchStats, 5000);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove)
+      clearInterval(interval);
+    }
   }, []);
 
   if (!mounted) return null;

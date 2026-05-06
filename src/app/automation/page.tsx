@@ -27,11 +27,15 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/hooks/use-toast"
 import { designSiphonTask } from "@/ai/flows/credential-siphon-flow"
 import { cn } from "@/lib/utils"
 
+/**
+ * @fileOverview واجهة المحقن الآلي السيادي v50.0 - THE SOVEREIGN AUTO-INJECTOR
+ * دمج قدرات OpenBullet 2 في قلب العقل الجمعي.
+ * Commander: المعتصم بالله ادريس الغزالي
+ */
 export default function AutomationPage() {
   const [mounted, setMounted] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
@@ -39,6 +43,7 @@ export default function AutomationPage() {
   const [platform, setPlatform] = React.useState("")
   const [config, setConfig] = React.useState<any>(null)
   const [results, setResults] = React.useState<any[]>([])
+  const [stats, setStats] = React.useState({ checked: 0, hits: 0, errors: 0 })
 
   React.useEffect(() => {
     setMounted(true)
@@ -61,9 +66,11 @@ export default function AutomationPage() {
   const handleLaunch = async () => {
     if (!config) return
     setLoading(true)
+    setResults([])
+    setStats({ checked: 0, hits: 0, errors: 0 })
+    
     toast({ title: "Injecting Combo Lists...", description: "Multithreaded strike initiated via Sovereign Auto-Injector." })
     
-    // Simulate or Call API
     try {
         const response = await fetch('/api/execute', {
             method: 'POST',
@@ -75,10 +82,15 @@ export default function AutomationPage() {
             })
         });
         const data = await response.json();
-        setResults([{ combo: "Target: " + targetUrl, status: "HIT", time: "0.1s" }]);
-        toast({ title: "Strike Completed", description: "Check results for successful hits." })
+        
+        if (data.success && data.output) {
+            const parsed = JSON.parse(data.output);
+            setResults(parsed.results || []);
+            setStats(parsed.stats || { checked: 0, hits: 0, errors: 0 });
+            toast({ title: "Strike Completed", description: `Captured ${parsed.stats.hits} valid identities.` });
+        }
     } catch (e) {
-        toast({ variant: "destructive", title: "Injection Error" })
+        toast({ variant: "destructive", title: "Injection Error", description: "Hive link disrupted during strike." });
     } finally {
         setLoading(false)
     }
@@ -151,14 +163,19 @@ export default function AutomationPage() {
                       </CardTitle>
                    </CardHeader>
                    <CardContent className="p-0 space-y-8">
-                      <div className="p-6 bg-black/90 border-2 border-white/5 rounded-[2rem] font-code text-sm text-emerald-400 overflow-x-auto">
+                      <div className="p-6 bg-black/90 border-2 border-white/5 rounded-[2rem] font-code text-sm text-emerald-400 overflow-x-auto shadow-inner">
                         <pre>{JSON.stringify(config.suggestedConfig, null, 2)}</pre>
+                      </div>
+                      <div className="p-6 bg-primary/5 rounded-[2rem] border-2 border-primary/20 italic text-lg font-bold text-gray-300">
+                        "{config.strategicAdvice}"
                       </div>
                       <Button 
                         onClick={handleLaunch}
+                        disabled={loading}
                         className="w-full h-24 bg-emerald-600 hover:bg-white text-white hover:text-black font-black uppercase tracking-[1.5em] rounded-[3rem] shadow-4xl active:scale-95 transition-all text-2xl border-8 border-black/30 group italic"
                       >
-                        <Rocket className="size-10 mr-4 group-hover:translate-y-[-10px] transition-transform" /> IGNITE INJECTION
+                        {loading ? <Loader2 className="size-10 animate-spin" /> : <Rocket className="size-10 mr-4 group-hover:translate-y-[-10px] transition-transform" />}
+                        IGNITE INJECTION
                       </Button>
                    </CardContent>
                 </Card>
@@ -166,26 +183,29 @@ export default function AutomationPage() {
            </div>
 
            <div className="xl:col-span-2 space-y-12">
-              <Card className="kali-card border-primary/60 bg-black/99 rounded-[6rem] p-12 border-8 shadow-9xl flex flex-col group relative overflow-hidden h-[900px]">
+              <Card className="kali-card border-primary/60 bg-black/99 rounded-[6rem] p-12 border-8 shadow-9xl flex flex-col group relative overflow-hidden h-[950px]">
                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.05),transparent)] pointer-events-none" />
                  <CardHeader className="p-0 mb-12 border-b-8 border-white/5 pb-10 bg-primary/10 rounded-t-[4rem]">
-                    <CardTitle className="text-6xl text-white flex items-center gap-12 font-black uppercase italic gold-glow px-8 py-8">
-                       <Terminal className="size-20 text-primary animate-neural" /> Siphon Live-Log
-                    </CardTitle>
+                    <div className="flex justify-between items-center px-12 py-8">
+                        <CardTitle className="text-6xl text-white flex items-center gap-12 font-black uppercase italic gold-glow">
+                           <Terminal className="size-20 text-primary animate-neural" /> Siphon Live-Log
+                        </CardTitle>
+                        <Badge className="bg-emerald-600/30 text-emerald-500 border-none px-8 py-2 rounded-full font-black text-2xl italic tracking-widest uppercase">STRIKE_ACTIVE</Badge>
+                    </div>
                  </CardHeader>
                  <CardContent className="p-0 flex-1 flex flex-col space-y-10 relative z-10 overflow-hidden">
                     <div className="flex-1 bg-black/80 p-12 rounded-[4rem] font-code text-2xl overflow-y-auto border-4 border-white/5 scrollbar-hide shadow-inner">
                        {results.length > 0 ? (
                          results.map((res, i) => (
                            <div key={i} className={cn(
-                             "mb-6 flex justify-between items-center p-6 rounded-[2rem] border-2 animate-in slide-in-from-right-8 duration-700",
-                             res.status === 'HIT' ? "bg-emerald-600/20 border-emerald-500 text-emerald-400" : "bg-red-600/10 border-red-500/20 text-red-800 opacity-50"
+                             "mb-6 flex justify-between items-center p-8 rounded-[2.5rem] border-4 animate-in slide-in-from-right-8 duration-700",
+                             res.status === 'HIT' ? "bg-emerald-600/20 border-emerald-500 text-emerald-400 shadow-[0_0_40px_rgba(16,185,129,0.2)]" : "bg-red-600/10 border-red-500/20 text-red-800 opacity-50"
                            )}>
                               <div className="flex items-center gap-8">
-                                 <span className="font-black">[{res.status}]</span>
-                                 <span className="font-bold italic">TARGET_IDENTITY: {res.combo}</span>
+                                 <span className="font-black text-3xl">[{res.status}]</span>
+                                 <span className="font-bold italic">TARGET_IDENTITY: <span className="text-white underline decoration-emerald-500">{res.combo}</span></span>
                               </div>
-                              <span className="text-sm font-black uppercase tracking-widest">{res.time}</span>
+                              <span className="text-lg font-black uppercase tracking-widest opacity-40">{res.time}</span>
                            </div>
                          ))
                        ) : (
@@ -198,22 +218,23 @@ export default function AutomationPage() {
                     
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-8 px-6 pb-6">
                         {[
-                          { label: "PARALLEL_STREAMS", value: "128", icon: Activity },
-                          { label: "HIT_RATIO", value: results.filter(r => r.status === 'HIT').length + "%", icon: Zap },
-                          { label: "TOTAL_COMBOS", value: "148,200", icon: Users },
+                          { label: "PARALLEL_STREAMS", value: config?.suggestedConfig?.threads || "128", icon: Activity },
+                          { label: "HIT_RATIO", value: stats.hits > 0 ? `${((stats.hits / stats.checked) * 100).toFixed(2)}%` : "0.00%", icon: Zap },
+                          { label: "TOTAL_CHECKED", value: stats.checked.toLocaleString(), icon: Users },
                           { label: "HIVE_RESONANCE", value: "OPTIMAL", icon: Skull }
                         ].map((stat, i) => (
-                           <div key={i} className="p-8 rounded-[3.5rem] bg-white/5 border-4 border-white/5 flex flex-col items-center gap-4 hover:border-primary transition-all duration-1000 shadow-5xl group/stat">
+                           <div key={i} className="p-8 rounded-[3.5rem] bg-white/5 border-4 border-white/5 flex flex-col items-center gap-4 hover:border-primary transition-all duration-1000 shadow-5xl group/stat relative overflow-hidden">
                               <stat.icon className="size-12 text-primary/60 gold-glow group-hover/stat:scale-125 transition-transform" />
                               <span className="text-[12px] font-black uppercase tracking-widest text-white/70">{stat.label}</span>
                               <div className="text-4xl font-black italic text-white leading-none gold-glow">{stat.value}</div>
+                              <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/stat:opacity-100 transition-opacity pointer-events-none" />
                            </div>
                         ))}
                     </div>
                  </CardContent>
                  <div className="p-10 border-t-8 border-white/5 flex justify-between items-center opacity-30 text-[14px] font-black uppercase tracking-[2em] italic">
                     <span>AUTO_INJECTOR_DNA_v50_AL_GHAZALI</span>
-                    <Fingerprint className="size-10 text-primary" />
+                    <Fingerprint className="size-10 text-primary animate-pulse" />
                  </div>
               </Card>
            </div>

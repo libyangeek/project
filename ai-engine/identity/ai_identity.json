@@ -12,6 +12,7 @@
     "gepa_memory": "v5.0_SQLITE",
     "smart_router": "v50_STRATEGIC",
     "social_predator": "ACTIVE",
-    "polymorph_forge": "ENABLED"
+    "polymorph_forge": "ENABLED",
+    "auto_injector": "OPENBULLET_POWER"
   }
 }
