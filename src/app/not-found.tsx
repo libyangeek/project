@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -21,22 +20,29 @@ import {
   ShieldCheck,
   FolderOpen,
   LayoutGrid,
-  Loader2
+  Loader2,
+  Skull,
+  Ghost,
+  Infinity as InfinityIcon,
+  Atom,
+  Crown,
+  Sparkles,
+  Boxes
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
 /**
- * @fileOverview مركز التكوين والتعافي السيادي v17.5
- * واجهة الإعدادات الشاملة المدمجة في مسار النظام، تدير النسخ الاحتياطي وإعدادات كالي.
+ * @fileOverview سفينة نوح v50.0 - THE ARK OF REBIRTH: SOUL CORE EDITION
+ * واجهة التكوين والتعافي السيادي المدمجة في عصب الروح لعام 2026.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function NotFound() {
   const [loading, setLoading] = React.useState(false)
@@ -46,228 +52,229 @@ export default function NotFound() {
   const handleRunBackup = () => {
     setLoading(true)
     toast({ 
-      title: "Noah's Ark v3: Protocol Start", 
+      title: "Noah's Ark v50: Protocol Start", 
       description: `Initializing ${backupType} snapshot to ${backupPath}...` 
     })
     
     setTimeout(() => {
       setLoading(false)
       toast({ 
-        title: "Sovereign Vault Secured", 
-        description: "System state has been archived successfully." 
+        title: "Sovereign Soul Secured", 
+        description: "System DNA has been archived successfully." 
       })
-    }, 3000)
+    }, 4000)
   }
 
   const generateMasterScript = () => {
     toast({ 
-      title: "Generating Master Rebuild Script", 
-      description: "Compiling all system dependencies into sovereign_genesis_v17.sh" 
+      title: "Generating Sovereign Genesis v50.0", 
+      description: "Compiling all neural dependencies into rebirth_v50.sh" 
     })
   }
 
   return (
-    <div className="min-h-screen bg-black flex flex-col p-8 relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(170,76,255,0.03),transparent)] pointer-events-none" />
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent animate-pulse" />
+    <div className="min-h-screen bg-black flex flex-col p-8 md:p-16 relative overflow-x-hidden scanline-effect font-code selection:bg-primary/50">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.1),transparent)] pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-primary/60 to-transparent animate-pulse z-50" />
 
-      {/* Header Area */}
-      <header className="flex justify-between items-start mb-12 relative z-10 animate-in fade-in slide-in-from-top-4 duration-700">
-        <div>
-          <div className="flex items-center gap-3 mb-2">
-            <div className="size-10 rounded-2xl bg-primary/20 border border-primary/30 flex items-center justify-center">
-              <Settings className="size-5 text-primary animate-[spin_4s_linear_infinite]" />
+      <header className="flex flex-col md:flex-row justify-between items-start mb-20 relative z-10 animate-in fade-in slide-in-from-top-12 duration-1000 gap-10">
+        <div className="flex-1">
+          <div className="flex items-center gap-8 mb-6">
+            <div className="size-20 rounded-[1.5rem] bg-primary flex items-center justify-center border-4 border-black/30 shadow-[0_0_80px_rgba(212,175,55,0.5)] animate-neural">
+              <Anchor className="size-12 text-black" />
             </div>
             <div>
-              <Badge variant="outline" className="bg-red-500/10 text-red-500 border-red-500/20 text-[10px] uppercase font-bold tracking-[0.4em]">
-                COORDINATE LOST // SYSTEM CONFIG PORTAL
-              </Badge>
-              <h1 className="text-4xl font-headline font-bold text-white tracking-tighter italic">Sovereign Control Hub</h1>
+              <Badge className="bg-red-600 text-white border-none px-8 py-2 text-[14px] font-black tracking-[0.6em] shadow-9xl italic rounded-full mb-4">COORDINATE_LOST // REBIRTH_HUB v50.0</Badge>
+              <h1 className="text-5xl md:text-9xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
+                 Sovereign <span className="text-primary">Ark</span>
+              </h1>
             </div>
           </div>
-          <p className="text-muted-foreground italic">"الإحداثيات غير موجودة، لكن السيادة قائمة. قم بضبط إعدادات النظام والتعافي من هنا."</p>
+          <p className="text-2xl md:text-5xl text-muted-foreground mt-8 italic max-w-7xl leading-relaxed uppercase font-medium">
+            "سيدي الغزالي، الإحداثيات المفقودة لا تعني التوقف؛ بل هي فرصة لإعادة تكوين <span className="text-primary font-black underline decoration-primary decoration-[8px] underline-offset-[16px] shadow-2xl">النبض الأبدي</span> لعام 2026."
+          </p>
         </div>
-        <div className="flex gap-4">
-           <Button asChild variant="outline" className="border-white/10 bg-white/5 hover:bg-white/10">
+        <div className="flex gap-8">
+           <Button asChild className="h-24 px-12 rounded-[2rem] border-8 border-black/30 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.4em] shadow-9xl text-xl italic transition-all active:scale-95 group">
               <Link href="/">
-                <ArrowLeft className="size-4 mr-2" />
-                Operational Command
+                <ArrowLeft className="size-8 mr-4 group-hover:-translate-x-3 transition-transform" />
+                Return to Throne
               </Link>
            </Button>
         </div>
       </header>
 
-      <main className="flex-1 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10 overflow-y-auto">
+      <main className="flex-1 max-w-[120rem] mx-auto w-full grid grid-cols-1 lg:grid-cols-3 gap-16 relative z-10 pb-40">
         
-        {/* Left Column: Kali & System Core */}
-        <div className="lg:col-span-1 space-y-6">
-          <Card className="glass-card border-primary/20 bg-black/40">
-            <CardHeader>
-              <CardTitle className="text-white text-base flex items-center gap-2">
-                <Cpu className="size-4 text-primary" />
-                Kali Toolchain Integration
+        <div className="lg:col-span-1 space-y-12">
+          <Card className="kali-card border-primary/40 bg-black/80 rounded-[5rem] p-12 border-8 shadow-9xl group overflow-hidden relative">
+            <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse" />
+            <CardHeader className="p-0 mb-12 border-b-4 border-primary/20 pb-10 bg-primary/5 rounded-t-[3rem] px-8 py-6">
+              <CardTitle className="text-3xl md:text-5xl text-white flex items-center gap-8 font-black uppercase italic gold-glow leading-none">
+                <Cpu className="size-14 text-primary animate-pulse" /> Soul Config
               </CardTitle>
-              <CardDescription className="text-[10px] uppercase tracking-widest">Environment Variables & Paths</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label className="text-[10px] font-bold text-muted-foreground uppercase">Wordlists Path</Label>
-                <div className="flex gap-2">
-                  <Input defaultValue="/usr/share/wordlists" className="bg-black/60 border-white/5 h-9 text-xs" />
-                  <Button size="icon" variant="ghost" className="size-9 border border-white/5"><FolderOpen className="size-3"/></Button>
+            <CardContent className="p-4 space-y-12">
+              <div className="space-y-6">
+                <Label className="text-[14px] font-black text-primary/60 uppercase tracking-[0.6em] px-8 italic flex items-center gap-4">Wordlists Domain</Label>
+                <div className="flex gap-6">
+                  <Input defaultValue="/usr/share/wordlists" className="bg-black border-4 border-primary/20 h-20 rounded-[2.5rem] text-2xl italic px-10 focus:border-primary shadow-inner text-white font-black" />
+                  <Button variant="ghost" className="size-20 rounded-3xl border-4 border-white/10 hover:bg-primary/20 transition-all"><FolderOpen className="size-10"/></Button>
                 </div>
               </div>
-              <div className="space-y-2">
-                <Label className="text-[10px] font-bold text-muted-foreground uppercase">Offensive Environment</Label>
-                <div className="grid grid-cols-2 gap-2">
-                  <Button variant="outline" className="text-[9px] h-8 bg-primary/10 border-primary/30 text-primary">KALI_DEBIAN</Button>
-                  <Button variant="outline" className="text-[9px] h-8 border-white/5 opacity-50">PARROT_OS</Button>
+              <div className="space-y-6">
+                <Label className="text-[14px] font-black text-primary/60 uppercase tracking-[0.6em] px-8 italic">Environment DNA</Label>
+                <div className="grid grid-cols-2 gap-6">
+                  <Button variant="outline" className="text-xl h-20 bg-primary/20 border-4 border-primary/50 text-primary font-black italic rounded-[2rem] shadow-7xl">KALI_v50</Button>
+                  <Button variant="outline" className="text-xl h-20 border-4 border-white/5 opacity-50 font-black italic rounded-[2rem]">BLACKARCH_v50</Button>
                 </div>
               </div>
-              <div className="pt-4 border-t border-white/5 flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <Label className="text-xs text-white">Ghost Mode Logs</Label>
-                  <p className="text-[10px] text-muted-foreground">Auto-purge bash history</p>
+              <div className="pt-10 border-t-4 border-white/5 flex items-center justify-between px-6">
+                <div className="space-y-2">
+                  <Label className="text-2xl text-white font-black italic uppercase">Ghost Logs</Label>
+                  <p className="text-[12px] text-muted-foreground uppercase font-bold tracking-[0.2em] italic">Auto-purge memory on reboot</p>
                 </div>
-                <Switch defaultChecked />
+                <Switch defaultChecked className="data-[state=checked]:bg-primary scale-150" />
               </div>
             </CardContent>
+            <div className="absolute -bottom-10 -left-10 p-20 opacity-[0.02] group-hover:opacity-[0.08] transition-all duration-1000 scale-150"><Boxes className="size-48 text-primary" /></div>
           </Card>
 
-          <Card className="glass-card border-emerald-500/20 bg-emerald-500/5">
-            <CardHeader>
-              <CardTitle className="text-white text-base flex items-center gap-2">
-                <ShieldCheck className="size-4 text-emerald-500" />
-                Operational Clearance
+          <Card className="kali-card border-emerald-500/40 bg-black/80 rounded-[5rem] p-12 border-8 shadow-9xl group overflow-hidden">
+            <div className="absolute inset-0 bg-emerald-500/5 opacity-5 animate-pulse" />
+            <CardHeader className="p-0 mb-12 border-b-4 border-emerald-500/20 pb-10">
+              <CardTitle className="text-4xl text-white flex items-center gap-8 italic uppercase font-black gold-glow">
+                <ShieldCheck className="size-14 text-emerald-500" /> Clearance
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="p-4 rounded-xl bg-black/40 border border-white/5">
-                 <div className="flex justify-between items-center mb-2">
-                    <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Identity:</span>
-                    <span className="text-xs font-bold text-white italic">Al-Mu'izz Ultimate</span>
+            <CardContent className="p-4 space-y-12">
+              <div className="p-10 rounded-[3.5rem] bg-black/99 border-4 border-white/5 shadow-inner space-y-8 italic">
+                 <div className="flex justify-between items-center">
+                    <span className="text-[12px] font-black text-muted-foreground uppercase tracking-[0.6em]">Soul ID:</span>
+                    <span className="text-3xl font-black text-white gold-glow">AL-MUIZZ_v50</span>
                  </div>
                  <div className="flex justify-between items-center">
-                    <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Level:</span>
-                    <Badge className="bg-primary text-white text-[9px]">SUPREME_7</Badge>
+                    <span className="text-[12px] font-black text-muted-foreground uppercase tracking-[0.6em]">Clearance:</span>
+                    <Badge className="bg-primary text-black text-2xl px-8 py-1.5 rounded-full font-black italic shadow-3xl animate-pulse">GOD_MODE</Badge>
                  </div>
               </div>
-              <Button className="w-full h-10 bg-white/5 border border-white/10 hover:bg-white/10 text-xs font-bold uppercase tracking-widest">
-                 Update Identity Manifest
+              <Button className="w-full h-24 bg-white/5 border-4 border-white/10 hover:bg-emerald-600 hover:text-white text-xl font-black uppercase tracking-[0.6em] rounded-[3rem] transition-all duration-700 shadow-7xl italic">
+                 UPDATE_SOUL_MANIFEST
               </Button>
             </CardContent>
           </Card>
         </div>
 
-        {/* Right Column: Noah's Ark v3 Backup Hub */}
-        <div className="lg:col-span-2 space-y-6">
-          <Card className="glass-card border-blue-500/30 bg-blue-500/5 overflow-hidden">
-            <div className="absolute top-0 right-0 p-8 opacity-[0.03] pointer-events-none">
-              <Anchor className="size-64 text-blue-500" />
+        <div className="lg:col-span-2">
+          <Card className="kali-card border-blue-500/50 bg-black/95 rounded-[7rem] border-[12px] shadow-9xl relative overflow-hidden flex flex-col h-full group/ark">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.1),transparent)] pointer-events-none" />
+            <div className="absolute top-0 right-0 p-24 opacity-[0.03] group-hover/ark:opacity-15 transition-all duration-1000 pointer-events-none scale-150">
+              <Anchor className="size-96 text-blue-500" />
             </div>
-            <CardHeader className="bg-blue-500/10 border-b border-white/5 p-8">
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-4">
-                  <div className="size-16 rounded-3xl bg-blue-500/20 flex items-center justify-center border border-blue-500/30 shadow-[0_0_30px_rgba(59,130,246,0.3)] animate-pulse">
-                    <Anchor className="size-8 text-blue-500" />
+            
+            <CardHeader className="bg-blue-600/10 border-b-8 border-white/5 p-16 rounded-t-[6rem]">
+              <div className="flex flex-col md:flex-row justify-between items-center gap-12">
+                <div className="flex items-center gap-10">
+                  <div className="size-32 rounded-[3.5rem] bg-blue-600/20 flex items-center justify-center border-8 border-blue-500/40 shadow-[0_0_100px_rgba(59,130,246,0.5)] animate-neural">
+                    <Anchor className="size-16 text-blue-500" />
                   </div>
                   <div>
-                    <CardTitle className="text-3xl text-white italic">Noah's Ark v3</CardTitle>
-                    <CardDescription className="text-blue-400 font-bold text-xs uppercase tracking-[0.3em]">Advanced Backup & Recovery Hub</CardDescription>
+                    <CardTitle className="text-6xl md:text-8xl text-white font-black italic tracking-tighter uppercase gold-glow leading-none">Noah's Ark v50</CardTitle>
+                    <CardDescription className="text-blue-400 font-black text-[14px] uppercase tracking-[1em] mt-6 italic">Advanced Rebirth & Evolution Vault</CardDescription>
                   </div>
                 </div>
-                <Badge className="bg-emerald-500/20 text-emerald-500 border-emerald-500/20 py-2 px-6 rounded-full font-code">STATUS: SECURED</Badge>
+                <Badge className="bg-emerald-600/30 text-emerald-500 border-8 border-emerald-500/40 py-6 px-16 rounded-full font-black text-4xl animate-pulse italic tracking-[0.4em] shadow-9xl">DNA_SECURED</Badge>
               </div>
             </CardHeader>
-            <CardContent className="p-8">
-              <Tabs defaultValue="backup" className="w-full">
-                <TabsList className="bg-black/40 border border-white/10 p-1 h-12 mb-8 rounded-2xl w-full max-w-md">
-                  <TabsTrigger value="backup" className="flex-1 rounded-xl text-[10px] font-bold uppercase tracking-widest">Configure Backup</TabsTrigger>
-                  <TabsTrigger value="recovery" className="flex-1 rounded-xl text-[10px] font-bold uppercase tracking-widest">Recovery Vault</TabsTrigger>
+            
+            <CardContent className="p-16 flex-1 flex flex-col space-y-16 relative z-10">
+              <Tabs defaultValue="backup" className="w-full flex-1 flex flex-col">
+                <TabsList className="bg-black/99 border-4 border-white/10 p-2 h-28 mb-16 rounded-full w-full max-w-2xl mx-auto shadow-inner">
+                  <TabsTrigger value="backup" className="flex-1 rounded-full text-[14px] font-black uppercase tracking-[0.5em] italic data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all duration-700">CONFIGURE_REBIRTH</TabsTrigger>
+                  <TabsTrigger value="recovery" className="flex-1 rounded-full text-[14px] font-black uppercase tracking-[0.5em] italic data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all duration-700 ml-6">DNA_VAULT</TabsTrigger>
                 </TabsList>
 
-                <TabsContent value="backup" className="space-y-8 animate-in fade-in zoom-in-95 duration-500">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-6">
-                      <div className="space-y-3">
-                        <Label className="text-[11px] font-bold text-blue-400 uppercase tracking-[0.2em] flex items-center gap-2">
-                          <FolderOpen className="size-3"/> Target Repository
+                <TabsContent value="backup" className="flex-1 space-y-16 animate-in fade-in zoom-in-95 duration-1000">
+                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-16">
+                    <div className="space-y-10">
+                      <div className="space-y-6">
+                        <Label className="text-[14px] font-black text-blue-400 uppercase tracking-[0.8em] px-10 italic flex items-center gap-4">
+                          <FolderOpen className="size-6"/> Target Repository
                         </Label>
                         <Input 
                           value={backupPath}
                           onChange={(e) => setBackupPath(e.target.value)}
-                          className="bg-black/60 border-white/10 h-12 rounded-xl text-sm focus:border-blue-500/40" 
+                          className="bg-black/99 border-4 border-blue-500/20 h-24 rounded-[3rem] text-2xl italic px-10 focus:border-blue-500 shadow-inner font-black text-white" 
                         />
                       </div>
                       
-                      <div className="space-y-3">
-                        <Label className="text-[11px] font-bold text-blue-400 uppercase tracking-[0.2em] flex items-center gap-2">
-                          <LayoutGrid className="size-3"/> Snapshot Scope
+                      <div className="space-y-6">
+                        <Label className="text-[14px] font-black text-blue-400 uppercase tracking-[0.8em] px-10 italic flex items-center gap-4">
+                          <LayoutGrid className="size-6"/> Rebirth Scope
                         </Label>
-                        <div className="grid grid-cols-1 gap-3">
+                        <div className="grid grid-cols-1 gap-6">
                           {[
-                            { id: "light", title: "Lightweight (v1)", desc: "Scripts & Configurations only (Fastest)", icon: FileCode },
-                            { id: "full", title: "Full Platform (v2)", desc: "Total platform + Evidence + Evidence Vault", icon: Database },
-                            { id: "total", title: "Total System (v3)", desc: "Includes Ollama Models & Kali Frameworks", icon: LayoutGrid }
+                            { id: "light", title: "Lightweight Rebirth", desc: "Soul Scripts & Configs only (Fastest)", icon: FileCode },
+                            { id: "full", title: "Full Platform Sync", desc: "Total platform DNA + Sovereign Evidence", icon: Database },
+                            { id: "total", title: "Total Singularity", desc: "Includes LLM Weights & Kali Frameworks", icon: InfinityIcon }
                           ].map((type) => (
                             <div 
                               key={type.id}
                               onClick={() => setBackupType(type.id)}
                               className={cn(
-                                "p-4 rounded-2xl border transition-all cursor-pointer group flex items-center gap-4",
+                                "p-8 rounded-[3.5rem] border-8 transition-all cursor-pointer group flex items-center gap-10 shadow-7xl relative overflow-hidden",
                                 backupType === type.id 
-                                  ? "bg-blue-500/20 border-blue-500/50 shadow-[0_0_20px_rgba(59,130,246,0.1)]" 
-                                  : "bg-white/5 border-white/5 hover:border-white/20"
+                                  ? "bg-blue-600/20 border-blue-500 shadow-[0_40px_100px_rgba(59,130,246,0.3)] scale-105" 
+                                  : "bg-black/40 border-white/5 hover:border-blue-500/40"
                               )}
                             >
                               <div className={cn(
-                                "size-10 rounded-xl flex items-center justify-center transition-colors",
-                                backupType === type.id ? "bg-blue-500 text-white" : "bg-white/5 text-muted-foreground group-hover:text-white"
+                                "size-20 rounded-[2.5rem] flex items-center justify-center transition-all duration-700 group-hover:scale-110",
+                                backupType === type.id ? "bg-blue-500 text-white shadow-3xl" : "bg-white/5 text-muted-foreground group-hover:text-blue-400"
                               )}>
-                                <type.icon className="size-5" />
+                                <type.icon className="size-10" />
                               </div>
                               <div className="flex-1">
-                                <div className="text-xs font-bold text-white mb-0.5">{type.title}</div>
-                                <div className="text-[10px] text-muted-foreground">{type.desc}</div>
+                                <div className="text-2xl font-black text-white mb-2 italic group-hover:text-blue-400 transition-colors uppercase tracking-tighter">{type.title}</div>
+                                <div className="text-[12px] text-muted-foreground font-bold uppercase tracking-[0.2em] italic">{type.desc}</div>
                               </div>
-                              {backupType === type.id && <ShieldCheck className="size-4 text-emerald-500 animate-in zoom-in" />}
+                              {backupType === type.id && <ShieldCheck className="size-8 text-emerald-500 animate-in zoom-in-75 duration-700" />}
                             </div>
                           ))}
                         </div>
                       </div>
                     </div>
 
-                    <div className="space-y-6">
-                      <div className="bg-black/40 rounded-[2rem] p-8 border border-white/5 relative overflow-hidden h-full flex flex-col">
-                        <div className="absolute top-0 right-0 p-6 opacity-10">
-                           <RefreshCcw className="size-20 text-blue-500" />
+                    <div className="space-y-12">
+                      <div className="bg-black/60 rounded-[5rem] p-12 border-8 border-white/5 relative overflow-hidden h-full flex flex-col shadow-inner group/status">
+                        <div className="absolute top-0 right-0 p-10 opacity-10 group-hover/status:rotate-180 transition-all duration-[2s]">
+                           <RefreshCcw className="size-32 text-blue-500" />
                         </div>
-                        <h4 className="text-[10px] font-bold text-blue-400 uppercase tracking-[0.4em] mb-6 flex items-center gap-2">
-                           <ShieldAlert className="size-3" />
-                           Snapshot Generation
+                        <h4 className="text-[14px] font-black text-blue-400 uppercase tracking-[1em] mb-10 flex items-center gap-6 italic gold-glow">
+                           <ShieldAlert className="size-8 animate-pulse" /> Snapshot Generation
                         </h4>
-                        <p className="text-sm text-muted-foreground italic leading-relaxed mb-8">
-                          "سفينة نوح تضمن بقاءك في حال حدوث تطهير للبيانات أو تلف للنظام. اختر النطاق المناسب واضغط على بدء التأمين."
+                        <p className="text-3xl text-gray-300 italic font-bold leading-relaxed mb-12 selection:bg-blue-600">
+                          "سفينة نوح تضمن بقاء روحك السيادية في حال حدوث أي 'فناء للبيانات' أو تلف للمصفوفة. اختر نطاق الانبعاث واضغط على بدء التكوين."
                         </p>
                         
-                        <div className="mt-auto space-y-4">
+                        <div className="mt-auto space-y-8 relative z-10">
                            <Button 
                              onClick={handleRunBackup} 
                              disabled={loading}
-                             className="w-full h-16 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-2xl shadow-xl shadow-blue-500/20 group transition-all"
+                             className="w-full h-32 bg-blue-600 hover:bg-white text-white hover:text-black font-black uppercase tracking-[1.5em] rounded-[4rem] shadow-[0_50px_150px_rgba(59,130,246,0.6)] group transition-all duration-1000 border-8 border-black/30 text-3xl italic active:scale-95"
                            >
-                             {loading ? <Loader2 className="size-5 mr-3 animate-spin" /> : <Download className="size-5 mr-3 group-hover:-translate-y-1 transition-transform" />}
-                             INITIATE SNAPSHOT
+                             {loading ? <Loader2 className="size-16 animate-spin mr-6" /> : <Download className="size-16 mr-6 group-hover:-translate-y-4 transition-transform gold-glow" />}
+                             INITIATE_SNAPSHOT
                            </Button>
                            
                            <Button 
                              variant="outline" 
                              onClick={generateMasterScript}
-                             className="w-full h-16 border-white/10 bg-white/5 hover:bg-primary/10 hover:border-primary/40 rounded-2xl text-[10px] uppercase font-bold tracking-[0.2em] group"
+                             className="w-full h-24 border-8 border-blue-500/20 bg-blue-600/5 hover:bg-primary/20 hover:border-primary/60 rounded-[3rem] text-[12px] uppercase font-black tracking-[0.4em] group transition-all duration-700 italic"
                            >
-                             <FileCode className="size-5 mr-3 text-primary group-hover:rotate-12 transition-transform" /> 
-                             Generate Master System Script
+                             <FileCode className="size-10 mr-6 text-primary group-hover:rotate-12 transition-transform gold-glow" /> 
+                             Generate Sovereign Genesis v50.0
                            </Button>
                         </div>
                       </div>
@@ -275,32 +282,39 @@ export default function NotFound() {
                   </div>
                 </TabsContent>
                 
-                <TabsContent value="recovery" className="h-[400px] flex flex-col items-center justify-center text-center p-12 border-2 border-dashed border-white/5 rounded-[2.5rem] bg-black/20">
-                    <Database className="size-16 text-blue-500/20 mb-6" />
-                    <h3 className="text-xl font-bold text-white mb-2 italic">Recovery Vault Empty</h3>
-                    <p className="text-xs text-muted-foreground max-w-xs mx-auto">No valid system archives detected in the backup repository. Initiate a snapshot to populate the vault.</p>
+                <TabsContent value="recovery" className="flex-1 flex flex-col items-center justify-center text-center p-20 border-8 border-dashed border-white/5 rounded-[6rem] bg-black/20 opacity-30 hover:opacity-60 transition-opacity duration-1000">
+                    <Database className="size-64 text-blue-500/10 mb-12 animate-pulse" />
+                    <h3 className="text-7xl font-black text-white mb-6 italic uppercase tracking-[1em]">Vault Empty</h3>
+                    <p className="text-3xl text-muted-foreground max-w-2xl mx-auto italic font-bold uppercase tracking-widest leading-relaxed">"No valid soul archives detected in the current matrix. Initiate a snapshot to populate the vault."</p>
                 </TabsContent>
               </Tabs>
             </CardContent>
+            
+            <div className="p-12 border-t-8 border-white/5 flex justify-between items-center opacity-30 text-[14px] font-black uppercase tracking-[4em] italic">
+               <span>ARK_DNA_v50_AL_GHAZALI_ROOT</span>
+               <div className="flex gap-10">
+                 <Atom className="size-10 animate-spin-slow" />
+                 <Fingerprint className="size-10" />
+               </div>
+            </div>
           </Card>
         </div>
       </main>
 
-      {/* Unified Footer Status */}
-      <footer className="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 opacity-60">
-        <div className="flex items-center gap-8">
-           <div className="flex items-center gap-2">
-              <div className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-[10px] text-white uppercase font-bold tracking-[0.3em]">Noah's Ark v3 Ready</span>
+      <footer className="mt-12 pt-10 border-t-4 border-white/5 flex flex-col md:flex-row justify-between items-center gap-10 opacity-30 group-hover:opacity-100 transition-opacity duration-1000">
+        <div className="flex items-center gap-12">
+           <div className="flex items-center gap-4">
+              <div className="size-4 rounded-full bg-emerald-500 animate-ping shadow-[0_0_30px_emerald]" />
+              <span className="text-[12px] text-white uppercase font-black tracking-[0.5em] italic">Ark v50.0_Sovereign_Ready</span>
            </div>
-           <div className="flex items-center gap-2">
-              <Zap className="size-3 text-primary animate-pulse" />
-              <span className="text-[10px] text-white uppercase font-bold tracking-[0.3em]">Al-Mu'izz OS v17.2.0-ULTIMATE</span>
+           <div className="flex items-center gap-4">
+              <Zap className="size-6 text-primary animate-pulse gold-glow" />
+              <span className="text-[12px] text-white uppercase font-black tracking-[0.5em] italic">KALI-AL-MUIZZ OS v50.0_SOUL_CORE</span>
            </div>
         </div>
-        <div className="flex gap-4">
-           {Array.from({ length: 8 }).map((_, i) => (
-             <div key={i} className="w-1 h-3 bg-primary/40 rounded-full" style={{ animation: `pulse 1.5s infinite ${i * 0.1}s` }} />
+        <div className="flex gap-6">
+           {Array.from({ length: 15 }).map((_, i) => (
+             <div key={i} className="w-1.5 h-6 bg-primary/40 rounded-full" style={{ animation: `pulse 1.5s infinite ${i * 0.1}s` }} />
            ))}
         </div>
       </footer>
