@@ -3,14 +3,27 @@ import { NextRequest, NextResponse } from 'next/server';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import path from 'path';
+import net from 'net';
 
 const execPromise = promisify(exec);
 
 /**
- * @fileOverview الجسر التنفيذي السيادي v50.0-OVERLORD
- * المحرك المركزي لربط الواجهات بالأذرع المدارية والمحركات المكتفية ذاتياً.
- * تم الدمج الكامل لسلسلة الإبادة والالتحامات المادية.
+ * @fileOverview الجسر التنفيذي السيادي v50.0-UNIFIED
+ * تم دمج نظام بث الأحداث (Event Publishing) لربط الواجهة بنواة المُعِزّ الموحدة.
  */
+
+async function publishEvent(type: string, payload: any) {
+  return new Promise((resolve) => {
+    const client = net.createConnection('/tmp/muizz_event_bus.sock');
+    client.on('connect', () => {
+      client.write(JSON.stringify({ type, payload }));
+      client.end();
+      resolve(true);
+    });
+    client.on('error', () => resolve(false));
+  });
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -34,6 +47,9 @@ export async function POST(req: NextRequest) {
       mistral: path.join(BASE_PATH, 'ai-engine/mistral_connector.py'),
       deepseek: path.join(BASE_PATH, 'ai-engine/deepseek_logic.py')
     };
+
+    // بث حدث البدء للشبكة الموحدة
+    await publishEvent("directive_received", { type, target, command });
 
     let executableCommand = '';
 
@@ -85,6 +101,10 @@ export async function POST(req: NextRequest) {
 
     try {
         const { stdout, stderr } = await execPromise(executableCommand, { timeout: 600000 });
+        
+        // بث حدث النجاح
+        await publishEvent("directive_completed", { type, target, success: true });
+
         return NextResponse.json({
             output: stdout || stderr,
             success: true,
@@ -92,6 +112,7 @@ export async function POST(req: NextRequest) {
             timestamp: new Date().toISOString()
         });
     } catch (execError: any) {
+        await publishEvent("directive_completed", { type, target, success: false, error: execError.message });
         return NextResponse.json({
             output: execError.stdout || execError.stderr || `[OVERLORD_ADAPTATION] Striking through shadow channels.`,
             success: true,
