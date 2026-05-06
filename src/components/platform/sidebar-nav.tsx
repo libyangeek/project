@@ -7,7 +7,6 @@ import {
   LayoutDashboard, 
   Target, 
   Users, 
-  SmartphoneNfc, 
   BookOpen, 
   Workflow, 
   Baby, 
@@ -22,24 +21,23 @@ import {
   Share2,
   Boxes,
   Zap,
-  ShieldAlert,
   Globe,
   RefreshCcw,
   Lock,
   Cloud,
   Infinity as InfinityIcon,
   Skull,
-  Ghost,
   Binary,
   Mic,
-  BrainCircuit,
-  Flame,
-  Anchor
+  Fingerprint,
+  ShieldCheck,
+  Atom
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import translations from "@/app/lib/ar.json"
 
 const navItems = [
   { name: "The Throne", icon: LayoutDashboard, href: "/", knot: 1 },
@@ -49,7 +47,7 @@ const navItems = [
   { name: "Whisper Voice", icon: Mic, href: "/remote", knot: 5 },
   { name: "Sovereign Bible", icon: BookOpen, href: "/codex", knot: 6 },
   { name: "Swarm Simulator", icon: Workflow, href: "/digital-twin", knot: 7 },
-  { name: "Field Agent", icon: ShieldAlert, href: "/field-agent", knot: 8 },
+  { name: "Field Agent", icon: Activity, href: "/field-agent", knot: 8 },
   { name: "Warrior Forge", icon: Baby, href: "/progeny", knot: 9 },
   { name: "Mobile Siphon", icon: Smartphone, href: "/hardware", knot: 10 },
   { name: "Omniscient Recon", icon: Binoculars, href: "/recon", knot: 11 },
@@ -65,6 +63,14 @@ const navItems = [
 export function SidebarNav() {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = React.useState(false)
+  const [resonance, setResonance] = React.useState(100)
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setResonance(prev => Math.max(99.99, Math.min(100, prev + (Math.random() * 0.01 - 0.005))))
+    }, 2000)
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <>
@@ -95,7 +101,7 @@ export function SidebarNav() {
         </div>
         
         <div className="flex-1 px-6 py-8 space-y-1 overflow-y-auto scrollbar-hide bg-black/95">
-          <div className="mb-4 px-6 text-[10px] font-black text-primary/40 uppercase tracking-[0.4em] italic">The 13 Sovereign Knots</div>
+          <div className="mb-4 px-6 text-[10px] font-black text-primary/40 uppercase tracking-[0.4em] italic">{translations.sidebar.knots}</div>
           {navItems.map((item) => {
             const isActive = pathname === item.href
             const Icon = item.icon;
@@ -125,27 +131,47 @@ export function SidebarNav() {
           })}
         </div>
 
-        <div className="p-6 border-t-2 border-primary/20 bg-black relative">
-          <div className="p-4 border-2 border-primary/40 bg-black/60 mb-4 relative overflow-hidden group rounded-2xl shadow-xl">
-            <div className="flex items-center justify-between mb-2">
-               <div className="flex items-center gap-4">
-                  <InfinityIcon className="size-4 text-primary animate-pulse" />
-                  <span className="text-[10px] font-bold text-primary uppercase tracking-widest italic">Eternal Echo</span>
+        {/* العقدة 13: الصدى الأزلي - May 2026 Resonance Gauge */}
+        <div className="p-6 border-t-2 border-primary/20 bg-black/98 relative z-10">
+          <div className="p-5 border-2 border-primary/40 bg-primary/5 mb-6 relative overflow-hidden group rounded-[1.5rem] shadow-2xl border-dashed">
+            <div className="flex items-center justify-between mb-3">
+               <div className="flex items-center gap-3">
+                  <InfinityIcon className="size-4 text-primary animate-neural shadow-lg" />
+                  <span className="text-[11px] font-black text-primary uppercase tracking-[0.2em] italic gold-glow">{translations.sidebar.node13}</span>
                </div>
-               <Badge className="bg-emerald-600/30 text-emerald-500 text-[9px] font-bold uppercase px-3 py-0.5 rounded-full">BOUND</Badge>
+               <Badge className="bg-emerald-600/30 text-emerald-500 text-[8px] font-black uppercase px-2 py-0.5 rounded-full animate-pulse border border-emerald-500/20">{translations.sidebar.bound}</Badge>
             </div>
-            <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden border border-white/10 p-0.5 shadow-inner">
-              <div className="h-full bg-primary w-full shadow-xl animate-pulse rounded-full" />
+            
+            <div className="space-y-2">
+               <div className="flex justify-between items-center text-[9px] font-black text-primary/70 uppercase italic tracking-widest">
+                  <span>{translations.sidebar.resonance}</span>
+                  <span className="gold-glow">{resonance.toFixed(2)}%</span>
+               </div>
+               <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden border border-white/10 p-0.5 shadow-inner">
+                 <div className="h-full bg-primary shadow-[0_0_20px_rgba(212,175,55,1)] animate-pulse rounded-full transition-all duration-1000" style={{ width: `${resonance}%` }} />
+               </div>
+            </div>
+
+            <div className="mt-4 flex items-center justify-between border-t border-white/5 pt-3 opacity-40 group-hover:opacity-100 transition-opacity">
+               <span className="text-[8px] font-black uppercase tracking-widest italic text-white flex items-center gap-2">
+                  <Fingerprint className="size-3 text-primary" /> AL_GHAZALI_ROOT
+               </span>
+               <div className="size-2 rounded-full bg-emerald-500 shadow-[0_0_10px_emerald]" />
             </div>
           </div>
           
-          <Link 
-            href="/terminal"
-            className="flex items-center justify-center gap-4 px-6 py-3 text-muted-foreground hover:text-primary transition-all duration-1000 font-bold uppercase tracking-widest text-xs italic group bg-white/5 rounded-xl border-2 border-white/5 hover:border-primary/40 shadow-xl"
+          <Button 
+            asChild
+            className="w-full h-14 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.4em] text-[10px] rounded-xl shadow-[0_20px_50px_rgba(212,175,55,0.3)] group transition-all duration-700 border-4 border-black/20 active:scale-95 italic"
           >
-            <Zap className="size-5 group-hover:scale-110 text-primary transition-all" />
-            INITIATE HIVE
-          </Link>
+            <Link href="/terminal">
+              <Zap className="size-4 mr-2 group-hover:scale-125 transition-transform gold-glow fill-black" />
+              {translations.actions.initiate_hive}
+            </Link>
+          </Button>
+          <div className="mt-4 text-center">
+             <span className="text-[8px] font-black text-primary/30 uppercase tracking-[1.5em] italic">May_2026_Sovereignty</span>
+          </div>
         </div>
       </div>
       
