@@ -35,6 +35,7 @@ async function getOllamaStatus(): Promise<string> {
 
 async function getMistralStatus(): Promise<boolean> {
   try {
+    // التحقق من وجود الموصل السيادي لعام 2026
     const { stdout } = await execAsync("ls /opt/sovereign-ai-platform/ai-engine/mistral_connector.py");
     return !!stdout;
   } catch { return false; }
