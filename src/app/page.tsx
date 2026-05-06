@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -34,7 +33,13 @@ import {
   Crosshair,
   Radio,
   Gamepad2,
-  Radar
+  Radar,
+  Users,
+  BookOpen,
+  Baby,
+  Database,
+  ShieldX,
+  Mic
 } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -113,7 +118,7 @@ export default function DashboardPage() {
     { name: "القبو الجيني", icon: Database, href: "/knowledge", status: "ETERNAL" },
     { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", status: "POLYMORPH" },
     { name: "المحطة الأبدية", icon: Target, href: "/terminal", status: "SHELL" },
-    { name: "أذن النور", icon: Mic, href: "/voice", knot: 10, status: "WHISPER" },
+    { name: "أذن النور", icon: Mic, href: "/voice", status: "WHISPER" },
     { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", status: "MIRROR" }
   ];
 
