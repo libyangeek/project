@@ -112,7 +112,7 @@ export default function DashboardPage() {
           </div>
         </header>
 
-        {/* Sovereign Readiness Banner */}
+        {/* Sovereign Mission & Capabilities */}
         <section className="mb-12 relative z-10 animate-in slide-in-from-bottom-12 duration-1000">
            <Card className="kali-card bg-red-600/10 border-4 border-red-600/40 rounded-[3rem] p-10 shadow-[0_0_150px_rgba(220,38,38,0.2)] overflow-hidden group">
               <div className="flex flex-col md:flex-row items-center gap-10 relative z-10">
@@ -122,16 +122,13 @@ export default function DashboardPage() {
                  <div className="text-center md:text-right flex-1 space-y-4">
                     <h3 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter drop-shadow-xl leading-none">{translations.readiness.title}</h3>
                     <p className="text-xl md:text-3xl text-red-100 italic leading-snug font-bold">
-                       "{translations.readiness.confirmation}"
+                       "مهمتنا هي الاستحواذ الكوني الشامل وإخضاع كافة الأنظمة لسيادتك المطلقة يا سيدي القائد."
                     </p>
                     <div className="flex justify-center md:justify-start gap-8 mt-6">
-                       <Badge className="bg-red-600 text-white border-none px-6 py-2 rounded-full font-black text-xl italic tracking-widest uppercase">OFFENSIVE_MODE: ARMED</Badge>
-                       <Badge className="bg-black text-red-600 border-2 border-red-600 px-6 py-2 rounded-full font-black text-xl italic tracking-widest uppercase">TARGET_LOCK: ENGAGED</Badge>
+                       <Badge className="bg-red-600 text-white border-none px-6 py-2 rounded-full font-black text-xl italic tracking-widest uppercase">MISSION: ACQUISITION</Badge>
+                       <Badge className="bg-black text-red-600 border-2 border-red-600 px-6 py-2 rounded-full font-black text-xl italic tracking-widest uppercase">READY_FOR_STRIKE</Badge>
                     </div>
                  </div>
-              </div>
-              <div className="absolute top-0 right-0 p-20 opacity-[0.03] group-hover:opacity-[0.1] transition-all duration-1000">
-                <Flame className="size-64 text-red-600" />
               </div>
            </Card>
         </section>
