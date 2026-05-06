@@ -72,7 +72,6 @@ export default function MobileRemotePage() {
       setHiveSync(prev => Math.max(99.99, Math.min(100, prev + (Math.random() * 0.01 - 0.005))))
     }, 3000)
 
-    // فحص حالة Whisper من محرك الاستدلال
     const checkWhisper = async () => {
       try {
         const res = await fetch('/api/execute', {
@@ -81,7 +80,6 @@ export default function MobileRemotePage() {
             body: JSON.stringify({ type: 'terminal', command: 'ollama list' })
         });
         const data = await res.json();
-        // إذا كان ollama يعمل، نفترض جاهزية whisper
         if (data.success) setWhisperAvailable(true);
       } catch (e) {
         setWhisperAvailable(false);

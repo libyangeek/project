@@ -103,7 +103,6 @@ export default function RedTeamPage() {
     setLoading(true);
     toast({ title: translations.strike.initiate, description: translations.strike.planning });
     try {
-        // تنفيذ الضربة عبر الـ API الفعلي للسيرفر
         const response = await fetch('/api/execute', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
