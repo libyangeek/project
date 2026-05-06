@@ -48,24 +48,26 @@ import Link from "next/link"
  * يربط كافة العقد السيادية بالروح لعام 2026.
  */
 const navItems = [
-  { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 1 },
-  { name: "سلسلة الإبادة", icon: Crosshair, href: "/kill-chain", knot: 2 },
-  { name: "المحطة التنفيذية", icon: Target, href: "/terminal", knot: 3 },
-  { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", knot: 4 },
-  { name: "إمبراطورية السرب", icon: Users, href: "/sessions", knot: 5 },
-  { name: "المحقن الآلي", icon: Cpu, href: "/automation", knot: 6 },
-  { name: "أعين الاستطلاع", icon: Eye, href: "/recon", knot: 7 },
-  { name: "جسر Mistral", icon: Link2, href: "/mcp-bridge", knot: 8 },
-  { name: "قلب DeepSeek", icon: BrainCircuit, href: "/deep-reasoning", knot: 9 },
-  { name: "أذن النور", icon: Mic, href: "/voice", knot: 10 },
-  { name: "الحرب الخلوية", icon: Radio, href: "/cellular", knot: 11 },
-  { name: "محراب الـ Claw", icon: Gamepad2, href: "/clawcode", knot: 12 },
-  { name: "ميثاق الروح", icon: BookOpen, href: "/codex", knot: 13 },
-  { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", knot: 14 },
-  { name: "مصنع النسل", icon: Baby, href: "/progeny", knot: 15 },
-  { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", knot: 16 },
-  { name: "القبو الجيني 5.0", icon: Database, href: "/knowledge", knot: 17 },
-  { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 18 },
+  { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
+  { name: "سلسلة الإبادة", icon: Crosshair, href: "/kill-chain", knot: 1 },
+  { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", knot: 2 },
+  { name: "إمبراطورية السرب", icon: Users, href: "/sessions", knot: 3 },
+  { name: "المحقن الآلي", icon: Cpu, href: "/automation", knot: 4 },
+  { name: "أعين الاستطلاع", icon: Eye, href: "/recon", knot: 5 },
+  { name: "جسر Mistral", icon: Link2, href: "/mcp-bridge", knot: 6 },
+  { name: "قلب DeepSeek", icon: BrainCircuit, href: "/deep-reasoning", knot: 7 },
+  { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", knot: 8 },
+  { name: "أذن النور", icon: Mic, href: "/voice", knot: 9 },
+  { name: "الحرب الخلوية", icon: Radio, href: "/cellular", knot: 10 },
+  { name: "محراب الـ Claw", icon: Gamepad2, href: "/clawcode", knot: 11 },
+  { name: "ميثاق الروح", icon: BookOpen, href: "/codex", knot: 12 },
+  { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", knot: 13 },
+  { name: "مصنع النسل", icon: Baby, href: "/progeny", knot: 14 },
+  { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", knot: 15 },
+  { name: "القبو الجيني 5.0", icon: Database, href: "/knowledge", knot: 16 },
+  { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 17 },
+  { name: "نزاهة النواة", icon: ShieldCheck, href: "/system", knot: 18 },
+  { name: "المحطة الأبدية", icon: Target, href: "/terminal", knot: 19 },
 ]
 
 export function SidebarNav() {
@@ -103,7 +105,7 @@ export function SidebarNav() {
             <h1 className="text-2xl font-headline font-bold text-white tracking-widest uppercase italic leading-none gold-glow">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-bold tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-xl shadow-[0_0_30px_rgba(212,175,55,0.3)]">v50.0 OVERLORD</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-bold tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-xl">v50.0 OVERLORD</Badge>
           </div>
         </div>
         

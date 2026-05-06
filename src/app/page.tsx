@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -146,8 +147,8 @@ export default function DashboardPage() {
     { name: "مصنع النسل", icon: Baby, href: "/progeny", status: "FORGING" },
     { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", status: "PEGASUS_v3" },
     { name: "القبو الجيني", icon: Database, href: "/knowledge", status: "ETERNAL" },
-    { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", status: "POLYMORPH" },
-    { name: "المحطة الأبدية", icon: Target, href: "/terminal", status: "SHELL" },
+    { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 18, status: "POLYMORPH" },
+    { name: "نزاهة النواة", icon: ShieldCheck, href: "/system", status: "STABILIZED" },
     { name: "أذن النور", icon: Mic, href: "/voice", status: "WHISPER" },
     { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", status: "MIRROR" }
   ];
@@ -266,7 +267,7 @@ export default function DashboardPage() {
         <section className="mb-32 relative z-10">
            <div className="flex items-center gap-12 mb-20 px-10">
               <ShieldAlert className="size-20 text-primary animate-pulse gold-glow" />
-              <h2 className="text-6xl md:text-[10rem] font-black uppercase italic tracking-[0.4em] text-white gold-glow leading-none">The 18 Knots</h2>
+              <h2 className="text-6xl md:text-[10rem] font-black uppercase italic tracking-[0.4em] text-white gold-glow leading-none">The 18 Sovereign Knots</h2>
            </div>
            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
               {knots.map((knot, i) => (
