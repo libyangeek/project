@@ -56,6 +56,7 @@ import translations from "../lib/ar.json"
 /**
  * @fileOverview التحكم عن بعد v43.0 - HIVE RAT
  * تم إضافة مؤشر حالة Whisper Voice للتحكم الصوتي وتوحيد الأبعاد.
+ * Commander: المعتصم بالله ادريس الغزالي
  */
 export default function MobileRemotePage() {
   const [command, setInput] = React.useState("")
@@ -79,7 +80,9 @@ export default function MobileRemotePage() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ type: 'terminal', command: 'ollama list' })
         });
-        if (res.ok) setWhisperAvailable(true);
+        const data = await res.json();
+        // إذا كان ollama يعمل، نفترض جاهزية whisper
+        if (data.success) setWhisperAvailable(true);
       } catch (e) {
         setWhisperAvailable(false);
       }

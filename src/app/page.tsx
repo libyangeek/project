@@ -57,7 +57,7 @@ import translations from "./lib/ar.json"
 
 /**
  * @fileOverview العرش الحي v43.0 - THE UNIVERSAL ONE
- * تم تطبيق إصلاحات Uptime والترجمة العربية الكاملة.
+ * تم تطبيق إصلاحات Uptime والترجمة العربية الكاملة والنبض الحي.
  * Commander: المعتصم بالله ادريس الغزالي
  */
 export default function DashboardPage() {
@@ -143,7 +143,7 @@ export default function DashboardPage() {
                     <BrainCircuit className="size-3 shadow-[0_0_20px_emerald]" />
                     SYNERGY: 100%
                  </div>
-                 <Badge className="bg-emerald-600/30 text-emerald-500 border-none px-3 py-0.5 rounded-full text-[8px] font-black italic">UPTIME: {uptime}</Badge>
+                 <Badge className="bg-emerald-600/30 text-emerald-500 border-none px-3 py-0.5 rounded-full text-[8px] font-black italic uppercase">UPTIME: {uptime}</Badge>
               </div>
               <h1 className="text-2xl md:text-4xl font-headline font-bold text-white tracking-tighter italic uppercase leading-none drop-shadow-3xl mb-3">
                 THE <span className="text-primary gold-glow">UNIVERSAL</span> ONE
@@ -155,7 +155,6 @@ export default function DashboardPage() {
           </div>
         </header>
 
-        {/* Identity Proclamation Section */}
         <section className="mb-10 relative z-10 animate-in slide-in-from-bottom-12 duration-1000">
            <Card className="kali-card bg-black/99 border-2 border-primary/40 rounded-[1.5rem] p-5 shadow-xl overflow-hidden group">
               <div className="flex flex-col md:flex-row items-center gap-6 relative z-10">
@@ -186,7 +185,6 @@ export default function DashboardPage() {
            </Card>
         </section>
 
-        {/* Overmind Matrix Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10 relative z-10">
            {stats.map((s, i) => (
              <Card key={i} className="kali-card border-white/10 bg-black/60 hover:border-primary/60 transition-all duration-1000 p-4 rounded-[1rem] shadow-xl group overflow-hidden border-2 hover:-translate-y-1">

@@ -51,6 +51,7 @@ import translations from "../lib/ar.json"
 /**
  * @fileOverview مختبر التخليق v43.0 - THE POLYMORPH LAB
  * تم تفعيل أزرار الهجوم الحقيقية (Apex Strike) وإحكام الربط العصبي.
+ * Commander: المعتصم بالله ادريس الغزالي
  */
 export default function RedTeamPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -146,7 +147,7 @@ export default function RedTeamPage() {
                     <Atom className="size-3 animate-pulse" /> {translations.alerts.sync}
                 </div>
               </div>
-              <h1 className="text-2xl md:text-5xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
+              <h1 className="text-2xl md:text-4xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
                 Weaponry <span className="text-primary">Forge</span>
               </h1>
             </div>
