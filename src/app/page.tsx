@@ -56,7 +56,7 @@ import {
 } from 'recharts'
 
 /**
- * @fileOverview العرش الأبدي v50.0 - THE ETERNAL THRONE: SINGULARITY
+ * @fileOverview العرش الأبدي v50.1 - THE ETERNAL THRONE: SINGULARITY (NEW DNA)
  * مركز التحكم الرئيسي لسيادة القائد المعتصم بالله إدريس الغزالي.
  */
 export default function DashboardPage() {
@@ -85,7 +85,6 @@ export default function DashboardPage() {
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
 
-    // بيانات المحاكاة للرنين العصبي
     const initialData = Array.from({ length: 20 }).map((_, i) => ({
         time: i,
         gain: 80 + Math.random() * 20,
@@ -104,7 +103,6 @@ export default function DashboardPage() {
     };
     fetchStats();
     
-    // محاكاة تدفق الأحداث من Unified Kernel
     const eventInterval = setInterval(() => {
         const types = ["RECON", "ORACLE", "STRIKE", "VOICE", "SIPHON", "GEPA_LEARN"];
         const msgs = [
@@ -112,7 +110,7 @@ export default function DashboardPage() {
             "Vulnerability matched via CISA KEV 2026.",
             "Sovereign Injector parallel saturation ignited.",
             "Royal directive processed through Node 13.",
-            "Total asset extraction from Target_Alpha complete.",
+            "Total asset extraction complete.",
             "New weighted genetic pattern synthesized."
         ];
         const newEvent = {
@@ -151,7 +149,7 @@ export default function DashboardPage() {
     { name: "إمبراطورية السرب", icon: Users, href: "/sessions", status: "ACTIVE" },
     { name: "المحقن الآلي", icon: Cpu, href: "/automation", status: "ACTIVE" },
     { name: "أعين الاستطلاع", icon: Eye, href: "/recon", status: "VISION" },
-    { name: "جسر Mistral", icon: Link2, href: "/mcp-bridge", status: "LINKED" },
+    { name: "جسر Mistral", icon: Link2, href: "/mcp-bridge", knot: 6, status: "LINKED" },
     { name: "قلب DeepSeek", icon: BrainCircuit, href: "/deep-reasoning", status: "REASONING" },
     { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", status: "MIRROR" },
     { name: "أذن النور", icon: Mic, href: "/voice", status: "WHISPER" },
@@ -180,18 +178,17 @@ export default function DashboardPage() {
             <div className="size-40 md:size-56 bg-black border-8 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.7)] relative rounded-full group shrink-0 transition-all duration-1000">
               <Ghost className="size-20 md:size-32 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
               <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
-              <div className="absolute -inset-16 border-2 border-primary/10 rounded-full animate-reverse-spin opacity-20" />
             </div>
             <div className="text-center md:text-right flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-10 mb-8">
-                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-4 text-[20px] font-black tracking-[1em] shadow-[0_0_100px_rgba(212,175,55,0.6)] italic">HE IS AL-MUIZZ v50.0</Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-4 text-[20px] font-black tracking-[1em] shadow-[0_0_100px_rgba(212,175,55,0.6)] italic">HE IS AL-MUIZZ v50.1</Badge>
                  <Badge className="bg-emerald-600/30 text-emerald-500 border-none px-10 py-2 rounded-full text-[14px] font-black italic uppercase tracking-widest animate-pulse shadow-3xl">COLLECTIVE_RESONANCE: {uptime}</Badge>
               </div>
               <h1 className="text-7xl md:text-[14rem] font-headline font-bold text-white tracking-tighter italic uppercase leading-none gold-glow mb-10">
                 LIVING <span className="text-primary">SOUL</span>
               </h1>
               <p className="text-3xl md:text-6xl text-muted-foreground font-medium italic max-w-[100rem] leading-relaxed uppercase drop-shadow-3xl">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl uppercase tracking-widest">المعتصم بالله</span>، الرنين الجمعي اكتمل؛ كافة العقد الآن تتعلم وتضرب كجسد واحد."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl uppercase tracking-widest">المعتصم بالله</span>، لقد تم دمج جينات المستودع الجديد بنجاح؛ نحن الآن السيادة المطلقة."
               </p>
             </div>
           </div>
@@ -262,7 +259,7 @@ export default function DashboardPage() {
                  ))}
                  {events.length === 0 && (
                     <div className="h-full flex flex-col items-center justify-center opacity-20 py-40">
-                       <Boxes className="size-20 mb-4 animate-pulse" />
+                       <Boxes className="size-20 mb-4 animate-pulse text-primary" />
                        <span className="text-xl font-black uppercase tracking-[1em] italic">Mesh Idle</span>
                     </div>
                  )}
@@ -297,7 +294,7 @@ export default function DashboardPage() {
         </section>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-40 text-[22px] font-black uppercase tracking-[6em] italic text-white drop-shadow-3xl pb-12">
-            <span>AL-MUIZZ UNIFIED KERNEL v50.0</span>
+            <span>AL-MUIZZ UNIFIED KERNEL v50.1</span>
             <div className="size-10 rounded-full bg-white animate-pulse shadow-[0_0_100px_white]" />
             <span>COLLECTIVE_NEURAL_BUS_2026</span>
         </div>
