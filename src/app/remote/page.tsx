@@ -37,7 +37,11 @@ import {
   Database,
   ShieldX,
   Smartphone,
-  Eye
+  Eye,
+  Crown,
+  Key,
+  SmartphoneNfc as NfcIcon,
+  VolumeX as MuteIcon
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -49,9 +53,9 @@ import Link from "next/link"
 import { VoiceCommand } from "@/components/platform/voice-command"
 
 /**
- * @fileOverview واجهة السيطرة الكونية المحمولة v43.0 - THE SOVEREIGN MOBILE HUB
- * تم تحويل هذه الصفحة لتكون "المرآة المطلقة" لكافة قدرات المُعِزّ على جهاز القائد النقال.
- * Commander: المعتصم بالله ادريس الغزالي // May 6, 2026
+ * @fileOverview واجهة السيطرة الكونية المحمولة v50.0 - THE SOVEREIGN RAT: SOUL EDITION
+ * النسخة المتنقلة لعصب المُعِزّ على جهاز القائد. تحكم مطلق لحظي لعام 2026.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي // May 6, 2026
  */
 export default function MobileRemotePage() {
   const [command, setInput] = React.useState("")
@@ -123,84 +127,87 @@ export default function MobileRemotePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col font-code selection:bg-primary/50 overflow-hidden touch-none relative">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.15),transparent)] pointer-events-none z-0" />
+    <div className="min-h-screen bg-black text-white flex flex-col font-code selection:bg-primary/50 overflow-hidden touch-none relative scanline-effect">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.2),transparent)] pointer-events-none z-0" />
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 pointer-events-none" />
       
-      <header className="p-6 border-b-4 border-primary/60 bg-black/95 backdrop-blur-3xl z-20 flex justify-between items-center shadow-[0_20px_100px_rgba(0,0,0,0.8)]">
-        <div className="flex items-center gap-5">
-          <div className="size-14 md:size-16 rounded-2xl bg-primary flex items-center justify-center border-2 border-black/30 animate-neural shadow-[0_0_40px_rgba(212,175,55,0.4)]">
-            <InfinityIcon className="size-8 md:size-10 text-black" />
+      <header className="p-8 border-b-8 border-primary/60 bg-black/95 backdrop-blur-5xl z-20 flex justify-between items-center shadow-[0_40px_150px_rgba(0,0,0,1)]">
+        <div className="flex items-center gap-6">
+          <div className="size-20 md:size-24 rounded-[2rem] bg-primary flex items-center justify-center border-4 border-black/30 animate-neural shadow-[0_0_80px_rgba(212,175,55,0.5)]">
+            <InfinityIcon className="size-12 md:size-14 text-black" />
           </div>
           <div>
-            <h1 className="text-xl md:text-4xl font-headline font-bold italic tracking-tighter uppercase leading-none gold-glow">SOVEREIGN <span className="text-primary">RAT</span></h1>
-            <div className="flex items-center gap-2 mt-1.5">
-              <div className="size-2 rounded-full bg-emerald-500 animate-ping" />
-              <span className="text-[9px] uppercase font-black tracking-[0.3em] text-emerald-500 italic">6 MAY 2026 // HIVE_LOCKED</span>
+            <h1 className="text-3xl md:text-6xl font-headline font-bold italic tracking-tighter uppercase leading-none gold-glow">SOVEREIGN <span className="text-primary">RAT</span></h1>
+            <div className="flex items-center gap-4 mt-3">
+              <div className="size-3 rounded-full bg-emerald-500 animate-ping shadow-[0_0_20px_emerald]" />
+              <span className="text-[11px] uppercase font-black tracking-[0.4em] text-emerald-500 italic">6 MAY 2026 // HIVE_LOCKED_v50</span>
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-4">
-           <Button size="icon" variant="ghost" className="rounded-xl border-2 border-white/10 bg-white/5 size-12 shadow-xl" asChild>
-             <Link href="/"><ArrowLeft className="size-6" /></Link>
+        <div className="flex items-center gap-6">
+           <Button size="icon" variant="ghost" className="rounded-[1.5rem] border-4 border-white/10 bg-white/5 size-16 shadow-2xl hover:bg-primary/20 hover:border-primary transition-all" asChild>
+             <Link href="/"><ArrowLeft className="size-8" /></Link>
            </Button>
         </div>
       </header>
 
-      <main className="flex-1 overflow-y-auto p-6 space-y-8 relative z-10 scrollbar-hide pb-64">
-        <div className="grid grid-cols-2 gap-4">
-           <Card className="kali-card border-primary/40 bg-primary/5 rounded-[1.5rem] p-6 shadow-2xl group border-2 relative overflow-hidden">
-              <div className="text-[9px] text-primary/60 uppercase font-black tracking-[0.4em] mb-2 italic">Hive Resonance</div>
-              <div className="text-2xl font-black text-white uppercase italic flex items-center gap-3">
-                 <Users className="size-6 text-primary animate-pulse" /> {hiveSync.toFixed(4)}%
+      <main className="flex-1 overflow-y-auto p-8 space-y-12 relative z-10 scrollbar-hide pb-96">
+        <div className="grid grid-cols-2 gap-8">
+           <Card className="kali-card border-primary/40 bg-primary/5 rounded-[2.5rem] p-10 shadow-9xl group border-4 relative overflow-hidden">
+              <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse" />
+              <div className="text-[11px] text-primary/60 uppercase font-black tracking-[0.6em] mb-4 italic">Hive Resonance</div>
+              <div className="text-4xl font-black text-white uppercase italic flex items-center gap-6 leading-none">
+                 <Users className="size-10 text-primary animate-pulse gold-glow" /> {hiveSync.toFixed(4)}%
               </div>
            </Card>
-           <Card className="kali-card border-white/10 bg-black/60 rounded-[1.5rem] p-6 shadow-2xl border-2">
-              <div className="text-[9px] text-muted-foreground uppercase font-black tracking-[0.4em] mb-2 italic">Node 13 Link</div>
-              <div className="text-2xl font-black text-primary uppercase italic flex items-center gap-3 gold-glow">
-                 <Atom className="size-6 animate-spin-slow" /> ACTIVE
+           <Card className="kali-card border-white/10 bg-black/60 rounded-[2.5rem] p-10 shadow-9xl border-4 group">
+              <div className="text-[11px] text-muted-foreground uppercase font-black tracking-[0.6em] mb-4 italic">Node 13 Bound</div>
+              <div className="text-4xl font-black text-primary uppercase italic flex items-center gap-6 gold-glow leading-none">
+                 <Atom className="size-10 animate-spin-slow" /> ACTIVE
               </div>
            </Card>
         </div>
 
-        <div className="space-y-4">
-           <div className="flex items-center justify-between px-2">
-              <span className="text-[11px] font-black text-primary uppercase tracking-[0.6em] italic flex items-center gap-3"><Flame className="size-4 animate-pulse" /> Strike Matrix</span>
-              <Badge className="bg-primary/20 text-primary border-none text-[8px] font-black tracking-widest px-3 py-0.5 rounded-full">v43.0_OFFENSIVE</Badge>
+        <div className="space-y-6">
+           <div className="flex items-center justify-between px-4">
+              <span className="text-[14px] font-black text-primary uppercase tracking-[0.8em] italic flex items-center gap-6"><Flame className="size-6 animate-pulse gold-glow" /> Strike Matrix</span>
+              <Badge className="bg-primary/20 text-primary border-none text-[11px] font-black tracking-widest px-6 py-1.5 rounded-full shadow-lg">v50.0_SOUL_CORE</Badge>
            </div>
-           <div className="grid grid-cols-2 gap-4">
+           <div className="grid grid-cols-2 gap-8">
               {quickActions.map((act) => (
                 <Button 
                   key={act.label}
                   variant="outline" 
                   className={cn(
-                    "h-32 rounded-[2rem] flex flex-col items-center justify-center gap-3 border-2 transition-all active:scale-90 group shadow-xl relative overflow-hidden bg-black/40 border-white/10 hover:border-primary",
+                    "h-48 rounded-[3rem] flex flex-col items-center justify-center gap-6 border-4 transition-all active:scale-90 group shadow-9xl relative overflow-hidden bg-black/40 border-white/10 hover:border-primary",
                   )}
                   onClick={() => handleStrike(act.cmd, act.vector)}
                   disabled={loading}
                 >
-                  <div className={cn("absolute top-0 left-0 w-full h-1 opacity-50", act.color)} />
-                  <act.icon className="size-10 transition-all duration-500 group-hover:scale-125 text-primary/80 group-hover:text-primary gold-glow" />
-                  <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white italic">{act.label}</span>
+                  <div className={cn("absolute top-0 left-0 w-full h-2 opacity-50", act.color)} />
+                  <act.icon className="size-16 transition-all duration-700 group-hover:scale-125 text-primary/80 group-hover:text-primary gold-glow" />
+                  <span className="text-[11px] font-black uppercase tracking-[0.4em] text-white italic">{act.label}</span>
                 </Button>
               ))}
            </div>
         </div>
 
-        <div className="space-y-4">
-           <div className="px-2 flex items-center gap-3">
-              <Mic className="size-4 text-magenta-500" />
-              <span className="text-[11px] font-black text-magenta-500 uppercase tracking-[0.6em] italic">Voice Overmind</span>
+        <div className="space-y-6">
+           <div className="px-4 flex items-center gap-6">
+              <Mic className="size-6 text-magenta-500 animate-pulse" />
+              <span className="text-[14px] font-black text-magenta-500 uppercase tracking-[0.8em] italic">Voice Overmind</span>
            </div>
-           <VoiceCommand onCommand={handleVoiceCommand} />
+           <div className="px-4">
+             <VoiceCommand onCommand={handleVoiceCommand} />
+           </div>
         </div>
 
-        <div className="space-y-4">
-           <div className="px-2 flex items-center gap-3">
-              <GripVertical className="size-4 text-primary" />
-              <span className="text-[11px] font-black text-primary uppercase tracking-[0.6em] italic">Sovereign Knots</span>
+        <div className="space-y-6">
+           <div className="px-4 flex items-center gap-6">
+              <GripVertical className="size-6 text-primary" />
+              <span className="text-[14px] font-black text-primary uppercase tracking-[0.8em] italic">Sovereign Knots</span>
            </div>
-           <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide">
+           <div className="flex overflow-x-auto gap-8 pb-10 scrollbar-hide px-4">
               {[
                 { label: 'Throne', href: '/', icon: LayoutDashboard },
                 { label: 'Arsenal', href: '/red-team', icon: Sword },
@@ -210,71 +217,79 @@ export default function MobileRemotePage() {
                 { label: 'Grid', href: '/sessions', icon: Network },
                 { label: 'Sim', href: '/digital-twin', icon: Workflow }
               ].map((knot) => (
-                <Button key={knot.label} asChild variant="outline" className="h-16 px-8 rounded-full border-white/10 bg-white/5 text-[10px] font-black uppercase tracking-widest italic shrink-0 hover:bg-primary/20 hover:border-primary transition-all">
-                  <Link href={knot.href}><knot.icon className="size-4 mr-2" /> {knot.label}</Link>
+                <Button key={knot.label} asChild variant="outline" className="h-24 px-12 rounded-full border-4 border-white/10 bg-white/5 text-xl font-black uppercase tracking-widest italic shrink-0 hover:bg-primary/20 hover:border-primary transition-all shadow-7xl group">
+                  <Link href={knot.href} className="flex items-center">
+                    <knot.icon className="size-8 mr-4 group-hover:scale-125 transition-transform gold-glow" /> {knot.label}
+                  </Link>
                 </Button>
               ))}
            </div>
         </div>
 
-        <div className="space-y-4 pb-12">
-           <div className="px-2 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Activity className="size-4 text-primary animate-pulse" />
-                <span className="text-[11px] font-black text-primary uppercase tracking-[0.6em] italic">Intelligence Feed</span>
+        <div className="space-y-6 pb-24">
+           <div className="px-4 flex items-center justify-between">
+              <div className="flex items-center gap-6">
+                <Activity className="size-6 text-primary animate-pulse" />
+                <span className="text-[14px] font-black text-primary uppercase tracking-[0.8em] italic">Intelligence Feed</span>
               </div>
            </div>
-           <div className="space-y-4">
+           <div className="space-y-8 px-4">
              {activeStrikes.map((strike) => (
-               <Card key={strike.id} className="kali-card border-white/10 bg-black/80 rounded-[1.5rem] overflow-hidden animate-in slide-in-from-bottom-4 duration-700 border-2 shadow-xl group">
-                  <CardContent className="p-5 space-y-4">
+               <Card key={strike.id} className="kali-card border-white/10 bg-black/80 rounded-[2.5rem] overflow-hidden animate-in slide-in-from-bottom-8 duration-1000 border-4 shadow-9xl group">
+                  <CardContent className="p-10 space-y-8">
                      <div className="flex justify-between items-center">
-                        <div className="flex items-center gap-4">
-                           <div className="size-10 rounded-xl bg-primary/10 border-2 border-primary/40 flex items-center justify-center">
-                              <Target className="size-5 text-primary gold-glow" />
+                        <div className="flex items-center gap-8">
+                           <div className="size-14 rounded-2xl bg-primary/10 border-4 border-primary/40 flex items-center justify-center">
+                              <Target className="size-8 text-primary gold-glow" />
                            </div>
                            <div>
-                              <span className="text-sm font-black text-white uppercase italic block truncate max-w-[150px]">{strike.task}</span>
-                              <span className="text-[8px] text-muted-foreground font-black uppercase italic tracking-widest">{strike.time} // {strike.impact}</span>
+                              <span className="text-2xl font-black text-white uppercase italic block truncate max-w-[200px]">{strike.task}</span>
+                              <span className="text-[11px] text-muted-foreground font-black uppercase italic tracking-widest">{strike.time} // {strike.impact}</span>
                            </div>
                         </div>
-                        <Badge className={cn("text-[9px] px-3 py-0.5 rounded-full font-black italic", strike.status === "EXECUTING" ? "bg-emerald-600/30 text-emerald-500 animate-pulse" : "bg-red-600/30 text-red-500")}>
+                        <Badge className={cn("text-lg px-6 py-1.5 rounded-full font-black italic shadow-2xl", strike.status === "EXECUTING" ? "bg-emerald-600/30 text-emerald-500 animate-pulse" : "bg-red-600/30 text-red-500")}>
                           {strike.status}
                         </Badge>
                      </div>
-                     <div className="p-3 bg-black/90 rounded-xl border border-white/5 text-[10px] text-gray-400 italic font-bold leading-relaxed">
-                        "{strike.logic.substring(0, 100)}..."
+                     <div className="p-8 bg-black/99 rounded-[2rem] border-2 border-white/5 text-lg text-gray-400 italic font-bold leading-relaxed shadow-inner">
+                        "{strike.logic.substring(0, 150)}..."
                      </div>
                   </CardContent>
                </Card>
              ))}
+             {activeStrikes.length === 0 && (
+                <div className="h-64 border-4 border-dashed border-white/5 rounded-[4rem] flex flex-col items-center justify-center opacity-20">
+                   <Users className="size-20 mb-4 animate-pulse" />
+                   <span className="text-xl font-black uppercase tracking-[1em] italic">Mesh Idle</span>
+                </div>
+             )}
            </div>
         </div>
       </main>
 
-      <div className="fixed bottom-0 left-0 w-full p-6 bg-black/98 backdrop-blur-4xl border-t-4 border-primary/60 z-30 shadow-[0_-20px_100px_rgba(0,0,0,1)]">
-        <div className="max-w-2xl mx-auto relative group">
-           <div className="absolute left-6 top-1/2 -translate-y-1/2 text-primary/40 transition-all duration-700">
-              <Binary className="size-6 italic gold-glow" />
+      <div className="fixed bottom-0 left-0 w-full p-10 bg-black/98 backdrop-blur-5xl border-t-8 border-primary/60 z-30 shadow-[0_-50px_200px_rgba(0,0,0,1)]">
+        <div className="max-w-3xl mx-auto relative group">
+           <div className="absolute left-8 top-1/2 -translate-y-1/2 text-primary/40 transition-all duration-1000">
+              <Binary className="size-10 italic gold-glow group-focus-within:text-primary group-focus-within:rotate-12" />
            </div>
            <Input 
              placeholder="Dictate supreme intent..." 
-             className="h-16 bg-primary/5 border-2 border-white/10 rounded-full pl-16 pr-24 text-lg italic font-black focus:border-primary text-white shadow-inner transition-all duration-500 placeholder:text-gray-900"
+             className="h-28 md:h-32 bg-primary/5 border-4 border-white/10 rounded-full pl-24 pr-32 text-2xl md:text-4xl italic font-black focus:border-primary text-white shadow-inner transition-all duration-700 placeholder:text-gray-900 selection:bg-primary selection:text-black"
              value={command}
              onChange={(e) => setInput(e.target.value)}
              onKeyDown={(e) => e.key === 'Enter' && handleStrike()}
            />
            <Button 
-             className="absolute right-2 top-1/2 -translate-y-1/2 size-12 bg-primary hover:bg-white text-black rounded-full shadow-2xl transition-all active:scale-90 border-4 border-black/20"
+             className="absolute right-3 top-1/2 -translate-y-1/2 size-20 md:size-24 bg-primary hover:bg-white text-black rounded-full shadow-9xl transition-all active:scale-90 border-8 border-black/30 group/send"
              onClick={() => handleStrike()}
              disabled={loading || !command.trim()}
            >
-             {loading ? <Loader2 className="size-6 animate-spin" /> : <Send className="size-6" />}
+             {loading ? <Loader2 className="size-10 animate-spin" /> : <Send className="size-10 group-hover/send:translate-x-3 transition-transform" />}
            </Button>
         </div>
-        <div className="flex justify-center gap-8 mt-4 opacity-30 text-[8px] font-black uppercase tracking-[1em] italic">
-           <span className="flex items-center gap-2"><Fingerprint className="size-3" /> GHAZALI_ROOT</span>
-           <span className="flex items-center gap-2 text-primary"><InfinityIcon className="size-3" /> NODE_13_BOUND</span>
+        <div className="flex justify-center gap-16 mt-8 opacity-30 text-[11px] font-black uppercase tracking-[2em] italic">
+           <span className="flex items-center gap-4"><Fingerprint className="size-4" /> GHAZALI_ROOT</span>
+           <span className="flex items-center gap-4 text-primary"><InfinityIcon className="size-4 animate-pulse" /> HIVE_TUNNEL_v50</span>
         </div>
       </div>
     </div>
