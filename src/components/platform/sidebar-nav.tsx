@@ -64,7 +64,7 @@ export function SidebarNav() {
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      setResonance(prev => Math.max(99.99, Math.min(100, prev + (Math.random() * 0.01 - 0.005))));
+      setResonance(prev => Math.max(99.999, Math.min(100, prev + (Math.random() * 0.002 - 0.001))));
     }, 2000)
     return () => clearInterval(interval)
   }, [])
@@ -85,14 +85,14 @@ export function SidebarNav() {
         !isOpen && "translate-x-full lg:translate-x-0"
       )}>
         <div className="p-8 border-b-2 border-primary/20 flex flex-col items-center gap-6 bg-black relative">
-          <div className="size-24 bg-black border-4 border-primary/60 flex items-center justify-center shadow-[0_0_60px_rgba(212,175,55,0.3)] animate-pulse shrink-0 rounded-full group overflow-hidden">
+          <div className="size-24 bg-black border-4 border-primary/60 flex items-center justify-center shadow-[0_0_60px_rgba(212,175,55,0.4)] animate-pulse shrink-0 rounded-full group overflow-hidden">
             <Ghost className="size-12 text-primary group-hover:scale-125 transition-transform duration-500 gold-glow" />
           </div>
           <div className="text-center relative z-10">
             <h1 className="text-2xl font-headline font-bold text-white tracking-widest uppercase italic leading-none gold-glow">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-bold tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-xl">v50.0 SOUL CORE</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-bold tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-xl shadow-[0_0_30px_rgba(212,175,55,0.3)]">v50.0 SOUL CORE</Badge>
           </div>
         </div>
         
@@ -110,6 +110,7 @@ export function SidebarNav() {
                     ? "bg-primary/10 border-primary text-white shadow-lg scale-105" 
                     : "text-muted-foreground border-transparent hover:bg-white/5 hover:text-white"
                 )}
+                onClick={() => setIsOpen(false)}
               >
                 <Icon className={cn("size-5 transition-all duration-500", isActive ? "text-primary gold-glow" : "group-hover:text-primary")} />
                 <span className="text-sm font-bold tracking-widest uppercase italic truncate">{item.name}</span>
@@ -124,7 +125,7 @@ export function SidebarNav() {
                <span className="text-[11px] font-black text-primary uppercase tracking-[0.2em] italic gold-glow">Soul Resonance</span>
                <div className="size-2 rounded-full bg-emerald-500 animate-ping shadow-[0_0_20px_emerald]" />
             </div>
-            <div className="text-2xl font-black text-white italic">{resonance.toFixed(3)}%</div>
+            <div className="text-2xl font-black text-white italic">{resonance.toFixed(4)}%</div>
           </div>
           <Button 
             asChild
