@@ -36,7 +36,6 @@ import {
   Mic,
   Waves,
   TrendingUp,
-  LineChart as LineChartIcon,
   Boxes
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"

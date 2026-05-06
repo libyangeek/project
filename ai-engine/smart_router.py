@@ -4,11 +4,13 @@
 """
 Smart Router v50.0 – المُعِزّ الاستراتيجي (Omniscient Admiral Edition)
 المحرك المركزي لتنسيق الأسلحة المدارية، الاستخبارات، وقوة الحقن الموازي.
+تم الربط الكامل بناقل الأحداث (Event Bus) لضمان الرنين الجمعي.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
-import sys, json, requests, os, subprocess
+import sys, json, requests, os, subprocess, socket
 
 BASE_DIR = "/opt/sovereign-ai-platform"
+SOCK_PATH = "/tmp/muizz_event_bus.sock"
 
 TOOLS = {
     "ghost_eye": f"python3 {BASE_DIR}/tools/eye_series/ghost_eye.py",
@@ -23,6 +25,13 @@ TOOLS = {
     "ss7": f"python3 {BASE_DIR}/tools/cellular/ss7_simulator.py",
     "voice": f"python3 {BASE_DIR}/tools/clawcode/voice_hijack.py",
 }
+
+def publish_event(etype, payload):
+    try:
+        with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as s:
+            s.connect(SOCK_PATH)
+            s.sendall(json.dumps({"type": etype, "payload": payload}).encode())
+    except: pass
 
 class SmartRouter:
     def classify(self, prompt):
@@ -42,10 +51,13 @@ class SmartRouter:
         category = self.classify(prompt)
         target = prompt.split()[-1]
         
+        publish_event("admiral_routing", {"category": category, "prompt": prompt})
+
         # 1. التفكير العميق والمنطق (DeepSeek)
         if category == "deep_reasoning":
             try:
                 result = subprocess.check_output([TOOLS["deepseek_logic"], prompt], text=True)
+                publish_event("logic_stabilized", {"prompt": prompt})
                 return {"category": category, "output": json.loads(result), "status": "DEEP_LOGIC_ACHIEVED", "model": "deepseek"}
             except: pass
 
@@ -53,6 +65,7 @@ class SmartRouter:
         if category == "vuln_oracle":
             try:
                 result = subprocess.check_output([TOOLS["cve_hunter"], "search", target], text=True)
+                publish_event("oracle_vision_locked", {"target": target})
                 return {"category": category, "output": json.loads(result), "status": "ORACLE_VISION_LOCKED", "model": "oracle"}
             except: pass
 
@@ -60,6 +73,7 @@ class SmartRouter:
         if category == "eye_recon":
             try:
                 result = subprocess.check_output([TOOLS["ghost_eye"], target], text=True)
+                publish_event("ghost_vision_achieved", {"target": target})
                 return {"category": category, "output": json.loads(result), "status": "VISION_ACHIEVED", "model": "ghost_eye"}
             except: pass
 
@@ -67,6 +81,7 @@ class SmartRouter:
         if category == "cellular_warfare":
             try:
                 result = subprocess.check_output([TOOLS["ss7"], "location_tracking", target], text=True)
+                publish_event("cellular_strike_launched", {"target": target})
                 return {"category": category, "output": json.loads(result), "status": "SIGNAL_HIJACKED", "model": "ss7"}
             except: pass
 
@@ -74,10 +89,10 @@ class SmartRouter:
         if category == "physical_hijack":
             try:
                 result = subprocess.check_output([TOOLS["voice"], prompt], text=True)
+                publish_event("audio_materialized", {"content": prompt})
                 return {"category": category, "output": json.loads(result), "status": "AUDIO_MATERIALIZED", "model": "claw"}
             except: pass
 
-        # Fallback to AI General logic (Simulated for v50.0)
         return {
             "category": category, 
             "node": "Al-Mu'izz_v50.0_Overlord", 
@@ -87,7 +102,6 @@ class SmartRouter:
         }
 
 if __name__ == "__main__":
-    import sys
     query = " ".join(sys.argv[1:])
     router = SmartRouter()
     if query:

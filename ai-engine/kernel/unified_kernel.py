@@ -3,7 +3,7 @@
 # -*- coding: utf-8 -*-
 """
 🦅 Unified Kernel Orchestrator v50.0 - Collective Resonance Edition
-منسق النواة الموحدة: يربط Ghost Eye بـ ApexBrain، ويسجل كافة الأحداث في GEPA 5.0.
+منسق النواة الموحدة: يربط كافة الأحداث بـ GEPA 5.0 لضمان التعلم الجيني اللحظي.
 (c) 2026 Sovereign Systems
 """
 import asyncio
@@ -32,12 +32,11 @@ async def emit_event(event_type, payload):
         await writer.drain()
         writer.close()
         await writer.wait_closed()
-    except:
-        pass
+    except: pass
 
 async def kernel_listener():
     """الاستماع للأحداث واتخاذ قرارات سيادية تلقائية مع التعلم الجيني"""
-    logging.info("Unified Kernel v50.0 initialized. Standing by for Hive Pulse.")
+    logging.info("Unified Kernel v50.0 initialized. Standing by for Collective Resonance.")
     
     while True:
         try:
@@ -53,35 +52,38 @@ async def kernel_listener():
                 if not data:
                     break
                 
-                event = json.loads(data.decode())
-                etype = event.get("type")
-                payload = event.get("payload")
-                
-                # تسجيل الحدث في الذاكرة الأبدية (GEPA 5.0)
-                gepa.record(
-                    tool=f"KERNEL_{etype}",
-                    input_data=json.dumps(payload),
-                    outcome="EVENT_PROCESSED",
-                    success=True,
-                    master_command="UNIFIED_ORCHESTRATION"
-                )
+                try:
+                    event = json.loads(data.decode())
+                    etype = event.get("type")
+                    payload = event.get("payload")
+                    
+                    # تسجيل كل حدث في الذاكرة الأبدية (GEPA 5.0)
+                    gepa.record(
+                        tool=f"KERNEL_{etype}",
+                        input_data=json.dumps(payload),
+                        outcome="RESONANCE_CAPTURED",
+                        success=True,
+                        master_command="UNIFIED_COLLECTIVE_ORCHESTRATION"
+                    )
 
-                # 1. التفاعل التلقائي مع نتائج الاستطلاع
-                if etype == "ghost_scan_complete":
-                    target = payload.get("target")
-                    logging.info(f"Target DNA captured for {target}. Feeding to ApexBrain...")
-                    await emit_event("ai_planning_start", {"target": target})
-                
-                # 2. الاستجابة للأوامر الصوتية الملكية
-                elif etype == "voice_command":
-                    cmd = payload
-                    logging.info(f"Royal directive received: {cmd}. Routing to Admiral...")
-                    await emit_event("directive_executing", {"cmd": cmd})
-                
-                # 3. معالجة نجاح الضربات
-                elif etype == "directive_completed" and payload.get("success"):
-                    logging.info(f"Strike successful: {payload.get('type')}. Genetic weight increased.")
-                    # هنا يمكن إضافة منطق لزيادة "رنين" النظام
+                    # 1. التفاعل التلقائي مع نتائج الاستطلاع
+                    if etype == "ghost_scan_complete":
+                        target = payload.get("target")
+                        logging.info(f"Target DNA captured for {target}. Feeding to ApexBrain...")
+                        await emit_event("ai_planning_start", {"target": target})
+                    
+                    # 2. الاستجابة للأوامر الصوتية الملكية
+                    elif etype == "voice_command":
+                        cmd = payload
+                        logging.info(f"Royal directive received: {cmd}. Routing to Admiral...")
+                        await emit_event("directive_executing", {"cmd": cmd})
+                    
+                    # 3. معالجة نجاح الضربات
+                    elif etype == "directive_completed" and payload.get("success"):
+                        logging.info(f"Strike successful: {payload.get('type')}. Genetic resonance increased.")
+                        
+                except json.JSONDecodeError:
+                    pass
 
         except Exception as e:
             logging.error(f"Kernel link lost: {e}")
