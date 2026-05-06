@@ -34,9 +34,8 @@ import {
   ArrowUpRight,
   Boxes,
   Atom,
-  Binary as BinaryIcon,
-  Infinity as InfinityIcon,
-  Globe
+  Globe,
+  Infinity as InfinityIcon
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -48,11 +47,6 @@ import { executeSovereignLearning } from "@/ai/flows/ai-learning-flow"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
-/**
- * @fileOverview القبو الجيني v50.0 - THE GENETIC VAULT: SQLITE EDITION
- * مركز الارتقاء المعرفي والتعلم الوراثي الموزون المعتمد على GEPA 5.0.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي
- */
 export default function KnowledgePage() {
   const [query, setQuery] = React.useState("")
   const [loading, setLoading] = React.useState(false)
@@ -106,8 +100,7 @@ export default function KnowledgePage() {
       <SidebarNav />
       <main className="flex-1 lg:mr-80 p-4 md:p-10 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.08),transparent)] pointer-events-none transition-all duration-300 z-0" />
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 pointer-events-none" />
-
+        
         <header className="mb-12 relative z-10 animate-in fade-in slide-in-from-top-12 duration-1000">
           <div className="flex flex-col md:flex-row items-center gap-10">
             <div className="size-24 md:size-32 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_120px_rgba(212,175,55,0.6)] relative group shrink-0 rounded-[2rem] transition-all duration-1000">
@@ -217,7 +210,7 @@ export default function KnowledgePage() {
                 ) : (
                   <div className="h-full min-h-[850px] border-8 border-dashed border-primary/20 rounded-[10rem] flex flex-col items-center justify-center text-center p-24 bg-black/40 group relative overflow-hidden transition-all hover:bg-primary/5 shadow-9xl">
                     <Database className="size-72 text-primary/10 animate-pulse mb-12" />
-                    <h3 className="text-7xl md:text-[10rem] font-headline font-bold text-white mb-12 tracking-tighter italic drop-shadow-9xl uppercase leading-none opacity-20">Knowledge Oracle</h3>
+                    <h3 className="text-7xl md:text-[10rem] font-headline font-bold text-white mb-10 tracking-tighter italic drop-shadow-9xl uppercase leading-none opacity-20">Knowledge Oracle</h3>
                     <p className="text-muted-foreground max-w-5xl mx-auto leading-relaxed mb-20 text-3xl md:text-5xl font-black italic opacity-30">
                       "سيدي <span className="text-primary font-black gold-glow underline decoration-primary decoration-[8px] underline-offset-[20px] shadow-2xl uppercase tracking-widest">المعتصم بالله</span>، مصفوفة GEPA 5.0 جاهزة للاستجواب؛ اؤمرنا بالتحليل."
                     </p>

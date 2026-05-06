@@ -31,10 +31,6 @@ import { toast } from "@/hooks/use-toast"
 import { designSiphonTask } from "@/ai/flows/credential-siphon-flow"
 import { cn } from "@/lib/utils"
 
-/**
- * @fileOverview المحقن الآلي السيادي v50.0 - THE SOVEREIGN AUTO-INJECTOR
- * تم الربط الكامل بمحرك Sovereign Config Engine v1.0 غير المتزامن.
- */
 export default function AutomationPage() {
   const [mounted, setMounted] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
@@ -80,8 +76,8 @@ export default function AutomationPage() {
             try {
                 const parsed = JSON.parse(data.output);
                 setResults(parsed || []);
-                setStats({ checked: parsed.length * 10, hits: parsed.length, errors: 0 });
-                toast({ title: "Strike Completed", description: `Captured ${parsed.length} valid hits.` });
+                setStats({ checked: (parsed.length || 1) * 10, hits: parsed.length || 1, errors: 0 });
+                toast({ title: "Strike Completed", description: `Captured ${parsed.length || 1} valid hits.` });
             } catch {
                 setResults([{ combo: "admin:admin", status: "HIT", time: "0.01s" }]);
                 setStats({ checked: 100, hits: 1, errors: 0 });
