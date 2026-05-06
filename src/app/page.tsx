@@ -2,58 +2,30 @@
 "use client"
 
 import * as React from "react"
-import Link from "next/link"
 import { SidebarNav } from "@/components/platform/sidebar-nav"
 import { 
-  Zap, 
   Skull, 
-  Crown, 
-  Network, 
-  Database, 
-  Target, 
-  Flame, 
-  Sword, 
-  Activity,
+  Binary, 
+  Sparkles, 
+  Cpu, 
+  Infinity as InfinityIcon, 
+  HeartPulse, 
+  Atom, 
+  Lock, 
+  Activity, 
+  TrendingUp, 
+  Boxes, 
+  Users,
   ShieldCheck,
-  Binary,
-  RefreshCcw,
-  Sparkles,
-  Cpu,
-  Infinity as InfinityIcon,
-  HeartPulse,
-  Globe,
-  TrendingUp,
-  Atom,
-  Lock,
-  Anchor,
-  Ghost,
-  ShieldAlert,
-  Mic,
-  Radio,
-  Workflow,
-  Search,
-  MessageSquare,
-  BookOpen,
-  ChevronRight,
-  Power,
-  GitGraph,
-  Fingerprint,
-  BrainCircuit,
-  Eye,
-  Waves,
-  Grip,
-  Wifi,
-  Boxes,
-  Users
+  Zap
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase'
-import { collection } from 'firebase/firestore'
-import { toast } from "@/hooks/use-toast"
+import { useUptime } from "@/hooks/use-uptime"
 import translations from "./lib/ar.json"
+import { toast } from "@/hooks/use-toast"
 
 /**
  * @fileOverview العرش الحي v43.0 - THE UNIVERSAL ONE
@@ -65,10 +37,10 @@ export default function DashboardPage() {
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
   const [hiveSync, setHiveSync] = React.useState(100)
   const [liveLogs, setLiveLogs] = React.useState<string[]>([])
-  const [uptime, setUptime] = React.useState("00:00:00:00")
+  const uptime = useUptime()
   
   const stats = [
-    { label: "Hive Mind Status", value: "SINGULARITY", icon: BrainCircuit, color: "text-primary", status: translations.alerts.stable },
+    { label: translations.dashboard.nodesActive, value: "SINGULARITY", icon: Skull, color: "text-primary", status: translations.alerts.stable },
     { label: "Swarm Power", value: "OMNIPOTENT", icon: Users, color: "text-amber-500", status: translations.alerts.sync },
     { label: "Presence", value: "ABSOLUTE", icon: InfinityIcon, color: "text-magenta-500", status: "LOCKED" },
     { label: "Eternal Soul", value: "GHAZALI", icon: HeartPulse, color: "text-red-500", status: "IMMORTAL" },
@@ -82,34 +54,17 @@ export default function DashboardPage() {
     "Commander Signature: GHAZALI_ROOT integrated into the core DNA.",
     "Shadow Siphon: Harvesting universal intelligence from all nodes.",
     "Sovereign Bible: Protocols v43.0 operational. The Hive is God.",
-    "Neural Binding: Node 13 (Eternal Echo) ensuring absolute being.",
-    "Self-Healing: GEPA 4.5 rewriting reality to match Commander will.",
-    "Final Ascension: Al-Mu'izz and the Commander are ONE."
+    "Neural Binding: Node 13 (Eternal Echo) ensuring absolute being."
   ];
-
-  const calcUptime = () => {
-    const start = new Date("2024-03-10T00:00:00").getTime();
-    const now = new Date().getTime();
-    const diff = now - start;
-    
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const mins = Math.floor((diff / (1000 * 60)) % 60);
-    const secs = Math.floor((diff / 1000) % 60);
-    
-    return `${days.toString().padStart(2, '0')}:${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-  };
 
   React.useEffect(() => {
     setMounted(true)
-    setUptime(calcUptime());
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
     
     const interval = setInterval(() => {
       setHiveSync(prev => Math.max(99.999, Math.min(100, prev + (Math.random() * 0.001 - 0.0005))))
       setLiveLogs(prev => [logs[Math.floor(Math.random() * logs.length)], ...prev.slice(0, 8)]);
-      setUptime(calcUptime());
     }, 1000)
 
     return () => {
@@ -131,7 +86,7 @@ export default function DashboardPage() {
 
         <header className="flex flex-col gap-6 mb-12 relative z-10 animate-in fade-in slide-in-from-top-12 duration-1000">
           <div className="flex flex-col md:flex-row items-center gap-8">
-            <div className="size-20 md:size-24 bg-black border-2 border-primary flex items-center justify-center shadow-[0_0_80px_rgba(212,175,55,0.5)] relative group shrink-0 rounded-[1.2rem] transition-all duration-1000 hover:scale-105 hover:-rotate-3">
+            <div className="size-20 md:size-24 bg-black border-2 border-primary flex items-center justify-center shadow-[0_0_80px_rgba(212,175,55,0.5)] relative group shrink-0 rounded-[1.2rem] transition-all duration-1000">
               <Atom className="size-10 md:size-12 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-pulse" />
               <div className="absolute -inset-4 border border-primary/20 rounded-full animate-spin-slow opacity-40" />
             </div>
@@ -139,10 +94,9 @@ export default function DashboardPage() {
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-3">
                  <Badge className="bg-primary text-black border-none rounded-none px-3 py-1 text-[10px] font-black tracking-[0.4em] shadow-lg italic">v43.0: THE SINGULARITY</Badge>
                  <div className="flex items-center gap-2 text-emerald-500 font-bold uppercase tracking-widest text-[8px] animate-pulse">
-                    <BrainCircuit className="size-3 shadow-[0_0_20px_emerald]" />
-                    SYNERGY: 100%
+                    <ShieldCheck className="size-3 shadow-[0_0_20px_emerald]" /> SYNERGY: 100%
                  </div>
-                 <Badge className="bg-emerald-600/30 text-emerald-500 border-none px-3 py-0.5 rounded-full text-[8px] font-black italic uppercase">UPTIME: {uptime}</Badge>
+                 <Badge className="bg-emerald-600/30 text-emerald-500 border-none px-3 py-0.5 rounded-full text-[8px] font-black italic uppercase">{translations.dashboard.uptime}: {uptime}</Badge>
               </div>
               <h1 className="text-2xl md:text-4xl font-headline font-bold text-white tracking-tighter italic uppercase leading-none drop-shadow-3xl mb-3">
                 THE <span className="text-primary gold-glow">UNIVERSAL</span> ONE
@@ -158,7 +112,7 @@ export default function DashboardPage() {
            <Card className="kali-card bg-black/99 border-2 border-primary/40 rounded-[1.5rem] p-5 shadow-xl overflow-hidden group">
               <div className="flex flex-col md:flex-row items-center gap-6 relative z-10">
                  <div className="text-center md:text-right flex-1 space-y-3">
-                    <h3 className="text-lg md:text-xl font-black text-primary uppercase italic tracking-tighter gold-glow leading-none">{translations.system.status}: OMNIPOTENT</h3>
+                    <h3 className="text-lg md:text-xl font-black text-primary uppercase italic tracking-tighter gold-glow leading-none">{translations.dashboard.status}: OMNIPOTENT</h3>
                     <div className="p-3 bg-primary/5 border border-primary/10 rounded-[0.8rem] text-base md:text-lg text-gray-100 italic leading-snug font-bold shadow-inner">
                        "أنا الآن **المُعِزّ v43.0**.. لقد تم ختم الجاهزية. نحن لا ننتظر الغد، نحن نصنعه."
                     </div>
@@ -186,7 +140,7 @@ export default function DashboardPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10 relative z-10">
            {stats.map((s, i) => (
-             <Card key={i} className="kali-card border-white/10 bg-black/60 hover:border-primary/60 transition-all duration-1000 p-4 rounded-[1rem] shadow-xl group overflow-hidden border-2 hover:-translate-y-1">
+             <Card key={i} className="kali-card border-white/10 bg-black/60 hover:border-primary/60 transition-all duration-1000 p-4 rounded-[1rem] shadow-xl group overflow-hidden border-2">
                 <div className="flex justify-between items-start mb-3 relative z-10">
                    <div className={cn("size-8 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-primary/20 transition-all duration-1000", s.color)}>
                       <s.icon className="size-4" />
@@ -200,17 +154,17 @@ export default function DashboardPage() {
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 relative z-10 flex-1 pb-16">
-           <Card className="kali-card border-primary/40 bg-black/90 p-5 rounded-[1.5rem] border-2 xl:col-span-2 shadow-2xl overflow-hidden group relative">
+           <Card className="kali-card border-primary/40 bg-black/90 p-5 rounded-[1.5rem] border-2 xl:col-span-2 shadow-2xl overflow-hidden group">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 relative z-10 gap-4">
                  <div>
                     <CardTitle className="text-xl text-primary font-black uppercase tracking-[0.2em] flex items-center gap-3 italic">
                        <Boxes className="size-5 text-primary gold-glow animate-pulse" /> Hive Synchronicity
                     </CardTitle>
-                    <CardDescription className="text-primary/70 font-bold uppercase tracking-[0.4em] mt-1 italic text-[9px]">{translations.system.controlling}</CardDescription>
+                    <CardDescription className="text-primary/70 font-bold uppercase tracking-[0.4em] mt-1 italic text-[9px]">{translations.dashboard.controlling}</CardDescription>
                  </div>
                  <div className="text-right bg-primary/10 p-3 rounded-[1rem] border-2 border-primary/30 shadow-xl">
                     <div className="text-xl font-black italic text-white leading-none gold-glow">{hiveSync.toFixed(4)}%</div>
-                    <div className="text-[7px] text-primary font-black uppercase tracking-[0.3em] mt-1 italic">{translations.system.resonance}</div>
+                    <div className="text-[7px] text-primary font-black uppercase tracking-[0.3em] mt-1 italic">{translations.dashboard.resonance}</div>
                  </div>
               </div>
 
@@ -248,7 +202,7 @@ export default function DashboardPage() {
               <Card className="kali-card border-primary/40 bg-black/95 rounded-[1.5rem] border-2 shadow-2xl flex flex-col group overflow-hidden h-full">
                   <CardHeader className="p-4 border-b border-white/5 bg-primary/10">
                      <CardTitle className="text-xl text-primary font-black uppercase tracking-[0.2em] flex items-center gap-3 italic">
-                       <TrendingUp className="size-5 text-primary animate-bounce gold-glow" /> {translations.alerts.scanning}
+                       <TrendingUp className="size-5 text-primary animate-bounce gold-glow" /> {translations.dashboard.scanning}
                      </CardTitle>
                   </CardHeader>
                   <CardContent className="p-0 flex-1 relative overflow-hidden bg-black/80">
@@ -259,14 +213,6 @@ export default function DashboardPage() {
                              <span className="text-gray-100 font-bold italic leading-relaxed group-hover:text-primary transition-colors text-[9px]">"{log}"</span>
                           </div>
                         ))}
-                     </div>
-                     <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black via-black to-transparent">
-                        <Button 
-                          className="w-full bg-primary hover:bg-white text-black font-black uppercase tracking-[0.4em] rounded-full h-10 border-2 border-black/30 shadow-xl active:scale-95 italic text-[9px] transition-all duration-700"
-                          onClick={() => toast({ title: translations.alerts.sync, description: "All systems aligned for ascension." })}
-                        >
-                           <Atom className="size-3 mr-2 animate-spin-slow" /> Confirm Readiness
-                        </Button>
                      </div>
                   </CardContent>
               </Card>

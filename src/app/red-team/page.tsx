@@ -10,32 +10,25 @@ import {
   Flame,
   Fingerprint,
   Sword,
-  Shield,
-  Brain,
   Terminal,
   Target,
-  FileCode,
-  Share2,
-  Cpu,
-  ShieldAlert,
-  Ghost,
-  Save,
-  Rocket,
-  Search,
   Code2,
   ChevronRight,
   ShieldCheck,
   Atom,
-  Boxes,
   Sparkles,
   Binary,
-  Infinity as InfinityIcon,
-  Info,
-  GitGraph
+  ShieldAlert,
+  Rocket,
+  Search,
+  Key,
+  Globe,
+  Wifi,
+  Radio,
+  Signal
 } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -95,19 +88,19 @@ export default function RedTeamPage() {
     }
   }
 
-  const launchStrike = async (vector?: string) => {
+  const launchStrike = async (vectorId: string) => {
     if (!target) {
         toast({ variant: "destructive", title: "Target Missing" });
         return;
     }
     setLoading(true);
-    toast({ title: translations.strike.initiate, description: translations.strike.planning });
+    toast({ title: translations.actions.exploit, description: `Initiating ${vectorId} strike on ${target}...` });
     try {
         const response = await fetch('/api/execute', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
-                command: `strike ${target} --vector ${vector || 'auto'}`, 
+                command: `strike ${target} --vector ${vectorId}`, 
                 target, 
                 type: 'autonomous_strike' 
             })
@@ -115,18 +108,27 @@ export default function RedTeamPage() {
         
         const data = await response.json();
         if (data.success) {
-            toast({ title: translations.strike.success });
+            toast({ title: translations.actions.exploit + " COMPLETED" });
         } else {
             throw new Error(data.error);
         }
-    } catch (e) {
-        toast({ variant: "destructive", title: translations.strike.failed });
+    } catch (e: any) {
+        toast({ variant: "destructive", title: "STRIKE FAILURE", description: e.message });
     } finally {
         setLoading(false);
     }
   }
 
   if (!mounted) return null;
+
+  const VECTORS = [
+    { id: 'cpanel', label: 'cPanel Sniper', icon: Zap },
+    { id: 'ssh', label: 'SSH Bruteforce', icon: Key },
+    { id: 'web', label: 'Web Pulse', icon: Globe },
+    { id: 'smb', label: 'SMB Exploit', icon: Atom },
+    { id: 'dns', label: 'DNS Tunnel', icon: Radio },
+    { id: 'wifi', label: 'Wireless Siege', icon: Signal }
+  ];
 
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/30 relative overflow-x-hidden scanline-effect font-code">
@@ -136,7 +138,7 @@ export default function RedTeamPage() {
         
         <header className="mb-10 relative z-10 animate-in fade-in slide-in-from-top-12 duration-1000">
           <div className="flex flex-col md:flex-row items-center gap-6">
-            <div className="size-16 md:size-20 bg-black border-2 border-primary flex items-center justify-center shadow-2xl relative group shrink-0 rounded-[1rem] rotate-3 hover:rotate-0 transition-all duration-1000">
+            <div className="size-16 md:size-20 bg-black border-2 border-primary flex items-center justify-center shadow-2xl relative group shrink-0 rounded-[1rem] transition-all duration-1000">
               <Flame className="size-8 md:size-10 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-pulse" />
             </div>
             <div className="text-center md:text-left flex-1">
@@ -199,14 +201,15 @@ export default function RedTeamPage() {
             </Card>
             
             <div className="grid grid-cols-2 gap-3">
-               {['RCE', 'LFI', 'Kernel', 'Network'].map(vector => (
+               {VECTORS.map(v => (
                  <Button 
-                   key={vector}
+                   key={v.id}
                    variant="outline" 
-                   onClick={() => launchStrike(vector)}
-                   className="h-12 rounded-xl border-primary/20 bg-primary/5 text-primary font-black uppercase tracking-widest hover:bg-primary hover:text-black transition-all text-[10px]"
+                   onClick={() => launchStrike(v.id)}
+                   className="h-16 rounded-xl border-primary/20 bg-primary/5 text-primary font-black uppercase tracking-widest hover:bg-primary hover:text-black transition-all text-[10px] flex flex-col items-center justify-center gap-1 group"
                  >
-                    {vector} Vector
+                    <v.icon className="size-4 group-hover:animate-pulse" />
+                    {v.label}
                  </Button>
                ))}
             </div>
@@ -234,7 +237,7 @@ export default function RedTeamPage() {
                                     {output.exploitCode}
                                 </div>
                                 <div className="p-6 rounded-[1.2rem] bg-primary/5 border border-primary/20">
-                                    <h5 className="text-sm font-black text-primary uppercase tracking-[0.6em] italic mb-3">Bible</h5>
+                                    <h5 className="text-sm font-black text-primary uppercase tracking-[0.6em] italic mb-3">Instructions</h5>
                                     <p className="text-base text-gray-200 italic font-black">{output.usageInstructions}</p>
                                 </div>
                             </div>
@@ -253,7 +256,7 @@ export default function RedTeamPage() {
                         )}
 
                         <div className="flex justify-end mt-8">
-                            <Button onClick={() => launchStrike()} className="h-14 px-8 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.6em] rounded-full shadow-2xl border-4 border-black/30 group text-xs">
+                            <Button onClick={() => launchStrike('auto')} className="h-14 px-8 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.6em] rounded-full shadow-2xl border-4 border-black/30 group text-xs">
                                 <Rocket className="size-5 mr-3" /> LAUNCH STRIKE
                             </Button>
                         </div>

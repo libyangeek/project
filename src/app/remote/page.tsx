@@ -3,59 +3,34 @@
 
 import * as React from "react"
 import { 
-  Smartphone, 
-  Zap, 
-  Skull, 
-  Terminal, 
-  ShieldX, 
-  Wifi, 
-  Cpu, 
-  ChevronRight, 
-  Loader2, 
-  Flame, 
-  Radio, 
-  Lock,
   ArrowLeft,
-  Search,
-  MessageSquare,
   Activity,
   Send,
-  Power,
-  Volume2,
-  Crosshair,
-  Binary,
-  GripVertical,
-  Bomb,
-  Network,
-  TowerControl,
+  Radio,
   Signal,
-  SmartphoneNfc,
+  Smartphone as PhoneIcon,
+  Mic,
+  Atom,
   Boxes,
   Users,
-  Infinity,
-  HeartPulse,
-  Sparkles,
-  Atom,
-  Target,
-  BrainCircuit,
-  RefreshCcw,
-  Smartphone as PhoneIcon,
-  ShieldCheck,
-  Mic
+  Bomb,
+  Volume2,
+  Loader2,
+  SmartphoneNfc,
+  GripVertical
 } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import { processRemoteCommand } from "@/ai/flows/remote-command-flow"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
-import translations from "../lib/ar.json"
+import { VoiceCommand } from "@/components/platform/voice-command"
 
 /**
  * @fileOverview التحكم عن بعد v43.0 - HIVE RAT
- * تم إضافة مؤشر حالة Whisper Voice للتحكم الصوتي وتوحيد الأبعاد.
+ * تم دمج Whisper Voice للتحكم الصوتي وتوحيد الأبعاد السيادية.
  * Commander: المعتصم بالله ادريس الغزالي
  */
 export default function MobileRemotePage() {
@@ -64,29 +39,12 @@ export default function MobileRemotePage() {
   const [activeStrikes, setActiveStrikes] = React.useState<any[]>([])
   const [mounted, setMounted] = React.useState(false)
   const [hiveSync, setHiveSync] = React.useState(100)
-  const [whisperAvailable, setWhisperAvailable] = React.useState(false)
 
   React.useEffect(() => {
     setMounted(true)
     const interval = setInterval(() => {
       setHiveSync(prev => Math.max(99.99, Math.min(100, prev + (Math.random() * 0.01 - 0.005))))
     }, 3000)
-
-    const checkWhisper = async () => {
-      try {
-        const res = await fetch('/api/execute', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ type: 'terminal', command: 'ollama list' })
-        });
-        const data = await res.json();
-        if (data.success) setWhisperAvailable(true);
-      } catch (e) {
-        setWhisperAvailable(false);
-      }
-    };
-    checkWhisper();
-
     return () => clearInterval(interval)
   }, [])
 
@@ -117,7 +75,8 @@ export default function MobileRemotePage() {
         impact: isMobileStrike ? "MOBILE_INFILTRATION" : "GLOBAL_RESONANCE",
         logic: data.output?.substring(0, 100) || "Syncing via Node 13...",
         chainCount: isMobileStrike ? 1 : 12,
-        isMobile: isMobileStrike
+        isMobile: isMobileStrike,
+        time: new Date().toLocaleTimeString()
       }, ...prev])
 
       toast({ title: isMobileStrike ? "Mobile Node Responding" : "Collective Intent Broadcasted" })
@@ -128,6 +87,11 @@ export default function MobileRemotePage() {
       setLoading(false)
     }
   }
+
+  const handleVoiceCommand = (text: string) => {
+    setInput(text);
+    handleStrike(text);
+  };
 
   if (!mounted) return null
 
@@ -149,12 +113,6 @@ export default function MobileRemotePage() {
           </div>
         </div>
         <div className="flex items-center gap-3">
-           <Badge className={cn(
-             "px-3 py-1 rounded-full border-2 text-[8px] font-black uppercase italic tracking-widest transition-all",
-             whisperAvailable ? "bg-emerald-600/30 border-emerald-500 text-emerald-500" : "bg-red-600/30 border-red-500 text-red-500"
-           )}>
-              Whisper: {whisperAvailable ? "READY" : "OFFLINE"}
-           </Badge>
            <Button size="icon" variant="ghost" className="rounded-xl border-2 border-primary/20 bg-primary/5 text-primary size-10"><Volume2 className="size-5" /></Button>
            <Button size="icon" variant="ghost" className="rounded-xl border-2 border-white/10 bg-white/5 size-10" asChild>
              <Link href="/"><ArrowLeft className="size-6" /></Link>
@@ -185,23 +143,37 @@ export default function MobileRemotePage() {
               <GripVertical className="size-3 text-primary/30" />
            </div>
            <div className="grid grid-cols-2 gap-3">
-              {[
-                { label: "Hive Broadcast", icon: Radio, cmd: "Broadcast collective intent to all global alpha clusters", color: "bg-primary/10 border-primary/30", iconColor: "text-primary" },
-                { label: "Swarm Siege", icon: Signal, cmd: "Initiate multi-node synchronized wireless siege", color: "bg-amber-600/10 border-amber-500/30", iconColor: "text-amber-500" },
-                { label: "Mobile Strike", icon: PhoneIcon, cmd: "Execute NetHunter-EliteHex field infiltration", color: "bg-emerald-600/10 border-emerald-500/30", iconColor: "text-emerald-400", isMobile: true },
-                { label: "Voice Command", icon: Mic, cmd: "Activate Whisper Voice listening", color: "bg-magenta-600/10 border-magenta-500/30", iconColor: "text-magenta-500", disabled: !whisperAvailable }
-              ].map((action, i) => (
-                <Button 
-                  key={i} 
-                  variant="outline" 
-                  className={cn("h-28 md:h-40 rounded-2xl flex flex-col items-center justify-center gap-3 border-2 transition-all active:scale-95 group shadow-2xl relative overflow-hidden", action.color, action.disabled && "opacity-30 cursor-not-allowed")}
-                  onClick={() => !action.disabled && handleStrike(action.cmd, (action as any).isMobile)}
-                  disabled={loading || action.disabled}
-                >
-                  <action.icon className={cn("size-8 md:size-12 transition-all duration-700 group-hover:scale-125 gold-glow", action.iconColor)} />
-                  <span className="text-[9px] md:text-[12px] font-black uppercase tracking-widest text-white italic">{action.label}</span>
-                </Button>
-              ))}
+              <Button 
+                variant="outline" 
+                className="h-28 md:h-40 rounded-2xl flex flex-col items-center justify-center gap-3 border-2 transition-all active:scale-95 group shadow-2xl relative overflow-hidden bg-primary/10 border-primary/30"
+                onClick={() => handleStrike("Broadcast collective intent to global clusters")}
+                disabled={loading}
+              >
+                <Radio className="size-8 md:size-12 transition-all duration-700 group-hover:scale-125 text-primary gold-glow" />
+                <span className="text-[9px] md:text-[12px] font-black uppercase tracking-widest text-white italic">Hive Broadcast</span>
+              </Button>
+
+              <Button 
+                variant="outline" 
+                className="h-28 md:h-40 rounded-2xl flex flex-col items-center justify-center gap-3 border-2 transition-all active:scale-95 group shadow-2xl relative overflow-hidden bg-amber-600/10 border-amber-500/30"
+                onClick={() => handleStrike("Initiate multi-node synchronized siege")}
+                disabled={loading}
+              >
+                <Signal className="size-8 md:size-12 transition-all duration-700 group-hover:scale-125 text-amber-500 gold-glow" />
+                <span className="text-[9px] md:text-[12px] font-black uppercase tracking-widest text-white italic">Swarm Siege</span>
+              </Button>
+
+              <Button 
+                variant="outline" 
+                className="h-28 md:h-40 rounded-2xl flex flex-col items-center justify-center gap-3 border-2 transition-all active:scale-95 group shadow-2xl relative overflow-hidden bg-emerald-600/10 border-emerald-500/30"
+                onClick={() => handleStrike("NetHunter Infiltration", true)}
+                disabled={loading}
+              >
+                <PhoneIcon className="size-8 md:size-12 transition-all duration-700 group-hover:scale-125 text-emerald-400 gold-glow" />
+                <span className="text-[9px] md:text-[12px] font-black uppercase tracking-widest text-white italic">Mobile Strike</span>
+              </Button>
+
+              <VoiceCommand onCommand={handleVoiceCommand} />
            </div>
         </div>
 
@@ -222,6 +194,7 @@ export default function MobileRemotePage() {
                          </div>
                          <div>
                             <span className="text-sm font-black text-white uppercase italic block truncate max-w-[150px]">{strike.task}</span>
+                            <span className="text-[8px] text-muted-foreground font-bold uppercase italic">{strike.time}</span>
                          </div>
                       </div>
                       <Badge className="bg-emerald-600/30 text-emerald-500 text-[9px] px-3 py-1 rounded-full shadow-2xl">{strike.status}</Badge>
