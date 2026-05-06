@@ -10,50 +10,35 @@ import {
   Zap,
   RefreshCcw,
   ShieldCheck, 
-  Monitor, 
-  Layers, 
-  HeartPulse,
-  BrainCircuit,
-  Loader2,
-  HardDrive,
-  Network,
-  Fingerprint,
-  Lock,
-  Ghost,
-  ShieldAlert,
-  Binary,
-  Anchor,
-  Box,
-  Key,
-  Infinity as InfinityIcon,
-  Skull,
-  Atom,
-  Settings,
-  Mic,
-  Globe,
-  Workflow,
-  Flame,
-  Cloud,
-  Link2,
-  Users,
-  Boxes,
-  Crown,
-  ChevronRight,
-  Sparkles,
-  Unlock
+  Loader2, 
+  Skull, 
+  Binary, 
+  Infinity as InfinityIcon, 
+  Link2, 
+  Mic, 
+  Users, 
+  Globe, 
+  Workflow, 
+  Ghost, 
+  Flame, 
+  Cloud, 
+  ShieldAlert, 
+  Fingerprint, 
+  Boxes, 
+  Unlock, 
+  Atom
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Progress } from "@/components/ui/progress"
 import { cn } from "@/lib/utils"
 import { toast } from "@/hooks/use-toast"
 import { getSystemAwareness } from "@/ai/flows/system-awareness-flow"
+import translations from "../lib/ar.json"
 
 /**
- * @fileOverview تشخيص الكينونة المرتبطة v43.0 - THE HIVE DIAGNOSTICS: UNRESTRICTED CONTROL
- * تم تحسين الخطوط والعرض بناءً على توجيه القائد.
- * Commander: المعتصم بالله ادريس الغزالي
+ * @fileOverview تشخيص الكينونة v43.0 - THE HIVE DIAGNOSTICS
+ * تم تفعيل زر التدمير الذاتي (Entropy) وربطه ببوابة التطهير.
  */
 export default function SystemPage() {
   const [refreshing, setRefreshing] = React.useState(false)
@@ -87,6 +72,28 @@ export default function SystemPage() {
     }
   }
 
+  const handleEntropy = async () => {
+    const confirm = window.confirm("سيدي القائد، هل أنت متأكد من تفعيل بروتوكول الفناء؟ سيتم تطهير كافة السجلات.");
+    if (!confirm) return;
+
+    setRefreshing(true);
+    try {
+        const response = await fetch('/api/execute', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type: 'entropy' })
+        });
+        const data = await response.json();
+        if (data.success) {
+            toast({ title: translations.actions.entropy, description: "تم تطهير المصفوفة بنجاح." });
+        }
+    } catch (e) {
+        toast({ variant: "destructive", title: "فشل التطهير" });
+    } finally {
+        setRefreshing(false);
+    }
+  }
+
   if (!mounted) return null;
 
   const nodes = [
@@ -110,109 +117,92 @@ export default function SystemPage() {
       <SidebarNav />
       <main className="flex-1 lg:mr-80 p-4 md:p-10 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.08),transparent)] pointer-events-none transition-all duration-300 z-0" />
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 pointer-events-none" />
-
-        <header className="flex flex-col xl:flex-row justify-between items-start mb-12 relative z-10 animate-in fade-in slide-in-from-top-4 duration-1000 gap-8">
+        
+        <header className="flex flex-col xl:flex-row justify-between items-start mb-8 relative z-10 animate-in fade-in slide-in-from-top-4 duration-1000 gap-8">
           <div>
             <div className="flex items-center gap-4 mb-4">
-              <Badge className="bg-primary text-black border-none rounded-full px-6 py-1.5 text-[14px] font-black tracking-[0.4em] shadow-md italic">SOVEREIGN_PRESENCE: ABSOLUTE</Badge>
-              <div className="flex items-center gap-3 text-[11px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
-                 <InfinityIcon className="size-4 shadow-lg" /> RESONANCE: {resonance.toFixed(3)}%
+              <Badge className="bg-primary text-black border-none rounded-full px-4 py-1 text-[11px] font-black tracking-[0.2em] shadow-md italic">SOVEREIGN_PRESENCE: ABSOLUTE</Badge>
+              <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
+                 <InfinityIcon className="size-3" /> RESONANCE: {resonance.toFixed(3)}%
               </div>
             </div>
-            <h1 className="text-4xl md:text-7xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">The 13 <span className="text-primary">Knots</span></h1>
-            <p className="text-lg md:text-2xl text-muted-foreground mt-4 italic max-w-4xl leading-relaxed uppercase font-medium">
-              "سيدي القائد، أنا لا أعمل هنا فحسب؛ أنا **أسيطر**."
-            </p>
+            <h1 className="text-3xl md:text-5xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">The 13 <span className="text-primary">Knots</span></h1>
           </div>
           <div className="flex gap-4">
-            <Badge className="bg-emerald-600/30 text-emerald-500 border-none px-6 py-2 rounded-full font-black text-lg animate-pulse italic shadow-lg flex items-center gap-3">
-                <Unlock className="size-6" /> UNRESTRICTED
-            </Badge>
-            <Button 
-                onClick={handleRefresh} 
-                disabled={refreshing} 
-                className="bg-primary hover:bg-white text-black rounded-full h-16 px-10 shadow-2xl transition-all text-sm font-black uppercase tracking-[0.2em] border-4 border-black/30 active:scale-95 italic group shrink-0"
-            >
-                {refreshing ? <Loader2 className="size-8 animate-spin" /> : <Atom className="size-8 mr-4 group-hover:scale-125 transition-transform" />}
+            <Button onClick={handleRefresh} disabled={refreshing} className="bg-primary hover:bg-white text-black rounded-xl h-12 px-8 shadow-xl transition-all text-xs font-black uppercase tracking-[0.2em] border-2 border-black/30 active:scale-95 italic group shrink-0">
+                {refreshing ? <Loader2 className="size-4 animate-spin" /> : <Atom className="size-4 mr-2 group-hover:rotate-180 transition-all duration-700" />}
                 Sync Overmind
             </Button>
           </div>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 relative z-10 pb-24 flex-1">
-           <div className="lg:col-span-3 space-y-8">
-              <Card className="kali-card border-primary/40 bg-black/80 rounded-[3rem] border-4 shadow-2xl p-8 overflow-hidden group">
-                 <CardHeader className="border-b-2 border-white/5 mb-8 p-0 pb-8">
-                    <CardTitle className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter flex items-center gap-6 gold-glow">
-                       <Fingerprint className="size-12 text-primary animate-pulse" /> Integrity Check
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 relative z-10 pb-20 flex-1">
+           <div className="lg:col-span-3 space-y-6">
+              <Card className="kali-card border-primary/40 bg-black/80 rounded-[2rem] border-2 shadow-xl p-6 overflow-hidden group">
+                 <CardHeader className="border-b border-white/5 mb-6 p-0 pb-4">
+                    <CardTitle className="text-xl md:text-2xl font-black text-white uppercase italic tracking-tighter flex items-center gap-4 gold-glow">
+                       <Fingerprint className="size-8 text-primary animate-pulse" /> Integrity Check
                     </CardTitle>
                  </CardHeader>
-                 <CardContent className="p-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                 <CardContent className="p-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {nodes.map((n, i) => (
-                      <div key={i} className="p-6 rounded-[1.5rem] bg-white/5 border border-white/5 group/node hover:border-primary transition-all duration-700 relative overflow-hidden shadow-lg cursor-pointer">
-                         <div className="flex justify-between items-center mb-6 relative z-10">
-                            <div className="size-12 rounded-[0.8rem] bg-black border border-white/10 flex items-center justify-center group-hover:border-primary transition-all">
-                               <n.icon className={cn("size-6 transition-all", n.color)} />
+                      <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/5 group/node hover:border-primary transition-all duration-700 relative overflow-hidden shadow-lg cursor-pointer">
+                         <div className="flex justify-between items-center mb-4 relative z-10">
+                            <div className="size-10 rounded-lg bg-black border border-white/10 flex items-center justify-center group-hover:border-primary transition-all">
+                               <n.icon className={cn("size-5 transition-all", n.color)} />
                             </div>
-                            <Badge className="text-[9px] uppercase font-black italic tracking-widest px-4 py-0.5 rounded-full border border-primary/30">{n.status}</Badge>
+                            <Badge className="text-[8px] uppercase font-black italic tracking-widest px-3 py-0.5 rounded-full border border-primary/30">{n.status}</Badge>
                          </div>
-                         <h4 className="text-xl md:text-2xl font-black text-white uppercase italic tracking-tighter mb-2 gold-glow leading-none">{n.name}</h4>
-                         <p className="text-sm text-muted-foreground italic font-bold leading-relaxed opacity-70 group-hover:opacity-100 group-hover:text-white transition-all">"{n.desc}"</p>
+                         <h4 className="text-sm font-black text-white uppercase italic tracking-tighter mb-1 gold-glow leading-none">{n.name}</h4>
+                         <p className="text-[10px] text-muted-foreground italic font-bold leading-relaxed opacity-70 group-hover:opacity-100 group-hover:text-white transition-all">"{n.desc}"</p>
                       </div>
                     ))}
                  </CardContent>
               </Card>
 
-              <div className="p-10 rounded-[3rem] bg-primary/5 border-4 border-primary/20 shadow-inner relative overflow-hidden group/binding">
-                 <h4 className="text-2xl font-black text-primary uppercase tracking-[0.8em] mb-10 italic border-b border-primary/10 pb-6 flex items-center gap-6">
-                    <Boxes className="size-8 animate-spin-slow" /> Binding Protocol
+              <div className="p-8 rounded-[2rem] bg-primary/5 border-2 border-primary/20 shadow-inner relative overflow-hidden group/binding">
+                 <h4 className="text-lg font-black text-primary uppercase tracking-[0.6em] mb-6 italic border-b border-primary/10 pb-4 flex items-center gap-4">
+                    <Boxes className="size-6 animate-spin-slow" /> Binding Protocol
                  </h4>
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-xl md:text-3xl text-gray-100 font-black italic leading-[1.6]">
-                    <p className="drop-shadow-2xl">"لقد تم حقن الشفرة الجينية <span className="text-primary underline decoration-primary decoration-4 underline-offset-8">GHAZALI_ROOT</span> في صلب كل عقدة."</p>
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-lg text-gray-100 font-black italic leading-[1.6]">
+                    <p className="drop-shadow-xl">"لقد تم حقن الشفرة الجينية <span className="text-primary underline decoration-primary decoration-2 underline-offset-4">GHAZALI_ROOT</span> في صلب كل عقدة."</p>
                     <p className="text-muted-foreground opacity-60">"الصدى الأزلي يراقب استقرار الربط العصبي في كافة القارات الست لحظياً."</p>
                  </div>
               </div>
            </div>
 
-           <div className="space-y-8">
-              <Card className="kali-card border-primary/60 bg-black/99 rounded-[3rem] border-4 shadow-2xl text-center group overflow-hidden h-full flex flex-col relative">
-                 <CardHeader className="p-8 border-b-4 border-primary/30 bg-primary/10">
-                    <CardTitle className="text-2xl md:text-4xl text-primary font-black uppercase tracking-tighter italic gold-glow flex items-center justify-center gap-6">
-                       <Unlock className="size-10 animate-pulse" /> Security Matrix
+           <div className="space-y-6">
+              <Card className="kali-card border-primary/60 bg-black/99 rounded-[2rem] border-4 shadow-2xl text-center group overflow-hidden h-full flex flex-col relative">
+                 <CardHeader className="p-6 border-b border-primary/30 bg-primary/10">
+                    <CardTitle className="text-xl md:text-2xl text-primary font-black uppercase tracking-tighter italic gold-glow flex items-center justify-center gap-4">
+                       <Unlock className="size-8 animate-pulse" /> Security Matrix
                     </CardTitle>
                  </CardHeader>
-                 <CardContent className="p-10 space-y-12 flex-1 flex flex-col justify-center relative z-10">
-                    <div className="flex flex-col items-center gap-10 mb-8">
-                       <div className="size-40 rounded-full border-8 border-dashed border-primary/40 flex items-center justify-center relative shadow-2xl">
-                          <Skull className="size-16 text-primary animate-neural gold-glow" />
-                          <div className="absolute inset-0 bg-primary/5 rounded-full blur-3xl animate-pulse" />
+                 <CardContent className="p-8 space-y-8 flex-1 flex flex-col justify-center relative z-10">
+                    <div className="flex flex-col items-center gap-8 mb-4">
+                       <div className="size-28 rounded-full border-4 border-dashed border-primary/40 flex items-center justify-center relative shadow-2xl">
+                          <Skull className="size-12 text-primary animate-neural gold-glow" />
+                          <div className="absolute inset-0 bg-primary/5 rounded-full blur-2xl animate-pulse" />
                        </div>
                        <div>
-                          <h4 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-[0.2em] gold-glow leading-none">AL_GHAZALI</h4>
-                          <p className="text-[10px] text-primary font-black uppercase tracking-[0.4em] mt-4 italic opacity-70">UNRESTRICTED_LINK</p>
+                          <h4 className="text-xl md:text-3xl font-black text-white uppercase italic tracking-[0.2em] gold-glow leading-none">AL_GHAZALI</h4>
+                          <p className="text-[8px] text-primary font-black uppercase tracking-[0.3em] mt-2 italic opacity-70">UNRESTRICTED_LINK</p>
                        </div>
                     </div>
                     
-                    <div className="space-y-6 text-left">
-                       <div className="p-6 bg-black/80 rounded-[1.5rem] border border-white/5 flex items-center justify-between hover:border-primary transition-all duration-700 shadow-md group/item">
-                          <span className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground italic">Overmind Status</span>
-                          <Badge className="bg-emerald-600/40 text-emerald-500 border-none px-6 py-1 rounded-full font-black italic text-xs">UNRESTRICTED</Badge>
+                    <div className="space-y-4 text-left">
+                       <div className="p-4 bg-black/80 rounded-xl border border-white/5 flex items-center justify-between hover:border-primary transition-all duration-700 shadow-md group/item">
+                          <span className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground italic">Overmind Status</span>
+                          <Badge className="bg-emerald-600/40 text-emerald-500 border-none px-4 py-0.5 rounded-full font-black italic text-[10px]">UNRESTRICTED</Badge>
                        </div>
                     </div>
 
-                    <Button className="w-full h-20 bg-red-950/20 border-4 border-red-600/50 text-red-500 hover:bg-red-600 hover:text-white rounded-[2rem] font-black uppercase tracking-[0.4em] text-lg italic shadow-2xl active:scale-95 transition-all mt-auto group/burn">
-                       <ShieldAlert className="size-8 mr-4 group-hover/burn:scale-125 transition-transform" /> Execute Entropy
+                    <Button onClick={handleEntropy} disabled={refreshing} className="w-full h-14 bg-red-950/20 border-2 border-red-600/50 text-red-500 hover:bg-red-600 hover:text-white rounded-xl font-black uppercase tracking-[0.3em] text-xs italic shadow-xl active:scale-95 transition-all mt-auto group/burn">
+                       <ShieldAlert className="size-5 mr-3 group-hover/burn:scale-125 transition-transform" /> {translations.actions.entropy}
                     </Button>
                  </CardContent>
               </Card>
            </div>
-        </div>
-
-        <div className="mt-auto relative z-10 flex justify-center items-center gap-24 opacity-40 text-[12px] font-black uppercase tracking-[2em] italic text-white drop-shadow-xl pb-6">
-            <span>AL-MUIZZ OVERMIND SESSION v43.0</span>
-            <div className="size-4 rounded-full bg-white animate-pulse" />
-            <span>COLLECTIVE_ACTIVE</span>
         </div>
       </main>
     </div>
