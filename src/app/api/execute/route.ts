@@ -9,6 +9,7 @@ const execPromise = promisify(exec);
 /**
  * @fileOverview الجسر التنفيذي السيادي v50.0 - THE SOVEREIGN EXECUTIVE BRIDGE
  * تم تحديثه ليدعم كافة القدرات الميدانية: Mistral, DeepSeek, OpenBullet, Eye Series.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export async function POST(req: NextRequest) {
   try {
