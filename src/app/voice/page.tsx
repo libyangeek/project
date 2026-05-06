@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from "react";
@@ -15,7 +16,7 @@ import {
   Atom,
   Skull,
   Waves,
-  Soundpad
+  AudioLines
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -129,6 +130,13 @@ export default function VoicePage() {
                       <Skull className="size-64 text-primary" />
                    </div>
                 </Card>
+              )}
+              
+              {!lastCommand && !isProcessing && (
+                 <div className="flex flex-col items-center justify-center opacity-10 py-40">
+                    <AudioLines className="size-64 text-primary/40 animate-pulse mb-12" />
+                    <h3 className="text-7xl font-black uppercase tracking-[2em] text-white italic">Awaiting Voice</h3>
+                 </div>
               )}
            </div>
         </div>
