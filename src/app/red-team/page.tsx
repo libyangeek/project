@@ -45,7 +45,7 @@ import translations from "../lib/ar.json"
 /**
  * @fileOverview مختبر التخليق v43.0 - THE POLYMORPH LAB
  * تم تفعيل كافة أزرار الضرب الحقيقي (Attack Vectors) وربطها بالنبض التنفيذي.
- * Commander: المعتصم بالله ادريس الغزالي
+ * التاريخ السيادي الحالي: 6 مايو 2026.
  */
 export default function RedTeamPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -70,14 +70,14 @@ export default function RedTeamPage() {
       let data;
       if (activeMode === "exploit") {
         data = await aiEnhancedExploitGeneration({
-          vulnerabilityDescription: description || "بحث في استغلال النواة السيادي.",
+          vulnerabilityDescription: description || "بحث في استغلال النواة السيادي v43.0",
           targetSystemDetails: target
         });
       } else if (activeMode === "apex") {
         data = await getAttackPlan({ target });
       } else if (activeMode === "wordlist") {
         data = await generateSmartWordlist({
-          targetBio: description || "بيانات الهدف غير كافية",
+          targetBio: description || "بيانات الهدف المستنزفة لعام 2026",
           complexityLevel: 'Extreme'
         });
       }
@@ -97,7 +97,7 @@ export default function RedTeamPage() {
     }
     setLoading(true);
     const timestamp = new Date().toLocaleTimeString();
-    setStrikeLog(prev => [`[${timestamp}] ⚡ بدء هجوم ${vectorId.toUpperCase()} على ${target}...`, ...prev]);
+    setStrikeLog(prev => [`[${timestamp}] ⚡ بدء هجوم ${vectorId.toUpperCase()} (Core v43.0) على ${target}...`, ...prev]);
     
     try {
         const response = await fetch('/api/execute', {
@@ -113,7 +113,7 @@ export default function RedTeamPage() {
         
         const data = await response.json();
         if (data.success) {
-            setStrikeLog(prev => [`[${timestamp}] ✅ نجاح: ${data.output || 'تم إشباع الناقل.'}`, ...prev]);
+            setStrikeLog(prev => [`[${timestamp}] ✅ نجاح: ${data.output || 'تم إشباع الناقل بنجاح.'}`, ...prev]);
             toast({ title: translations.actions.exploit + " تم بنجاح" });
         } else {
             throw new Error(data.error);
@@ -129,12 +129,12 @@ export default function RedTeamPage() {
   if (!mounted) return null;
 
   const VECTORS = [
-    { id: 'cpanel', label: 'cPanel Sniper', icon: Zap },
+    { id: 'cpanel', label: 'cPanel Sniper v3', icon: Zap },
     { id: 'ssh', label: 'SSH Bruteforce', icon: Key },
-    { id: 'web', label: 'Web Pulse', icon: Globe },
+    { id: 'web', label: 'Web Pulse v43', icon: Globe },
     { id: 'smb', label: 'SMB Exploit', icon: Atom },
-    { id: 'dns', label: 'DNS Tunnel', icon: Radio },
-    { id: 'wifi', label: 'Wireless Siege', icon: Signal }
+    { id: 'dns', label: 'DNS Tunneling', icon: Radio },
+    { id: 'wifi', label: 'WiFi Attack v2', icon: Signal }
   ];
 
   return (
@@ -192,7 +192,7 @@ export default function RedTeamPage() {
                     <Textarea 
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
-                      placeholder={activeMode === 'wordlist' ? "Provide DNA data..." : "Define attack goal..."}
+                      placeholder={activeMode === 'wordlist' ? "Provide DNA data for 2026 patterns..." : "Define attack goal for v43.0..."}
                       className="bg-black border border-white/10 rounded-xl min-h-[140px] text-sm italic p-4 focus:border-primary font-bold text-gray-200 shadow-inner"
                     />
                   </div>
@@ -267,7 +267,7 @@ export default function RedTeamPage() {
                      !strikeLog.length && (
                        <div className="h-full flex flex-col items-center justify-center text-center opacity-10 py-40 gap-6 animate-in fade-in duration-1000">
                           <Skull className="size-32 text-primary animate-pulse gold-glow" />
-                          <p className="text-2xl font-black uppercase tracking-[1em] text-white italic">READY_FOR_FORGE</p>
+                          <p className="text-2xl font-black uppercase tracking-[1em] text-white italic">READY_FOR_FORGE_2026</p>
                        </div>
                      )
                    )}
