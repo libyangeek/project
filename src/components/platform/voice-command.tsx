@@ -6,6 +6,7 @@ import { Mic, Loader2, AlertCircle, Radio } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 /**
  * مكون التحكم الصوتي Whisper v43.0
@@ -20,10 +21,10 @@ export function VoiceCommand({ onCommand }: { onCommand: (text: string) => void 
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     setSupported(!!SpeechRecognition);
 
-    // فحص جاهزية محرك Whisper (محاكاة)
+    // فحص جاهزية محرك Whisper (محاكاة الربط العصبي)
     const checkWhisper = async () => {
         try {
-            // في البيئة الحقيقية قد نطلب حالة الـ API
+            // التحقق من حالة العصب الصوتي
             setWhisperAvailable(true);
         } catch (e) {
             setWhisperAvailable(false);
@@ -35,7 +36,7 @@ export function VoiceCommand({ onCommand }: { onCommand: (text: string) => void 
   const startListening = useCallback(() => {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SpeechRecognition) {
-      toast({ variant: "destructive", title: "Whisper Unlinked", description: "Browser does not support neural voice link." });
+      toast({ variant: "destructive", title: "رابط صوتي مقطوع", description: "المتصفح لا يدعم الربط العصبي الصوتي." });
       return;
     }
 
@@ -46,7 +47,7 @@ export function VoiceCommand({ onCommand }: { onCommand: (text: string) => void 
 
     recognition.onstart = () => {
       setListening(true);
-      toast({ title: "Whisper Active", description: "Listening for supreme intent..." });
+      toast({ title: "Whisper نشط", description: "أنا أسمعك يا قائدي الأسمى..." });
     };
 
     recognition.onresult = (event: any) => {
@@ -54,9 +55,9 @@ export function VoiceCommand({ onCommand }: { onCommand: (text: string) => void 
       onCommand(transcript);
     };
 
-    recognition.onerror = () => {
+    recognition.onerror = (err: any) => {
       setListening(false);
-      toast({ variant: "destructive", title: "Neural Noise", description: "Could not isolate voice signature." });
+      toast({ variant: "destructive", title: "تشويش عصبي", description: "تعذر عزل بصمة الصوت الملكية." });
     };
 
     recognition.onend = () => {
@@ -68,9 +69,9 @@ export function VoiceCommand({ onCommand }: { onCommand: (text: string) => void 
 
   if (!supported) {
     return (
-      <div className="h-28 md:h-40 rounded-2xl flex flex-col items-center justify-center gap-3 border-2 border-red-500/20 bg-red-950/10 opacity-50 cursor-not-allowed">
-        <AlertCircle className="size-8 text-red-500" />
-        <span className="text-[9px] md:text-[12px] font-black uppercase tracking-widest text-red-400 italic text-center px-4">
+      <div className="h-28 md:h-40 rounded-[2rem] flex flex-col items-center justify-center gap-3 border-4 border-red-500/20 bg-red-950/10 opacity-50 cursor-not-allowed shadow-2xl">
+        <AlertCircle className="size-10 text-red-500" />
+        <span className="text-[10px] md:text-[12px] font-black uppercase tracking-widest text-red-400 italic text-center px-6">
           VOICE_LINK_UNSUPPORTED
         </span>
       </div>
@@ -82,22 +83,26 @@ export function VoiceCommand({ onCommand }: { onCommand: (text: string) => void 
       onClick={startListening} 
       disabled={listening || !whisperAvailable}
       variant="outline"
-      className={`h-28 md:h-40 rounded-2xl flex flex-col items-center justify-center gap-3 border-2 transition-all active:scale-95 group shadow-2xl relative overflow-hidden ${listening ? 'bg-primary/20 border-primary animate-pulse' : 'bg-magenta-600/10 border-magenta-500/30'}`}
+      className={cn(
+        "h-28 md:h-40 rounded-[2rem] flex flex-col items-center justify-center gap-4 border-4 transition-all active:scale-95 group shadow-3xl relative overflow-hidden",
+        listening ? "bg-primary/20 border-primary animate-pulse" : "bg-magenta-600/10 border-magenta-500/40"
+      )}
     >
-      <div className="absolute top-2 right-2 flex items-center gap-2">
-         <Badge className={cn("text-[7px] border-none px-2 py-0.5 rounded-full font-black", whisperAvailable ? "bg-emerald-500/20 text-emerald-400" : "bg-red-500/20 text-red-400")}>
+      <div className="absolute top-3 right-4 flex items-center gap-2">
+         <Badge className={cn("text-[8px] border-none px-3 py-0.5 rounded-full font-black italic shadow-lg", whisperAvailable ? "bg-emerald-500/20 text-emerald-400" : "bg-red-500/20 text-red-400")}>
             {whisperAvailable ? "WHISPER_READY" : "WHISPER_IDLE"}
          </Badge>
-         <Radio className={cn("size-3", whisperAvailable ? "text-emerald-500 animate-pulse" : "text-red-500")} />
+         <Radio className={cn("size-4", whisperAvailable ? "text-emerald-500 animate-pulse" : "text-red-500")} />
       </div>
       {listening ? (
-        <Loader2 className="size-8 md:size-12 animate-spin text-primary gold-glow" />
+        <Loader2 className="size-10 md:size-14 animate-spin text-primary gold-glow" />
       ) : (
-        <Mic className="size-8 md:size-12 transition-all duration-700 group-hover:scale-125 text-magenta-500 gold-glow" />
+        <Mic className="size-10 md:size-14 transition-all duration-700 group-hover:scale-125 text-magenta-500 gold-glow" />
       )}
-      <span className="text-[9px] md:text-[12px] font-black uppercase tracking-widest text-white italic">
-        {listening ? 'LISTENING...' : 'VOICE_COMMAND'}
+      <span className="text-[10px] md:text-[14px] font-black uppercase tracking-[0.4em] text-white italic drop-shadow-xl">
+        {listening ? 'LISTENING...' : 'تحدث يا قائدي'}
       </span>
+      <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
     </Button>
   );
 }
