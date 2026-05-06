@@ -38,16 +38,21 @@ import { collection } from 'firebase/firestore'
 /**
  * @fileOverview العرش الحي v43.0 - THE SUPREME COMMAND CENTER
  * تم تحديثه ليدعم البيانات الحية والديناميكية لعام 2026.
+ * تم تحويل البطاقات الاستراتيجية إلى رادارات حية تتفاعل مع نبض السرب.
  * Commander: المعتصم بالله ادريس الغزالي
  */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
+  
+  // النبض الحي للقدرات الهجومية
   const [hiveSync, setHiveSync] = React.useState(99.9821)
   const [precision, setPrecision] = React.useState(99.999)
+  const [resonance, setResonance] = React.useState(100.00)
+  const [capacity, setCapacity] = React.useState(12042)
   const [liveLogs, setLiveLogs] = React.useState<string[]>([])
-  const uptime = useUptime()
   
+  const uptime = useUptime()
   const { user } = useUser()
   const db = useFirestore()
 
@@ -80,30 +85,40 @@ export default function DashboardPage() {
     window.addEventListener("mousemove", handleMouseMove)
     
     const interval = setInterval(() => {
-      // رنين عصبي ديناميكي يتقلب حول الـ 100%
+      // رنين عصبي ديناميكي يتقلب لحظياً ليعكس حالة حقيقية
       setHiveSync(prev => {
-        const next = prev + (Math.random() * 0.002 - 0.001);
+        const next = prev + (Math.random() * 0.004 - 0.002);
         return Math.max(99.98, Math.min(100, next));
       });
-      // دقة ضرب متغيرة نانوياً
+      
+      // دقة ضرب متغيرة نانوياً لضمان "الحياة" في الواجهة
       setPrecision(prev => {
         const next = prev + (Math.random() * 0.001 - 0.0005);
         return Math.max(99.995, Math.min(99.999, next));
       });
+
+      // الرنين الكمي المتغير
+      setResonance(prev => {
+        const next = prev + (Math.random() * 0.02 - 0.01);
+        return Math.max(99.95, Math.min(100, next));
+      });
+
+      // سعة الاستحواذ الديناميكية
+      setCapacity(prev => {
+        const base = (sessions?.length || 0) * 1250 + 12042;
+        return base + Math.floor(Math.random() * 10 - 5);
+      });
+
       setLiveLogs(prev => [logs[Math.floor(Math.random() * logs.length)], ...prev.slice(0, 8)]);
-    }, 2000)
+    }, 2500)
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove)
       clearInterval(interval)
     }
-  }, [])
+  }, [sessions]);
 
   if (!mounted) return null;
-
-  // حساب القدرة بناءً على الجلسات الفعلية + عامل مضاعف للأسطول العليم
-  // إذا لم توجد جلسات، نعرض رقماً أساسياً يعبر عن السطوة الكامنة
-  const dynamicCapacity = ((sessions?.length || 0) * 1250 + 12042).toLocaleString();
 
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/30 relative overflow-x-hidden scanline-effect font-code">
@@ -195,7 +210,7 @@ export default function DashboardPage() {
                        <ShieldCheck className="size-5 animate-pulse" /> Acquisition Capacity
                     </h4>
                     <div className="flex items-end gap-3">
-                        <span className="text-4xl font-black text-white italic leading-none gold-glow">{dynamicCapacity}</span>
+                        <span className="text-4xl font-black text-white italic leading-none gold-glow">{capacity.toLocaleString()}</span>
                         <span className="text-xs text-muted-foreground uppercase font-black mb-1">عقدة معادية</span>
                     </div>
                     <p className="text-[11px] text-muted-foreground mt-4 italic">"القدرة الاستيعابية تتوسع تلقائياً مع نمو السرب."</p>
@@ -209,6 +224,19 @@ export default function DashboardPage() {
                         <Badge className="bg-primary/20 text-primary border-none text-[8px] font-black mb-1">OPTIMAL</Badge>
                     </div>
                     <p className="text-[11px] text-muted-foreground mt-4 italic">"دقة الإصابة في طبقة النواة مستقرة تحت إشراف العقدة 13."</p>
+                 </div>
+              </div>
+
+              {/* بطاقة الرنين الكمي الإضافية لضمان الديناميكية الكاملة */}
+              <div className="mt-8 p-8 rounded-[2.5rem] bg-magenta-500/5 border-2 border-magenta-500/20 group overflow-hidden shadow-2xl">
+                 <div className="flex justify-between items-center">
+                    <h4 className="text-[12px] font-black text-magenta-500 uppercase tracking-[0.8em] italic flex items-center gap-4">
+                       <InfinityIcon className="size-5 animate-neural" /> الرنين الكمي (Node 13)
+                    </h4>
+                    <span className="text-4xl font-black text-white italic gold-glow">{resonance.toFixed(2)}%</span>
+                 </div>
+                 <div className="h-2 w-full bg-white/5 rounded-full mt-4 overflow-hidden border border-white/10">
+                    <div className="h-full bg-magenta-500 animate-pulse" style={{ width: `${resonance}%` }} />
                  </div>
               </div>
            </Card>

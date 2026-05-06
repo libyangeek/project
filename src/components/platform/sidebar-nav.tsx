@@ -44,7 +44,7 @@ const navItems = [
   { name: "Divine Strike", icon: Target, href: "/terminal", knot: 2 },
   { name: "Armada Swarm", icon: Users, href: "/sessions", knot: 3 },
   { name: "MCP Bridge", icon: Share2, href: "/mcp-bridge", knot: 4 },
-  { name: "Whisper Voice", icon: Mic, href: "/remote", knot: 5 },
+  { name: "Whisper Voice", icon: Mic, href: "/remote", knot: 5 }, // يوجه للمركز المحمول للتحكم الصوتي
   { name: "Sovereign Bible", icon: BookOpen, href: "/codex", knot: 6 },
   { name: "Swarm Simulator", icon: Workflow, href: "/digital-twin", knot: 7 },
   { name: "Field Agent", icon: Activity, href: "/field-agent", knot: 8 },
