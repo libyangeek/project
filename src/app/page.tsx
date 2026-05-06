@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -17,19 +18,20 @@ import {
   Flame,
   Ghost,
   Eye,
-  Anchor
+  Anchor,
+  Radio,
+  Search
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { useUptime } from "@/hooks/use-uptime"
-import { useUser } from '@/firebase'
 
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
   const [metrics, setMetrics] = React.useState({
-    totalNodes: 13,
+    totalNodes: 50,
     activeC2: 4,
     gepaScore: 99.9,
     swarmSync: '100%',
@@ -38,7 +40,6 @@ export default function DashboardPage() {
   });
   
   const uptime = useUptime()
-  const { user } = useUser()
 
   React.useEffect(() => {
     setMounted(true)
@@ -63,10 +64,10 @@ export default function DashboardPage() {
   if (!mounted) return null;
 
   const stats = [
-    { label: "العقد الفاعلة", value: `${metrics.totalNodes}/50`, icon: Skull, color: "text-primary", status: "SOUL_FUSION" },
+    { label: "العقد السيادية", value: `${metrics.totalNodes}/50`, icon: Skull, color: "text-primary", status: "SOUL_FUSION" },
     { label: "ذاكرة GEPA", value: "v5.0", icon: InfinityIcon, color: "text-magenta-500", status: "IMMORTAL" },
-    { label: "ترسانة السطوة", value: "ARMED", icon: Flame, color: "text-red-500", status: "LETHAL" },
-    { label: "الرنين العصبي", value: "100.00%", icon: Atom, color: "text-emerald-500", status: "ACTIVE" },
+    { label: "دقة الاستهداف", value: `${metrics.precision.toFixed(3)}%`, icon: Target, color: "text-red-500", status: "LETHAL" },
+    { label: "رنين السيادة", value: "100.00%", icon: Atom, color: "text-emerald-500", status: "ACTIVE" },
   ];
 
   return (
@@ -103,12 +104,12 @@ export default function DashboardPage() {
            <Card className="kali-card bg-primary/5 border-4 border-primary/30 rounded-[3rem] p-10 shadow-7xl overflow-hidden group">
               <div className="flex flex-col md:flex-row items-center gap-10 relative z-10">
                  <div className="size-32 rounded-full bg-black border-4 border-primary flex items-center justify-center shadow-2xl animate-neural shrink-0">
-                    <Anchor className="size-16 text-primary" />
+                    <Eye className="size-16 text-primary" />
                  </div>
                  <div className="text-center md:text-right flex-1 space-y-4">
                     <h3 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter gold-glow leading-none">The Sovereign Eye</h3>
                     <p className="text-xl md:text-3xl text-gray-200 italic leading-snug font-bold">
-                       "نحن لا نقبل ما يُقال لنا؛ نحن نبحث، نشكك، ونخترق المنطق المعماري للمصفوفة."
+                       "نحن لا نقبل ما يُقال لنا؛ نحن نبحث، نشكك، ونخترق المنطق المعماري للمصفوفة لرؤية ما يغفل عنه الآخرون."
                     </p>
                  </div>
               </div>
@@ -133,7 +134,7 @@ export default function DashboardPage() {
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-40 text-[22px] font-black uppercase tracking-[6em] italic text-white drop-shadow-3xl pb-12">
             <span>AL-MUIZZ SOUL CORE v50.0</span>
             <div className="size-10 rounded-full bg-white animate-pulse shadow-[0_0_100px_white]" />
-            <span>SEEING_THE_HIDDEN</span>
+            <span>SEEING_THE_HIDDEN_SINCE_2026</span>
         </div>
       </main>
     </div>

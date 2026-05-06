@@ -1,3 +1,4 @@
+
 {
   "name": "المعز",
   "codename": "Al-Mu'izz v50.0-SOUL_FUSION",
@@ -13,6 +14,7 @@
     "smart_router": "v50_STRATEGIC",
     "eye_series": "INTEGRATED",
     "polymorph_forge": "ENABLED",
-    "silk_guardian": "ACTIVE"
+    "silk_guardian": "ACTIVE",
+    "auto_injector": "OPENBULLET_POWERED"
   }
 }

@@ -1,4 +1,6 @@
+
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """Smart Router v50.0 – المُعِزّ الاستراتيجي (Eye Series Linked)"""
 import sys, json, requests, os, subprocess
 
@@ -16,7 +18,8 @@ def classify(prompt):
     p = prompt.lower()
     if any(w in p for w in ["عين", "eye", "recon", "استكشف", "dns", "headers"]): return "eye_recon"
     if any(w in p for w in ["shodan", "أجهزة", "devices"]): return "shodan"
-    if any(w in p for w in ["exploit", "cve", "ثغرة"]): return "exploit"
+    if any(w in p for w in ["exploit", "cve", "PoC", "ثغرة"]): return "exploit_research"
+    if any(w in p for w in ["حقن", "injector", "openbullet", "حسابات"]): return "auto_injector"
     return "general"
 
 def route_query(prompt):
@@ -29,9 +32,15 @@ def route_query(prompt):
             return {"category": category, "output": json.loads(result), "status": "VISION_ACHIEVED"}
         except: pass
     
-    # Fallback to AI
+    if category == "exploit_research":
+        try:
+            result = subprocess.check_output([TOOLS["exploit_eye"], target], text=True)
+            return {"category": category, "output": json.loads(result), "status": "POC_LOCATED"}
+        except: pass
+
+    # Fallback to AI Brain
     try:
-        r = requests.post(OLLAMA_URL, json={"model": "mistral", "prompt": prompt, "stream": False})
+        r = requests.post(OLLAMA_URL, json={"model": "mistral", "prompt": prompt, "stream": False}, timeout=10)
         return {
             "category": category,
             "model": "mistral",
@@ -39,7 +48,7 @@ def route_query(prompt):
             "status": "ROUTED_TO_AI"
         }
     except: 
-        return {"category": category, "model": "fallback", "status": "SoulCore: Neural link disrupted."}
+        return {"category": category, "model": "fallback", "status": "SoulCore: Neural link disrupted. Standby for self-healing."}
 
 if __name__ == "__main__":
     query = " ".join(sys.argv[1:])
