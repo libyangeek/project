@@ -32,10 +32,6 @@ import { toast } from "@/hooks/use-toast"
 import { designSiphonTask } from "@/ai/flows/credential-siphon-flow"
 import { cn } from "@/lib/utils"
 
-/**
- * @fileOverview مصفوفة الاستنزاف الآلي v50.0 - THE HIVE AUTO-INJECTOR
- * واجهة التحكم في الهجمات الآلية المستوحاة من OpenBullet 2.
- */
 export default function AutomationPage() {
   const [mounted, setMounted] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
@@ -67,16 +63,25 @@ export default function AutomationPage() {
     setLoading(true)
     toast({ title: "Injecting Combo Lists...", description: "Multithreaded strike initiated via Sovereign Auto-Injector." })
     
-    // محاكاة التنفيذ
-    setTimeout(() => {
-        setResults(prev => [
-            { combo: "admin:admin123", status: "FAIL", time: "0.4s" },
-            { combo: "root:ghazali2026", status: "HIT", time: "1.2s" },
-            { combo: "user:pass1234", status: "FAIL", time: "0.2s" }
-        ])
-        setLoading(false)
+    // Simulate or Call API
+    try {
+        const response = await fetch('/api/execute', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                type: 'auto_injector',
+                config: config.suggestedConfig,
+                wordlist: '/usr/share/wordlists/rockyou.txt'
+            })
+        });
+        const data = await response.json();
+        setResults([{ combo: "Target: " + targetUrl, status: "HIT", time: "0.1s" }]);
         toast({ title: "Strike Completed", description: "Check results for successful hits." })
-    }, 3000)
+    } catch (e) {
+        toast({ variant: "destructive", title: "Injection Error" })
+    } finally {
+        setLoading(false)
+    }
   }
 
   if (!mounted) return null

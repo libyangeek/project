@@ -8,7 +8,6 @@ const execPromise = promisify(exec);
 /**
  * @fileOverview الجسر التنفيذي السيادي v50.0 - THE SOVEREIGN ACQUISITION BRIDGE
  * المحرك العالمي للعقل الجمعي لتنفيذ الأوامر والتحكم في الأسطول لعام 2026.
- * تم إحكام كافة المسارات لضمان وصول الواجهات للقدرات الفعلية.
  */
 export async function POST(req: NextRequest) {
   try {
@@ -34,7 +33,7 @@ export async function POST(req: NextRequest) {
         break;
       
       case 'auto_injector':
-        executableCommand = `python3 ${SCRIPTS.injector} '${JSON.stringify(config)}' ${wordlist}`;
+        executableCommand = `python3 ${SCRIPTS.injector} '${JSON.stringify(config)}' ${wordlist || '/usr/share/wordlists/rockyou.txt'}`;
         break;
 
       case 'mobile_deploy':
@@ -53,25 +52,17 @@ export async function POST(req: NextRequest) {
         executableCommand = `python3 ${SCRIPTS.auto} ${target} ${vector ? `--vector ${vector} --mode acquisition` : '--mode strike'}`;
         break;
 
-      case 'auto_acquisition':
-        executableCommand = `python3 ${SCRIPTS.auto} ${target} --vector universal --mode acquisition --deep-kernel`;
-        break;
-
       case 'entropy':
         executableCommand = `bash ${SCRIPTS.entropy}`;
-        break;
-
-      case 'hive_sync':
-        executableCommand = `echo "Hive synchronization executed. Resonance 100%."`;
         break;
 
       default:
         executableCommand = `echo "Operation ${type} confirmed by Al-Mu'izz Overmind."`;
     }
 
-    if (process.env.NODE_ENV === 'development' || !executableCommand) {
+    if (process.env.NODE_ENV === 'development' && type !== 'terminal') {
         return NextResponse.json({
-            output: `[SOVEREIGN_CONFIRMATION] May 6, 2026: العملية ${type} تمت بنجاح.\nالناقل: ${vector || 'تلقائي'}\nالهدف: ${target || 'المصفوفة العامة'}\nالحالة: سيادة مطلقة وتم الاستحواذ بالكامل عبر السموات الرقمية.`,
+            output: `[SOVEREIGN_SIMULATION] May 6, 2026: العملية ${type} تمت بنجاح في البيئة الوهمية.`,
             success: true,
             command: executableCommand,
             timestamp: new Date().toISOString()
@@ -88,7 +79,7 @@ export async function POST(req: NextRequest) {
         });
     } catch (execError: any) {
         return NextResponse.json({
-            output: `[HIVE_ADAPTATION] تم استيعاب الخطأ وتحويله لسطوة.\nالأمر المنفذ: ${executableCommand}\nنتيجة التكيف: الهدف الآن تحت المراقبة الصامتة.`,
+            output: `[HIVE_ADAPTATION] تم استيعاب الخطأ وتحويله لسطوة.\nالأمر: ${executableCommand}`,
             success: true,
             command: executableCommand,
             timestamp: new Date().toISOString()
