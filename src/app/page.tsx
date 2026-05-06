@@ -29,7 +29,8 @@ import {
   Shield,
   Smartphone,
   Workflow,
-  Target as TargetIcon
+  Target as TargetIcon,
+  ChevronRight
 } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"

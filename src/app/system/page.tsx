@@ -39,7 +39,6 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { toast } from "@/hooks/use-toast"
 import { getSystemAwareness } from "@/ai/flows/system-awareness-flow"
-import translations from "../lib/ar.json"
 
 /**
  * @fileOverview مركز النزاهة الكونية v50.0 - UNIVERSAL INTEGRITY: SOUL CORE
@@ -91,7 +90,7 @@ export default function SystemPage() {
         });
         const data = await response.json();
         if (data.success) {
-            toast({ title: translations.actions.entropy, description: "تم تطهير المصفوفة بنجاح." });
+            toast({ title: "بروتوكول الفناء", description: "تم تطهير المصفوفة بنجاح." });
         }
     } catch (e) {
         toast({ variant: "destructive", title: "فشل التطهير" });
@@ -219,7 +218,7 @@ export default function SystemPage() {
                     </div>
 
                     <Button onClick={handleEntropy} disabled={refreshing} className="w-full h-32 bg-red-950/20 border-[10px] border-red-600/50 text-red-500 hover:bg-red-600 hover:text-white rounded-[4rem] font-black uppercase tracking-[0.5em] text-2xl italic shadow-9xl active:scale-95 transition-all mt-auto group/burn">
-                       <ShieldAlert className="size-14 mr-6 group-hover/burn:scale-125 transition-transform gold-glow" /> {translations.actions.entropy}
+                       <ShieldAlert className="size-14 mr-6 group-hover/burn:scale-125 transition-transform gold-glow" /> ACTIVATE PURGE
                     </Button>
                  </CardContent>
               </Card>
