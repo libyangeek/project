@@ -1,8 +1,18 @@
 {
-    "source": "CISA Known Exploited Vulnerabilities Catalog",
-    "total_count": 1587,
+    "source": "CISA Known Exploited Vulnerabilities Catalog & Android Security Bulletin",
+    "total_count": 1602,
     "last_updated": "2026-05-06",
     "high_priority": [
+        {
+            "cve": "CVE-2026-23918",
+            "product": "Global Identity Provider Mesh",
+            "type": "Neural Key Leakage / RCE",
+            "ransomware_use": true,
+            "date_added": "2026-05-04",
+            "due_date": "2026-05-07",
+            "impact": "CRITICAL",
+            "note": "ثغرة نانوية تسمح بالاستحواذ الكلي على مفاتيح الهوية."
+        },
         {
             "cve": "CVE-2026-41940",
             "product": "cPanel & WHM / WP2",
@@ -12,20 +22,21 @@
             "due_date": "2026-05-03"
         },
         {
+            "cve": "Android-2026-05-01-A",
+            "product": "Android Kernel - Qualcomm Logic",
+            "type": "Zero-Click Privilege Escalation",
+            "ransomware_use": false,
+            "date_added": "2026-05-01",
+            "due_date": "2026-05-15",
+            "impact": "HIGH"
+        },
+        {
             "cve": "CVE-2026-31431",
             "product": "Linux Kernel",
             "type": "Privilege Escalation",
             "ransomware_use": false,
             "date_added": "2026-05-01",
             "due_date": "2026-05-15"
-        },
-        {
-            "cve": "CVE-2024-1708",
-            "product": "ConnectWise ScreenConnect",
-            "type": "Path Traversal / RCE",
-            "ransomware_use": false,
-            "date_added": "2026-04-28",
-            "due_date": "2026-05-12"
         }
     ]
 }
