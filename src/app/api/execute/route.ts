@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from 'next/server';
 import { exec } from 'child_process';
 import { promisify } from 'util';
@@ -52,6 +51,7 @@ export async function POST(req: NextRequest) {
         break;
 
       case 'auto_injector':
+        // تمرير الإعدادات كـ JSON للسكريبت
         executableCommand = `python3 ${SCRIPTS.auto_injector} '${JSON.stringify(config)}' /usr/share/wordlists/rockyou.txt`;
         break;
 
@@ -65,6 +65,10 @@ export async function POST(req: NextRequest) {
 
       case 'gepa_stats':
         executableCommand = `python3 ${SCRIPTS.gepa} stats`;
+        break;
+
+      case 'smart_route':
+        executableCommand = `python3 ${SCRIPTS.router} "${command}"`;
         break;
 
       default:
