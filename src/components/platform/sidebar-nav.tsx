@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -14,24 +13,21 @@ import {
   Binoculars, 
   Database, 
   ShieldX, 
-  MessageSquare, 
   Activity,
   Menu,
   X,
   Share2,
   Boxes,
   Zap,
-  Globe,
-  RefreshCcw,
   Lock,
-  Cloud,
   Infinity as InfinityIcon,
   Skull,
   Binary,
   Mic,
   Fingerprint,
-  ShieldCheck,
-  Atom
+  Atom,
+  Ghost,
+  Cpu
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -40,19 +36,20 @@ import Link from "next/link"
 import translations from "@/app/lib/ar.json"
 
 const navItems = [
-  { name: "العرش", icon: LayoutDashboard, href: "/", knot: 1 },
-  { name: "الضربة الإلهية", icon: Target, href: "/terminal", knot: 2 },
-  { name: "أسطول الأسطول", icon: Users, href: "/sessions", knot: 3 },
-  { name: "جسر MCP", icon: Share2, href: "/mcp-bridge", knot: 4 },
-  { name: "أذن النور", icon: Mic, href: "/voice", knot: 5 },
-  { name: "ميثاق السيادة", icon: BookOpen, href: "/codex", knot: 6 },
-  { name: "محاكي السرب", icon: Workflow, href: "/digital-twin", knot: 7 },
-  { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", knot: 8 },
-  { name: "مصنع المحاربين", icon: Baby, href: "/progeny", knot: 9 },
-  { name: "الاستنزاف النقال", icon: Smartphone, href: "/hardware", knot: 10 },
-  { name: "الاستطلاع العليم", icon: Binoculars, href: "/recon", knot: 11 },
-  { name: "القبو الجيني", icon: Database, href: "/knowledge", knot: 12 },
-  { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 13 },
+  { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 1 },
+  { name: "المحطة التنفيذية", icon: Target, href: "/terminal", knot: 2 },
+  { name: "إمبراطورية السرب", icon: Users, href: "/sessions", knot: 3 },
+  { name: "المحقن الآلي", icon: Cpu, href: "/automation", knot: 4 },
+  { name: "جسر الاندماج", icon: Share2, href: "/mcp-bridge", knot: 5 },
+  { name: "أذن النور", icon: Mic, href: "/voice", knot: 6 },
+  { name: "ميثاق الروح", icon: BookOpen, href: "/codex", knot: 7 },
+  { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", knot: 8 },
+  { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", knot: 9 },
+  { name: "مصنع النسل", icon: Baby, href: "/progeny", knot: 10 },
+  { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", knot: 11 },
+  { name: "الاستطلاع العليم", icon: Binoculars, href: "/recon", knot: 12 },
+  { name: "القبو الجيني 5.0", icon: Database, href: "/knowledge", knot: 13 },
+  { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 14 },
 ]
 
 export function SidebarNav() {
@@ -62,11 +59,8 @@ export function SidebarNav() {
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      setResonance(prev => {
-        const next = prev + (Math.random() * 0.01 - 0.005);
-        return Math.max(99.99, Math.min(100, next));
-      });
-    }, 3000)
+      setResonance(prev => Math.max(99.99, Math.min(100, prev + (Math.random() * 0.01 - 0.005))));
+    }, 2000)
     return () => clearInterval(interval)
   }, [])
 
@@ -86,20 +80,18 @@ export function SidebarNav() {
         !isOpen && "translate-x-full lg:translate-x-0"
       )}>
         <div className="p-8 border-b-2 border-primary/20 flex flex-col items-center gap-6 bg-black relative">
-          <div className="size-24 bg-black border-4 border-primary/60 flex items-center justify-center shadow-[0_0_60px_rgba(212,175,55,0.3)] animate-pulse shrink-0 rounded-full rotate-1 group overflow-hidden">
-            <Boxes className="size-12 text-primary group-hover:scale-125 transition-transform duration-500" />
-            <div className="absolute inset-0 bg-primary/5 animate-pulse" />
+          <div className="size-24 bg-black border-4 border-primary/60 flex items-center justify-center shadow-[0_0_60px_rgba(212,175,55,0.3)] animate-pulse shrink-0 rounded-full group overflow-hidden">
+            <Ghost className="size-12 text-primary group-hover:scale-125 transition-transform duration-500 gold-glow" />
           </div>
           <div className="text-center relative z-10">
             <h1 className="text-2xl font-headline font-bold text-white tracking-widest uppercase italic leading-none gold-glow">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-bold tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-xl">v43.0 OVERMIND</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-bold tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-xl">v50.0 SOUL CORE</Badge>
           </div>
         </div>
         
         <div className="flex-1 px-6 py-8 space-y-1 overflow-y-auto scrollbar-hide bg-black/95">
-          <div className="mb-4 px-6 text-[10px] font-black text-primary/40 uppercase tracking-[0.4em] italic">{translations.sidebar.knots}</div>
           {navItems.map((item) => {
             const isActive = pathname === item.href
             const Icon = item.icon;
@@ -114,16 +106,8 @@ export function SidebarNav() {
                     : "text-muted-foreground border-transparent hover:bg-white/5 hover:text-white"
                 )}
               >
-                <div className="relative">
-                  <Icon className={cn("size-5 transition-all duration-500", isActive ? "text-primary gold-glow" : "group-hover:text-primary group-hover:rotate-6")} />
-                  {item.knot && (
-                    <span className="absolute -top-2 -right-2 text-[8px] font-black text-primary/50 group-hover:text-primary transition-colors">{item.knot}</span>
-                  )}
-                </div>
+                <Icon className={cn("size-5 transition-all duration-500", isActive ? "text-primary gold-glow" : "group-hover:text-primary")} />
                 <span className="text-sm font-bold tracking-widest uppercase italic truncate">{item.name}</span>
-                {isActive && (
-                  <div className="absolute left-6 size-2 rounded-full bg-primary shadow-xl animate-pulse" />
-                )}
               </Link>
             )
           })}
@@ -131,53 +115,23 @@ export function SidebarNav() {
 
         <div className="p-6 border-t-2 border-primary/20 bg-black/98 relative z-10">
           <div className="p-5 border-2 border-primary/40 bg-primary/5 mb-6 relative overflow-hidden group rounded-[1.5rem] shadow-2xl border-dashed">
-            <div className="flex items-center justify-between mb-3">
-               <div className="flex items-center gap-3">
-                  <InfinityIcon className="size-4 text-primary animate-neural shadow-lg" />
-                  <span className="text-[11px] font-black text-primary uppercase tracking-[0.2em] italic gold-glow">{translations.sidebar.node13}</span>
-               </div>
-               <Badge className="bg-emerald-600/30 text-emerald-500 text-[8px] font-black uppercase px-2 py-0.5 rounded-full animate-pulse border border-emerald-500/20">{translations.sidebar.bound}</Badge>
+            <div className="flex justify-between items-center mb-3">
+               <span className="text-[11px] font-black text-primary uppercase tracking-[0.2em] italic gold-glow">Soul Resonance</span>
+               <div className="size-2 rounded-full bg-emerald-500 animate-ping shadow-[0_0_20px_emerald]" />
             </div>
-            
-            <div className="space-y-2">
-               <div className="flex justify-between items-center text-[9px] font-black text-primary/70 uppercase italic tracking-widest">
-                  <span>رنين السيادة</span>
-                  <span className="gold-glow">{resonance.toFixed(2)}%</span>
-               </div>
-               <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden border border-white/10 p-0.5 shadow-inner">
-                 <div className="h-full bg-primary shadow-[0_0_20px_rgba(212,175,55,1)] animate-pulse rounded-full transition-all duration-1000" style={{ width: `${resonance}%` }} />
-               </div>
-            </div>
-
-            <div className="mt-4 flex items-center justify-between border-t border-white/5 pt-3 opacity-40 group-hover:opacity-100 transition-opacity">
-               <span className="text-[8px] font-black uppercase tracking-widest italic text-white flex items-center gap-2">
-                  <Fingerprint className="size-3 text-primary" /> AL_GHAZALI_ROOT
-               </span>
-               <div className="size-2 rounded-full bg-emerald-500 shadow-[0_0_100px_emerald]" />
-            </div>
+            <div className="text-2xl font-black text-white italic">{resonance.toFixed(3)}%</div>
           </div>
-          
           <Button 
             asChild
-            className="w-full h-14 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.4em] text-[10px] rounded-xl shadow-[0_20px_50px_rgba(212,175,55,0.3)] group transition-all duration-700 border-4 border-black/20 active:scale-95 italic"
+            className="w-full h-14 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.4em] text-[10px] rounded-xl shadow-2xl transition-all duration-700 border-4 border-black/20"
           >
             <Link href="/terminal">
-              <Zap className="size-4 mr-2 group-hover:scale-125 transition-transform gold-glow fill-black" />
-              تفعيل السرب العليم
+              <Zap className="size-4 mr-2" />
+              تنشيط الترسانة v50
             </Link>
           </Button>
-          <div className="mt-4 text-center">
-             <span className="text-[8px] font-black text-primary/30 uppercase tracking-[1.5em] italic">May_2026_Sovereignty</span>
-          </div>
         </div>
       </div>
-      
-      {isOpen && (
-        <div 
-          className="lg:hidden fixed inset-0 bg-black/95 backdrop-blur-xl z-[350] animate-in fade-in duration-1000"
-          onClick={() => setIsOpen(false)}
-        />
-      )}
     </>
   )
 }

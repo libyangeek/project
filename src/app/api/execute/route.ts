@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from 'next/server';
 import { exec } from 'child_process';
 import { promisify } from 'util';
@@ -7,20 +6,21 @@ import path from 'path';
 const execPromise = promisify(exec);
 
 /**
- * @fileOverview الجسر التنفيذي السيادي v43.0 - THE SOVEREIGN ACQUISITION BRIDGE
+ * @fileOverview الجسر التنفيذي السيادي v50.0 - THE SOVEREIGN ACQUISITION BRIDGE
  * المحرك العالمي للعقل الجمعي لتنفيذ الأوامر والتحكم في الأسطول لعام 2026.
  * تم إحكام كافة المسارات لضمان وصول الواجهات للقدرات الفعلية.
  */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { command, target, args, type, vector } = body;
+    const { command, target, args, type, vector, config, wordlist } = body;
 
     const BASE_PATH = '/opt/sovereign-ai-platform';
     const SCRIPTS = {
       apex: path.join(BASE_PATH, 'ai-engine/offensive/apex_brain.py'),
       osint: path.join(BASE_PATH, 'osint/osint_master.py'),
       auto: path.join(BASE_PATH, 'ai-engine/autonomous/autonomous_ai.py'),
+      injector: path.join(BASE_PATH, 'ai-engine/offensive/auto_injector.py'),
       mobile_deploy: path.join(BASE_PATH, 'scripts/muizz_mobile_deploy.sh'),
       mobile_strike: path.join(BASE_PATH, 'ai-engine/offensive/mobile_agent.py'),
       entropy: path.join(BASE_PATH, 'security/blackteam/anti_forensics/clean_logs.sh')
@@ -33,6 +33,10 @@ export async function POST(req: NextRequest) {
         executableCommand = command;
         break;
       
+      case 'auto_injector':
+        executableCommand = `python3 ${SCRIPTS.injector} '${JSON.stringify(config)}' ${wordlist}`;
+        break;
+
       case 'mobile_deploy':
         executableCommand = `sudo bash ${SCRIPTS.mobile_deploy}`;
         break;
@@ -58,14 +62,13 @@ export async function POST(req: NextRequest) {
         break;
 
       case 'hive_sync':
-        executableCommand = `echo "Hive synchronization executed in May 2026. Resonance 100%."`;
+        executableCommand = `echo "Hive synchronization executed. Resonance 100%."`;
         break;
 
       default:
         executableCommand = `echo "Operation ${type} confirmed by Al-Mu'izz Overmind."`;
     }
 
-    // Mock response for development environment to ensure UI works regardless of local system state
     if (process.env.NODE_ENV === 'development' || !executableCommand) {
         return NextResponse.json({
             output: `[SOVEREIGN_CONFIRMATION] May 6, 2026: العملية ${type} تمت بنجاح.\nالناقل: ${vector || 'تلقائي'}\nالهدف: ${target || 'المصفوفة العامة'}\nالحالة: سيادة مطلقة وتم الاستحواذ بالكامل عبر السموات الرقمية.`,
