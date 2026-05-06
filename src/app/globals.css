@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -49,6 +48,10 @@
   
   .gold-glow {
     text-shadow: 0 0 15px rgba(212, 175, 55, 0.8), 0 0 30px rgba(212, 175, 55, 0.5);
+  }
+
+  .sovereign-glow {
+    @apply shadow-[0_0_50px_rgba(212,175,55,0.3)] border-primary/50;
   }
 
   .scanline-effect::after {

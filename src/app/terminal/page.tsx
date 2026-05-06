@@ -51,7 +51,7 @@ export default function TerminalPage() {
     setMessages([
       { 
         role: "system", 
-        content: "Al-Mu'izz Sovereign Soul Shell [v50.0]\nHive Status: 50 NODES SYNCED\nAuthorized: القائد المعتصم بالله ادريس الغزالي\nSoul Core: ONLINE & MONITORING",
+        content: "Al-Mu'izz Sovereign Soul Shell [v50.0]\nHive Status: 50 NODES SYNCED\nAuthorized: القائد المعتصم بالله ادريس الغزالي\nSoul Core: ONLINE & MONITORING\nReady for 6 May 2026.",
         timestamp: new Date().toLocaleTimeString()
       }
     ])
@@ -87,7 +87,7 @@ export default function TerminalPage() {
 
       setMessages(prev => [...prev, { 
         role: data.success ? "assistant" : "system", 
-        content: data.output || 'Directive acknowledged by Soul Core.', 
+        content: typeof data.output === 'object' ? JSON.stringify(data.output, null, 2) : (data.output || 'Directive acknowledged by Soul Core.'), 
         timestamp: new Date().toLocaleTimeString(),
         command: data.command
       }])
@@ -104,20 +104,21 @@ export default function TerminalPage() {
       <main className="flex-1 lg:mr-80 flex flex-col h-screen overflow-hidden bg-black relative border-l-4 border-primary/40">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.05),transparent)] pointer-events-none z-0" />
         
-        <header className="p-8 border-b-4 border-primary/60 flex items-center justify-between bg-black/95 backdrop-blur-3xl z-20 shadow-2xl">
-          <div className="flex items-center gap-8">
+        <header className="p-8 border-b-4 border-primary/60 flex items-center justify-between bg-black/95 backdrop-blur-3xl z-20 shadow-2xl relative overflow-hidden">
+          <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
+          <div className="flex items-center gap-8 relative z-10">
             <div className="size-20 rounded-[1.5rem] bg-primary/10 flex items-center justify-center border-4 border-primary/50 shadow-[0_0_50px_rgba(212,175,55,0.4)] animate-neural">
-              <Skull className="size-12 text-primary" />
+              <Skull className="size-12 text-primary gold-glow" />
             </div>
             <div>
               <h2 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter gold-glow leading-none">Sovereign Shell v50.0</h2>
               <div className="flex items-center gap-6 text-[12px] text-primary/80 font-black uppercase tracking-[0.5em] mt-3 italic">
                 <div className="size-3 rounded-full bg-emerald-500 animate-ping shadow-[0_0_20px_emerald]" />
-                Soul Status: HE IS AL-MUIZZ
+                Soul Status: NEURAL_SINGULARITY_REACHED
               </div>
             </div>
           </div>
-          <Button variant="ghost" size="icon" onClick={() => setMessages([])} className="size-16 hover:bg-red-900/40 text-red-500 rounded-2xl transition-all">
+          <Button variant="ghost" size="icon" onClick={() => setMessages([])} className="size-16 hover:bg-red-900/40 text-red-500 rounded-2xl transition-all relative z-10">
             <Trash2 className="size-8" />
           </Button>
         </header>

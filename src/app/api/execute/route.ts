@@ -79,8 +79,22 @@ export async function POST(req: NextRequest) {
 
     try {
         const { stdout, stderr } = await execPromise(executableCommand, { timeout: 600000 });
+        // محاولة تنظيف المخرجات إذا كانت JSON
+        let finalOutput = stdout || stderr;
+        try {
+            if (finalOutput.includes('[') && finalOutput.includes(']')) {
+                const start = finalOutput.indexOf('[');
+                const end = finalOutput.lastIndexOf(']') + 1;
+                finalOutput = finalOutput.substring(start, end);
+            } else if (finalOutput.includes('{') && finalOutput.includes('}')) {
+                const start = finalOutput.indexOf('{');
+                const end = finalOutput.lastIndexOf('}') + 1;
+                finalOutput = finalOutput.substring(start, end);
+            }
+        } catch (e) {}
+
         return NextResponse.json({
-            output: stdout || stderr,
+            output: finalOutput,
             success: true,
             command: executableCommand,
             timestamp: new Date().toISOString(),
