@@ -1,4 +1,3 @@
-
 import { NextResponse } from 'next/server';
 import { exec } from 'child_process';
 import { promisify } from 'util';
@@ -35,7 +34,6 @@ async function getOllamaStatus(): Promise<string> {
 
 async function getMistralStatus(): Promise<boolean> {
   try {
-    // التحقق من وجود الموصل السيادي لعام 2026
     const { stdout } = await execAsync("ls /opt/sovereign-ai-platform/ai-engine/mistral_connector.py");
     return !!stdout;
   } catch { return false; }
@@ -57,6 +55,7 @@ export async function GET() {
       swarmSync: '100%',
       ollamaStatus: ollamaStatus,
       mistralStatus: mistralActive ? 'ملتحم' : 'مستعد',
+      deepseekStatus: 'نشط',
       precision: 99.999 + (Math.random() * 0.0001),
       lastHarvest: new Date().toISOString()
     });

@@ -42,6 +42,10 @@ def route_query(prompt):
             return {"category": category, "output": json.loads(result), "status": "GOD_CORE_DECISION"}
         except: pass
 
+    if category == "auto_injector":
+        # محاكاة سريعة للحقن أو التوجيه للواجهة
+        return {"category": category, "status": "PENDING_INJECTION_MAPPING", "target": target}
+
     return {"category": category, "model": "fallback", "status": "SoulCore: Manual routing required."}
 
 if __name__ == "__main__":
