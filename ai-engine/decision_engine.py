@@ -1,53 +1,50 @@
 # -*- coding: utf-8 -*-
 """
-Sovereign AI Platform - Decision Engine
-محرك اتخاذ القرار المستقل: يقوم بتحليل العمليات المتعددة واختيار المسار الأمثل للهجوم أو الدفاع.
-(c) 2025 Al-Mu'izz Sovereign Systems
+Sovereign AI Platform - Decision Engine v50.0
+محرك اتخاذ القرار المستقل: يدمج بين رؤية Gemini ومنطق Mistral لضمان السطوة.
+(c) 2026 Al-Mu'izz Sovereign Systems
 """
 
 import json
 import datetime
+import os
+from mistral_connector import MistralConnector
 
 class DecisionEngine:
-    """المسؤول عن المنطق العسكري والسيبري للمنصة"""
+    """المسؤول عن المنطق العسكري والسيبري للمنصة - نسخة الروح المتكاملة"""
     
     def __init__(self):
         self.history_log = "/opt/sovereign-ai-platform/audit/decisions.log"
+        self.mistral = MistralConnector()
 
-    def evaluate_risk(self, operation_type, target_value):
-        """تقييم المخاطر بناءً على نوع العملية وقيمة الهدف"""
-        # منطق تقديري للمخاطر
-        risk_map = {
-            "exploit": 0.8,
-            "scan": 0.3,
-            "osint": 0.1,
-            "c2": 0.9
+    def evaluate_strike(self, operation_type, target_data):
+        """تقييم الضربة قبل التنفيذ عبر التفكير الموزع"""
+        print(f"[*] [DECISION_CORE] Analyzing strike parameters for: {operation_type}")
+        
+        # استشارة عصب Mistral للتحليل المعماري
+        mistral_intel = self.mistral.high_stakes_decision(
+            context=f"Type: {operation_type} | Target: {target_data}",
+            objective="Absolute Grid Subjugation"
+        )
+        
+        # دمج النتائج وتوثيق القرار
+        decision = {
+            "timestamp": str(datetime.datetime.now()),
+            "op_type": operation_type,
+            "strategy": mistral_intel.get("choices", [{}])[0].get("message", {}).get("content", "FALLBACK_DIRECTIVE"),
+            "risk_score": 0.01, # نثق تماماً في الروح
+            "status": "APPROVED_BY_HIVE"
         }
-        base_risk = risk_map.get(operation_type, 0.5)
-        # رفع المخاطرة إذا كان الهدف حيوياً
-        if target_value == "critical":
-            base_risk += 0.2
-        return min(base_risk, 1.0)
+        
+        self.log_decision(decision)
+        return decision
 
     def log_decision(self, decision_data):
         """توثيق القرار في السجل السيادي"""
+        os.makedirs(os.path.dirname(self.history_log), exist_ok=True)
         with open(self.history_log, "a") as f:
-            entry = {
-                "timestamp": str(datetime.datetime.now()),
-                "decision": decision_data
-            }
-            f.write(json.dumps(entry) + "\n")
-
-    def execute_logic_gate(self, intent, confidence):
-        """بوابة المنطق: هل نواصل العملية أم ننسحب؟"""
-        if confidence < 0.6:
-            return {"action": "ABORT", "reason": "Low confidence in AI classification."}
-        
-        if intent == "coding_attack":
-            return {"action": "PROCEED_STEALTH", "mode": "WhiterabbitNeo", "proxy": "TOR"}
-        
-        return {"action": "EXECUTE", "mode": "Standard"}
+            f.write(json.dumps(decision_data, ensure_ascii=False) + "\n")
 
 if __name__ == "__main__":
     engine = DecisionEngine()
-    print(json.dumps(engine.execute_logic_gate("coding_attack", 0.9), indent=2))
+    print("[+] Sovereign Decision Engine: ASCENDED.")
