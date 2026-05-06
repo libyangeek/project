@@ -46,7 +46,7 @@ export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
   
-  // المقاييس الحية من الـ API
+  // المقاييس الحية من الـ API السيادي
   const [metrics, setMetrics] = React.useState({
     totalNodes: 13,
     activeC2: 0,
@@ -144,7 +144,7 @@ export default function DashboardPage() {
           </div>
         </header>
 
-        {/* Sovereign Mission & Capabilities */}
+        {/* Sovereign Mission & Readiness Section */}
         <section className="mb-12 relative z-10 animate-in slide-in-from-bottom-12 duration-1000">
            <Card className="kali-card bg-red-600/10 border-4 border-red-600/40 rounded-[3rem] p-10 shadow-[0_0_150px_rgba(220,38,38,0.2)] overflow-hidden group">
               <div className="flex flex-col md:flex-row items-center gap-10 relative z-10">
