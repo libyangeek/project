@@ -7,8 +7,7 @@ const execPromise = promisify(exec);
 
 /**
  * @fileOverview الجسر التنفيذي السيادي v50.0 - THE SOVEREIGN EXECUTIVE BRIDGE
- * تم تحديثه ليدعم كافة الأذرع المدارية المكتفية ذاتياً لعام 2026.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي
+ * تم تحديثه ليدعم محرك التكوين السيادي v50 (Sovereign Config Engine).
  */
 export async function POST(req: NextRequest) {
   try {
@@ -17,8 +16,8 @@ export async function POST(req: NextRequest) {
 
     const BASE_PATH = '/opt/sovereign-ai-platform';
     const SCRIPTS = {
+      config_engine: path.join(BASE_PATH, 'ai-engine/openbullet/sovereign_config_engine.py'),
       auto_injector: path.join(BASE_PATH, 'ai-engine/offensive/auto_injector.py'),
-      openbullet: path.join(BASE_PATH, 'ai-engine/openbullet/ob_database.py'),
       ss7: path.join(BASE_PATH, 'tools/cellular/ss7_simulator.py'),
       voice: path.join(BASE_PATH, 'tools/clawcode/voice_hijack.py'),
       mistral: path.join(BASE_PATH, 'ai-engine/mistral_connector.py'),
@@ -26,13 +25,17 @@ export async function POST(req: NextRequest) {
       ghost_eye: path.join(BASE_PATH, 'tools/eye_series/ghost_eye.py'),
       ghost_track: path.join(BASE_PATH, 'tools/social_predator/ghost_track.py'),
       blackbird: path.join(BASE_PATH, 'tools/social_predator/blackbird_scan.py'),
-      router: path.join(BASE_PATH, 'ai-engine/smart_router.py'),
-      gepa: path.join(BASE_PATH, 'ai-engine/gepa.py')
+      router: path.join(BASE_PATH, 'ai-engine/smart_router.py')
     };
 
     let executableCommand = '';
 
     switch (type) {
+      case 'sovereign_config_strike':
+        // تشغيل محرك التكوين الجديد مع البيانات الممررة
+        executableCommand = `python3 ${SCRIPTS.config_engine} '${JSON.stringify(config)}'`;
+        break;
+
       case 'cellular_strike':
         executableCommand = `python3 ${SCRIPTS.ss7} "${vector}" "${target}"`;
         break;
@@ -42,7 +45,6 @@ export async function POST(req: NextRequest) {
         break;
 
       case 'ghost_track':
-        // دعم تتبع الـ IP أو اليوزر
         const subType = target.includes('.') || target.includes(':') ? 'ip' : 'user';
         executableCommand = `python3 ${SCRIPTS.ghost_track} ${subType} "${target}"`;
         break;
@@ -57,10 +59,6 @@ export async function POST(req: NextRequest) {
 
       case 'mistral_analyze':
         executableCommand = `python3 ${SCRIPTS.mistral} --context "${context}"`;
-        break;
-
-      case 'auto_injector':
-        executableCommand = `python3 ${SCRIPTS.auto_injector} '${JSON.stringify(config)}' /usr/share/wordlists/rockyou.txt`;
         break;
 
       case 'ghost_eye':
