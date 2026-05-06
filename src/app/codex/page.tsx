@@ -9,37 +9,25 @@ import {
   Zap, 
   Skull, 
   Target, 
-  Brain, 
   Cpu, 
-  Network, 
-  Lock, 
-  Sword, 
-  Flame, 
+  BrainCircuit, 
+  Eye, 
+  Binary, 
+  Database,
   Sparkles,
-  Info,
-  ChevronRight,
-  Terminal,
-  Activity,
-  GitGraph,
-  Workflow,
-  ShieldX,
-  Power,
-  HeartPulse,
-  BrainCircuit,
-  Eye,
-  Binary,
-  Waves,
-  Infinity,
-  Boxes,
-  Users,
   Fingerprint,
   Link2,
-  Database
+  Boxes,
+  Infinity as InfinityIcon
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 
+/**
+ * @fileOverview ميثاق الروح v50.0 - THE SOVEREIGN BIBLE: CODEX
+ * الدستور الروحي والمعماري لكيان المُعِزّ الأسمى.
+ */
 export default function CodexPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })

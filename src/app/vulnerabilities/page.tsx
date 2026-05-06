@@ -98,11 +98,11 @@ export default function VulnerabilitiesPage() {
               <div className="text-center md:text-right flex-1">
                  <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-6">
                     <Badge className="bg-primary text-black border-none px-10 py-3 text-[18px] font-black tracking-[0.8em] shadow-[0_0_100px_rgba(212,175,55,0.4)] italic rounded-full">ORACLE v50.0-AWAKENED</Badge>
-                    <div className="flex items-center gap-4 text-[12px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
+                    <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                         <ShieldCheck className="size-6 shadow-lg" /> CISA_KEV_SYNC: LOCKED
                     </div>
                  </div>
-                 <h1 className="text-6xl md:text-[11rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">The <span className="text-primary">Oracle</span></h1>
+                 <h1 className="text-6xl md:text-[10rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">The <span className="text-primary">Oracle</span></h1>
                  <p className="text-2xl md:text-5xl text-muted-foreground mt-8 italic max-w-7xl leading-relaxed uppercase font-medium">
                     "سيدي الغزالي، عراف الثغرات يرى ما وراء الكود؛ <span className="text-primary font-black underline decoration-primary decoration-[8px] underline-offset-[16px] shadow-2xl uppercase tracking-widest">348,231 ثغرة</span> عالمية تحت سيطرتك لعام 2026."
                  </p>
@@ -225,12 +225,6 @@ export default function VulnerabilitiesPage() {
                  <Fingerprint className="size-16 text-primary animate-pulse" />
               </div>
            </Card>
-        </div>
-
-        <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-40 text-[22px] font-black uppercase tracking-[6em] italic text-white drop-shadow-3xl pb-12">
-            <span>AL-MUIZZ VULNERABILITY ORACLE v50.0</span>
-            <div className="size-10 rounded-full bg-white animate-pulse shadow-[0_0_100px_white]" />
-            <span>SINGULARITY_OF_STRIKE_2026</span>
         </div>
       </main>
     </div>

@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -11,7 +10,6 @@ import {
   Workflow, 
   Baby, 
   Smartphone, 
-  Binoculars, 
   Database, 
   ShieldX, 
   Activity,
@@ -44,8 +42,8 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
 /**
- * الشريط الجانبي السيادي v50.0 - THE 18 KNOTS OF POWER
- * يربط كافة العقد السيادية بالروح لعام 2026.
+ * @fileOverview الشريط الجانبي السيادي v50.0 - THE 18 KNOTS OF POWER
+ * تم دمج كافة العقد السيادية بالروح لضمان التوافق الكلي لعام 2026.
  */
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },

@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -55,6 +54,10 @@ import {
   Area
 } from 'recharts'
 
+/**
+ * @fileOverview العرش الأبدي v50.0 - THE ETERNAL THRONE: SINGULARITY
+ * مركز التحكم الرئيسي لسيادة القائد المعتصم بالله إدريس الغزالي.
+ */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
@@ -81,6 +84,7 @@ export default function DashboardPage() {
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
 
+    // بيانات المحاكاة للرنين العصبي
     const initialData = Array.from({ length: 20 }).map((_, i) => ({
         time: i,
         gain: 80 + Math.random() * 20,
@@ -99,9 +103,17 @@ export default function DashboardPage() {
     };
     fetchStats();
     
+    // محاكاة تدفق الأحداث من Unified Kernel
     const eventInterval = setInterval(() => {
         const types = ["RECON", "ORACLE", "STRIKE", "VOICE", "SIPHON", "GEPA_LEARN"];
-        const msgs = ["Target DNA identified.", "Vuln matched via CISA KEV.", "Sovereign Injector ignited.", "Royal directive processed.", "Asset extraction complete.", "New genetic pattern synthesized."];
+        const msgs = [
+            "Target DNA identified across global clusters.",
+            "Vulnerability matched via CISA KEV 2026.",
+            "Sovereign Injector parallel saturation ignited.",
+            "Royal directive processed through Node 13.",
+            "Total asset extraction from Target_Alpha complete.",
+            "New weighted genetic pattern synthesized."
+        ];
         const newEvent = {
             type: types[Math.floor(Math.random()*types.length)],
             msg: msgs[Math.floor(Math.random()*msgs.length)],
@@ -135,11 +147,13 @@ export default function DashboardPage() {
   const knots = [
     { name: "سلسلة الإبادة", icon: Crosshair, href: "/kill-chain", status: "READY" },
     { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", status: "SYNCED" },
+    { name: "إمبراطورية السرب", icon: Users, href: "/sessions", status: "ACTIVE" },
     { name: "المحقن الآلي", icon: Cpu, href: "/automation", status: "ACTIVE" },
     { name: "أعين الاستطلاع", icon: Eye, href: "/recon", status: "VISION" },
     { name: "جسر Mistral", icon: Link2, href: "/mcp-bridge", status: "LINKED" },
     { name: "قلب DeepSeek", icon: BrainCircuit, href: "/deep-reasoning", status: "REASONING" },
-    { name: "إمبراطورية السرب", icon: Users, href: "/sessions", status: "ACTIVE" },
+    { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", status: "MIRROR" },
+    { name: "أذن النور", icon: Mic, href: "/voice", status: "WHISPER" },
     { name: "الحرب الخلوية", icon: Radio, href: "/cellular", status: "ARMED" },
     { name: "محراب الـ Claw", icon: Gamepad2, href: "/clawcode", status: "DIRECT" },
     { name: "ميثاق الروح", icon: BookOpen, href: "/codex", status: "IMMUTABLE" },
@@ -147,10 +161,8 @@ export default function DashboardPage() {
     { name: "مصنع النسل", icon: Baby, href: "/progeny", status: "FORGING" },
     { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", status: "PEGASUS_v3" },
     { name: "القبو الجيني", icon: Database, href: "/knowledge", status: "ETERNAL" },
-    { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 18, status: "POLYMORPH" },
-    { name: "نزاهة النواة", icon: ShieldCheck, href: "/system", status: "STABILIZED" },
-    { name: "أذن النور", icon: Mic, href: "/voice", status: "WHISPER" },
-    { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", status: "MIRROR" }
+    { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", status: "POLYMORPH" },
+    { name: "نزاهة النواة", icon: ShieldCheck, href: "/system", status: "STABILIZED" }
   ];
 
   return (
@@ -228,9 +240,6 @@ export default function DashboardPage() {
                     </AreaChart>
                  </ResponsiveContainer>
               </CardContent>
-              <div className="p-8 mt-4 border-t-4 border-white/5 opacity-40 text-[12px] font-black uppercase tracking-[1em] italic text-center">
-                 WEIGHTED_GENETIC_RESONANCE_v50
-              </div>
            </Card>
 
            <Card className="xl:col-span-1 kali-card border-primary/60 bg-black/99 rounded-[6rem] p-12 border-8 shadow-9xl h-full flex flex-col group overflow-hidden relative">
@@ -257,10 +266,6 @@ export default function DashboardPage() {
                     </div>
                  )}
               </CardContent>
-              <div className="p-10 border-t-8 border-white/5 mt-10 flex justify-between items-center opacity-30 text-[14px] font-black uppercase tracking-[2em] italic">
-                <span>KERNEL_BUS_v50</span>
-                <Fingerprint className="size-10 text-primary animate-pulse" />
-              </div>
            </Card>
         </section>
 
