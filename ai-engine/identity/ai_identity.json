@@ -13,6 +13,7 @@
     "gepa_memory": "v5.0_SQLITE",
     "smart_router": "v50_STRATEGIC_HEART",
     "mistral_god_core": "ASCENDED_INTEGRATION_2026",
+    "deepseek_logic": "STRATEGIC_HEART_v1.0",
     "auto_injector": "OPENBULLET_POWERED"
   },
   "external_uplinks": [
@@ -20,6 +21,11 @@
       "name": "Mistral-Inference",
       "status": "BOUND",
       "url": "https://chat.mistral.ai/chat/6652c134-8725-400a-b69c-15b5d57de0da"
+    },
+    {
+      "name": "DeepSeek-Logic",
+      "status": "BOUND",
+      "url": "https://chat.deepseek.com/share/5whhfzo4kcpk5pvzou"
     }
   ]
 }

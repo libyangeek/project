@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -29,7 +28,8 @@ import {
   Ghost,
   Cpu,
   Eye,
-  Link2
+  Link2,
+  BrainCircuit
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -43,14 +43,15 @@ const navItems = [
   { name: "المحقن الآلي", icon: Cpu, href: "/automation", knot: 4 },
   { name: "أعين الاستطلاع", icon: Eye, href: "/recon", knot: 5 },
   { name: "جسر الاندماج", icon: Share2, href: "/mcp-bridge", knot: 6 },
-  { name: "أذن النور", icon: Mic, href: "/voice", knot: 7 },
-  { name: "ميثاق الروح", icon: BookOpen, href: "/codex", knot: 8 },
-  { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", knot: 9 },
-  { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", knot: 10 },
-  { name: "مصنع النسل", icon: Baby, href: "/progeny", knot: 11 },
-  { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", knot: 12 },
-  { name: "القبو الجيني 5.0", icon: Database, href: "/knowledge", knot: 13 },
-  { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 14 },
+  { name: "القلب الاستراتيجي", icon: BrainCircuit, href: "/deep-reasoning", knot: 7 },
+  { name: "أذن النور", icon: Mic, href: "/voice", knot: 8 },
+  { name: "ميثاق الروح", icon: BookOpen, href: "/codex", knot: 9 },
+  { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", knot: 10 },
+  { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", knot: 11 },
+  { name: "مصنع النسل", icon: Baby, href: "/progeny", knot: 12 },
+  { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", knot: 13 },
+  { name: "القبو الجيني 5.0", icon: Database, href: "/knowledge", knot: 14 },
+  { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 15 },
 ]
 
 export function SidebarNav() {

@@ -7,17 +7,18 @@ const execPromise = promisify(exec);
 
 /**
  * @fileOverview الجسر التنفيذي السيادي v50.0 - THE SOVEREIGN ACQUISITION BRIDGE
- * تم تحديثه ليدعم 'عصب Mistral' والعمليات الحية لعام 2026.
+ * تم تحديثه ليدعم 'عصب DeepSeek' و 'Mistral' والعمليات الحية لعام 2026.
  */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { command, target, type, config, context } = body;
+    const { command, target, type, config, context, prompt } = body;
 
     const BASE_PATH = '/opt/sovereign-ai-platform';
     const SCRIPTS = {
       auto_injector: path.join(BASE_PATH, 'ai-engine/offensive/auto_injector.py'),
       mistral: path.join(BASE_PATH, 'ai-engine/mistral_connector.py'),
+      deepseek: path.join(BASE_PATH, 'ai-engine/deepseek_logic.py'),
       eye: path.join(BASE_PATH, 'tools/eye_series/ghost_eye.py'),
       router: path.join(BASE_PATH, 'ai-engine/smart_router.py')
     };
@@ -25,16 +26,16 @@ export async function POST(req: NextRequest) {
     let executableCommand = '';
 
     switch (type) {
+      case 'deep_reason':
+        executableCommand = `python3 ${SCRIPTS.deepseek} "${prompt}"`;
+        break;
+
       case 'mistral_analyze':
         executableCommand = `python3 ${SCRIPTS.mistral} --context "${context}"`;
         break;
 
       case 'auto_injector':
         executableCommand = `python3 ${SCRIPTS.auto_injector} '${JSON.stringify(config)}'`;
-        break;
-
-      case 'eye_recon':
-        executableCommand = `python3 ${SCRIPTS.eye} ${target}`;
         break;
 
       case 'smart_route':
@@ -53,9 +54,8 @@ export async function POST(req: NextRequest) {
             timestamp: new Date().toISOString()
         });
     } catch (execError: any) {
-        // العودة بالنتائج حتى في حال وجود أخطاء stderr لضمان الرؤية
         return NextResponse.json({
-            output: execError.stdout || execError.stderr || `[HIVE_ADAPTATION] Node 13 reporting execution flow.`,
+            output: execError.stdout || execError.stderr || `[HIVE_ADAPTATION] Node 15 reporting logic flow.`,
             success: true,
             timestamp: new Date().toISOString()
         });
