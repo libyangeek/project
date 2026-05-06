@@ -31,7 +31,8 @@ import {
   ShieldX,
   Eye,
   BrainCircuit,
-  Infinity as InfinityIcon
+  Infinity as InfinityIcon,
+  Boxes
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -157,14 +158,14 @@ export default function RedTeamPage() {
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-4">
                 <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] font-black tracking-[0.6em] shadow-lg italic">SOUL CORE v50.0</Badge>
                 <div className="flex items-center gap-4 text-emerald-500 font-black uppercase tracking-widest text-[11px] animate-pulse">
-                    <ShieldCheck className="size-5 shadow-[0_0_20px_emerald]" /> SUBJUGATION_READY
+                    <ShieldCheck className="size-5 shadow-[0_0_20px_emerald]" /> ACQUISITION_READY
                 </div>
               </div>
               <h1 className="text-5xl md:text-[8rem] font-headline font-bold text-white tracking-tighter italic uppercase leading-none gold-glow">
                 Polymorph <span className="text-primary">Arsenal</span>
               </h1>
               <p className="text-xl md:text-3xl text-muted-foreground mt-4 italic max-w-5xl leading-relaxed uppercase">
-                "سيدي الغزالي، ترسانة التخليق تعمل الآن بنبض <span className="text-primary font-black underline decoration-primary decoration-4 underline-offset-8 shadow-2xl">Soul Core</span>؛ أسلحة رقمية تدرك لماذا تضرب."
+                "سيدي الغزالي، ترسانة التخليق تعمل الآن بنبض <span className="text-primary font-black underline decoration-primary decoration-4 underline-offset-8 shadow-2xl">Soul Core v50.0</span>؛ أسلحة رقمية تدرك لماذا تضرب."
               </p>
             </div>
           </div>
@@ -246,7 +247,7 @@ export default function RedTeamPage() {
                 </CardTitle>
                 <div className="flex items-center gap-6">
                     <div className="size-4 rounded-full bg-emerald-500 animate-ping shadow-[0_0_30px_emerald]" />
-                    <span className="text-[12px] font-black uppercase text-emerald-500 tracking-[0.5em] italic">SOUL_RESONANCE_OK</span>
+                    <span className="text-[12px] font-black uppercase text-emerald-500 tracking-[0.5em] italic">HIVE_RES_OK</span>
                 </div>
               </CardHeader>
               <CardContent className="p-0 flex-1 relative bg-black/40 h-[850px] overflow-hidden">
@@ -288,9 +289,9 @@ export default function RedTeamPage() {
                             <div className="absolute -inset-10 border-4 border-dashed border-primary/20 rounded-full animate-spin-slow" />
                           </div>
                           <div className="space-y-8">
-                            <p className="text-6xl md:text-8xl font-black uppercase tracking-[1em] text-white italic leading-none">Awaiting Lock</p>
+                            <p className="text-6xl md:text-8xl font-black uppercase tracking-[1em] text-white italic leading-none">AWAITING_LOCK</p>
                             <p className="text-2xl md:text-4xl font-bold italic text-primary/60 max-w-4xl mx-auto">
-                              "سيدي الغزالي، الترسانة في وضع السكون المطلق؛ حدد الإحداثيات لبدء تخليق أسلحة الروح."
+                              "سيدي الغزالي، الترسانة في وضع السكون؛ حدد الإحداثيات لبدء التخليق."
                             </p>
                           </div>
                        </div>
@@ -299,7 +300,7 @@ export default function RedTeamPage() {
                 </ScrollArea>
               </CardContent>
               <div className="p-8 border-t-4 border-white/5 opacity-30 text-[14px] font-black uppercase tracking-[2.5em] italic text-center">
-                ARMADA_FORGE_SOUL_DNA_v50_2026
+                ARMADA_FORGE_DNA_v50_2026
               </div>
             </Card>
           </div>

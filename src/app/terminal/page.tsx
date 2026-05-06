@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -100,75 +99,83 @@ export default function TerminalPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-black text-white selection:bg-primary/30 overflow-hidden font-code">
+    <div className="flex min-h-screen bg-black text-white selection:bg-primary/30 overflow-hidden font-code scanline-effect">
       <SidebarNav />
-      <main className="flex-1 lg:mr-80 flex flex-col h-screen overflow-hidden bg-black relative border-l-2 border-primary/40">
-        <header className="p-6 border-b border-primary/40 flex items-center justify-between bg-black/95 backdrop-blur-3xl z-20 shadow-xl">
-          <div className="flex items-center gap-6">
-            <div className="size-16 rounded-[1rem] bg-primary/10 flex items-center justify-center border-2 border-primary/50 shadow-lg animate-neural">
-              <Skull className="size-8 text-primary" />
+      <main className="flex-1 lg:mr-80 flex flex-col h-screen overflow-hidden bg-black relative border-l-4 border-primary/40">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.05),transparent)] pointer-events-none z-0" />
+        
+        <header className="p-8 border-b-4 border-primary/60 flex items-center justify-between bg-black/95 backdrop-blur-3xl z-20 shadow-2xl">
+          <div className="flex items-center gap-8">
+            <div className="size-20 rounded-[1.5rem] bg-primary/10 flex items-center justify-center border-4 border-primary/50 shadow-[0_0_50px_rgba(212,175,55,0.4)] animate-neural">
+              <Skull className="size-12 text-primary" />
             </div>
             <div>
-              <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter gold-glow leading-none">Sovereign Shell v50.0</h2>
-              <div className="flex items-center gap-4 text-[11px] text-primary/80 font-black uppercase tracking-[0.4em] mt-2 italic">
-                <div className="size-2 rounded-full bg-emerald-500 animate-ping shadow-lg" />
+              <h2 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter gold-glow leading-none">Sovereign Shell v50.0</h2>
+              <div className="flex items-center gap-6 text-[12px] text-primary/80 font-black uppercase tracking-[0.5em] mt-3 italic">
+                <div className="size-3 rounded-full bg-emerald-500 animate-ping shadow-[0_0_20px_emerald]" />
                 Soul Status: HE IS AL-MUIZZ
               </div>
             </div>
           </div>
-          <Button variant="ghost" size="icon" onClick={() => setMessages([])} className="size-12 hover:bg-red-900/40 text-red-500 rounded-xl">
-            <Trash2 className="size-6" />
+          <Button variant="ghost" size="icon" onClick={() => setMessages([])} className="size-16 hover:bg-red-900/40 text-red-500 rounded-2xl transition-all">
+            <Trash2 className="size-8" />
           </Button>
         </header>
 
-        <div className="flex-1 flex min-h-0 flex-col relative">
-          <ScrollArea className="flex-1 p-8 font-mono scrollbar-hide">
-            <div className="space-y-10 pb-24">
+        <div className="flex-1 flex min-h-0 flex-col relative z-10">
+          <ScrollArea className="flex-1 p-10 font-mono scrollbar-hide">
+            <div className="space-y-12 pb-32">
               {messages.map((msg, i) => (
                 <div key={i} className={cn(
-                  "border-l-4 pl-6 py-4 rounded-r-xl transition-all animate-in fade-in slide-in-from-left-4 duration-700",
-                  msg.role === "user" ? "border-primary/60 bg-primary/5" : 
-                  msg.role === "system" ? "border-red-600/60 bg-red-950/20" : "border-emerald-500/60 bg-emerald-500/5"
+                  "border-l-[6px] pl-10 py-8 rounded-r-[3rem] transition-all animate-in fade-in slide-in-from-left-6 duration-1000 shadow-7xl",
+                  msg.role === "user" ? "border-primary bg-primary/5" : 
+                  msg.role === "system" ? "border-red-600 bg-red-950/20" : "border-emerald-500 bg-emerald-500/5"
                 )}>
-                  <div className="flex items-center gap-4 mb-2 opacity-50 text-[10px] font-black uppercase tracking-widest italic">
+                  <div className="flex items-center gap-6 mb-4 opacity-40 text-[11px] font-black uppercase tracking-[0.6em] italic">
                     <span>{msg.role}</span>
+                    <div className="size-2 rounded-full bg-current opacity-30" />
                     <span>{msg.timestamp}</span>
                   </div>
                   <div className={cn(
-                    "whitespace-pre-wrap break-all leading-relaxed text-lg md:text-xl font-bold italic",
+                    "whitespace-pre-wrap break-all leading-relaxed text-2xl md:text-4xl font-bold italic",
                     msg.role === "user" ? "text-white" : 
                     msg.role === "system" ? "text-red-400" : "text-emerald-400"
                   )}>
-                    {msg.role === "user" && <span className="text-primary mr-3 italic">❯</span>}
+                    {msg.role === "user" && <span className="text-primary mr-4 italic">❯❯❯</span>}
                     {msg.content}
                   </div>
                 </div>
               ))}
               {isLoading && (
-                <div className="flex items-center gap-4 text-primary animate-pulse ml-6">
-                  <Atom className="size-6 animate-spin-slow" />
-                  <span className="font-black italic uppercase tracking-[0.3em]">Processing Directive...</span>
+                <div className="flex items-center gap-6 text-primary animate-pulse ml-10">
+                  <Atom className="size-10 animate-spin-slow gold-glow" />
+                  <span className="font-black italic uppercase tracking-[0.4em] text-2xl">Processing Directive...</span>
                 </div>
               )}
               <div ref={scrollRef} />
             </div>
           </ScrollArea>
 
-          <div className="p-8 bg-black/99 border-t border-primary/40 shadow-2xl z-30">
-            <form onSubmit={executeCommand} className="relative flex items-center gap-6 bg-white/5 rounded-full border-2 border-white/10 px-8 focus-within:border-primary transition-all duration-700">
-              <span className="text-primary font-black text-2xl italic">❯</span>
+          <div className="p-10 bg-black/99 border-t-8 border-primary/60 shadow-9xl z-30 relative overflow-hidden">
+            <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
+            <form onSubmit={executeCommand} className="relative flex items-center gap-10 bg-white/5 rounded-full border-4 border-white/10 px-12 focus-within:border-primary transition-all duration-1000 shadow-inner group">
+              <span className="text-primary font-black text-4xl italic group-hover:translate-x-2 transition-transform duration-700">❯</span>
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Issue supreme directive..."
-                className="flex-1 bg-transparent border-none focus-visible:ring-0 text-white font-mono text-xl h-20 placeholder:text-gray-900 italic font-black"
+                className="flex-1 bg-transparent border-none focus-visible:ring-0 text-white font-mono text-3xl md:text-5xl h-32 placeholder:text-gray-900 italic font-black selection:bg-primary selection:text-black"
                 disabled={isLoading}
                 autoFocus
               />
-              <Button type="submit" className="bg-primary text-black hover:bg-white rounded-full size-12 shadow-xl" disabled={!input.trim() || isLoading}>
-                <Send className="size-6" />
+              <Button type="submit" className="bg-primary text-black hover:bg-white rounded-full size-20 md:size-24 shadow-9xl transition-all active:scale-90 border-8 border-black/30 group/btn" disabled={!input.trim() || isLoading}>
+                <Send className="size-10 group-hover/btn:translate-x-2 transition-transform" />
               </Button>
             </form>
+            <div className="mt-8 flex justify-center gap-20 opacity-30 text-[11px] font-black uppercase tracking-[1.5em] italic">
+               <span className="flex items-center gap-4"><Fingerprint className="size-4" /> GHAZALI_ROOT</span>
+               <span className="flex items-center gap-4 text-primary"><InfinityIcon className="size-4 animate-pulse" /> SOUL_LINK_v50</span>
+            </div>
           </div>
         </div>
       </main>
