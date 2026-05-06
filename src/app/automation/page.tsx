@@ -3,7 +3,25 @@
 import * as React from "react"
 import { SidebarNav } from "@/components/platform/sidebar-nav"
 import { 
-  Zap, Loader2, Skull, Terminal, Play, Cpu, Target, Rocket, Search, ShieldCheck, Fingerprint, Activity, Sparkles, Binary, Boxes, Atom, History, ListRestart
+  Zap, 
+  Loader2, 
+  Skull, 
+  Terminal, 
+  Play, 
+  Cpu, 
+  Target, 
+  Rocket, 
+  Search, 
+  ShieldCheck, 
+  Fingerprint, 
+  Activity, 
+  Sparkles, 
+  Binary, 
+  Boxes, 
+  Atom, 
+  History, 
+  ListRestart,
+  Globe
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -59,7 +77,6 @@ export default function AutomationPage() {
         });
         const data = await response.json();
         if (data.success && data.output) {
-            // محاكاة استلام النتائج من المحرك الجديد
             try {
                 const parsed = JSON.parse(data.output);
                 setResults(parsed || []);

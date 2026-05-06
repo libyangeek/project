@@ -35,7 +35,8 @@ import {
   Boxes,
   Atom,
   Binary as BinaryIcon,
-  Infinity as InfinityIcon
+  Infinity as InfinityIcon,
+  Globe
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
