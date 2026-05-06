@@ -103,7 +103,7 @@ export default function DashboardPage() {
         return Math.max(99.95, Math.min(100, next));
       });
 
-      // سعة الاستحواذ الديناميكية
+      // سعة الاستحواذ الديناميكية بناءً على الجلسات الفعلية
       setCapacity(prev => {
         const base = (sessions?.length || 0) * 1250 + 12042;
         return base + Math.floor(Math.random() * 10 - 5);
@@ -227,7 +227,6 @@ export default function DashboardPage() {
                  </div>
               </div>
 
-              {/* بطاقة الرنين الكمي الإضافية لضمان الديناميكية الكاملة */}
               <div className="mt-8 p-8 rounded-[2.5rem] bg-magenta-500/5 border-2 border-magenta-500/20 group overflow-hidden shadow-2xl">
                  <div className="flex justify-between items-center">
                     <h4 className="text-[12px] font-black text-magenta-500 uppercase tracking-[0.8em] italic flex items-center gap-4">
