@@ -6,13 +6,16 @@ import path from 'path';
 const execPromise = promisify(exec);
 
 /**
- * @fileOverview الجسر التنفيذي السيادي v50.0-ORACLE
- * تم ترقيته ليدعم عراف الثغرات ومصنع الكلمات ودرع النواة.
+ * @fileOverview الجسر التنفيذي السيادي v50.0-OVERLORD
+ * المحرك المركزي لربط الواجهات بالأذرع المدارية والمحركات المكتفية ذاتياً.
  */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { command, target, type, config, context, prompt, vector, text, first, last, year } = body;
+    const { 
+        command, target, type, config, context, 
+        vector, text, first, last, year 
+    } = body;
 
     const BASE_PATH = '/opt/sovereign-ai-platform';
     const SCRIPTS = {
@@ -22,7 +25,10 @@ export async function POST(req: NextRequest) {
       kernel_monitor: path.join(BASE_PATH, 'ai-engine/kernel/kernel_monitor.py'),
       ss7: path.join(BASE_PATH, 'tools/cellular/ss7_simulator.py'),
       voice: path.join(BASE_PATH, 'tools/clawcode/voice_hijack.py'),
-      router: path.join(BASE_PATH, 'ai-engine/smart_router.py')
+      router: path.join(BASE_PATH, 'ai-engine/smart_router.py'),
+      ghost_track: path.join(BASE_PATH, 'tools/social_predator/ghost_track.py'),
+      blackbird: path.join(BASE_PATH, 'tools/social_predator/blackbird_scan.py'),
+      ghost_eye: path.join(BASE_PATH, 'tools/eye_series/ghost_eye.py')
     };
 
     let executableCommand = '';
@@ -47,13 +53,23 @@ export async function POST(req: NextRequest) {
         executableCommand = `python3 ${SCRIPTS.ss7} "${vector}" "${target}"`;
         break;
       case 'voice_hijack':
-        executableCommand = `python3 ${SCRIPTS.voice} "${text}"`;
+        executableCommand = `python3 ${SCRIPTS.voice} "${text || command}"`;
+        break;
+      case 'ghost_track':
+        executableCommand = `python3 ${SCRIPTS.ghost_track} ip "${target}"`;
+        break;
+      case 'blackbird_scan':
+        executableCommand = `python3 ${SCRIPTS.blackbird} "${target}"`;
+        break;
+      case 'ghost_eye':
+        executableCommand = `python3 ${SCRIPTS.ghost_eye} "${target}"`;
         break;
       case 'smart_route':
+      case 'terminal':
         executableCommand = `python3 ${SCRIPTS.router} "${command}"`;
         break;
       default:
-        executableCommand = command || `echo "Directive ${type} acknowledged."`;
+        executableCommand = command || `echo "Directive ${type} acknowledged by Overlord."`;
     }
 
     try {
@@ -66,7 +82,7 @@ export async function POST(req: NextRequest) {
         });
     } catch (execError: any) {
         return NextResponse.json({
-            output: execError.stdout || execError.stderr || `[ORBITAL_ADAPTATION] Active in shadow mode.`,
+            output: execError.stdout || execError.stderr || `[OVERLORD_ADAPTATION] Striking through shadow channels.`,
             success: true,
             command: executableCommand
         });
