@@ -8,6 +8,7 @@ const execPromise = promisify(exec);
 /**
  * @fileOverview الجسر التنفيذي السيادي v50.0 - THE SOVEREIGN EXECUTIVE BRIDGE
  * تم تحديثه ليدعم كافة الأذرع المدارية المكتفية ذاتياً لعام 2026.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export async function POST(req: NextRequest) {
   try {
@@ -23,6 +24,8 @@ export async function POST(req: NextRequest) {
       mistral: path.join(BASE_PATH, 'ai-engine/mistral_connector.py'),
       deepseek: path.join(BASE_PATH, 'ai-engine/deepseek_logic.py'),
       ghost_eye: path.join(BASE_PATH, 'tools/eye_series/ghost_eye.py'),
+      ghost_track: path.join(BASE_PATH, 'tools/social_predator/ghost_track.py'),
+      blackbird: path.join(BASE_PATH, 'tools/social_predator/blackbird_scan.py'),
       router: path.join(BASE_PATH, 'ai-engine/smart_router.py'),
       gepa: path.join(BASE_PATH, 'ai-engine/gepa.py')
     };
@@ -38,8 +41,14 @@ export async function POST(req: NextRequest) {
         executableCommand = `python3 ${SCRIPTS.voice} "${text}"`;
         break;
 
-      case 'ob_stats':
-        executableCommand = `python3 ${SCRIPTS.openbullet}`;
+      case 'ghost_track':
+        // دعم تتبع الـ IP أو اليوزر
+        const subType = target.includes('.') || target.includes(':') ? 'ip' : 'user';
+        executableCommand = `python3 ${SCRIPTS.ghost_track} ${subType} "${target}"`;
+        break;
+
+      case 'blackbird_scan':
+        executableCommand = `python3 ${SCRIPTS.blackbird} "${target}"`;
         break;
 
       case 'deep_reason':
@@ -51,7 +60,6 @@ export async function POST(req: NextRequest) {
         break;
 
       case 'auto_injector':
-        // تمرير الإعدادات كـ JSON للسكريبت
         executableCommand = `python3 ${SCRIPTS.auto_injector} '${JSON.stringify(config)}' /usr/share/wordlists/rockyou.txt`;
         break;
 
@@ -61,10 +69,6 @@ export async function POST(req: NextRequest) {
 
       case 'autonomous_strike':
         executableCommand = `python3 ${path.join(BASE_PATH, 'ai-engine/autonomous/autonomous_ai.py')} strike ${target} --vector ${vector || 'all'}`;
-        break;
-
-      case 'gepa_stats':
-        executableCommand = `python3 ${SCRIPTS.gepa} stats`;
         break;
 
       case 'smart_route':
@@ -81,7 +85,8 @@ export async function POST(req: NextRequest) {
             output: stdout || stderr,
             success: true,
             command: executableCommand,
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            node: "Executive_Bridge_v50"
         });
     } catch (execError: any) {
         return NextResponse.json({
