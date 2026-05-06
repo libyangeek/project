@@ -19,7 +19,8 @@ import {
   ShieldCheck,
   Flame,
   Globe,
-  Activity
+  Activity,
+  Eye
 } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"

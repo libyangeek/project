@@ -10,7 +10,7 @@ const execPromise = promisify(exec);
  * @fileOverview الجسر التنفيذي السيادي v50.0 - THE SOVEREIGN EXECUTIVE BRIDGE
  * تم تحديثه ليدعم كافة القدرات الميدانية: Mistral, DeepSeek, OpenBullet, Eye Series.
  */
-export default async function POST(req: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { command, target, type, config, context, prompt, vector } = body;
@@ -55,6 +55,10 @@ export default async function POST(req: NextRequest) {
 
       case 'gepa_stats':
         executableCommand = `python3 ${SCRIPTS.gepa} stats`;
+        break;
+
+      case 'entropy':
+        executableCommand = `bash ${path.join(BASE_PATH, 'scripts/command_center.sh')} self-destruct`;
         break;
 
       default:
