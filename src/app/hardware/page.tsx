@@ -38,6 +38,7 @@ import {
   SmartphoneNfc,
   Rocket,
   Eye,
+  Key,
   Infinity as InfinityIcon
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
