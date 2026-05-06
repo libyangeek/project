@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -160,7 +161,7 @@ export default function DashboardPage() {
     { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", status: "ALIGNED" },
     { name: "مصنع النسل", icon: Baby, href: "/progeny", status: "FORGING" },
     { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", status: "PEGASUS_v3" },
-    { name: "القبو الجيني", icon: Database, href: "/knowledge", status: "ETERNAL" },
+    { name: "القبو الجيني 5.0", icon: Database, href: "/knowledge", status: "ETERNAL" },
     { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", status: "POLYMORPH" },
     { name: "نزاهة النواة", icon: ShieldCheck, href: "/system", status: "STABILIZED" }
   ];
