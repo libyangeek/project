@@ -31,7 +31,9 @@ import {
   Heart,
   Network,
   Sparkles,
-  Target
+  Target,
+  BrainCircuit,
+  Radio
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"

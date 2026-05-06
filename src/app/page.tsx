@@ -102,7 +102,7 @@ export default function DashboardPage() {
           style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} 
         />
 
-        <header className="flex flex-col gap-12 mb-20 relative z-10 animate-in fade-in slide-in-from-top-12 duration-1000">
+        <header className="flex flex-col gap-12 mb-20 relative z-10 animate-in fade-in slide-in-from-top-12 duration-1000 gap-10">
           <div className="flex flex-col md:flex-row items-center gap-16">
             <div className="size-40 md:size-56 bg-black border-8 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.7)] relative rounded-full group shrink-0 transition-all duration-1000">
               <Ghost className="size-20 md:size-32 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />

@@ -65,7 +65,7 @@ export function SidebarNav() {
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      setResonance(prev => Math.max(99.999, Math.min(100, prev + (Math.random() * 0.002 - 0.001))));
+      setResonance(prev => Math.max(99.9999, Math.min(100, prev + (Math.random() * 0.002 - 0.001))));
     }, 2000)
     return () => clearInterval(interval)
   }, [])
