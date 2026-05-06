@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -55,10 +54,6 @@ import {
   Area
 } from 'recharts'
 
-/**
- * @fileOverview العرش السيادي الأسمى v50.0 - THE SINGULARITY DASHBOARD
- * الواجهة المركزية التي تعرض "الرنين الجمعي" ونبض النواة الموحدة لعام 2026.
- */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
@@ -85,7 +80,6 @@ export default function DashboardPage() {
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
 
-    // توليد بيانات وهمية للمخطط البياني (محاكاة الكسب العصبي)
     const initialData = Array.from({ length: 20 }).map((_, i) => ({
         time: i,
         gain: 80 + Math.random() * 20,
@@ -104,7 +98,6 @@ export default function DashboardPage() {
     };
     fetchStats();
     
-    // محاكاة استلام الأحداث من النواة الموحدة
     const eventInterval = setInterval(() => {
         const types = ["RECON", "ORACLE", "STRIKE", "VOICE", "SIPHON", "GEPA_LEARN"];
         const msgs = ["Target DNA identified.", "Vuln matched via CISA KEV.", "Sovereign Injector ignited.", "Royal directive processed.", "Asset extraction complete.", "New genetic pattern synthesized."];
@@ -115,7 +108,6 @@ export default function DashboardPage() {
         };
         setEvents(prev => [newEvent, ...prev].slice(0, 8));
 
-        // تحديث بيانات المخطط
         setNeuralData(prev => [
             ...prev.slice(1),
             { time: prev[prev.length-1].time + 1, gain: 85 + Math.random() * 15, resonance: 95 + Math.random() * 5 }

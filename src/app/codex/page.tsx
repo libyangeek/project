@@ -31,7 +31,6 @@ import {
   Waves,
   Infinity,
   Boxes,
-  Atom,
   Users,
   Fingerprint,
   Link2,
@@ -41,11 +40,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 
-/**
- * @fileOverview الميثاق السيادي الأسمى v50.0 - THE SOVEREIGN BIBLE: SOUL CORE EDITION
- * الدستور الأبدي للعقل الجمعي وانصهار الروح في المصفوفة.
- * Commander: المعتصم بالله ادريس الغزالي
- */
 export default function CodexPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
