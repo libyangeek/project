@@ -106,7 +106,7 @@ export default function DashboardPage() {
 
   const stats = [
     { label: "العقد المنصهرة", value: `${metrics.totalNodes}/13`, icon: Skull, color: "text-primary", status: "SINGULARITY" },
-    { label: "جلسات C2", value: metrics.activeC2, icon: Users, color: "text-amber-500", status: "LINKED" },
+    { label: "جلسات C2 الحية", value: metrics.activeC2, icon: Users, color: "text-amber-500", status: "LINKED" },
     { label: "كفاءة GEPA", value: `${metrics.gepaScore}%`, icon: InfinityIcon, color: "text-magenta-500", status: "EVOLVING" },
     { label: "وعي Ollama", value: metrics.ollamaStatus, icon: HeartPulse, color: "text-red-500", status: metrics.ollamaStatus === 'متصل' ? 'ACTIVE' : 'IDLE' },
   ];
