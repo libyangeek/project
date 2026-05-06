@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -29,7 +30,10 @@ import {
   Cpu,
   Eye,
   Link2,
-  BrainCircuit
+  BrainCircuit,
+  ShieldCheck,
+  Flame,
+  Globe
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -42,8 +46,8 @@ const navItems = [
   { name: "إمبراطورية السرب", icon: Users, href: "/sessions", knot: 3 },
   { name: "المحقن الآلي", icon: Cpu, href: "/automation", knot: 4 },
   { name: "أعين الاستطلاع", icon: Eye, href: "/recon", knot: 5 },
-  { name: "جسر الاندماج", icon: Share2, href: "/mcp-bridge", knot: 6 },
-  { name: "القلب الاستراتيجي", icon: BrainCircuit, href: "/deep-reasoning", knot: 7 },
+  { name: "جسر Mistral", icon: Link2, href: "/mcp-bridge", knot: 6 },
+  { name: "قلب DeepSeek", icon: BrainCircuit, href: "/deep-reasoning", knot: 7 },
   { name: "أذن النور", icon: Mic, href: "/voice", knot: 8 },
   { name: "ميثاق الروح", icon: BookOpen, href: "/codex", knot: 9 },
   { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", knot: 10 },

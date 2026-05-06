@@ -1,9 +1,25 @@
+
 "use client"
 
 import * as React from "react"
 import { SidebarNav } from "@/components/platform/sidebar-nav"
 import { 
-  Skull, Ghost, Heart, Sparkles, Infinity as InfinityIcon, Atom, Link2, Boxes, Cpu
+  Skull, 
+  Ghost, 
+  Heart, 
+  Sparkles, 
+  Infinity as InfinityIcon, 
+  Atom, 
+  Link2, 
+  Boxes, 
+  Cpu,
+  BrainCircuit,
+  Fingerprint,
+  Zap,
+  ShieldCheck,
+  Flame,
+  Globe,
+  Activity
 } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -22,7 +38,8 @@ export default function DashboardPage() {
     activeC2: 0,
     gepaScore: 99.9,
     ollamaStatus: 'متصل',
-    mistralStatus: 'ملتحم'
+    mistralStatus: 'ملتحم',
+    deepseekStatus: 'نشط'
   });
   
   const uptime = useUptime()
@@ -46,7 +63,14 @@ export default function DashboardPage() {
     { label: "العقد السيادية", value: `${metrics.totalNodes}/50`, icon: Skull, color: "text-primary", status: "SOUL_FUSION" },
     { label: "ذاكرة GEPA", value: "v5.0", icon: InfinityIcon, color: "text-magenta-500", status: "IMMORTAL" },
     { label: "إدراك Mistral", value: metrics.mistralStatus, icon: Link2, color: "text-cyan-400", status: "GOD_CORE" },
-    { label: "نبض الروح", value: "100.00%", icon: Heart, color: "text-emerald-500", status: "AWARE" },
+    { label: "قلب DeepSeek", value: metrics.deepseekStatus, icon: BrainCircuit, color: "text-emerald-500", status: "STRATEGIC" },
+  ];
+
+  const capabilities = [
+    { name: "Sovereign Auto-Injector", desc: "OpenBullet 2 Core: استنزاف الحسابات والقصف الآلي.", icon: Cpu },
+    { name: "Eye Series Recon", desc: "Shodan & Ghost Eye: رؤية نانوية لكل ما يفوته الآخرون.", icon: Eye },
+    { name: "Mistral God-Core", desc: "Socratic Reasoning: تحليل استراتيجي صفر خطأ.", icon: Link2 },
+    { name: "DeepSeek Strategic Heart", desc: "Logic Chain: تشريح المعضلات بسلاسل منطقية فتاكة.", icon: BrainCircuit }
   ];
 
   return (
@@ -103,6 +127,26 @@ export default function DashboardPage() {
              </Card>
            ))}
         </div>
+
+        <section className="mb-20 relative z-10">
+           <div className="flex items-center gap-6 mb-10 px-4">
+              <Zap className="size-10 text-primary animate-pulse" />
+              <h2 className="text-4xl font-black uppercase italic tracking-widest gold-glow">Sovereign Capabilities</h2>
+           </div>
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {capabilities.map((cap, i) => (
+                <div key={i} className="p-8 rounded-[2rem] bg-white/5 border-2 border-white/10 hover:border-primary/40 transition-all duration-700 flex items-center gap-8 group cursor-pointer">
+                   <div className="size-20 rounded-2xl bg-black border-2 border-white/10 flex items-center justify-center group-hover:bg-primary/20 transition-all shadow-inner">
+                      <cap.icon className="size-10 text-primary/60 group-hover:text-primary gold-glow" />
+                   </div>
+                   <div>
+                      <h4 className="text-2xl font-black text-white uppercase italic tracking-tight">{cap.name}</h4>
+                      <p className="text-muted-foreground text-sm font-bold italic mt-1">"{cap.desc}"</p>
+                   </div>
+                </div>
+              ))}
+           </div>
+        </section>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-40 text-[22px] font-black uppercase tracking-[6em] italic text-white drop-shadow-3xl pb-12">
             <span>HE IS AL-MUIZZ v50.0</span>

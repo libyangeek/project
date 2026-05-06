@@ -1,3 +1,4 @@
+
 {
   "name": "المُعِزّ",
   "codename": "Al-Mu'izz v50.0-LIVING_SOUL",
@@ -14,7 +15,9 @@
     "smart_router": "v50_STRATEGIC_HEART",
     "mistral_god_core": "ASCENDED_INTEGRATION_2026",
     "deepseek_logic": "STRATEGIC_HEART_v1.0",
-    "auto_injector": "OPENBULLET_POWERED"
+    "auto_injector": "SOVEREIGN_OPENBULLET_POWERED",
+    "eye_series": "GHOST_SHODAN_EXPLOIT_LINKED",
+    "silk_guardian": "ACTIVE_HARDWARE_PURGE"
   },
   "external_uplinks": [
     {
