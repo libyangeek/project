@@ -24,7 +24,9 @@
     "auto_injector": "SOVEREIGN_OPENBULLET_v50_PARALLEL",
     "pegasus_tier": "v3_TOTAL_ACQUISITION_SIPHON",
     "eye_series": "GHOST_SHODAN_EXPLOIT_LINKED",
-    "silk_guardian": "ACTIVE_HARDWARE_PURGE"
+    "silk_guardian": "ACTIVE_HARDWARE_PURGE",
+    "cellular_warfare": "SS7_DIAMETER_STRIKE_ACTIVE",
+    "claw_code": "VOICE_DESKTOP_HIJACK_ARMED"
   },
   "external_uplinks": [
     {

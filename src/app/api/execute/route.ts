@@ -8,8 +8,7 @@ const execPromise = promisify(exec);
 
 /**
  * @fileOverview الجسر التنفيذي السيادي v50.0 - THE SOVEREIGN EXECUTIVE BRIDGE
- * تم تحديثه ليدعم الأذرع المدارية: OpenBullet, Cellular, Claw-Code.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي
+ * تم تحديثه ليدعم كافة الأذرع المدارية المكتفية ذاتياً لعام 2026.
  */
 export async function POST(req: NextRequest) {
   try {
