@@ -80,12 +80,12 @@ export default function DashboardPage() {
     window.addEventListener("mousemove", handleMouseMove)
     
     const interval = setInterval(() => {
-      // رنين عصبي ديناميكي
+      // رنين عصبي ديناميكي يتقلب حول الـ 100%
       setHiveSync(prev => {
         const next = prev + (Math.random() * 0.002 - 0.001);
         return Math.max(99.98, Math.min(100, next));
       });
-      // دقة ضرب متغيرة
+      // دقة ضرب متغيرة نانوياً
       setPrecision(prev => {
         const next = prev + (Math.random() * 0.001 - 0.0005);
         return Math.max(99.995, Math.min(99.999, next));
@@ -102,7 +102,8 @@ export default function DashboardPage() {
   if (!mounted) return null;
 
   // حساب القدرة بناءً على الجلسات الفعلية + عامل مضاعف للأسطول العليم
-  const dynamicCapacity = ((sessions?.length || 0) * 1250 + 1042).toLocaleString();
+  // إذا لم توجد جلسات، نعرض رقماً أساسياً يعبر عن السطوة الكامنة
+  const dynamicCapacity = ((sessions?.length || 0) * 1250 + 12042).toLocaleString();
 
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/30 relative overflow-x-hidden scanline-effect font-code">

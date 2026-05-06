@@ -44,7 +44,7 @@ const navItems = [
   { name: "Divine Strike", icon: Target, href: "/terminal", knot: 2 },
   { name: "Armada Swarm", icon: Users, href: "/sessions", knot: 3 },
   { name: "MCP Bridge", icon: Share2, href: "/mcp-bridge", knot: 4 },
-  { name: "Whisper Voice", icon: Mic, href: "/remote", knot: 5 }, // الرابط الموحد للتحكم الصوتي والموبايل
+  { name: "Whisper Voice", icon: Mic, href: "/remote", knot: 5 },
   { name: "Sovereign Bible", icon: BookOpen, href: "/codex", knot: 6 },
   { name: "Swarm Simulator", icon: Workflow, href: "/digital-twin", knot: 7 },
   { name: "Field Agent", icon: Activity, href: "/field-agent", knot: 8 },
@@ -53,11 +53,6 @@ const navItems = [
   { name: "Omniscient Recon", icon: Binoculars, href: "/recon", knot: 11 },
   { name: "Genetic Vault", icon: Database, href: "/knowledge", knot: 12 },
   { name: "Polymorph Lab", icon: ShieldX, href: "/red-team", knot: 13 },
-  { name: "Cloud Dominion", icon: Cloud, href: "/system" },
-  { name: "Fractal Rebirth", icon: RefreshCcw, href: "/system" },
-  { name: "Silk Guardian", icon: Lock, href: "/system" },
-  { name: "Social Intel", icon: MessageSquare, href: "/social" },
-  { name: "System Pulse", icon: Activity, href: "/system" },
 ]
 
 export function SidebarNav() {
