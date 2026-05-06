@@ -19,7 +19,6 @@ import {
   Share2,
   Boxes,
   Zap,
-  Lock,
   Infinity as InfinityIcon,
   Skull,
   Binary,
@@ -27,7 +26,8 @@ import {
   Fingerprint,
   Atom,
   Ghost,
-  Cpu
+  Cpu,
+  Eye
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -39,14 +39,14 @@ const navItems = [
   { name: "المحطة التنفيذية", icon: Target, href: "/terminal", knot: 2 },
   { name: "إمبراطورية السرب", icon: Users, href: "/sessions", knot: 3 },
   { name: "المحقن الآلي", icon: Cpu, href: "/automation", knot: 4 },
-  { name: "جسر الاندماج", icon: Share2, href: "/mcp-bridge", knot: 5 },
-  { name: "أذن النور", icon: Mic, href: "/voice", knot: 6 },
-  { name: "ميثاق الروح", icon: BookOpen, href: "/codex", knot: 7 },
-  { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", knot: 8 },
-  { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", knot: 9 },
-  { name: "مصنع النسل", icon: Baby, href: "/progeny", knot: 10 },
-  { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", knot: 11 },
-  { name: "الاستطلاع العليم", icon: Binoculars, href: "/recon", knot: 12 },
+  { name: "أعين الاستطلاع", icon: Eye, href: "/recon", knot: 5 },
+  { name: "جسر الاندماج", icon: Share2, href: "/mcp-bridge", knot: 6 },
+  { name: "أذن النور", icon: Mic, href: "/voice", knot: 7 },
+  { name: "ميثاق الروح", icon: BookOpen, href: "/codex", knot: 8 },
+  { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", knot: 9 },
+  { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", knot: 10 },
+  { name: "مصنع النسل", icon: Baby, href: "/progeny", knot: 11 },
+  { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", knot: 12 },
   { name: "القبو الجيني 5.0", icon: Database, href: "/knowledge", knot: 13 },
   { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 14 },
 ]
