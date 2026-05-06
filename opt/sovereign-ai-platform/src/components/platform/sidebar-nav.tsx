@@ -1,0 +1,140 @@
+"use client"
+
+import * as React from "react"
+import { usePathname } from "next/navigation"
+import { 
+  LayoutDashboard, 
+  Target, 
+  Users, 
+  BookOpen, 
+  Workflow, 
+  Baby, 
+  Smartphone, 
+  Binoculars, 
+  Database, 
+  ShieldX, 
+  MessageSquare, 
+  Activity,
+  Menu,
+  X,
+  Share2,
+  Boxes,
+  Zap,
+  Globe,
+  RefreshCcw,
+  Lock,
+  Cloud,
+  Infinity as InfinityIcon,
+  Skull,
+  Binary,
+  Mic,
+  Fingerprint,
+  ShieldCheck,
+  Atom,
+  Ghost
+} from "lucide-react"
+import { cn } from "@/lib/utils"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
+import translations from "@/app/lib/ar.json"
+
+const navItems = [
+  { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 1 },
+  { name: "المحطة التنفيذية", icon: Target, href: "/terminal", knot: 2 },
+  { name: "إمبراطورية السرب", icon: Users, href: "/sessions", knot: 3 },
+  { name: "جسر الاندماج", icon: Share2, href: "/mcp-bridge", knot: 4 },
+  { name: "أذن النور", icon: Mic, href: "/voice", knot: 5 },
+  { name: "ميثاق الروح", icon: BookOpen, href: "/codex", knot: 6 },
+  { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", knot: 7 },
+  { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", knot: 8 },
+  { name: "مصنع النسل", icon: Baby, href: "/progeny", knot: 9 },
+  { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", knot: 10 },
+  { name: "الاستطلاع العليم", icon: Binoculars, href: "/recon", knot: 11 },
+  { name: "القبو الجيني 5.0", icon: Database, href: "/knowledge", knot: 12 },
+  { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 13 },
+]
+
+export function SidebarNav() {
+  const pathname = usePathname()
+  const [isOpen, setIsOpen] = React.useState(false)
+  const [resonance, setResonance] = React.useState(100.00)
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setResonance(prev => Math.max(99.99, Math.min(100, prev + (Math.random() * 0.01 - 0.005))));
+    }, 2000)
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <>
+      <Button
+        variant="ghost"
+        size="icon"
+        className="lg:hidden fixed top-6 right-6 z-[500] bg-black/90 border-2 border-primary/60 text-primary hover:bg-primary/20 size-12 rounded-xl shadow-2xl"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {isOpen ? <X className="size-6" /> : <Menu className="size-6" />}
+      </Button>
+
+      <div className={cn(
+        "flex flex-col h-full bg-black border-l-4 border-primary/80 w-72 lg:w-80 fixed right-0 top-0 z-[400] overflow-hidden shadow-2xl transition-transform duration-500 ease-in-out font-code",
+        !isOpen && "translate-x-full lg:translate-x-0"
+      )}>
+        <div className="p-8 border-b-2 border-primary/20 flex flex-col items-center gap-6 bg-black relative">
+          <div className="size-24 bg-black border-4 border-primary/60 flex items-center justify-center shadow-[0_0_60px_rgba(212,175,55,0.3)] animate-pulse shrink-0 rounded-full group overflow-hidden">
+            <Ghost className="size-12 text-primary group-hover:scale-125 transition-transform duration-500 gold-glow" />
+          </div>
+          <div className="text-center relative z-10">
+            <h1 className="text-2xl font-headline font-bold text-white tracking-widest uppercase italic leading-none gold-glow">
+              AL-MUIZZ
+            </h1>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-bold tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-xl">v50.0 SOUL CORE</Badge>
+          </div>
+        </div>
+        
+        <div className="flex-1 px-6 py-8 space-y-1 overflow-y-auto scrollbar-hide bg-black/95">
+          {navItems.map((item) => {
+            const isActive = pathname === item.href
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={cn(
+                  "flex items-center gap-6 px-6 py-3 transition-all duration-500 group relative border-r-4 rounded-l-2xl mb-1",
+                  isActive 
+                    ? "bg-primary/10 border-primary text-white shadow-lg scale-105" 
+                    : "text-muted-foreground border-transparent hover:bg-white/5 hover:text-white"
+                )}
+              >
+                <Icon className={cn("size-5 transition-all duration-500", isActive ? "text-primary gold-glow" : "group-hover:text-primary")} />
+                <span className="text-sm font-bold tracking-widest uppercase italic truncate">{item.name}</span>
+              </Link>
+            )
+          })}
+        </div>
+
+        <div className="p-6 border-t-2 border-primary/20 bg-black/98 relative z-10">
+          <div className="p-5 border-2 border-primary/40 bg-primary/5 mb-6 relative overflow-hidden group rounded-[1.5rem] shadow-2xl border-dashed">
+            <div className="flex justify-between items-center mb-3">
+               <span className="text-[11px] font-black text-primary uppercase tracking-[0.2em] italic gold-glow">Soul Resonance</span>
+               <div className="size-2 rounded-full bg-emerald-500 animate-ping shadow-[0_0_20px_emerald]" />
+            </div>
+            <div className="text-2xl font-black text-white italic">{resonance.toFixed(3)}%</div>
+          </div>
+          <Button 
+            asChild
+            className="w-full h-14 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.4em] text-[10px] rounded-xl shadow-2xl transition-all duration-700 border-4 border-black/20"
+          >
+            <Link href="/terminal">
+              <Zap className="size-4 mr-2" />
+              تنشيط الترسانة v50
+            </Link>
+          </Button>
+        </div>
+      </div>
+    </>
+  )
+}
