@@ -1,51 +1,47 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Smart Router v42.0 – The Singularity Edition
-يختار أفضل مسار معالجة بين النماذج المحلية والسحابية بناءً على طبيعة المهمة.
-"""
-import sys
-import json
-import requests
-
+"""Smart Router v50.0 – المُعِزّ الاستراتيجي"""
+import sys, json, requests, os, subprocess
 OLLAMA_URL = "http://localhost:11434/api/generate"
 
-def get_local_models():
-    try:
-        resp = requests.get("http://localhost:11434/api/tags", timeout=5)
-        return [m["name"] for m in resp.json().get("models", [])]
-    except:
-        return []
+TOOLS = {
+    "ghost_track": "python3 /opt/sovereign-ai-platform/tools/social_predator/ghost_track.py",
+    "blackbird": "python3 /opt/sovereign-ai-platform/tools/social_predator/blackbird_scan.py",
+    "seeker": "python3 /opt/sovereign-ai-platform/tools/social_predator/seeker_gps.py",
+    "xlogger": "python3 /opt/sovereign-ai-platform/tools/social_predator/xlogger.py",
+}
 
 def classify(prompt):
     p = prompt.lower()
-    if any(w in p for w in ["code", "python", "javascript", "bash", "react"]): return "code"
-    if any(w in p for w in ["exploit", "scan", "vuln", "attack", "payload", "cpanel"]): return "cyber"
-    if any(w in p for w in ["image", "photo", "draw", "visual"]): return "image"
+    if any(w in p for w in ["استهدف", "osint", "معلومات", "ip", "user", "من هو", "حدد"]): return "osint"
+    if any(w in p for w in ["اختراق", "ثغرة", "هجوم", "exploit", "c2"]): return "cyber"
+    if any(w in p for w in ["gps", "موقع", "تتبع", "رابط"]): return "tracking"
     return "general"
 
 def route_query(prompt):
-    models = get_local_models()
     category = classify(prompt)
+    if category == "osint":
+        target = prompt.split()[-1]
+        try:
+            subprocess.Popen([TOOLS["ghost_track"], "ip", target] if target.replace(".","").isdigit() else [TOOLS["ghost_track"], "user", target])
+            return {"category": category, "model": "GhostTrack", "status": f"تشغيل GhostTrack على {target}"}
+        except: pass
+    elif category == "tracking":
+        try:
+            subprocess.Popen([TOOLS["seeker"]])
+            return {"category": category, "model": "Seeker", "status": "تشغيل Seeker GPS"}
+        except: pass
     
-    # Mapping logic
-    model_map = {
-        "code": "codellama",
-        "cyber": "mistral",
-        "image": "llava",
-        "general": "mistral"
-    }
-    
-    selected_model = model_map.get(category, "mistral")
-    
-    if selected_model not in models:
-        selected_model = "mistral" # Default fallback
-        
-    return {
-        "category": category,
-        "model": selected_model,
-        "status": "ROUTED"
-    }
+    # Fallback to AI
+    try:
+        r = requests.post(OLLAMA_URL, json={"model": "mistral", "prompt": prompt, "stream": False})
+        return {
+            "category": category,
+            "model": "mistral",
+            "response": r.json().get("response", ""),
+            "status": "ROUTED_TO_AI"
+        }
+    except: 
+        return {"category": category, "model": "fallback", "status": "SoulCore: رابط AI مفقود"}
 
 if __name__ == "__main__":
     query = " ".join(sys.argv[1:]) if len(sys.argv) > 1 else ""

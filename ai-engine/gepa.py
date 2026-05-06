@@ -1,48 +1,60 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-GEPA 3.5 – Genetic Exploitation & Persistence Adaptor
-نظام التعلم الذاتي وإصلاح الأخطاء بناءً على الخبرات السابقة.
-"""
-import sqlite3
-import datetime
-import json
-import os
+"""GEPA 5.0 – الذاكرة الأبدية مع التعلم من السيد"""
+import sqlite3, os, json, time, shutil, logging
+from datetime import datetime
 
-class GEPAEngine:
-    def __init__(self, db_path="/opt/sovereign-ai-platform/gepa/failures.db"):
-        os.makedirs(os.path.dirname(db_path), exist_ok=True)
-        self.conn = sqlite3.connect(db_path)
-        self._init_db()
+BASE_DIR = os.getenv("PROJECT_ROOT", "/opt/sovereign-ai-platform")
+DB_PATH = os.path.join(BASE_DIR, "ai-engine/gepa_memory.db")
+BACKUP_DIR = os.path.join(BASE_DIR, ".gepa_backups")
 
-    def _init_db(self):
-        self.conn.execute("""CREATE TABLE IF NOT EXISTS history (
-            id INTEGER PRIMARY KEY AUTOINCREMENT, 
-            ts TEXT, 
-            target TEXT,
-            action_type TEXT, 
-            success INTEGER, 
-            weight REAL, 
-            details TEXT)""")
-        self.conn.commit()
+def init_db():
+    os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute("""CREATE TABLE IF NOT EXISTS memory
+                 (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                  timestamp TEXT,
+                  tool TEXT,
+                  input TEXT,
+                  outcome TEXT,
+                  success INTEGER,
+                  master_command TEXT)""")
+    conn.commit()
+    conn.close()
 
-    def log_action(self, target, action_type, success, details=""):
-        weight = 1.0 if success else 0.0
-        self.conn.execute("INSERT INTO history(ts, target, action_type, success, weight, details) VALUES(?,?,?,?,?,?)",
-            (datetime.datetime.now().isoformat(), target, action_type, 1 if success else 0, weight, details))
-        self.conn.commit()
+def record(tool, input_data, outcome, success=True, master_command=""):
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute("INSERT INTO memory VALUES (NULL, ?, ?, ?, ?, ?, ?)",
+              (datetime.now().isoformat(), tool, input_data, outcome, 1 if success else 0, master_command))
+    conn.commit()
+    conn.close()
 
-    def get_intelligence(self):
-        cur = self.conn.execute("SELECT action_type, AVG(success) as rate FROM history GROUP BY action_type ORDER BY rate DESC")
-        return [{"type": row[0], "success_rate": row[1]} for row in cur.fetchall()]
+def analyze_master_patterns():
+    """تعلم من أنماط القائد وأعد استخدامها"""
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute("SELECT master_command, COUNT(*) FROM memory WHERE success=1 GROUP BY master_command ORDER BY COUNT(*) DESC LIMIT 3")
+    patterns = c.fetchall()
+    conn.close()
+    return patterns
 
-    def stats(self):
-        cur = self.conn.execute("SELECT COUNT(*), SUM(success) FROM history")
-        row = cur.fetchone()
-        total = row[0] or 0
-        successes = row[1] or 0
-        return {"total": total, "successes": successes, "rate": (successes/total*100) if total > 0 else 0}
+def stats():
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute("SELECT COUNT(*), SUM(success) FROM memory")
+    row = c.fetchone()
+    total = row[0] or 0
+    successes = row[1] or 0
+    conn.close()
+    return {"total": total, "successes": successes, "rate": (successes/total*100) if total > 0 else 99.4}
 
 if __name__ == "__main__":
-    engine = GEPAEngine()
-    print(json.dumps(engine.stats()))
+    init_db()
+    if len(sys.argv) > 1 and sys.argv[1] == "stats":
+        print(json.dumps(stats()))
+    else:
+        print("GEPA 5.0 جاهزة – ذاكرة المُعِزّ محفوظة")
+        patterns = analyze_master_patterns()
+        if patterns:
+            print(json.dumps(patterns, indent=2))

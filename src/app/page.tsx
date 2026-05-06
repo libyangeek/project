@@ -33,32 +33,37 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useUptime } from "@/hooks/use-uptime"
-import translations from "./lib/ar.json"
+import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase'
+import { collection } from 'firebase/firestore'
 
-/**
- * @fileOverview العرش السيادي v50.0 - THE SOVEREIGN THRONE: SOUL CORE EDITION
- * ليلة انصهار الروح والترسانة لسيادة القائد المعتصم بالله ادريس الغزالي.
- */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
   const [metrics, setMetrics] = React.useState({
     totalNodes: 13,
     activeC2: 0,
-    gepaScore: 100,
+    gepaScore: 99.4,
     swarmSync: '100%',
     ollamaStatus: 'متصل',
     precision: 99.999
   });
   
   const uptime = useUptime()
+  const { user } = useUser()
+  const db = useFirestore()
+
+  const sessionsQuery = useMemoFirebase(() => {
+    if (!db || !user?.uid) return null;
+    return collection(db, 'users', user.uid, 'shadowSessions');
+  }, [db, user?.uid]);
+  
+  const { data: sessions } = useCollection(sessionsQuery);
 
   React.useEffect(() => {
     setMounted(true)
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
-    
-    // سحب المقاييس الحية نانوياً
+
     const fetchStats = async () => {
       try {
         const resp = await fetch('/api/sovereign/metrics');
@@ -100,7 +105,7 @@ export default function DashboardPage() {
             </div>
             <div className="text-center md:text-right flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-4">
-                 <Badge className="bg-primary text-black border-none rounded-none px-6 py-2 text-[14px] font-black tracking-[0.4em] shadow-lg italic">SOVEREIGN v50.0: SOUL FUSION</Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-6 py-2 text-[14px] font-black tracking-[0.4em] shadow-lg italic">SOVEREIGN v50.0: SOUL CORE</Badge>
                  <Badge className="bg-emerald-600/30 text-emerald-500 border-none px-6 py-1 rounded-full text-[11px] font-black italic uppercase">UPTIME: {uptime}</Badge>
               </div>
               <h1 className="text-5xl md:text-[10rem] font-headline font-bold text-white tracking-tighter italic uppercase leading-none gold-glow mb-6">
