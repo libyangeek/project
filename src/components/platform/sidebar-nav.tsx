@@ -156,7 +156,7 @@ export function SidebarNav() {
                <span className="text-[8px] font-black uppercase tracking-widest italic text-white flex items-center gap-2">
                   <Fingerprint className="size-3 text-primary" /> AL_GHAZALI_ROOT
                </span>
-               <div className="size-2 rounded-full bg-emerald-500 shadow-[0_0_10px_emerald]" />
+               <div className="size-2 rounded-full bg-emerald-500 shadow-[0_0_100px_emerald]" />
             </div>
           </div>
           
