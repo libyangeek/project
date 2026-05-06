@@ -48,6 +48,10 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
 import translations from "../lib/ar.json"
 
+/**
+ * @fileOverview مختبر التخليق v43.0 - THE POLYMORPH LAB
+ * تم تفعيل أزرار الهجوم الحقيقية (Apex Strike) وإحكام الربط العصبي.
+ */
 export default function RedTeamPage() {
   const [mounted, setMounted] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
@@ -91,13 +95,18 @@ export default function RedTeamPage() {
   }
 
   const launchStrike = async (vector?: string) => {
-    if (!target) return;
+    if (!target) {
+        toast({ variant: "destructive", title: "Target Missing" });
+        return;
+    }
     setLoading(true);
     toast({ title: translations.strike.initiate, description: translations.strike.planning });
     try {
+        // استدعاء ApexBrain لتوليد الخطة أولاً
         const plan = await getAttackPlan({ target });
         setOutput(plan);
         
+        // تنفيذ الضربة عبر الـ API
         await fetch('/api/execute', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

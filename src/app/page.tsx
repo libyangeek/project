@@ -49,13 +49,17 @@ import {
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Progress } from "@/components/ui/progress"
 import { cn } from "@/lib/utils"
 import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase'
 import { collection } from 'firebase/firestore'
 import { toast } from "@/hooks/use-toast"
 import translations from "./lib/ar.json"
 
+/**
+ * @fileOverview العرش الحي v43.0 - THE UNIVERSAL ONE
+ * تم تطبيق إصلاحات Uptime والترجمة العربية الكاملة.
+ * Commander: المعتصم بالله ادريس الغزالي
+ */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
@@ -84,7 +88,6 @@ export default function DashboardPage() {
   ];
 
   const calcUptime = () => {
-    // نظام المُعِزّ بدأ في ليلة القدر 2024
     const start = new Date("2024-03-10T00:00:00").getTime();
     const now = new Date().getTime();
     const diff = now - start;
@@ -99,6 +102,7 @@ export default function DashboardPage() {
 
   React.useEffect(() => {
     setMounted(true)
+    setUptime(calcUptime());
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
     

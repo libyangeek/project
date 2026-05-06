@@ -53,6 +53,10 @@ import { cn } from "@/lib/utils"
 import Link from "next/link"
 import translations from "../lib/ar.json"
 
+/**
+ * @fileOverview التحكم عن بعد v43.0 - HIVE RAT
+ * تم إضافة مؤشر حالة Whisper Voice للتحكم الصوتي.
+ */
 export default function MobileRemotePage() {
   const [command, setInput] = React.useState("")
   const [loading, setLoading] = React.useState(false)
