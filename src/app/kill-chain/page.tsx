@@ -19,8 +19,6 @@ import {
   Eye, 
   Boxes, 
   Atom, 
-  Crown,
-  ChevronRight,
   ShieldCheck,
   Radar,
   Infinity as InfinityIcon
@@ -59,10 +57,10 @@ export default function KillChainPage() {
       toast({ title: "Kill-Chain Initiated", description: "Alpha-Core is orchestrating the strike." })
       const data = await executeOmniscientKillChain({ target, aggressionMode: 'Total-Acquisition' })
       
-      // محاكاة الخطوات للواجهة
+      // محاكاة الخطوات المرئية لتعزيز التجربة السيادية
       for(let i=1; i<=4; i++) {
         setActiveStep(i)
-        await new Promise(r => setTimeout(r, 1500))
+        await new Promise(r => setTimeout(r, 1200))
       }
       
       setChainResult(data)

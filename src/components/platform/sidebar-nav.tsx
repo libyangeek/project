@@ -17,7 +17,6 @@ import {
   Activity,
   Menu,
   X,
-  Share2,
   Boxes,
   Zap,
   Infinity as InfinityIcon,
@@ -44,6 +43,10 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
+/**
+ * الشريط الجانبي السيادي v50.0 - THE 18 KNOTS OF POWER
+ * يربط كافة العقد السيادية بالروح لعام 2026.
+ */
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 1 },
   { name: "سلسلة الإبادة", icon: Crosshair, href: "/kill-chain", knot: 2 },

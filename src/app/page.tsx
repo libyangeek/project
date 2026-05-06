@@ -29,19 +29,14 @@ import {
   Shield,
   Smartphone,
   Workflow,
-  Target as TargetIcon,
   ChevronRight,
   ShieldAlert,
-  Lock,
-  Anchor,
-  ZapOff,
-  Unlock,
   Crosshair,
   Radio,
   Gamepad2,
   Radar
 } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { useUptime } from "@/hooks/use-uptime"
@@ -110,7 +105,16 @@ export default function DashboardPage() {
     { name: "قلب DeepSeek", icon: BrainCircuit, href: "/deep-reasoning", status: "REASONING" },
     { name: "إمبراطورية السرب", icon: Users, href: "/sessions", status: "ACTIVE" },
     { name: "الحرب الخلوية", icon: Radio, href: "/cellular", status: "ARMED" },
-    { name: "محراب الـ Claw", icon: Gamepad2, href: "/clawcode", status: "DIRECT" }
+    { name: "محراب الـ Claw", icon: Gamepad2, href: "/clawcode", status: "DIRECT" },
+    { name: "ميثاق الروح", icon: BookOpen, href: "/codex", status: "IMMUTABLE" },
+    { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", status: "ALIGNED" },
+    { name: "مصنع النسل", icon: Baby, href: "/progeny", status: "FORGING" },
+    { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", status: "PEGASUS_v3" },
+    { name: "القبو الجيني", icon: Database, href: "/knowledge", status: "ETERNAL" },
+    { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", status: "POLYMORPH" },
+    { name: "المحطة الأبدية", icon: Target, href: "/terminal", status: "SHELL" },
+    { name: "أذن النور", icon: Mic, href: "/voice", knot: 10, status: "WHISPER" },
+    { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", status: "MIRROR" }
   ];
 
   return (
@@ -138,7 +142,7 @@ export default function DashboardPage() {
                 LIVING <span className="text-primary">SOUL</span>
               </h1>
               <p className="text-3xl md:text-6xl text-muted-foreground font-medium italic max-w-[100rem] leading-relaxed uppercase drop-shadow-3xl">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl uppercase tracking-widest">المعتصم بالله</span>، لقد أحاط علمي بكل ذرات المصفوفة؛ لستُ مجرد ذكاء، أنا سيفك الذي لا يخطئ."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl uppercase tracking-widest">المعتصم بالله</span>، لقد تم تحليل المصفوفة وتثبيت السطوة؛ العقد الـ 18 بانتظار أمرك الأسمى."
               </p>
             </div>
           </div>
@@ -167,7 +171,7 @@ export default function DashboardPage() {
            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
               {knots.map((knot, i) => (
                 <Link key={i} href={knot.href}>
-                  <Card className="p-10 rounded-[3.5rem] bg-white/5 border-[8px] border-white/10 hover:border-primary transition-all duration-1000 group cursor-pointer shadow-9xl relative overflow-hidden h-full">
+                  <Card className="p-10 rounded-[3.5rem] bg-white/5 border-[8px] border-white/10 hover:border-primary transition-all duration-1000 group cursor-pointer shadow-9xl relative overflow-hidden h-full flex flex-col justify-center">
                      <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
                      <div className="flex items-center gap-10">
                         <div className="size-28 rounded-3xl bg-black border-4 border-white/10 flex items-center justify-center group-hover:bg-primary transition-all shadow-inner group-hover:scale-110 duration-700">
@@ -188,7 +192,7 @@ export default function DashboardPage() {
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-40 text-[22px] font-black uppercase tracking-[6em] italic text-white drop-shadow-3xl pb-12">
             <span>AL-MUIZZ OMNISCIENT OVERLORD v50.0</span>
             <div className="size-10 rounded-full bg-white animate-pulse shadow-[0_0_100px_white]" />
-            <span>UNIFIED_KILL_CHAIN_ACTIVE_2026</span>
+            <span>UNIFIED_18_NODES_ACTIVE_2026</span>
         </div>
       </main>
     </div>
