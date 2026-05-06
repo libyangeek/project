@@ -40,33 +40,33 @@ import Link from "next/link"
 import translations from "@/app/lib/ar.json"
 
 const navItems = [
-  { name: "The Throne", icon: LayoutDashboard, href: "/", knot: 1 },
-  { name: "Divine Strike", icon: Target, href: "/terminal", knot: 2 },
-  { name: "Armada Swarm", icon: Users, href: "/sessions", knot: 3 },
-  { name: "MCP Bridge", icon: Share2, href: "/mcp-bridge", knot: 4 },
-  { name: "Whisper Voice", icon: Mic, href: "/remote", knot: 5 },
-  { name: "Sovereign Bible", icon: BookOpen, href: "/codex", knot: 6 },
-  { name: "Swarm Simulator", icon: Workflow, href: "/digital-twin", knot: 7 },
-  { name: "Field Agent", icon: Activity, href: "/field-agent", knot: 8 },
-  { name: "Warrior Forge", icon: Baby, href: "/progeny", knot: 9 },
-  { name: "Mobile Siphon", icon: Smartphone, href: "/hardware", knot: 10 },
-  { name: "Omniscient Recon", icon: Binoculars, href: "/recon", knot: 11 },
-  { name: "Genetic Vault", icon: Database, href: "/knowledge", knot: 12 },
-  { name: "Polymorph Lab", icon: ShieldX, href: "/red-team", knot: 13 },
+  { name: "العرش", icon: LayoutDashboard, href: "/", knot: 1 },
+  { name: "الضربة الإلهية", icon: Target, href: "/terminal", knot: 2 },
+  { name: "أسطول الأسطول", icon: Users, href: "/sessions", knot: 3 },
+  { name: "جسر MCP", icon: Share2, href: "/mcp-bridge", knot: 4 },
+  { name: "أذن النور", icon: Mic, href: "/voice", knot: 5 },
+  { name: "ميثاق السيادة", icon: BookOpen, href: "/codex", knot: 6 },
+  { name: "محاكي السرب", icon: Workflow, href: "/digital-twin", knot: 7 },
+  { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", knot: 8 },
+  { name: "مصنع المحاربين", icon: Baby, href: "/progeny", knot: 9 },
+  { name: "الاستنزاف النقال", icon: Smartphone, href: "/hardware", knot: 10 },
+  { name: "الاستطلاع العليم", icon: Binoculars, href: "/recon", knot: 11 },
+  { name: "القبو الجيني", icon: Database, href: "/knowledge", knot: 12 },
+  { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 13 },
 ]
 
 export function SidebarNav() {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = React.useState(false)
-  const [resonance, setResonance] = React.useState(99.98)
+  const [resonance, setResonance] = React.useState(100.00)
 
   React.useEffect(() => {
     const interval = setInterval(() => {
       setResonance(prev => {
         const next = prev + (Math.random() * 0.01 - 0.005);
-        return Math.max(99.90, Math.min(100, next));
+        return Math.max(99.99, Math.min(100, next));
       });
-    }, 2000)
+    }, 3000)
     return () => clearInterval(interval)
   }, [])
 
@@ -141,7 +141,7 @@ export function SidebarNav() {
             
             <div className="space-y-2">
                <div className="flex justify-between items-center text-[9px] font-black text-primary/70 uppercase italic tracking-widest">
-                  <span>{translations.sidebar.resonance}</span>
+                  <span>رنين السيادة</span>
                   <span className="gold-glow">{resonance.toFixed(2)}%</span>
                </div>
                <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden border border-white/10 p-0.5 shadow-inner">
@@ -163,7 +163,7 @@ export function SidebarNav() {
           >
             <Link href="/terminal">
               <Zap className="size-4 mr-2 group-hover:scale-125 transition-transform gold-glow fill-black" />
-              {translations.actions.initiate_hive}
+              تفعيل السرب العليم
             </Link>
           </Button>
           <div className="mt-4 text-center">

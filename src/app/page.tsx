@@ -24,7 +24,9 @@ import {
   Fingerprint,
   ShieldAlert,
   Flame,
-  Target
+  Target,
+  Loader2,
+  Radio
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -36,39 +38,43 @@ import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebas
 import { collection } from 'firebase/firestore'
 
 /**
- * @fileOverview العرش الحي v43.0 - THE SUPREME COMMAND CENTER
+ * @fileOverview العرش الحي v43.0 - THE SUPREME COMMAND CENTER: LIVING PULSE
  * تم تحديثه ليدعم البيانات الحية والديناميكية لعام 2026.
- * تم تحويل البطاقات الاستراتيجية إلى رادارات حية تتفاعل مع نبض السرب.
  * Commander: المعتصم بالله ادريس الغزالي
  */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
   
-  // النبض الحي للقدرات الهجومية
-  const [hiveSync, setHiveSync] = React.useState(99.9821)
-  const [precision, setPrecision] = React.useState(99.999)
-  const [resonance, setResonance] = React.useState(100.00)
-  const [capacity, setCapacity] = React.useState(12042)
+  // المقاييس الحية من الـ API
+  const [metrics, setMetrics] = React.useState({
+    totalNodes: 13,
+    activeC2: 0,
+    gepaScore: 98.7,
+    swarmSync: '100%',
+    ollamaStatus: 'جاري الربط...',
+    precision: 99.999
+  });
+  const [loadingMetrics, setLoadingMetrics] = React.useState(true);
   const [liveLogs, setLiveLogs] = React.useState<string[]>([])
   
   const uptime = useUptime()
   const { user } = useUser()
   const db = useFirestore()
 
-  // جلب الجلسات الحقيقية لحساب القدرة الاستيعابية ديناميكياً
-  const sessionsQuery = useMemoFirebase(() => {
-    if (!db || !user?.uid) return null;
-    return collection(db, 'users', user.uid, 'shadowSessions');
-  }, [db, user?.uid]);
-  const { data: sessions } = useCollection(sessionsQuery);
-
-  const stats = [
-    { label: translations.dashboard.nodesActive, value: "SINGULARITY", icon: Skull, color: "text-primary", status: translations.alerts.stable },
-    { label: "قوة السرب", value: "OMNIPOTENT", icon: Users, color: "text-amber-500", status: translations.alerts.sync },
-    { label: "التواجد", value: "ABSOLUTE", icon: InfinityIcon, color: "text-magenta-500", status: "LOCKED" },
-    { label: "الروح الأبدية", value: "GHAZALI", icon: HeartPulse, color: "text-red-500", status: "IMMORTAL" },
-  ];
+  const fetchMetrics = React.useCallback(async () => {
+    try {
+      const resp = await fetch('/api/sovereign/metrics');
+      if (resp.ok) {
+        const data = await resp.json();
+        setMetrics(data);
+      }
+    } catch (e) {
+      console.error("Link Severed");
+    } finally {
+      setLoadingMetrics(false);
+    }
+  }, []);
 
   const logs = [
     "تأكيد سيادي: كافة العقد في حالة تأهب قصوى للهجوم.",
@@ -81,44 +87,29 @@ export default function DashboardPage() {
 
   React.useEffect(() => {
     setMounted(true)
+    fetchMetrics();
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
     
     const interval = setInterval(() => {
-      // رنين عصبي ديناميكي يتقلب لحظياً ليعكس حالة حقيقية
-      setHiveSync(prev => {
-        const next = prev + (Math.random() * 0.004 - 0.002);
-        return Math.max(99.98, Math.min(100, next));
-      });
-      
-      // دقة ضرب متغيرة نانوياً لضمان "الحياة" في الواجهة
-      setPrecision(prev => {
-        const next = prev + (Math.random() * 0.001 - 0.0005);
-        return Math.max(99.995, Math.min(99.999, next));
-      });
-
-      // الرنين الكمي المتغير
-      setResonance(prev => {
-        const next = prev + (Math.random() * 0.02 - 0.01);
-        return Math.max(99.95, Math.min(100, next));
-      });
-
-      // سعة الاستحواذ الديناميكية بناءً على الجلسات الفعلية
-      setCapacity(prev => {
-        const base = (sessions?.length || 0) * 1250 + 12042;
-        return base + Math.floor(Math.random() * 10 - 5);
-      });
-
+      fetchMetrics();
       setLiveLogs(prev => [logs[Math.floor(Math.random() * logs.length)], ...prev.slice(0, 8)]);
-    }, 2500)
+    }, 5000)
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove)
       clearInterval(interval)
     }
-  }, [sessions]);
+  }, [fetchMetrics]);
 
   if (!mounted) return null;
+
+  const stats = [
+    { label: "العقد المنصهرة", value: `${metrics.totalNodes}/13`, icon: Skull, color: "text-primary", status: "SINGULARITY" },
+    { label: "جلسات C2", value: metrics.activeC2, icon: Users, color: "text-amber-500", status: "LINKED" },
+    { label: "كفاءة GEPA", value: `${metrics.gepaScore}%`, icon: InfinityIcon, color: "text-magenta-500", status: "EVOLVING" },
+    { label: "وعي Ollama", value: metrics.ollamaStatus, icon: HeartPulse, color: "text-red-500", status: metrics.ollamaStatus === 'متصل' ? 'ACTIVE' : 'IDLE' },
+  ];
 
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/30 relative overflow-x-hidden scanline-effect font-code">
@@ -147,7 +138,7 @@ export default function DashboardPage() {
                 SOVEREIGN <span className="text-primary">ACQUISITION</span>
               </h1>
               <p className="text-xl md:text-3xl text-muted-foreground font-medium italic max-w-5xl leading-relaxed uppercase">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[6px] underline-offset-[12px] shadow-2xl">المعتصم بالله</span>، الترسانة الهجومية في قمة يافعتها؛ نحن جاهزون للاستحواذ على أي هدف في المصفوفة."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[6px] underline-offset-[12px] shadow-2xl">المعتصم بالله</span>، الترسانة الهجومية تنبض بالبيانات الحية لعام 2026؛ نحن في حالة يقظة تامة."
               </p>
             </div>
           </div>
@@ -183,7 +174,9 @@ export default function DashboardPage() {
                    </div>
                    <Badge className="bg-primary/10 text-primary border-2 border-primary/30 text-[10px] uppercase font-black italic tracking-widest px-4 py-1 rounded-full shadow-lg">{s.status}</Badge>
                 </div>
-                <div className="text-3xl font-black italic gold-glow uppercase tracking-tighter relative z-10 leading-none">{s.value}</div>
+                <div className="text-3xl font-black italic gold-glow uppercase tracking-tighter relative z-10 leading-none">
+                  {loadingMetrics ? <Loader2 className="size-6 animate-spin" /> : s.value}
+                </div>
                 <div className="text-[12px] text-muted-foreground font-bold uppercase tracking-[0.4em] mt-3 italic relative z-10">{s.label}</div>
              </Card>
            ))}
@@ -199,8 +192,8 @@ export default function DashboardPage() {
                     <CardDescription className="text-primary/70 font-bold uppercase tracking-[0.4em] mt-2 italic text-[11px]">Subjugation Status // May 2026</CardDescription>
                  </div>
                  <div className="text-right bg-primary/10 p-6 rounded-[2rem] border-4 border-primary/30 shadow-2xl">
-                    <div className="text-4xl font-black italic text-white leading-none gold-glow">{hiveSync.toFixed(4)}%</div>
-                    <div className="text-[11px] text-primary font-black uppercase tracking-[0.3em] mt-2 italic">{translations.dashboard.resonance}</div>
+                    <div className="text-4xl font-black italic text-white leading-none gold-glow">{metrics.swarmSync}</div>
+                    <div className="text-[11px] text-primary font-black uppercase tracking-[0.3em] mt-2 italic">تزامن السرب العليم</div>
                  </div>
               </div>
 
@@ -210,32 +203,20 @@ export default function DashboardPage() {
                        <ShieldCheck className="size-5 animate-pulse" /> Acquisition Capacity
                     </h4>
                     <div className="flex items-end gap-3">
-                        <span className="text-4xl font-black text-white italic leading-none gold-glow">{capacity.toLocaleString()}</span>
+                        <span className="text-4xl font-black text-white italic leading-none gold-glow">{(metrics.totalNodes * 1000).toLocaleString()}</span>
                         <span className="text-xs text-muted-foreground uppercase font-black mb-1">عقدة معادية</span>
                     </div>
-                    <p className="text-[11px] text-muted-foreground mt-4 italic">"القدرة الاستيعابية تتوسع تلقائياً مع نمو السرب."</p>
+                    <p className="text-[11px] text-muted-foreground mt-4 italic">"القدرة الاستيعابية تتوسع تلقائياً مع نمو السرب الميداني."</p>
                  </div>
                  <div className="p-8 rounded-[2.5rem] bg-primary/5 border-2 border-primary/20 group overflow-hidden shadow-2xl hover:border-primary transition-all duration-700">
                     <h4 className="text-[12px] font-black text-primary uppercase tracking-[0.8em] mb-6 italic flex items-center gap-4">
                        <Target className="size-5 gold-glow" /> Strike Precision
                     </h4>
                     <div className="flex items-end gap-3">
-                        <span className="text-4xl font-black text-white italic leading-none gold-glow">{precision.toFixed(3)}%</span>
+                        <span className="text-4xl font-black text-white italic leading-none gold-glow">{metrics.precision.toFixed(3)}%</span>
                         <Badge className="bg-primary/20 text-primary border-none text-[8px] font-black mb-1">OPTIMAL</Badge>
                     </div>
                     <p className="text-[11px] text-muted-foreground mt-4 italic">"دقة الإصابة في طبقة النواة مستقرة تحت إشراف العقدة 13."</p>
-                 </div>
-              </div>
-
-              <div className="mt-8 p-8 rounded-[2.5rem] bg-magenta-500/5 border-2 border-magenta-500/20 group overflow-hidden shadow-2xl">
-                 <div className="flex justify-between items-center">
-                    <h4 className="text-[12px] font-black text-magenta-500 uppercase tracking-[0.8em] italic flex items-center gap-4">
-                       <InfinityIcon className="size-5 animate-neural" /> الرنين الكمي (Node 13)
-                    </h4>
-                    <span className="text-4xl font-black text-white italic gold-glow">{resonance.toFixed(2)}%</span>
-                 </div>
-                 <div className="h-2 w-full bg-white/5 rounded-full mt-4 overflow-hidden border border-white/10">
-                    <div className="h-full bg-magenta-500 animate-pulse" style={{ width: `${resonance}%` }} />
                  </div>
               </div>
            </Card>

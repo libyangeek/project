@@ -6,7 +6,7 @@ import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   title: 'AL-MUIZZ v43.0 | THE SOVEREIGN OVERMIND',
-  description: 'The Sovereign Overmind: Universal Singularity & Hive Consciousness for Commander Al-Ghazali.',
+  description: 'The Sovereign Overmind: Universal Singularity & Hive Consciousness for Commander Al-Ghazali. Maximum Readiness 2026.',
 };
 
 export default function RootLayout({
