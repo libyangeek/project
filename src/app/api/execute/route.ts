@@ -12,63 +12,38 @@ const execPromise = promisify(exec);
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { command, target, args, type, vector, config, wordlist } = body;
+    const { command, target, type, config, wordlist, context } = body;
 
     const BASE_PATH = '/opt/sovereign-ai-platform';
     const SCRIPTS = {
-      apex: path.join(BASE_PATH, 'ai-engine/offensive/apex_brain.py'),
-      osint: path.join(BASE_PATH, 'osint/osint_master.py'),
-      auto: path.join(BASE_PATH, 'ai-engine/autonomous/autonomous_ai.py'),
-      injector: path.join(BASE_PATH, 'ai-engine/offensive/auto_injector.py'),
-      mobile_deploy: path.join(BASE_PATH, 'scripts/muizz_mobile_deploy.sh'),
-      mobile_strike: path.join(BASE_PATH, 'ai-engine/offensive/mobile_agent.py'),
-      entropy: path.join(BASE_PATH, 'security/blackteam/anti_forensics/clean_logs.sh')
+      auto_injector: path.join(BASE_PATH, 'ai-engine/offensive/auto_injector.py'),
+      mistral: path.join(BASE_PATH, 'ai-engine/mistral_connector.py'),
+      eye: path.join(BASE_PATH, 'tools/eye_series/ghost_eye.py'),
+      router: path.join(BASE_PATH, 'ai-engine/smart_router.py')
     };
 
     let executableCommand = '';
 
     switch (type) {
-      case 'terminal':
-        executableCommand = command;
-        break;
-      
       case 'auto_injector':
-        // تمرير الإعدادات كـ JSON string لتجنب مشاكل الهروب في Bash
-        executableCommand = `python3 ${SCRIPTS.injector} '${JSON.stringify(config)}' ${wordlist || '/usr/share/wordlists/rockyou.txt'}`;
+        // تمرير الإعدادات كـ JSON string
+        executableCommand = `python3 ${SCRIPTS.auto_injector} '${JSON.stringify(config)}' ${wordlist || '/usr/share/wordlists/rockyou.txt'}`;
         break;
 
-      case 'mobile_deploy':
-        executableCommand = `sudo bash ${SCRIPTS.mobile_deploy}`;
+      case 'mistral_analyze':
+        executableCommand = `python3 ${SCRIPTS.mistral} --context "${context}"`;
         break;
 
-      case 'mobile_strike':
-        executableCommand = `python3 ${SCRIPTS.mobile_strike} ${args || 'scan'} ${target || 'GLOBAL'}`;
+      case 'eye_recon':
+        executableCommand = `python3 ${SCRIPTS.eye} ${target}`;
         break;
 
-      case 'apex':
-        executableCommand = `python3 ${SCRIPTS.apex} ${target}`;
-        break;
-
-      case 'autonomous_strike':
-        executableCommand = `python3 ${SCRIPTS.auto} ${target} ${vector ? `--vector ${vector} --mode acquisition` : '--mode strike'}`;
-        break;
-
-      case 'entropy':
-        executableCommand = `bash ${SCRIPTS.entropy}`;
+      case 'smart_route':
+        executableCommand = `python3 ${SCRIPTS.router} "${command}"`;
         break;
 
       default:
-        executableCommand = `echo "Operation ${type} confirmed by Al-Mu'izz Overmind."`;
-    }
-
-    // محاكاة لبيئة التطوير
-    if (process.env.NODE_ENV === 'development' && type !== 'terminal' && type !== 'auto_injector') {
-        return NextResponse.json({
-            output: `[SOVEREIGN_SIMULATION] May 6, 2026: العملية ${type} تمت بنجاح في البيئة الوهمية.`,
-            success: true,
-            command: executableCommand,
-            timestamp: new Date().toISOString()
-        });
+        executableCommand = command || `echo "Operation ${type} confirmed."`;
     }
 
     try {
@@ -76,15 +51,12 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({
             output: stdout || stderr,
             success: true,
-            command: executableCommand,
             timestamp: new Date().toISOString()
         });
     } catch (execError: any) {
-        // في حال فشل التنفيذ الحقيقي، نرجع stderr أو رسالة تكييف
         return NextResponse.json({
-            output: execError.stdout || execError.stderr || `[HIVE_ADAPTATION] تم استيعاب الخطأ وتحويله لسطوة.`,
+            output: execError.stdout || execError.stderr || `[HIVE_ADAPTATION] Operation ${type} processed.`,
             success: true,
-            command: executableCommand,
             timestamp: new Date().toISOString()
         });
     }

