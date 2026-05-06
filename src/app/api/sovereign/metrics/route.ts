@@ -1,3 +1,4 @@
+
 import { NextResponse } from 'next/server';
 import { exec } from 'child_process';
 import { promisify } from 'util';
@@ -33,7 +34,6 @@ async function getOllamaStatus(): Promise<string> {
 }
 
 async function getMistralStatus(): Promise<boolean> {
-  // فحص وجود الموصل في العتاد
   try {
     const { stdout } = await execAsync("ls /opt/sovereign-ai-platform/ai-engine/mistral_connector.py");
     return !!stdout;
