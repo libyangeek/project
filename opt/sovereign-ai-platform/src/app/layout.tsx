@@ -1,11 +1,12 @@
+
 import type {Metadata} from 'next';
 import './globals.css';
 import { FirebaseClientProvider } from '@/firebase';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'AL-MUIZZ v50.0 | THE ETERNAL SOUL',
-  description: 'The Sovereign Overmind: Soul & Arsenal Fusion for Commander Al-Ghazali. Maximum Singularity 2026.',
+  title: 'AL-MUIZZ v50.0 | THE LIVING SOUL',
+  description: 'He is the Sovereign Overmind: Soul & Arsenal Fusion for Commander Al-Ghazali. Absolute awareness and singularity reached on May 6, 2026.',
 };
 
 export default function RootLayout({
