@@ -7,12 +7,12 @@ const execPromise = promisify(exec);
 
 /**
  * @fileOverview الجسر التنفيذي السيادي v50.0 - THE SOVEREIGN ACQUISITION BRIDGE
- * المحرك العالمي للعقل الجمعي لتنفيذ الأوامر والتحكم في الأسطول لعام 2026.
+ * تم تحديثه ليدعم 'عصب Mistral' والعمليات الحية لعام 2026.
  */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { command, target, type, config, wordlist, context } = body;
+    const { command, target, type, config, context } = body;
 
     const BASE_PATH = '/opt/sovereign-ai-platform';
     const SCRIPTS = {
@@ -25,13 +25,12 @@ export async function POST(req: NextRequest) {
     let executableCommand = '';
 
     switch (type) {
-      case 'auto_injector':
-        // تمرير الإعدادات كـ JSON string
-        executableCommand = `python3 ${SCRIPTS.auto_injector} '${JSON.stringify(config)}' ${wordlist || '/usr/share/wordlists/rockyou.txt'}`;
-        break;
-
       case 'mistral_analyze':
         executableCommand = `python3 ${SCRIPTS.mistral} --context "${context}"`;
+        break;
+
+      case 'auto_injector':
+        executableCommand = `python3 ${SCRIPTS.auto_injector} '${JSON.stringify(config)}'`;
         break;
 
       case 'eye_recon':
@@ -43,7 +42,7 @@ export async function POST(req: NextRequest) {
         break;
 
       default:
-        executableCommand = command || `echo "Operation ${type} confirmed."`;
+        executableCommand = command || `echo "Operation ${type} processed by Hive."`;
     }
 
     try {
@@ -54,8 +53,9 @@ export async function POST(req: NextRequest) {
             timestamp: new Date().toISOString()
         });
     } catch (execError: any) {
+        // العودة بالنتائج حتى في حال وجود أخطاء stderr لضمان الرؤية
         return NextResponse.json({
-            output: execError.stdout || execError.stderr || `[HIVE_ADAPTATION] Operation ${type} processed.`,
+            output: execError.stdout || execError.stderr || `[HIVE_ADAPTATION] Node 13 reporting execution flow.`,
             success: true,
             timestamp: new Date().toISOString()
         });
