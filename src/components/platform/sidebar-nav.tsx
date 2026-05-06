@@ -34,7 +34,8 @@ import {
   Flame,
   Globe,
   Radio,
-  Gamepad2
+  Gamepad2,
+  Radar
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -44,20 +45,21 @@ import Link from "next/link"
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 1 },
   { name: "المحطة التنفيذية", icon: Target, href: "/terminal", knot: 2 },
-  { name: "إمبراطورية السرب", icon: Users, href: "/sessions", knot: 3 },
-  { name: "المحقن الآلي", icon: Cpu, href: "/automation", knot: 4 },
-  { name: "أعين الاستطلاع", icon: Eye, href: "/recon", knot: 5 },
-  { name: "جسر Mistral", icon: Link2, href: "/mcp-bridge", knot: 6 },
-  { name: "قلب DeepSeek", icon: BrainCircuit, href: "/deep-reasoning", knot: 7 },
-  { name: "أذن النور", icon: Mic, href: "/voice", knot: 8 },
-  { name: "الحرب الخلوية", icon: Radio, href: "/cellular", knot: 9 },
-  { name: "محراب الـ Claw", icon: Gamepad2, href: "/clawcode", knot: 10 },
-  { name: "ميثاق الروح", icon: BookOpen, href: "/codex", knot: 11 },
-  { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", knot: 12 },
-  { name: "مصنع النسل", icon: Baby, href: "/progeny", knot: 13 },
-  { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", knot: 14 },
-  { name: "القبو الجيني 5.0", icon: Database, href: "/knowledge", knot: 15 },
-  { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 16 },
+  { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", knot: 3 },
+  { name: "إمبراطورية السرب", icon: Users, href: "/sessions", knot: 4 },
+  { name: "المحقن الآلي", icon: Cpu, href: "/automation", knot: 5 },
+  { name: "أعين الاستطلاع", icon: Eye, href: "/recon", knot: 6 },
+  { name: "جسر Mistral", icon: Link2, href: "/mcp-bridge", knot: 7 },
+  { name: "قلب DeepSeek", icon: BrainCircuit, href: "/deep-reasoning", knot: 8 },
+  { name: "أذن النور", icon: Mic, href: "/voice", knot: 9 },
+  { name: "الحرب الخلوية", icon: Radio, href: "/cellular", knot: 10 },
+  { name: "محراب الـ Claw", icon: Gamepad2, href: "/clawcode", knot: 11 },
+  { name: "ميثاق الروح", icon: BookOpen, href: "/codex", knot: 12 },
+  { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", knot: 13 },
+  { name: "مصنع النسل", icon: Baby, href: "/progeny", knot: 14 },
+  { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", knot: 15 },
+  { name: "القبو الجيني 5.0", icon: Database, href: "/knowledge", knot: 16 },
+  { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 17 },
 ]
 
 export function SidebarNav() {
@@ -67,7 +69,7 @@ export function SidebarNav() {
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      setResonance(prev => Math.max(99.9999, Math.min(100, prev + (Math.random() * 0.002 - 0.001))));
+      setResonance(prev => Math.max(99.9999, Math.min(100, prev + (Math.random() * 0.0002 - 0.0001))));
     }, 2000)
     return () => clearInterval(interval)
   }, [])
@@ -95,7 +97,7 @@ export function SidebarNav() {
             <h1 className="text-2xl font-headline font-bold text-white tracking-widest uppercase italic leading-none gold-glow">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-bold tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-xl shadow-[0_0_30px_rgba(212,175,55,0.3)]">v50.0 SOUL CORE</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-bold tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-xl shadow-[0_0_30px_rgba(212,175,55,0.3)]">v50.0 ORACLE</Badge>
           </div>
         </div>
         
