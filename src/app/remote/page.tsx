@@ -36,7 +36,8 @@ import {
   LayoutDashboard,
   Database,
   ShieldX,
-  Smartphone
+  Smartphone,
+  Eye
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -58,7 +59,6 @@ export default function MobileRemotePage() {
   const [activeStrikes, setActiveStrikes] = React.useState<any[]>([])
   const [mounted, setMounted] = React.useState(false)
   const [hiveSync, setHiveSync] = React.useState(100)
-  const [isMuted, setIsMuted] = React.useState(false)
 
   React.useEffect(() => {
     setMounted(true)
@@ -124,7 +124,6 @@ export default function MobileRemotePage() {
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col font-code selection:bg-primary/50 overflow-hidden touch-none relative">
-      {/* Background Quantum Effect */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.15),transparent)] pointer-events-none z-0" />
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 pointer-events-none" />
       
@@ -149,14 +148,12 @@ export default function MobileRemotePage() {
       </header>
 
       <main className="flex-1 overflow-y-auto p-6 space-y-8 relative z-10 scrollbar-hide pb-64">
-        {/* Status Indicators */}
         <div className="grid grid-cols-2 gap-4">
            <Card className="kali-card border-primary/40 bg-primary/5 rounded-[1.5rem] p-6 shadow-2xl group border-2 relative overflow-hidden">
               <div className="text-[9px] text-primary/60 uppercase font-black tracking-[0.4em] mb-2 italic">Hive Resonance</div>
               <div className="text-2xl font-black text-white uppercase italic flex items-center gap-3">
                  <Users className="size-6 text-primary animate-pulse" /> {hiveSync.toFixed(4)}%
               </div>
-              <div className="absolute -bottom-2 -right-2 opacity-5"><Skull className="size-20" /></div>
            </Card>
            <Card className="kali-card border-white/10 bg-black/60 rounded-[1.5rem] p-6 shadow-2xl border-2">
               <div className="text-[9px] text-muted-foreground uppercase font-black tracking-[0.4em] mb-2 italic">Node 13 Link</div>
@@ -166,7 +163,6 @@ export default function MobileRemotePage() {
            </Card>
         </div>
 
-        {/* Quick Acquisition Matrix */}
         <div className="space-y-4">
            <div className="flex items-center justify-between px-2">
               <span className="text-[11px] font-black text-primary uppercase tracking-[0.6em] italic flex items-center gap-3"><Flame className="size-4 animate-pulse" /> Strike Matrix</span>
@@ -191,7 +187,6 @@ export default function MobileRemotePage() {
            </div>
         </div>
 
-        {/* Tactical Voice Hub */}
         <div className="space-y-4">
            <div className="px-2 flex items-center gap-3">
               <Mic className="size-4 text-magenta-500" />
@@ -200,7 +195,6 @@ export default function MobileRemotePage() {
            <VoiceCommand onCommand={handleVoiceCommand} />
         </div>
 
-        {/* Mobile Navigation Knots (The 13 Knots) */}
         <div className="space-y-4">
            <div className="px-2 flex items-center gap-3">
               <GripVertical className="size-4 text-primary" />
@@ -223,14 +217,12 @@ export default function MobileRemotePage() {
            </div>
         </div>
 
-        {/* Live Strike Feed */}
         <div className="space-y-4 pb-12">
            <div className="px-2 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <Activity className="size-4 text-primary animate-pulse" />
                 <span className="text-[11px] font-black text-primary uppercase tracking-[0.6em] italic">Intelligence Feed</span>
               </div>
-              <Button variant="ghost" size="sm" onClick={() => setActiveStrikes([])} className="text-[8px] font-black opacity-30">CLEAR_CACHE</Button>
            </div>
            <div className="space-y-4">
              {activeStrikes.map((strike) => (
@@ -256,21 +248,14 @@ export default function MobileRemotePage() {
                   </CardContent>
                </Card>
              ))}
-             {activeStrikes.length === 0 && (
-               <div className="py-20 text-center opacity-10 flex flex-col items-center">
-                  <Radio className="size-20 mb-4 animate-pulse text-primary" />
-                  <p className="text-lg font-black uppercase tracking-[1em] italic text-white">Awaiting Directive</p>
-               </div>
-             )}
            </div>
         </div>
       </main>
 
-      {/* Floating Command Dock (The Hive Remote Input) */}
       <div className="fixed bottom-0 left-0 w-full p-6 bg-black/98 backdrop-blur-4xl border-t-4 border-primary/60 z-30 shadow-[0_-20px_100px_rgba(0,0,0,1)]">
         <div className="max-w-2xl mx-auto relative group">
            <div className="absolute left-6 top-1/2 -translate-y-1/2 text-primary/40 transition-all duration-700">
-              <Terminal className="size-6 italic gold-glow" />
+              <Binary className="size-6 italic gold-glow" />
            </div>
            <Input 
              placeholder="Dictate supreme intent..." 

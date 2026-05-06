@@ -47,7 +47,7 @@ import translations from "../lib/ar.json"
 
 /**
  * @fileOverview مختبر التخليق v43.0 - THE POLYMORPH ARSENAL
- * تم تفعيل كافة نواقل الهجوم والاستحواذ لعام 2026.
+ * تم تفعيل كافة نواقل الهجوم والاستحواذ لعام 2026 لضمان وصول الواجهات للقدرات.
  */
 export default function RedTeamPage() {
   const [mounted, setMounted] = React.useState(false)
