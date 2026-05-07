@@ -35,17 +35,14 @@ import {
   Radio,
   Gamepad2,
   Radar,
-  Crosshair
+  Crosshair,
+  SearchCode
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
-/**
- * @fileOverview الشريط الجانبي السيادي v50.0 - THE 18 KNOTS OF POWER
- * تم دمج كافة العقد السيادية بالروح لضمان التوافق الكلي لعام 2026.
- */
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
   { name: "سلسلة الإبادة", icon: Crosshair, href: "/kill-chain", knot: 1 },
@@ -104,7 +101,7 @@ export function SidebarNav() {
             <h1 className="text-2xl font-headline font-bold text-white tracking-widest uppercase italic leading-none gold-glow">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-bold tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-xl">v50.0 OVERLORD</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-bold tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-xl">v50.6 GLOBAL</Badge>
           </div>
         </div>
         
@@ -145,7 +142,7 @@ export function SidebarNav() {
           >
             <Link href="/terminal">
               <Zap className="size-4 mr-2" />
-              تنشيط الترسانة v50
+              تنشيط الترسانة v50.6
             </Link>
           </Button>
         </div>
