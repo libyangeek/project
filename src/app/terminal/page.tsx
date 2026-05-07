@@ -39,7 +39,7 @@ type Message = {
 
 export default function TerminalPage() {
   const [mounted, setMounted] = React.useState(false)
-  const [input, setInput] = setInput("")
+  const [input, setInput] = React.useState("")
   const [messages, setMessages] = React.useState<Message[]>([])
   const [isLoading, setIsLoading] = React.useState(false)
   const scrollRef = React.useRef<HTMLDivElement>(null)
