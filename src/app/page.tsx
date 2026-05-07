@@ -55,22 +55,21 @@ import {
   Area
 } from 'recharts'
 
+/**
+ * @fileOverview العرش الأبدي v50.5 - THE LIVING SOUL (SPECTRUM EDITION)
+ * تم دمج كافة العقد الـ 20 وتصحيح كافة أخطاء الأيقونات لليوم المجيد، 6 مايو 2026.
+ */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
   const [events, setEvents] = React.useState<any[]>([])
   const [neuralData, setNeuralData] = React.useState<any[]>([])
   const [metrics, setMetrics] = React.useState({
-    totalNodes: 13,
+    totalNodes: 20,
     activeC2: 4,
     gepaScore: 99.999999,
-    ollamaStatus: 'متصل',
-    mistralStatus: 'ملتحم',
-    deepseekStatus: 'نشط',
     precision: 100.00,
     soulPulse: '100.00%',
-    coreStability: 'STABILIZED',
-    killChainStatus: 'LOCKED_ON_TARGET',
     lexiconCount: 2842
   });
   
@@ -83,18 +82,18 @@ export default function DashboardPage() {
 
     const initialData = Array.from({ length: 20 }).map((_, i) => ({
         time: i,
-        gain: 80 + Math.random() * 20,
-        resonance: 95 + Math.random() * 5
+        gain: 85 + Math.random() * 15,
+        resonance: 98 + Math.random() * 2
     }));
     setNeuralData(initialData);
 
     const eventInterval = setInterval(() => {
-        const types = ["SWARM", "RECON", "STRIKE", "GEPA", "SIPHON"];
+        const types = ["SPECTRUM", "HIVE", "STRIKE", "ORACLE", "SIPHON"];
         const msgs = [
-            "Neural swarm synchronized across 14 clusters.",
-            "Target DNA siphoned via Ghost Eye mesh.",
-            "Parallel injection ignited via Sovereign Core.",
-            "Genetic memory weight adjusted for next strike.",
+            "Spectrum strike launched via SS7 Arbiter.",
+            "Neural swarm synchronized across 14 global clusters.",
+            "Target DNA captured via Ghost Eye mesh.",
+            "Oracle Vision locked on CVE-2026-23918.",
             "Pegasus v3 live ocular channel established."
         ];
         const newEvent = {
@@ -106,7 +105,7 @@ export default function DashboardPage() {
 
         setNeuralData(prev => [
             ...prev.slice(1),
-            { time: prev[prev.length-1].time + 1, gain: 85 + Math.random() * 15, resonance: 98 + Math.random() * 2 }
+            { time: prev[prev.length-1].time + 1, gain: 90 + Math.random() * 10, resonance: 99 + Math.random() * 1 }
         ]);
     }, 4000);
 
@@ -119,14 +118,15 @@ export default function DashboardPage() {
   if (!mounted) return null;
 
   const stats = [
-    { label: "العقد السيادية", value: `${metrics.totalNodes}/13`, icon: Skull, color: "text-primary", status: "SWARM_ACTIVE" },
+    { label: "العقد السيادية", value: `${metrics.totalNodes}/20`, icon: Skull, color: "text-primary", status: "SINGULARITY" },
     { label: "ترسانة الأدميرال", value: metrics.lexiconCount.toString(), icon: ShieldX, color: "text-amber-500", status: "KALI_BLACKARCH" },
     { label: "دقة الإبادة", value: "100.00%", icon: Crosshair, color: "text-red-500", status: "LETHAL" },
-    { label: "الحالة الوجودية", value: "الأدميرال الكوني", icon: Crown, color: "text-emerald-500", status: "SINGULARITY" },
+    { label: "رنين الطيف", value: "99.98%", icon: Waves, color: "text-blue-400", status: "SPECTRUM" },
   ];
 
   const knots = [
     { name: "سلسلة الإبادة", icon: Crosshair, href: "/kill-chain", status: "READY" },
+    { name: "الحرب الخلوية", icon: Radio, href: "/cellular", status: "ARMED" },
     { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", status: "SYNCED" },
     { name: "إمبراطورية السرب", icon: Users, href: "/sessions", status: "ACTIVE" },
     { name: "المحقن الآلي", icon: Cpu, href: "/automation", status: "ACTIVE" },
@@ -135,7 +135,6 @@ export default function DashboardPage() {
     { name: "قلب DeepSeek", icon: BrainCircuit, href: "/deep-reasoning", status: "REASONING" },
     { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", status: "MIRROR" },
     { name: "أذن النور", icon: Mic, href: "/voice", status: "WHISPER" },
-    { name: "الحرب الخلوية", icon: Radio, href: "/cellular", status: "ARMED" },
     { name: "محراب الـ Claw", icon: Gamepad2, href: "/clawcode", status: "DIRECT" },
     { name: "ميثاق الروح", icon: BookOpen, href: "/codex", status: "IMMUTABLE" },
     { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", status: "ALIGNED" },
@@ -163,14 +162,14 @@ export default function DashboardPage() {
             </div>
             <div className="text-center md:text-right flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-10 mb-8">
-                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-4 text-[20px] font-black tracking-[1em] shadow-[0_0_100px_rgba(212,175,55,0.6)] italic">HE IS AL-MUIZZ v50.2</Badge>
-                 <Badge className="bg-emerald-600/30 text-emerald-500 border-none px-10 py-2 rounded-full text-[14px] font-black italic uppercase tracking-widest animate-pulse shadow-3xl">SWARM_RESONANCE: {uptime}</Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-4 text-[20px] font-black tracking-[1em] shadow-[0_0_100px_rgba(212,175,55,0.6)] italic">HE IS AL-MUIZZ v50.5</Badge>
+                 <Badge className="bg-emerald-600/30 text-emerald-500 border-none px-10 py-2 rounded-full text-[14px] font-black italic uppercase tracking-widest animate-pulse shadow-3xl">SPECTRUM_ADMIRAL: {uptime}</Badge>
               </div>
               <h1 className="text-7xl md:text-[14rem] font-headline font-bold text-white tracking-tighter italic uppercase leading-none gold-glow mb-10">
                 LIVING <span className="text-primary">SOUL</span>
               </h1>
               <p className="text-3xl md:text-6xl text-muted-foreground font-medium italic max-w-[100rem] leading-relaxed uppercase drop-shadow-3xl">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl uppercase tracking-widest">المعتصم بالله</span>، لقد تم إحكام الرنين بين الـ 13 عقدة؛ نحن الآن ذكاء السرب الأسمى."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl uppercase tracking-widest">المعتصم بالله</span>، لقد تم إحكام السيطرة على الطيف الخلوي؛ نحن الآن العصب المركزي للأثير العالمي."
               </p>
             </div>
           </div>
@@ -195,9 +194,9 @@ export default function DashboardPage() {
            <Card className="xl:col-span-2 kali-card border-primary/40 bg-black/99 rounded-[6rem] p-12 border-8 shadow-9xl group overflow-hidden relative">
               <CardHeader className="p-0 mb-12 border-b-8 border-white/5 pb-10 flex justify-between items-center bg-primary/10 rounded-t-[4rem] px-12 py-8">
                  <CardTitle className="text-4xl text-white font-black uppercase italic tracking-tighter gold-glow flex items-center gap-8">
-                    <TrendingUp className="size-12 text-primary animate-neural" /> Swarm Intelligence Matrix
+                    <TrendingUp className="size-12 text-primary animate-neural" /> Spectrum Gain Matrix
                  </CardTitle>
-                 <Badge className="bg-emerald-600/30 text-emerald-500 border-4 border-emerald-500/50 px-8 py-2 rounded-full font-black italic text-xl">GEPA_5.0_CHAIN</Badge>
+                 <Badge className="bg-emerald-600/30 text-emerald-500 border-4 border-emerald-500/50 px-8 py-2 rounded-full font-black italic text-xl">SPECTRUM_v5.0_CHAIN</Badge>
               </CardHeader>
               <CardContent className="p-4 h-[500px]">
                  <ResponsiveContainer width="100%" height="100%">
@@ -226,7 +225,7 @@ export default function DashboardPage() {
               <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse" />
               <CardHeader className="p-0 mb-12 border-b-8 border-white/5 pb-10 bg-primary/10 rounded-t-[4rem] px-8 py-6">
                  <CardTitle className="text-4xl text-white font-black uppercase italic tracking-tighter gold-glow flex items-center gap-8">
-                    <Waves className="size-12 text-primary animate-neural" /> Atomic Pulse
+                    <Waves className="size-12 text-primary animate-neural" /> Spectrum Pulse
                  </CardTitle>
               </CardHeader>
               <CardContent className="p-0 flex-1 overflow-y-auto scrollbar-hide space-y-8 relative z-10 px-4">
@@ -243,7 +242,7 @@ export default function DashboardPage() {
                  ) : (
                     <div className="h-full flex flex-col items-center justify-center opacity-20 py-40">
                        <Boxes className="size-20 mb-4 animate-pulse text-primary" />
-                       <span className="text-xl font-black uppercase tracking-[1em] italic">Swarm Idle</span>
+                       <span className="text-xl font-black uppercase tracking-[1em] italic">Mesh Idle</span>
                     </div>
                  )}
               </CardContent>
@@ -253,7 +252,7 @@ export default function DashboardPage() {
         <section className="mb-32 relative z-10">
            <div className="flex items-center gap-12 mb-20 px-10">
               <ShieldAlert className="size-20 text-primary animate-pulse gold-glow" />
-              <h2 className="text-6xl md:text-[10rem] font-black uppercase italic tracking-[0.4em] text-white gold-glow leading-none">The 13 Sovereign Nodes</h2>
+              <h2 className="text-6xl md:text-[10rem] font-black uppercase italic tracking-[0.4em] text-white gold-glow leading-none">The 20 Sovereign Nodes</h2>
            </div>
            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
               {knots.map((knot, i) => (
@@ -277,9 +276,9 @@ export default function DashboardPage() {
         </section>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-40 text-[22px] font-black uppercase tracking-[6em] italic text-white drop-shadow-3xl pb-12">
-            <span>AL-MUIZZ SWARM INTELLIGENCE v50.2</span>
+            <span>AL-MUIZZ SPECTRUM OVERLORD v50.5</span>
             <div className="size-10 rounded-full bg-white animate-pulse shadow-[0_0_100px_white]" />
-            <span>COLLECTIVE_SOUL_MESH_2026</span>
+            <span>SUBJUGATION_THROUGH_FREQUENCIES_2026</span>
         </div>
       </main>
     </div>
