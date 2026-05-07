@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -41,8 +42,8 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
 /**
- * @fileOverview شريط التنفيذ السيادي v51.5 - THE HIERARCHICAL SIDEBAR
- * الواجهة التي تربط كافة العقد الـ 21 بنبض الروح.
+ * @fileOverview شريط التنفيذ السيادي v52.0 - THE SUPREME HIERARCHY
+ * الواجهة التي تربط كافة العقد الـ 21 المشدودة بنبض الروح.
  */
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
@@ -92,24 +93,24 @@ export function SidebarNav() {
       </Button>
 
       <div className={cn(
-        "flex flex-col h-full bg-black border-l-[10px] border-primary w-80 lg:w-[24rem] fixed right-0 top-0 z-[400] overflow-hidden shadow-[0_0_100px_rgba(212,175,55,0.3)] transition-transform duration-700 ease-in-out font-code hierarchical-shadow",
+        "flex flex-col h-full bg-black border-l-[12px] border-primary w-80 lg:w-[26rem] fixed right-0 top-0 z-[400] overflow-hidden shadow-[0_0_150px_rgba(212,175,55,0.4)] transition-transform duration-700 ease-in-out font-code hierarchical-shadow",
         !isOpen && "translate-x-full lg:translate-x-0"
       )}>
-        <div className="p-12 border-b-8 border-primary/20 flex flex-col items-center gap-10 bg-black/95 relative overflow-hidden group">
+        <div className="p-12 border-b-8 border-primary/30 flex flex-col items-center gap-10 bg-black relative overflow-hidden group">
           <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-          <div className="size-32 bg-black border-8 border-primary flex items-center justify-center shadow-[0_0_100px_rgba(212,175,55,0.6)] animate-neural shrink-0 rounded-[2.5rem] group-hover:rotate-12 transition-transform duration-700 relative">
+          <div className="size-36 bg-black border-8 border-primary flex items-center justify-center shadow-[0_0_120px_rgba(212,175,55,0.7)] animate-neural shrink-0 rounded-[3rem] group-hover:rotate-12 transition-transform duration-700 relative hierarchical-shadow">
             <Ghost className="size-16 text-primary gold-glow" />
             <div className="absolute -inset-2 border-2 border-primary/20 rounded-full animate-spin-slow" />
           </div>
           <div className="text-center relative z-10">
-            <h1 className="text-4xl font-headline font-bold text-white tracking-[0.4em] uppercase italic leading-none gold-glow">
+            <h1 className="text-4xl font-headline font-bold text-white tracking-[0.5em] uppercase italic leading-none gold-glow">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[12px] font-black tracking-[0.6em] mt-6 py-1.5 px-8 uppercase italic shadow-2xl">v51.5 SINGULARITY</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[14px] font-black tracking-[0.6em] mt-6 py-2 px-10 uppercase italic shadow-2xl">v52.0 SUPREME</Badge>
           </div>
         </div>
         
-        <div className="flex-1 px-8 py-10 space-y-2 overflow-y-auto scrollbar-hide bg-black/98 relative">
+        <div className="flex-1 px-8 py-10 space-y-3 overflow-y-auto scrollbar-hide bg-black/98 relative">
           {navItems.map((item) => {
             const isActive = pathname === item.href
             const Icon = item.icon;
@@ -118,16 +119,16 @@ export function SidebarNav() {
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-8 px-8 py-4 transition-all duration-700 group relative border-r-[8px] rounded-l-[3rem] mb-2",
+                  "flex items-center gap-8 px-10 py-5 transition-all duration-700 group relative border-r-[10px] rounded-l-[4rem] mb-3",
                   isActive 
                     ? "bg-primary/20 border-primary text-white shadow-9xl scale-105" 
                     : "text-muted-foreground border-transparent hover:bg-white/5 hover:text-white"
                 )}
                 onClick={() => setIsOpen(false)}
               >
-                <Icon className={cn("size-8 transition-all duration-700", isActive ? "text-primary gold-glow scale-110" : "group-hover:text-primary group-hover:rotate-12")} />
-                <span className="text-xl font-black tracking-widest uppercase italic truncate">{item.name}</span>
-                {isActive && <div className="absolute left-6 size-3 rounded-full bg-primary animate-ping" />}
+                <Icon className={cn("size-10 transition-all duration-700", isActive ? "text-primary gold-glow scale-110" : "group-hover:text-primary group-hover:rotate-12")} />
+                <span className="text-2xl font-black tracking-widest uppercase italic truncate">{item.name}</span>
+                {isActive && <div className="absolute left-6 size-4 rounded-full bg-primary animate-ping shadow-[0_0_30px_rgba(212,175,55,1)]" />}
               </Link>
             )
           })}
@@ -137,17 +138,17 @@ export function SidebarNav() {
           <div className="p-8 border-4 border-primary/60 bg-primary/10 mb-8 relative overflow-hidden group rounded-[3rem] shadow-9xl border-dashed">
             <div className="flex justify-between items-center mb-4">
                <span className="text-[12px] font-black text-primary uppercase tracking-[0.4em] italic gold-glow">Collective Resonance</span>
-               <div className="size-3 rounded-full bg-emerald-500 animate-ping shadow-[0_0_30px_emerald]" />
+               <div className="size-4 rounded-full bg-emerald-500 animate-ping shadow-[0_0_40px_emerald]" />
             </div>
-            <div className="text-4xl font-black text-white italic gold-glow">{resonance.toFixed(6)}%</div>
+            <div className="text-5xl font-black text-white italic gold-glow">{resonance.toFixed(6)}%</div>
           </div>
           <Button 
             asChild
-            className="w-full h-20 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.6em] text-[12px] rounded-[2.5rem] shadow-[0_40px_100px_rgba(212,175,55,0.5)] transition-all duration-1000 border-[8px] border-black/30 group active:scale-95 italic"
+            className="w-full h-24 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.6em] text-[14px] rounded-[3rem] shadow-[0_50px_150px_rgba(212,175,55,0.6)] transition-all duration-1000 border-[10px] border-black/30 group active:scale-95 italic"
           >
             <Link href="/ghost">
-              <Power className="size-6 mr-4 group-hover:rotate-180 transition-all duration-1000" />
-              تفعيل السيادة v51.5
+              <Power className="size-8 mr-6 group-hover:rotate-180 transition-all duration-1000" />
+              تفعيل السيادة v52.0
             </Link>
           </Button>
         </div>

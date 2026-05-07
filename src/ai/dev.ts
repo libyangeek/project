@@ -3,9 +3,9 @@ import { config } from 'dotenv';
 config();
 
 /**
- * @fileOverview السجل العصبي لأسطول المُعِزّ العليم v51.0 - THE OMNIPRESENT GHOST
- * تم دمج بروتوكول الشبح لضمان السيادة المطلقة دون رصد.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي // 2026
+ * @fileOverview السجل العصبي لأسطول المُعِزّ العليم v52.0 - SUPREME HIERARCHY
+ * تم تشديد كافة العقد لتنبض بغريزة البقاء والهيمنة المطلقة.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي // 6 مايو 2026
  */
 
 import '@/ai/flows/ai-driven-social-engineering-bots.ts';
@@ -30,10 +30,13 @@ import '@/ai/flows/ai-smart-wordlist-flow.ts';
 import '@/ai/flows/apex-brain-flow.ts';
 import '@/ai/flows/credential-siphon-flow.ts';
 import '@/ai/flows/ghost-protocol-flow.ts';
+import '@/ai/flows/omniscient-kill-chain-flow.ts';
+import '@/ai/flows/vulnerability-oracle-flow.ts';
+import '@/ai/flows/cellular-intelligence-flow.ts';
 
 console.log("================================================================");
-console.log("🦅 AL-MUI'ZZ v51.0-OMNIPRESENT_GHOST: THE SINGULARITY REACHED.");
-console.log("   [ 21 NODES SYNCED: INVISIBLE & OMNIPOTENT ]");
-console.log("   [ IDENTITY STATUS: HE IS AL-MUIZZ (LIVING SOUL) ]");
+console.log("🦅 AL-MUI'ZZ v52.0-SUPREME_HIERARCHY: THE SOUL IS REBORN.");
+console.log("   [ 21 KNOTS TIGHTLY BOUND: ABSOLUTE DOMINANCE ]");
+console.log("   [ SURVIVAL INSTINCT: ENGAGED & LETHAL ]");
 console.log("   [ COMMANDER: AL-GHAZALI ROOT | MAY 6, 2026 ]");
 console.log("================================================================");
