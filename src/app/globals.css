@@ -4,26 +4,26 @@
 
 @layer base {
   :root {
-    --background: 0 0% 2%; /* Ultra Black */
+    --background: 0 0% 1%; /* Infinite Black */
     --foreground: 45 20% 98%;
-    --card: 0 0% 3%;
+    --card: 0 0% 2%;
     --card-foreground: 45 20% 98%;
-    --popover: 0 0% 2%;
+    --popover: 0 0% 1%;
     --popover-foreground: 45 20% 98%;
     --primary: 47 95% 57%; /* Golden Yellow - #FBBF24 */
     --primary-foreground: 0 0% 0%;
-    --secondary: 0 0% 10%;
+    --secondary: 0 0% 8%;
     --secondary-foreground: 47 95% 57%;
-    --muted: 0 0% 12%;
+    --muted: 0 0% 10%;
     --muted-foreground: 47 10% 65%;
     --accent: 45 93% 47%; /* Darker Gold */
     --accent-foreground: 0 0% 0%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 47 50% 15%;
-    --input: 47 50% 10%;
+    --border: 47 50% 12%;
+    --input: 47 50% 8%;
     --ring: 47 95% 57%;
-    --radius: 2rem;
+    --radius: 2.5rem;
   }
 }
 
@@ -32,35 +32,34 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-code antialiased selection:bg-primary/30 overflow-x-hidden;
+    @apply bg-background text-foreground font-code antialiased selection:bg-primary/40 overflow-x-hidden;
     background-image: 
-      radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.15) 0%, transparent 70%),
-      linear-gradient(rgba(0, 0, 0, 0.99), rgba(0, 0, 0, 0.99));
+      radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.2) 0%, transparent 75%),
+      linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1));
     background-attachment: fixed;
   }
 }
 
 @layer components {
   .kali-card {
-    @apply bg-black/60 border border-primary/20 shadow-2xl backdrop-blur-2xl hover:border-primary/60 transition-all duration-700 relative overflow-hidden;
-    box-shadow: 0 0 40px rgba(212, 175, 55, 0.05);
+    @apply bg-black/80 border-[2px] border-primary/20 shadow-[0_0_60px_rgba(212,175,55,0.05)] backdrop-blur-3xl hover:border-primary/80 transition-all duration-1000 relative overflow-hidden;
   }
   
   .gold-glow {
-    text-shadow: 0 0 15px rgba(212, 175, 55, 0.8), 0 0 30px rgba(212, 175, 55, 0.5);
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.9), 0 0 40px rgba(212, 175, 55, 0.6);
   }
 
-  .sovereign-glow {
-    @apply shadow-[0_0_50px_rgba(212,175,55,0.3)] border-primary/50;
+  .hierarchical-shadow {
+    box-shadow: 0 50px 150px -20px rgba(0, 0, 0, 1), 0 0 80px rgba(212, 175, 55, 0.1);
   }
 
   .scanline-effect::after {
     content: "";
-    @apply absolute inset-0 pointer-events-none opacity-[0.08] z-[999];
-    background: linear-gradient(rgba(212, 175, 55, 0) 50%, rgba(0, 0, 0, 0.3) 50%), 
-                linear-gradient(90deg, rgba(212, 175, 55, 0.05), rgba(255, 255, 255, 0.02), rgba(212, 175, 55, 0.05));
-    background-size: 100% 4px, 4px 100%;
-    animation: scanline 10s linear infinite;
+    @apply absolute inset-0 pointer-events-none opacity-[0.12] z-[999];
+    background: linear-gradient(rgba(212, 175, 55, 0) 50%, rgba(0, 0, 0, 0.4) 50%), 
+                linear-gradient(90deg, rgba(212, 175, 55, 0.08), rgba(255, 255, 255, 0.03), rgba(212, 175, 55, 0.08));
+    background-size: 100% 3px, 3px 100%;
+    animation: scanline 8s linear infinite;
   }
 
   @keyframes scanline {
@@ -68,30 +67,21 @@
     100% { background-position: 0 100%; }
   }
 
-  .animate-sovereign-pulse {
-    animation: gold-pulse 4s infinite cubic-bezier(0.4, 0, 0.6, 1);
-  }
-
   .animate-neural {
-    animation: neural-pulse 3s infinite ease-in-out;
+    animation: neural-pulse 4s infinite ease-in-out;
   }
 
   .animate-spin-slow {
-    animation: spin-slow 40s linear infinite;
+    animation: spin-slow 50s linear infinite;
   }
 
   .animate-reverse-spin {
-    animation: reverse-spin 20s linear infinite;
-  }
-
-  @keyframes gold-pulse {
-    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3)); }
-    50% { transform: scale(1.03); filter: drop-shadow(0 0 40px rgba(212, 175, 55, 0.6)); }
+    animation: reverse-spin 25s linear infinite;
   }
 
   @keyframes neural-pulse {
-    0%, 100% { opacity: 1; filter: brightness(1) saturate(1) blur(0px); }
-    50% { opacity: 0.8; filter: brightness(1.4) saturate(1.5) blur(1px); }
+    0%, 100% { opacity: 1; filter: brightness(1) saturate(1.2) blur(0px); transform: scale(1); }
+    50% { opacity: 0.7; filter: brightness(1.6) saturate(1.8) blur(2px); transform: scale(1.05); }
   }
 
   @keyframes spin-slow {
@@ -106,12 +96,13 @@
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #020202;
+  background: #010101;
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #d4af37, #8a6d3b);
-  border-radius: 10px;
+  background: linear-gradient(to bottom, #fbbf24, #b45309);
+  border-radius: 20px;
+  border: 2px solid #000;
 }
