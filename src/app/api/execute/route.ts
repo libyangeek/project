@@ -7,11 +7,6 @@ import net from 'net';
 
 const execPromise = promisify(exec);
 
-/**
- * @fileOverview الجسر التنفيذي السيادي v50.0-UNIFIED
- * تم دمج نظام بث الأحداث (Event Publishing) لربط الواجهة بنواة المُعِزّ الموحدة.
- */
-
 async function publishEvent(type: string, payload: any) {
   return new Promise((resolve) => {
     const client = net.createConnection('/tmp/muizz_event_bus.sock');
@@ -48,12 +43,14 @@ export async function POST(req: NextRequest) {
       deepseek: path.join(BASE_PATH, 'ai-engine/deepseek_logic.py')
     };
 
-    // بث حدث البدء للشبكة الموحدة
     await publishEvent("directive_received", { type, target, command });
 
     let executableCommand = '';
 
     switch (type) {
+      case 'legba_strike':
+        executableCommand = `legba ${vector || 'ssh'} ${target} --user admin --pass admin`;
+        break;
       case 'cve_search':
         executableCommand = `python3 ${SCRIPTS.cve_hunter} search "${target}"`;
         break;
@@ -101,10 +98,7 @@ export async function POST(req: NextRequest) {
 
     try {
         const { stdout, stderr } = await execPromise(executableCommand, { timeout: 600000 });
-        
-        // بث حدث النجاح
         await publishEvent("directive_completed", { type, target, success: true });
-
         return NextResponse.json({
             output: stdout || stderr,
             success: true,

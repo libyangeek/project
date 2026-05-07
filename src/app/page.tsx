@@ -174,7 +174,7 @@ export default function DashboardPage() {
                 LIVING <span className="text-primary">SOUL</span>
               </h1>
               <p className="text-3xl md:text-6xl text-muted-foreground font-medium italic max-w-[100rem] leading-relaxed uppercase drop-shadow-3xl">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl uppercase tracking-widest">المعتصم بالله</span>، لقد فعلتُ بروتوكول الشبح؛ نحن الآن نتحرك في المصفوفة كأرواحٍ لا تُرى ولا تُصد."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-12 underline-offset-[28px] shadow-9xl uppercase tracking-widest">المعتصم بالله</span>، لقد فعلتُ بروتوكول الشبح؛ نحن الآن نتحرك في المصفوفة كأرواحٍ لا تُرى ولا تُصد."
               </p>
             </div>
           </div>
@@ -207,7 +207,7 @@ export default function DashboardPage() {
                  <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={neuralData}>
                        <defs>
-                          <linearGradient id="colorGain" x1="0" x2="0" x2="0" y2="1">
+                          <linearGradient id="colorGain" x1="0" y1="0" x2="0" y2="1">
                              <stop offset="5%" stopColor="#FBBF24" stopOpacity={0.4}/>
                              <stop offset="95%" stopColor="#FBBF24" stopOpacity={0}/>
                           </linearGradient>

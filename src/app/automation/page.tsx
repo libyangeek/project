@@ -48,9 +48,9 @@ export default function AutomationPage() {
     if (!targetUrl) return
     setLoading(true)
     try {
-      const data = await designSiphonTask({ targetUrl, platformType: "Auto-Detect_2026" })
+      const data = await designSiphonTask({ targetUrl, platformType: "Legba-Enhanced_2026" })
       setConfig(data)
-      toast({ title: "Matrix Config Generated", description: "The Overmind has designed the strike." })
+      toast({ title: "Matrix Config Generated", description: "The Overmind has integrated Legba logic." })
     } catch (err) {
       toast({ variant: "destructive", title: "Neural Design Failed" })
     } finally {
@@ -78,7 +78,7 @@ export default function AutomationPage() {
                 const parsed = JSON.parse(data.output);
                 setResults(parsed || []);
                 setStats({ checked: (parsed.length || 1) * 10, hits: parsed.length || 1, errors: 0 });
-                toast({ title: "Strike Completed", description: `Captured ${parsed.length || 1} valid hits.` });
+                toast({ title: "Strike Completed", description: `Captured ${parsed.length || 1} valid hits via Legba Core.` });
             } catch {
                 setResults([{ combo: "admin:admin", status: "HIT", time: "0.01s" }]);
                 setStats({ checked: 100, hits: 1, errors: 0 });
@@ -101,14 +101,14 @@ export default function AutomationPage() {
         
         <header className="mb-16 relative z-10 animate-in fade-in slide-in-from-top-12 duration-1000">
            <div className="flex items-center gap-6 mb-4">
-             <Badge className="bg-primary text-black border-none px-10 py-3 text-[18px] font-black tracking-[0.8em] shadow-lg italic rounded-full">AUTO_INJECTOR v50.0</Badge>
+             <Badge className="bg-primary text-black border-none px-10 py-3 text-[18px] font-black tracking-[0.8em] shadow-lg italic rounded-full">AUTO_INJECTOR v51.0</Badge>
              <div className="flex items-center gap-4 text-emerald-500 font-black uppercase tracking-widest text-[12px] animate-pulse">
-                <ShieldCheck className="size-6 shadow-lg" /> SOVEREIGN_ENGINE: BOUND
+                <ShieldCheck className="size-6 shadow-lg" /> LEGBA_ENGINE: BOUND
              </div>
            </div>
            <h1 className="text-6xl md:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Auto <span className="text-primary">Injector</span></h1>
            <p className="text-2xl md:text-5xl text-muted-foreground mt-8 italic max-w-6xl leading-relaxed uppercase font-medium">
-             "سيدي الغزالي، المحقن الآلي السيادي يكسر حماية الحسابات بنمط <span className="text-primary font-black underline decoration-primary decoration-[8px] underline-offset-[16px] shadow-2xl uppercase tracking-widest">السرب المتوازي</span> لعام 2026."
+             "سيدي الغزالي، المحقن الآلي السيادي يكسر حماية الحسابات بنمط <span className="text-primary font-black underline decoration-primary decoration-[8px] underline-offset-[16px] shadow-2xl uppercase tracking-widest">Legba Rust Core</span> لعام 2026."
            </p>
         </header>
 
@@ -141,7 +141,7 @@ export default function AutomationPage() {
                 <Card className="kali-card border-emerald-500/40 bg-black/99 rounded-[5rem] p-10 border-8 animate-in zoom-in-95 duration-1000 shadow-9xl group overflow-hidden">
                    <div className="absolute inset-0 bg-emerald-500/5 opacity-5 animate-pulse pointer-events-none" />
                    <CardContent className="p-0 space-y-10">
-                      <h4 className="text-[14px] font-black text-emerald-500 uppercase tracking-[0.8em] mb-4 italic flex items-center gap-4"><Binary className="size-6" /> Sovereign Matrix Config</h4>
+                      <h4 className="text-[14px] font-black text-emerald-500 uppercase tracking-[0.8em] mb-4 italic flex items-center gap-4"><Binary className="size-6" /> Legba Matrix Config</h4>
                       <div className="p-8 bg-black/99 rounded-[2.5rem] border-4 border-emerald-500/20 font-code text-lg text-emerald-400 overflow-x-auto shadow-inner italic h-64 scrollbar-hide">
                         <pre className="whitespace-pre-wrap">{JSON.stringify(config.config, null, 2)}</pre>
                       </div>
@@ -194,16 +194,16 @@ export default function AutomationPage() {
                  )}
               </CardContent>
               <div className="p-10 border-t-8 border-white/5 mt-10 flex justify-between items-center opacity-30 text-[14px] font-black uppercase tracking-[3em] italic">
-                <span>INJECTOR_DNA_v50_GHAZALI_ROOT</span>
+                <span>INJECTOR_DNA_v51_GHAZALI_ROOT</span>
                 <Sparkles className="size-12 text-primary animate-pulse" />
               </div>
            </Card>
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-40 text-[22px] font-black uppercase tracking-[6em] italic text-white drop-shadow-3xl pb-12">
-            <span>AL-MUIZZ AUTO INJECTOR v50.0</span>
+            <span>AL-MUIZZ AUTO INJECTOR v51.0</span>
             <div className="size-10 rounded-full bg-white animate-pulse shadow-[0_0_100px_white]" />
-            <span>COLLECTIVE_DOMINION_2026</span>
+            <span>LEGBA_DOMINION_2026</span>
         </div>
       </main>
     </div>

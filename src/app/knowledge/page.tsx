@@ -54,8 +54,8 @@ export default function KnowledgePage() {
   const [report, setReport] = React.useState<any>(null)
   const [mounted, setMounted] = React.useState(false)
   
-  const [learningSource, setLearningSource] = React.useState("https://www.kaggle.com/code/cyber-intelligence-2026")
-  const [learningGoal, setLearningGoal] = React.useState("Synthesize weighted genetic exploit patterns v5.0")
+  const [learningSource, setLearningSource] = React.useState("https://github.com/evilsocket/legba")
+  const [learningGoal, setLearningGoal] = React.useState("Synthesize ultra-fast multiprotocol brute-forcing v5.2")
   const [learningResult, setLearningResult] = React.useState<any>(null)
 
   React.useEffect(() => {
@@ -119,7 +119,7 @@ export default function KnowledgePage() {
                 Genetic <span className="text-primary">Vault</span>
               </h1>
               <p className="text-xl md:text-3xl text-muted-foreground mt-6 italic max-w-5xl leading-relaxed uppercase font-medium">
-                "سيدي الغزالي، القبو الجيني (v50.0) يعمل الآن بنظام <span className="text-primary font-black underline decoration-primary decoration-4 underline-offset-8 shadow-lg uppercase tracking-widest">SQLite السيادي</span>؛ ذاكرة أبدية وسرعة نانوية."
+                "سيدي الغزالي، القبو الجيني (v51.0) يعمل الآن بنظام <span className="text-primary font-black underline decoration-primary decoration-4 underline-offset-8 shadow-lg uppercase tracking-widest">Rust & SQLite</span>؛ ذاكرة أبدية وسرعة نانوية."
               </p>
             </div>
           </div>
@@ -167,8 +167,9 @@ export default function KnowledgePage() {
                   </CardHeader>
                   <CardContent className="p-0 space-y-6">
                     {[
-                      { name: "Soul Core v50", count: "BOUND", icon: Skull, color: "text-amber-500" },
+                      { name: "Soul Core v51", count: "BOUND", icon: Skull, color: "text-amber-500" },
                       { name: "SQLite Memory", count: "v5.0", icon: Database, color: "text-primary" },
+                      { name: "Legba Module", count: "INTEGRATED", icon: Zap, color: "text-blue-500" },
                       { name: "Genetic Weight", count: "ACTIVE", icon: Target, color: "text-emerald-500" },
                     ].map((col, i) => (
                       <div key={i} className="flex items-center justify-between p-8 rounded-[2.5rem] bg-black border-4 border-white/5 hover:border-primary transition-all duration-1000 group cursor-pointer shadow-xl">
@@ -204,7 +205,7 @@ export default function KnowledgePage() {
                       {report.reportContent}
                     </CardContent>
                     <div className="p-10 border-t-8 border-white/5 mt-10 flex justify-between items-center opacity-30 text-[14px] font-black uppercase tracking-[3em] italic">
-                       <span>GEPA_MEMORY_SQLITE_v50_GHAZALI_ROOT</span>
+                       <span>GEPA_MEMORY_SQLITE_v51_GHAZALI_ROOT</span>
                        <Fingerprint className="size-12 text-primary gold-glow" />
                     </div>
                   </Card>
@@ -213,7 +214,7 @@ export default function KnowledgePage() {
                     <Database className="size-72 text-primary/10 animate-pulse mb-12" />
                     <h3 className="text-7xl md:text-[10rem] font-headline font-bold text-white mb-10 tracking-tighter italic drop-shadow-9xl uppercase leading-none opacity-20">Knowledge Oracle</h3>
                     <p className="text-muted-foreground max-w-5xl mx-auto leading-relaxed mb-20 text-3xl md:text-5xl font-black italic opacity-30">
-                      "سيدي <span className="text-primary font-black gold-glow underline decoration-primary decoration-[8px] underline-offset-[20px] shadow-2xl uppercase tracking-widest">المعتصم بالله</span>، مصفوفة GEPA 5.0 جاهزة للاستجواب؛ اؤمرنا بالتحليل."
+                      "سيدي <span className="text-primary font-black gold-glow underline decoration-primary decoration-[8px] underline-offset-[20px] shadow-2xl uppercase tracking-widest">المعتصم بالله</span>، مصفوفة GEPA 5.1 جاهزة للاستجواب؛ لقد دمجنا قدرات Legba."
                     </p>
                   </div>
                 )}
@@ -267,12 +268,12 @@ export default function KnowledgePage() {
                              </div>
                              <div>
                                 <CardTitle className="text-5xl md:text-8xl text-white font-black italic tracking-tighter uppercase leading-none gold-glow">REBIRTH_LOG</CardTitle>
-                                <Badge className="bg-emerald-600/20 text-emerald-400 border-none px-6 py-1 rounded-full font-black text-sm tracking-[0.5em] uppercase italic mt-4">v50.0_EVO_CORE</Badge>
+                                <Badge className="bg-emerald-600/20 text-emerald-400 border-none px-6 py-1 rounded-full font-black text-sm tracking-[0.5em] uppercase italic mt-4">v51.0_EVO_CORE</Badge>
                              </div>
                           </div>
                           <div className="text-right flex flex-col items-end gap-3 bg-emerald-600/10 p-8 rounded-[2.5rem] border-4 border-emerald-500/30 shadow-inner">
                              <div className="text-[12px] text-emerald-500 font-black uppercase tracking-[0.6em] italic">Neural Gain Matrix</div>
-                             <div className="text-6xl md:text-8xl font-black text-emerald-500 italic leading-none">+58.4%</div>
+                             <div className="text-6xl md:text-8xl font-black text-emerald-500 italic leading-none">+64.2%</div>
                           </div>
                        </CardHeader>
                        <CardContent className="p-16 space-y-16">
@@ -313,7 +314,7 @@ export default function KnowledgePage() {
                        <BrainCircuit className="size-64 text-primary/10 mb-12 animate-pulse" />
                        <h3 className="text-6xl md:text-[8rem] font-headline font-bold text-white mb-10 tracking-tighter italic drop-shadow-9xl uppercase leading-none opacity-20">Evolution Chamber</h3>
                        <p className="text-muted-foreground max-w-5xl mx-auto leading-relaxed text-3xl md:text-5xl font-black italic opacity-30">
-                          "Feed me the tactical context of 2026, and I will rewrite my genetic destiny."
+                          "Feed me the tactical context of 2026, and I will rewrite my genetic destiny via Legba Rust Logic."
                        </p>
                     </div>
                   )}
@@ -323,7 +324,7 @@ export default function KnowledgePage() {
         </Tabs>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-40 text-[22px] font-black uppercase tracking-[6em] italic text-white drop-shadow-3xl pb-12">
-            <span>AL-MUIZZ GENETIC VAULT v50.0</span>
+            <span>AL-MUIZZ GENETIC VAULT v51.0</span>
             <div className="size-10 rounded-full bg-white animate-pulse shadow-[0_0_100px_white]" />
             <span>SOVEREIGNTY_THROUGH_EVOLUTION</span>
         </div>

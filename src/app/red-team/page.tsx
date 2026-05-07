@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -32,7 +33,8 @@ import {
   Eye,
   BrainCircuit,
   Infinity as InfinityIcon,
-  Boxes
+  Boxes,
+  ZapOff
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -47,11 +49,6 @@ import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
 
-/**
- * @fileOverview مختبر التخليق v50.0 - THE POLYMORPH ARSENAL: SOUL EDITION
- * واجهة تخليق الأسلحة الرقمية المنصهرة في عصب الروح لعام 2026.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي
- */
 export default function RedTeamPage() {
   const [mounted, setMounted] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
@@ -75,7 +72,7 @@ export default function RedTeamPage() {
       let data;
       if (activeMode === "exploit") {
         data = await aiEnhancedExploitGeneration({
-          vulnerabilityDescription: description || "تحليل ثغرات النواة السيادية v50.0 لعام 2026",
+          vulnerabilityDescription: description || "تحليل ثغرات النواة السيادية v51.0 لعام 2026",
           targetSystemDetails: target
         });
       } else if (activeMode === "apex") {
@@ -91,7 +88,7 @@ export default function RedTeamPage() {
     } catch (err) {
       toast({ variant: "destructive", title: "فشل التخليق", description: "تعذر استدعاء عقل الهجوم." });
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
   }
 
@@ -102,7 +99,7 @@ export default function RedTeamPage() {
     }
     setLoading(true);
     const timestamp = new Date().toLocaleTimeString();
-    setStrikeLog(prev => [`[${timestamp}] ⚡ بدء هجوم ${vectorId.toUpperCase()} (Soul Core v50.0) على ${target}...`, ...prev]);
+    setStrikeLog(prev => [`[${timestamp}] ⚡ بدء هجوم ${vectorId.toUpperCase()} (Soul Core v51.0) على ${target}...`, ...prev]);
     
     try {
         const response = await fetch('/api/execute', {
@@ -127,16 +124,16 @@ export default function RedTeamPage() {
         setStrikeLog(prev => [`[${timestamp}] ❌ فشل الارتباط: ${e.message}`, ...prev]);
         toast({ variant: "destructive", title: "فشل تنفيذ الضربة", description: e.message });
     } finally {
-        setLoading(false);
+        setLoading(false)
     }
   }
 
   if (!mounted) return null;
 
   const VECTORS = [
-    { id: 'cpanel', label: 'cPanel Sniper v50', icon: Zap, desc: 'CVE-2026-41940 REBORN' },
-    { id: 'ssh', label: 'Rapid Auth Hijack', icon: Key, desc: 'Neural Brute v5.0' },
-    { id: 'web', label: 'Web Pulse v50', icon: Globe, desc: 'Logic Siphon Elite' },
+    { id: 'legba', label: 'Legba Multi-Brute', icon: Zap, desc: 'Ultra-Fast Rust Stuffing' },
+    { id: 'cpanel', label: 'cPanel Sniper v51', icon: Skull, desc: 'CVE-2026-41940 REBORN' },
+    { id: 'ssh', label: 'Rapid Auth Hijack', icon: Key, desc: 'Neural Brute v5.2' },
     { id: 'smb', label: 'SMB God-Core', icon: Atom, desc: 'Kernel Ring 0 Injection' },
     { id: 'dns', label: 'Stealth Exfil', icon: Radio, desc: 'Overmind DNS Tunnel' },
     { id: 'eye', label: 'Eye Series Recon', icon: Eye, desc: 'Shodan & Ghost Eye' }
@@ -156,7 +153,7 @@ export default function RedTeamPage() {
             </div>
             <div className="text-center md:text-right flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-4">
-                <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] font-black tracking-[0.6em] shadow-lg italic">SOUL CORE v50.0</Badge>
+                <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] font-black tracking-[0.6em] shadow-lg italic">SOUL CORE v51.0</Badge>
                 <div className="flex items-center gap-4 text-emerald-500 font-black uppercase tracking-widest text-[11px] animate-pulse">
                     <ShieldCheck className="size-5 shadow-[0_0_20px_emerald]" /> ACQUISITION_READY
                 </div>
@@ -165,7 +162,7 @@ export default function RedTeamPage() {
                 Polymorph <span className="text-primary">Arsenal</span>
               </h1>
               <p className="text-xl md:text-3xl text-muted-foreground mt-4 italic max-w-5xl leading-relaxed uppercase">
-                "سيدي الغزالي، ترسانة التخليق تعمل الآن بنبض <span className="text-primary font-black underline decoration-primary decoration-4 underline-offset-8 shadow-2xl">Soul Core v50.0</span>؛ أسلحة رقمية تدرك لماذا تضرب."
+                "سيدي الغزالي، ترسانة التخليق تعمل الآن بنبض <span className="text-primary font-black underline decoration-primary decoration-4 underline-offset-8 shadow-2xl">Soul Core v51.0</span>؛ دمجنا قدرات Legba لسحق الحصون."
               </p>
             </div>
           </div>
@@ -200,7 +197,7 @@ export default function RedTeamPage() {
                     <Textarea 
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
-                      placeholder={activeMode === 'wordlist' ? "Provide identity data for 2026 neural patterns..." : "Define attack intent for v50.0 soul integration..."}
+                      placeholder={activeMode === 'wordlist' ? "Provide identity data for 2026 neural patterns..." : "Define attack intent for v51.0 soul integration..."}
                       className="bg-black/99 border-4 border-white/10 rounded-[2rem] min-h-[200px] text-xl italic p-8 focus:border-primary font-bold text-gray-200 shadow-inner resize-none"
                     />
                   </div>
@@ -300,14 +297,14 @@ export default function RedTeamPage() {
                 </ScrollArea>
               </CardContent>
               <div className="p-8 border-t-4 border-white/5 opacity-30 text-[14px] font-black uppercase tracking-[2.5em] italic text-center">
-                ARMADA_FORGE_DNA_v50_2026
+                ARMADA_FORGE_DNA_v51_2026
               </div>
             </Card>
           </div>
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-40 text-[22px] font-black uppercase tracking-[6em] italic text-white drop-shadow-3xl pb-12">
-            <span>AL-MUIZZ POLYMORPH FORGE v50.0</span>
+            <span>AL-MUIZZ POLYMORPH FORGE v51.0</span>
             <div className="size-10 rounded-full bg-white animate-pulse shadow-[0_0_100px_white]" />
             <span>SINGULARITY_OF_STRIKE_2026</span>
         </div>

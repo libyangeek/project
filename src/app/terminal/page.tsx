@@ -49,7 +49,7 @@ export default function TerminalPage() {
     setMessages([
       { 
         role: "system", 
-        content: "Al-Mu'izz Sovereign Swarm Shell [v50.2]\nHive Status: 13 NODES SYNCED\nAuthorized: القائد المعتصم بالله ادريس الغزالي\nMesh Resonance: 100.00%\nReady for 6 May 2026.",
+        content: "Al-Mu'izz Sovereign Swarm Shell [v51.2]\nHive Status: 21 NODES SYNCED\nAuthorized: القائد المعتصم بالله ادريس الغزالي\nMesh Resonance: 100.00%\nReady for 6 May 2026.",
         timestamp: new Date().toLocaleTimeString(),
         node: "Alpha-Core"
       }
@@ -111,7 +111,7 @@ export default function TerminalPage() {
               <Skull className="size-12 text-primary gold-glow" />
             </div>
             <div>
-              <h2 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter gold-glow leading-none">Swarm Shell v50.2</h2>
+              <h2 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter gold-glow leading-none">Swarm Shell v51.2</h2>
               <div className="flex items-center gap-6 text-[12px] text-primary/80 font-black uppercase tracking-[0.5em] mt-3 italic">
                 <div className="size-3 rounded-full bg-emerald-500 animate-ping shadow-[0_0_20px_emerald]" />
                 Swarm Status: COLLECTIVE_RESONANCE_OK
