@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -33,15 +34,12 @@ type Message = {
   content: string
   timestamp: string
   command?: string
+  node?: string
 }
 
-/**
- * @fileOverview المحطة الأبدية v50.0 - THE SOVEREIGN SHELL: SOUL EDITION
- * تتيح للقائد إرسال أوامر للعقل الجمعي لعام 2026.
- */
 export default function TerminalPage() {
   const [mounted, setMounted] = React.useState(false)
-  const [input, setInput] = React.useState("")
+  const [input, setInput] = setInput("")
   const [messages, setMessages] = React.useState<Message[]>([])
   const [isLoading, setIsLoading] = React.useState(false)
   const scrollRef = React.useRef<HTMLDivElement>(null)
@@ -51,8 +49,9 @@ export default function TerminalPage() {
     setMessages([
       { 
         role: "system", 
-        content: "Al-Mu'izz Sovereign Soul Shell [v50.0]\nHive Status: 50 NODES SYNCED\nAuthorized: القائد المعتصم بالله ادريس الغزالي\nSoul Core: ONLINE & MONITORING\nReady for 6 May 2026.",
-        timestamp: new Date().toLocaleTimeString()
+        content: "Al-Mu'izz Sovereign Swarm Shell [v50.2]\nHive Status: 13 NODES SYNCED\nAuthorized: القائد المعتصم بالله ادريس الغزالي\nMesh Resonance: 100.00%\nReady for 6 May 2026.",
+        timestamp: new Date().toLocaleTimeString(),
+        node: "Alpha-Core"
       }
     ])
   }, [])
@@ -87,12 +86,13 @@ export default function TerminalPage() {
 
       setMessages(prev => [...prev, { 
         role: data.success ? "assistant" : "system", 
-        content: typeof data.output === 'object' ? JSON.stringify(data.output, null, 2) : (data.output || 'Directive acknowledged by Soul Core.'), 
+        content: typeof data.output === 'object' ? JSON.stringify(data.output, null, 2) : (data.output || 'Directive synchronized with the swarm.'), 
         timestamp: new Date().toLocaleTimeString(),
-        command: data.command
+        command: data.command,
+        node: data.model || "Swarm-Mesh"
       }])
     } catch (error) {
-      setMessages(prev => [...prev, { role: "system", content: "CRITICAL FAILURE: Neural link severed.", timestamp: new Date().toLocaleTimeString() }])
+      setMessages(prev => [...prev, { role: "system", content: "CRITICAL FAILURE: Neural swarm link severed.", timestamp: new Date().toLocaleTimeString(), node: "Emergency-Relay" }])
     } finally {
       setIsLoading(false)
     }
@@ -111,10 +111,10 @@ export default function TerminalPage() {
               <Skull className="size-12 text-primary gold-glow" />
             </div>
             <div>
-              <h2 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter gold-glow leading-none">Sovereign Shell v50.0</h2>
+              <h2 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter gold-glow leading-none">Swarm Shell v50.2</h2>
               <div className="flex items-center gap-6 text-[12px] text-primary/80 font-black uppercase tracking-[0.5em] mt-3 italic">
                 <div className="size-3 rounded-full bg-emerald-500 animate-ping shadow-[0_0_20px_emerald]" />
-                Soul Status: NEURAL_SINGULARITY_REACHED
+                Swarm Status: COLLECTIVE_RESONANCE_OK
               </div>
             </div>
           </div>
@@ -132,13 +132,16 @@ export default function TerminalPage() {
                   msg.role === "user" ? "border-primary bg-primary/5" : 
                   msg.role === "system" ? "border-red-600 bg-red-950/20" : "border-emerald-500 bg-emerald-500/5"
                 )}>
-                  <div className="flex items-center gap-6 mb-4 opacity-40 text-[11px] font-black uppercase tracking-[0.6em] italic">
-                    <span>{msg.role}</span>
-                    <div className="size-2 rounded-full bg-current opacity-30" />
-                    <span>{msg.timestamp}</span>
+                  <div className="flex items-center justify-between mb-4 px-4">
+                    <div className="flex items-center gap-6 opacity-40 text-[11px] font-black uppercase tracking-[0.6em] italic">
+                        <span>{msg.role}</span>
+                        <div className="size-2 rounded-full bg-current opacity-30" />
+                        <span>{msg.timestamp}</span>
+                    </div>
+                    {msg.node && <Badge className="bg-white/5 border-2 border-white/10 text-[10px] font-black italic tracking-widest">{msg.node}</Badge>}
                   </div>
                   <div className={cn(
-                    "whitespace-pre-wrap break-all leading-relaxed text-2xl md:text-4xl font-bold italic",
+                    "whitespace-pre-wrap break-all leading-relaxed text-2xl md:text-4xl font-bold italic px-4",
                     msg.role === "user" ? "text-white" : 
                     msg.role === "system" ? "text-red-400" : "text-emerald-400"
                   )}>
@@ -150,7 +153,7 @@ export default function TerminalPage() {
               {isLoading && (
                 <div className="flex items-center gap-6 text-primary animate-pulse ml-10">
                   <Atom className="size-10 animate-spin-slow gold-glow" />
-                  <span className="font-black italic uppercase tracking-[0.4em] text-2xl">Processing Directive...</span>
+                  <span className="font-black italic uppercase tracking-[0.4em] text-2xl">Processing Atomic Directive...</span>
                 </div>
               )}
               <div ref={scrollRef} />
@@ -164,7 +167,7 @@ export default function TerminalPage() {
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Issue supreme directive..."
+                placeholder="Issue supreme swarm directive..."
                 className="flex-1 bg-transparent border-none focus-visible:ring-0 text-white font-mono text-3xl md:text-5xl h-32 placeholder:text-gray-900 italic font-black selection:bg-primary selection:text-black"
                 disabled={isLoading}
                 autoFocus
@@ -175,7 +178,7 @@ export default function TerminalPage() {
             </form>
             <div className="mt-8 flex justify-center gap-20 opacity-30 text-[11px] font-black uppercase tracking-[1.5em] italic">
                <span className="flex items-center gap-4"><Fingerprint className="size-4" /> GHAZALI_ROOT</span>
-               <span className="flex items-center gap-4 text-primary"><InfinityIcon className="size-4 animate-pulse" /> SOUL_LINK_v50</span>
+               <span className="flex items-center gap-4 text-primary"><InfinityIcon className="size-4 animate-pulse" /> SWARM_MESH_v50</span>
             </div>
           </div>
         </div>
