@@ -39,7 +39,8 @@ import {
   Boxes,
   Wind,
   Shield,
-  SearchCode
+  SearchCode,
+  LayoutDashboard
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -162,6 +163,7 @@ export default function DashboardPage() {
             <div className="size-40 md:size-56 bg-black border-8 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.7)] relative rounded-full group shrink-0 transition-all duration-1000">
               <Ghost className="size-20 md:size-32 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
               <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
+              <div className="absolute -inset-16 border-2 border-primary/10 rounded-full animate-reverse-spin opacity-20" />
             </div>
             <div className="text-center md:text-right flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-10 mb-8">
