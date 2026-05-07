@@ -207,7 +207,7 @@ export default function DashboardPage() {
                  <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={neuralData}>
                        <defs>
-                          <linearGradient id="colorGain" x1="0" y1="0" x2="0" y2="1">
+                          <linearGradient id="colorGain" x1="0" x2="0" x2="0" y2="1">
                              <stop offset="5%" stopColor="#FBBF24" stopOpacity={0.4}/>
                              <stop offset="95%" stopColor="#FBBF24" stopOpacity={0}/>
                           </linearGradient>
@@ -246,7 +246,7 @@ export default function DashboardPage() {
                     ))
                  ) : (
                     <div className="h-full flex flex-col items-center justify-center opacity-20 py-40">
-                       <Boxes className="size-20 mb-4 animate-pulse text-primary" />
+                       <Boxes className="size-20 mb-4 animate-pulse" />
                        <span className="text-xl font-black uppercase tracking-[1em] italic">Mesh Idle</span>
                     </div>
                  )}
