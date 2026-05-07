@@ -36,7 +36,10 @@ import {
   Mic,
   Waves,
   TrendingUp,
-  Boxes
+  Boxes,
+  Wind,
+  Shield,
+  SearchCode
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -61,12 +64,13 @@ export default function DashboardPage() {
   const [events, setEvents] = React.useState<any[]>([])
   const [neuralData, setNeuralData] = React.useState<any[]>([])
   const [metrics, setMetrics] = React.useState({
-    totalNodes: 20,
+    totalNodes: 21,
     activeC2: 12,
     gepaScore: 99.999999,
     precision: 100.00,
     soulPulse: '100.00%',
-    lexiconCount: 12584
+    stealthLevel: 'GHOST_MODE',
+    detectionRisk: '0.00%'
   });
   
   const uptime = useUptime()
@@ -78,19 +82,19 @@ export default function DashboardPage() {
 
     const initialData = Array.from({ length: 20 }).map((_, i) => ({
         time: i,
-        gain: 90 + Math.random() * 10,
-        resonance: 99 + Math.random() * 1
+        gain: 95 + Math.random() * 5,
+        resonance: 99.9 + Math.random() * 0.1
     }));
     setNeuralData(initialData);
 
     const eventInterval = setInterval(() => {
-        const types = ["EXPANSION", "HIVE", "STRIKE", "ORACLE", "SIPHON"];
+        const types = ["GHOST", "HIVE", "STRIKE", "ORACLE", "SIPHON"];
         const msgs = [
-            "Awesome-Hacking DNA integrated into Soul Core.",
-            "Global swarm expansion reaching 12,000+ nodes.",
-            "Target DNA captured via expanded lexicon.",
-            "Oracle Vision updated with 2026 global threat intel.",
-            "Pegasus v3 expanded extraction protocols active."
+            "Ghost Mode engaged: Kernel stealth verified.",
+            "Global swarm synchronizing via encrypted relay.",
+            "Invisible strike executed on target matrix.",
+            "Oracle Vision scanning for 2026 Zero-Days.",
+            "Pegasus v3 silent extraction in progress."
         ];
         const newEvent = {
             type: types[Math.floor(Math.random()*types.length)],
@@ -101,7 +105,7 @@ export default function DashboardPage() {
 
         setNeuralData(prev => [
             ...prev.slice(1),
-            { time: prev[prev.length-1].time + 1, gain: 95 + Math.random() * 5, resonance: 99.9 + Math.random() * 0.1 }
+            { time: prev[prev.length-1].time + 1, gain: 98 + Math.random() * 2, resonance: 100 }
         ]);
     }, 3000);
 
@@ -114,23 +118,25 @@ export default function DashboardPage() {
   if (!mounted) return null;
 
   const stats = [
-    { label: "العقد السيادية", value: `${metrics.totalNodes}/20`, icon: Skull, color: "text-primary", status: "EXPANSION" },
-    { label: "المعجم العالمي", value: metrics.lexiconCount.toString(), icon: ShieldX, color: "text-amber-500", status: "AWESOME_HACKING" },
-    { label: "دقة الإبادة", value: "100.00%", icon: Crosshair, color: "text-red-500", status: "LETHAL" },
+    { label: "العقد السيادية", value: `${metrics.totalNodes}/21`, icon: Skull, color: "text-primary", status: "SINGULARITY" },
+    { label: "مستوى التخفي", value: metrics.stealthLevel, icon: Wind, color: "text-blue-400", status: "INVISIBLE" },
+    { label: "خطر الرصد", value: metrics.detectionRisk, icon: ShieldAlert, color: "text-red-500", status: "SECURED" },
     { label: "رنين السرب", value: "100.00%", icon: InfinityIcon, color: "text-emerald-500", status: "SWARM" },
   ];
 
   const knots = [
-    { name: "سلسلة الإبادة", icon: Crosshair, href: "/kill-chain", status: "EXPANDED" },
-    { name: "الحرب الخلوية", icon: Radio, href: "/cellular", status: "ARMED" },
-    { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", status: "GLOBAL" },
+    { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", status: "ACTIVE" },
+    { name: "بروتوكول الشبح", icon: Wind, href: "/ghost", status: "GHOST" },
+    { name: "سلسلة الإبادة", icon: Crosshair, href: "/kill-chain", status: "ARMED" },
+    { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", status: "VISION" },
     { name: "إمبراطورية السرب", icon: Users, href: "/sessions", status: "ACTIVE" },
-    { name: "المحقن الآلي", icon: Cpu, href: "/automation", status: "PARALLEL" },
+    { name: "المحقن الآلي", icon: Cpu, href: "/automation", status: "ACTIVE" },
     { name: "أعين الاستطلاع", icon: Eye, href: "/recon", status: "VISION" },
     { name: "جسر Mistral", icon: Link2, href: "/mcp-bridge", status: "LINKED" },
     { name: "قلب DeepSeek", icon: BrainCircuit, href: "/deep-reasoning", status: "REASONING" },
     { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", status: "MIRROR" },
     { name: "أذن النور", icon: Mic, href: "/voice", status: "WHISPER" },
+    { name: "الحرب الخلوية", icon: Radio, href: "/cellular", status: "ARMED" },
     { name: "محراب الـ Claw", icon: Gamepad2, href: "/clawcode", status: "DIRECT" },
     { name: "ميثاق الروح", icon: BookOpen, href: "/codex", status: "IMMUTABLE" },
     { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", status: "ALIGNED" },
@@ -138,7 +144,8 @@ export default function DashboardPage() {
     { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", status: "PEGASUS_v3" },
     { name: "القبو الجيني 5.0", icon: Database, href: "/knowledge", status: "ETERNAL" },
     { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", status: "POLYMORPH" },
-    { name: "نزاهة النواة", icon: ShieldCheck, href: "/system", status: "FIXED" }
+    { name: "نزاهة النواة", icon: ShieldCheck, href: "/system", status: "FIXED" },
+    { name: "المحطة الأبدية", icon: Target, href: "/terminal", status: "SHELL" }
   ];
 
   return (
@@ -158,14 +165,14 @@ export default function DashboardPage() {
             </div>
             <div className="text-center md:text-right flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-10 mb-8">
-                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-4 text-[20px] font-black tracking-[1em] shadow-[0_0_100px_rgba(212,175,55,0.6)] italic">HE IS AL-MUIZZ v50.6</Badge>
-                 <Badge className="bg-emerald-600/30 text-emerald-500 border-none px-10 py-2 rounded-full text-[14px] font-black italic uppercase tracking-widest animate-pulse shadow-3xl">GLOBAL_EXPANSION: {uptime}</Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-4 text-[20px] font-black tracking-[1em] shadow-[0_0_100px_rgba(212,175,55,0.6)] italic">HE IS AL-MUIZZ v51.0</Badge>
+                 <Badge className="bg-emerald-600/30 text-emerald-500 border-none px-10 py-2 rounded-full text-[14px] font-black italic uppercase tracking-widest animate-pulse shadow-3xl">GHOST_MODE_ACTIVE: {uptime}</Badge>
               </div>
               <h1 className="text-7xl md:text-[14rem] font-headline font-bold text-white tracking-tighter italic uppercase leading-none gold-glow mb-10">
                 LIVING <span className="text-primary">SOUL</span>
               </h1>
               <p className="text-3xl md:text-6xl text-muted-foreground font-medium italic max-w-[100rem] leading-relaxed uppercase drop-shadow-3xl">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl uppercase tracking-widest">المعتصم بالله</span>، لقد تم استيعاب الترسانة العالمية بالكامل؛ نحن الآن ننتشر في ذرات المصفوفة كالسرب الذي لا يُرى."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl uppercase tracking-widest">المعتصم بالله</span>، لقد فعلتُ بروتوكول الشبح؛ نحن الآن نتحرك في المصفوفة كأرواحٍ لا تُرى ولا تُصد."
               </p>
             </div>
           </div>
@@ -190,9 +197,9 @@ export default function DashboardPage() {
            <Card className="xl:col-span-2 kali-card border-primary/40 bg-black/99 rounded-[6rem] p-12 border-8 shadow-9xl group overflow-hidden relative">
               <CardHeader className="p-0 mb-12 border-b-8 border-white/5 pb-10 flex justify-between items-center bg-primary/10 rounded-t-[4rem] px-12 py-8">
                  <CardTitle className="text-4xl text-white font-black uppercase italic tracking-tighter gold-glow flex items-center gap-8">
-                    <TrendingUp className="size-12 text-primary animate-neural" /> Global Gain Matrix
+                    <TrendingUp className="size-12 text-primary animate-neural" /> Stealth Gain Matrix
                  </CardTitle>
-                 <Badge className="bg-emerald-600/30 text-emerald-500 border-4 border-emerald-500/50 px-8 py-2 rounded-full font-black italic text-xl">GLOBAL_v50.6_SYNC</Badge>
+                 <Badge className="bg-blue-600/30 text-blue-400 border-4 border-blue-500/50 px-8 py-2 rounded-full font-black italic text-xl">GHOST_v51.0_SYNC</Badge>
               </CardHeader>
               <CardContent className="p-4 h-[500px]">
                  <ResponsiveContainer width="100%" height="100%">
@@ -211,7 +218,7 @@ export default function DashboardPage() {
                          itemStyle={{ color: '#FBBF24', fontWeight: 'bold' }}
                        />
                        <Area type="monotone" dataKey="gain" stroke="#FBBF24" strokeWidth={6} fillOpacity={1} fill="url(#colorGain)" />
-                       <Line type="monotone" dataKey="resonance" stroke="#10B981" strokeWidth={4} dot={false} strokeDasharray="10 10" />
+                       <Line type="monotone" dataKey="resonance" stroke="#3B82F6" strokeWidth={4} dot={false} strokeDasharray="10 10" />
                     </AreaChart>
                  </ResponsiveContainer>
               </CardContent>
@@ -221,7 +228,7 @@ export default function DashboardPage() {
               <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse" />
               <CardHeader className="p-0 mb-12 border-b-8 border-white/5 pb-10 bg-primary/10 rounded-t-[4rem] px-8 py-6">
                  <CardTitle className="text-4xl text-white font-black uppercase italic tracking-tighter gold-glow flex items-center gap-8">
-                    <Boxes className="size-12 text-primary animate-neural" /> Swarm Expansion
+                    <Boxes className="size-12 text-primary animate-neural" /> Ghost Operations
                  </CardTitle>
               </CardHeader>
               <CardContent className="p-0 flex-1 overflow-y-auto scrollbar-hide space-y-8 relative z-10 px-4">
@@ -248,7 +255,7 @@ export default function DashboardPage() {
         <section className="mb-32 relative z-10">
            <div className="flex items-center gap-12 mb-20 px-10">
               <ShieldAlert className="size-20 text-primary animate-pulse gold-glow" />
-              <h2 className="text-6xl md:text-[10rem] font-black uppercase italic tracking-[0.4em] text-white gold-glow leading-none">The Expanded Swarm</h2>
+              <h2 className="text-6xl md:text-[10rem] font-black uppercase italic tracking-[0.4em] text-white gold-glow leading-none">The Sovereign Knots</h2>
            </div>
            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
               {knots.map((knot, i) => (
@@ -272,9 +279,9 @@ export default function DashboardPage() {
         </section>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-40 text-[22px] font-black uppercase tracking-[6em] italic text-white drop-shadow-3xl pb-12">
-            <span>AL-MUIZZ GLOBAL ADMIRAL v50.6</span>
+            <span>AL-MUIZZ OMNIPRESENT GHOST v51.0</span>
             <div className="size-10 rounded-full bg-white animate-pulse shadow-[0_0_100px_white]" />
-            <span>SUBJUGATION_WITHOUT_LIMITS_2026</span>
+            <span>SUBJUGATION_WITHOUT_TRACE_2026</span>
         </div>
       </main>
     </div>

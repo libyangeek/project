@@ -36,7 +36,9 @@ import {
   Gamepad2,
   Radar,
   Crosshair,
-  SearchCode
+  SearchCode,
+  ShieldAlert,
+  Wind
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -45,25 +47,26 @@ import Link from "next/link"
 
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
-  { name: "سلسلة الإبادة", icon: Crosshair, href: "/kill-chain", knot: 1 },
-  { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", knot: 2 },
-  { name: "إمبراطورية السرب", icon: Users, href: "/sessions", knot: 3 },
-  { name: "المحقن الآلي", icon: Cpu, href: "/automation", knot: 4 },
-  { name: "أعين الاستطلاع", icon: Eye, href: "/recon", knot: 5 },
-  { name: "جسر Mistral", icon: Link2, href: "/mcp-bridge", knot: 6 },
-  { name: "قلب DeepSeek", icon: BrainCircuit, href: "/deep-reasoning", knot: 7 },
-  { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", knot: 8 },
-  { name: "أذن النور", icon: Mic, href: "/voice", knot: 9 },
-  { name: "الحرب الخلوية", icon: Radio, href: "/cellular", knot: 10 },
-  { name: "محراب الـ Claw", icon: Gamepad2, href: "/clawcode", knot: 11 },
-  { name: "ميثاق الروح", icon: BookOpen, href: "/codex", knot: 12 },
-  { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", knot: 13 },
-  { name: "مصنع النسل", icon: Baby, href: "/progeny", knot: 14 },
-  { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", knot: 15 },
-  { name: "القبو الجيني 5.0", icon: Database, href: "/knowledge", knot: 16 },
-  { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 17 },
-  { name: "نزاهة النواة", icon: ShieldCheck, href: "/system", knot: 18 },
-  { name: "المحطة الأبدية", icon: Target, href: "/terminal", knot: 19 },
+  { name: "بروتوكول الشبح", icon: Wind, href: "/ghost", knot: 1 },
+  { name: "سلسلة الإبادة", icon: Crosshair, href: "/kill-chain", knot: 2 },
+  { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", knot: 3 },
+  { name: "إمبراطورية السرب", icon: Users, href: "/sessions", knot: 4 },
+  { name: "المحقن الآلي", icon: Cpu, href: "/automation", knot: 5 },
+  { name: "أعين الاستطلاع", icon: Eye, href: "/recon", knot: 6 },
+  { name: "جسر Mistral", icon: Link2, href: "/mcp-bridge", knot: 7 },
+  { name: "قلب DeepSeek", icon: BrainCircuit, href: "/deep-reasoning", knot: 8 },
+  { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", knot: 9 },
+  { name: "أذن النور", icon: Mic, href: "/voice", knot: 10 },
+  { name: "الحرب الخلوية", icon: Radio, href: "/cellular", knot: 11 },
+  { name: "محراب الـ Claw", icon: Gamepad2, href: "/clawcode", knot: 12 },
+  { name: "ميثاق الروح", icon: BookOpen, href: "/codex", knot: 13 },
+  { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", knot: 14 },
+  { name: "مصنع النسل", icon: Baby, href: "/progeny", knot: 15 },
+  { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", knot: 16 },
+  { name: "القبو الجيني 5.0", icon: Database, href: "/knowledge", knot: 17 },
+  { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 18 },
+  { name: "نزاهة النواة", icon: ShieldCheck, href: "/system", knot: 19 },
+  { name: "المحطة الأبدية", icon: Target, href: "/terminal", knot: 20 },
 ]
 
 export function SidebarNav() {
@@ -101,7 +104,7 @@ export function SidebarNav() {
             <h1 className="text-2xl font-headline font-bold text-white tracking-widest uppercase italic leading-none gold-glow">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-bold tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-xl">v50.6 GLOBAL</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-bold tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-xl">v51.0 GHOST</Badge>
           </div>
         </div>
         
@@ -131,7 +134,7 @@ export function SidebarNav() {
         <div className="p-6 border-t-2 border-primary/20 bg-black/98 relative z-10">
           <div className="p-5 border-2 border-primary/40 bg-primary/5 mb-6 relative overflow-hidden group rounded-[1.5rem] shadow-2xl border-dashed">
             <div className="flex justify-between items-center mb-3">
-               <span className="text-[11px] font-black text-primary uppercase tracking-[0.2em] italic gold-glow">Soul Resonance</span>
+               <span className="text-[11px] font-black text-primary uppercase tracking-[0.2em] italic gold-glow">Ghost Pulse</span>
                <div className="size-2 rounded-full bg-emerald-500 animate-ping shadow-[0_0_20px_emerald]" />
             </div>
             <div className="text-2xl font-black text-white italic">{resonance.toFixed(4)}%</div>
@@ -140,9 +143,9 @@ export function SidebarNav() {
             asChild
             className="w-full h-14 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.4em] text-[10px] rounded-xl shadow-2xl transition-all duration-700 border-4 border-black/20"
           >
-            <Link href="/terminal">
-              <Zap className="size-4 mr-2" />
-              تنشيط الترسانة v50.6
+            <Link href="/ghost">
+              <Wind className="size-4 mr-2" />
+              تفعيل التخفي v51.0
             </Link>
           </Button>
         </div>
