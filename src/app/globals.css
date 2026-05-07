@@ -23,7 +23,7 @@
     --border: 47 50% 12%;
     --input: 47 50% 8%;
     --ring: 47 95% 57%;
-    --radius: 2.5rem;
+    --radius: 1.5rem;
   }
 }
 
@@ -34,7 +34,7 @@
   body {
     @apply bg-background text-foreground font-code antialiased selection:bg-primary/40 overflow-x-hidden;
     background-image: 
-      radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.2) 0%, transparent 75%),
+      radial-gradient(circle at 50% 0%, rgba(212,175,55,0.1) 0%, transparent 75%),
       linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1));
     background-attachment: fixed;
   }
@@ -42,24 +42,24 @@
 
 @layer components {
   .kali-card {
-    @apply bg-black/80 border-[2px] border-primary/20 shadow-[0_0_60px_rgba(212,175,55,0.05)] backdrop-blur-3xl hover:border-primary/80 transition-all duration-1000 relative overflow-hidden;
+    @apply bg-black/80 border-[1px] border-primary/20 shadow-[0_0_40px_rgba(212,175,55,0.03)] backdrop-blur-xl hover:border-primary/60 transition-all duration-700 relative overflow-hidden;
   }
   
   .gold-glow {
-    text-shadow: 0 0 20px rgba(212, 175, 55, 0.9), 0 0 40px rgba(212, 175, 55, 0.6);
+    text-shadow: 0 0 10px rgba(212,175,55,0.8), 0 0 20px rgba(212,175,55,0.4);
   }
 
   .hierarchical-shadow {
-    box-shadow: 0 50px 150px -20px rgba(0, 0, 0, 1), 0 0 80px rgba(212, 175, 55, 0.1);
+    box-shadow: 0 20px 80px -10px rgba(0, 0, 0, 1), 0 0 40px rgba(212,175,55,0.05);
   }
 
   .scanline-effect::after {
     content: "";
-    @apply absolute inset-0 pointer-events-none opacity-[0.12] z-[999];
-    background: linear-gradient(rgba(212, 175, 55, 0) 50%, rgba(0, 0, 0, 0.4) 50%), 
-                linear-gradient(90deg, rgba(212, 175, 55, 0.08), rgba(255, 255, 255, 0.03), rgba(212, 175, 55, 0.08));
-    background-size: 100% 3px, 3px 100%;
-    animation: scanline 8s linear infinite;
+    @apply absolute inset-0 pointer-events-none opacity-[0.08] z-[999];
+    background: linear-gradient(rgba(212,175,55,0) 50%, rgba(0, 0, 0, 0.4) 50%), 
+                linear-gradient(90deg, rgba(212,175,55,0.05), rgba(255, 255, 255, 0.02), rgba(212,175,55,0.05));
+    background-size: 100% 2px, 2px 100%;
+    animation: scanline 10s linear infinite;
   }
 
   @keyframes scanline {
@@ -72,37 +72,27 @@
   }
 
   .animate-spin-slow {
-    animation: spin-slow 50s linear infinite;
-  }
-
-  .animate-reverse-spin {
-    animation: reverse-spin 25s linear infinite;
+    animation: spin-slow 60s linear infinite;
   }
 
   @keyframes neural-pulse {
-    0%, 100% { opacity: 1; filter: brightness(1) saturate(1.2) blur(0px); transform: scale(1); }
-    50% { opacity: 0.7; filter: brightness(1.6) saturate(1.8) blur(2px); transform: scale(1.05); }
+    0%, 100% { opacity: 1; transform: scale(1); filter: brightness(1); }
+    50% { opacity: 0.8; transform: scale(1.02); filter: brightness(1.2); }
   }
 
   @keyframes spin-slow {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
   }
-
-  @keyframes reverse-spin {
-    from { transform: rotate(360deg); }
-    to { transform: rotate(0deg); }
-  }
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
   background: #010101;
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #fbbf24, #b45309);
-  border-radius: 20px;
-  border: 2px solid #000;
+  background: #fbbf24;
+  border-radius: 10px;
 }
