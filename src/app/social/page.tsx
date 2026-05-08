@@ -41,7 +41,11 @@ import {
   TrendingUp,
   BarChart3,
   Copy,
-  CheckCircle2
+  CheckCircle2,
+  Cpu,
+  SearchCode,
+  FileSearch,
+  DatabaseZap
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -52,20 +56,21 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { aiDrivenSocialEngineeringBots } from "@/ai/flows/ai-driven-social-engineering-bots"
 import { generateSmartWordlist } from "@/ai/flows/ai-smart-wordlist-flow"
 import { osintMaster } from "@/ai/flows/osint-master-flow"
+import { executeAutonomousIntel } from "@/ai/flows/autonomous-web-intel-flow"
 import { toast } from "@/hooks/use-toast"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { ResponsiveContainer, Radar as RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, RadarChart as RechartsRadar } from 'recharts'
 
 /**
- * @fileOverview العقدة المفترسة للتواصل v53.9 - THE SUPREME SOCIAL PREDATOR: MASS STRIKE EDITION
- * مجهزة بقدرات BlackBullet 2 للقصف الجماعي واستنزاف القوائم بنمط السرب.
+ * @fileOverview العقدة المفترسة للتواصل v53.9 - THE SUPREME SOCIAL PREDATOR: AUTONOMOUS DISCOVERY
+ * مجهزة بقدرات BlackBullet 2 والاستخبارات المستقلة لبناء قواعد بيانات جديدة.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي // 6 مايو 2026
  */
 export default function SocialPredatorPage() {
   const [mounted, setMounted] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
-  const [activeTab, setActiveMode] = React.useState<"subjugate" | "wordlist" | "mass" | "breach">("subjugate")
+  const [activeTab, setActiveMode] = React.useState<"subjugate" | "wordlist" | "mass" | "breach" | "intel">("subjugate")
   
   // Inputs
   const [targetId, setTargetId] = React.useState("")
@@ -83,6 +88,7 @@ export default function SocialPredatorPage() {
   const [result, setResult] = React.useState<any>(null)
   const [wordlist, setWordlist] = React.useState<any>(null)
   const [breachData, setBreachData] = React.useState<any>(null)
+  const [intelResult, setIntelResult] = React.useState<any>(null)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
 
   React.useEffect(() => {
@@ -109,8 +115,8 @@ export default function SocialPredatorPage() {
   }, [isMassRunning])
 
   const handleAction = async () => {
-    if (!targetId && activeTab !== "mass" && activeTab !== "subjugate") {
-        toast({ variant: "destructive", title: "Target Missing", description: "Identify the digital coordinate first." });
+    if (!targetId && !persona && activeTab !== "mass") {
+        toast({ variant: "destructive", title: "Target Missing", description: "Identify the digital coordinate or context first." });
         return
     }
     setLoading(true)
@@ -136,6 +142,13 @@ export default function SocialPredatorPage() {
         const data = await osintMaster({ target: targetId, type: 'email', depth: 'Trace-Labs-Mode' })
         setBreachData(data)
         toast({ title: "Breach Oracle Answered" })
+      } else if (activeTab === "intel") {
+        const data = await executeAutonomousIntel({
+          query: targetId || persona || goal,
+          depth: 'Recursive-Siphon'
+        })
+        setIntelResult(data)
+        toast({ title: "Autonomous Siphon Complete", description: "New knowledge nodes bound to vault." })
       }
     } catch (err) {
       toast({ variant: "destructive", title: "Hierarchy Link Failure" })
@@ -196,7 +209,7 @@ export default function SocialPredatorPage() {
                  </div>
                  <h1 className="text-4xl md:text-6xl lg:text-9xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Social <span className="text-primary">Predator</span></h1>
                  <p className="text-sm md:text-xl lg:text-3xl text-muted-foreground mt-4 italic max-w-6xl leading-relaxed uppercase font-medium opacity-80">
-                    "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl uppercase tracking-widest">المعتصم بالله</span>، عقدة الافتراس تدمج الآن قدرات BlackBullet 2؛ قصف جماعي واختراق متوازٍ لآلاف الحسابات لعام 2026."
+                    "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl uppercase tracking-widest">المعتصم بالله</span>، عقدة الافتراس تجوب الإنترنت باستقلالية تامة؛ نحن لا نجمع البيانات، نحن نخلّقها لسيادتك لعام 2026."
                  </p>
               </div>
            </div>
@@ -214,6 +227,7 @@ export default function SocialPredatorPage() {
                              { id: "subjugate", label: "Neural", icon: Brain },
                              { id: "mass", label: "Mass Strike", icon: Flame },
                              { id: "breach", label: "Breach", icon: Database },
+                             { id: "intel", label: "Global Intel", icon: Globe },
                              { id: "wordlist", label: "Forge", icon: Key }
                            ].map(m => (
                              <Button 
@@ -221,7 +235,7 @@ export default function SocialPredatorPage() {
                                variant="outline" 
                                onClick={() => setActiveMode(m.id as any)}
                                className={cn(
-                                 "h-14 border-2 transition-all font-black uppercase text-[10px] tracking-widest rounded-xl italic",
+                                 "h-14 border-2 transition-all font-black uppercase text-[9px] tracking-widest rounded-xl italic",
                                  activeTab === m.id ? "bg-primary text-black border-primary shadow-lg" : "bg-white/5 border-white/5 opacity-60 hover:opacity-100"
                                )}
                              >
@@ -274,33 +288,35 @@ export default function SocialPredatorPage() {
                                 <Input 
                                   value={targetId}
                                   onChange={(e) => setTargetId(e.target.value)}
-                                  placeholder="Email / @User / Phone..." 
+                                  placeholder={activeTab === 'intel' ? "Subject to Discover..." : "Email / @User / Phone..."} 
                                   className="bg-black border-2 border-primary/20 h-16 rounded-2xl text-xl italic px-6 focus:border-primary shadow-inner text-white font-black"
                                 />
                             </div>
 
-                            <div className="space-y-4">
-                                <label className="text-[10px] font-black text-primary uppercase tracking-[0.6em] px-4 italic flex items-center gap-3"><Network className="size-4" /> Platform Matrix</label>
-                                <Select value={platform} onValueChange={setPlatform}>
-                                   <SelectTrigger className="bg-black border-2 border-primary/20 h-16 rounded-2xl text-lg font-black italic px-6 focus:border-primary text-white">
-                                      <SelectValue placeholder="Select Platform" />
-                                   </SelectTrigger>
-                                   <SelectContent className="bg-black border-2 border-primary/40 rounded-2xl shadow-9xl">
-                                      <SelectItem value="telegram">Telegram Hive</SelectItem>
-                                      <SelectItem value="whatsapp">WhatsApp Mesh</SelectItem>
-                                      <SelectItem value="snapchat">Snapchat Siphon</SelectItem>
-                                      <SelectItem value="instagram">Instagram Ghost</SelectItem>
-                                      <SelectItem value="facebook">Facebook Pulse</SelectItem>
-                                   </SelectContent>
-                                </Select>
-                            </div>
+                            {activeTab !== 'intel' && (
+                                <div className="space-y-4">
+                                    <label className="text-[10px] font-black text-primary uppercase tracking-[0.6em] px-4 italic flex items-center gap-3"><Network className="size-4" /> Platform Matrix</label>
+                                    <Select value={platform} onValueChange={setPlatform}>
+                                    <SelectTrigger className="bg-black border-2 border-primary/20 h-16 rounded-2xl text-lg font-black italic px-6 focus:border-primary text-white">
+                                        <SelectValue placeholder="Select Platform" />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-black border-2 border-primary/40 rounded-2xl shadow-9xl">
+                                        <SelectItem value="telegram">Telegram Hive</SelectItem>
+                                        <SelectItem value="whatsapp">WhatsApp Mesh</SelectItem>
+                                        <SelectItem value="snapchat">Snapchat Siphon</SelectItem>
+                                        <SelectItem value="instagram">Instagram Ghost</SelectItem>
+                                        <SelectItem value="facebook">Facebook Pulse</SelectItem>
+                                    </SelectContent>
+                                    </Select>
+                                </div>
+                            )}
 
                             <div className="space-y-4">
-                                <label className="text-[10px] font-black text-primary uppercase tracking-[0.6em] px-4 italic flex items-center gap-3"><Binary className="size-4" /> Behavioral DNA</label>
+                                <label className="text-[10px] font-black text-primary uppercase tracking-[0.6em] px-4 italic flex items-center gap-3"><Binary className="size-4" /> Behavioral DNA / Context</label>
                                 <Textarea 
                                   value={persona}
                                   onChange={(e) => setPersona(e.target.value)}
-                                  placeholder="Bio, interests, family names, birth year..."
+                                  placeholder={activeTab === 'intel' ? "Define search scope and depth..." : "Bio, interests, family names, birth year..."}
                                   className="bg-black border-2 border-white/5 rounded-2xl min-h-[120px] text-lg italic p-6 focus:border-primary font-bold text-gray-200 shadow-inner resize-none scrollbar-hide"
                                 />
                             </div>
@@ -311,7 +327,7 @@ export default function SocialPredatorPage() {
                               className="w-full h-24 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.8em] rounded-[2rem] shadow-xl active:scale-95 transition-all text-xl border-4 border-black/30 group italic"
                             >
                               {loading ? <Loader2 className="size-10 animate-spin mr-3" /> : <Flame className="size-10 mr-4 group-hover:scale-125 transition-transform gold-glow" />}
-                              IGNITE_PREDATOR
+                              {activeTab === 'intel' ? 'IGNITE_DISCOVERY' : 'IGNITE_PREDATOR'}
                             </Button>
                         </div>
                     )}
@@ -351,8 +367,45 @@ export default function SocialPredatorPage() {
               </CardHeader>
 
               <CardContent className="p-6 flex-1 overflow-y-auto scrollbar-hide space-y-12 relative z-10">
-                 {/* قسم نتائج القصف الجماعي (BlackBullet Style) */}
-                 {activeTab === "mass" ? (
+                 {/* قسم نتائج الاستخبارات المستقلة */}
+                 {activeTab === "intel" && intelResult ? (
+                    <div className="space-y-10 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col">
+                        <div className="p-10 rounded-[3rem] bg-primary/5 border-2 border-primary/20 italic text-2xl md:text-4xl text-gray-100 leading-relaxed font-black shadow-inner relative group/brief overflow-hidden">
+                            <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse" />
+                            "{intelResult.discoveryBrief}"
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <Card className="bg-black/80 border-2 border-white/5 p-8 rounded-3xl shadow-2xl relative group/vault">
+                                <h5 className="text-[12px] font-black text-primary uppercase tracking-[0.8em] mb-8 italic border-b-2 border-primary/10 pb-4 flex items-center gap-4 gold-glow">
+                                    <DatabaseZap className="size-6 animate-pulse" /> New Vault Nodes
+                                </h5>
+                                <div className="space-y-6 max-h-[400px] overflow-y-auto scrollbar-hide">
+                                    {intelResult.newKnowledgeNodes.map((node: any, idx: number) => (
+                                        <div key={idx} className="p-6 rounded-2xl bg-white/5 border border-primary/20 hover:border-primary transition-all group/node relative overflow-hidden">
+                                            <div className="flex justify-between items-center mb-2">
+                                                <span className="text-xl font-black text-white italic">{node.topic}</span>
+                                                <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-3 py-0.5 rounded-full text-[8px] font-black">VAULTED</Badge>
+                                            </div>
+                                            <p className="text-sm text-gray-400 italic font-bold leading-relaxed">{node.content}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </Card>
+                            <Card className="bg-black/80 border-2 border-white/5 p-8 rounded-3xl shadow-2xl space-y-6 relative overflow-hidden group/inference">
+                                <h5 className="text-[12px] font-black text-emerald-500 uppercase tracking-[0.8em] mb-4 italic border-b-2 border-emerald-500/10 pb-4 flex items-center gap-4">
+                                    <BrainCircuit className="size-6" /> Strategic Inference
+                                </h5>
+                                <p className="text-lg md:text-2xl text-gray-200 italic font-black leading-relaxed">"{intelResult.strategicInference}"</p>
+                                <div className="p-4 rounded-xl bg-emerald-600/10 border border-emerald-500/20 mt-8 text-center">
+                                    <span className="text-[9px] font-black uppercase text-emerald-500 tracking-[0.4em]">{intelResult.databaseStatus}</span>
+                                </div>
+                                <div className="absolute -bottom-6 -right-6 p-10 opacity-[0.02] group-hover/inference:opacity-[0.08] transition-all duration-700 scale-150"><SearchCode className="size-32 text-emerald-500" /></div>
+                            </Card>
+                        </div>
+                    </div>
+                 ) : activeTab === "mass" ? (
+                    /* قسم نتائج القصف الجماعي (BlackBullet Style) */
                     <div className="space-y-10 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col">
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                             {[
