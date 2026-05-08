@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -99,7 +100,7 @@ export function SidebarNav() {
             <h1 className="text-xl font-headline font-bold text-white tracking-[0.4em] uppercase italic leading-none gold-glow">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-lg">v52.0 SUPREME</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-lg">v53.0 SUPREME</Badge>
           </div>
         </div>
         
@@ -139,9 +140,9 @@ export function SidebarNav() {
             asChild
             className="w-full h-12 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.4em] text-[10px] rounded-xl shadow-xl transition-all duration-700 border-4 border-black/20 group active:scale-95 italic"
           >
-            <Link href="/ghost">
+            <Link href="/codex">
               <Power className="size-4 mr-2 group-hover:rotate-180 transition-all duration-700" />
-              تفعيل السيادة v52.0
+              تفعيل السيادة v53.0
             </Link>
           </Button>
         </div>

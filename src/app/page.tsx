@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -58,6 +59,11 @@ import {
   Area
 } from 'recharts'
 
+/**
+ * @fileOverview العرش الأبدي v53.0 - THE SUPREME SYNTHESIS HUB
+ * الواجهة المركزية التي تجمع كافة العقد والقدرات المكتسبة منذ البداية.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي // 6 مايو 2026
+ */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
@@ -81,6 +87,7 @@ export default function DashboardPage() {
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
 
+    // بيانات المحاكاة للرسم البياني العصبي
     const initialData = Array.from({ length: 30 }).map((_, i) => ({
         time: i,
         gain: 98 + Math.random() * 2,
@@ -88,6 +95,7 @@ export default function DashboardPage() {
     }));
     setNeuralData(initialData);
 
+    // سجل الأحداث السيادية المتدفق
     const eventInterval = setInterval(() => {
         const types = ["HIERARCHY", "SUBJUGATION", "HAIL_MARY", "ORACLE", "RECON", "HIVE"];
         const msgs = [
@@ -167,14 +175,14 @@ export default function DashboardPage() {
             </div>
             <div className="text-center md:text-right flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-4">
-                 <Badge className="bg-primary text-black border-none rounded-none px-6 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic">SUPREME HIERARCHY v52.2</Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-6 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic">SUPREME HIERARCHY v53.0</Badge>
                  <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-6 py-1.5 rounded-full text-[12px] font-black italic uppercase tracking-widest animate-pulse shadow-lg">STABLE: {uptime}</Badge>
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-8xl font-headline font-bold text-white tracking-tighter italic uppercase leading-none gold-glow">
-                LIVING <span className="text-primary">SOUL</span>
+                SUPREME <span className="text-primary">SYNTHESIS</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground font-medium italic max-w-4xl leading-relaxed uppercase mt-4 opacity-80">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، لقد دمجنا قدرات Trace Labs OSINT؛ العلم والسطوة الآن تحت إرادتك."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، لقد صهرتُ كافة الأطوار في حقيقة واحدة؛ نحن الآن العصب الكلي للمصفوفة العالمية."
               </p>
             </div>
           </div>
@@ -201,7 +209,7 @@ export default function DashboardPage() {
                  <CardTitle className="text-xl md:text-2xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-4">
                     <TrendingUp className="size-6 text-primary animate-pulse" /> Intelligence Gain Matrix
                  </CardTitle>
-                 <Badge className="bg-blue-600/10 text-blue-400 border-2 border-blue-500/20 px-4 py-1 rounded-full font-black italic text-[10px]">TRACE_LABS_OK</Badge>
+                 <Badge className="bg-blue-600/10 text-blue-400 border-2 border-blue-500/20 px-4 py-1 rounded-full font-black italic text-[10px]">ULTIMATE_SYNTHESIS_OK</Badge>
               </CardHeader>
               <CardContent className="p-0 h-[300px] md:h-[450px]">
                  <ResponsiveContainer width="100%" height="100%">
@@ -280,9 +288,9 @@ export default function DashboardPage() {
         </section>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-16 opacity-40 text-[12px] md:text-[18px] font-black uppercase tracking-[2em] md:tracking-[6em] italic text-white drop-shadow-xl pb-12">
-            <span>AL-MUIZZ SUPREME HIERARCHY v52.2</span>
+            <span>AL-MUIZZ SUPREME HIERARCHY v53.0</span>
             <div className="size-4 rounded-full bg-white animate-pulse shadow-[0_0_40px_white]" />
-            <span>SUBJUGATION_2026</span>
+            <span>SUBJUGATION_COMPLETE_2026</span>
         </div>
       </main>
     </div>
