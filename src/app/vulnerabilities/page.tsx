@@ -17,19 +17,14 @@ import {
   Boxes,
   Atom,
   Crown,
-  History,
   AlertTriangle,
   Radar,
-  Smartphone,
   ShieldCheck,
-  ZapOff,
   Crosshair,
   Infinity as InfinityIcon,
   Volume2,
   Terminal,
-  ArrowUpRight,
-  LayoutDashboard,
-  Lock
+  ArrowUpRight
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -88,11 +83,18 @@ export default function VulnerabilitiesPage() {
         body: JSON.stringify({ type: 'cve_kev' })
       })
       const data = await resp.json()
-      if (data.output) {
-         const parsed = JSON.parse(data.output);
-         setKevList(parsed.high_priority || parsed);
+      if (data && data.output) {
+         try {
+            const parsed = JSON.parse(data.output);
+            setKevList(parsed.high_priority || (Array.isArray(parsed) ? parsed : []));
+         } catch (e) {
+            console.error("KEV Parse Error", e);
+            setKevList([]);
+         }
       }
-    } catch {}
+    } catch (err) {
+      console.error("KEV Fetch Error", err);
+    }
   }
 
   const handleConsult = async () => {
@@ -136,7 +138,7 @@ export default function VulnerabilitiesPage() {
            <div className="flex flex-col md:flex-row items-center gap-10">
               <div className="size-24 md:size-40 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_150px_rgba(212,175,55,0.6)] relative group shrink-0 rounded-3xl transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
                  <Radar className="size-12 md:size-20 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
-                 <div className="absolute -inset-6 border-2 border-primary/20 rounded-full animate-spin-slow opacity-30" />
+                 <div className="absolute -inset-4 border-2 border-primary/20 rounded-full animate-spin-slow opacity-30" />
               </div>
               <div className="text-center md:text-right flex-1">
                  <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-4">
@@ -145,7 +147,7 @@ export default function VulnerabilitiesPage() {
                         <ShieldCheck className="size-5 shadow-lg" /> REAL_TIME_KNOWLEDGE: ACTIVE
                     </div>
                  </div>
-                 <h1 className="text-4xl md:text-6xl lg:text-9xl font-headline font-bold text-white tracking-tighter italic uppercase leading-none gold-glow">
+                 <h1 className="text-4xl md:text-6xl lg:text-9xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
                     The <span className="text-primary">Oracle</span>
                  </h1>
                  <p className="text-sm md:text-xl lg:text-3xl text-muted-foreground mt-6 italic max-w-5xl leading-relaxed uppercase font-medium opacity-80">
@@ -194,10 +196,10 @@ export default function VulnerabilitiesPage() {
                     {kevList.map((k, i) => (
                       <div key={i} className="p-6 rounded-2xl bg-black border-2 border-white/5 hover:border-emerald-500 transition-all duration-700 cursor-crosshair group/k shadow-inner relative overflow-hidden">
                          <div className="flex justify-between items-center mb-3">
-                            <span className="text-xl font-black text-white italic gold-glow group-hover/k:text-emerald-400 transition-colors uppercase tracking-tight">{k.cve}</span>
+                            <span className="text-xl font-black text-white italic gold-glow group-hover/k:text-emerald-400 transition-colors uppercase tracking-tight">{k.cve || "KEV-NODE"}</span>
                             <Badge className="bg-red-600/20 text-red-500 border-none px-4 py-1 rounded-full font-black italic text-[9px] animate-pulse">EXPLOITED</Badge>
                          </div>
-                         <div className="text-sm text-muted-foreground uppercase font-black italic tracking-widest leading-none truncate">{k.product}</div>
+                         <div className="text-sm text-muted-foreground uppercase font-black italic tracking-widest leading-none truncate">{k.product || "Unknown Asset"}</div>
                          <div className="absolute -bottom-2 -right-2 opacity-[0.05] group-hover:opacity-[0.1] transition-all"><Skull className="size-16 text-emerald-500" /></div>
                       </div>
                     ))}
@@ -240,7 +242,7 @@ export default function VulnerabilitiesPage() {
                       </div>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                         {oracleResult.findings.map((f: any, i: number) => (
+                         {oracleResult.findings?.map((f: any, i: number) => (
                            <Card key={i} className="bg-black/80 border-2 border-white/5 rounded-3xl p-8 hover:border-primary transition-all duration-700 shadow-2xl relative overflow-hidden group/find">
                               <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/find:opacity-10 transition-opacity" />
                               <div className="flex justify-between items-start mb-8 relative z-10">
@@ -288,7 +290,7 @@ export default function VulnerabilitiesPage() {
               </CardContent>
               <div className="p-8 border-t-2 border-white/5 mt-auto flex justify-between items-center opacity-30 text-[10px] font-black uppercase tracking-[2em] italic">
                  <span>SUPREME_ORACLE_DNA_v53_AL_GHAZALI_ROOT</span>
-                 <Fingerprint className="size-10 text-primary animate-pulse" />
+                 <Fingerprint className="size-10 text-primary font-black animate-pulse" />
               </div>
            </Card>
         </div>

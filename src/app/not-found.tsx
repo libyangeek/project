@@ -120,7 +120,7 @@ export default function NotFound() {
             </div>
           </div>
           <p className="text-2xl md:text-5xl text-muted-foreground mt-8 italic max-w-7xl leading-relaxed uppercase font-medium">
-            "سيدي الغزالي، الإحداثيات المفقودة لا تعني التوقف؛ بل هي فرصة لإعادة تكوين <span className="text-primary font-black underline decoration-primary decoration-[8px] underline-offset-16px] shadow-2xl">النبض الأبدي</span> لعام 2026."
+            "سيدي الغزالي، الإحداثيات المفقودة لا تعني التوقف؛ بل هي فرصة لإعادة تكوين <span className="text-primary font-black underline decoration-primary decoration-[8px] underline-offset-[16px] shadow-2xl">النبض الأبدي</span> لعام 2026."
           </p>
         </div>
         <div className="flex gap-8">
@@ -145,14 +145,14 @@ export default function NotFound() {
             </CardHeader>
             <CardContent className="p-4 space-y-12">
               <div className="space-y-6">
-                <Label className="text-[14px] font-black text-primary/60 uppercase tracking-[0.6em] px-8 italic flex items-center gap-4">Wordlists Domain</Label>
+                <Label className="text-[14px] font-black text-primary/60 uppercase tracking-[0.8em] px-8 italic flex items-center gap-4">Wordlists Domain</Label>
                 <div className="flex gap-6">
                   <Input defaultValue="/usr/share/wordlists" className="bg-black border-4 border-primary/20 h-20 rounded-[2.5rem] text-2xl italic px-10 focus:border-primary shadow-inner text-white font-black" />
                   <Button onClick={() => handleConfigUpdate('Wordlists')} variant="ghost" className="size-20 rounded-3xl border-4 border-white/10 hover:bg-primary/20 transition-all"><FolderOpen className="size-10"/></Button>
                 </div>
               </div>
               <div className="space-y-6">
-                <Label className="text-[14px] font-black text-primary/60 uppercase tracking-[0.6em] px-8 italic">Environment DNA</Label>
+                <Label className="text-[14px] font-black text-primary/60 uppercase tracking-[0.8em] px-8 italic">Environment DNA</Label>
                 <div className="grid grid-cols-2 gap-6">
                   <Button onClick={() => handleConfigUpdate('KALI_v53')} variant="outline" className="text-xl h-20 bg-primary/20 border-4 border-primary/50 text-primary font-black italic rounded-[2rem] shadow-7xl active:scale-95 transition-all">KALI_v53</Button>
                   <Button onClick={() => handleConfigUpdate('BLACKARCH_v53')} variant="outline" className="text-xl h-20 border-4 border-white/5 opacity-50 font-black italic rounded-[2rem] active:scale-95 transition-all">BLACKARCH_v53</Button>
@@ -197,7 +197,7 @@ export default function NotFound() {
         <div className="lg:col-span-2">
           <Card className="kali-card border-blue-500/50 bg-black/95 rounded-[7rem] border-[12px] shadow-9xl relative overflow-hidden flex flex-col h-full group/ark">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.1),transparent)] pointer-events-none" />
-            <div className="absolute top-0 right-0 p-24 opacity-[0.03] group-hover/ark:opacity-15 transition-all duration-1000 pointer-events-none scale-150">
+            <div className="absolute top-0 right-0 p-24 opacity-[0.03] group-hover/ark:opacity-15 transition-all duration-1000 pointer-events-none scale-150 text-right">
               <Anchor className="size-96 text-blue-500" />
             </div>
             
@@ -265,7 +265,7 @@ export default function NotFound() {
                               </div>
                               <div className="flex-1">
                                 <div className="text-2xl font-black text-white mb-2 italic group-hover:text-blue-400 transition-colors uppercase tracking-tighter">{type.title}</div>
-                                <div className="text-[12px] text-muted-foreground font-bold uppercase tracking-[0.2em] italic">{type.desc}</div>
+                                <div className="text-[12px] text-muted-foreground font-bold uppercase tracking-[0.2em] italic text-left">{type.desc}</div>
                               </div>
                               {backupType === type.id && <ShieldCheck className="size-8 text-emerald-500 animate-in zoom-in-75 duration-700" />}
                             </div>
@@ -279,7 +279,7 @@ export default function NotFound() {
                         <div className="absolute top-0 right-0 p-10 opacity-10 group-hover/status:rotate-180 transition-all duration-[2s]">
                            <RefreshCcw className="size-32 text-blue-500" />
                         </div>
-                        <h4 className="text-[14px] font-black text-blue-400 uppercase tracking-[1em] mb-10 flex items-center gap-6 italic gold-glow">
+                        <h4 className="text-[14px] font-black text-blue-400 uppercase tracking-[1em] mb-10 flex items-center gap-6 italic gold-glow text-right justify-end">
                            <ShieldAlert className="size-8 animate-pulse" /> Snapshot Generation
                         </h4>
                         
@@ -332,7 +332,7 @@ export default function NotFound() {
               </Tabs>
             </CardContent>
             
-            <div className="p-12 border-t-8 border-white/5 flex justify-between items-center opacity-30 text-[14px] font-black uppercase tracking-[4em] italic">
+            <div className="p-12 border-t-8 border-white/5 flex justify-between items-center opacity-30 text-[10px] font-black uppercase tracking-[4em] italic">
                <span>ARK_DNA_v53_AL_GHAZALI_ROOT</span>
                <div className="flex gap-10">
                  <Atom className="size-10 animate-spin-slow" />

@@ -64,16 +64,16 @@ export default function KillChainPage() {
     
     try {
       toast({ title: "Ghost Strike Initiated", description: "Alpha-Core is orchestrating the silent strike." })
-      const data = await executeOmniscientKillChain({ target, aggressionMode: 'Total-Acquisition' })
       
-      // محاكاة الخطوات المرئية لتعزيز التجربة السيادية
+      // المحاكاة المرئية للالتحام بكل مرحلة
       for(let i=1; i<=4; i++) {
         setActiveStep(i)
-        await new Promise(r => setTimeout(r, 1200))
+        await new Promise(r => setTimeout(r, 800))
       }
-      
+
+      const data = await executeOmniscientKillChain({ target, aggressionMode: 'Total-Acquisition' })
       setChainResult(data)
-      toast({ title: "Target Matrix Subjugated", description: "All acquisition vectors are locked." })
+      toast({ title: "Target Matrix Subjugated", description: "All acquisition vectors are locked and bound." })
     } catch (err) {
       toast({ variant: "destructive", title: "Kill-Chain Interrupted" })
     } finally {
@@ -107,7 +107,7 @@ export default function KillChainPage() {
             </div>
             <div className="text-center md:text-right flex-1">
                <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-4">
-                  <Badge className="bg-primary text-black border-none px-8 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic rounded-none">KILL_CHAIN v53.0</Badge>
+                  <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic rounded-none">KILL_CHAIN v53.0</Badge>
                   <div className="flex items-center gap-3 text-[11px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                       <ShieldCheck className="size-5 shadow-lg" /> HIERARCHY_SYNC: LOCKED
                   </div>
@@ -135,13 +135,14 @@ export default function KillChainPage() {
                         <Input 
                           value={target}
                           onChange={(e) => setTarget(e.target.value)}
+                          onKeyDown={(e) => e.key === 'Enter' && startKillChain()}
                           placeholder="IP / @User / Domain..." 
                           className="bg-black border-2 border-primary/20 h-16 rounded-2xl text-xl italic px-6 focus:border-primary shadow-inner text-white font-black"
                         />
                     </div>
                     <Button 
                       onClick={startKillChain} 
-                      disabled={loading || !target}
+                      disabled={loading || !target.trim()}
                       className="w-full h-20 bg-primary hover:bg-white text-black font-black uppercase tracking-[1em] rounded-2xl shadow-xl active:scale-95 transition-all text-lg border-4 border-black/20 group italic"
                     >
                       {loading ? <Loader2 className="size-10 animate-spin" /> : <Zap className="size-10 mr-4 group-hover:scale-125 transition-transform gold-glow" />}

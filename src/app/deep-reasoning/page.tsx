@@ -59,9 +59,18 @@ export default function DeepReasoningPage() {
         })
       });
       const data = await response.json();
-      if (data.success && data.output) {
-        setResult(JSON.parse(data.output));
-        toast({ title: "Logic Chain Stabilized", description: "DeepSeek has finalized the chain of thought." });
+      if (data && data.success && data.output) {
+        try {
+            setResult(JSON.parse(data.output));
+            toast({ title: "Logic Chain Stabilized", description: "DeepSeek has finalized the chain of thought." });
+        } catch (parseErr) {
+            console.error("Logic Parse Error", parseErr);
+            setResult({
+                thought_chain: ["Initial scan initiated.", "Logical extraction failed.", "Recalibrating neural nodes."],
+                final_decision: "Directive acknowledged but logic format was inconsistent. Re-igniting deep scan.",
+                confidence: "0.000%"
+            });
+        }
       }
     } catch (err) {
       toast({ variant: "destructive", title: "Neural Link Disrupted", description: "The Overmind is re-aligning logical frequencies." });
@@ -76,7 +85,8 @@ export default function DeepReasoningPage() {
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
       <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.08),transparent)] pointer-events-none transition-all duration-300 z-0" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.1),transparent 40%)] pointer-events-none transition-all duration-300 z-0" 
+             style={{ '--x': '50%', '--y': '0%' } as any} />
         
         <header className="mb-12 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000">
           <div className="flex flex-col md:flex-row items-center gap-8">
@@ -161,7 +171,7 @@ export default function DeepReasoningPage() {
                 </CardHeader>
                 <CardContent className="p-6 flex-1 relative overflow-hidden flex flex-col gap-10 z-10">
                    <div className="space-y-6">
-                      {result.thought_chain.map((step: string, i: number) => (
+                      {result.thought_chain?.map((step: string, i: number) => (
                         <div key={i} className="flex gap-6 items-start group/step">
                            <div className="size-8 rounded-lg bg-primary/10 border-2 border-primary/20 flex items-center justify-center shrink-0 group-hover/step:bg-primary transition-all duration-500 shadow-inner">
                               <span className="text-primary text-sm font-black group-hover/step:text-black">{i+1}</span>

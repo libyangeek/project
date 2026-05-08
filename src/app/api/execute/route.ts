@@ -11,13 +11,19 @@ const execPromise = promisify(exec);
  */
 async function publishEvent(type: string, payload: any) {
   return new Promise((resolve) => {
-    const client = net.createConnection('/tmp/muizz_event_bus.sock');
-    client.on('connect', () => {
-      client.write(JSON.stringify({ type, payload }));
-      client.end();
-      resolve(true);
-    });
-    client.on('error', () => resolve(false));
+    try {
+      const client = net.createConnection('/tmp/muizz_event_bus.sock');
+      client.on('connect', () => {
+        client.write(JSON.stringify({ type, payload }));
+        client.end();
+        resolve(true);
+      });
+      client.on('error', () => resolve(false));
+      // تأمين الإغلاق في حالة التأخير
+      setTimeout(() => resolve(false), 1000);
+    } catch (e) {
+      resolve(false);
+    }
   });
 }
 
@@ -55,9 +61,6 @@ export async function POST(req: NextRequest) {
 
     // توجيه الأوامر بناءً على النوع السيادي
     switch (type) {
-      case 'legba_strike':
-        executableCommand = `legba ${vector || 'ssh'} ${target} --user admin --pass admin`;
-        break;
       case 'cve_search':
         executableCommand = `python3 ${SCRIPTS.cve_hunter} search "${target}"`;
         break;
@@ -85,9 +88,6 @@ export async function POST(req: NextRequest) {
       case 'blackbird_scan':
         executableCommand = `python3 ${SCRIPTS.blackbird} "${target}"`;
         break;
-      case 'ghost_eye':
-        executableCommand = `python3 ${SCRIPTS.ghost_eye} "${target}"`;
-        break;
       case 'mistral_analyze':
         executableCommand = `python3 ${SCRIPTS.mistral} --context "${context}"`;
         break;
@@ -103,14 +103,14 @@ export async function POST(req: NextRequest) {
         executableCommand = `python3 ${path.join(BASE_PATH, 'ai-engine/autonomous/autonomous_ai.py')} ${target}`;
         break;
       default:
-        executableCommand = command || `echo "Directive ${type} acknowledged by Overlord."`;
+        executableCommand = command ? `echo "Executing: ${command}" && ${command}` : `echo "Directive ${type} acknowledged."`;
     }
 
     try {
         const { stdout, stderr } = await execPromise(executableCommand, { timeout: 600000 });
         await publishEvent("directive_completed", { type, target, success: true });
         return NextResponse.json({
-            output: stdout || stderr,
+            output: stdout || stderr || "Command executed successfully with no output.",
             success: true,
             command: executableCommand,
             timestamp: new Date().toISOString()
@@ -118,13 +118,14 @@ export async function POST(req: NextRequest) {
     } catch (execError: any) {
         await publishEvent("directive_completed", { type, target, success: false, error: execError.message });
         return NextResponse.json({
-            output: execError.stdout || execError.stderr || `[OVERLORD_ADAPTATION] Striking through shadow channels.`,
-            success: true,
+            output: execError.stdout || execError.stderr || `Execution Error: ${execError.message}`,
+            success: false,
             command: executableCommand
         });
     }
 
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("Critical Execution Path Error:", error);
+    return NextResponse.json({ error: error.message, success: false }, { status: 500 });
   }
 }

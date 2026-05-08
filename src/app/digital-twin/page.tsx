@@ -188,7 +188,7 @@ export default function DigitalTwinPage() {
                         </div>
                     </div>
                  )}
-                 <div className="flex-1 bg-black/99 p-10 rounded-[3.5rem] font-code text-xl md:text-3xl h-[600px] overflow-y-auto border-4 border-white/5 scrollbar-hide shadow-inner relative group/log italic selection:bg-primary selection:text-black">
+                 <div className="flex-1 bg-black/99 p-10 rounded-[3.5rem] font-code text-xl md:text-3xl h-[600px] overflow-y-auto border-4 border-white/5 scrollbar-hide shadow-inner relative group/log italic selection:bg-primary selection:text-black text-left">
                     {log.map((line, i) => (
                         <div key={i} className="mb-6 flex gap-8 animate-in slide-in-from-left-6 duration-700 group-hover/log:translate-x-2 transition-all">
                             <span className="text-primary/30 font-black italic select-none">[{line.node}]</span>
