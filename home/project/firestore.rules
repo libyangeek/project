@@ -1,0 +1,67 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * SOVEREIGN FORTRESS RULES v53.8 - THE MASTER GATE
+     * تم تحصين بوابة السيد لضمان السطوة المطلقة ومنع أي استيلاء خارجي.
+     */
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isMaster(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidResource(userId) {
+      return request.resource.data.userId == userId;
+    }
+
+    // بوابة المستخدمين: كل كيان هو امتداد لهوية القائد
+    match /users/{userId} {
+      allow get: if isMaster(userId);
+      
+      match /operations/{opId} {
+        allow list, get: if isMaster(userId);
+        allow create: if isMaster(userId) && isValidResource(userId);
+        allow update, delete: if isMaster(userId);
+      }
+
+      match /reports/{reportId} {
+        allow list, get: if isMaster(userId);
+        allow create: if isMaster(userId) && isValidResource(userId);
+        allow update, delete: if isMaster(userId);
+      }
+
+      match /knowledgeItems/{itemId} {
+        allow list, get: if isMaster(userId);
+        allow create: if isMaster(userId) && isValidResource(userId);
+        allow update, delete: if isMaster(userId);
+      }
+
+      match /shadowSessions/{sessionId} {
+        allow list, get: if isMaster(userId);
+        allow create, update, delete: if isMaster(userId);
+      }
+      
+      match /progeny/{warriorId} {
+        allow list, get: if isMaster(userId);
+        allow create, update, delete: if isMaster(userId);
+      }
+    }
+
+    // بوابة النظام المركزية
+    match /system/core {
+      allow get: if isSignedIn();
+      allow write: if false; // النواة محمية مادية فقط
+    }
+
+    // حماية تكوينات النماذج والأدوات
+    match /aiModelConfigurations/{id} {
+      allow get: if isSignedIn();
+      allow write: if false;
+    }
+  }
+}
