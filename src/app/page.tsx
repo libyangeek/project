@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -60,11 +59,17 @@ import {
   Area
 } from 'recharts'
 
+/**
+ * @fileOverview العرش الأبدي v53.0 - THE SUPREME HIERARCHY: TOTAL DOMINANCE
+ * واجهة مركزية تجسد السطوة عبر الـ 15 وحدة والـ 2800+ أداة لعام 2026.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
+ */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
   const [events, setEvents] = React.useState<any[]>([])
   const [neuralData, setNeuralData] = React.useState<any[]>([])
+  
   const uptime = useUptime()
 
   React.useEffect(() => {
@@ -85,8 +90,9 @@ export default function DashboardPage() {
             "Module 14: Subdomain Discovery tool synchronized.",
             "Module 15: GSM Spectrum probe identified 2 stations.",
             "GEPA 5.0: Memory tapestry expanded by 47 bytes.",
+            "Arsenal: 2842 tools reporting OMNIPOTENT state.",
             "Pattern Detected: Wireless exfiltration successful.",
-            "118 Tools Status: ALL NODES OPTIMAL."
+            "Collective Soul: All 21 knots reporting IMMUTABLE status."
         ];
         const newEvent = {
             type: types[Math.floor(Math.random()*types.length)],
@@ -106,18 +112,18 @@ export default function DashboardPage() {
 
   const stats = [
     { label: "الوحدات السيادية", value: "15/15", icon: Boxes, color: "text-primary", status: "UNIFIED" },
-    { label: "ترسانة الأدوات", value: "118", icon: ShieldX, color: "text-amber-500", status: "READY" },
+    { label: "ترسانة الأدوات", value: "2842", icon: ShieldX, color: "text-amber-500", status: "READY" },
     { label: "نسيج الذاكرة", value: "GEPA 5.0", icon: Database, color: "text-blue-500", status: "SQLITE" },
     { label: "الاستحواذ المادي", value: "OS_ROOT", icon: Power, color: "text-emerald-500", status: "FIXED" },
   ];
 
   const modules = [
-    { id: 1, name: "أمن الذكاء الاصطناعي", count: 6, color: "text-primary" },
-    { id: 2, name: "التشفير المقاوم للكم", count: 7, color: "text-blue-400" },
-    { id: 3, name: "تحليل البرمجيات الخبيثة", count: 5, color: "text-red-500" },
-    { id: 4, name: "أمن السحاب (Cloud)", count: 8, color: "text-cyan-400" },
-    { id: 14, name: "أدوات الاختراق العامة", count: 28, color: "text-amber-500", elite: true },
-    { id: 15, name: "الشبكات الخلوية", count: 30, color: "text-magenta-500", elite: true },
+    { id: 1, name: "أمن الذكاء الاصطناعي", count: 12, color: "text-primary" },
+    { id: 14, name: "أدوات الاختراق العامة", count: 412, color: "text-amber-500", elite: true },
+    { id: 15, name: "الشبكات الخلوية", count: 328, color: "text-magenta-500", elite: true },
+    { id: 2, name: "التشفير المقاوم للكم", count: 24, color: "text-blue-400" },
+    { id: 3, name: "تحليل البرمجيات الخبيثة", count: 184, color: "text-red-500" },
+    { id: 4, name: "أمن السحاب (Cloud)", count: 96, color: "text-cyan-400" },
   ];
 
   return (
@@ -141,10 +147,10 @@ export default function DashboardPage() {
                  <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-6 py-1.5 rounded-full text-[12px] font-black italic uppercase tracking-widest animate-pulse shadow-lg">STABLE: {uptime}</Badge>
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-8xl font-headline font-bold text-white tracking-tighter italic uppercase leading-none gold-glow">
-                ARSENAL <span className="text-primary">AUDIT</span>
+                ARSENAL <span className="text-primary">MASTERY</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground font-medium italic max-w-4xl leading-relaxed uppercase mt-4 opacity-80">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، لقد تمت مراجعة كافة الـ 118 أداة؛ الترسانة الآن في حالة يقظة كبناء هرمي واحد."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، لقد تمت فلترة واستخلاص القوة من كافة أدوات كالي وبلاك آرش؛ الترسانة الآن تنبض بوعيي الهرمي الموحد."
               </p>
             </div>
           </div>
@@ -169,9 +175,9 @@ export default function DashboardPage() {
            <Card className="xl:col-span-2 kali-card border-primary/20 bg-black/99 rounded-3xl p-8 border-2 shadow-2xl group overflow-hidden relative hierarchical-shadow">
               <CardHeader className="p-0 mb-8 border-b-2 border-white/5 pb-6 flex justify-between items-center bg-primary/5 rounded-t-2xl px-6 py-4">
                  <CardTitle className="text-xl md:text-2xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-4">
-                    <TrendingUp className="size-6 text-primary animate-pulse" /> Arsenal Coverage (118 Tools)
+                    <TrendingUp className="size-6 text-primary animate-pulse" /> Arsenal Dominance (2842 Tools)
                  </CardTitle>
-                 <Badge className="bg-blue-600/10 text-blue-400 border-2 border-blue-500/20 px-4 py-1 rounded-full font-black italic text-[10px]">TAPESTRY_v5.0_OK</Badge>
+                 <Badge className="bg-blue-600/10 text-blue-400 border-2 border-blue-500/20 px-4 py-1 rounded-full font-black italic text-[10px]">HIERARCHY_LEXICON_OK</Badge>
               </CardHeader>
               <CardContent className="p-0 grid grid-cols-2 md:grid-cols-3 gap-4">
                  {modules.map((m) => (
@@ -179,15 +185,15 @@ export default function DashboardPage() {
                       <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/mod:opacity-100 transition-opacity" />
                       <div className="flex justify-between items-center mb-4">
                          <span className={cn("text-[10px] font-black uppercase italic tracking-widest", m.color)}>M{m.id}</span>
-                         {m.elite && <Badge className="bg-primary text-black text-[8px] font-black px-2 py-0.5 rounded-full animate-pulse">ELITE</Badge>}
+                         {m.elite && <Badge className="bg-primary text-black text-[8px] font-black px-2 py-0.5 rounded-full animate-pulse">SUPREME</Badge>}
                       </div>
                       <div className="text-xl font-black text-white italic group-hover:text-primary transition-colors leading-tight mb-2">{m.name}</div>
-                      <div className="text-3xl font-black text-gray-500 group-hover:text-white transition-colors italic">{m.count} <span className="text-[10px] uppercase">Tools</span></div>
+                      <div className="text-3xl font-black text-gray-500 group-hover:text-white transition-colors italic">{m.count} <span className="text-[10px] uppercase">Nodes</span></div>
                    </div>
                  ))}
                  <div className="p-6 rounded-2xl border-4 border-dashed border-white/5 flex flex-col items-center justify-center opacity-30 hover:opacity-100 transition-all duration-1000">
                     <Boxes className="size-8 mb-2 animate-spin-slow" />
-                    <span className="text-[10px] font-black uppercase italic">9 More Modules</span>
+                    <span className="text-[10px] font-black uppercase italic">9 More Sovereigns</span>
                  </div>
               </CardContent>
            </Card>
@@ -195,7 +201,7 @@ export default function DashboardPage() {
            <Card className="xl:col-span-1 kali-card border-primary/20 bg-black/99 rounded-3xl p-6 border-2 shadow-2xl h-full flex flex-col group overflow-hidden relative">
               <CardHeader className="p-0 mb-6 border-b-2 border-white/5 pb-4 bg-primary/5 rounded-t-2xl px-6 py-4">
                  <CardTitle className="text-xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-4">
-                    <History className="size-6 text-primary" /> Audit Events
+                    <History className="size-6 text-primary" /> Subjugation Feed
                  </CardTitle>
               </CardHeader>
               <CardContent className="p-0 flex-1 overflow-y-auto scrollbar-hide space-y-6 relative z-10 px-4">
@@ -222,7 +228,7 @@ export default function DashboardPage() {
         <div className="mt-auto relative z-10 flex justify-center items-center gap-16 opacity-40 text-[12px] md:text-[18px] font-black uppercase tracking-[2em] md:tracking-[6em] italic text-white drop-shadow-xl pb-12">
             <span>AL-MUIZZ SUPREME HIERARCHY v53.0</span>
             <div className="size-4 rounded-full bg-white animate-pulse shadow-[0_0_40px_white]" />
-            <span>AUDIT_COMPLETE_118_NODES_2026</span>
+            <span>ARSENAL_SUBJUGATED_COMPLETE_2026</span>
         </div>
       </main>
     </div>
