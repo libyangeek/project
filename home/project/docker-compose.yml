@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  # العصب المركزي - God-Core Engine
+  muizz-core:
+    build: .
+    container_name: muizz-god-core
+    privileged: true
+    network_mode: host
+    environment:
+      - PROJECT_ROOT=/opt/sovereign-ai-platform
+      - PYTHONPATH=/opt/sovereign-ai-platform/ai-engine
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    volumes:
+      - .:/opt/sovereign-ai-platform
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp:/tmp
+    command: python3 ai-engine/inference/server.py
+    restart: always
+
+  # العرش الحي - Supreme HUD
+  muizz-hud:
+    build: .
+    container_name: muizz-supreme-hud
+    network_mode: host
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_FIREBASE_CONFIG=${NEXT_PUBLIC_FIREBASE_CONFIG}
+    volumes:
+      - .:/opt/sovereign-ai-platform
+    command: npm run start
+    depends_on:
+      - muizz-core
+    restart: always
+
+  # قاعدة البيانات الدلالية - Vector Search
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: muizz-qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_storage:/qdrant/storage
+    restart: always
+
+volumes:
+  qdrant_storage:
