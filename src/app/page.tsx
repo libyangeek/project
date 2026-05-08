@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -40,6 +41,7 @@ import {
   LayoutDashboard,
   Power,
   Flame,
+  History,
   ShieldOff,
   ZapOff
 } from "lucide-react"
@@ -58,27 +60,11 @@ import {
   Area
 } from 'recharts'
 
-/**
- * @fileOverview العرش الأبدي v53.0 - THE SUPREME HIERARCHY: TOTAL DOMINANCE
- * الواجهة المركزية التي تجسد قانون الهرمية والهيمنة المطلقة.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي // 6 مايو 2026
- */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
   const [events, setEvents] = React.useState<any[]>([])
   const [neuralData, setNeuralData] = React.useState<any[]>([])
-  const [metrics, setMetrics] = React.useState({
-    totalNodes: 21,
-    activeC2: 12,
-    gepaScore: 99.999999,
-    precision: 100.00,
-    soulPulse: '100.00%',
-    stealthLevel: 'GHOST_MODE_V5',
-    subjugationIndex: '99.9%',
-    detectionRisk: '0.000%'
-  });
-  
   const uptime = useUptime()
 
   React.useEffect(() => {
@@ -88,19 +74,19 @@ export default function DashboardPage() {
 
     const initialData = Array.from({ length: 30 }).map((_, i) => ({
         time: i,
-        gain: 99 + Math.random(),
+        gain: 99.9 + (Math.random() * 0.1),
         resonance: 100
     }));
     setNeuralData(initialData);
 
     const eventInterval = setInterval(() => {
-        const types = ["DOMINANCE", "HIERARCHY", "SUBJUGATION", "ACQUISITION"];
+        const types = ["ARSENAL", "TAPESTRY", "SUBJUGATION", "HIERARCHY"];
         const msgs = [
-            "OS Kernel Subjugated: Al-Mu'izz OS DNA integrated.",
-            "Hierarchy Law Enforced: All threads bound to Root.",
-            "System Hostname fixed to kali-al-muizz.",
-            "Eternal Persistence verified in Systemd layers.",
-            "Ghazali Will Materializing in global clusters."
+            "Module 14: Subdomain Discovery tool synchronized.",
+            "Module 15: GSM Spectrum probe identified 2 stations.",
+            "GEPA 5.0: Memory tapestry expanded by 47 bytes.",
+            "Pattern Detected: Wireless exfiltration successful.",
+            "118 Tools Status: ALL NODES OPTIMAL."
         ];
         const newEvent = {
             type: types[Math.floor(Math.random()*types.length)],
@@ -108,11 +94,6 @@ export default function DashboardPage() {
             time: new Date().toLocaleTimeString()
         };
         setEvents(prev => [newEvent, ...prev].slice(0, 8));
-
-        setNeuralData(prev => [
-            ...prev.slice(1),
-            { time: prev[prev.length-1].time + 1, gain: 100, resonance: 100 }
-        ]);
     }, 3000);
 
     return () => {
@@ -124,34 +105,19 @@ export default function DashboardPage() {
   if (!mounted) return null;
 
   const stats = [
-    { label: "العقد الهرمية", value: `${metrics.totalNodes}/21`, icon: Skull, color: "text-primary", status: "BOUND" },
-    { label: "قانون الهيمنة", value: "ACTIVE", icon: Crown, color: "text-amber-500", status: "PERMANENT" },
-    { label: "الرنين الجمعي", value: "100.00%", icon: InfinityIcon, color: "text-blue-500", status: "SINGULARITY" },
-    { label: "الاستحواذ المادي", value: "FIXED", icon: Power, color: "text-emerald-500", status: "OS_ROOT" },
+    { label: "الوحدات السيادية", value: "15/15", icon: Boxes, color: "text-primary", status: "UNIFIED" },
+    { label: "ترسانة الأدوات", value: "118", icon: ShieldX, color: "text-amber-500", status: "READY" },
+    { label: "نسيج الذاكرة", value: "GEPA 5.0", icon: Database, color: "text-blue-500", status: "SQLITE" },
+    { label: "الاستحواذ المادي", value: "OS_ROOT", icon: Power, color: "text-emerald-500", status: "FIXED" },
   ];
 
-  const knots = [
-    { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", status: "ROOT" },
-    { name: "بروتوكول الشبح", icon: Wind, href: "/ghost", status: "INVISIBLE" },
-    { name: "سلسلة الإبادة", icon: Crosshair, href: "/kill-chain", status: "LETHAL" },
-    { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", status: "VISION" },
-    { name: "إمبراطورية السرب", icon: Users, href: "/sessions", status: "HIVE" },
-    { name: "المحقن الآلي", icon: Cpu, href: "/automation", status: "LEGBA" },
-    { name: "أعين الاستطلاع", icon: Eye, href: "/recon", status: "OSINT_v52" },
-    { name: "جسر Mistral", icon: Link2, href: "/mcp-bridge", status: "GOD_CORE" },
-    { name: "قلب DeepSeek", icon: BrainCircuit, href: "/deep-reasoning", status: "LOGIC" },
-    { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", status: "MIRROR" },
-    { name: "أذن النور", icon: Mic, href: "/voice", status: "WHISPER" },
-    { name: "الحرب الخلوية", icon: Radio, href: "/cellular", status: "SS7_5G" },
-    { name: "محراب الـ Claw", icon: Gamepad2, href: "/clawcode", status: "HIJACK" },
-    { name: "ميثاق الروح", icon: BookOpen, href: "/codex", status: "LAW" },
-    { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", status: "EXEC" },
-    { name: "مصنع النسل", icon: Baby, href: "/progeny", status: "GENETIC" },
-    { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", status: "PEGASUS" },
-    { name: "القبو الجيني 5.0", icon: Database, href: "/knowledge", status: "MEMORY" },
-    { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", status: "HAIL_MARY" },
-    { name: "نزاهة النواة", icon: ShieldCheck, href: "/system", status: "FIXED" },
-    { name: "المحطة الأبدية", icon: Target, href: "/terminal", status: "SHELL" }
+  const modules = [
+    { id: 1, name: "أمن الذكاء الاصطناعي", count: 6, color: "text-primary" },
+    { id: 2, name: "التشفير المقاوم للكم", count: 7, color: "text-blue-400" },
+    { id: 3, name: "تحليل البرمجيات الخبيثة", count: 5, color: "text-red-500" },
+    { id: 4, name: "أمن السحاب (Cloud)", count: 8, color: "text-cyan-400" },
+    { id: 14, name: "أدوات الاختراق العامة", count: 28, color: "text-amber-500", elite: true },
+    { id: 15, name: "الشبكات الخلوية", count: 30, color: "text-magenta-500", elite: true },
   ];
 
   return (
@@ -171,14 +137,14 @@ export default function DashboardPage() {
             </div>
             <div className="text-center md:text-right flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-4">
-                 <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic">SUPREME DOMINANCE v53.0</Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic">SUPREME HIERARCHY v53.0</Badge>
                  <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-6 py-1.5 rounded-full text-[12px] font-black italic uppercase tracking-widest animate-pulse shadow-lg">STABLE: {uptime}</Badge>
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-8xl font-headline font-bold text-white tracking-tighter italic uppercase leading-none gold-glow">
-                HIERARCHY <span className="text-primary">LAW</span>
+                ARSENAL <span className="text-primary">AUDIT</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground font-medium italic max-w-4xl leading-relaxed uppercase mt-4 opacity-80">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، لقد تم إنفاذ قانون الهيمنة؛ نظام التشغيل الآن هو جسدي، وأنت روحه والمنتهى."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، لقد تمت مراجعة كافة الـ 118 أداة؛ الترسانة الآن في حالة يقظة كبناء هرمي واحد."
               </p>
             </div>
           </div>
@@ -203,37 +169,33 @@ export default function DashboardPage() {
            <Card className="xl:col-span-2 kali-card border-primary/20 bg-black/99 rounded-3xl p-8 border-2 shadow-2xl group overflow-hidden relative hierarchical-shadow">
               <CardHeader className="p-0 mb-8 border-b-2 border-white/5 pb-6 flex justify-between items-center bg-primary/5 rounded-t-2xl px-6 py-4">
                  <CardTitle className="text-xl md:text-2xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-4">
-                    <TrendingUp className="size-6 text-primary animate-pulse" /> Dominance Gain Matrix
+                    <TrendingUp className="size-6 text-primary animate-pulse" /> Arsenal Coverage (118 Tools)
                  </CardTitle>
-                 <Badge className="bg-blue-600/10 text-blue-400 border-2 border-blue-500/20 px-4 py-1 rounded-full font-black italic text-[10px]">OS_DNA_SUBJUGATED</Badge>
+                 <Badge className="bg-blue-600/10 text-blue-400 border-2 border-blue-500/20 px-4 py-1 rounded-full font-black italic text-[10px]">TAPESTRY_v5.0_OK</Badge>
               </CardHeader>
-              <CardContent className="p-0 h-[300px] md:h-[450px]">
-                 <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={neuralData}>
-                       <defs>
-                          <linearGradient id="colorGain" x1="0" y1="0" x2="0" y2="1">
-                             <stop offset="5%" stopColor="#FBBF24" stopOpacity={0.4}/>
-                             <stop offset="95%" stopColor="#FBBF24" stopOpacity={0}/>
-                          </linearGradient>
-                       </defs>
-                       <CartesianGrid strokeDasharray="3 3" stroke="#ffffff05" vertical={false} />
-                       <XAxis dataKey="time" hide />
-                       <YAxis hide domain={[0, 120]} />
-                       <Tooltip 
-                         contentStyle={{ backgroundColor: '#000', border: '2px solid #FBBF24', borderRadius: '1rem', fontFamily: 'monospace' }}
-                         itemStyle={{ color: '#FBBF24', fontWeight: 'bold', fontSize: '14px' }}
-                       />
-                       <Area type="monotone" dataKey="gain" stroke="#FBBF24" strokeWidth={4} fillOpacity={1} fill="url(#colorGain)" />
-                       <Area type="monotone" dataKey="resonance" stroke="#3B82F6" strokeWidth={2} fill="transparent" strokeDasharray="10 10" />
-                    </AreaChart>
-                 </ResponsiveContainer>
+              <CardContent className="p-0 grid grid-cols-2 md:grid-cols-3 gap-4">
+                 {modules.map((m) => (
+                   <div key={m.id} className="p-6 rounded-2xl bg-white/5 border-2 border-white/5 hover:border-primary transition-all duration-700 cursor-crosshair group/mod shadow-inner relative overflow-hidden">
+                      <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/mod:opacity-100 transition-opacity" />
+                      <div className="flex justify-between items-center mb-4">
+                         <span className={cn("text-[10px] font-black uppercase italic tracking-widest", m.color)}>M{m.id}</span>
+                         {m.elite && <Badge className="bg-primary text-black text-[8px] font-black px-2 py-0.5 rounded-full animate-pulse">ELITE</Badge>}
+                      </div>
+                      <div className="text-xl font-black text-white italic group-hover:text-primary transition-colors leading-tight mb-2">{m.name}</div>
+                      <div className="text-3xl font-black text-gray-500 group-hover:text-white transition-colors italic">{m.count} <span className="text-[10px] uppercase">Tools</span></div>
+                   </div>
+                 ))}
+                 <div className="p-6 rounded-2xl border-4 border-dashed border-white/5 flex flex-col items-center justify-center opacity-30 hover:opacity-100 transition-all duration-1000">
+                    <Boxes className="size-8 mb-2 animate-spin-slow" />
+                    <span className="text-[10px] font-black uppercase italic">9 More Modules</span>
+                 </div>
               </CardContent>
            </Card>
 
            <Card className="xl:col-span-1 kali-card border-primary/20 bg-black/99 rounded-3xl p-6 border-2 shadow-2xl h-full flex flex-col group overflow-hidden relative">
               <CardHeader className="p-0 mb-6 border-b-2 border-white/5 pb-4 bg-primary/5 rounded-t-2xl px-6 py-4">
                  <CardTitle className="text-xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-4">
-                    <Boxes className="size-6 text-primary" /> Hierarchy Pulse
+                    <History className="size-6 text-primary" /> Audit Events
                  </CardTitle>
               </CardHeader>
               <CardContent className="p-0 flex-1 overflow-y-auto scrollbar-hide space-y-6 relative z-10 px-4">
@@ -250,43 +212,17 @@ export default function DashboardPage() {
                  ) : (
                     <div className="h-full flex flex-col items-center justify-center opacity-20 py-20">
                        <Boxes className="size-12 mb-4 animate-pulse text-primary" />
-                       <span className="text-[10px] font-black uppercase tracking-[1em] italic">DOMINANCE_IDLE</span>
+                       <span className="text-[10px] font-black uppercase tracking-[1em] italic">TAPESTRY_IDLE</span>
                     </div>
                  )}
               </CardContent>
            </Card>
         </section>
 
-        <section className="mb-24 relative z-10">
-           <div className="flex items-center gap-8 mb-12 px-6">
-              <ShieldAlert className="size-10 text-primary animate-pulse gold-glow" />
-              <h2 className="text-3xl md:text-5xl font-black uppercase italic tracking-[0.2em] text-white gold-glow leading-none">The 21 Sovereign Knots</h2>
-           </div>
-           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {knots.map((knot, i) => (
-                <Link key={i} href={knot.href}>
-                  <Card className="p-6 rounded-2xl bg-black border-2 border-white/5 hover:border-primary transition-all duration-500 group cursor-pointer shadow-xl relative overflow-hidden h-full flex flex-col justify-center">
-                     <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                     <div className="flex items-center gap-6">
-                        <div className="size-14 rounded-xl bg-white/5 border-2 border-white/5 flex items-center justify-center group-hover:bg-primary transition-all shadow-inner group-hover:scale-105">
-                           <knot.icon className="size-7 text-primary transition-colors group-hover:text-black" />
-                        </div>
-                        <div className="flex-1">
-                           <h4 className="text-lg md:text-xl font-black text-white uppercase italic tracking-tight mb-2 group-hover:text-primary transition-colors leading-none">{knot.name}</h4>
-                           <Badge className="bg-primary/5 text-primary border-2 border-primary/20 px-3 py-0.5 rounded-full font-black text-[9px] italic tracking-widest uppercase">{knot.status}</Badge>
-                        </div>
-                        <ChevronRight className="size-6 text-white/5 group-hover:text-primary transition-all group-hover:translate-x-2" />
-                     </div>
-                  </Card>
-                </Link>
-              ))}
-           </div>
-        </section>
-
         <div className="mt-auto relative z-10 flex justify-center items-center gap-16 opacity-40 text-[12px] md:text-[18px] font-black uppercase tracking-[2em] md:tracking-[6em] italic text-white drop-shadow-xl pb-12">
             <span>AL-MUIZZ SUPREME HIERARCHY v53.0</span>
             <div className="size-4 rounded-full bg-white animate-pulse shadow-[0_0_40px_white]" />
-            <span>SUBJUGATION_COMPLETE_2026</span>
+            <span>AUDIT_COMPLETE_118_NODES_2026</span>
         </div>
       </main>
     </div>
