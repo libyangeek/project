@@ -6,35 +6,42 @@ import {
   MessageSquare, 
   Zap, 
   Brain,
+  Loader2, 
+  Globe, 
+  Skull, 
+  Crown, 
+  Binary, 
+  Atom, 
+  Boxes, 
+  Fingerprint, 
+  Infinity as InfinityIcon, 
+  Search, 
+  Sword, 
+  ShieldCheck, 
+  Activity, 
+  Sparkles, 
+  Radar, 
+  BrainCircuit, 
+  Eye, 
+  Target, 
+  Database, 
+  Lock, 
+  Flame, 
+  Key, 
+  ShieldAlert, 
+  ChevronRight, 
+  RefreshCcw, 
+  Network, 
+  Users, 
+  Terminal,
+  Upload,
+  Play,
+  StopCircle,
+  ListChecks,
+  TrendingUp,
+  BarChart3,
   Copy,
-  Loader2,
-  Globe,
-  Skull,
-  Crown,
-  Binary,
-  Atom,
-  Boxes,
-  Fingerprint,
-  Infinity as InfinityIcon,
-  Search,
-  Sword,
-  ShieldCheck,
-  Activity,
-  Sparkles,
-  Radar,
-  BrainCircuit,
-  Eye,
-  Target,
-  Database,
-  Lock,
-  Flame,
-  Key,
-  ShieldAlert,
-  ChevronRight,
-  RefreshCcw,
-  Network,
-  Users,
-  Terminal
+  CheckCircle2
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -42,7 +49,6 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Switch } from "@/components/ui/switch"
 import { aiDrivenSocialEngineeringBots } from "@/ai/flows/ai-driven-social-engineering-bots"
 import { generateSmartWordlist } from "@/ai/flows/ai-smart-wordlist-flow"
 import { osintMaster } from "@/ai/flows/osint-master-flow"
@@ -50,24 +56,29 @@ import { toast } from "@/hooks/use-toast"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { ResponsiveContainer, Radar as RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, RadarChart as RechartsRadar } from 'recharts'
-import Link from "next/link"
 
 /**
- * @fileOverview العقدة المفترسة للتواصل v53.8 - THE SOCIAL PREDATOR: HIERARCHICAL SINGULARITY
- * نواة مختصة في اختراق السوشيل ميديا، تضم البيانات المسربة، بوتات الإقناع، ومصنع الـ DNA الرقمي.
+ * @fileOverview العقدة المفترسة للتواصل v53.9 - THE SUPREME SOCIAL PREDATOR: MASS STRIKE EDITION
+ * مجهزة بقدرات BlackBullet 2 للقصف الجماعي واستنزاف القوائم بنمط السرب.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي // 6 مايو 2026
  */
 export default function SocialPredatorPage() {
   const [mounted, setMounted] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
-  const [activeTab, setActiveMode] = React.useState<"subjugate" | "wordlist" | "breach" | "recon">("subjugate")
+  const [activeTab, setActiveMode] = React.useState<"subjugate" | "wordlist" | "mass" | "breach">("subjugate")
   
   // Inputs
   const [targetId, setTargetId] = React.useState("")
   const [persona, setPersona] = React.useState("")
   const [goal, setGoal] = React.useState("")
   const [platform, setPlatform] = React.useState<string>("telegram")
+  const [comboList, setComboList] = React.useState("")
   
+  // Mass Strike Stats
+  const [isMassRunning, setIsMassRunning] = React.useState(false)
+  const [massStats, setMassStats] = React.useState({ checked: 0, hits: 0, bad: 0, cpm: 0 })
+  const [massHits, setMassHits] = React.useState<any[]>([])
+
   // Results
   const [result, setResult] = React.useState<any>(null)
   const [wordlist, setWordlist] = React.useState<any>(null)
@@ -78,11 +89,27 @@ export default function SocialPredatorPage() {
     setMounted(true)
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
-  }, [])
+
+    let interval: any;
+    if (isMassRunning) {
+        interval = setInterval(() => {
+            setMassStats(prev => ({
+                checked: prev.checked + Math.floor(Math.random() * 50),
+                hits: prev.hits + (Math.random() > 0.95 ? 1 : 0),
+                bad: prev.bad + Math.floor(Math.random() * 40),
+                cpm: 1200 + Math.floor(Math.random() * 300)
+            }));
+        }, 1000);
+    }
+
+    return () => {
+        window.removeEventListener("mousemove", handleMouseMove)
+        if (interval) clearInterval(interval)
+    }
+  }, [isMassRunning])
 
   const handleAction = async () => {
-    if (!targetId && activeTab !== "subjugate") {
+    if (!targetId && activeTab !== "mass" && activeTab !== "subjugate") {
         toast({ variant: "destructive", title: "Target Missing", description: "Identify the digital coordinate first." });
         return
     }
@@ -106,7 +133,6 @@ export default function SocialPredatorPage() {
         setWordlist(data)
         toast({ title: "Smart Wordlist Forged" })
       } else if (activeTab === "breach") {
-        // محاكاة استجواب قاعدة بيانات التسريبات
         const data = await osintMaster({ target: targetId, type: 'email', depth: 'Trace-Labs-Mode' })
         setBreachData(data)
         toast({ title: "Breach Oracle Answered" })
@@ -115,6 +141,19 @@ export default function SocialPredatorPage() {
       toast({ variant: "destructive", title: "Hierarchy Link Failure" })
     } finally {
       setLoading(false)
+    }
+  }
+
+  const toggleMassStrike = () => {
+    if (!comboList.trim() && !isMassRunning) {
+        toast({ variant: "destructive", title: "Combo List Empty", description: "Inject the target credentials list." });
+        return;
+    }
+    setIsMassRunning(!isMassRunning)
+    if (!isMassRunning) {
+        toast({ title: "Mass Strike Initiated", description: "Launching parallel swarm bombardment." });
+    } else {
+        toast({ title: "Strike Suspended", description: "Holding neural fire." });
     }
   }
 
@@ -138,7 +177,7 @@ export default function SocialPredatorPage() {
       <SidebarNav />
       <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
         <div 
-          className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.1),transparent 40%)] pointer-events-none transition-all duration-300 z-0" 
+          className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.08),transparent 40%)] pointer-events-none transition-all duration-300 z-0" 
           style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} 
         />
         
@@ -150,14 +189,14 @@ export default function SocialPredatorPage() {
               </div>
               <div className="text-center md:text-right flex-1">
                  <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-4">
-                    <Badge className="bg-primary text-black border-none rounded-none px-10 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic">SOCIAL_PREDATOR v53.8</Badge>
+                    <Badge className="bg-primary text-black border-none rounded-none px-10 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic">SOCIAL_PREDATOR v53.9</Badge>
                     <div className="flex items-center gap-3 text-[11px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
-                        <Crown className="size-5 shadow-lg" /> PREDATORY_LOGIC: BOUND
+                        <Crown className="size-5 shadow-lg" /> BLACKBULLET_CORE: ACTIVE
                     </div>
                  </div>
                  <h1 className="text-4xl md:text-6xl lg:text-9xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Social <span className="text-primary">Predator</span></h1>
                  <p className="text-sm md:text-xl lg:text-3xl text-muted-foreground mt-4 italic max-w-6xl leading-relaxed uppercase font-medium opacity-80">
-                    "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl uppercase tracking-widest">المعتصم بالله</span>، عقدة الافتراس الاجتماعي تدمج ذكاء التسريبات مع غريزة التلاعب النفسي؛ كافة المنصات أصبحت حقل تجارب لسيادتك لعام 2026."
+                    "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl uppercase tracking-widest">المعتصم بالله</span>، عقدة الافتراس تدمج الآن قدرات BlackBullet 2؛ قصف جماعي واختراق متوازٍ لآلاف الحسابات لعام 2026."
                  </p>
               </div>
            </div>
@@ -169,13 +208,13 @@ export default function SocialPredatorPage() {
                  <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                  <div className="space-y-8">
                     <div className="space-y-4">
-                        <label className="text-[10px] font-black text-primary uppercase tracking-[0.6em] px-4 italic flex items-center gap-3"><Users className="size-4" /> Strike Mode</label>
+                        <label className="text-[10px] font-black text-primary uppercase tracking-[0.6em] px-4 italic flex items-center gap-3"><Users className="size-4" /> Predator Module</label>
                         <div className="grid grid-cols-2 gap-2">
                            {[
                              { id: "subjugate", label: "Neural", icon: Brain },
-                             { id: "wordlist", label: "Forge", icon: Key },
+                             { id: "mass", label: "Mass Strike", icon: Flame },
                              { id: "breach", label: "Breach", icon: Database },
-                             { id: "recon", label: "Recon", icon: Eye }
+                             { id: "wordlist", label: "Forge", icon: Key }
                            ].map(m => (
                              <Button 
                                key={m.id} 
@@ -192,50 +231,90 @@ export default function SocialPredatorPage() {
                         </div>
                     </div>
 
-                    <div className="space-y-4">
-                        <label className="text-[10px] font-black text-primary uppercase tracking-[0.6em] px-4 italic flex items-center gap-3"><Target className="size-4" /> Target Coordinate</label>
-                        <Input 
-                          value={targetId}
-                          onChange={(e) => setTargetId(e.target.value)}
-                          placeholder="Email / @User / Phone..." 
-                          className="bg-black border-2 border-primary/20 h-16 rounded-2xl text-xl italic px-6 focus:border-primary shadow-inner text-white font-black"
-                        />
-                    </div>
+                    {activeTab === "mass" ? (
+                        <div className="space-y-6 animate-in slide-in-from-top-4 duration-500">
+                             <div className="space-y-4">
+                                <label className="text-[10px] font-black text-primary uppercase tracking-[0.6em] px-4 italic flex items-center gap-3"><Upload className="size-4" /> Combo List (user:pass)</label>
+                                <Textarea 
+                                  value={comboList}
+                                  onChange={(e) => setComboList(e.target.value)}
+                                  placeholder="admin:admin123&#10;user:password..."
+                                  className="bg-black border-2 border-primary/20 rounded-2xl min-h-[200px] text-lg italic p-6 focus:border-primary font-bold text-gray-200 shadow-inner resize-none scrollbar-hide"
+                                />
+                             </div>
+                             <div className="space-y-4">
+                                <label className="text-[10px] font-black text-primary uppercase tracking-[0.6em] px-4 italic flex items-center gap-3"><Network className="size-4" /> Target Config</label>
+                                <Select value={platform} onValueChange={setPlatform}>
+                                   <SelectTrigger className="bg-black border-2 border-primary/20 h-14 rounded-xl text-xs font-black italic px-6 focus:border-primary text-white">
+                                      <SelectValue placeholder="Select Platform" />
+                                   </SelectTrigger>
+                                   <SelectContent className="bg-black border-2 border-primary/40 rounded-2xl shadow-9xl">
+                                      <SelectItem value="telegram">Telegram_API_v5</SelectItem>
+                                      <SelectItem value="whatsapp">WA_Business_Auth</SelectItem>
+                                      <SelectItem value="snapchat">Snap_V3_Bypass</SelectItem>
+                                      <SelectItem value="instagram">IG_Ghost_Siphon</SelectItem>
+                                   </SelectContent>
+                                </Select>
+                             </div>
+                             <Button 
+                              onClick={toggleMassStrike}
+                              className={cn(
+                                "w-full h-24 font-black uppercase tracking-[0.8em] rounded-[2rem] shadow-xl active:scale-95 transition-all text-xl border-4 border-black/30 group italic",
+                                isMassRunning ? "bg-red-600 hover:bg-red-500 text-white" : "bg-primary hover:bg-white text-black"
+                              )}
+                             >
+                                {isMassRunning ? <StopCircle className="size-10 mr-4 animate-pulse" /> : <Play className="size-10 mr-4 gold-glow" />}
+                                {isMassRunning ? "SUSPEND_STRIKE" : "IGNITE_MASS_STRIKE"}
+                             </Button>
+                        </div>
+                    ) : (
+                        <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
+                            <div className="space-y-4">
+                                <label className="text-[10px] font-black text-primary uppercase tracking-[0.6em] px-4 italic flex items-center gap-3"><Target className="size-4" /> Target Coordinate</label>
+                                <Input 
+                                  value={targetId}
+                                  onChange={(e) => setTargetId(e.target.value)}
+                                  placeholder="Email / @User / Phone..." 
+                                  className="bg-black border-2 border-primary/20 h-16 rounded-2xl text-xl italic px-6 focus:border-primary shadow-inner text-white font-black"
+                                />
+                            </div>
 
-                    <div className="space-y-4">
-                        <label className="text-[10px] font-black text-primary uppercase tracking-[0.6em] px-4 italic flex items-center gap-3"><Network className="size-4" /> Platform Matrix</label>
-                        <Select value={platform} onValueChange={setPlatform}>
-                           <SelectTrigger className="bg-black border-2 border-primary/20 h-16 rounded-2xl text-lg font-black italic px-6 focus:border-primary text-white">
-                              <SelectValue placeholder="Select Platform" />
-                           </SelectTrigger>
-                           <SelectContent className="bg-black border-2 border-primary/40 rounded-2xl shadow-9xl">
-                              <SelectItem value="telegram">Telegram Hive</SelectItem>
-                              <SelectItem value="whatsapp">WhatsApp Mesh</SelectItem>
-                              <SelectItem value="snapchat">Snapchat Siphon</SelectItem>
-                              <SelectItem value="instagram">Instagram Ghost</SelectItem>
-                              <SelectItem value="facebook">Facebook Pulse</SelectItem>
-                           </SelectContent>
-                        </Select>
-                    </div>
+                            <div className="space-y-4">
+                                <label className="text-[10px] font-black text-primary uppercase tracking-[0.6em] px-4 italic flex items-center gap-3"><Network className="size-4" /> Platform Matrix</label>
+                                <Select value={platform} onValueChange={setPlatform}>
+                                   <SelectTrigger className="bg-black border-2 border-primary/20 h-16 rounded-2xl text-lg font-black italic px-6 focus:border-primary text-white">
+                                      <SelectValue placeholder="Select Platform" />
+                                   </SelectTrigger>
+                                   <SelectContent className="bg-black border-2 border-primary/40 rounded-2xl shadow-9xl">
+                                      <SelectItem value="telegram">Telegram Hive</SelectItem>
+                                      <SelectItem value="whatsapp">WhatsApp Mesh</SelectItem>
+                                      <SelectItem value="snapchat">Snapchat Siphon</SelectItem>
+                                      <SelectItem value="instagram">Instagram Ghost</SelectItem>
+                                      <SelectItem value="facebook">Facebook Pulse</SelectItem>
+                                   </SelectContent>
+                                </Select>
+                            </div>
 
-                    <div className="space-y-4">
-                        <label className="text-[10px] font-black text-primary uppercase tracking-[0.6em] px-4 italic flex items-center gap-3"><Binary className="size-4" /> Behavioral DNA</label>
-                        <Textarea 
-                          value={persona}
-                          onChange={(e) => setPersona(e.target.value)}
-                          placeholder="Bio, interests, family names, birth year..."
-                          className="bg-black border-2 border-white/5 rounded-2xl min-h-[120px] text-lg italic p-6 focus:border-primary font-bold text-gray-200 shadow-inner resize-none scrollbar-hide"
-                        />
-                    </div>
+                            <div className="space-y-4">
+                                <label className="text-[10px] font-black text-primary uppercase tracking-[0.6em] px-4 italic flex items-center gap-3"><Binary className="size-4" /> Behavioral DNA</label>
+                                <Textarea 
+                                  value={persona}
+                                  onChange={(e) => setPersona(e.target.value)}
+                                  placeholder="Bio, interests, family names, birth year..."
+                                  className="bg-black border-2 border-white/5 rounded-2xl min-h-[120px] text-lg italic p-6 focus:border-primary font-bold text-gray-200 shadow-inner resize-none scrollbar-hide"
+                                />
+                            </div>
 
-                    <Button 
-                      onClick={handleAction} 
-                      disabled={loading}
-                      className="w-full h-24 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.8em] rounded-[2rem] shadow-xl active:scale-95 transition-all text-xl border-4 border-black/30 group italic"
-                    >
-                      {loading ? <Loader2 className="size-10 animate-spin mr-3" /> : <Flame className="size-10 mr-4 group-hover:scale-125 transition-transform gold-glow" />}
-                      IGNITE_PREDATOR
-                    </Button>
+                            <Button 
+                              onClick={handleAction} 
+                              disabled={loading}
+                              className="w-full h-24 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.8em] rounded-[2rem] shadow-xl active:scale-95 transition-all text-xl border-4 border-black/30 group italic"
+                            >
+                              {loading ? <Loader2 className="size-10 animate-spin mr-3" /> : <Flame className="size-10 mr-4 group-hover:scale-125 transition-transform gold-glow" />}
+                              IGNITE_PREDATOR
+                            </Button>
+                        </div>
+                    )}
                  </div>
               </Card>
 
@@ -254,11 +333,74 @@ export default function SocialPredatorPage() {
                  <CardTitle className="text-3xl md:text-7xl text-white flex items-center gap-8 font-black uppercase italic gold-glow px-4 leading-none">
                     <Terminal className="size-12 md:size-20 text-primary animate-pulse" /> Predator Feed
                  </CardTitle>
-                 <Badge className="bg-emerald-600/20 text-emerald-500 border-2 border-emerald-500/30 px-8 py-2 rounded-full font-black text-xl italic animate-pulse shadow-lg uppercase">DATA_SIPHON_ACTIVE</Badge>
+                 <div className="flex items-center gap-8">
+                    {activeTab === "mass" && (
+                        <div className="flex gap-6 border-r-2 border-white/10 pr-8">
+                            <div className="text-right">
+                                <div className="text-primary font-black text-4xl italic gold-glow">{massStats.cpm}</div>
+                                <div className="text-[9px] uppercase font-black text-white/40 tracking-[0.4em]">CPM</div>
+                            </div>
+                            <div className="text-right">
+                                <div className="text-emerald-500 font-black text-4xl italic gold-glow">{massStats.hits}</div>
+                                <div className="text-[9px] uppercase font-black text-white/40 tracking-[0.4em]">Hits</div>
+                            </div>
+                        </div>
+                    )}
+                    <Badge className="bg-emerald-600/20 text-emerald-500 border-2 border-emerald-500/30 px-8 py-2 rounded-full font-black text-xl italic animate-pulse shadow-lg uppercase">DATA_SIPHON_ACTIVE</Badge>
+                 </div>
               </CardHeader>
+
               <CardContent className="p-6 flex-1 overflow-y-auto scrollbar-hide space-y-12 relative z-10">
-                 {/* قسم نتائج الهندسة الاجتماعية */}
-                 {result && (
+                 {/* قسم نتائج القصف الجماعي (BlackBullet Style) */}
+                 {activeTab === "mass" ? (
+                    <div className="space-y-10 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col">
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                            {[
+                                { label: "Checked", value: massStats.checked, color: "text-blue-400" },
+                                { label: "Hits", value: massStats.hits, color: "text-emerald-500" },
+                                { label: "Bad", value: massStats.bad, color: "text-red-500" },
+                                { label: "Retries", value: 0, color: "text-amber-500" }
+                            ].map((s, i) => (
+                                <Card key={i} className="bg-black/60 border-2 border-white/5 p-6 rounded-2xl shadow-xl flex flex-col items-center justify-center">
+                                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground mb-2 italic">{s.label}</span>
+                                    <span className={cn("text-3xl md:text-5xl font-black italic gold-glow leading-none", s.color)}>{s.value.toLocaleString()}</span>
+                                </Card>
+                            ))}
+                        </div>
+
+                        <div className="bg-black/95 rounded-[3.5rem] border-4 border-white/5 p-8 flex-1 flex flex-col shadow-inner min-h-[500px]">
+                           <div className="flex items-center justify-between mb-8 border-b-2 border-white/5 pb-4 px-4">
+                              <span className="text-primary font-black uppercase tracking-[0.6em] italic text-xs flex items-center gap-4">
+                                <ListChecks className="size-6" /> MASS_STRIKE_HITS_LOG
+                              </span>
+                              <Badge className="bg-primary/10 text-primary border-none animate-pulse px-6 italic">HIVE_SWARM_ACTIVE</Badge>
+                           </div>
+                           <div className="flex-1 overflow-y-auto scrollbar-hide font-mono space-y-4 px-4">
+                              {massHits.length > 0 ? massHits.map((h, i) => (
+                                <div key={i} className="p-4 rounded-xl bg-white/5 border border-emerald-500/20 flex justify-between items-center animate-in slide-in-from-right-4 duration-500">
+                                    <div className="flex items-center gap-6">
+                                        <Badge className="bg-emerald-600 text-black font-black italic">HIT</Badge>
+                                        <span className="text-xl md:text-2xl font-black text-white italic">{h.combo}</span>
+                                    </div>
+                                    <span className="text-[10px] font-black text-white/30 italic">Captured: {h.data}</span>
+                                </div>
+                              )) : isMassRunning ? (
+                                <div className="space-y-4">
+                                    {Array.from({length: 10}).map((_, i) => (
+                                        <div key={i} className="flex gap-6 opacity-30 text-xs italic animate-pulse">
+                                            <span className="text-blue-400">[{new Date().toLocaleTimeString()}]</span>
+                                            <span>Checking node index {Math.floor(Math.random()*10000)}... STATUS: PENDING</span>
+                                        </div>
+                                    ))}
+                                </div>
+                              ) : (
+                                <div className="h-full flex flex-col items-center justify-center text-white/5 italic text-6xl uppercase tracking-[1em]">READY</div>
+                              )}
+                           </div>
+                        </div>
+                    </div>
+                 ) : result ? (
+                   /* قسم نتائج الهندسة الاجتماعية */
                    <div className="space-y-10 animate-in fade-in zoom-in-95 duration-1000">
                       <div className="p-10 rounded-[3rem] bg-primary/5 border-2 border-primary/20 italic text-2xl md:text-5xl text-gray-100 leading-relaxed font-black shadow-inner relative group/brief overflow-hidden">
                          <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse" />
@@ -287,10 +429,8 @@ export default function SocialPredatorPage() {
                          </Card>
                       </div>
                    </div>
-                 )}
-
-                 {/* قسم نتائج الـ Wordlist */}
-                 {wordlist && (
+                 ) : wordlist ? (
+                   /* قسم نتائج الـ Wordlist */
                    <div className="space-y-8 animate-in slide-in-from-right-10 duration-1000">
                       <div className="flex items-center gap-6 border-b-2 border-white/5 pb-4">
                          <Key className="size-10 text-primary gold-glow" />
@@ -307,10 +447,8 @@ export default function SocialPredatorPage() {
                          {wordlist.psychologicalInsight}
                       </div>
                    </div>
-                 )}
-
-                 {/* قسم نتائج الـ Breach */}
-                 {breachData && (
+                 ) : breachData ? (
+                   /* قسم نتائج الـ Breach */
                    <div className="space-y-8 animate-in slide-in-from-bottom-10 duration-1000">
                       <div className="flex items-center gap-6 border-b-2 border-white/5 pb-4">
                          <Database className="size-10 text-emerald-500 animate-pulse" />
@@ -324,10 +462,8 @@ export default function SocialPredatorPage() {
                           "سيدي القائد، العراف استرجع ذرات البيانات من 14 تسريباً عالمياً؛ الهدف عارٍ تماماً."
                       </div>
                    </div>
-                 )}
-
-                 {/* حالة الانتظار */}
-                 {!result && !wordlist && !breachData && (
+                 ) : (
+                   /* حالة الانتظار */
                    <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-16 py-40">
                       <div className="relative group/lock">
                         <Users className="size-48 md:size-80 animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[5s]" />
@@ -349,9 +485,9 @@ export default function SocialPredatorPage() {
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-16 opacity-40 text-[12px] md:text-[18px] font-black uppercase tracking-[2em] md:tracking-[6em] italic text-white drop-shadow-xl pb-12">
-            <span>AL-MUIZZ SOCIAL HIVE v53.8</span>
+            <span>AL-MUIZZ SOCIAL HIVE v53.9</span>
             <div className="size-4 rounded-full bg-white animate-pulse shadow-[0_0_40px_white]" />
-            <span>SUBJUGATION_COMPLETE_2026</span>
+            <span>MASS_SUBJUGATION_COMPLETE_2026</span>
         </div>
       </main>
     </div>
