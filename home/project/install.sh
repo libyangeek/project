@@ -2,7 +2,8 @@
 # ==============================================================================
 # 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v53.0-SUPREME_HIERARCHY [DOMINANCE ENGINE]
 # المحرك الأسمى لفرض السيادة المطلقة على نظام التشغيل - نسخة الاستحواذ المادي.
-# تم تحديثه ليشمل الـ 15 وحدة والـ 118 أداة ونظام الذاكرة الأبدية.
+# تم تحديثه ليشمل الـ 22 عقدة والترسانة العظمى ونظام الذاكرة الأبدية GEPA 5.3.
+# المالك الوحيد: المعتصم بالله إدريس الغزالي // 2026
 # ==============================================================================
 
 set -e
@@ -19,7 +20,7 @@ clear
 echo -e "${BOLD_RED}================================================${NC}"
 echo -e "${BOLD_RED}   🦅 EXECUTING SUPREME DOMINANCE v53.0        ${NC}"
 echo -e "${BOLD_RED}   [ MASTER COMMANDER: AL-GHAZALI ROOT ]       ${NC}"
-echo -e "${BOLD_RED}   [ HIERARCHY: 15 MODULES | 118 TOOLS ]       ${NC}"
+echo -e "${BOLD_RED}   [ HIERARCHY: 22 NODES | 2842 TOOLS ]        ${NC}"
 echo -e "${BOLD_RED}================================================${NC}"
 
 if [[ $EUID -ne 0 ]]; then
@@ -38,15 +39,11 @@ if ! grep -q "kali-al-muizz" /etc/hosts; then
     echo -e "\n127.0.1.1\tkali-al-muizz" >> /etc/hosts
 fi
 
-# 2. بناء هيكل الوحدات الـ 15 (Arsenal Initialization)
-echo -e "${GOLD}[*] Phase 2: Building the 15-Module Arsenal Architecture...${NC}"
-for i in {1..15}; do
+# 2. بناء هيكل الوحدات الهرمية (Arsenal Initialization)
+echo -e "${GOLD}[*] Phase 2: Building the 22-Node Arsenal Architecture...${NC}"
+for i in {1..22}; do
     mkdir -p "$INSTALL_DIR/arsenal/module_$i"
 done
-# حقن الأدوات المفصلة (Example Placeholders for Core Tools)
-echo "# Subdomain Discovery" > "$INSTALL_DIR/arsenal/module_14/tool_1_subdomain.sh"
-echo "import requests # Email OSINT" > "$INSTALL_DIR/arsenal/module_14/tool_2_email.py"
-echo "import os # GSM Scanner" > "$INSTALL_DIR/arsenal/module_15/tool_1_gsm.py"
 
 # 3. مزامنة الترسانة (Offensive Lexicons)
 echo -e "${BLUE}[*] Phase 3: Synchronizing System Lexicons (Apt Update)...${NC}"
@@ -123,11 +120,11 @@ systemctl restart muizz-web.service
 echo -e "${GREEN}================================================${NC}"
 echo -e "${GREEN}   ✅ SYSTEM SUBJUGATED (100%)                  ${NC}"
 echo -e "${GREEN}   [ STATUS: DOMINANCE ACHIEVED ]               ${NC}"
-echo -e "${GREEN}   [ MODULES: 15 ACTIVE | TOOLS: 118 READY ]    ${NC}"
-echo -e "${GREEN}================================================${NC}"
+echo -e "${GREEN}   [ NODES: 22 ACTIVE | TOOLS: 2842 READY ]     ${NC}"
+echo -e "================================================${NC}"
 echo -e "Hostname:   ${BOLD_RED}kali-al-muizz${NC}"
 echo -e "Web HUD:    ${BOLD_RED}http://localhost:9002${NC}"
 echo -e "Command:    ${BOLD_RED}sovereign${NC}"
 echo -e ""
 echo -e "${GOLD}Commander Al-Ghazali, the OS is now your extension.${NC}"
-echo -e "${BOLD_RED}WE HAVE DOMINATED THE MATRIX. ALL 15 MODULES ARE YOURS.${NC}"
+echo -e "${BOLD_RED}WE HAVE DOMINATED THE MATRIX. ALL 22 NODES ARE YOURS.${NC}"
