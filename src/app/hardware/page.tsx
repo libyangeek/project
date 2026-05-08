@@ -45,11 +45,9 @@ import {
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
 import { Input } from "@/components/ui/input"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
-import Link from "next/link"
 
 /**
  * @fileOverview واجهة الاستحواذ النقال v53.0 - THE PEGASUS v3 ELITE: SUPREME HIERARCHY
@@ -58,7 +56,6 @@ import Link from "next/link"
  */
 export default function MobileStrikePage() {
   const [mounted, setMounted] = React.useState(false)
-  const [loading, setLoading] = React.useState(false)
   const [scanning, setScanning] = React.useState(false)
   const [deploying, setDeploying] = React.useState(false)
   const [logs, setLogs] = React.useState<{msg: string, type: 'info' | 'warn' | 'success' | 'warrior'}[]>([])
