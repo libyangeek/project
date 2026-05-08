@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -176,7 +177,7 @@ export default function MobileStrikePage() {
 
   if (!mounted) return null;
 
-  const activeDevice = devices.find(d => d.id === selectedDeviceId);
+  const activeNode = devices.find(d => d.id === selectedDeviceId);
 
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
@@ -333,7 +334,7 @@ export default function MobileStrikePage() {
 
                  {/* قسم التحليل العصبي للجهاز المختار */}
                  <div className="col-span-full">
-                    {activeDevice ? (
+                    {activeNode ? (
                        <Card className="bg-primary/5 border-4 border-primary/30 rounded-[4rem] p-12 overflow-hidden shadow-9xl animate-in zoom-in-95 duration-1000 relative group/anal">
                           <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse" />
                           <div className="flex justify-between items-center mb-12 border-b-4 border-primary/20 pb-8">
@@ -343,7 +344,7 @@ export default function MobileStrikePage() {
                                 </div>
                                 <div>
                                    <h4 className="text-4xl md:text-6xl font-black text-white italic uppercase gold-glow leading-none">Neural Analysis</h4>
-                                   <span className="text-[11px] text-primary/70 font-black tracking-[0.5em] uppercase italic mt-3 block">TARGET_DNA: {activeDevice.id}</span>
+                                   <span className="text-[11px] text-primary/70 font-black tracking-[0.5em] uppercase italic mt-3 block">TARGET_DNA: {activeNode.id}</span>
                                 </div>
                              </div>
                              <Badge className="bg-emerald-600/30 text-emerald-500 border-4 border-emerald-500/40 px-10 py-4 rounded-full font-black text-2xl animate-pulse italic tracking-[0.3em] shadow-3xl">LOCKED</Badge>
@@ -403,43 +404,8 @@ export default function MobileStrikePage() {
                        </div>
                     )}
                  </div>
-                 
-                 <div className="col-span-full grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-                    <div className="p-12 rounded-[4rem] bg-black/80 border-8 border-primary/20 relative group/net overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,1)]">
-                       <div className="absolute top-0 right-0 p-10 opacity-5 group-hover/net:opacity-10 transition-all duration-1000 scale-125"><Radio className="size-48 text-primary" /></div>
-                       <h5 className="text-2xl font-black text-primary uppercase tracking-[0.8em] mb-10 border-b-4 border-primary/20 pb-6 italic flex items-center gap-8 gold-glow">
-                          <Zap className="size-10 animate-neural" /> NetHunter v53.8
-                       </h5>
-                       <p className="text-xl md:text-3xl text-gray-300 italic font-black leading-relaxed selection:bg-primary selection:text-black uppercase drop-shadow-2xl">
-                          "تفعيل سيادة كالي نيثانتر لعام 2026؛ سحب كافة البيانات اللاسلكية واختراق المحيط المادي عبر ثغرات May-2026-X فوراً."
-                       </p>
-                    </div>
-                    <div className="p-12 rounded-[4rem] bg-black/80 border-8 border-primary/20 relative group/hex overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,1)]">
-                       <div className="absolute top-0 right-0 p-10 opacity-5 group-hover/hex:opacity-10 transition-all duration-1000 scale-125"><Key className="size-48 text-primary" /></div>
-                       <h5 className="text-2xl font-black text-primary uppercase tracking-[0.8em] mb-10 border-b-4 border-primary/20 pb-6 italic flex items-center gap-8">
-                          <ShieldAlert className="size-10" /> EliteHex v5.5
-                       </h5>
-                       <p className="text-xl md:text-3xl text-gray-300 italic font-black leading-relaxed uppercase drop-shadow-2xl">
-                          "حقن طقم أدوات الهجوم النانوي لكسر حماية تطبيقات الـ Sandbox واستنزاف الجلسات المشفرة لليوم المجيد بنمط 100% Stealth."
-                       </p>
-                    </div>
-                 </div>
               </CardContent>
-              
-              <div className="p-10 border-t-4 border-white/5 mt-auto flex justify-between items-center opacity-30 text-[12px] font-black uppercase tracking-[3em] italic">
-                 <span>PEGASUS_ELITE_v53_AL_GHAZALI_ROOT</span>
-                 <div className="flex gap-10">
-                    <Fingerprint className="size-10 text-primary animate-pulse" />
-                    <Atom className="size-10 animate-spin-slow" />
-                 </div>
-              </div>
            </Card>
-        </div>
-
-        <div className="mt-auto relative z-10 flex justify-center items-center gap-24 opacity-40 text-[14px] md:text-[22px] font-black uppercase tracking-[2em] md:tracking-[6em] italic text-white drop-shadow-xl pb-12">
-            <span>AL-MUIZZ SUPREME PEGASUS v53.8</span>
-            <div className="size-6 rounded-full bg-white animate-pulse shadow-[0_0_80px_white]" />
-            <span>TOTAL_HARDWARE_SIPHON_2026</span>
         </div>
       </main>
     </div>

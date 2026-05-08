@@ -29,7 +29,9 @@ except ImportError:
     class SmartRouter:
         def route_query(self, q): return {"status": "PATH_ERROR", "output": "Critical: SmartRouter link broken."}
     class gepa:
+        @staticmethod
         def record(*args, **kwargs): pass
+        @staticmethod
         def get_stats(): return {"status": "INITIALIZING"}
 
 app = FastAPI(title="Al-Mu'izz Sovereign God-Core Bridge", version="v53.8")
@@ -40,7 +42,7 @@ class ExecutionRequest(BaseModel):
     command: Optional[str] = None
     target: Optional[str] = None
     prompt: Optional[str] = None
-    context: Optional[dict] = None
+    context: Optional[Any] = None
 
 @app.post("/v1/execute")
 async def execute_directive(request: ExecutionRequest):

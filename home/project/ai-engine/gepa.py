@@ -82,5 +82,4 @@ if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "stats":
         print(json.dumps(gm.get_stats(), indent=2))
     else:
-        # عرض الحالة الافتراضية
         print(json.dumps(gm.get_stats()))
