@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -20,7 +19,10 @@ import {
   Target,
   Database,
   Terminal,
-  ArrowUpRight
+  ArrowUpRight,
+  Radar,
+  Radio,
+  Smartphone
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -78,7 +80,7 @@ export default function ArsenalNodePage() {
            <div className="flex flex-col md:flex-row items-center gap-10">
               <div className="size-24 md:size-40 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_150px_rgba(212,175,55,0.6)] relative group shrink-0 rounded-3xl transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
                  <Library className="size-12 md:size-20 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
-                 <div className="absolute -inset-6 border-2 border-primary/20 rounded-full animate-spin-slow opacity-30" />
+                 <div className="absolute -inset-4 border-2 border-primary/20 rounded-full animate-spin-slow opacity-30" />
               </div>
               <div className="text-center md:text-right flex-1">
                  <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-4">
@@ -125,7 +127,7 @@ export default function ArsenalNodePage() {
                  </CardContent>
               </Card>
 
-              <Card className="kali-card border-white/5 bg-black/60 p-6 rounded-2xl border-2 shadow-inner group overflow-hidden">
+              <Card className="kali-card border-white/5 bg-black/60 p-6 rounded-2xl border-2 shadow-inner group overflow-hidden text-center">
                  <h4 className="text-[10px] font-black text-primary uppercase tracking-[0.5em] mb-4 italic flex items-center justify-center gap-3">
                     <Boxes className="size-4 animate-pulse" /> ARSENAL_STABILITY
                  </h4>
