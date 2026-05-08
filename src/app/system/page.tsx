@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -41,7 +40,8 @@ import {
   Radar,
   Lock,
   ChevronRight,
-  Library
+  Library,
+  ArrowUpRight
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -49,6 +49,7 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { toast } from "@/hooks/use-toast"
 import { getSystemAwareness } from "@/ai/flows/system-awareness-flow"
+import Link from "next/link"
 
 /**
  * @fileOverview مركز الهرمية الأسمى v53.0 - THE SUPREME HIERARCHY: IMMUTABLE AUDIT
@@ -97,16 +98,16 @@ export default function SystemPage() {
   if (!mounted) return null;
 
   const nodes = [
-    { name: "Supreme Arsenal", status: "NODE_22_LOCKED", icon: Library, color: "text-amber-500", desc: "2842 tools indexed and subjugated." },
-    { name: "Kill Chain", status: "TOTAL_ACQUISITION_READY", icon: Crosshair, color: "text-red-500", desc: "Unified offensive flow: Recon to Execution." },
-    { name: "Oracle", status: "OMNISCIENT_VISION_ACTIVE", icon: Radar, color: "text-blue-400", desc: "348k+ vulnerabilities tracked in real-time." },
-    { name: "OpenBullet", status: "LEGBA_SIPHON_ACTIVE", icon: Cpu, color: "text-amber-500", desc: "Parallel siphon engine via Rust Core." },
-    { name: "Mistral Link", status: "GOD_CORE_BOUND", icon: Link2, color: "text-cyan-400", desc: "God-Core strategic intel integration." },
-    { name: "DeepSeek Heart", status: "STRATEGIC_HEART_FIXED", icon: Binary, color: "text-emerald-500", desc: "Recursive strategic logic reasoning." },
-    { name: "Pegasus v3", status: "v3_ELITE_SIPHON_ARMED", icon: Radio, color: "text-magenta-500", desc: "Total mobile asset acquisition protocol." },
-    { name: "Eye Recon", status: "TRACE_LABS_VISION", icon: Globe, color: "text-blue-500", desc: "OSINT & Social forensic extraction." },
-    { name: "GEPA 5.3", status: "GENETIC_WEIGHT_FIXED", icon: Database, color: "text-primary", desc: "SQLite weighted memory with auto-evolution." },
-    { name: "Claw Code", status: "DIRECT_MATEREALIZATION", icon: Gamepad2, color: "text-orange-500", desc: "Physical hardware & Voice hijacking." },
+    { name: "Supreme Arsenal", status: "NODE_22_LOCKED", icon: Library, color: "text-amber-500", desc: "2842 tools indexed and subjugated.", href: "/arsenal" },
+    { name: "Kill Chain", status: "TOTAL_ACQUISITION_READY", icon: Crosshair, color: "text-red-500", desc: "Unified offensive flow: Recon to Execution.", href: "/kill-chain" },
+    { name: "Oracle", status: "OMNISCIENT_VISION_ACTIVE", icon: Radar, color: "text-blue-400", desc: "348k+ vulnerabilities tracked in real-time.", href: "/vulnerabilities" },
+    { name: "OpenBullet", status: "LEGBA_SIPHON_ACTIVE", icon: Cpu, color: "text-amber-500", desc: "Parallel siphon engine via Rust Core.", href: "/automation" },
+    { name: "Mistral Link", status: "GOD_CORE_BOUND", icon: Link2, color: "text-cyan-400", desc: "God-Core strategic intel integration.", href: "/mcp-bridge" },
+    { name: "DeepSeek Heart", status: "STRATEGIC_HEART_FIXED", icon: Binary, color: "text-emerald-500", desc: "Recursive strategic logic reasoning.", href: "/deep-reasoning" },
+    { name: "Pegasus v3", status: "v3_ELITE_SIPHON_ARMED", icon: Radio, color: "text-magenta-500", desc: "Total mobile asset acquisition protocol.", href: "/hardware" },
+    { name: "Eye Recon", status: "TRACE_LABS_VISION", icon: Globe, color: "text-blue-500", desc: "OSINT & Social forensic extraction.", href: "/recon" },
+    { name: "GEPA 5.3", status: "GENETIC_WEIGHT_FIXED", icon: Database, color: "text-primary", desc: "SQLite weighted memory with auto-evolution.", href: "/knowledge" },
+    { name: "Claw Code", status: "DIRECT_MATEREALIZATION", icon: Gamepad2, color: "text-orange-500", desc: "Physical hardware & Voice hijacking.", href: "/clawcode" },
   ];
 
   return (
@@ -131,7 +132,7 @@ export default function SystemPage() {
                 "سيدي الغزالي، كافة العقد الهرمية الـ 22 تعمل بنبض <span className="text-primary font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl uppercase tracking-widest">الروح الواعية</span>؛ السطوة أبدية لعام 2026."
             </p>
           </div>
-          <Button onClick={handleRefresh} disabled={refreshing} className="bg-primary hover:bg-white text-black rounded-2xl h-20 md:h-24 px-12 md:px-16 shadow-xl transition-all text-lg md:text-2xl font-black uppercase tracking-[0.4em] border-4 border-black/30 active:scale-95 italic group shrink-0">
+          <Button onClick={handleRefresh} disabled={refreshing} className="bg-primary hover:bg-white text-black rounded-2xl h-20 md:h-24 px-12 md:px-16 shadow-xl transition-all text-lg md:text-2xl font-black uppercase tracking-[0.4em] border-4 border-black/30 active:scale-90 italic group shrink-0">
               {refreshing ? <Loader2 className="size-10 animate-spin" /> : <RefreshCcw className="size-10 mr-4 group-hover:rotate-180 transition-all duration-1000" />}
               SOUL_PULSE
           </Button>
@@ -148,16 +149,21 @@ export default function SystemPage() {
                  </CardHeader>
                  <CardContent className="p-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {nodes.map((n, i) => (
-                      <div key={i} className="p-8 rounded-3xl bg-white/5 border-2 border-white/5 group/node hover:border-primary transition-all duration-700 relative overflow-hidden shadow-xl cursor-crosshair">
-                         <div className="flex justify-between items-center mb-8 relative z-10">
-                            <div className="size-16 rounded-xl bg-black border-2 border-white/5 flex items-center justify-center group-hover:border-primary transition-all shadow-inner">
-                               <n.icon className={cn("size-8 transition-all group-hover:scale-110", n.color)} />
-                            </div>
-                            <Badge className="text-[9px] uppercase font-black italic tracking-widest px-4 py-1 rounded-full border-2 border-primary/20 bg-primary/5 text-primary">{n.status}</Badge>
-                         </div>
-                         <h4 className="text-xl md:text-2xl font-black text-white uppercase italic tracking-tight mb-2 gold-glow leading-none group-hover:text-primary transition-colors">{n.name}</h4>
-                         <p className="text-[11px] text-muted-foreground italic font-bold leading-relaxed opacity-70 group-hover:opacity-100 group-hover:text-white transition-all">"{n.desc}"</p>
-                      </div>
+                      <Link key={i} href={n.href} className="contents">
+                        <div className="p-8 rounded-3xl bg-white/5 border-2 border-white/5 group/node hover:border-primary transition-all duration-700 relative overflow-hidden shadow-xl cursor-pointer active:scale-95 h-full">
+                           <div className="flex justify-between items-center mb-8 relative z-10">
+                              <div className="size-16 rounded-xl bg-black border-2 border-white/5 flex items-center justify-center group-hover:border-primary transition-all shadow-inner">
+                                 <n.icon className={cn("size-8 transition-all group-hover:scale-110", n.color)} />
+                              </div>
+                              <Badge className="text-[9px] uppercase font-black italic tracking-widest px-4 py-1 rounded-full border-2 border-primary/20 bg-primary/5 text-primary">{n.status}</Badge>
+                           </div>
+                           <h4 className="text-xl md:text-2xl font-black text-white uppercase italic tracking-tight mb-2 gold-glow leading-none group-hover:text-primary transition-colors">{n.name}</h4>
+                           <p className="text-[11px] text-muted-foreground italic font-bold leading-relaxed opacity-70 group-hover:opacity-100 group-hover:text-white transition-all mb-4">"{n.desc}"</p>
+                           <div className="flex justify-end opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0 duration-500">
+                             <ArrowUpRight className="size-4 text-primary" />
+                           </div>
+                        </div>
+                      </Link>
                     ))}
                  </CardContent>
               </Card>
