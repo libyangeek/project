@@ -4,12 +4,10 @@ import { NextRequest, NextResponse } from 'next/server';
 /**
  * المرحل السيادي v53.8 - SOVEREIGN RELAY
  * يقوم بتوجيه كافة طلبات الواجهة إلى "الممر السيادي" (FastAPI Bridge) حصراً.
- * هذا يضمن السرعة القصوى، التوسع اللامحدود، ونظام مناعة مركزي للأخطاء.
  */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    // الممر السيادي يعمل دائماً على المنفذ 8000 داخل الحاوية أو النظام المضيف
     const BRIDGE_URL = "http://localhost:8000/v1/execute";
 
     const response = await fetch(BRIDGE_URL, {
@@ -27,7 +25,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(data);
 
   } catch (error: any) {
-    // نظام المناعة السيادي: رصد الخلل وتوثيقه
     console.error(`[IMMUNE_CENTER] Failure in Relay: ${error.message}`);
     
     return NextResponse.json({ 

@@ -38,11 +38,10 @@ done
 # 2. تحديث البيئة البرمجية (Stable Runtime)
 echo -e "${BLUE}[*] Phase 2: Strengthening Foundations...${NC}"
 apt-get update && apt-get install -y docker.io docker-compose lsof curl python3-pip python3-venv sqlite3 2>/dev/null || true
-systemctl enable docker --now
+systemctl enable docker --now || true
 
 # 3. بناء مصفوفة Docker (Sovereign Bridge Integration)
 echo -e "${GOLD}[*] Phase 3: Building the Sovereign Bridge Matrix...${NC}"
-# التأكد من وجود docker-compose.yml في المسار الصحيح
 if [ -f "docker-compose.yml" ]; then
     docker-compose up -d --build
 fi
@@ -50,12 +49,12 @@ fi
 # 4. حقن الطبقات العصبية (Neural Python Hub)
 echo -e "${BLUE}[*] Phase 4: Injecting Neural Python Hub...${NC}"
 pip3 install --upgrade pip --break-system-packages || true
-pip3 install --break-system-packages fastapi uvicorn pydantic requests qdrant-client sentence-transformers 2>/dev/null || true
+pip3 install --break-system-packages fastapi uvicorn pydantic requests sqlite3 2>/dev/null || true
 
 # 5. بروتوكول الخلود والنبض النهائي
 echo -e "${GOLD}[*] Phase 5: Establishing Eternal Persistence...${NC}"
 BASH_HOOK="bash $INSTALL_DIR/scripts/sovereign_banner.sh"
-if ! grep -q "sovereign_banner.sh" ~/.bashrc; then
+if [ -f "$INSTALL_DIR/scripts/sovereign_banner.sh" ] && ! grep -q "sovereign_banner.sh" ~/.bashrc; then
     echo -e "\n# Al-Mu'izz Supreme Integration\n$BASH_HOOK" >> ~/.bashrc
 fi
 

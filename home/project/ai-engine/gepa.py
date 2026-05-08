@@ -11,7 +11,6 @@ import os
 import json
 from datetime import datetime
 
-# المسار الموحد للمنظومة
 BASE_DIR = os.getenv("PROJECT_ROOT", "/opt/sovereign-ai-platform")
 DB_PATH = os.path.join(BASE_DIR, "ai-engine/gepa_memory.db")
 
@@ -23,7 +22,6 @@ class GeneticMemory:
     def _init_db(self):
         conn = sqlite3.connect(DB_PATH)
         c = conn.cursor()
-        # نسيج الذاكرة: تسجيل كل عملية، أمر، ونتيجة مع وزن جيني
         c.execute("""CREATE TABLE IF NOT EXISTS memory 
                      (id INTEGER PRIMARY KEY AUTOINCREMENT,
                       timestamp TEXT,
@@ -37,7 +35,6 @@ class GeneticMemory:
         conn.close()
 
     def record(self, tool, input_data, outcome, success=True, master_command="AUTONOMOUS_STRIKE"):
-        """تسجيل تجربة جديدة في القبو الجيني لتعزيز السطوة"""
         try:
             conn = sqlite3.connect(DB_PATH)
             c = conn.cursor()
@@ -52,7 +49,6 @@ class GeneticMemory:
             return False
 
     def get_stats(self):
-        """استخراج مقاييس الرنين العصبي لليوم المجيد"""
         try:
             conn = sqlite3.connect(DB_PATH)
             c = conn.cursor()
@@ -76,10 +72,9 @@ def record(tool, input_data, outcome, success=True, master_command=""):
     gm = GeneticMemory()
     gm.record(tool, input_data, outcome, success, master_command)
 
-if __name__ == "__main__":
+def get_stats():
     gm = GeneticMemory()
-    import sys
-    if len(sys.argv) > 1 and sys.argv[1] == "stats":
-        print(json.dumps(gm.get_stats(), indent=2))
-    else:
-        print(json.dumps(gm.get_stats()))
+    return gm.get_stats()
+
+if __name__ == "__main__":
+    print(json.dumps(get_stats(), indent=2))
