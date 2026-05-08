@@ -369,11 +369,10 @@ export default function ShadowGridPage() {
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-16 opacity-40 text-[14px] md:text-[22px] font-black uppercase tracking-[2em] md:tracking-[6em] italic text-white drop-shadow-xl pb-12">
             <span>AL-MUIZZ SHADOW GRID v53.5</span>
-            <div className="size-6 rounded-full bg-white animate-pulse shadow-[0_0_80px_white]" />
+            <div className="size-4 rounded-full bg-white animate-pulse shadow-[0_0_40px_white]" />
             <span>TOTAL_ACQUISITION_2026</span>
         </div>
       </main>
     </div>
   )
 }
-

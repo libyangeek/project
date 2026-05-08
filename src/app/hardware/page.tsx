@@ -378,19 +378,19 @@ export default function MobileStrikePage() {
                                 <h5 className="text-[12px] font-black text-primary uppercase tracking-[0.8em] italic border-b-2 border-primary/10 pb-4 flex items-center gap-4"><Database className="size-6" /> Intelligence Extracted</h5>
                                 <div className="bg-black/99 rounded-[3rem] border-4 border-white/5 p-10 h-96 overflow-y-auto scrollbar-hide shadow-inner font-code text-lg md:text-2xl leading-relaxed italic text-emerald-400 selection:bg-primary selection:text-black">
                                    <div className="mb-6 flex gap-6 animate-in slide-in-from-right-6 duration-700">
-                                      <span className="text-primary opacity-30 select-none">>>></span>
+                                      <span className="text-primary opacity-30 select-none">{" >>> "}</span>
                                       <span>[SUCCESS] WhatsApp DB Extracted: {Math.floor(Math.random()*500)} MB</span>
                                    </div>
                                    <div className="mb-6 flex gap-6 animate-in slide-in-from-right-6 duration-1000">
-                                      <span className="text-primary opacity-30 select-none">>>></span>
+                                      <span className="text-primary opacity-30 select-none">{" >>> "}</span>
                                       <span>[SUCCESS] Identity Siphon: 42 Browser cookies captured.</span>
                                    </div>
                                    <div className="mb-6 flex gap-6 animate-in slide-in-from-right-6 duration-1200">
-                                      <span className="text-primary opacity-30 select-none">>>></span>
+                                      <span className="text-primary opacity-30 select-none">{" >>> "}</span>
                                       <span>[SUCCESS] Signal Session Key: Decrypted via Neural Core.</span>
                                    </div>
                                    <div className="mb-6 flex gap-6 animate-in slide-in-from-right-6 duration-1400">
-                                      <span className="text-primary opacity-30 select-none">>>></span>
+                                      <span className="text-primary opacity-30 select-none">{" >>> "}</span>
                                       <span>[SUCCESS] Call Logs: 1,242 entries bound to Hierarchy.</span>
                                    </div>
                                 </div>
