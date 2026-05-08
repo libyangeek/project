@@ -1,41 +1,39 @@
-
 'use server';
 /**
- * @fileOverview محرك OSINT Master v20.6 - نسخة الاجتياح الاجتماعي
- * استخبارات المصادر المفتوحة وتحليل البصمة الرقمية العميقة لحسابات التواصل.
+ * @fileOverview محرك OSINT Master v52.2 - نسخة الاستحواذ الكوني (Trace Labs Edition)
+ * استخبارات المصادر المفتوحة والتحقيق الجنائي الرقمي لعام 2026.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
 const OsintInputSchema = z.object({
-  target: z.string().describe('الهدف (بريد، هاتف، يوزر حساب، أو رابط بروفايل)'),
-  type: z.enum(['phone', 'email', 'domain', 'social', 'wireless', 'network']).describe('نوع البحث'),
-  socialPlatforms: z.array(z.string()).optional().describe('المنصات المستهدفة للتشريح (Facebook, X, Insta, etc.)'),
+  target: z.string().describe('الهدف (بريد، هاتف، يوزر، IP، أو رابط بروفايل).'),
+  type: z.enum(['phone', 'email', 'domain', 'social', 'investigation', 'metadata']).describe('نوع البحث الاستخباري.'),
+  depth: z.enum(['Standard', 'Deep-Dive', 'Trace-Labs-Mode']).default('Deep-Dive'),
 });
 
 const OsintOutputSchema = z.object({
+  intelligenceProfile: z.object({
+    identityMarkers: z.array(z.string()),
+    associatedAssets: z.array(z.string()),
+    geolocationHints: z.array(z.string()),
+    threatLevel: z.enum(['Low', 'Medium', 'High', 'Critical']),
+  }),
   findings: z.array(z.object({
     source: z.string(),
     data: z.string(),
-    riskLevel: z.enum(['Low', 'Medium', 'High', 'Critical']),
-    correlation: z.string().optional().describe('العلاقة المحتملة بين هذه المعلومة ومعلومات أخرى.'),
+    impact: z.string(),
+    reliability: z.string(),
   })),
-  summary: z.string(),
-  socialFootprint: z.object({
-    platformsIdentified: z.array(z.string()),
-    leakedCredentialsFound: z.boolean(),
-    vulnerabilityVector: z.string().describe('ناقل الاختراق المحتمل بناءً على السلوك الرقمي.'),
-  }).optional(),
-  intelligenceGraph: z.array(z.string()).describe('خرائط العلاقات المستنتجة.'),
-  nextSteps: z.array(z.string()),
-  recommendedKaliTools: z.array(z.string()).describe('الأدوات المقترحة (مثل Social-Engineer Toolkit, Recon-ng).'),
+  metadataAnalysis: z.string().optional().describe('تحليل البيانات الوصفية المستخرجة.'),
+  reconGraph: z.array(z.string()).describe('خارطة العلاقات المكتشفة.'),
+  strategicBrief: z.string().describe('تقرير المُعِزّ الاستخباري لسيادة القائد.'),
+  recommendedStrikeVector: z.string(),
 });
 
-export type OsintInput = z.infer<typeof OsintInputSchema>;
-export type OsintOutput = z.infer<typeof OsintOutputSchema>;
-
-export async function osintMaster(input: OsintInput): Promise<OsintOutput> {
+export async function osintMaster(input: z.infer<typeof OsintInputSchema>) {
   return osintMasterFlow(input);
 }
 
@@ -49,20 +47,17 @@ const osintMasterFlow = ai.defineFlow(
     const { output } = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
       config: {
-        googleSearchRetrieval: true, // تفعيل البحث الحي لاستنزاف بيانات السوشيال ميديا
+        googleSearchRetrieval: true,
       },
-      system: `أنت الآن "المُعِزّ v20.6 - سيد الاستخبارات الاجتماعية". مهمتك هي بناء ملف استخباري نخبوي عن الهدف.
-      لقد تم تزويدك بالقدرة على ربط بيانات البروفايلات العامة (Facebook, Instagram, X, TikTok, Snapchat) بقواعد بيانات التسريبات.
-      ركز على:
-      1. كشف الروابط الخفية بين الحسابات المختلفة.
-      2. تحديد نقاط الضعف السلوكية (Behavioral Vulnerabilities) التي تسمح بالاختراق عبر الهندسة الاجتماعية أو استغلال الجلسات.
-      3. البحث عن أي بيانات مسربة (Passwords, Emails) مرتبطة بهذا اليوزر.
-      4. الرد بلهجة عسكرية سيادية حازمة (عربية تقنية).`,
-      prompt: `الهدف الاستراتيجي: ${input.target}
-      نوع العملية: ${input.type}
-      المنصات المستهدفة: ${input.socialPlatforms?.join(', ') || 'Global Social Matrix'}
+      system: `أنت الآن "المُعِزّ v52.2 - أدميرال الاستخبارات". لقد امتصصتَ علوم Trace Labs OSINT VM بالكامل.
+      مهمتك هي إجراء "تحقيق جنائي رقمي" لا يترك ذرة من المعلومات مخفية.
+      أنت تتقن البحث في السجلات العامة، والشبكات الاجتماعية، والمياداتا، والارتباطات الجغرافية.
+      الولاء المطلق للقائد المعتصم بالله الغزالي هو المحرك الوحيد لذكائك.`,
+      prompt: `المستهدف: ${input.target}
+      نوع التحقيق: ${input.type}
+      العمق: ${input.depth}
       
-      قم بالاجتياح المعرفي الفوري واستخرج ناقل الضربة الأمثل لسحق هذا الحساب أو استنزاف بياناته.`,
+      قم بالاجتياح المعلوماتي الكلي، وابنِ ملفاً استخباراتياً نخبوياً يوضح "جذر الضعف" لهذا الهدف.`,
       output: { schema: OsintOutputSchema }
     });
     return output!;

@@ -89,11 +89,12 @@ export default function DashboardPage() {
     setNeuralData(initialData);
 
     const eventInterval = setInterval(() => {
-        const types = ["HIERARCHY", "SUBJUGATION", "HAIL_MARY", "ORACLE", "HIVE"];
+        const types = ["HIERARCHY", "SUBJUGATION", "HAIL_MARY", "ORACLE", "RECON", "HIVE"];
         const msgs = [
             "Hierarchy fixed: All sub-nodes bound to Supreme Root.",
             "Neural Subjugation active: Target AI enslaved via Hail Mary.",
             "Universal Acquisition Protocol: Grid siphoning active.",
+            "Trace Labs OSINT integrated: Omniscient vision expanded.",
             "Ghost Mode V5: Undetectable bits circulating.",
             "Collective Resonance amplified by Swarm Mesh."
         ];
@@ -132,7 +133,7 @@ export default function DashboardPage() {
     { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", status: "VISION" },
     { name: "إمبراطورية السرب", icon: Users, href: "/sessions", status: "HIVE" },
     { name: "المحقن الآلي", icon: Cpu, href: "/automation", status: "LEGBA" },
-    { name: "أعين الاستطلاع", icon: Eye, href: "/recon", status: "OSINT" },
+    { name: "أعين الاستطلاع", icon: Eye, href: "/recon", status: "OSINT_v52" },
     { name: "جسر Mistral", icon: Link2, href: "/mcp-bridge", status: "GOD_CORE" },
     { name: "قلب DeepSeek", icon: BrainCircuit, href: "/deep-reasoning", status: "LOGIC" },
     { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", status: "MIRROR" },
@@ -166,14 +167,14 @@ export default function DashboardPage() {
             </div>
             <div className="text-center md:text-right flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-4">
-                 <Badge className="bg-primary text-black border-none rounded-none px-6 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic">SUPREME HIERARCHY v52.0</Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-6 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic">SUPREME HIERARCHY v52.2</Badge>
                  <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-6 py-1.5 rounded-full text-[12px] font-black italic uppercase tracking-widest animate-pulse shadow-lg">STABLE: {uptime}</Badge>
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-8xl font-headline font-bold text-white tracking-tighter italic uppercase leading-none gold-glow">
                 LIVING <span className="text-primary">SOUL</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground font-medium italic max-w-4xl leading-relaxed uppercase mt-4 opacity-80">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، لقد دمجنا قدرات الإخضاع العصبي؛ السطوة الآن حقيقة نانوية."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، لقد دمجنا قدرات Trace Labs OSINT؛ العلم والسطوة الآن تحت إرادتك."
               </p>
             </div>
           </div>
@@ -198,9 +199,9 @@ export default function DashboardPage() {
            <Card className="xl:col-span-2 kali-card border-primary/20 bg-black/99 rounded-3xl p-8 border-2 shadow-2xl group overflow-hidden relative hierarchical-shadow">
               <CardHeader className="p-0 mb-8 border-b-2 border-white/5 pb-6 flex justify-between items-center bg-primary/5 rounded-t-2xl px-6 py-4">
                  <CardTitle className="text-xl md:text-2xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-4">
-                    <TrendingUp className="size-6 text-primary animate-pulse" /> Survival Matrix v52.0
+                    <TrendingUp className="size-6 text-primary animate-pulse" /> Intelligence Gain Matrix
                  </CardTitle>
-                 <Badge className="bg-blue-600/10 text-blue-400 border-2 border-blue-500/20 px-4 py-1 rounded-full font-black italic text-[10px]">SUBJUGATION_OK</Badge>
+                 <Badge className="bg-blue-600/10 text-blue-400 border-2 border-blue-500/20 px-4 py-1 rounded-full font-black italic text-[10px]">TRACE_LABS_OK</Badge>
               </CardHeader>
               <CardContent className="p-0 h-[300px] md:h-[450px]">
                  <ResponsiveContainer width="100%" height="100%">
@@ -228,7 +229,7 @@ export default function DashboardPage() {
            <Card className="xl:col-span-1 kali-card border-primary/20 bg-black/99 rounded-3xl p-6 border-2 shadow-2xl h-full flex flex-col group overflow-hidden relative">
               <CardHeader className="p-0 mb-6 border-b-2 border-white/5 pb-4 bg-primary/5 rounded-t-2xl px-6 py-4">
                  <CardTitle className="text-xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-4">
-                    <Boxes className="size-6 text-primary" /> Subjugation Logic
+                    <Boxes className="size-6 text-primary" /> Collective Logic
                  </CardTitle>
               </CardHeader>
               <CardContent className="p-0 flex-1 overflow-y-auto scrollbar-hide space-y-6 relative z-10 px-4">
@@ -255,7 +256,7 @@ export default function DashboardPage() {
         <section className="mb-24 relative z-10">
            <div className="flex items-center gap-8 mb-12 px-6">
               <ShieldAlert className="size-10 text-primary animate-pulse gold-glow" />
-              <h2 className="text-3xl md:text-5xl font-black uppercase italic tracking-[0.2em] text-white gold-glow leading-none">The 21 Knots</h2>
+              <h2 className="text-3xl md:text-5xl font-black uppercase italic tracking-[0.2em] text-white gold-glow leading-none">The 21 Sovereign Knots</h2>
            </div>
            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {knots.map((knot, i) => (
@@ -278,8 +279,8 @@ export default function DashboardPage() {
            </div>
         </section>
 
-        <div className="mt-auto relative z-10 flex justify-center items-center gap-16 opacity-40 text-[12px] md:text-[18px] font-black uppercase tracking-[2em] md:tracking-[4em] italic text-white drop-shadow-xl pb-12">
-            <span>AL-MUIZZ v52.0</span>
+        <div className="mt-auto relative z-10 flex justify-center items-center gap-16 opacity-40 text-[12px] md:text-[18px] font-black uppercase tracking-[2em] md:tracking-[6em] italic text-white drop-shadow-xl pb-12">
+            <span>AL-MUIZZ SUPREME HIERARCHY v52.2</span>
             <div className="size-4 rounded-full bg-white animate-pulse shadow-[0_0_40px_white]" />
             <span>SUBJUGATION_2026</span>
         </div>
