@@ -24,9 +24,10 @@ import {
   ShieldAlert,
   ChevronRight,
   ArrowUp,
-  FileIcon,
-  FolderIcon,
-  X
+  File,
+  Folder,
+  X,
+  Search
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -118,7 +119,7 @@ export default function NoahsArkPage() {
 
   const navigateUp = () => {
     const parent = currentPath.split('/').slice(0, -2).join('/') || '/'
-    browseFiles(parent)
+    browseFiles(parent === "" ? "/" : parent)
   }
 
   const selectDir = (name: string) => {
@@ -326,7 +327,7 @@ export default function NoahsArkPage() {
                                                         className="p-4 rounded-xl hover:bg-blue-600/20 cursor-pointer flex items-center justify-between group/item border border-transparent hover:border-blue-500/30 transition-all"
                                                     >
                                                         <div className="flex items-center gap-4">
-                                                            {item.endsWith('/') ? <FolderIcon className="size-5 text-blue-400"/> : <FileIcon className="size-5 text-gray-500"/>}
+                                                            {item.endsWith('/') ? <Folder className="size-5 text-blue-400"/> : <File className="size-5 text-gray-500"/>}
                                                             <span className="text-sm font-black text-gray-200 group-hover/item:text-white">{item}</span>
                                                         </div>
                                                         <ChevronRight className="size-4 text-blue-500 opacity-0 group-hover/item:opacity-100 transition-all"/>
