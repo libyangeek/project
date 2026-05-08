@@ -6,10 +6,10 @@ import { NextRequest, NextResponse } from 'next/server';
  * هذا يضمن السرعة، التوسع، ونظام مناعة مركزي للأخطاء.
  */
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const BRIDGE_URL = "http://localhost:8000/v1/execute";
-
   try {
+    const body = await req.json();
+    const BRIDGE_URL = "http://localhost:8000/v1/execute";
+
     const response = await fetch(BRIDGE_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(data);
 
   } catch (error: any) {
-    // نظام المناعة: تسجيل الخطأ وتنبيه العرّاف
+    // نظام المناعة السيادي
     console.error(`[IMMUNE_CENTER] Failure in Relay: ${error.message}`);
     
     return NextResponse.json({ 

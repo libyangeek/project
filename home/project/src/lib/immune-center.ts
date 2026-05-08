@@ -1,6 +1,6 @@
 /**
- * @fileOverview مركز المناعة السيادي v1.0 - IMMUNE CENTER
- * المسؤول عن توحيد معالجة الأخطاء وضمان الوضوح المطلق لكل نبضة فاشلة.
+ * @fileOverview مركز المناعة السيادي v53.8 - IMMUNE CENTER
+ * المسؤول عن توحيد معالجة الأخطاء وضمان الوضوح المطلق لكل نبضة فاشلة في العصب الهرمي.
  */
 
 import { toast } from "@/hooks/use-toast";
@@ -27,17 +27,17 @@ export const ImmuneCenter = {
             severity,
         };
 
-        // 1. تسجيل في كونسول النظام (Visible in Docker Logs)
+        // 1. تسجيل في كونسول النظام (Visible in Logs)
         console.error(`[IMMUNE_CENTER][${severity}] @ ${node}: ${incident.error}`);
 
-        // 2. تنبيه القائد عبر الواجهة
+        // 2. تنبيه القائد عبر الواجهة بنمط سيادي
         toast({
             variant: "destructive",
             title: `Neural Glitch: ${severity}`,
-            description: `Node ${node} reported a conflict: ${incident.error.substring(0, 50)}...`
+            description: `Node ${node} reported a conflict: ${incident.error.substring(0, 80)}...`
         });
 
-        // 3. (مستقبلاً) إرسال بلاغ لـ GEPA للتعلم من الفشل
+        // 3. مستقبلاً: إرسال البلاغ لـ GEPA للتعلم التلقائي من الفشل
         return incident;
     }
 }

@@ -33,15 +33,6 @@ class ExecutionRequest(BaseModel):
     prompt: Optional[str] = None
     context: Optional[dict] = None
 
-class ChatMessage(BaseModel):
-    role: str
-    content: str
-
-class ChatCompletionRequest(BaseModel):
-    model: str
-    messages: List[ChatMessage]
-    temperature: Optional[float] = 0.7
-
 @app.post("/v1/execute")
 async def execute_directive(request: ExecutionRequest):
     """الممر السيادي لتنفيذ الأوامر المادية والذكية"""

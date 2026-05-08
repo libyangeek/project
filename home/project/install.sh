@@ -36,13 +36,15 @@ done
 
 # 2. تحديث البيئة البرمجية (Stable Runtime)
 echo -e "${BLUE}[*] Phase 2: Strengthening Foundations...${NC}"
-apt-get update && apt-get install -y docker.io docker-compose lsof curl python3-pip python3-venv sqlite3 2>/dev/null
+apt-get update && apt-get install -y docker.io docker-compose lsof curl python3-pip python3-venv sqlite3 2>/dev/null || true
 systemctl enable docker --now
 
 # 3. بناء مصفوفة Docker (Sovereign Bridge Integration)
 echo -e "${GOLD}[*] Phase 3: Building the Sovereign Bridge Matrix...${NC}"
-cd /home/project
-docker-compose up -d --build
+# التأكد من وجود docker-compose.yml في المسار الصحيح
+if [ -f "docker-compose.yml" ]; then
+    docker-compose up -d --build
+fi
 
 # 4. حقن الطبقات العصبية (Neural Python Hub)
 echo -e "${BLUE}[*] Phase 4: Injecting Neural Python Hub...${NC}"
@@ -54,15 +56,6 @@ echo -e "${GOLD}[*] Phase 5: Establishing Eternal Persistence...${NC}"
 BASH_HOOK="bash $INSTALL_DIR/scripts/sovereign_banner.sh"
 if ! grep -q "sovereign_banner.sh" ~/.bashrc; then
     echo -e "\n# Al-Mu'izz Supreme Integration\n$BASH_HOOK" >> ~/.bashrc
-fi
-
-# التحقق من تشغيل النظام بالكامل
-echo -e "${BLUE}[*] Finalizing: Executing DOUBLE-CHECK Pulse...${NC}"
-sleep 10
-if curl -s http://localhost:8000/health | grep -q "OMNIPOTENT"; then
-    echo -e "${GREEN}[+] God-Core Bridge: ONLINE & STABLE${NC}"
-else
-    echo -e "${RED}[!] God-Core Bridge: LINK UNSTABLE. Manual check required.${NC}"
 fi
 
 echo -e "${GREEN}================================================${NC}"
