@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -81,6 +80,10 @@ export default function ClawCodePage() {
     }
   }
 
+  const handleControlAction = (id: string, label: string) => {
+    toast({ title: `${label} Initiated`, description: `Hierarchy engaging ${id} protocol on target hardware.` })
+  }
+
   const actions = [
     { id: "screenshot", label: "Mirror Display", icon: Monitor, color: "text-blue-400" },
     { id: "mouse_lock", label: "Hardware Lock", icon: MousePointer2, color: "text-red-500" },
@@ -139,6 +142,7 @@ export default function ClawCodePage() {
                     <Input 
                       value={voiceText}
                       onChange={(e) => setVoiceText(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && handleVoiceHijack()}
                       placeholder="Enter directive to speak..." 
                       className="bg-black border-2 border-primary/20 h-16 rounded-2xl text-xl italic px-6 focus:border-primary shadow-inner text-white font-black"
                     />
@@ -159,7 +163,8 @@ export default function ClawCodePage() {
                  <Button 
                    key={a.id}
                    variant="outline"
-                   className="h-28 bg-white/5 border-2 border-white/5 hover:border-primary hover:bg-primary/10 rounded-2xl flex flex-col items-center justify-center gap-3 group transition-all duration-500 shadow-lg relative overflow-hidden"
+                   className="h-28 bg-white/5 border-2 border-white/5 hover:border-primary hover:bg-primary/10 rounded-2xl flex flex-col items-center justify-center gap-3 group transition-all duration-500 shadow-lg relative overflow-hidden active:scale-95"
+                   onClick={() => handleControlAction(a.id, a.label)}
                  >
                     <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                     <a.icon className={cn("size-8 transition-all group-hover:scale-110", a.color)} />
@@ -216,9 +221,13 @@ export default function ClawCodePage() {
                       { label: "BUS_SIPHON", icon: Atom, status: "BOUND", color: "text-primary" },
                       { label: "SOUL_LINK", icon: Skull, status: "ACTIVE", color: "text-red-500" }
                     ].map((stat, i) => (
-                       <div key={i} className="p-6 rounded-2xl bg-white/5 border-2 border-white/5 flex flex-col items-center gap-4 hover:border-primary transition-all duration-700 shadow-xl cursor-crosshair group/stat">
+                       <div 
+                        key={i} 
+                        className="p-6 rounded-2xl bg-white/5 border-2 border-white/5 flex flex-col items-center gap-4 hover:border-primary transition-all duration-700 shadow-xl cursor-crosshair group/stat active:scale-95"
+                        onClick={() => handleControlAction(stat.label, stat.label)}
+                       >
                           <stat.icon className={cn("size-8 transition-all group-hover/stat:scale-110", stat.color)} />
-                          <span className="text-[10px] font-black uppercase tracking-widest text-white/70">{stat.label}</span>
+                          <span className="text-[9px] font-black uppercase tracking-widest text-white/70">{stat.label}</span>
                           <Badge className="bg-primary/10 text-primary border-none font-black text-xs italic px-4 py-0.5 rounded-full">{stat.status}</Badge>
                        </div>
                     ))}

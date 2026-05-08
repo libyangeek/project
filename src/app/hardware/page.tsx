@@ -117,6 +117,11 @@ export default function MobileStrikePage() {
     }
   }
 
+  const handleDeviceAction = (deviceId: string, action: string) => {
+    toast({ title: `${action.replace('_', ' ')} Initialized`, description: `Engaging ${action} vector on ${deviceId}` })
+    addLog(`Executing ${action} on node ${deviceId}...`, 'warrior')
+  }
+
   if (!mounted) return null;
 
   return (
@@ -199,7 +204,7 @@ export default function MobileStrikePage() {
                    <Card key={i} className="bg-white/5 border-2 border-white/5 rounded-3xl p-8 hover:border-primary transition-all duration-700 shadow-xl group/dev relative overflow-hidden flex flex-col justify-between">
                       <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/dev:opacity-10 transition-opacity" />
                       <div className="flex justify-between items-start mb-6">
-                         <div className="size-16 rounded-2xl bg-black border-2 border-white/10 flex items-center justify-center group-hover/dev:border-primary transition-all duration-700 shadow-inner">
+                         <div className="size-16 rounded-xl bg-black border-2 border-white/10 flex items-center justify-center group-hover/dev:border-primary transition-all duration-700 shadow-inner">
                             <Smartphone className={cn("size-8", device.platform === 'iOS' ? "text-amber-500" : "text-primary")} />
                          </div>
                          <Badge className="bg-emerald-500 text-black font-black text-[10px] px-4 py-1 rounded-full uppercase tracking-widest italic">{device.status}</Badge>
@@ -212,10 +217,10 @@ export default function MobileStrikePage() {
                          </div>
                       </div>
                       <div className="mt-8 pt-6 border-t-2 border-white/5 flex gap-4">
-                         <Button variant="outline" className="flex-1 h-14 rounded-xl border-white/10 text-[10px] font-black uppercase tracking-widest italic hover:bg-primary hover:text-black">
+                         <Button onClick={() => handleDeviceAction(device.id, 'Ocular_Stream')} variant="outline" className="flex-1 h-14 rounded-xl border-white/10 text-[10px] font-black uppercase tracking-widest italic hover:bg-primary hover:text-black active:scale-95 transition-all">
                             <Eye className="size-4 mr-2" /> Ocular_Stream
                          </Button>
-                         <Button className="flex-1 h-14 rounded-xl bg-primary/20 text-primary border-2 border-primary/40 text-[10px] font-black uppercase tracking-widest italic hover:bg-primary hover:text-black">
+                         <Button onClick={() => handleDeviceAction(device.id, 'Deep_Siphon')} className="flex-1 h-14 rounded-xl bg-primary/20 text-primary border-2 border-primary/40 text-[10px] font-black uppercase tracking-widest italic hover:bg-primary hover:text-black active:scale-95 transition-all">
                             <Zap className="size-4 mr-2" /> Deep_Siphon
                          </Button>
                       </div>

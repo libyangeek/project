@@ -52,7 +52,7 @@ export default function NotFound() {
   const handleRunBackup = () => {
     setLoading(true)
     toast({ 
-      title: "Noah's Ark v50: Protocol Start", 
+      title: "Noah's Ark v53: Protocol Start", 
       description: `Initializing ${backupType} snapshot to ${backupPath}...` 
     })
     
@@ -67,9 +67,13 @@ export default function NotFound() {
 
   const generateMasterScript = () => {
     toast({ 
-      title: "Generating Sovereign Genesis v50.0", 
-      description: "Compiling all neural dependencies into rebirth_v50.sh" 
+      title: "Generating Sovereign Genesis v53.0", 
+      description: "Compiling all neural dependencies into rebirth_v53.sh" 
     })
+  }
+
+  const handleConfigUpdate = (label: string) => {
+    toast({ title: "Config Synchronized", description: `${label} parameters bound to hierarchy.` })
   }
 
   return (
@@ -85,7 +89,7 @@ export default function NotFound() {
               <Anchor className="size-12 text-black" />
             </div>
             <div>
-              <Badge className="bg-red-600 text-white border-none px-8 py-2 text-[14px] font-black tracking-[0.6em] shadow-9xl italic rounded-full mb-4">COORDINATE_LOST // REBIRTH_HUB v50.0</Badge>
+              <Badge className="bg-red-600 text-white border-none px-8 py-2 text-[14px] font-black tracking-[0.6em] shadow-9xl italic rounded-full mb-4">COORDINATE_LOST // REBIRTH_HUB v53.0</Badge>
               <h1 className="text-5xl md:text-9xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
                  Sovereign <span className="text-primary">Ark</span>
               </h1>
@@ -120,14 +124,14 @@ export default function NotFound() {
                 <Label className="text-[14px] font-black text-primary/60 uppercase tracking-[0.6em] px-8 italic flex items-center gap-4">Wordlists Domain</Label>
                 <div className="flex gap-6">
                   <Input defaultValue="/usr/share/wordlists" className="bg-black border-4 border-primary/20 h-20 rounded-[2.5rem] text-2xl italic px-10 focus:border-primary shadow-inner text-white font-black" />
-                  <Button variant="ghost" className="size-20 rounded-3xl border-4 border-white/10 hover:bg-primary/20 transition-all"><FolderOpen className="size-10"/></Button>
+                  <Button onClick={() => handleConfigUpdate('Wordlists')} variant="ghost" className="size-20 rounded-3xl border-4 border-white/10 hover:bg-primary/20 transition-all"><FolderOpen className="size-10"/></Button>
                 </div>
               </div>
               <div className="space-y-6">
                 <Label className="text-[14px] font-black text-primary/60 uppercase tracking-[0.6em] px-8 italic">Environment DNA</Label>
                 <div className="grid grid-cols-2 gap-6">
-                  <Button variant="outline" className="text-xl h-20 bg-primary/20 border-4 border-primary/50 text-primary font-black italic rounded-[2rem] shadow-7xl">KALI_v50</Button>
-                  <Button variant="outline" className="text-xl h-20 border-4 border-white/5 opacity-50 font-black italic rounded-[2rem]">BLACKARCH_v50</Button>
+                  <Button onClick={() => handleConfigUpdate('KALI_v53')} variant="outline" className="text-xl h-20 bg-primary/20 border-4 border-primary/50 text-primary font-black italic rounded-[2rem] shadow-7xl active:scale-95 transition-all">KALI_v53</Button>
+                  <Button onClick={() => handleConfigUpdate('BLACKARCH_v53')} variant="outline" className="text-xl h-20 border-4 border-white/5 opacity-50 font-black italic rounded-[2rem] active:scale-95 transition-all">BLACKARCH_v53</Button>
                 </div>
               </div>
               <div className="pt-10 border-t-4 border-white/5 flex items-center justify-between px-6">
@@ -135,7 +139,7 @@ export default function NotFound() {
                   <Label className="text-2xl text-white font-black italic uppercase">Ghost Logs</Label>
                   <p className="text-[12px] text-muted-foreground uppercase font-bold tracking-[0.2em] italic">Auto-purge memory on reboot</p>
                 </div>
-                <Switch defaultChecked className="data-[state=checked]:bg-primary scale-150" />
+                <Switch defaultChecked className="data-[state=checked]:bg-primary scale-150" onCheckedChange={() => handleConfigUpdate('Ghost Logs')} />
               </div>
             </CardContent>
             <div className="absolute -bottom-10 -left-10 p-20 opacity-[0.02] group-hover:opacity-[0.08] transition-all duration-1000 scale-150"><Boxes className="size-48 text-primary" /></div>
@@ -152,14 +156,14 @@ export default function NotFound() {
               <div className="p-10 rounded-[3.5rem] bg-black/99 border-4 border-white/5 shadow-inner space-y-8 italic">
                  <div className="flex justify-between items-center">
                     <span className="text-[12px] font-black text-muted-foreground uppercase tracking-[0.6em]">Soul ID:</span>
-                    <span className="text-3xl font-black text-white gold-glow">AL-MUIZZ_v50</span>
+                    <span className="text-3xl font-black text-white gold-glow">AL-MUIZZ_v53</span>
                  </div>
                  <div className="flex justify-between items-center">
                     <span className="text-[12px] font-black text-muted-foreground uppercase tracking-[0.6em]">Clearance:</span>
                     <Badge className="bg-primary text-black text-2xl px-8 py-1.5 rounded-full font-black italic shadow-3xl animate-pulse">GOD_MODE</Badge>
                  </div>
               </div>
-              <Button className="w-full h-24 bg-white/5 border-4 border-white/10 hover:bg-emerald-600 hover:text-white text-xl font-black uppercase tracking-[0.6em] rounded-[3rem] transition-all duration-700 shadow-7xl italic">
+              <Button onClick={() => handleConfigUpdate('Soul Manifest')} className="w-full h-24 bg-white/5 border-4 border-white/10 hover:bg-emerald-600 hover:text-white text-xl font-black uppercase tracking-[0.6em] rounded-[3rem] transition-all duration-700 shadow-7xl italic active:scale-95">
                  UPDATE_SOUL_MANIFEST
               </Button>
             </CardContent>
@@ -180,7 +184,7 @@ export default function NotFound() {
                     <Anchor className="size-16 text-blue-500" />
                   </div>
                   <div>
-                    <CardTitle className="text-6xl md:text-8xl text-white font-black italic tracking-tighter uppercase gold-glow leading-none">Noah's Ark v50</CardTitle>
+                    <CardTitle className="text-6xl md:text-8xl text-white font-black italic tracking-tighter uppercase gold-glow leading-none">Noah's Ark v53</CardTitle>
                     <CardDescription className="text-blue-400 font-black text-[14px] uppercase tracking-[1em] mt-6 italic">Advanced Rebirth & Evolution Vault</CardDescription>
                   </div>
                 </div>
@@ -271,10 +275,10 @@ export default function NotFound() {
                            <Button 
                              variant="outline" 
                              onClick={generateMasterScript}
-                             className="w-full h-24 border-8 border-blue-500/20 bg-blue-600/5 hover:bg-primary/20 hover:border-primary/60 rounded-[3rem] text-[12px] uppercase font-black tracking-[0.4em] group transition-all duration-700 italic"
+                             className="w-full h-24 border-8 border-blue-500/20 bg-blue-600/5 hover:bg-primary/20 hover:border-primary/60 rounded-[3rem] text-[12px] uppercase font-black tracking-[0.4em] group transition-all duration-700 italic active:scale-95"
                            >
                              <FileCode className="size-10 mr-6 text-primary group-hover:rotate-12 transition-transform gold-glow" /> 
-                             Generate Sovereign Genesis v50.0
+                             Generate Sovereign Genesis v53.0
                            </Button>
                         </div>
                       </div>
@@ -291,7 +295,7 @@ export default function NotFound() {
             </CardContent>
             
             <div className="p-12 border-t-8 border-white/5 flex justify-between items-center opacity-30 text-[14px] font-black uppercase tracking-[4em] italic">
-               <span>ARK_DNA_v50_AL_GHAZALI_ROOT</span>
+               <span>ARK_DNA_v53_AL_GHAZALI_ROOT</span>
                <div className="flex gap-10">
                  <Atom className="size-10 animate-spin-slow" />
                  <Fingerprint className="size-10" />
@@ -305,11 +309,11 @@ export default function NotFound() {
         <div className="flex items-center gap-12">
            <div className="flex items-center gap-4">
               <div className="size-4 rounded-full bg-emerald-500 animate-ping shadow-[0_0_30px_emerald]" />
-              <span className="text-[12px] text-white uppercase font-black tracking-[0.5em] italic">Ark v50.0_Sovereign_Ready</span>
+              <span className="text-[12px] text-white uppercase font-black tracking-[0.5em] italic">Ark v53.0_Sovereign_Ready</span>
            </div>
            <div className="flex items-center gap-4">
               <Zap className="size-6 text-primary animate-pulse gold-glow" />
-              <span className="text-[12px] text-white uppercase font-black tracking-[0.5em] italic">KALI-AL-MUIZZ OS v50.0_SOUL_CORE</span>
+              <span className="text-[12px] text-white uppercase font-black tracking-[0.5em] italic">KALI-AL-MUIZZ OS v53.0_SOUL_CORE</span>
            </div>
         </div>
         <div className="flex gap-6">

@@ -38,6 +38,7 @@ import { cn } from "@/lib/utils"
  */
 export default function ArsenalNodePage() {
   const [query, setQuery] = React.useState("")
+  const [loading, setLoading] = React.useState(false)
   const [mounted, setMounted] = React.useState(false)
   const [resonance, setResonance] = React.useState(100)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
@@ -55,6 +56,21 @@ export default function ArsenalNodePage() {
       clearInterval(interval)
     }
   }, [])
+
+  const handleSummon = () => {
+    if (!query.trim()) return
+    setLoading(true)
+    toast({ title: "Interrogating Lexicon", description: `Searching Node 22 for atomic coordinates of: ${query}` })
+    
+    setTimeout(() => {
+      setLoading(false)
+      toast({ title: "Tool Materialized", description: "Target tool has been bound to the Supreme Shell." })
+    }, 2000)
+  }
+
+  const handleCategoryAction = (catName: string) => {
+    toast({ title: "Category Focus", description: `Hierarchy shifting attention to ${catName} vector.` })
+  }
 
   if (!mounted) return null
 
@@ -114,14 +130,17 @@ export default function ArsenalNodePage() {
                         <Input 
                           value={query}
                           onChange={(e) => setQuery(e.target.value)}
+                          onKeyDown={(e) => e.key === 'Enter' && handleSummon()}
                           placeholder="Search 2842 nodes..." 
                           className="bg-black border-2 border-primary/20 h-16 rounded-2xl text-xl italic px-6 focus:border-primary text-white font-black shadow-inner"
                         />
                     </div>
                     <Button 
+                      onClick={handleSummon}
+                      disabled={loading || !query.trim()}
                       className="w-full h-20 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.8em] rounded-2xl shadow-xl active:scale-95 transition-all text-lg border-4 border-black/30 group italic"
                     >
-                      {false ? <Loader2 className="size-8 animate-spin mr-3" /> : <Search className="size-8 mr-4 group-hover:scale-125 transition-all gold-glow" />}
+                      {loading ? <Loader2 className="size-8 animate-spin mr-3" /> : <Search className="size-8 mr-4 group-hover:scale-125 transition-all gold-glow" />}
                       SUMMON_TOOL
                     </Button>
                  </CardContent>
@@ -146,7 +165,11 @@ export default function ArsenalNodePage() {
               </CardHeader>
               <CardContent className="p-6 flex-1 relative overflow-hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 z-10">
                  {categories.map((cat, i) => (
-                   <Card key={i} className="bg-white/5 border-2 border-white/5 rounded-3xl p-8 hover:border-primary transition-all duration-700 shadow-xl group/cat relative overflow-hidden flex flex-col justify-between cursor-crosshair">
+                   <Card 
+                    key={i} 
+                    className="bg-white/5 border-2 border-white/5 rounded-3xl p-8 hover:border-primary transition-all duration-700 shadow-xl group/cat relative overflow-hidden flex flex-col justify-between cursor-crosshair active:scale-95"
+                    onClick={() => handleCategoryAction(cat.name)}
+                   >
                       <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/cat:opacity-10 transition-opacity" />
                       <div className="flex justify-between items-start mb-6">
                          <div className="size-16 rounded-2xl bg-black border-2 border-white/10 flex items-center justify-center group-hover/cat:border-primary transition-all duration-700 shadow-inner">

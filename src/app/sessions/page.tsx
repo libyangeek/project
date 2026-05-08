@@ -92,6 +92,11 @@ export default function ShadowGridPage() {
     }
   }
 
+  const handleSensorAction = (sensor: string) => {
+    if (!selectedNodeId) return
+    toast({ title: `${sensor} Channel Active`, description: `Establishing live ${sensor} link via Pegasus Node.` })
+  }
+
   if (!mounted) return null
 
   const activeNode = sessions?.find(s => s.id === selectedNodeId);
@@ -118,7 +123,7 @@ export default function ShadowGridPage() {
                     <InfinityIcon className="size-5 shadow-lg" /> HIVE_MESH: ARMED
                 </div>
               </div>
-              <h1 className="text-4xl md:text-6xl lg:text-8xl font-headline font-bold text-white tracking-tighter italic uppercase leading-none gold-glow">
+              <h1 className="text-4xl md:text-6xl lg:text-8xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
                 Shadow <span className="text-primary">Grid</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground mt-4 italic max-w-5xl leading-relaxed uppercase font-medium opacity-80">
@@ -213,14 +218,20 @@ export default function ShadowGridPage() {
                    {activeNode ? (
                      <div className="space-y-8 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col">
                         <div className="grid grid-cols-2 gap-6">
-                           <div className="p-8 rounded-3xl bg-white/5 border-2 border-white/5 space-y-3 hover:border-primary transition-all duration-700 shadow-inner group/stat">
+                           <div 
+                            className="p-8 rounded-3xl bg-white/5 border-2 border-white/5 space-y-3 hover:border-primary transition-all duration-700 shadow-inner group/stat cursor-pointer active:scale-95"
+                            onClick={() => handleSensorAction('Message_Log')}
+                           >
                               <div className="flex items-center gap-3 text-primary italic">
                                  <MessageSquare className="size-6 group-hover/stat:scale-110 transition-transform" />
                                  <span className="text-[10px] font-black uppercase tracking-[0.4em]">Intel_Dump</span>
                               </div>
                               <div className="text-4xl font-black text-white italic gold-glow uppercase tracking-tighter">{activeNode.assets?.messagesDumped ? "READY" : "LOCKED"}</div>
                            </div>
-                           <div className="p-8 rounded-3xl bg-white/5 border-2 border-white/5 space-y-3 hover:border-primary transition-all duration-700 shadow-inner group/stat">
+                           <div 
+                            className="p-8 rounded-3xl bg-white/5 border-2 border-white/5 space-y-3 hover:border-primary transition-all duration-700 shadow-inner group/stat cursor-pointer active:scale-95"
+                            onClick={() => handleSensorAction('Contact_Mesh')}
+                           >
                               <div className="flex items-center gap-3 text-primary italic">
                                  <Users className="size-6 group-hover/stat:scale-110 transition-transform" />
                                  <span className="text-[10px] font-black uppercase tracking-[0.4em]">Entities</span>
@@ -236,11 +247,15 @@ export default function ShadowGridPage() {
                            </h4>
                            <div className="grid grid-cols-1 gap-4">
                               {[
-                                { label: "Ocular (Cam)", status: activeNode.assets?.cameraAccess, icon: Video, color: "text-red-500" },
-                                { label: "Aural (Mic)", status: activeNode.assets?.micAccess, icon: Mic, color: "text-blue-500" },
-                                { label: "Cerebral (Data)", status: "SIPHONING", icon: Cpu, color: "text-emerald-500" }
+                                { id: 'Ocular', label: "Ocular (Cam)", status: activeNode.assets?.cameraAccess, icon: Video, color: "text-red-500" },
+                                { id: 'Aural', label: "Aural (Mic)", status: activeNode.assets?.micAccess, icon: Mic, color: "text-blue-500" },
+                                { id: 'Cerebral', label: "Cerebral (Data)", status: "SIPHONING", icon: Cpu, color: "text-emerald-500" }
                               ].map((s, idx) => (
-                                <div key={idx} className="flex items-center justify-between p-4 bg-white/5 rounded-2xl border-2 border-white/5 hover:border-primary transition-all duration-700 group/sensor">
+                                <div 
+                                  key={idx} 
+                                  className="flex items-center justify-between p-4 bg-white/5 rounded-2xl border-2 border-white/5 hover:border-primary transition-all duration-700 group/sensor cursor-pointer active:scale-95"
+                                  onClick={() => handleSensorAction(s.id)}
+                                >
                                    <div className="flex items-center gap-4">
                                       <div className="size-12 rounded-xl bg-black border-2 border-white/5 flex items-center justify-center group-hover/sensor:bg-primary/20 transition-all">
                                          <s.icon className={cn("size-6", s.color)} />
