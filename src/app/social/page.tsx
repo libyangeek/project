@@ -20,7 +20,7 @@ import {
   ShieldCheck, 
   Activity, 
   Sparkles, 
-  Radar, 
+  Radar as LucideRadar, 
   BrainCircuit, 
   Eye, 
   Target, 
@@ -43,9 +43,7 @@ import {
   Copy,
   CheckCircle2,
   Cpu,
-  SearchCode,
-  FileSearch,
-  DatabaseZap
+  FileSearch
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -60,7 +58,7 @@ import { executeAutonomousIntel } from "@/ai/flows/autonomous-web-intel-flow"
 import { toast } from "@/hooks/use-toast"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
-import { ResponsiveContainer, Radar as RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, RadarChart as RechartsRadar } from 'recharts'
+import { ResponsiveContainer, Radar as RadarSeries, PolarGrid, PolarAngleAxis, RadarChart as RechartsRadar } from 'recharts'
 
 /**
  * @fileOverview العقدة المفترسة للتواصل v53.9 - THE SUPREME SOCIAL PREDATOR: AUTONOMOUS DISCOVERY
@@ -378,7 +376,7 @@ export default function SocialPredatorPage() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <Card className="bg-black/80 border-2 border-white/5 p-8 rounded-3xl shadow-2xl relative group/vault">
                                 <h5 className="text-[12px] font-black text-primary uppercase tracking-[0.8em] mb-8 italic border-b-2 border-primary/10 pb-4 flex items-center gap-4 gold-glow">
-                                    <DatabaseZap className="size-6 animate-pulse" /> New Vault Nodes
+                                    <Database className="size-6 animate-pulse" /> New Vault Nodes
                                 </h5>
                                 <div className="space-y-6 max-h-[400px] overflow-y-auto scrollbar-hide">
                                     {intelResult.newKnowledgeNodes.map((node: any, idx: number) => (
@@ -400,7 +398,7 @@ export default function SocialPredatorPage() {
                                 <div className="p-4 rounded-xl bg-emerald-600/10 border border-emerald-500/20 mt-8 text-center">
                                     <span className="text-[9px] font-black uppercase text-emerald-500 tracking-[0.4em]">{intelResult.databaseStatus}</span>
                                 </div>
-                                <div className="absolute -bottom-6 -right-6 p-10 opacity-[0.02] group-hover/inference:opacity-[0.08] transition-all duration-700 scale-150"><SearchCode className="size-32 text-emerald-500" /></div>
+                                <div className="absolute -bottom-6 -right-6 p-10 opacity-[0.02] group-hover/inference:opacity-[0.08] transition-all duration-700 scale-150"><Search className="size-32 text-emerald-500" /></div>
                             </Card>
                         </div>
                     </div>
@@ -462,14 +460,14 @@ export default function SocialPredatorPage() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                          <Card className="bg-black/80 border-2 border-white/5 p-8 rounded-3xl shadow-2xl relative group/rad">
                             <h5 className="text-[12px] font-black text-primary uppercase tracking-[0.6em] mb-8 italic border-b-2 border-primary/10 pb-4 flex items-center gap-4 gold-glow">
-                               <Radar className="size-6 animate-pulse" /> Neural Impact
+                               <LucideRadar className="size-6 animate-pulse" /> Neural Impact
                             </h5>
                             <div className="h-64 w-full">
                                <ResponsiveContainer width="100%" height="100%">
                                   <RechartsRadar cx="50%" cy="50%" outerRadius="80%" data={radarData}>
                                      <PolarGrid stroke="#FBBF24" strokeOpacity={0.1} />
                                      <PolarAngleAxis dataKey="subject" tick={{ fill: '#FBBF24', fontSize: 10, fontWeight: 'bold' }} />
-                                     <RadarChart name="Impact" dataKey="A" stroke="#FBBF24" fill="#FBBF24" fillOpacity={0.4} />
+                                     <RadarSeries name="Impact" dataKey="A" stroke="#FBBF24" fill="#FBBF24" fillOpacity={0.4} />
                                   </RechartsRadar>
                                </ResponsiveContainer>
                             </div>
@@ -505,7 +503,7 @@ export default function SocialPredatorPage() {
                    <div className="space-y-8 animate-in slide-in-from-bottom-10 duration-1000">
                       <div className="flex items-center gap-6 border-b-2 border-white/5 pb-4">
                          <Database className="size-10 text-emerald-500 animate-pulse" />
-                         <h4 className="text-2xl md:text-5xl font-black text-white italic uppercase gold-glow leading-none">Breach Intelligence</h4>
+                         <h4 className="text-2xl font-black text-white italic uppercase gold-glow leading-none">Breach Intelligence</h4>
                       </div>
                       <div className="p-10 bg-black border-2 border-emerald-500/20 text-emerald-400 overflow-x-auto whitespace-pre rounded-[3rem] text-xl leading-relaxed italic font-black shadow-inner selection:bg-emerald-600 selection:text-white">
                          {JSON.stringify(breachData.findings, null, 2)}

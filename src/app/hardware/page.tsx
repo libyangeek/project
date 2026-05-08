@@ -4,7 +4,6 @@ import * as React from "react"
 import { SidebarNav } from "@/components/platform/sidebar-nav"
 import { 
   Smartphone, 
-  Usb, 
   ShieldAlert, 
   Zap, 
   Activity,
@@ -12,20 +11,14 @@ import {
   RefreshCcw,
   Terminal,
   ChevronRight,
-  Download,
-  ShieldX,
   Target,
   Fingerprint,
   Radio,
   Search,
-  Scan,
   Database,
-  Lock,
-  MessageSquare,
   Skull,
   Flame,
   Crown,
-  Wifi,
   Binary,
   Boxes,
   SmartphoneNfc,
@@ -36,7 +29,6 @@ import {
   Video,
   Mic,
   Navigation,
-  Share2,
   ShieldCheck,
   TrendingUp,
   Globe,
@@ -222,7 +214,7 @@ export default function MobileStrikePage() {
            <div className="xl:col-span-1 space-y-8">
               <Card className="kali-card border-primary/40 bg-black/98 rounded-[3rem] p-10 border-4 shadow-9xl group overflow-hidden hierarchical-shadow">
                  <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
-                 <CardHeader className="p-0 mb-10 border-b-2 border-primary/20 pb-6 bg-primary/5 rounded-t-[2.5rem] px-4 py-4">
+                 <CardHeader className="p-0 mb-10 border-b-2 border-primary/10 pb-6 bg-primary/5 rounded-t-[2.5rem] px-4 py-4">
                     <CardTitle className="text-xl md:text-2xl text-primary flex items-center gap-6 font-black uppercase italic gold-glow">
                        <Target className="size-8 animate-neural" /> Strike Core
                     </CardTitle>
@@ -276,7 +268,7 @@ export default function MobileStrikePage() {
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.03),transparent)] pointer-events-none" />
               <CardHeader className="p-0 mb-12 border-b-2 border-white/5 pb-10 bg-primary/5 rounded-t-[3.5rem] px-10 py-6 flex flex-row justify-between items-center">
                  <CardTitle className="text-3xl md:text-7xl text-white flex items-center gap-10 font-black uppercase italic gold-glow px-4 leading-none">
-                    <SmartphoneNfc className="size-12 md:size-20 text-primary animate-pulse" /> Siphon Matrix
+                    <Atom className="size-12 md:size-20 text-primary animate-pulse" /> Siphon Matrix
                  </CardTitle>
                  <div className="flex gap-8">
                     <div className="text-right">
@@ -414,7 +406,7 @@ export default function MobileStrikePage() {
                  
                  <div className="col-span-full grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
                     <div className="p-12 rounded-[4rem] bg-black/80 border-8 border-primary/20 relative group/net overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,1)]">
-                       <div className="absolute top-0 right-0 p-10 opacity-5 group-hover/net:opacity-10 transition-all duration-1000 scale-125"><Wifi className="size-48 text-primary" /></div>
+                       <div className="absolute top-0 right-0 p-10 opacity-5 group-hover/net:opacity-10 transition-all duration-1000 scale-125"><Radio className="size-48 text-primary" /></div>
                        <h5 className="text-2xl font-black text-primary uppercase tracking-[0.8em] mb-10 border-b-4 border-primary/20 pb-6 italic flex items-center gap-8 gold-glow">
                           <Zap className="size-10 animate-neural" /> NetHunter v53.8
                        </h5>
@@ -422,10 +414,10 @@ export default function MobileStrikePage() {
                           "تفعيل سيادة كالي نيثانتر لعام 2026؛ سحب كافة البيانات اللاسلكية واختراق المحيط المادي عبر ثغرات May-2026-X فوراً."
                        </p>
                     </div>
-                    <div className="p-12 rounded-[4rem] bg-black/80 border-8 border-amber-500/20 relative group/hex overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,1)]">
-                       <div className="absolute top-0 right-0 p-10 opacity-5 group-hover/hex:opacity-10 transition-all duration-1000 scale-125"><Key className="size-48 text-amber-500" /></div>
-                       <h5 className="text-2xl font-black text-amber-500 uppercase tracking-[0.8em] mb-10 border-b-4 border-amber-500/20 pb-6 italic flex items-center gap-8">
-                          <ShieldX className="size-10" /> EliteHex v5.5
+                    <div className="p-12 rounded-[4rem] bg-black/80 border-8 border-primary/20 relative group/hex overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,1)]">
+                       <div className="absolute top-0 right-0 p-10 opacity-5 group-hover/hex:opacity-10 transition-all duration-1000 scale-125"><Key className="size-48 text-primary" /></div>
+                       <h5 className="text-2xl font-black text-primary uppercase tracking-[0.8em] mb-10 border-b-4 border-primary/20 pb-6 italic flex items-center gap-8">
+                          <ShieldAlert className="size-10" /> EliteHex v5.5
                        </h5>
                        <p className="text-xl md:text-3xl text-gray-300 italic font-black leading-relaxed uppercase drop-shadow-2xl">
                           "حقن طقم أدوات الهجوم النانوي لكسر حماية تطبيقات الـ Sandbox واستنزاف الجلسات المشفرة لليوم المجيد بنمط 100% Stealth."
