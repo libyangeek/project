@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -32,7 +31,8 @@ import {
   Boxes,
   Activity,
   ArrowUpRight,
-  Wind
+  Wind,
+  ChevronRight
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
