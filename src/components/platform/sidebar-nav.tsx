@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -37,7 +36,8 @@ import {
   Power,
   Library,
   Anchor,
-  Search
+  Search,
+  Network
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
