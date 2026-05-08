@@ -21,7 +21,12 @@ import {
   Sparkles,
   Fingerprint,
   Zap,
-  ShieldAlert
+  ShieldAlert,
+  ChevronRight,
+  ArrowUp,
+  FileIcon,
+  FolderIcon,
+  X
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -30,6 +35,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
@@ -46,6 +52,12 @@ export default function NoahsArkPage() {
   const [progress, setProgress] = React.useState(0)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
 
+  // حالات مستكشف الملفات
+  const [isBrowsing, setIsBrowsing] = React.useState(false)
+  const [currentPath, setCurrentPath] = React.useState("/")
+  const [dirItems, setDirItems] = React.useState<string[]>([])
+  const [browsingLoading, setBrowsingLoading] = React.useState(false)
+
   React.useEffect(() => {
     setMounted(true)
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
@@ -54,6 +66,10 @@ export default function NoahsArkPage() {
   }, [])
 
   const handleRunBackup = () => {
+    if (!backupPath.trim()) {
+        toast({ variant: "destructive", title: "Missing Path", description: "Target coordinate is empty." })
+        return
+    }
     setLoading(true)
     setProgress(0)
     toast({ 
@@ -75,6 +91,47 @@ export default function NoahsArkPage() {
             return prev + 2
         })
     }, 100)
+  }
+
+  const browseFiles = async (path: string) => {
+    setBrowsingLoading(true)
+    try {
+      const response = await fetch('/api/execute', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'terminal', command: `ls -p ${path}` })
+      })
+      const data = await response.json()
+      if (data.success) {
+        const items = data.output.split('\n').filter((i: string) => i.trim() !== '')
+        setDirItems(items)
+        setCurrentPath(path)
+      } else {
+        toast({ variant: "destructive", title: "Access Denied", description: "Hierarchy restricted from this sector." })
+      }
+    } catch (e) {
+      toast({ variant: "destructive", title: "Signal Lost" })
+    } finally {
+      setBrowsingLoading(false)
+    }
+  }
+
+  const navigateUp = () => {
+    const parent = currentPath.split('/').slice(0, -2).join('/') || '/'
+    browseFiles(parent)
+  }
+
+  const selectDir = (name: string) => {
+    const newPath = currentPath === '/' ? `/${name}` : `${currentPath}${name}`
+    if (name.endsWith('/')) {
+        browseFiles(newPath)
+    }
+  }
+
+  const confirmSelection = () => {
+    setBackupPath(currentPath)
+    setIsBrowsing(false)
+    toast({ title: "Coordinate Locked", description: `Path synchronized: ${currentPath}` })
   }
 
   const generateMasterScript = async () => {
@@ -229,11 +286,61 @@ export default function NoahsArkPage() {
                             <Label className="text-[10px] font-black text-blue-400 uppercase tracking-[0.6em] px-8 italic flex items-center gap-4">
                               <FolderOpen className="size-5"/> Target Repository
                             </Label>
-                            <Input 
-                              value={backupPath}
-                              onChange={(e) => setBackupPath(e.target.value)}
-                              className="bg-black/99 border-2 border-blue-500/20 h-16 rounded-[2rem] text-xl italic px-8 focus:border-blue-500 shadow-inner font-black text-white" 
-                            />
+                            <div className="flex gap-4">
+                                <Input 
+                                  value={backupPath}
+                                  onChange={(e) => setBackupPath(e.target.value)}
+                                  className="bg-black/99 border-2 border-blue-500/20 h-16 rounded-[2rem] text-xl italic px-8 focus:border-blue-500 shadow-inner font-black text-white flex-1" 
+                                />
+                                <Dialog open={isBrowsing} onOpenChange={(open) => {
+                                    setIsBrowsing(open)
+                                    if(open) browseFiles(backupPath || "/")
+                                }}>
+                                    <DialogTrigger asChild>
+                                        <Button variant="outline" className="size-16 rounded-2xl border-2 border-blue-500/20 bg-blue-600/5 hover:bg-blue-600 hover:text-white transition-all shadow-xl group/browse">
+                                            <Search className="size-8 group-hover/browse:scale-125 transition-transform"/>
+                                        </Button>
+                                    </DialogTrigger>
+                                    <DialogContent className="bg-black/95 border-4 border-blue-500/40 rounded-[3rem] max-w-3xl h-[600px] flex flex-col p-8 backdrop-blur-3xl shadow-9xl">
+                                        <DialogHeader className="border-b-2 border-white/5 pb-4">
+                                            <DialogTitle className="text-2xl font-black text-blue-400 uppercase italic flex items-center gap-4">
+                                                <FolderOpen className="size-6"/> Sovereign Explorer
+                                            </DialogTitle>
+                                            <div className="flex items-center gap-4 mt-4 bg-black/60 p-4 rounded-xl border border-white/5">
+                                                <span className="text-[10px] font-black text-muted-foreground uppercase">Path:</span>
+                                                <code className="text-blue-300 text-sm font-black truncate flex-1">{currentPath}</code>
+                                                <Button size="icon" variant="ghost" onClick={navigateUp} className="size-8 hover:bg-blue-600 hover:text-white"><ArrowUp className="size-4"/></Button>
+                                            </div>
+                                        </DialogHeader>
+                                        <div className="flex-1 overflow-y-auto scrollbar-hide py-6 space-y-2">
+                                            {browsingLoading ? (
+                                                <div className="h-full flex flex-col items-center justify-center gap-6 opacity-30">
+                                                    <Loader2 className="size-12 animate-spin text-blue-500" />
+                                                    <span className="text-xs font-black uppercase tracking-[0.4em]">Interrogating_Sector...</span>
+                                                </div>
+                                            ) : (
+                                                dirItems.map((item, i) => (
+                                                    <div 
+                                                        key={i} 
+                                                        onClick={() => selectDir(item)}
+                                                        className="p-4 rounded-xl hover:bg-blue-600/20 cursor-pointer flex items-center justify-between group/item border border-transparent hover:border-blue-500/30 transition-all"
+                                                    >
+                                                        <div className="flex items-center gap-4">
+                                                            {item.endsWith('/') ? <FolderIcon className="size-5 text-blue-400"/> : <FileIcon className="size-5 text-gray-500"/>}
+                                                            <span className="text-sm font-black text-gray-200 group-hover/item:text-white">{item}</span>
+                                                        </div>
+                                                        <ChevronRight className="size-4 text-blue-500 opacity-0 group-hover/item:opacity-100 transition-all"/>
+                                                    </div>
+                                                ))
+                                            )}
+                                        </div>
+                                        <div className="pt-6 border-t-2 border-white/5 flex gap-4">
+                                            <Button variant="ghost" onClick={() => setIsBrowsing(false)} className="flex-1 h-14 rounded-2xl border-2 border-white/5 font-black uppercase">Cancel</Button>
+                                            <Button onClick={confirmSelection} className="flex-1 h-14 rounded-2xl bg-blue-600 hover:bg-white hover:text-black font-black uppercase shadow-xl">SELECT_coordinate</Button>
+                                        </div>
+                                    </DialogContent>
+                                </Dialog>
+                            </div>
                           </div>
                           
                           <div className="space-y-4">
