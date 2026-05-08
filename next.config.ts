@@ -8,13 +8,6 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  experimental: {
-    // السماح بالأصول الخاصة ببيئة العمل السحابية لضمان عمل Fast Refresh واستقرار المنظومة السيادية
-    allowedDevOrigins: [
-      "6000-firebase-sovereignaileastv1-1777740764643.cluster-cbeiita7rbe7iuwhvjs5zww2i4.cloudworkstations.dev",
-      "*.cloudworkstations.dev"
-    ],
-  },
   images: {
     remotePatterns: [
       {
