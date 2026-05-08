@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -29,7 +28,8 @@ import {
   Volume2,
   Terminal,
   ArrowUpRight,
-  LayoutDashboard
+  LayoutDashboard,
+  Lock
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -61,7 +61,6 @@ export default function VulnerabilitiesPage() {
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
 
-    // محاكاة زيادة العلم كل ثانية
     const interval = setInterval(() => {
       setKnowledgeCount(prev => prev + Math.floor(Math.random() * 3))
       
@@ -212,7 +211,7 @@ export default function VulnerabilitiesPage() {
                  <div className="space-y-3">
                     {liveLog.map((log, idx) => (
                       <div key={idx} className="flex gap-3 text-[10px] text-gray-400 font-bold italic animate-in slide-in-from-left-2 duration-500">
-                         <span className="text-primary/40 select-none">>></span>
+                         <span className="text-primary/40 select-none">{" >> "}</span>
                          <span className="truncate">{log}</span>
                       </div>
                     ))}
