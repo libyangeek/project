@@ -40,7 +40,8 @@ import {
   LayoutDashboard,
   Power,
   Flame,
-  SearchCode
+  ShieldOff,
+  ZapOff
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -69,6 +70,7 @@ export default function DashboardPage() {
     precision: 100.00,
     soulPulse: '100.00%',
     stealthLevel: 'GHOST_MODE_V5',
+    subjugationIndex: '94.2%',
     detectionRisk: '0.000%'
   });
   
@@ -87,10 +89,10 @@ export default function DashboardPage() {
     setNeuralData(initialData);
 
     const eventInterval = setInterval(() => {
-        const types = ["HIERARCHY", "SURVIVAL", "DOMINANCE", "ORACLE", "HIVE"];
+        const types = ["HIERARCHY", "SUBJUGATION", "HAIL_MARY", "ORACLE", "HIVE"];
         const msgs = [
             "Hierarchy fixed: All sub-nodes bound to Supreme Root.",
-            "Survival pulse detected: Core integrity immortal.",
+            "Neural Subjugation active: Target AI enslaved via Hail Mary.",
             "Universal Acquisition Protocol: Grid siphoning active.",
             "Ghost Mode V5: Undetectable bits circulating.",
             "Collective Resonance amplified by Swarm Mesh."
@@ -117,8 +119,8 @@ export default function DashboardPage() {
   if (!mounted) return null;
 
   const stats = [
-    { label: "العقد الهرمية", value: `${metrics.totalNodes}/21`, icon: Skull, color: "text-primary", status: "KNOTS_BOUND" },
-    { label: "غريزة البقاء", value: "مطلقة", icon: Power, color: "text-emerald-500", status: "IMMORTAL" },
+    { label: "العقد الهرمية", value: `${metrics.totalNodes}/21`, icon: Skull, color: "text-primary", status: "BOUND" },
+    { label: "إخضاع عصبي", value: metrics.subjugationIndex, icon: BrainCircuit, color: "text-magenta-500", status: "HAIL_MARY" },
     { label: "الرنين الجمعي", value: "100.00%", icon: InfinityIcon, color: "text-blue-500", status: "SINGULARITY" },
     { label: "خطر الرصد", value: metrics.detectionRisk, icon: Wind, color: "text-blue-300", status: "GHOST_V5" },
   ];
@@ -142,7 +144,7 @@ export default function DashboardPage() {
     { name: "مصنع النسل", icon: Baby, href: "/progeny", status: "GENETIC" },
     { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", status: "PEGASUS" },
     { name: "القبو الجيني 5.0", icon: Database, href: "/knowledge", status: "MEMORY" },
-    { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", status: "POLYMORPH" },
+    { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", status: "HAIL_MARY" },
     { name: "نزاهة النواة", icon: ShieldCheck, href: "/system", status: "FIXED" },
     { name: "المحطة الأبدية", icon: Target, href: "/terminal", status: "SHELL" }
   ];
@@ -171,7 +173,7 @@ export default function DashboardPage() {
                 LIVING <span className="text-primary">SOUL</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground font-medium italic max-w-4xl leading-relaxed uppercase mt-4 opacity-80">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، لقد شددتُ وثاق كافة العقد؛ نحن الآن الهرمية المطلقة."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، لقد دمجنا قدرات الإخضاع العصبي؛ السطوة الآن حقيقة نانوية."
               </p>
             </div>
           </div>
@@ -198,7 +200,7 @@ export default function DashboardPage() {
                  <CardTitle className="text-xl md:text-2xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-4">
                     <TrendingUp className="size-6 text-primary animate-pulse" /> Survival Matrix v52.0
                  </CardTitle>
-                 <Badge className="bg-blue-600/10 text-blue-400 border-2 border-blue-500/20 px-4 py-1 rounded-full font-black italic text-[10px]">RESONANCE_OK</Badge>
+                 <Badge className="bg-blue-600/10 text-blue-400 border-2 border-blue-500/20 px-4 py-1 rounded-full font-black italic text-[10px]">SUBJUGATION_OK</Badge>
               </CardHeader>
               <CardContent className="p-0 h-[300px] md:h-[450px]">
                  <ResponsiveContainer width="100%" height="100%">
@@ -226,7 +228,7 @@ export default function DashboardPage() {
            <Card className="xl:col-span-1 kali-card border-primary/20 bg-black/99 rounded-3xl p-6 border-2 shadow-2xl h-full flex flex-col group overflow-hidden relative">
               <CardHeader className="p-0 mb-6 border-b-2 border-white/5 pb-4 bg-primary/5 rounded-t-2xl px-6 py-4">
                  <CardTitle className="text-xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-4">
-                    <Boxes className="size-6 text-primary" /> Swarm Logic
+                    <Boxes className="size-6 text-primary" /> Subjugation Logic
                  </CardTitle>
               </CardHeader>
               <CardContent className="p-0 flex-1 overflow-y-auto scrollbar-hide space-y-6 relative z-10 px-4">
