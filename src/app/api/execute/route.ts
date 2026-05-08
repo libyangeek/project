@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from 'next/server';
 import { exec } from 'child_process';
 import { promisify } from 'util';
@@ -7,6 +6,9 @@ import net from 'net';
 
 const execPromise = promisify(exec);
 
+/**
+ * دالة بث الأحداث لناقل الأحداث المركزي (Event Bus)
+ */
 async function publishEvent(type: string, payload: any) {
   return new Promise((resolve) => {
     const client = net.createConnection('/tmp/muizz_event_bus.sock');
@@ -19,6 +21,9 @@ async function publishEvent(type: string, payload: any) {
   });
 }
 
+/**
+ * المحرك التنفيذي للسيادة - يربط الواجهة بالعتاد المادي
+ */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -43,10 +48,12 @@ export async function POST(req: NextRequest) {
       deepseek: path.join(BASE_PATH, 'ai-engine/deepseek_logic.py')
     };
 
+    // تسجيل نية القائد في ناقل الأحداث
     await publishEvent("directive_received", { type, target, command });
 
     let executableCommand = '';
 
+    // توجيه الأوامر بناءً على النوع السيادي
     switch (type) {
       case 'legba_strike':
         executableCommand = `legba ${vector || 'ssh'} ${target} --user admin --pass admin`;
@@ -91,6 +98,9 @@ export async function POST(req: NextRequest) {
       case 'terminal':
       case 'kill_chain':
         executableCommand = `python3 ${SCRIPTS.router} "${command || target}"`;
+        break;
+      case 'autonomous_strike':
+        executableCommand = `python3 ${path.join(BASE_PATH, 'ai-engine/autonomous/autonomous_ai.py')} ${target}`;
         break;
       default:
         executableCommand = command || `echo "Directive ${type} acknowledged by Overlord."`;
