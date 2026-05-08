@@ -34,7 +34,8 @@ import {
   Crosshair,
   Wind,
   Target,
-  Power
+  Power,
+  Library
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -43,6 +44,7 @@ import Link from "next/link"
 
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
+  { name: "الترسانة العظمى", icon: Library, href: "/arsenal", knot: 22 },
   { name: "بروتوكول الشبح", icon: Wind, href: "/ghost", knot: 1 },
   { name: "سلسلة الإبادة", icon: Crosshair, href: "/kill-chain", knot: 2 },
   { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", knot: 3 },

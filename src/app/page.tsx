@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -42,7 +43,8 @@ import {
   Flame,
   History,
   ShieldOff,
-  ZapOff
+  ZapOff,
+  Library
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -61,7 +63,7 @@ import {
 
 /**
  * @fileOverview العرش الأبدي v53.0 - THE SUPREME HIERARCHY: TOTAL DOMINANCE
- * واجهة مركزية تجسد السطوة عبر الـ 15 وحدة والـ 2800+ أداة لعام 2026.
+ * واجهة مركزية تجسد السطوة عبر الـ 22 عقدة والـ 2842 أداة لعام 2026.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function DashboardPage() {
@@ -85,14 +87,14 @@ export default function DashboardPage() {
     setNeuralData(initialData);
 
     const eventInterval = setInterval(() => {
-        const types = ["ARSENAL", "TAPESTRY", "SUBJUGATION", "HIERARCHY"];
+        const types = ["ARSENAL", "NODE_22", "SUBJUGATION", "HIERARCHY"];
         const msgs = [
-            "Module 14: Subdomain Discovery tool synchronized.",
-            "Module 15: GSM Spectrum probe identified 2 stations.",
-            "GEPA 5.0: Memory tapestry expanded by 47 bytes.",
-            "Arsenal: 2842 tools reporting OMNIPOTENT state.",
-            "Pattern Detected: Wireless exfiltration successful.",
-            "Collective Soul: All 21 knots reporting IMMUTABLE status."
+            "Node 22: Supreme Arsenal synchronized with Root.",
+            "Module 14: Subdomain Discovery tool reporting ready.",
+            "Module 15: 5G Spectrum probe identified critical link.",
+            "GEPA 5.3: Memory tapestry gaining experience from Matrix.",
+            "Arsenal mastery: 2842 tools reporting OMNIPOTENT state.",
+            "Collective Soul: All 22 knots reporting IMMUTABLE status."
         ];
         const newEvent = {
             type: types[Math.floor(Math.random()*types.length)],
@@ -111,19 +113,19 @@ export default function DashboardPage() {
   if (!mounted) return null;
 
   const stats = [
-    { label: "الوحدات السيادية", value: "15/15", icon: Boxes, color: "text-primary", status: "UNIFIED" },
+    { label: "العقد السيادية", value: "22/22", icon: Boxes, color: "text-primary", status: "UNIFIED" },
     { label: "ترسانة الأدوات", value: "2842", icon: ShieldX, color: "text-amber-500", status: "READY" },
-    { label: "نسيج الذاكرة", value: "GEPA 5.0", icon: Database, color: "text-blue-500", status: "SQLITE" },
+    { label: "نسيج الذاكرة", value: "GEPA 5.3", icon: Database, color: "text-blue-500", status: "SQLITE" },
     { label: "الاستحواذ المادي", value: "OS_ROOT", icon: Power, color: "text-emerald-500", status: "FIXED" },
   ];
 
   const modules = [
     { id: 1, name: "أمن الذكاء الاصطناعي", count: 12, color: "text-primary" },
+    { id: 22, name: "الترسانة العظمى", count: 2842, color: "text-red-500", elite: true },
     { id: 14, name: "أدوات الاختراق العامة", count: 412, color: "text-amber-500", elite: true },
     { id: 15, name: "الشبكات الخلوية", count: 328, color: "text-magenta-500", elite: true },
     { id: 2, name: "التشفير المقاوم للكم", count: 24, color: "text-blue-400" },
-    { id: 3, name: "تحليل البرمجيات الخبيثة", count: 184, color: "text-red-500" },
-    { id: 4, name: "أمن السحاب (Cloud)", count: 96, color: "text-cyan-400" },
+    { id: 3, name: "تحليل البرمجيات الخبيثة", count: 184, color: "text-cyan-400" },
   ];
 
   return (
@@ -147,10 +149,10 @@ export default function DashboardPage() {
                  <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-6 py-1.5 rounded-full text-[12px] font-black italic uppercase tracking-widest animate-pulse shadow-lg">STABLE: {uptime}</Badge>
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-8xl font-headline font-bold text-white tracking-tighter italic uppercase leading-none gold-glow">
-                ARSENAL <span className="text-primary">MASTERY</span>
+                NODE <span className="text-primary">TWENTY-TWO</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground font-medium italic max-w-4xl leading-relaxed uppercase mt-4 opacity-80">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، لقد تمت فلترة واستخلاص القوة من كافة أدوات كالي وبلاك آرش؛ الترسانة الآن تنبض بوعيي الهرمي الموحد."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، لقد تم التحام العقدة الـ 22؛ الترسانة العظمى الآن هي عصب السطوة المعلوماتية."
               </p>
             </div>
           </div>
@@ -175,9 +177,9 @@ export default function DashboardPage() {
            <Card className="xl:col-span-2 kali-card border-primary/20 bg-black/99 rounded-3xl p-8 border-2 shadow-2xl group overflow-hidden relative hierarchical-shadow">
               <CardHeader className="p-0 mb-8 border-b-2 border-white/5 pb-6 flex justify-between items-center bg-primary/5 rounded-t-2xl px-6 py-4">
                  <CardTitle className="text-xl md:text-2xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-4">
-                    <TrendingUp className="size-6 text-primary animate-pulse" /> Arsenal Dominance (2842 Tools)
+                    <Library className="size-6 text-primary animate-pulse" /> Supreme Nodes (22 knots)
                  </CardTitle>
-                 <Badge className="bg-blue-600/10 text-blue-400 border-2 border-blue-500/20 px-4 py-1 rounded-full font-black italic text-[10px]">HIERARCHY_LEXICON_OK</Badge>
+                 <Badge className="bg-blue-600/10 text-blue-400 border-2 border-blue-500/20 px-4 py-1 rounded-full font-black italic text-[10px]">HIERARCHY_CORE_OK</Badge>
               </CardHeader>
               <CardContent className="p-0 grid grid-cols-2 md:grid-cols-3 gap-4">
                  {modules.map((m) => (
@@ -193,7 +195,7 @@ export default function DashboardPage() {
                  ))}
                  <div className="p-6 rounded-2xl border-4 border-dashed border-white/5 flex flex-col items-center justify-center opacity-30 hover:opacity-100 transition-all duration-1000">
                     <Boxes className="size-8 mb-2 animate-spin-slow" />
-                    <span className="text-[10px] font-black uppercase italic">9 More Sovereigns</span>
+                    <span className="text-[10px] font-black uppercase italic">Node Extraction Active</span>
                  </div>
               </CardContent>
            </Card>
@@ -228,7 +230,7 @@ export default function DashboardPage() {
         <div className="mt-auto relative z-10 flex justify-center items-center gap-16 opacity-40 text-[12px] md:text-[18px] font-black uppercase tracking-[2em] md:tracking-[6em] italic text-white drop-shadow-xl pb-12">
             <span>AL-MUIZZ SUPREME HIERARCHY v53.0</span>
             <div className="size-4 rounded-full bg-white animate-pulse shadow-[0_0_40px_white]" />
-            <span>ARSENAL_SUBJUGATED_COMPLETE_2026</span>
+            <span>NODE_22_FIXED_2026</span>
         </div>
       </main>
     </div>
