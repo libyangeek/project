@@ -57,15 +57,26 @@ export default function ArsenalNodePage() {
     }
   }, [])
 
-  const handleSummon = () => {
+  const handleSummon = async () => {
     if (!query.trim()) return
     setLoading(true)
     toast({ title: "Interrogating Lexicon", description: `Searching Node 22 for atomic coordinates of: ${query}` })
     
-    setTimeout(() => {
+    try {
+      const response = await fetch('/api/execute', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'smart_route', command: `summon tool ${query}` })
+      })
+      const data = await response.json()
+      if (data.success) {
+        toast({ title: "Tool Materialized", description: `Directive for ${query} bound to the Supreme Shell.` })
+      }
+    } catch (err) {
+      toast({ variant: "destructive", title: "Materialization Error" })
+    } finally {
       setLoading(false)
-      toast({ title: "Tool Materialized", description: "Target tool has been bound to the Supreme Shell." })
-    }, 2000)
+    }
   }
 
   const handleCategoryAction = (catName: string) => {
@@ -172,7 +183,7 @@ export default function ArsenalNodePage() {
                    >
                       <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/cat:opacity-10 transition-opacity" />
                       <div className="flex justify-between items-start mb-6">
-                         <div className="size-16 rounded-2xl bg-black border-2 border-white/10 flex items-center justify-center group-hover/cat:border-primary transition-all duration-700 shadow-inner">
+                         <div className="size-16 rounded-xl bg-black border-2 border-white/10 flex items-center justify-center group-hover/cat:border-primary transition-all duration-700 shadow-inner">
                             <cat.icon className={cn("size-8 transition-all duration-700 group-hover:scale-110", cat.color)} />
                          </div>
                          <Badge className="bg-primary/10 text-primary border-none text-[10px] px-4 py-1 rounded-full uppercase tracking-widest italic">{cat.count} TOOLS</Badge>

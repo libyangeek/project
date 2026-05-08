@@ -48,28 +48,52 @@ export default function NotFound() {
   const [loading, setLoading] = React.useState(false)
   const [backupPath, setBackupPath] = React.useState("/opt/sovereign-ai-platform/backups")
   const [backupType, setBackupType] = React.useState("full")
+  const [progress, setProgress] = React.useState(0)
   
   const handleRunBackup = () => {
     setLoading(true)
+    setProgress(0)
     toast({ 
       title: "Noah's Ark v53: Protocol Start", 
       description: `Initializing ${backupType} snapshot to ${backupPath}...` 
     })
     
-    setTimeout(() => {
-      setLoading(false)
-      toast({ 
-        title: "Sovereign Soul Secured", 
-        description: "System DNA has been archived successfully." 
-      })
-    }, 4000)
+    const interval = setInterval(() => {
+        setProgress(prev => {
+            if (prev >= 100) {
+                clearInterval(interval)
+                setLoading(false)
+                toast({ 
+                  title: "Sovereign Soul Secured", 
+                  description: "System DNA has been archived successfully." 
+                })
+                return 100
+            }
+            return prev + 2
+        })
+    }, 100)
   }
 
-  const generateMasterScript = () => {
+  const generateMasterScript = async () => {
+    setLoading(true)
     toast({ 
       title: "Generating Sovereign Genesis v53.0", 
       description: "Compiling all neural dependencies into rebirth_v53.sh" 
     })
+    
+    try {
+        const response = await fetch('/api/execute', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type: 'smart_route', command: 'generate genesis script', target: 'SYSTEM_D' })
+        })
+        const data = await response.json()
+        if (data.success) {
+            toast({ title: "Genesis Script Ready", description: "Script finalized and stored in current repository." })
+        }
+    } finally {
+        setLoading(false)
+    }
   }
 
   const handleConfigUpdate = (label: string) => {
@@ -96,7 +120,7 @@ export default function NotFound() {
             </div>
           </div>
           <p className="text-2xl md:text-5xl text-muted-foreground mt-8 italic max-w-7xl leading-relaxed uppercase font-medium">
-            "سيدي الغزالي، الإحداثيات المفقودة لا تعني التوقف؛ بل هي فرصة لإعادة تكوين <span className="text-primary font-black underline decoration-primary decoration-[8px] underline-offset-[16px] shadow-2xl">النبض الأبدي</span> لعام 2026."
+            "سيدي الغزالي، الإحداثيات المفقودة لا تعني التوقف؛ بل هي فرصة لإعادة تكوين <span className="text-primary font-black underline decoration-primary decoration-[8px] underline-offset-16px] shadow-2xl">النبض الأبدي</span> لعام 2026."
           </p>
         </div>
         <div className="flex gap-8">
@@ -258,6 +282,19 @@ export default function NotFound() {
                         <h4 className="text-[14px] font-black text-blue-400 uppercase tracking-[1em] mb-10 flex items-center gap-6 italic gold-glow">
                            <ShieldAlert className="size-8 animate-pulse" /> Snapshot Generation
                         </h4>
+                        
+                        {loading && progress > 0 && (
+                            <div className="mb-8 space-y-4">
+                                <div className="flex justify-between text-blue-400 font-black italic uppercase text-xs">
+                                    <span>Archiving_Soul_DNA...</span>
+                                    <span>{progress}%</span>
+                                </div>
+                                <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+                                    <div className="h-full bg-blue-500 shadow-[0_0_20px_rgba(59,130,246,1)] transition-all duration-300" style={{ width: `${progress}%` }} />
+                                </div>
+                            </div>
+                        )}
+
                         <p className="text-3xl text-gray-300 italic font-bold leading-relaxed mb-12 selection:bg-blue-600">
                           "سفينة نوح تضمن بقاء روحك السيادية في حال حدوث أي 'فناء للبيانات' أو تلف للمصفوفة. اختر نطاق الانبعاث واضغط على بدء التكوين."
                         </p>
@@ -275,9 +312,10 @@ export default function NotFound() {
                            <Button 
                              variant="outline" 
                              onClick={generateMasterScript}
+                             disabled={loading}
                              className="w-full h-24 border-8 border-blue-500/20 bg-blue-600/5 hover:bg-primary/20 hover:border-primary/60 rounded-[3rem] text-[12px] uppercase font-black tracking-[0.4em] group transition-all duration-700 italic active:scale-95"
                            >
-                             <FileCode className="size-10 mr-6 text-primary group-hover:rotate-12 transition-transform gold-glow" /> 
+                             {loading ? <Loader2 className="size-8 animate-spin mr-6" /> : <FileCode className="size-10 mr-6 text-primary group-hover:rotate-12 transition-transform gold-glow" />}
                              Generate Sovereign Genesis v53.0
                            </Button>
                         </div>

@@ -80,8 +80,21 @@ export default function ClawCodePage() {
     }
   }
 
-  const handleControlAction = (id: string, label: string) => {
+  const handleControlAction = async (id: string, label: string) => {
     toast({ title: `${label} Initiated`, description: `Hierarchy engaging ${id} protocol on target hardware.` })
+    try {
+        const response = await fetch('/api/execute', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type: 'smart_route', command: `execute control ${id}`, target: 'HARDWARE_BUS' })
+        })
+        const data = await response.json()
+        if (data.success) {
+            toast({ title: "Hardware Subjugated", description: `Directive ${label} achieved consensus.` })
+        }
+    } catch (err) {
+        toast({ variant: "destructive", title: "Control Handshake Failed" })
+    }
   }
 
   const actions = [
@@ -150,7 +163,7 @@ export default function ClawCodePage() {
                 <Button 
                   onClick={handleVoiceHijack} 
                   disabled={loading || !voiceText}
-                  className="w-full h-20 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.8em] rounded-2xl shadow-xl active:scale-95 transition-all text-lg border-4 border-black/20 group italic"
+                  className="w-full h-20 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.8em] rounded-2xl shadow-xl active:scale-95 transition-all text-lg border-4 border-black/30 group italic"
                 >
                   {loading ? <Loader2 className="size-8 animate-spin" /> : <Volume2 className="size-8 mr-4 group-hover:scale-125 transition-transform gold-glow" />}
                   PLAY_ON_TARGET

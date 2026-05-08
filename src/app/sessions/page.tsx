@@ -92,9 +92,27 @@ export default function ShadowGridPage() {
     }
   }
 
-  const handleSensorAction = (sensor: string) => {
+  const handleSensorAction = async (sensor: string) => {
     if (!selectedNodeId) return
     toast({ title: `${sensor} Channel Active`, description: `Establishing live ${sensor} link via Pegasus Node.` })
+    
+    try {
+      const response = await fetch('/api/execute', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          type: 'smart_route', 
+          command: `activate sensor ${sensor} on node ${selectedNodeId}`,
+          target: selectedNodeId
+        })
+      })
+      const data = await response.json()
+      if (data.success) {
+        toast({ title: "Siphon Stream Established", description: `Receiving real-time ${sensor} data from target.` })
+      }
+    } catch (err) {
+      toast({ variant: "destructive", title: "Channel Interrupted" })
+    }
   }
 
   if (!mounted) return null
@@ -134,7 +152,7 @@ export default function ShadowGridPage() {
           <Button 
             onClick={handleHarvestAll} 
             disabled={harvesting} 
-            className="bg-primary hover:bg-white text-black h-20 px-12 rounded-2xl shadow-xl font-black uppercase tracking-[0.6em] text-lg group transition-all duration-700 border-4 border-black/20 active:scale-95 italic shrink-0"
+            className="bg-primary hover:bg-white text-black h-20 px-12 rounded-2xl shadow-xl font-black uppercase tracking-[0.6em] text-lg group transition-all duration-700 border-4 border-black/30 active:scale-95 italic shrink-0"
           >
             {harvesting ? <Loader2 className="size-8 animate-spin mr-3" /> : <Sparkles className="size-8 mr-4 group-hover:scale-125 transition-transform gold-glow" />}
             PEGASUS SIPHON

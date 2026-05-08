@@ -12,7 +12,6 @@ import {
   RefreshCcw,
   Terminal,
   ChevronRight,
-  ClipboardCopy,
   Download,
   ShieldX,
   Target,
@@ -23,14 +22,8 @@ import {
   Database,
   Lock,
   MessageSquare,
-  AlertCircle,
-  CheckCircle2,
-  Info,
-  Hammer,
   Skull,
   Flame,
-  Sword,
-  Shield,
   Crown,
   Wifi,
   Binary,
@@ -117,9 +110,23 @@ export default function MobileStrikePage() {
     }
   }
 
-  const handleDeviceAction = (deviceId: string, action: string) => {
+  const handleDeviceAction = async (deviceId: string, action: string) => {
     toast({ title: `${action.replace('_', ' ')} Initialized`, description: `Engaging ${action} vector on ${deviceId}` })
     addLog(`Executing ${action} on node ${deviceId}...`, 'warrior')
+    
+    try {
+      const response = await fetch('/api/execute', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'smart_route', command: `${action} on ${deviceId}`, target: deviceId })
+      })
+      const data = await response.json()
+      if (data.success) {
+        addLog(`Action ${action} finalized. Intelligence siphoned successfully.`, 'success')
+      }
+    } catch (err) {
+       addLog(`Action ${action} encountered neural resistance.`, 'warn')
+    }
   }
 
   if (!mounted) return null;
