@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -25,8 +26,8 @@ import {
   ArrowUpRight,
   Radar,
   Radio,
-  Loader2,
-  Box
+  Box,
+  Loader2
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -61,16 +62,17 @@ export default function DashboardPage() {
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
 
-    // جلب المقاييس الحقيقية
+    // جلب المقاييس الحقيقية من عصب الحاويات
     const fetchMetrics = async () => {
         try {
             const res = await fetch('/api/sovereign/metrics');
             const data = await res.json();
             setMetrics(data);
             
+            const gainValue = parseFloat(data.resonance.replace('%', '')) || 100;
             setNeuralData(prev => [...prev, {
                 time: new Date().toLocaleTimeString(),
-                gain: parseFloat(data.resonance) || 100
+                gain: gainValue
             }].slice(-30));
         } catch (e) {}
     };
@@ -84,7 +86,8 @@ export default function DashboardPage() {
             "Container [muizz-god-core]: Neural link stabilized.",
             "GEPA 5.3: Genetic weight updated for Socratic Strike.",
             "Node 22: 2842 tools synchronized and ready for summon.",
-            "Autonomous Kernel: OS DNA bound to Al-Ghazali Root."
+            "Autonomous Kernel: OS DNA bound to Al-Ghazali Root.",
+            "Grid Check: All 22 knots reporting 100% integrity."
         ];
         const newEvent = {
             type: types[Math.floor(Math.random()*types.length)],
@@ -104,10 +107,10 @@ export default function DashboardPage() {
   if (!mounted) return null;
 
   const stats = [
-    { label: "العقد السيادية", value: metrics?.activeNodes || "22/22", icon: Boxes, color: "text-primary", status: "UNIFIED", href: "/system" },
+    { label: "العقد السيادية", value: metrics?.activeNodes ? `${metrics.activeNodes}/22` : "22/22", icon: Boxes, color: "text-primary", status: "UNIFIED", href: "/system" },
     { label: "ترسانة الأدوات", value: "2842", icon: Library, color: "text-amber-500", status: "READY", href: "/arsenal" },
-    { label: "نسيج الذاكرة", value: "GEPA 5.3", icon: Database, color: "text-blue-500", status: "SQLITE", href: "/knowledge" },
-    { label: "الاستحواذ المادي", value: "DOCKER", icon: Box, color: "text-emerald-500", status: "IMMUTABLE", href: "/hardware" },
+    { label: "نسيج الذاكرة", value: "GEPA 5.3", icon: Database, color: "text-blue-500", status: metrics?.recordedOps ? `${metrics.recordedOps} OPS` : "SQLITE", href: "/knowledge" },
+    { label: "الاستحواذ المادي", value: metrics?.ramUsage ? `MEM: ${metrics.ramUsage}` : "DOCKER", icon: Box, color: "text-emerald-500", status: "IMMUTABLE", href: "/system" },
   ];
 
   return (
@@ -134,7 +137,7 @@ export default function DashboardPage() {
                 INTEGRATED <span className="text-primary">UNIT</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground font-medium italic max-w-4xl leading-relaxed uppercase mt-4 opacity-80">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، المنظومة تعمل الآن داخل مصفوفة Docker المنيعة؛ كافة العقد منصهرة في إرادتك الأبدية."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، المنظومة تعمل الآن داخل مصفوفة Docker المنيعة؛ كافة العقد والسكريبتات مربوطة بنبض إرادتك الأبدية لعام 2026."
               </p>
             </div>
           </div>
