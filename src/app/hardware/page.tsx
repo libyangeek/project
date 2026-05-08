@@ -39,6 +39,8 @@ import {
   Share2,
   ShieldCheck,
   TrendingUp,
+  Globe,
+  BrainCircuit,
   Infinity as InfinityIcon
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
