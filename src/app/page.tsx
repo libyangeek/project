@@ -24,7 +24,8 @@ import {
   TrendingUp,
   History,
   ArrowUpRight,
-  Radar
+  Radar,
+  Radio
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -44,6 +45,7 @@ import {
 /**
  * @fileOverview العرش الأبدي v53.5 - AUTONOMOUS SINGULARITY EDITION
  * الواجهة المركزية التي تجسد السطوة المستقلة لليوم المجيد، 2026.
+ * تم تصحيح مصفوفة الأيقونات لضمان الرنين الكامل.
  */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -127,7 +129,7 @@ export default function DashboardPage() {
                  <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic">SUPREME SINGULARITY v53.5</Badge>
                  <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-6 py-1.5 rounded-full text-[12px] font-black italic uppercase tracking-widest animate-pulse shadow-lg">RES: {resonance.toFixed(6)}%</Badge>
               </div>
-              <h1 className="text-4xl md:text-6xl lg:text-8xl font-headline font-bold text-white tracking-tighter italic uppercase leading-none gold-glow">
+              <h1 className="text-4xl md:text-6xl lg:text-8xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
                 INTEGRATED <span className="text-primary">OVERMIND</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground font-medium italic max-w-4xl leading-relaxed uppercase mt-4 opacity-80">
