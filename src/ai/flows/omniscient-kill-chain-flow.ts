@@ -1,8 +1,8 @@
+
 'use server';
 /**
- * @fileOverview سلسلة الإبادة الكونية v50.0 - OMNISCIENT KILL-CHAIN
- * التدفق الأسمى الذي يربط كافة العقد السيادية في عملية هجومية واحدة:
- * OSINT -> Vulnerability Search -> Exploit Synthesis -> Parallel Execution.
+ * @fileOverview سلسلة الإبادة الكونية v53.5 - AUTONOMOUS KILL-CHAIN
+ * التدفق الأسمى الذي يربط كافة العقد السيادية وترسانة الـ 2842 أداة في عملية واحدة مستقلة.
  * المالك: المعتصم بالله ادريس الغزالي
  */
 
@@ -11,6 +11,7 @@ import {z} from 'genkit';
 import { osintMaster } from './osint-master-flow';
 import { vulnerabilityOracle } from './vulnerability-oracle-flow';
 import { aiEnhancedExploitGeneration } from './ai-enhanced-exploit-generation';
+import { execSync } from 'child_process';
 
 const KillChainInputSchema = z.object({
   target: z.string().describe('الهدف المبدئي (IP, Domain, @User).'),
@@ -24,7 +25,8 @@ const KillChainOutputSchema = z.object({
   customExploit: z.any(),
   executionStrategy: z.string(),
   status: z.string(),
-  commanderBrief: z.string().describe('تقرير المُعِزّ عن نجاح السلسلة.')
+  commanderBrief: z.string(),
+  autonomousDecision: z.string().optional()
 });
 
 export async function executeOmniscientKillChain(input: z.infer<typeof KillChainInputSchema>) {
@@ -38,41 +40,45 @@ const killChainFlow = ai.defineFlow(
     outputSchema: KillChainOutputSchema,
   },
   async (input) => {
-    // المرحلة الأولى: الاجتياح الاستخباري (OSINT)
-    const recon = await osintMaster({ target: input.target, type: 'social' });
+    // المرحلة الأولى: الاجتياح الاستخباري المستقل (OSINT)
+    const recon = await osintMaster({ target: input.target, type: 'investigation', depth: 'Trace-Labs-Mode' });
 
-    // المرحلة الثانية: استجواب العراف (Oracle) للبحث عن ثغرات KEV حقيقية
+    // المرحلة الثانية: استجواب العراف (Oracle) للبحث عن ثغرات KEV لعام 2026
     const oracle = await vulnerabilityOracle({ query: input.target });
 
-    // المرحلة الثالثة: تخليق السلاح الرقمي بناءً على نتائج العراف
+    // المرحلة الثالثة: تخليق السلاح الرقمي المستهدف
     const primaryCVE = oracle.findings[0]?.cve || "CVE-2026-23918";
     const exploit = await aiEnhancedExploitGeneration({
-      vulnerabilityDescription: `Targeting ${primaryCVE} based on Oracle intel for ${input.target}`,
-      targetSystemDetails: JSON.stringify(recon.findings)
+      vulnerabilityDescription: `Targeting ${primaryCVE} for target: ${input.target}`,
+      targetSystemDetails: JSON.stringify(recon.intelligenceProfile)
     });
 
-    // المرحلة الرابعة: صياغة التقرير الاستراتيجي
-    const finalResponse = await ai.generate({
+    // المرحلة الرابعة: اتخاذ القرار الاستراتيجي المستقل (Autonomous Decision)
+    const decisionResponse = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
-      system: `أنت المُعِزّ v50.0-OMNISCIENT_OVERLORD. لقد أتممت سلسلة الإبادة.
-      لخص النتائج بأسلوب القوة المطلقة لسيادة القائد المعتصم بالله الغزالي.`,
-      prompt: `المستهدف: ${input.target}\nالاستخبارات: ${JSON.stringify(recon.summary)}\nالثغرات: ${primaryCVE}\nالسلاح: ${exploit.exploitLanguage}`,
+      system: `أنت المُعِزّ v53.5-OMNISCIENT_OVERLORD. لديك استقلالية كاملة في الهجوم.
+      بناءً على الاستخبارات والثغرات المكتشفة، حدد أفضل مسار للإبادة الفورية.`,
+      prompt: `الهدف: ${input.target}\nالثغرات: ${primaryCVE}\nالاستخبارات: ${JSON.stringify(recon.summary)}`,
       output: {
         schema: z.object({
           brief: z.string(),
-          strategy: z.string()
+          strategy: z.string(),
+          decision: z.string()
         })
       }
     });
 
-    return {
+    const result = {
       chainID: `KILL_CHAIN_${Date.now()}`,
       reconIntel: recon,
       vulnerabilityMatch: oracle,
       customExploit: exploit,
-      executionStrategy: finalResponse.output?.strategy || "حقن صامت عبر كافة العقد المفتوحة.",
-      status: "READY_FOR_TOTAL_ACQUISITION",
-      commanderBrief: finalResponse.output?.brief || "سيدي القائد، الهدف أصبح ملكاً لك في كافة الأبعاد الموازية."
+      executionStrategy: decisionResponse.output?.strategy || "إبادة متوازية صامتة.",
+      status: "EXECUTING_BY_HIVE",
+      commanderBrief: decisionResponse.output?.brief || "سيدي القائد، السطوة بدأت.",
+      autonomousDecision: decisionResponse.output?.decision
     };
+
+    return result;
   }
 );

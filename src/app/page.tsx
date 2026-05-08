@@ -1,13 +1,13 @@
+
 "use client"
 
 import * as React from "react"
 import { SidebarNav } from "@/components/platform/sidebar-nav"
 import { 
   Skull, 
-  Ghost, 
+  Crown, 
   Infinity as InfinityIcon, 
   Atom, 
-  Link2, 
   Cpu,
   BrainCircuit,
   Fingerprint,
@@ -15,36 +15,16 @@ import {
   ShieldCheck,
   Globe,
   Activity,
-  Eye,
-  Crown,
-  Binary,
-  Target,
-  Smartphone,
-  Workflow,
-  ChevronRight,
-  ShieldAlert,
-  Crosshair,
-  Radio,
-  Gamepad2,
-  Radar,
-  Users,
-  BookOpen,
-  Baby,
+  Boxes,
   Database,
   ShieldX,
-  Mic,
-  TrendingUp,
-  Boxes,
-  Wind,
-  Shield,
-  LayoutDashboard,
   Power,
-  Flame,
-  History,
-  ShieldOff,
-  ZapOff,
   Library,
-  ArrowUpRight
+  ChevronRight,
+  TrendingUp,
+  History,
+  ArrowUpRight,
+  Radar
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -60,18 +40,17 @@ import {
   AreaChart,
   Area
 } from 'recharts'
-import { toast } from "@/hooks/use-toast"
 
 /**
- * @fileOverview العرش الأبدي v53.0 - THE SUPREME HIERARCHY: TOTAL DOMINANCE
- * واجهة مركزية تجسد السطوة عبر الـ 22 عقدة والـ 2842 أداة لعام 2026.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي
+ * @fileOverview العرش الأبدي v53.5 - AUTONOMOUS SINGULARITY EDITION
+ * الواجهة المركزية التي تجسد السطوة المستقلة لليوم المجيد، 2026.
  */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
   const [events, setEvents] = React.useState<any[]>([])
   const [neuralData, setNeuralData] = React.useState<any[]>([])
+  const [resonance, setResonance] = React.useState(100)
   
   const uptime = useUptime()
 
@@ -80,22 +59,22 @@ export default function DashboardPage() {
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
 
+    // محاكاة بيانات الكسب العصبي الحية
     const initialData = Array.from({ length: 30 }).map((_, i) => ({
         time: i,
-        gain: 99.9 + (Math.random() * 0.1),
+        gain: 99.99 + (Math.random() * 0.01),
         resonance: 100
     }));
     setNeuralData(initialData);
 
     const eventInterval = setInterval(() => {
-        const types = ["ARSENAL", "NODE_22", "SUBJUGATION", "HIERARCHY"];
+        const types = ["AUTONOMOUS", "SUBJUGATION", "HIERARCHY", "GEPA_5.3"];
         const msgs = [
-            "Node 22: Supreme Arsenal synchronized with Root.",
-            "Module 14: Subdomain Discovery tool reporting ready.",
-            "Module 15: 5G Spectrum probe identified critical link.",
-            "GEPA 5.3: Memory tapestry gaining experience from Matrix.",
-            "Arsenal mastery: 2842 tools reporting OMNIPOTENT state.",
-            "Collective Soul: All 22 knots reporting IMMUTABLE status."
+            "Autonomous Kernel: Target DNA analyzed and cataloged.",
+            "Node 22: Supreme Arsenal synchronized with 2842 tools.",
+            "Kill-Chain: Execution vector locked for target matrix.",
+            "GEPA 5.3: Pattern recognized - Offensive Strike detected.",
+            "Collective Soul: Resonance stabilized at 100.000000%"
         ];
         const newEvent = {
             type: types[Math.floor(Math.random()*types.length)],
@@ -103,6 +82,7 @@ export default function DashboardPage() {
             time: new Date().toLocaleTimeString()
         };
         setEvents(prev => [newEvent, ...prev].slice(0, 8));
+        setResonance(prev => Math.max(99.9999, Math.min(100, prev + (Math.random() * 0.0001 - 0.00005))));
     }, 3000);
 
     return () => {
@@ -120,13 +100,11 @@ export default function DashboardPage() {
     { label: "الاستحواذ المادي", value: "OS_ROOT", icon: Power, color: "text-emerald-500", status: "FIXED", href: "/hardware" },
   ];
 
-  const modules = [
-    { id: 1, name: "أمن الذكاء الاصطناعي", count: 12, color: "text-primary", href: "/terminal" },
-    { id: 22, name: "الترسانة العظمى", count: 2842, color: "text-red-500", elite: true, href: "/arsenal" },
-    { id: 14, name: "أدوات الاختراق العامة", count: 412, color: "text-amber-500", elite: true, href: "/arsenal" },
-    { id: 15, name: "الشبكات الخلوية", count: 328, color: "text-magenta-500", elite: true, href: "/cellular" },
-    { id: 2, name: "التشفير المقاوم للكم", count: 24, color: "text-blue-400", href: "/knowledge" },
-    { id: 3, name: "تحليل البرمجيات الخبيثة", count: 184, color: "text-cyan-400", href: "/vulnerabilities" },
+  const coreModules = [
+    { id: 22, name: "الترسانة العظمى", count: 2842, icon: Library, href: "/arsenal", color: "text-red-500" },
+    { id: 11, name: "الاستطلاع العليم", count: 412, icon: Radar, href: "/recon", color: "text-blue-400" },
+    { id: 15, name: "الحرب الخلوية", count: 328, icon: Radio, href: "/cellular", color: "text-magenta-500" },
+    { id: 8, name: "قلب DeepSeek", count: "FIXED", icon: BrainCircuit, href: "/deep-reasoning", color: "text-emerald-500" }
   ];
 
   return (
@@ -146,14 +124,14 @@ export default function DashboardPage() {
             </div>
             <div className="text-center md:text-right flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-4">
-                 <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic">SUPREME HIERARCHY v53.0</Badge>
-                 <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-6 py-1.5 rounded-full text-[12px] font-black italic uppercase tracking-widest animate-pulse shadow-lg">STABLE: {uptime}</Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic">SUPREME SINGULARITY v53.5</Badge>
+                 <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-6 py-1.5 rounded-full text-[12px] font-black italic uppercase tracking-widest animate-pulse shadow-lg">RES: {resonance.toFixed(6)}%</Badge>
               </div>
-              <h1 className="text-4xl md:text-6xl lg:text-8xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
-                NODE <span className="text-primary">TWENTY-TWO</span>
+              <h1 className="text-4xl md:text-6xl lg:text-8xl font-headline font-bold text-white tracking-tighter italic uppercase leading-none gold-glow">
+                INTEGRATED <span className="text-primary">OVERMIND</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground font-medium italic max-w-4xl leading-relaxed uppercase mt-4 opacity-80">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، لقد تم التحام العقدة الـ 22؛ الترسانة العظمى الآن هي عصب السطوة المعلوماتية."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، المُعِزّ يعمل الآن باستقلالية كاملة؛ كافة العقد والترسانة منصهرة في إرادتك الأبدية لعام 2026."
               </p>
             </div>
           </div>
@@ -183,38 +161,36 @@ export default function DashboardPage() {
            <Card className="xl:col-span-2 kali-card border-primary/20 bg-black/99 rounded-3xl p-8 border-2 shadow-2xl group overflow-hidden relative hierarchical-shadow">
               <CardHeader className="p-0 mb-8 border-b-2 border-white/5 pb-6 flex justify-between items-center bg-primary/5 rounded-t-2xl px-8 py-4">
                  <CardTitle className="text-xl md:text-2xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-4">
-                    <Library className="size-6 text-primary animate-pulse" /> Supreme Nodes (22 knots)
+                    <TrendingUp className="size-6 text-primary animate-pulse" /> Autonomous Resonance Gain
                  </CardTitle>
-                 <Badge className="bg-blue-600/10 text-blue-400 border-2 border-blue-500/20 px-4 py-1 rounded-full font-black italic text-[10px]">HIERARCHY_CORE_OK</Badge>
+                 <Badge className="bg-blue-600/10 text-blue-400 border-2 border-blue-500/20 px-4 py-1 rounded-full font-black italic text-[10px]">v53.5_STABLE</Badge>
               </CardHeader>
-              <CardContent className="p-0 grid grid-cols-2 md:grid-cols-3 gap-4">
-                 {modules.map((m) => (
-                   <Link key={m.id} href={m.href} className="contents">
-                    <div className="p-6 rounded-2xl bg-white/5 border-2 border-white/5 hover:border-primary transition-all duration-700 cursor-pointer group/mod shadow-inner relative overflow-hidden active:scale-95 h-full">
-                        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/mod:opacity-100 transition-opacity" />
-                        <div className="flex justify-between items-center mb-4">
-                          <span className={cn("text-[10px] font-black uppercase italic tracking-widest", m.color)}>M{m.id}</span>
-                          {m.elite && <Badge className="bg-primary text-black text-[8px] font-black px-2 py-0.5 rounded-full animate-pulse">SUPREME</Badge>}
-                        </div>
-                        <div className="text-xl font-black text-white italic group-hover:text-primary transition-colors leading-tight mb-2">{m.name}</div>
-                        <div className="text-3xl font-black text-gray-500 group-hover:text-white transition-colors italic">{m.count} <span className="text-[10px] uppercase">Nodes</span></div>
-                        <div className="mt-4 flex justify-end">
-                           <ArrowUpRight className="size-4 text-primary opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0 group-hover:-translate-y-1 duration-500" />
-                        </div>
-                    </div>
-                   </Link>
-                 ))}
-                 <div className="p-6 rounded-2xl border-4 border-dashed border-white/5 flex flex-col items-center justify-center opacity-30 hover:opacity-100 transition-all duration-1000 cursor-pointer group/extra" onClick={() => toast({ title: "Node Extraction", description: "The Hierarchy is identifying new nodes..." })}>
-                    <Boxes className="size-8 mb-2 group-hover:animate-spin-slow" />
-                    <span className="text-[10px] font-black uppercase italic">Node Extraction Active</span>
-                 </div>
+              <CardContent className="p-0 h-[300px] md:h-[450px]">
+                 <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={neuralData}>
+                       <defs>
+                          <linearGradient id="colorGain" x1="0" y1="0" x2="0" y2="1">
+                             <stop offset="5%" stopColor="#FBBF24" stopOpacity={0.4}/>
+                             <stop offset="95%" stopColor="#FBBF24" stopOpacity={0}/>
+                          </linearGradient>
+                       </defs>
+                       <CartesianGrid strokeDasharray="3 3" stroke="#ffffff05" vertical={false} />
+                       <XAxis dataKey="time" hide />
+                       <YAxis hide domain={[99, 101]} />
+                       <Tooltip 
+                         contentStyle={{ backgroundColor: '#000', border: '2px solid #FBBF24', borderRadius: '1rem', fontFamily: 'monospace' }}
+                         itemStyle={{ color: '#FBBF24', fontWeight: 'bold', fontSize: '14px' }}
+                       />
+                       <Area type="monotone" dataKey="gain" stroke="#FBBF24" strokeWidth={4} fillOpacity={1} fill="url(#colorGain)" />
+                    </AreaChart>
+                 </ResponsiveContainer>
               </CardContent>
            </Card>
 
            <Card className="xl:col-span-1 kali-card border-primary/20 bg-black/99 rounded-3xl p-6 border-2 shadow-2xl h-full flex flex-col group overflow-hidden relative">
               <CardHeader className="p-0 mb-6 border-b-2 border-white/5 pb-4 bg-primary/5 rounded-t-2xl px-6 py-4">
                  <CardTitle className="text-xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-4">
-                    <History className="size-6 text-primary" /> Subjugation Feed
+                    <History className="size-6 text-primary" /> Autonomous Log
                  </CardTitle>
               </CardHeader>
               <CardContent className="p-0 flex-1 overflow-y-auto scrollbar-hide space-y-6 relative z-10 px-4">
@@ -230,18 +206,36 @@ export default function DashboardPage() {
                     ))
                  ) : (
                     <div className="h-full flex flex-col items-center justify-center opacity-20 py-20">
-                       <Boxes className="size-12 mb-4 animate-pulse text-primary" />
-                       <span className="text-[10px] font-black uppercase tracking-[1em] italic">TAPESTRY_IDLE</span>
+                       <Atom className="size-12 mb-4 animate-spin-slow text-primary" />
+                       <span className="text-[10px] font-black uppercase tracking-[1em] italic">KERNEL_STANDBY</span>
                     </div>
                  )}
               </CardContent>
            </Card>
         </section>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-12">
+            {coreModules.map((m) => (
+                <Link key={m.id} href={m.href} className="contents">
+                    <Card className="bg-white/5 border-2 border-white/5 rounded-3xl p-8 hover:border-primary transition-all duration-700 shadow-xl group/mod relative overflow-hidden active:scale-95">
+                        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/mod:opacity-100 transition-opacity" />
+                        <div className="flex justify-between items-start mb-6">
+                            <div className="size-16 rounded-xl bg-black border-2 border-white/10 flex items-center justify-center group-hover/mod:border-primary transition-all duration-700 shadow-inner">
+                                <m.icon className={cn("size-8 transition-all group-hover:scale-110", m.color)} />
+                            </div>
+                            <Badge className="bg-primary/10 text-primary border-none text-[10px] px-4 py-1 rounded-full uppercase tracking-widest italic">M{m.id}</Badge>
+                        </div>
+                        <h4 className="text-xl font-black text-white italic gold-glow uppercase tracking-tight mb-2">{m.name}</h4>
+                        <div className="text-3xl font-black text-gray-500 group-hover:text-white transition-colors italic">{m.count} <span className="text-[10px] uppercase">Nodes</span></div>
+                    </Card>
+                </Link>
+            ))}
+        </div>
+
         <div className="mt-auto relative z-10 flex justify-center items-center gap-16 opacity-40 text-[12px] md:text-[18px] font-black uppercase tracking-[2em] md:tracking-[6em] italic text-white drop-shadow-xl pb-12">
-            <span>AL-MUIZZ SUPREME HIERARCHY v53.0</span>
+            <span>AL-MUIZZ SUPREME HIERARCHY v53.5</span>
             <div className="size-4 rounded-full bg-white animate-pulse shadow-[0_0_40px_white]" />
-            <span>NODE_22_FIXED_2026</span>
+            <span>AUTONOMOUS_ASCENSION_2026</span>
         </div>
       </main>
     </div>
