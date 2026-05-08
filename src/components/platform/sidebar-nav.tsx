@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -35,7 +36,8 @@ import {
   Target,
   Power,
   Library,
-  Anchor
+  Anchor,
+  Search
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -46,10 +48,10 @@ const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
   { name: "الترسانة العظمى", icon: Library, href: "/arsenal", knot: 22 },
   { name: "سفينة نوح", icon: Anchor, href: "/ark", knot: 21 },
-  { name: "بروتوكول الشبح", icon: Wind, href: "/ghost", knot: 1 },
+  { name: "الافتراس الاجتماعي", icon: Users, href: "/social", knot: 1 },
   { name: "سلسلة الإبادة", icon: Crosshair, href: "/kill-chain", knot: 2 },
   { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", knot: 3 },
-  { name: "إمبراطورية السرب", icon: Users, href: "/sessions", knot: 4 },
+  { name: "إمبراطورية السرب", icon: Network, href: "/sessions", knot: 4 },
   { name: "المحقن الآلي", icon: Cpu, href: "/automation", knot: 5 },
   { name: "أعين الاستطلاع", icon: Eye, href: "/recon", knot: 6 },
   { name: "جسر Mistral", icon: Link2, href: "/mcp-bridge", knot: 7 },
@@ -110,7 +112,7 @@ export function SidebarNav() {
         <div className="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto scrollbar-hide bg-black/98 relative">
           {navItems.map((item) => {
             const isActive = pathname === item.href
-            const Icon = item.icon;
+            const Icon = item.icon || Search;
             return (
               <Link
                 key={item.name}
