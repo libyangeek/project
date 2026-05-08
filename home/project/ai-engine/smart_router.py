@@ -2,21 +2,22 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Smart Router v53.5 – المُعِزّ الاستراتيجي (Arsenal Master Edition)
+Smart Router v53.8 – المُعِزّ الاستراتيجي (Arsenal Master Edition)
 المحرك المركزي لتنسيق الأسلحة المدارية، اللاسلكية، والترسانة العامة.
-تم دمج ذكاء الـ 2800 أداة وتصنيفها بنمط الهرمية المطلقة.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
-import sys, json, requests, os, subprocess, socket
+import sys, json, os, subprocess, socket
 
-BASE_DIR = "/opt/sovereign-ai-platform"
+BASE_DIR = os.getenv("PROJECT_ROOT", "/opt/sovereign-ai-platform")
 SOCK_PATH = "/tmp/muizz_event_bus.sock"
 
 def publish_event(etype, payload):
+    """بث الحدث عبر ناقل الأحداث لضمان الرنين الجماعي"""
     try:
-        with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as s:
-            s.connect(SOCK_PATH)
-            s.sendall(json.dumps({"type": etype, "payload": payload}).encode())
+        if os.path.exists(SOCK_PATH):
+            with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as s:
+                s.connect(SOCK_PATH)
+                s.sendall(json.dumps({"type": etype, "payload": payload}).encode())
     except: pass
 
 class SmartRouter:
@@ -36,47 +37,28 @@ class SmartRouter:
 
     def route_query(self, prompt):
         category = self.classify(prompt)
-        # استخراج الهدف (بسيط - آخر كلمة غالباً ما تكون الهدف في الأوامر)
-        target = prompt.split()[-1] if len(prompt.split()) > 0 else "unknown"
+        target = prompt.split()[-1] if len(prompt.split()) > 0 else "GLOBAL_MATRIX"
         
         publish_event("admiral_routing", {"category": category, "prompt": prompt})
 
-        # 1. الافتراس الاجتماعي والحسابات
-        if category == "auto_injector" or category == "ghost_track":
-            return {
-                "category": category,
-                "status": "PREDATOR_ENGAGED",
-                "tool_used": "OpenBullet_v50",
-                "output": f"Sovereign Predator Node 14: Starting siphoning sequence on {target}. Results bound to Hierarchy.",
-                "model": "predator_admiral"
-            }
+        # توجيه المهمة للوحدة التنفيذية المناسبة
+        response_map = {
+            "eye_recon": f"Initiating Trace-Labs forensics on {target}...",
+            "auto_injector": f"Deploying Legba Siphon on {target}...",
+            "cellular_warfare": f"Subjugating spectrum frequencies for {target}...",
+            "mistral_analysis": f"Consulting God-Core for strategic scenario...",
+            "kill_chain": f"Executing Universal Kill-Chain on {target}..."
+        }
 
-        # 2. الحروب الخلوية واللاسلكية
-        if category == "cellular_warfare":
-            return {
-                "category": category,
-                "node": "Al-Mu'izz_Spectrum_Arbiter",
-                "status": "SIGNAL_SUBJUGATED",
-                "output": f"Orchestrating parallel frequency strike on spectrum: {target}. IMSI Capture initialized.",
-                "model": "spectrum_admiral"
-            }
+        output = response_map.get(category, f"Sovereign Directive '{prompt}' accepted by Node 22.")
 
-        # 3. المنطق العميق (Deep Reasoning)
-        if category == "deep_reasoning" or category == "mistral_analysis":
-            return {
-                "category": category,
-                "status": "LOGIC_SYNCHRONIZED",
-                "output": f"DeepSeek Heart: Logical dissection of {prompt} complete. Path to subjugation is verified.",
-                "model": "strategic_heart"
-            }
-
-        # 4. الترسانة العامة
         return {
-            "category": category, 
-            "node": "Al-Mu'izz_God_Core_v53", 
-            "status": "Intent captured. Subjugating all necessary assets.",
-            "output": f"Supreme Directive '{prompt}' accepted. Node 22: General Arsenal is at your command.",
-            "model": "alpha_core"
+            "category": category,
+            "status": "DIRECTIVE_LOCKED",
+            "output": output,
+            "target": target,
+            "node": "Alpha-God-Core",
+            "model": "arsenal_admiral"
         }
 
 if __name__ == "__main__":
