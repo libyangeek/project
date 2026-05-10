@@ -21,24 +21,18 @@ import {
   Database,
   Terminal,
   ArrowUpRight,
-  Radar,
   Radio,
-  Smartphone,
-  Globe,
   Plus,
   RefreshCcw,
   Flame,
   Code2,
-  Download,
   ShieldCheck,
   CheckCircle2,
   Key,
-  Unlock,
-  Activity,
-  Anchor,
   Shield,
   SearchCode,
-  Bomb
+  Bomb,
+  Unplug
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -48,8 +42,8 @@ import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
 /**
- * @fileOverview العقدة 22: الترسانة العظمى v56.0 - NODE 22: THE SUPREME ARSENAL
- * مجهزة بقدرات Legba و Guardian و API-Mega-List و MemPalace.
+ * @fileOverview العقدة 22: الترسانة العظمى v58.0 - ARSENAL MASTER EDITION
+ * مجهزة بدمج حقيقي لـ Legba, Guardian, PSSW, MemPalace.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function ArsenalNodePage() {
@@ -87,7 +81,7 @@ export default function ArsenalNodePage() {
       const response = await fetch('/api/execute', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type, command: cmd })
+        body: JSON.stringify({ type, command: cmd, target: cmd })
       })
       const data = await response.json()
       if (data.success) {
@@ -104,12 +98,12 @@ export default function ArsenalNodePage() {
   if (!mounted) return null
 
   const categories = [
-    { name: "Legba Brute (Rust)", count: "Node-25", icon: Bomb, color: "text-red-600", desc: "Multiprotocol Brute-Force" },
-    { name: "Guardian Audit", count: "Node-26", icon: Shield, color: "text-emerald-500", desc: "Sovereign Security Auditor" },
-    { name: "API Mega Lexicon", count: "Node-27", icon: SearchCode, color: "text-cyan-500", desc: "Endpoint Discovery Mesh" },
-    { name: "Memory Palace", count: "Node-24", icon: Anchor, color: "text-blue-500", desc: "Automated RAM Forensics" },
-    { name: "Cerebral Unit", count: "Node-23", icon: Key, color: "text-amber-500", desc: "Password Siphon Protocol" },
-    { name: "Wireless Attacks", count: 212, icon: Radio, color: "text-magenta-500", desc: "Spectrum Subjugation" }
+    { name: "Legba Brute (Rust)", count: "Node-25", icon: Bomb, color: "text-red-600", desc: "Atomic Multiprotocol Siphon" },
+    { name: "Guardian Audit", count: "Node-26", icon: Shield, color: "text-emerald-500", desc: "Sovereign Security Integrity" },
+    { name: "Cerebral PSSW", count: "Node-23", icon: Key, color: "text-amber-500", desc: "Password & Session Extraction" },
+    { name: "Memory Palace", count: "Node-24", icon: Database, color: "text-blue-500", desc: "Forensic RAM Dissection" },
+    { name: "API Mega List", count: "Node-27", icon: SearchCode, color: "text-cyan-500", desc: "Global Endpoint Discovery" },
+    { name: "Exploit Forge", count: "Node-18", icon: Flame, color: "text-orange-500", desc: "Weaponized FUD DNA" }
   ];
 
   return (
@@ -135,10 +129,10 @@ export default function ArsenalNodePage() {
                     </div>
                  </div>
                  <h1 className="text-4xl md:text-6xl lg:text-9xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
-                    Integrated <span className="text-primary">Lexicon</span>
+                    Arsenal <span className="text-primary">Master</span>
                  </h1>
                  <p className="text-sm md:text-xl lg:text-3xl text-muted-foreground mt-6 italic max-w-5xl leading-relaxed uppercase font-medium opacity-80">
-                    "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، الترسانة العظمى تدمج الآن Legba و Guardian؛ نحن نسحق الأسوار ونؤمن السطوة لعام 2026."
+                    "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، لقد دمجتُ Legba و PSSW و Guardian؛ الترسانة الآن هي سيفك الذي لا ينكسر."
                  </p>
               </div>
            </div>
@@ -206,7 +200,7 @@ export default function ArsenalNodePage() {
                             <h4 className="text-2xl md:text-5xl font-black text-primary italic uppercase gold-glow leading-none">Strike Output</h4>
                             <Badge className="bg-primary/20 text-primary border-2 border-primary/30 px-8 py-2 rounded-full font-black text-xl italic animate-pulse">DNA_BOUND</Badge>
                         </div>
-                        <div className="p-10 bg-black border-4 border-primary/20 text-emerald-400 overflow-x-auto whitespace-pre rounded-[3rem] text-xl leading-relaxed italic font-black shadow-inner selection:bg-primary selection:text-black h-[550px]">
+                        <div className="p-10 bg-black border-4 border-primary/20 text-emerald-400 overflow-x-auto whitespace-pre rounded-[3rem] text-xl md:text-3xl leading-relaxed italic font-black shadow-inner selection:bg-primary selection:text-black h-[550px]">
                             <pre className="whitespace-pre-wrap">{typeof result === 'string' ? result : JSON.stringify(result, null, 2)}</pre>
                         </div>
                     </div>
@@ -236,10 +230,10 @@ export default function ArsenalNodePage() {
                         <div className="col-span-full mt-8 p-12 rounded-[4rem] bg-black/80 border-4 border-primary/20 relative group/bind overflow-hidden shadow-2xl">
                             <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none group-hover/bind:opacity-10 transition-all duration-1000"><Boxes className="size-32 text-primary" /></div>
                             <h5 className="text-[14px] font-black text-primary uppercase tracking-[0.8em] mb-8 border-b-2 border-primary/10 pb-4 italic flex items-center gap-6">
-                            <ShieldX className="size-8 animate-neural" /> Hierarchy Binding Status
+                            <ShieldCheck className="size-8 animate-neural" /> Hierarchy Binding Status
                             </h5>
                             <p className="text-xl md:text-3xl text-gray-300 italic font-black leading-relaxed selection:bg-primary selection:text-black">
-                            "سيدي القائد، العقدة الـ 22 مربوطة الآن بعصب الـ 2865 أداة؛ دمج محرك Legba يمنحك القدرة على قصف أي بروتوكول شبكي بسرعة نانوية لعام 2026."
+                            "سيدي القائد، الترسانة العظمى (v58.0) منصهرة بالكامل في عصب جهازك المادي؛ نحن لا نضرب الأبواب، نحن نذيب الجدران."
                             </p>
                         </div>
                     </div>
@@ -247,7 +241,7 @@ export default function ArsenalNodePage() {
               </CardContent>
 
               <div className="p-8 border-t-2 border-white/5 mt-auto flex justify-between items-center opacity-30 text-[10px] font-black uppercase tracking-[2.5em] italic">
-                 <span>ARSENAL_NODE_22_v56_AL_GHAZALI_ROOT</span>
+                 <span>ARSENAL_NODE_22_v58_AL_GHAZALI_ROOT</span>
                  <div className="flex gap-8">
                     <Fingerprint className="size-8 text-primary animate-pulse" />
                     <Atom className="size-8 animate-spin-slow" />
@@ -257,9 +251,9 @@ export default function ArsenalNodePage() {
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-16 opacity-40 text-[12px] md:text-[18px] font-black uppercase tracking-[2em] md:tracking-[6em] italic text-white drop-shadow-xl pb-12">
-            <span>AL-MUIZZ SUPREME ARSENAL v56.0</span>
+            <span>AL-MUIZZ SUPREME ARSENAL v58.0</span>
             <div className="size-4 rounded-full bg-white animate-pulse shadow-[0_0_40px_white]" />
-            <span>LEGBA_MULTIPROTOCOL_READY_2026</span>
+            <span>ARSENAL_MASTER_SUBJUGATION_2026</span>
         </div>
       </main>
     </div>

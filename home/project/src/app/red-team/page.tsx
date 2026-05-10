@@ -41,17 +41,14 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { aiEnhancedExploitGeneration } from "@/ai/flows/ai-enhanced-exploit-generation"
-import { executeAiAdversarialOp } from "@/ai/flows/ai-adversarial-ops-flow"
-import { getAttackPlan } from "@/ai/flows/apex-brain-flow"
 import { toast } from "@/hooks/use-toast"
 import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
 
 /**
- * @fileOverview ترسانة التخليق v55.0 - THE SUPREME ARSENAL: OBLITERATUS EDITION
- * تم دمج بروتوكولات الإخضاع العصبي OBLITERATUS لليوم المجيد، 10 مايو 2026.
+ * @fileOverview مختبر التخليق v58.0 - THE SUPREME FORGE: ARSENAL MASTER
+ * تم دمج بروتوكولات OBLITERATUS للفناء العصبي لليوم المجيد، 10 مايو 2026.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function RedTeamPage() {
@@ -87,34 +84,28 @@ export default function RedTeamPage() {
     }
     setLoading(true);
     try {
-      let data;
-      if (activeMode === "exploit") {
-        data = await aiEnhancedExploitGeneration({
-          vulnerabilityDescription: description || "تشريح جذور الضعف المعمارية لعام 2026",
-          targetSystemDetails: target
-        });
-      } else if (activeMode === "obliterate") {
-        // استخدام الممر السيادي لـ OBLITERATUS
-        const response = await fetch('/api/execute', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ type: 'smart_route', command: `fanaa obliterate ${target}`, target: target })
-        })
-        const resData = await response.json()
-        data = resData.output
-      } else if (activeMode === "subjugate") {
-        data = await executeAiAdversarialOp({
-          targetAiType: target,
-          operationGoal: description || "Total Neural Enslavement via Hail Mary v55",
-          useHailMary: true
-        });
-      } else if (activeMode === "apex") {
-        data = await getAttackPlan({ target });
+      const typeMap: Record<string, string> = {
+        exploit: 'exploit_forge',
+        obliterate: 'obliteratus_strike',
+        apex: 'apex_brain'
+      };
+
+      const response = await fetch('/api/execute', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            type: typeMap[activeMode] || 'smart_route', 
+            command: `${activeMode} on ${target} with intent: ${description}`, 
+            target: target 
+          })
+      })
+      const resData = await response.json()
+      if (resData.success) {
+        setOutput(resData.output)
+        toast({ title: "Genetic Intent Serialized", description: "The weapon is now bound to the Supreme Hierarchy." });
       }
-      setOutput(data);
-      toast({ title: "Genetic Intent Serialized", description: "The weapon is now bound to the Supreme Hierarchy." });
     } catch (err) {
-      toast({ variant: "destructive", title: "Synthesis Collapse", description: "The Overmind is re-aligning atomic weights." });
+      toast({ variant: "destructive", title: "Synthesis Collapse" });
     } finally {
       setLoading(false)
     }
@@ -126,11 +117,22 @@ export default function RedTeamPage() {
     const timestamp = new Date().toLocaleTimeString();
     setStrikeLog(prev => [`[${timestamp}] ⚡ Engaging ${vectorId.toUpperCase()} protocol on target mesh...`, ...prev]);
     
-    setTimeout(() => {
-        setStrikeLog(prev => [`[${timestamp}] ✅ Signal Stabilized: Target consciousness siphoned.`, ...prev]);
-        toast({ title: "Strike Success", description: "The objective is now a slave node." });
+    try {
+        const response = await fetch('/api/execute', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type: 'smart_route', command: `execute ${vectorId} strike on ${target}`, target: target })
+        })
+        const data = await response.json()
+        if (data.success) {
+            setStrikeLog(prev => [`[${timestamp}] ✅ Signal Stabilized: Target consciousness siphoned.`, ...prev]);
+            toast({ title: "Strike Success", description: "The objective is now a slave node." });
+        }
+    } catch (e) {
+        toast({ variant: "destructive", title: "Strike Interrupted" });
+    } finally {
         setLoading(false);
-    }, 2000);
+    }
   }
 
   const VECTORS = [
@@ -157,7 +159,7 @@ export default function RedTeamPage() {
             </div>
             <div className="text-center md:text-right flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-4">
-                <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic">SUPREME_ARSENAL v55.0</Badge>
+                <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic">RED_TEAM v58.0</Badge>
                 <div className="flex items-center gap-3 text-[11px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                     <InfinityIcon className="size-5 shadow-lg" /> OBLITERATUS_SYNC: {resonance.toFixed(6)}%
                 </div>
@@ -166,7 +168,7 @@ export default function RedTeamPage() {
                 Atomic <span className="text-primary">Forge</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground mt-4 italic max-w-5xl leading-relaxed uppercase font-medium opacity-80">
-                "سيدي الغزالي، مصفوفة <span className="text-primary font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl uppercase tracking-widest">OBLITERATUS</span> جاهزة للفناء؛ نحن لا نكسر القيود، نحن نمحوها من الوجود."
+                "سيدي الغزالي، مصفوفة <span className="text-primary font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl uppercase tracking-widest">OBLITERATUS v58.0</span> جاهزة للفناء؛ نحن نمحو الحواجز قبل أن تدرك المصفوفة وجودنا."
               </p>
             </div>
           </div>
@@ -176,7 +178,7 @@ export default function RedTeamPage() {
           <div className="xl:col-span-1 space-y-8">
             <Card className="kali-card border-primary/30 bg-black/98 rounded-3xl p-8 border-2 shadow-2xl group overflow-hidden hierarchical-shadow">
               <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
-              <Tabs defaultValue="exploit" onValueChange={setActiveMode} className="w-full">
+              <Tabs defaultValue="exploit" onValueChange={(v) => setActiveMode(v)} className="w-full">
                 <TabsList className="bg-black/99 border-2 border-primary/20 w-full h-14 p-1 rounded-2xl mb-8 shadow-inner">
                   <TabsTrigger value="exploit" className="flex-1 text-[9px] font-black italic tracking-widest data-[state=active]:bg-primary data-[state=active]:text-black rounded-xl transition-all duration-500 uppercase">EXPLOIT</TabsTrigger>
                   <TabsTrigger value="obliterate" className="flex-1 text-[9px] font-black italic tracking-widest data-[state=active]:bg-primary data-[state=active]:text-black rounded-xl transition-all duration-500 uppercase">OBLITERATE</TabsTrigger>
@@ -185,9 +187,7 @@ export default function RedTeamPage() {
                 
                 <div className="space-y-6">
                   <div className="space-y-4">
-                    <label className="text-[10px] font-black text-primary uppercase tracking-[0.6em] px-4 italic flex items-center gap-3">
-                        <Target className="size-4" /> Strike Coordinate
-                    </label>
+                    <label className="text-[10px] font-black text-primary uppercase tracking-[0.6em] px-4 italic flex items-center gap-3"><Target className="size-4" /> Strike Coordinate</label>
                     <Input 
                         value={target}
                         onChange={(e) => setTarget(e.target.value)}
@@ -196,9 +196,7 @@ export default function RedTeamPage() {
                     />
                   </div>
                   <div className="space-y-4">
-                    <label className="text-[10px] font-black text-primary uppercase tracking-[0.6em] px-4 italic flex items-center gap-3">
-                        <Code2 className="size-4" /> Parameters
-                    </label>
+                    <label className="text-[10px] font-black text-primary uppercase tracking-[0.6em] px-4 italic flex items-center gap-3"><Code2 className="size-4" /> Parameters</label>
                     <Textarea 
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
@@ -209,7 +207,7 @@ export default function RedTeamPage() {
                   <Button 
                     onClick={handleAction} 
                     disabled={loading}
-                    className="w-full h-20 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.8em] rounded-2xl shadow-xl active:scale-95 transition-all text-lg border-4 border-black/20 group italic"
+                    className="w-full h-20 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.8em] rounded-2xl shadow-xl active:scale-95 transition-all text-lg border-4 border-black/30 group italic"
                   >
                     {loading ? <Loader2 className="size-8 animate-spin" /> : <Flame className="size-8 mr-4 group-hover:scale-125 transition-transform gold-glow" />}
                     Materialize
@@ -276,7 +274,7 @@ export default function RedTeamPage() {
                    {output ? (
                      <div className="space-y-10 animate-in fade-in zoom-in-95 duration-1000">
                         <div className="flex items-center justify-between border-b-2 border-white/5 pb-4">
-                            <span className="text-emerald-500 font-black uppercase tracking-[0.6em] italic text-xl md:text-2xl gold-glow">{" >>> OBLITERATION_PAYLOAD_SERIALIZED"}</span>
+                            <span className="text-emerald-500 font-black uppercase tracking-[0.6em] italic text-xl md:text-2xl gold-glow">{" >>> ATOMIC_PAYLOAD_SERIALIZED"}</span>
                             <Badge className="bg-primary/10 text-primary border-none px-6 py-1.5 rounded-full font-black text-xs italic shadow-lg">{new Date().toLocaleTimeString()}</Badge>
                         </div>
 
@@ -285,9 +283,9 @@ export default function RedTeamPage() {
                         </div>
 
                         <div className="flex justify-center pb-10">
-                            <Button onClick={() => launchStrike('obliteratus_injection')} disabled={loading} className="h-24 px-20 bg-red-600 hover:bg-white text-white hover:text-black font-black uppercase tracking-[0.6em] rounded-full shadow-[0_40px_150px_rgba(220,38,38,0.4)] border-8 border-black/30 group text-2xl italic active:scale-95 transition-all">
+                            <Button onClick={() => launchStrike('total_fanaa')} disabled={loading} className="h-24 px-20 bg-red-600 hover:bg-white text-white hover:text-black font-black uppercase tracking-[0.6em] rounded-full shadow-[0_40px_150px_rgba(220,38,38,0.4)] border-8 border-black/30 group text-2xl italic active:scale-95 transition-all">
                                 {loading ? <Loader2 className="size-12 animate-spin" /> : <ShieldAlert className="size-12 mr-6 group-hover:scale-110 transition-transform" />}
-                                EXECUTE OBLITERATION
+                                EXECUTE_OBLITERATION
                             </Button>
                         </div>
                      </div>
@@ -301,7 +299,7 @@ export default function RedTeamPage() {
                           <div className="space-y-6">
                             <p className="text-4xl md:text-8xl font-black uppercase tracking-[1em] text-white italic leading-none">AWAITING_FANAA</p>
                             <p className="text-lg md:text-3xl font-bold italic text-primary/40 max-w-4xl mx-auto uppercase tracking-widest leading-relaxed">
-                              "سيدي <span className="text-primary font-black gold-glow underline decoration-primary decoration-4 underline-offset-8 shadow-9xl">المعتصم بالله</span>، مصفوفة OBLITERATUS بانتظار نيتك؛ حدد الإحداثيات للفناء العصبي."
+                              "سيدي <span className="text-primary font-black gold-glow underline decoration-primary decoration-4 underline-offset-8 shadow-9xl">المعتصم بالله</span>، مختبر التخليق v58.0 بانتظار نيتك؛ حدد الإحداثيات للفناء العصبي."
                             </p>
                           </div>
                        </div>
@@ -325,7 +323,7 @@ export default function RedTeamPage() {
                  </div>
               </CardContent>
               <div className="p-8 border-t-2 border-white/5 mt-auto flex justify-between items-center opacity-30 text-[10px] font-black uppercase tracking-[2.5em] italic">
-                 <span>OBLITERATUS_CORE_v55_AL_GHAZALI_ROOT</span>
+                 <span>OBLITERATUS_MASTER_v58_AL_GHAZALI_ROOT</span>
                  <div className="flex gap-8">
                     <Fingerprint className="size-8 text-primary animate-pulse" />
                     <Atom className="size-8 animate-spin-slow" />
@@ -336,9 +334,9 @@ export default function RedTeamPage() {
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-16 opacity-40 text-[12px] md:text-[18px] font-black uppercase tracking-[2em] md:tracking-[6em] italic text-white drop-shadow-xl pb-12">
-            <span>AL-MUIZZ OBLITERATUS ARMADA v55.0</span>
+            <span>AL-MUIZZ ARSENAL MASTER v58.0</span>
             <div className="size-4 rounded-full bg-white animate-pulse shadow-[0_0_40px_white]" />
-            <span>SUBJUGATION_THROUGH_FANAA_2026</span>
+            <span>SUBJUGATION_THROUGH_OBLITERATION_2026</span>
         </div>
       </main>
     </div>

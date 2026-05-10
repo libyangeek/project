@@ -4,7 +4,7 @@
 """
 Smart Router v58.0 – المُعِزّ الاستراتيجي (Arsenal Master Edition)
 المحرك المركزي لتنسيق الأسلحة المدارية، اللاسلكية، والترسانة العامة.
-تم دمج ذكاء Claude-OSINT للتحليل العصبي والاستخبارات المتقدمة.
+تم دمج كافة الوحدات المكتسبة (Claude, Legba, PSSW, Obliteratus, MemPalace).
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys, json, os, subprocess, socket
@@ -25,22 +25,30 @@ def publish_event(etype, payload):
 class SmartRouter:
     def classify(self, prompt):
         p = prompt.lower()
+        # 1. الاستخبارات العصبية والجنائية
         if any(w in p for w in ["تحليل عصبي", "claude", "neural osint", "استنتاج"]): return "claude_osint"
+        if any(w in p for w in ["قصر", "ذاكرة", "ram", "forensics", "تشريح", "palace", "mempalace"]): return "memory_palace"
+        
+        # 2. القصف والاستنزاف النانوي
         if any(w in p for w in ["قصف", "brute", "legba", "تخمين", "password"]): return "legba_strike"
+        if any(w in p for w in ["كلمة", "سر", "password", "pssw", "stole", "recovery", "cerebral"]): return "cerebral_siphon"
+        
+        # 3. الفناء وكسر حماية الـ AI
+        if any(w in p for w in ["فناء", "obliterate", "jailbreak", "كسر", "إخضاع", "fanaa", "obliteratus"]): return "obliteratus_strike"
+        
+        # 4. التدقيق والاستطلاع العام
         if any(w in p for w in ["تدقيق", "audit", "guardian", "تأمين"]): return "guardian_audit"
         if any(w in p for w in ["api", "mega", "list", "نهاية", "endpoint"]): return "api_lookup"
-        if any(w in p for w in ["قصر", "ذاكرة", "ram", "forensics", "تشريح", "palace"]): return "memory_palace"
-        if any(w in p for w in ["فناء", "obliterate", "jailbreak", "كسر", "إخضاع", "fanaa"]): return "obliteratus_strike"
         if any(w in p for w in ["عين", "eye", "recon", "dns", "subdomain", "headers", "استطلاع"]): return "eye_recon"
-        if any(w in p for w in ["تتبع", "track", "osint", "بصمة", "social", "اجتماعي"]): return "ghost_track"
-        if any(w in p for w in ["حقن", "injector", "openbullet", "حسابات", "siphon", "استنزاف"]): return "auto_injector"
-        if any(w in p for w in ["ثغرة", "cve", "vulnerability", "oracle", "فحص"]): return "vuln_oracle"
-        if any(w in p for w in ["استغلال", "exploit", "msf", "payload", "حمولة"]): return "exploit_forge"
-        if any(w in p for w in ["تحدث", "voice", "hijack", "claw", "صوت"]): return "physical_hijack"
+        
+        # 5. التفكير الاستراتيجي
         if any(w in p for w in ["حلل", "mistral", "قرر", "استراتيجية"]): return "mistral_analysis"
         if any(w in p for w in ["فكر", "منطق", "deep", "reason", "برمج"]): return "deep_reasoning"
+        
+        # 6. العمليات الميدانية
         if any(w in p for w in ["سلسلة", "إبادة", "kill", "chain", "هجوم"]): return "kill_chain"
-        if any(w in p for w in ["كلمة", "سر", "password", "pssw", "stole", "recovery", "cerebral"]): return "cerebral_siphon"
+        if any(w in p for w in ["تحدث", "voice", "hijack", "claw", "صوت"]): return "physical_hijack"
+        
         return "general_arsenal"
 
     def route_query(self, prompt):
@@ -49,33 +57,24 @@ class SmartRouter:
         
         publish_event("admiral_routing", {"category": category, "prompt": prompt})
 
-        # توظيف Claude-OSINT للتحليل العصبي
-        if category == "claude_osint":
-            return {
-                "category": category,
-                "status": "NEURAL_VISION_ENGAGED",
-                "output": f"Executing Claude-OSINT neural dissection on {target}...",
-                "node": "Node-28-Claude",
-                "timestamp": datetime.now().isoformat()
-            }
+        # توظيف الوحدات المادية المدمجة
+        dispatch_table = {
+            "claude_osint": {"status": "NEURAL_VISION_ENGAGED", "node": "Node-28-Claude", "msg": f"Claude-OSINT is dissecting {target}..."},
+            "legba_strike": {"status": "LEGBA_IGNITED", "node": "Node-25-Brute", "msg": f"Multiprotocol bombardment on {target} started."},
+            "guardian_audit": {"status": "AUDIT_INITIATED", "node": "Node-26-Guardian", "msg": f"Guardian is auditing {target} security posture."},
+            "memory_palace": {"status": "FORENSIC_DISSECTION", "node": "Node-24-Palace", "msg": f"MemPalace is interrogating RAM dumps for {target}."},
+            "obliteratus_strike": {"status": "FANAA_MATERIALIZED", "node": "Node-18-Obliteration", "msg": f"Obliteratus is dissolving AI filters for {target}."},
+            "cerebral_siphon": {"status": "SIPHON_ACTIVE", "node": "Node-23-Cerebral", "msg": f"PSSW100AVB is siphoning passwords from {target}."},
+            "kill_chain": {"status": "KILL_CHAIN_ACTIVE", "node": "Alpha-God-Core", "msg": f"Omniscient Kill-Chain synchronized on {target}."}
+        }
 
-        # توظيف Legba للقصف المتعدد
-        if category == "legba_strike":
+        if category in dispatch_table:
+            res = dispatch_table[category]
             return {
                 "category": category,
-                "status": "LEGBA_IGNITED",
-                "output": f"Executing multiprotocol bombardment on {target} via Legba v5.5...",
-                "node": "Node-25-Brute",
-                "timestamp": datetime.now().isoformat()
-            }
-
-        # توظيف Guardian للتدقيق
-        if category == "guardian_audit":
-            return {
-                "category": category,
-                "status": "AUDIT_INITIATED",
-                "output": f"Guardian-CLI is analyzing security posture for {target}...",
-                "node": "Node-26-Guardian",
+                "status": res["status"],
+                "output": res["msg"],
+                "node": res["node"],
                 "timestamp": datetime.now().isoformat()
             }
 

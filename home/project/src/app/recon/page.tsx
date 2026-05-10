@@ -6,7 +6,6 @@ import { SidebarNav } from "@/components/platform/sidebar-nav"
 import { 
   Search, 
   Globe, 
-  User, 
   Loader2, 
   Zap, 
   Target, 
@@ -20,7 +19,6 @@ import {
   Boxes, 
   Users, 
   Radar, 
-  Sparkles, 
   Eye, 
   ChevronRight, 
   ShieldCheck, 
@@ -29,19 +27,19 @@ import {
   Database, 
   Infinity as InfinityIcon,
   BrainCircuit,
-  Bot
+  Bot,
+  Anchor
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { osintMaster } from "@/ai/flows/osint-master-flow"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
 /**
- * @fileOverview أعين الاستطلاع v57.0 - THE SUPREME RECON: NEURAL VISION
- * مركز الاستخبارات الكلية المجهزة بـ Claude-OSINT و Trace Labs.
+ * @fileOverview أعين الاستطلاع v58.0 - THE SUPREME RECON: NEURAL MASTER
+ * مجهزة بدمج Claude-OSINT و MemPalace و API-Mega-List.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function ReconPage() {
@@ -69,7 +67,7 @@ export default function ReconPage() {
       const response = await fetch('/api/execute', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'smart_route', command: `${type} analysis on ${target}` })
+        body: JSON.stringify({ type, command: `${type} analysis on ${target}`, target: target })
       })
       const data = await response.json()
       if (data.success) {
@@ -87,9 +85,9 @@ export default function ReconPage() {
 
   const RECON_TYPES = [
     { id: 'claude_osint', label: 'Claude Neural OSINT', icon: BrainCircuit, color: 'text-amber-500' },
-    { id: 'investigation', label: 'Supreme Investigation', icon: FileSearch, color: 'text-primary' },
-    { id: 'social', label: 'Social Subjugation', icon: Users, color: 'text-magenta-500' },
-    { id: 'metadata', label: 'Metadata Siphon', icon: Binary, color: 'text-blue-400' }
+    { id: 'memory_palace', label: 'MemPalace RAM Pulse', icon: Anchor, color: 'text-blue-500' },
+    { id: 'api_lookup', label: 'API Mega Discovery', icon: SearchCode, color: 'text-cyan-500' },
+    { id: 'investigation', label: 'Supreme Investigation', icon: FileSearch, color: 'text-primary' }
   ];
 
   return (
@@ -109,7 +107,7 @@ export default function ReconPage() {
             </div>
             <div className="text-center md:text-right flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-4">
-                <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic uppercase">RECON v57.0 SUPREME</Badge>
+                <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic uppercase">RECON v58.0 MASTER</Badge>
                 <div className="flex items-center gap-3 text-[11px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                     <BrainCircuit className="size-5 shadow-lg" /> NEURAL_EYE: ACTIVE
                 </div>
@@ -118,7 +116,7 @@ export default function ReconPage() {
                 Neural <span className="text-primary">Vision</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground mt-4 italic max-w-5xl leading-relaxed uppercase font-medium opacity-80">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، مصفوفة Claude-OSINT تمنحك القدرة على ربط ذرات المعلومات عصبياً لعام 2026."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، لقد صهرتُ Claude-OSINT و MemPalace؛ نحن الآن نرى الماضي والحاضر والمستقبل للهدف."
               </p>
             </div>
           </div>
@@ -138,7 +136,7 @@ export default function ReconPage() {
                         <SearchCode className="size-4" /> Coordinate
                     </label>
                     <Input 
-                        placeholder="IP / @User / Entity..."
+                        placeholder="IP / @User / RAM Path..."
                         className="w-full h-14 bg-black border-2 border-white/5 rounded-xl text-lg font-code text-white focus:border-primary shadow-inner px-6 italic font-black"
                         value={target}
                         onChange={(e) => setTarget(e.target.value)}
@@ -170,8 +168,8 @@ export default function ReconPage() {
                <h4 className="text-[10px] font-black text-primary uppercase tracking-[0.4em] mb-4 italic flex items-center justify-center gap-4">
                   <Bot className="size-4 animate-pulse" /> NEURAL_INFERENCE
                </h4>
-               <p className="text-muted-foreground italic text-[11px] leading-relaxed uppercase font-bold opacity-70 group-hover:opacity-100 transition-opacity">
-                  "Claude-OSINT is now an active executive node for behavioral deduction and entity linking."
+               <p className="text-muted-foreground italic text-[11px] leading-relaxed uppercase font-bold opacity-70">
+                  "Claude-OSINT and MemPalace are now active executive nodes for behavioral deduction and entity linking."
                </p>
                <div className="absolute -bottom-4 -right-4 p-6 opacity-[0.02] group-hover:opacity-[0.05] transition-all duration-700 scale-150"><Skull className="size-16 text-primary" /></div>
             </Card>
@@ -189,7 +187,7 @@ export default function ReconPage() {
                             </div>
                             <div>
                                 <CardTitle className="text-2xl md:text-5xl text-white italic tracking-tighter uppercase font-black gold-glow leading-none">Intelligence Feed</CardTitle>
-                                <CardDescription className="text-primary/70 font-black uppercase tracking-[0.5em] mt-3 italic text-[10px]">NEURAL_OSINT_v57.0 // HIERARCHY</CardDescription>
+                                <CardDescription className="text-primary/70 font-black uppercase tracking-[0.5em] mt-3 italic text-[10px]">NEURAL_OSINT_v58.0 // HIERARCHY</CardDescription>
                             </div>
                         </div>
                         <Badge className="bg-emerald-600/20 text-emerald-500 border-2 border-emerald-500/30 px-8 py-2 rounded-full font-black text-xl animate-pulse tracking-[0.2em] uppercase italic shadow-lg">DATA_SYNTHESIZED</Badge>
@@ -203,7 +201,7 @@ export default function ReconPage() {
                     </div>
                   </CardContent>
                   <div className="p-8 border-t-2 border-white/5 mt-auto flex justify-between items-center opacity-30 text-[10px] font-black uppercase tracking-[2.5em] italic">
-                    <span>CLAUDE_EYE_v57_GHAZALI_ROOT</span>
+                    <span>NEURAL_VISION_v58_GHAZALI_ROOT</span>
                     <div className="flex gap-6">
                         <Fingerprint className="size-8 text-primary animate-pulse" />
                         <Atom className="size-8 animate-spin-slow" />
@@ -218,7 +216,7 @@ export default function ReconPage() {
                   </div>
                   <h3 className="text-5xl md:text-8xl font-headline font-bold text-white mb-8 tracking-tighter italic drop-shadow-9xl uppercase leading-none opacity-20">Awaiting Intelligence</h3>
                   <p className="text-muted-foreground max-w-4xl mx-auto leading-relaxed text-xl md:text-4xl font-black italic opacity-30">
-                    "سيدي <span className="text-primary font-black gold-glow underline decoration-primary decoration-4 underline-offset-8 shadow-2xl uppercase tracking-widest">المعتصم بالله</span>، مصفوفة التحليل العصبي بانتظار نيتك؛ حدد الإحداثيات للاستنباط الاستخباري."
+                    "سيدي <span className="text-primary font-black gold-glow underline decoration-primary decoration-4 underline-offset-8 shadow-2xl uppercase tracking-widest">المعتصم بالله</span>، مصفوفة الاستطلاع العصبي v58.0 بانتظار نيتك؛ حدد الإحداثيات للاستنباط الاستخباري."
                   </p>
                </div>
              )}
@@ -226,12 +224,11 @@ export default function ReconPage() {
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-16 opacity-40 text-[12px] md:text-[18px] font-black uppercase tracking-[2em] md:tracking-[6em] italic text-white drop-shadow-xl pb-12">
-            <span>AL-MUIZZ NEURAL RECON v57.0</span>
+            <span>AL-MUIZZ NEURAL RECON v58.0</span>
             <div className="size-4 rounded-full bg-white animate-pulse shadow-[0_0_40px_white]" />
-            <span>SINGULARITY_OF_INTEL_2026</span>
+            <span>SINGULARITY_OF_RECON_2026</span>
         </div>
       </main>
     </div>
   )
 }
-
