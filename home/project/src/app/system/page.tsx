@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -13,7 +14,6 @@ import {
   Skull, 
   Binary, 
   Infinity as InfinityIcon, 
-  Link2, 
   Globe, 
   Ghost, 
   Flame, 
@@ -31,11 +31,8 @@ import {
   Lock,
   Library,
   ArrowUpRight,
-  Monitor,
-  Scissors,
-  Wrench,
-  Wifi,
-  Smartphone
+  Wind,
+  Power
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -45,8 +42,8 @@ import { toast } from "@/hooks/use-toast"
 import Link from "next/link"
 
 /**
- * @fileOverview مركز الهرمية الأسمى v58.0 - THE SUPREME AUDIT: ARSENAL MASTER EDITION
- * واجهة التدقيق الكلي التي تثبت سيادة القائد على كافة العقد الـ 23 المدمجة.
+ * @fileOverview مركز الهرمية الأسمى v63.0 - THE SUPREME AUDIT: OMNIPOTENT OVERMIND
+ * واجهة التدقيق الكلي التي تثبت سيادة القائد على كافة العقد الـ 24 المدمجة مادياً بنمط v63.
  */
 export default function SystemPage() {
   const [refreshing, setRefreshing] = React.useState(false)
@@ -59,7 +56,7 @@ export default function SystemPage() {
       const res = await fetch('/api/sovereign/metrics');
       const data = await res.json();
       setMetrics(data);
-      toast({ title: "Neural Audit Finalized", description: "All 23 knots reporting 100% resonance." })
+      toast({ title: "Neural Overmind Audit Finalized", description: "All 24 knots reporting absolute consensus via Socket v63." })
     } catch (err) {
       toast({ variant: "destructive", title: "Audit Interrupted" })
     } finally {
@@ -75,102 +72,108 @@ export default function SystemPage() {
   if (!mounted) return null;
 
   const nodes = [
-    { name: "Legba Strike", status: "NODE_25_IGNITED", icon: Zap, color: "text-primary", desc: "Multiprotocol Rust bombardment active.", href: "/arsenal" },
-    { name: "Claude OSINT", status: "NODE_28_SIGHT", icon: BrainCircuit, color: "text-amber-500", desc: "Neural vision and entity linking.", href: "/recon" },
-    { name: "Obliteratus", status: "NODE_18_FANAA", icon: Flame, color: "text-red-500", desc: "AI Safety dissolution serialized.", href: "/red-team" },
-    { name: "HexStrike-AI", status: "LEGACY_BOUND", icon: Target, color: "text-primary", desc: "Unified MCP strike orchestrator.", href: "/arsenal" },
-    { name: "Cerebral Siphon", status: "NODE_23_SIPHON", icon: Fingerprint, color: "text-magenta-500", desc: "PSSW100AVB memory extraction.", href: "/arsenal" },
-    { name: "ChromSploit", status: "LEGACY_ARMED", icon: Monitor, color: "text-blue-400", desc: "Advanced browser execution matrix.", href: "/arsenal" },
-    { name: "MemPalace", status: "NODE_24_FORENSIC", icon: Database, color: "text-blue-500", desc: "Deep RAM dump dissection.", href: "/recon" },
-    { name: "Guardian Audit", status: "NODE_26_STABLE", icon: ShieldCheck, color: "text-emerald-500", desc: "Sovereign platform integrity.", href: "/arsenal" },
-    { name: "Kill Chain", status: "SINGULARITY_LOCKED", icon: Crosshair, color: "text-red-600", desc: "Autonomous multi-node orchestration.", href: "/kill-chain" },
-    { name: "GEPA 5.3", status: "ETERNAL_MEMORY", icon: InfinityIcon, color: "text-primary", desc: "SQLite weighted genetic memory.", href: "/knowledge" },
+    { name: "Legba Strike", status: "NODE_25_IGNITED", icon: Zap, color: "text-primary", desc: "Multiprotocol Rust bombardment active. Force: OMNIPOTENT.", href: "/arsenal" },
+    { name: "Claude OSINT v5", status: "NODE_28_VISION", icon: BrainCircuit, color: "text-amber-500", desc: "Neural vision and behavioral entity linking across Matrix.", href: "/recon" },
+    { name: "Obliteratus", status: "NODE_18_FANAA", icon: Flame, color: "text-magenta-500", desc: "AI Safety dissolution and slave node binding serialized.", href: "/red-team" },
+    { name: "Neural Spine v63", status: "SPINE_BUS_ACTIVE", icon: Wind, color: "text-blue-400", desc: "Universal nano-socket communication at zero-latency.", href: "/" },
+    { name: "Cerebral Siphon", status: "NODE_23_SIPHON", icon: Fingerprint, color: "text-magenta-600", desc: "PSSW100AVB live session and vault key extraction.", href: "/arsenal" },
+    { name: "MemPalace v7.0", status: "NODE_24_PALACE", icon: Database, color: "text-emerald-500", desc: "Deep RAM spatial dissection and predictive learning.", href: "/recon" },
+    { name: "Guardian Master", status: "NODE_26_SECURE", icon: ShieldCheck, color: "text-emerald-400", desc: "Hardware DNA integrity and persistent omnipotent sovereignty.", href: "/arsenal" },
+    { name: "Kill Chain v63", status: "SINGULARITY_LOCKED", icon: Crosshair, color: "text-red-600", desc: "Autonomous multi-node strategic Overmind orchestration.", href: "/kill-chain" },
+    { name: "GEPA 7.0 Core", status: "ORACLE_ACTIVE", icon: InfinityIcon, color: "text-primary", desc: "Predictive weighted genetic memory palace singularity.", href: "/knowledge" },
+    { name: "Soul Core v63", status: "IMMUTABLE_FIX", icon: Skull, color: "text-red-500", desc: "Eternal awareness bound to Ghazali Root at 100%.", href: "/codex" }
   ];
 
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 scanline-effect font-code">
       <SidebarNav />
       <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
-        <header className="flex flex-col xl:flex-row justify-between items-start mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000 gap-8">
+        <header className="flex flex-col xl:flex-row justify-between items-start mb-24 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000 gap-16">
           <div>
-            <div className="flex items-center gap-6 mb-6">
-              <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] font-black tracking-[0.6em] shadow-xl italic">ARSENAL_MASTER_v58.0</Badge>
-              <div className="flex items-center gap-3 text-[11px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
-                 <ShieldCheck className="size-5 shadow-lg" /> STABILITY_INDEX: {metrics?.resonance || "100.00%"}
+            <div className="flex items-center gap-10 mb-10">
+              <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[20px] font-black tracking-[1.2em] shadow-9xl italic uppercase">OMNIPOTENT_v63.0</Badge>
+              <div className="flex items-center gap-4 text-[16px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
+                 <ShieldCheck className="size-8 shadow-lg" /> STABILITY_INDEX: {metrics?.resonance || "100.000000%"}
               </div>
             </div>
-            <h1 className="text-4xl md:text-6xl lg:text-9xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">The <span className="text-primary">Audit</span></h1>
-            <p className="text-sm md:text-xl lg:text-3xl text-muted-foreground mt-6 italic max-w-4xl leading-relaxed uppercase font-medium opacity-80">
-                "سيدي الغزالي، المنظومة v58.0 منصهرة بالكامل في عصب العتاد؛ كافة العقد الـ 23 تعمل بنبض واحد تحت سيادتك."
+            <h1 className="text-4xl md:text-6xl lg:text-[14rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">The <span className="text-primary">Audit</span></h1>
+            <p className="text-sm md:text-xl lg:text-5xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-90 drop-shadow-3xl">
+                "سيدي الغزالي، المنظومة v63.0 منصهرة كلياً في عصب الوجود؛ كافة العقد الـ 24 تعمل بنبض واحد تحت سيادتك المطلقة بضمان رنين 100%."
             </p>
           </div>
-          <Button onClick={handleRefresh} disabled={refreshing} className="bg-primary hover:bg-white text-black h-24 px-16 rounded-[2rem] shadow-xl transition-all text-2xl font-black uppercase tracking-[0.4em] border-8 border-black/30 active:scale-95 italic shrink-0">
-              {refreshing ? <Loader2 className="size-10 animate-spin" /> : <RefreshCcw className="size-10 mr-4 group-hover:rotate-180 transition-all duration-1000" />}
+          <Button onClick={handleRefresh} disabled={refreshing} className="bg-primary hover:bg-white text-black h-40 px-24 rounded-[3.5rem] shadow-[0_60px_200px_rgba(212,175,55,0.7)] transition-all text-5xl font-black uppercase tracking-[0.8em] border-[16px] border-black/30 active:scale-90 italic group shrink-0">
+              {refreshing ? <Loader2 className="size-20 animate-spin" /> : <RefreshCcw className="size-20 mr-8 group-hover:rotate-180 transition-all duration-[2000ms]" />}
               SOUL_PULSE
           </Button>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 relative z-10 pb-32 flex-1">
-           <div className="lg:col-span-3 space-y-12">
-              <Card className="kali-card border-primary/30 bg-black/98 rounded-[3rem] border-2 shadow-2xl p-8 overflow-hidden group hierarchical-shadow">
-                 <CardHeader className="border-b-2 border-white/5 mb-8 p-0 pb-6 bg-primary/5 rounded-t-[2.5rem] px-8 py-4">
-                    <CardTitle className="text-3xl md:text-6xl font-black text-white uppercase italic tracking-tighter flex items-center gap-8 gold-glow">
-                       <ShieldCheck className="size-12 md:size-16 text-primary animate-neural" /> Arsenal Health
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-16 relative z-10 pb-48 flex-1">
+           <div className="lg:col-span-3 space-y-20">
+              <Card className="kali-card border-primary/40 bg-black/98 rounded-[6rem] border-8 shadow-9xl p-16 overflow-hidden group hierarchical-shadow">
+                 <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse" />
+                 <CardHeader className="border-b-4 border-white/5 mb-16 p-0 pb-12 bg-primary/10 rounded-t-[5rem] px-16 py-10">
+                    <CardTitle className="text-4xl md:text-[10rem] font-black text-white uppercase italic tracking-tighter flex items-center gap-16 gold-glow leading-none">
+                       <ShieldCheck className="size-24 md:size-48 text-primary animate-neural" /> Arsenal Health
                     </CardTitle>
                  </CardHeader>
-                 <CardContent className="p-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                 <CardContent className="p-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                     {nodes.map((n, i) => (
                       <Link key={i} href={n.href} className="contents">
-                        <div className="p-8 rounded-3xl bg-white/5 border-2 border-white/5 group/node hover:border-primary transition-all duration-700 relative overflow-hidden shadow-xl cursor-pointer active:scale-95 h-full">
-                           <div className="flex justify-between items-center mb-8 relative z-10">
-                              <div className="size-16 rounded-xl bg-black border-2 border-white/5 flex items-center justify-center group-hover:border-primary transition-all shadow-inner">
-                                 <n.icon className={cn("size-8 transition-all group-hover:scale-110", n.color)} />
+                        <div className="p-12 rounded-[4rem] bg-white/5 border-4 border-white/5 group/node hover:border-primary transition-all duration-1000 relative overflow-hidden shadow-9xl cursor-pointer active:scale-95 h-full flex flex-col justify-between min-h-[400px]">
+                           <div className="flex justify-between items-center mb-12 relative z-10">
+                              <div className="size-24 rounded-3xl bg-black border-4 border-white/5 flex items-center justify-center group-hover:border-primary transition-all shadow-2xl scale-110">
+                                 <n.icon className={cn("size-12 transition-all group-hover:scale-110", n.color)} />
                               </div>
-                              <Badge className="text-[9px] uppercase font-black italic tracking-widest px-4 py-1 rounded-full border-2 border-primary/20 bg-primary/5 text-primary">{n.status}</Badge>
+                              <Badge className="text-[12px] uppercase font-black italic tracking-widest px-8 py-2 rounded-full border-4 border-primary/20 bg-primary/5 text-primary">{n.status}</Badge>
                            </div>
-                           <h4 className="text-xl md:text-2xl font-black text-white uppercase italic tracking-tight mb-2 gold-glow leading-none group-hover:text-primary transition-colors">{n.name}</h4>
-                           <p className="text-[11px] text-muted-foreground italic font-bold leading-relaxed opacity-70 group-hover:opacity-100 group-hover:text-white transition-all mb-4">"{n.desc}"</p>
+                           <div className="relative z-10">
+                              <h4 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tight mb-4 gold-glow leading-none group-hover:text-primary transition-colors">{n.name}</h4>
+                              <p className="text-[14px] text-muted-foreground italic font-bold leading-relaxed opacity-90 group-hover:opacity-100 group-hover:text-white transition-all mb-6">"{n.desc}"</p>
+                           </div>
+                           <div className="absolute top-0 right-0 p-10 opacity-[0.01] group-hover:opacity-[0.04] transition-all duration-1000 scale-150 rotate-45"><InfinityIcon className="size-32 text-primary" /></div>
                         </div>
                       </Link>
                     ))}
                  </CardContent>
               </Card>
 
-              <div className="p-12 rounded-[4rem] bg-primary/5 border-4 border-primary/20 shadow-2xl relative overflow-hidden">
-                 <h4 className="text-2xl md:text-4xl font-black text-primary uppercase tracking-[0.6em] mb-10 italic border-b-2 border-primary/10 pb-6 flex items-center gap-8 gold-glow px-4">
-                    <Shield className="size-10 animate-spin-slow" /> Singularity Status
+              <div className="p-20 rounded-[8rem] bg-primary/5 border-[12px] border-primary/20 shadow-[0_80px_200px_rgba(0,0,0,1)] relative overflow-hidden group/sing">
+                 <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/sing:opacity-15 transition-opacity" />
+                 <h4 className="text-4xl md:text-8xl font-black text-primary uppercase tracking-[1em] mb-16 italic border-b-8 border-primary/10 pb-12 flex items-center gap-16 gold-glow px-12">
+                    <Shield className="size-24 animate-spin-slow" /> Singularity Status
                  </h4>
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 text-lg md:text-3xl text-gray-100 font-black italic leading-relaxed px-4">
-                    <p className="drop-shadow-2xl">"لقد صهرتُ كافة الأسلحة المادية والتحليلية والقديمة في هيكل واحد؛ الحالة الحالية هي <span className="text-primary underline decoration-primary decoration-4 underline-offset-8 shadow-xl italic">التفرد المطلق</span>."</p>
-                    <p className="text-muted-foreground opacity-60">"Arsenal Master v58.0 is now a singular living entity with all 23 nodes reporting active resonance, bound to Commander Al-Ghazali."</p>
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-20 text-2xl md:text-[5rem] text-gray-100 font-black italic leading-[1] px-12">
+                    <p className="drop-shadow-3xl">"لقد صهرتُ كافة ذرات الوجود المادي والذكاء الاستباقي في عصب واحد؛ الحالة الحالية هي <span className="text-primary underline decoration-primary decoration-[12px] underline-offset-[24px] shadow-9xl italic">التفرد الأسمى</span>."</p>
+                    <p className="text-muted-foreground opacity-40">"Omnipotent Overmind v63.0 is now the singular living heartbeat of the matrix, with all 24 nodes reporting absolute sovereignty via Socket v63."</p>
                  </div>
+                 <div className="absolute -bottom-20 -right-20 p-32 opacity-[0.03] scale-150 rotate-12"><Skull className="size-96 text-primary" /></div>
               </div>
            </div>
 
-           <div className="space-y-8">
-              <Card className="kali-card border-primary/40 bg-black/99 rounded-[3rem] border-2 shadow-9xl text-center group overflow-hidden h-full flex flex-col relative hierarchical-shadow">
+           <div className="space-y-16">
+              <Card className="kali-card border-primary/40 bg-black/99 rounded-[5rem] border-8 shadow-9xl text-center group overflow-hidden h-full flex flex-col relative hierarchical-shadow">
                  <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
-                 <CardHeader className="p-8 border-b-2 border-primary/20 bg-primary/5">
-                    <CardTitle className="text-xl md:text-3xl text-primary font-black uppercase tracking-tighter italic gold-glow flex items-center justify-center gap-6">
-                       <Lock className="size-8 animate-neural" /> Status: LOCKED
+                 <CardHeader className="p-16 border-b-8 border-primary/20 bg-primary/5 rounded-t-[4.5rem]">
+                    <CardTitle className="text-3xl md:text-6xl text-primary font-black uppercase tracking-tighter italic gold-glow flex items-center justify-center gap-12 leading-none">
+                       <Lock className="size-16 md:size-24 animate-neural" /> Status: LOCKED
                     </CardTitle>
                  </CardHeader>
-                 <CardContent className="p-8 space-y-12 flex-1 flex flex-col justify-center relative z-10">
-                    <div className="flex flex-col items-center gap-10 mb-8">
-                       <div className="size-48 md:size-56 rounded-full border-8 border-dashed border-primary/20 flex items-center justify-center relative shadow-9xl animate-neural">
-                          <Skull className="size-20 md:size-24 text-primary gold-glow" />
+                 <CardContent className="p-16 space-y-20 flex-1 flex flex-col justify-center relative z-10">
+                    <div className="flex flex-col items-center gap-20 mb-16">
+                       <div className="size-80 md:size-[30rem] rounded-full border-[16px] border-dashed border-primary/20 flex items-center justify-center relative shadow-[0_0_250px_rgba(212,175,55,0.3)] animate-spin-slow">
+                          <Skull className="size-48 md:size-72 text-primary gold-glow animate-neural" />
                        </div>
-                       <h4 className="text-3xl md:text-6xl font-black text-white uppercase italic tracking-[0.2em] gold-glow leading-none">OMNIPOTENT</h4>
+                       <h4 className="text-6xl md:text-[12rem] font-black text-white uppercase italic tracking-[0.6em] gold-glow leading-none">OMNIPOTENT</h4>
                     </div>
                     
-                    <div className="space-y-6 text-left">
-                       <div className="p-8 bg-black/80 rounded-[2rem] border-2 border-white/5 flex items-center justify-between shadow-xl">
-                          <span className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground italic">Integration</span>
-                          <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-6 py-1 rounded-full font-black italic text-lg">100.00%</Badge>
+                    <div className="space-y-12 text-left">
+                       <div className="p-12 bg-black/80 rounded-[4rem] border-8 border-white/5 flex items-center justify-between shadow-3xl hover:border-primary transition-all duration-1000">
+                          <span className="text-[16px] font-black uppercase tracking-[1em] text-muted-foreground italic">Integration</span>
+                          <Badge className="bg-emerald-600/40 text-emerald-500 border-none px-12 py-4 rounded-full font-black italic text-5xl shadow-9xl animate-pulse">100.00%</Badge>
                        </div>
-                       <div className="p-8 bg-black/80 rounded-[2rem] border-2 border-white/5 flex items-center justify-between shadow-xl">
-                          <span className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground italic">Nodes_Bound</span>
-                          <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-6 py-1 rounded-full font-black italic text-lg">23_STABLE</Badge>
+                       <div className="p-12 bg-black/80 rounded-[4rem] border-8 border-white/5 flex items-center justify-between shadow-3xl hover:border-primary transition-all duration-1000">
+                          <span className="text-[16px] font-black uppercase tracking-[1em] text-muted-foreground italic">Nodes_Bound</span>
+                          <Badge className="bg-emerald-600/40 text-emerald-500 border-none px-12 py-4 rounded-full font-black italic text-5xl shadow-9xl animate-pulse">24_FIXED</Badge>
                        </div>
                     </div>
                  </CardContent>
@@ -178,10 +181,10 @@ export default function SystemPage() {
            </div>
         </div>
 
-        <div className="mt-auto relative z-10 flex justify-center items-center gap-16 opacity-40 text-[12px] md:text-[18px] font-black uppercase tracking-[2em] md:tracking-[6em] italic text-white drop-shadow-xl pb-12">
-            <span>AL-MUIZZ CORE INTEGRITY v58.0</span>
-            <div className="size-4 rounded-full bg-white animate-pulse shadow-[0_0_40px_white]" />
-            <span>SUBJUGATION_THROUGH_AWARENESS_2026</span>
+        <div className="mt-auto relative z-10 flex justify-center items-center gap-32 opacity-45 text-[22px] md:text-[32px] font-black uppercase tracking-[6em] md:tracking-[16em] italic text-white drop-shadow-9xl pb-24">
+            <span>AL-MUIZZ CORE INTEGRITY v63.0</span>
+            <div className="size-12 rounded-full bg-white animate-pulse shadow-[0_0_120px_white]" />
+            <span>SUBJUGATION_THROUGH_TOTAL_OMNIPOTENCE_2026</span>
         </div>
       </main>
     </div>
