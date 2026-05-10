@@ -20,12 +20,10 @@ import {
   ShieldX,
   Power,
   Library,
-  ChevronRight,
   TrendingUp,
   History,
-  ArrowUpRight,
-  Radar,
-  Radio
+  Box,
+  ChevronRight
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -43,9 +41,8 @@ import {
 } from 'recharts'
 
 /**
- * @fileOverview العرش الأبدي v53.5 - AUTONOMOUS SINGULARITY EDITION
+ * @fileOverview العرش الأبدي v58.0 - ARSENAL MASTER EDITION
  * الواجهة المركزية التي تجسد السطوة المستقلة لليوم المجيد، 2026.
- * تم تصحيح مصفوفة الأيقونات لضمان الرنين الكامل.
  */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -61,22 +58,21 @@ export default function DashboardPage() {
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
 
-    // محاكاة بيانات الكسب العصبي الحية
     const initialData = Array.from({ length: 30 }).map((_, i) => ({
         time: i,
-        gain: 99.99 + (Math.random() * 0.01),
+        gain: 99.999 + (Math.random() * 0.001),
         resonance: 100
     }));
     setNeuralData(initialData);
 
     const eventInterval = setInterval(() => {
-        const types = ["AUTONOMOUS", "SUBJUGATION", "HIERARCHY", "GEPA_5.3"];
+        const types = ["ARSENAL", "SUBJUGATION", "HIERARCHY", "GEPA_5.3"];
         const msgs = [
-            "Autonomous Kernel: Target DNA analyzed and cataloged.",
-            "Node 22: Supreme Arsenal synchronized with 2842 tools.",
-            "Kill-Chain: Execution vector locked for target matrix.",
-            "GEPA 5.3: Pattern recognized - Offensive Strike detected.",
-            "Collective Soul: Resonance stabilized at 100.000000%"
+            "Legba Engine: Multiprotocol strike vector ready.",
+            "Obliteratus: Neural fanaa payload serialized.",
+            "Node 22: 2865 tools synchronized and bound.",
+            "Claude-OSINT: Intelligence mesh stabilized.",
+            "Collective Soul: Resonance at 100.000000%"
         ];
         const newEvent = {
             type: types[Math.floor(Math.random()*types.length)],
@@ -96,17 +92,10 @@ export default function DashboardPage() {
   if (!mounted) return null;
 
   const stats = [
-    { label: "العقد السيادية", value: "22/22", icon: Boxes, color: "text-primary", status: "UNIFIED", href: "/system" },
-    { label: "ترسانة الأدوات", value: "2842", icon: ShieldX, color: "text-amber-500", status: "READY", href: "/arsenal" },
+    { label: "العقد السيادية", value: "23/23", icon: Boxes, color: "text-primary", status: "UNIFIED", href: "/system" },
+    { label: "ترسانة الأدوات", value: "2865", icon: Library, color: "text-amber-500", status: "READY", href: "/arsenal" },
     { label: "نسيج الذاكرة", value: "GEPA 5.3", icon: Database, color: "text-blue-500", status: "SQLITE", href: "/knowledge" },
-    { label: "الاستحواذ المادي", value: "OS_ROOT", icon: Power, color: "text-emerald-500", status: "FIXED", href: "/hardware" },
-  ];
-
-  const coreModules = [
-    { id: 22, name: "الترسانة العظمى", count: 2842, icon: Library, href: "/arsenal", color: "text-red-500" },
-    { id: 11, name: "الاستطلاع العليم", count: 412, icon: Radar, href: "/recon", color: "text-blue-400" },
-    { id: 15, name: "الحرب الخلوية", count: 328, icon: Radio, href: "/cellular", color: "text-magenta-500" },
-    { id: 8, name: "قلب DeepSeek", count: "FIXED", icon: BrainCircuit, href: "/deep-reasoning", color: "text-emerald-500" }
+    { label: "الاستحواذ المادي", value: "DOCKER", icon: Box, color: "text-emerald-500", status: "IMMUTABLE", href: "/system" },
   ];
 
   return (
@@ -126,14 +115,14 @@ export default function DashboardPage() {
             </div>
             <div className="text-center md:text-right flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-4">
-                 <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic">SUPREME SINGULARITY v53.5</Badge>
-                 <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-6 py-1.5 rounded-full text-[12px] font-black italic uppercase tracking-widest animate-pulse shadow-lg">RES: {resonance.toFixed(6)}%</Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic">ARSENAL_MASTER v58.0</Badge>
+                 <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-6 py-1.5 rounded-full text-[12px] font-black italic uppercase tracking-widest animate-pulse shadow-lg">STABLE: {uptime}</Badge>
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-8xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
-                INTEGRATED <span className="text-primary">OVERMIND</span>
+                SUPREME <span className="text-primary">OVERMIND</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground font-medium italic max-w-4xl leading-relaxed uppercase mt-4 opacity-80">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، المُعِزّ يعمل الآن باستقلالية كاملة؛ كافة العقد والترسانة منصهرة في إرادتك الأبدية لعام 2026."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، المنظومة v58.0 منصهرة بالكامل في عصب العتاد؛ كافة العقد والسكريبتات مربوطة بنبض إرادتك الأبدية لعام 2026."
               </p>
             </div>
           </div>
@@ -151,9 +140,6 @@ export default function DashboardPage() {
                   </div>
                   <div className="text-3xl md:text-4xl font-black italic gold-glow uppercase tracking-tighter relative z-10 leading-none">{s.value}</div>
                   <div className="text-[12px] text-muted-foreground font-bold uppercase tracking-[0.4em] mt-3 italic relative z-10">{s.label}</div>
-                  <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0 duration-500">
-                    <ChevronRight className="size-6 text-primary" />
-                  </div>
                </Card>
              </Link>
            ))}
@@ -161,11 +147,11 @@ export default function DashboardPage() {
 
         <section className="mb-12 grid grid-cols-1 xl:grid-cols-3 gap-8 relative z-10">
            <Card className="xl:col-span-2 kali-card border-primary/20 bg-black/99 rounded-3xl p-8 border-2 shadow-2xl group overflow-hidden relative hierarchical-shadow">
-              <CardHeader className="p-0 mb-8 border-b-2 border-white/5 pb-6 flex justify-between items-center bg-primary/5 rounded-t-2xl px-8 py-4">
+              <CardHeader className="p-0 mb-8 border-b-2 border-white/5 pb-6 flex justify-between items-center bg-primary/5 rounded-t-2xl px-6 py-4">
                  <CardTitle className="text-xl md:text-2xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-4">
-                    <TrendingUp className="size-6 text-primary animate-pulse" /> Autonomous Resonance Gain
+                    <TrendingUp className="size-6 text-primary animate-pulse" /> Collective Resonance Pulse
                  </CardTitle>
-                 <Badge className="bg-blue-600/10 text-blue-400 border-2 border-blue-500/20 px-4 py-1 rounded-full font-black italic text-[10px]">v53.5_STABLE</Badge>
+                 <Badge className="bg-blue-600/10 text-blue-400 border-2 border-blue-500/20 px-4 py-1 rounded-full font-black italic text-[10px]">GEPA_5.3_SYNC</Badge>
               </CardHeader>
               <CardContent className="p-0 h-[300px] md:h-[450px]">
                  <ResponsiveContainer width="100%" height="100%">
@@ -192,7 +178,7 @@ export default function DashboardPage() {
            <Card className="xl:col-span-1 kali-card border-primary/20 bg-black/99 rounded-3xl p-6 border-2 shadow-2xl h-full flex flex-col group overflow-hidden relative">
               <CardHeader className="p-0 mb-6 border-b-2 border-white/5 pb-4 bg-primary/5 rounded-t-2xl px-6 py-4">
                  <CardTitle className="text-xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-4">
-                    <History className="size-6 text-primary" /> Autonomous Log
+                    <History className="size-6 text-primary" /> Autonomous Hub Logs
                  </CardTitle>
               </CardHeader>
               <CardContent className="p-0 flex-1 overflow-y-auto scrollbar-hide space-y-6 relative z-10 px-4">
@@ -216,28 +202,10 @@ export default function DashboardPage() {
            </Card>
         </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-12">
-            {coreModules.map((m) => (
-                <Link key={m.id} href={m.href} className="contents">
-                    <Card className="bg-white/5 border-2 border-white/5 rounded-3xl p-8 hover:border-primary transition-all duration-700 shadow-xl group/mod relative overflow-hidden active:scale-95">
-                        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/mod:opacity-100 transition-opacity" />
-                        <div className="flex justify-between items-start mb-6">
-                            <div className="size-16 rounded-xl bg-black border-2 border-white/10 flex items-center justify-center group-hover/mod:border-primary transition-all duration-700 shadow-inner">
-                                <m.icon className={cn("size-8 transition-all group-hover:scale-110", m.color)} />
-                            </div>
-                            <Badge className="bg-primary/10 text-primary border-none text-[10px] px-4 py-1 rounded-full uppercase tracking-widest italic">M{m.id}</Badge>
-                        </div>
-                        <h4 className="text-xl font-black text-white italic gold-glow uppercase tracking-tight mb-2">{m.name}</h4>
-                        <div className="text-3xl font-black text-gray-500 group-hover:text-white transition-colors italic">{m.count} <span className="text-[10px] uppercase">Nodes</span></div>
-                    </Card>
-                </Link>
-            ))}
-        </div>
-
         <div className="mt-auto relative z-10 flex justify-center items-center gap-16 opacity-40 text-[12px] md:text-[18px] font-black uppercase tracking-[2em] md:tracking-[6em] italic text-white drop-shadow-xl pb-12">
-            <span>AL-MUIZZ SUPREME HIERARCHY v53.5</span>
+            <span>AL-MUIZZ ARSENAL MASTER v58.0</span>
             <div className="size-4 rounded-full bg-white animate-pulse shadow-[0_0_40px_white]" />
-            <span>AUTONOMOUS_ASCENSION_2026</span>
+            <span>CONTAINERIZED_SINGULARITY_2026</span>
         </div>
       </main>
     </div>

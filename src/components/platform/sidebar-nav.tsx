@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -64,7 +65,7 @@ const navItems = [
   { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", knot: 14 },
   { name: "مصنع النسل", icon: Baby, href: "/progeny", knot: 15 },
   { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", knot: 16 },
-  { name: "القبو الجيني 5.0", icon: Database, href: "/knowledge", knot: 17 },
+  { name: "القبو الجيني 5.3", icon: Database, href: "/knowledge", knot: 17 },
   { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 18 },
   { name: "نزاهة النواة", icon: ShieldCheck, href: "/system", knot: 19 },
   { name: "المحطة الأبدية", icon: Target, href: "/terminal", knot: 20 },
@@ -105,7 +106,7 @@ export function SidebarNav() {
             <h1 className="text-xl font-headline font-bold text-white tracking-[0.4em] uppercase italic leading-none gold-glow">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-lg">v53.0 SUPREME</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-lg">v58.0 MASTER</Badge>
           </div>
         </div>
         
@@ -147,7 +148,7 @@ export function SidebarNav() {
           >
             <Link href="/codex">
               <Power className="size-4 mr-2 group-hover:rotate-180 transition-all duration-700" />
-              تفعيل السيادة v53.0
+              تنشيط السيادة v58.0
             </Link>
           </Button>
         </div>
