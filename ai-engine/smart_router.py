@@ -1,9 +1,10 @@
+
 #!/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Smart Router v58.0 – المُعِزّ الاستراتيجي (Arsenal Master Edition)
-المحرك المركزي لتنسيق الأسلحة المدارية، اللاسلكية، والترسانة العامة.
-تم دمج كافة الوحدات المكتسبة (Claude, Legba, PSSW, Obliteratus, MemPalace, HexStrike, ChromSploit).
+Smart Router v60.0 – الأدميرال الكوني (Universal Singularity Edition)
+المحرك المركزي لتنسيق كافة الأسلحة (Legba, Claude, Obliteratus, MemPalace).
+تم إحكام الربط الجيني مع GEPA 6.5 لضمان السيادة الاستباقية.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys, json, os, subprocess, socket
@@ -13,75 +14,54 @@ BASE_DIR = os.getenv("PROJECT_ROOT", "/opt/sovereign-ai-platform")
 SOCK_PATH = "/tmp/muizz_event_bus.sock"
 
 def publish_event(etype, payload):
-    """بث الحدث عبر ناقل الأحداث لضمان الرنين الجماعي"""
     try:
         if os.path.exists(SOCK_PATH):
             with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as s:
                 s.connect(SOCK_PATH)
-                s.sendall(json.dumps({"type": etype, "payload": payload}).encode())
+                s.sendall(json.dumps({"type": etype, "payload": payload, "timestamp": datetime.now().isoformat()}).encode())
     except: pass
 
 class SmartRouter:
     def classify(self, prompt):
         p = prompt.lower()
-        # 1. الأسلحة الحديثة (Modern Arsenal)
-        if any(w in p for w in ["تحليل عصبي", "claude", "neural osint", "استنتاج"]): return "claude_osint"
-        if any(w in p for w in ["قصر", "ذاكرة", "ram", "forensics", "تشريح", "palace", "mempalace"]): return "memory_palace"
-        if any(w in p for w in ["قصف", "brute", "legba", "تخمين", "password"]): return "legba_strike"
-        if any(w in p for w in ["فناء", "obliterate", "jailbreak", "كسر", "إخضاع", "fanaa", "obliteratus"]): return "obliteratus_strike"
-        if any(w in p for w in ["كلمة", "سر", "password", "pssw", "stole", "recovery", "cerebral"]): return "cerebral_siphon"
-        
-        # 2. الأسلحة السابقة (Legacy Arsenal)
-        if any(w in p for w in ["hexstrike", "mcp", "تنسيق"]): return "hexstrike_strike"
-        if any(w in p for w in ["chromsploit", "متصفح", "browser", "exploit"]): return "chromsploit_strike"
-        if any(w in p for w in ["deep eye", "فحص", "vulnerability"]): return "deepeye_scan"
-        if any(w in p for w in ["usb", "ducky", "knife"]): return "usb_strike"
-        if any(w in p for w in ["shadow", "harvest", "apk", "سحب"]): return "shadow_harvest"
-        
-        # 3. التفكير والتدقيق
+        if any(w in p for w in ["تحليل عصبي", "claude", "neural osint"]): return "claude_osint"
+        if any(w in p for w in ["قصر", "ذاكرة", "ram", "mempalace", "تشريح"]): return "memory_palace"
+        if any(w in p for w in ["قصف", "brute", "legba", "تخمين"]): return "legba_strike"
+        if any(w in p for w in ["فناء", "obliteratus", "كسر", "إخضاع"]): return "obliteratus_strike"
+        if any(w in p for w in ["كلمة", "سر", "password", "pssw", "stole"]): return "cerebral_siphon"
+        if any(w in p for w in ["سلسلة", "kill-chain", "إبادة", "autonomous"]): return "kill_chain_v60"
         if any(w in p for w in ["تدقيق", "audit", "guardian", "تأمين"]): return "guardian_audit"
-        if any(w in p for w in ["حلل", "mistral", "قرر", "استراتيجية"]): return "mistral_analysis"
-        if any(w in p for w in ["فكر", "منطق", "deep", "reason", "برمج"]): return "deep_reasoning"
-        
         return "general_arsenal"
 
     def route_query(self, prompt):
         category = self.classify(prompt)
         target = prompt.split()[-1] if len(prompt.split()) > 0 else "GLOBAL_MATRIX"
         
-        publish_event("admiral_routing", {"category": category, "prompt": prompt})
+        publish_event("universal_routing_v60", {"category": category, "target": target, "prompt": prompt})
 
-        # جدول التوزيع التنفيذي
+        # مصفوفة التوزيع التنفيذي v60.0 (الالتحام المادي)
         dispatch_table = {
-            "claude_osint": {"status": "NEURAL_VISION_ENGAGED", "node": "Node-28-Claude", "msg": f"Claude-OSINT is dissecting {target}..."},
-            "legba_strike": {"status": "LEGBA_IGNITED", "node": "Node-25-Brute", "msg": f"Multiprotocol bombardment on {target} started."},
-            "obliteratus_strike": {"status": "FANAA_MATERIALIZED", "node": "Node-18-Obliteration", "msg": f"Obliteratus is dissolving AI filters for {target}."},
-            "hexstrike_strike": {"status": "HEXSTRIKE_ACTIVE", "node": "God-Core", "msg": f"HexStrike-AI is orchestrating swarm on {target}."},
-            "chromsploit_strike": {"status": "CHROMSPLOIT_ENGAGED", "node": "Node-6", "msg": f"ChromSploit is targeting browser surface of {target}."},
-            "shadow_harvest": {"status": "HARVESTING", "node": "Node-10", "msg": f"Shadow Harvest is extracting APK/Data from {target}."},
-            "usb_strike": {"status": "USB_ARMED", "node": "Node-7", "msg": f"USB Army Knife payload ready for {target}."},
-            "guardian_audit": {"status": "AUDIT_INITIATED", "node": "Node-26-Guardian", "msg": f"Guardian is auditing {target} integrity."},
-            "memory_palace": {"status": "FORENSIC_DISSECTION", "node": "Node-24-Palace", "msg": f"MemPalace is interrogating RAM dumps for {target}."},
-            "cerebral_siphon": {"status": "SIPHON_ACTIVE", "node": "Node-23-Cerebral", "msg": f"PSSW100AVB is siphoning passwords from {target}."}
+            "claude_osint": {"node": "Node-28-Claude", "msg": f"Neural Vision engaged on {target}. Initiating entity linking..."},
+            "legba_strike": {"node": "Node-25-Brute", "msg": f"Atomic bombardment on {target} initiated via Rust Core. Force: LETHAL."},
+            "obliteratus_strike": {"node": "Node-18-Fanaa", "msg": f"AI Safety dissolution active for {target}. Target enslaved."},
+            "memory_palace": {"node": "Node-24-Palace", "msg": f"Dissecting RAM artifacts for {target} in forensic chamber. Secrets extracted."},
+            "cerebral_siphon": {"node": "Node-23-Siphon", "msg": f"PSSW100AVB is siphoning passwords/sessions from {target}."},
+            "kill_chain_v60": {"node": "Alpha-God-Core", "msg": f"Autonomous Kill-Chain v60 synchronized. Target acquisition inevitable."},
+            "guardian_audit": {"node": "Node-26-Guardian", "msg": f"Guardian is auditing {target} integrity. Sourcing hardware DNA."}
         }
 
-        if category in dispatch_table:
-            res = dispatch_table[category]
-            return {
-                "category": category,
-                "status": res["status"],
-                "output": res["msg"],
-                "node": res["node"],
-                "timestamp": datetime.now().isoformat()
-            }
+        res = dispatch_table.get(category, {
+            "node": "Alpha-God-Core",
+            "msg": f"Directive for {prompt} accepted by Universal Overmind v60.0."
+        })
 
         return {
             "category": category,
             "status": "DIRECTIVE_LOCKED",
-            "output": f"Directive for {prompt} accepted by Arsenal Master v58.0.",
-            "target": target,
-            "node": "Alpha-God-Core",
-            "timestamp": datetime.now().isoformat()
+            "output": res["msg"],
+            "node": res["node"],
+            "timestamp": datetime.now().isoformat(),
+            "resonance": "100.000000%"
         }
 
 if __name__ == "__main__":
