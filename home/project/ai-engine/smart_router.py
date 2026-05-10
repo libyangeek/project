@@ -8,6 +8,7 @@ Smart Router v54.0 – المُعِزّ الاستراتيجي (Arsenal Master E
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys, json, os, subprocess, socket
+from datetime import datetime
 
 BASE_DIR = os.getenv("PROJECT_ROOT", "/opt/sovereign-ai-platform")
 SOCK_PATH = "/tmp/muizz_event_bus.sock"
@@ -49,8 +50,8 @@ class SmartRouter:
                 cmd = f"python3 {os.path.join(BASE_DIR, 'ai-engine/offensive/pssw_extractor.py')} memory"
                 output = subprocess.check_output(cmd, shell=True).decode()
                 return json.loads(output)
-            except:
-                return {"status": "FAILED", "error": "Cerebral link disrupted. Re-aligning DNA."}
+            except Exception as e:
+                return {"status": "FAILED", "error": f"Cerebral link disrupted: {str(e)}"}
 
         response_map = {
             "eye_recon": f"Initiating Trace-Labs forensics on {target}...",
@@ -74,7 +75,6 @@ class SmartRouter:
         }
 
 if __name__ == "__main__":
-    from datetime import datetime
     query = " ".join(sys.argv[1:])
     router = SmartRouter()
     if query:
