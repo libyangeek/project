@@ -38,7 +38,8 @@ import {
   Library,
   Anchor,
   Search,
-  Network
+  Network,
+  Wrench
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -62,7 +63,7 @@ const navItems = [
   { name: "الحرب الخلوية", icon: Radio, href: "/cellular", knot: 11 },
   { name: "محراب الـ Claw", icon: Gamepad2, href: "/clawcode", knot: 12 },
   { name: "ميثاق الروح", icon: BookOpen, href: "/codex", knot: 13 },
-  { name: "الوكيل الميداني", icon: Activity, href: "/field-agent", knot: 14 },
+  { name: "الوكيل الميداني", icon: Wrench, href: "/field-agent", knot: 14 },
   { name: "مصنع النسل", icon: Baby, href: "/progeny", knot: 15 },
   { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", knot: 16 },
   { name: "القبو الجيني 5.3", icon: Database, href: "/knowledge", knot: 17 },
@@ -144,7 +145,7 @@ export function SidebarNav() {
           </div>
           <Button 
             asChild
-            className="w-full h-12 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.4em] text-[10px] rounded-xl shadow-xl transition-all duration-700 border-4 border-black/20 group active:scale-95 italic"
+            className="w-full h-12 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.4em] text-[10px] rounded-xl shadow-2xl transition-all duration-700 border-4 border-black/20 group active:scale-95 italic"
           >
             <Link href="/codex">
               <Power className="size-4 mr-2 group-hover:rotate-180 transition-all duration-700" />
