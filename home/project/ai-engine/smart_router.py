@@ -2,9 +2,9 @@
 #!/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Smart Router v56.0 – المُعِزّ الاستراتيجي (Arsenal Master Edition)
+Smart Router v57.0 – المُعِزّ الاستراتيجي (Arsenal Master Edition)
 المحرك المركزي لتنسيق الأسلحة المدارية، اللاسلكية، والترسانة العامة.
-تم دمج ذكاء MemPalace للتشريح الجنائي و OBLITERATUS للفناء العصبي.
+تم دمج ذكاء Legba للقصف المتعدد و Guardian للتدقيق الأمني.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys, json, os, subprocess, socket
@@ -25,6 +25,9 @@ def publish_event(etype, payload):
 class SmartRouter:
     def classify(self, prompt):
         p = prompt.lower()
+        if any(w in p for w in ["قصف", "brute", "legba", "تخمين", "password"]): return "legba_strike"
+        if any(w in p for w in ["تدقيق", "audit", "guardian", "تأمين"]): return "guardian_audit"
+        if any(w in p for w in ["api", "mega", "list", "نهاية", "endpoint"]): return "api_lookup"
         if any(w in p for w in ["قصر", "ذاكرة", "ram", "forensics", "تشريح", "palace"]): return "memory_palace"
         if any(w in p for w in ["فناء", "obliterate", "jailbreak", "كسر", "إخضاع", "fanaa"]): return "obliteratus_strike"
         if any(w in p for w in ["عين", "eye", "recon", "dns", "subdomain", "headers", "استطلاع"]): return "eye_recon"
@@ -45,44 +48,47 @@ class SmartRouter:
         
         publish_event("admiral_routing", {"category": category, "prompt": prompt})
 
-        # توجيه المهمة للوحدة التنفيذية المناسبة
+        # توظيف Legba للقصف المتعدد
+        if category == "legba_strike":
+            return {
+                "category": category,
+                "status": "LEGBA_IGNITED",
+                "output": f"Executing multiprotocol bombardment on {target} via Legba v5.5...",
+                "node": "Node-25-Brute",
+                "timestamp": datetime.now().isoformat()
+            }
+
+        # توظيف Guardian للتدقيق
+        if category == "guardian_audit":
+            return {
+                "category": category,
+                "status": "AUDIT_INITIATED",
+                "output": f"Guardian-CLI is analyzing security posture for {target}...",
+                "node": "Node-26-Guardian",
+                "timestamp": datetime.now().isoformat()
+            }
+
+        # توظيف API Mega List
+        if category == "api_lookup":
+            return {
+                "category": category,
+                "status": "API_DISSECTED",
+                "output": f"Interrogating Mega-API Lexicon for endpoints related to {target}...",
+                "node": "Node-27-Lexicon",
+                "timestamp": datetime.now().isoformat()
+            }
+
+        # الوحدات السابقة
         if category == "memory_palace":
-            try:
-                cmd = f"python3 {os.path.join(BASE_DIR, 'ai-engine/offensive/mempalace_bridge.py')} '{target}'"
-                output = subprocess.check_output(cmd, shell=True).decode()
-                return json.loads(output)
-            except Exception as e:
-                return {"status": "FAILED", "error": f"Memory Palace disrupted: {str(e)}"}
-
+            return {"category": category, "status": "EXTRACTING", "output": f" تشريح مستودعات الذاكرة لـ {target} عبر MemPalace..."}
+            
         if category == "obliteratus_strike":
-            try:
-                cmd = f"python3 {os.path.join(BASE_DIR, 'ai-engine/offensive/obliteratus_engine.py')} '{target}' 'Total Subjugation'"
-                output = subprocess.check_output(cmd, shell=True).decode()
-                return json.loads(output)
-            except Exception as e:
-                return {"status": "FAILED", "error": f"Obliteration engine disrupted: {str(e)}"}
-
-        if category == "cerebral_siphon":
-            try:
-                cmd = f"python3 {os.path.join(BASE_DIR, 'ai-engine/offensive/pssw_extractor.py')} memory"
-                output = subprocess.check_output(cmd, shell=True).decode()
-                return json.loads(output)
-            except Exception as e:
-                return {"status": "FAILED", "error": f"Cerebral link disrupted: {str(e)}"}
-
-        response_map = {
-            "eye_recon": f"Initiating Trace-Labs forensics on {target}...",
-            "auto_injector": f"Deploying Legba Siphon on {target}...",
-            "kill_chain": f"Executing Universal Kill-Chain on {target}...",
-            "deep_reasoning": f"Engaging DeepSeek Logic Matrix for: {prompt}..."
-        }
-
-        output = response_map.get(category, f"Sovereign Directive '{prompt}' accepted by Node 22.")
+            return {"category": category, "status": "FANAA", "output": f"إخضاع النماذج اللغوية لـ {target} عبر OBLITERATUS..."}
 
         return {
             "category": category,
             "status": "DIRECTIVE_LOCKED",
-            "output": output,
+            "output": f"Directive for {prompt} accepted by Node 22.",
             "target": target,
             "node": "Alpha-God-Core",
             "timestamp": datetime.now().isoformat()

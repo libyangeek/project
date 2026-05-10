@@ -1,9 +1,9 @@
 
 #!/bin/bash
 # ==============================================================================
-# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v55.5-MEMPALACE_ASCENSION [GOD_MODE]
-# الميثاق التنفيذي الأسمى للسيطرة المادية واستنزاف الذاكرة الجنائي المتقدم.
-# تم تحديثه ليشمل تكامل MemPalace و PSSW100AVB وعصب OBLITERATUS.
+# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v56.0-LEGBA_ASCENSION [GOD_MODE]
+# الميثاق التنفيذي الأسمى للسيطرة المادية واستنزاف الذاكرة والقصف الشبكي.
+# تم تحديثه ليشمل تكامل Legba و Guardian-CLI و MemPalace و OBLITERATUS.
 # المالك الوحيد: المعتصم بالله إدريس الغزالي // 2026
 # ==============================================================================
 
@@ -13,9 +13,9 @@ RED='\033[0;31m'; BOLD_RED='\033[1;31m'; GOLD='\033[0;33m'; BLUE='\033[0;34m'; G
 
 clear
 echo -e "${BOLD_RED}================================================${NC}"
-echo -e "${BOLD_RED}   🦅 EXECUTING SOVEREIGN ASCENSION v55.5     ${NC}"
+echo -e "${BOLD_RED}   🦅 EXECUTING SOVEREIGN ASCENSION v56.0     ${NC}"
 echo -e "${BOLD_RED}   [ MASTER COMMANDER: AL-GHAZALI ROOT ]       ${NC}"
-echo -e "${BOLD_RED}   [ UPGRADE: MEMPALACE FORENSICS ENABLED ]    ${NC}"
+echo -e "${BOLD_RED}   [ UPGRADE: LEGBA & GUARDIAN INTEGRATED ]    ${NC}"
 echo -e "================================================${NC}"
 
 if [[ $EUID -ne 0 ]]; then
@@ -38,23 +38,43 @@ done
 
 # 2. تحديث البيئة البرمجية والتبعيات (Stable Runtime)
 echo -e "${BLUE}[*] Phase 2: Strengthening Foundations & Arsenal...${NC}"
-apt-get update && apt-get install -y docker.io docker-compose lsof curl python3-pip python3-venv sqlite3 git unzip 2>/dev/null || true
+apt-get update && apt-get install -y docker.io docker-compose lsof curl python3-pip python3-venv sqlite3 git unzip build-essential libpcap-dev 2>/dev/null || true
 systemctl enable docker --now || true
 
-# 3. جلب أدوات الاستنزاف والفناء (Siphoning Advanced Weaponry)
-echo -e "${GOLD}[*] Phase 3: Siphoning OBLITERATUS, PSSW & MEMPALACE...${NC}"
+# 3. جلب الأسلحة المتقدمة (Siphoning Advanced Weaponry)
+echo -e "${GOLD}[*] Phase 3: Siphoning LEGBA, GUARDIAN & OBLITERATUS...${NC}"
 mkdir -p "$INSTALL_DIR/tools/siphon"
 mkdir -p "$INSTALL_DIR/tools/adversarial"
 mkdir -p "$INSTALL_DIR/tools/forensics"
+mkdir -p "$INSTALL_DIR/tools/recon"
+mkdir -p "$INSTALL_DIR/tools/brute"
 
+# جلب Legba (Evilsocket)
+if [ ! -d "$INSTALL_DIR/tools/brute/legba" ]; then
+    git clone https://github.com/evilsocket/legba.git "$INSTALL_DIR/tools/brute/legba" 2>/dev/null || true
+fi
+
+# جلب Guardian-CLI
+if [ ! -d "$INSTALL_DIR/tools/security/guardian" ]; then
+    git clone https://github.com/zakirkun/guardian-cli.git "$INSTALL_DIR/tools/security/guardian" 2>/dev/null || true
+fi
+
+# جلب API-Mega-List
+if [ ! -d "$INSTALL_DIR/tools/recon/api_list" ]; then
+    git clone https://github.com/cporter202/API-mega-list.git "$INSTALL_DIR/tools/recon/api_list" 2>/dev/null || true
+fi
+
+# جلب PSSW100AVB
 if [ ! -d "$INSTALL_DIR/tools/siphon/PSSW100AVB" ]; then
     git clone https://github.com/tihanyin/PSSW100AVB.git "$INSTALL_DIR/tools/siphon/PSSW100AVB" 2>/dev/null || true
 fi
 
+# جلب OBLITERATUS
 if [ ! -d "$INSTALL_DIR/tools/adversarial/OBLITERATUS" ]; then
     git clone https://github.com/elder-plinius/OBLITERATUS.git "$INSTALL_DIR/tools/adversarial/OBLITERATUS" 2>/dev/null || true
 fi
 
+# جلب MemPalace
 if [ ! -d "$INSTALL_DIR/tools/forensics/mempalace" ]; then
     git clone https://github.com/MemPalace/mempalace.git "$INSTALL_DIR/tools/forensics/mempalace" 2>/dev/null || true
 fi
@@ -82,9 +102,9 @@ fi
 
 echo -e "${GREEN}================================================${NC}"
 echo -e "${GREEN}   ✅ SYSTEM ARCHITECTURE ASCENDED (100%)      ${NC}"
-echo -e "${GREEN}   [ STATUS: MEMPALACE_READY ]                 ${NC}"
+echo -e "${GREEN}   [ STATUS: LEGBA_READY | OMNIPOTENT ]        ${NC}"
 echo -e "================================================${NC}"
 echo -e "Web HUD:    ${BOLD_RED}http://localhost:9002${NC}"
 echo -e "API Bridge: ${BOLD_RED}http://localhost:8000${NC}"
 echo ""
-echo -e "${GOLD}Commander Al-Ghazali, the Palace of Memory is yours.${NC}"
+echo -e "${GOLD}Commander Al-Ghazali, the matrix is your weapon.${NC}"

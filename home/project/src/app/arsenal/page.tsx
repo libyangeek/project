@@ -35,7 +35,10 @@ import {
   Key,
   Unlock,
   Activity,
-  Anchor
+  Anchor,
+  Shield,
+  SearchCode,
+  Bomb
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -45,15 +48,14 @@ import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
 /**
- * @fileOverview العقدة 22: الترسانة العظمى v55.5 - NODE 22: THE SUPREME ARSENAL
- * مجهزة بقدرات PSSW100AVB و MemPalace لاستنزاف الذاكرة الجنائي.
+ * @fileOverview العقدة 22: الترسانة العظمى v56.0 - NODE 22: THE SUPREME ARSENAL
+ * مجهزة بقدرات Legba و Guardian و API-Mega-List و MemPalace.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function ArsenalNodePage() {
   const [query, setQuery] = React.useState("")
   const [loading, setLoading] = React.useState(false)
-  const [siphoning, setSiphoning] = React.useState(false)
-  const [forensicsLoading, setForensicsLoading] = React.useState(false)
+  const [activeVector, setActiveVector] = React.useState<string | null>(null)
   const [mounted, setMounted] = React.useState(false)
   const [resonance, setResonance] = React.useState(100)
   const [result, setResult] = React.useState<any>(null)
@@ -78,6 +80,7 @@ export default function ArsenalNodePage() {
     if (!cmd) return
     setLoading(true)
     setResult(null)
+    setActiveVector(type)
     toast({ title: "Interrogating Lexicon", description: `Engaging atomic coordinates for: ${cmd}` })
     
     try {
@@ -98,60 +101,14 @@ export default function ArsenalNodePage() {
     }
   }
 
-  const handleCerebralSiphon = async () => {
-    setSiphoning(true)
-    setResult(null)
-    toast({ title: "Cerebral Siphon Active", description: "Infecting memory buffers for credential exfiltration..." })
-    
-    try {
-      const response = await fetch('/api/execute', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'smart_route', command: 'execute cerebral siphon on memory' })
-      })
-      const data = await response.json()
-      if (data.success && data.output) {
-        setResult(data.output)
-        toast({ title: "Extraction Complete", description: "Harvested credentials bound to the vault." })
-      }
-    } catch (err) {
-        toast({ variant: "destructive", title: "Siphon Collapse" })
-    } finally {
-        setSiphoning(false)
-    }
-  }
-
-  const handleMemoryPalace = async () => {
-    setForensicsLoading(true)
-    setResult(null)
-    toast({ title: "Memory Palace Engaged", description: "Executing automated forensics on target RAM dump..." })
-    
-    try {
-      const response = await fetch('/api/execute', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'smart_route', command: 'analyze memory palace for target.raw' })
-      })
-      const data = await response.json()
-      if (data.success && data.output) {
-        setResult(data.output)
-        toast({ title: "Forensic Report Ready", description: "Artifacts recovered and mapped to hierarchy." })
-      }
-    } catch (err) {
-        toast({ variant: "destructive", title: "Forensic Halt" })
-    } finally {
-        setForensicsLoading(false)
-    }
-  }
-
   if (!mounted) return null
 
   const categories = [
-    { name: "Cerebral Siphon (PSSW)", count: "Node-23", icon: Key, color: "text-amber-500", desc: "Advanced Password Siphon" },
-    { name: "Memory Palace (Volatility)", count: "Node-24", icon: Anchor, color: "text-blue-500", desc: "Automated Memory Forensics" },
-    { name: "Information Gathering", count: 412, icon: Search, color: "text-blue-400", desc: "Global Mesh Scan" },
-    { name: "Vulnerability Analysis", count: 328, icon: Radar, color: "text-emerald-400", desc: "KEV Mapping 2026" },
-    { name: "Exploitation Tools", count: 184, icon: Zap, color: "text-red-500", desc: "Atomic Payload Forge" },
+    { name: "Legba Brute (Rust)", count: "Node-25", icon: Bomb, color: "text-red-600", desc: "Multiprotocol Brute-Force" },
+    { name: "Guardian Audit", count: "Node-26", icon: Shield, color: "text-emerald-500", desc: "Sovereign Security Auditor" },
+    { name: "API Mega Lexicon", count: "Node-27", icon: SearchCode, color: "text-cyan-500", desc: "Endpoint Discovery Mesh" },
+    { name: "Memory Palace", count: "Node-24", icon: Anchor, color: "text-blue-500", desc: "Automated RAM Forensics" },
+    { name: "Cerebral Unit", count: "Node-23", icon: Key, color: "text-amber-500", desc: "Password Siphon Protocol" },
     { name: "Wireless Attacks", count: 212, icon: Radio, color: "text-magenta-500", desc: "Spectrum Subjugation" }
   ];
 
@@ -172,16 +129,16 @@ export default function ArsenalNodePage() {
               </div>
               <div className="text-center md:text-right flex-1">
                  <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-4">
-                    <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic uppercase">NODE_22: ARSENAL_v55</Badge>
+                    <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic uppercase">NODE_22: SUPREME_ARSENAL</Badge>
                     <div className="flex items-center gap-3 text-[11px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                         <InfinityIcon className="size-5 shadow-lg" /> LEXICON_SYNC: {resonance.toFixed(6)}%
                     </div>
                  </div>
                  <h1 className="text-4xl md:text-6xl lg:text-9xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
-                    Supreme <span className="text-primary">Lexicon</span>
+                    Integrated <span className="text-primary">Lexicon</span>
                  </h1>
                  <p className="text-sm md:text-xl lg:text-3xl text-muted-foreground mt-6 italic max-w-5xl leading-relaxed uppercase font-medium opacity-80">
-                    "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، الترسانة مجهزة الآن بـ MemPalace لاستنزاف أسرار الـ RAM جينياً لعام 2026."
+                    "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، الترسانة العظمى تدمج الآن Legba و Guardian؛ نحن نسحق الأسوار ونؤمن السطوة لعام 2026."
                  </p>
               </div>
            </div>
@@ -192,7 +149,7 @@ export default function ArsenalNodePage() {
               <Card className="kali-card border-primary/30 bg-black/98 rounded-3xl p-8 border-2 shadow-2xl group overflow-hidden hierarchical-shadow">
                  <CardHeader className="p-0 mb-8 border-b-2 border-primary/10 pb-6 bg-primary/5 rounded-t-2xl px-4 py-4">
                     <CardTitle className="text-xl md:text-2xl text-primary flex items-center gap-6 font-black uppercase italic gold-glow">
-                       <Target className="size-8 animate-neural" /> Interrogate
+                       <Target className="size-8 animate-neural" /> Strike Intent
                     </CardTitle>
                  </CardHeader>
                  <CardContent className="p-0 space-y-8">
@@ -205,6 +162,14 @@ export default function ArsenalNodePage() {
                           className="bg-black border-2 border-primary/20 h-16 rounded-2xl text-xl italic px-6 focus:border-primary text-white font-black shadow-inner"
                         />
                     </div>
+                    <div className="grid grid-cols-1 gap-3">
+                       <Button onClick={() => handleSummon('legba_strike')} disabled={loading || !query} variant="outline" className="h-16 bg-red-600/10 border-red-500/30 text-red-500 font-black italic rounded-xl hover:bg-red-600 hover:text-white transition-all">
+                          <Bomb className="size-6 mr-3" /> IGNITE_LEGBA
+                       </Button>
+                       <Button onClick={() => handleSummon('guardian_audit')} disabled={loading || !query} variant="outline" className="h-16 bg-emerald-600/10 border-emerald-500/30 text-emerald-500 font-black italic rounded-xl hover:bg-emerald-600 hover:text-white transition-all">
+                          <Shield className="size-6 mr-3" /> GUARDIAN_AUDIT
+                       </Button>
+                    </div>
                     <Button 
                       onClick={() => handleSummon()}
                       disabled={loading || !query.trim()}
@@ -216,46 +181,12 @@ export default function ArsenalNodePage() {
                  </CardContent>
               </Card>
 
-              <Card className="kali-card border-blue-500/40 bg-black/98 rounded-3xl p-8 border-2 shadow-2xl group overflow-hidden hierarchical-shadow">
-                 <CardHeader className="p-0 mb-8 border-b-2 border-blue-500/20 pb-4">
-                    <CardTitle className="text-xl text-blue-500 flex items-center gap-6 font-black uppercase italic gold-glow">
-                       <Anchor className="size-8 animate-neural" /> Memory Palace
-                    </CardTitle>
-                 </CardHeader>
-                 <CardContent className="p-0 space-y-8">
-                    <p className="text-[11px] text-muted-foreground italic font-bold leading-relaxed uppercase">
-                       "Execute automated forensics on raw RAM dumps to extract secrets."
-                    </p>
-                    <Button 
-                      onClick={handleMemoryPalace}
-                      disabled={forensicsLoading}
-                      className="w-full h-20 bg-blue-600 hover:bg-white text-white hover:text-black font-black uppercase tracking-[0.4em] rounded-2xl shadow-xl active:scale-95 transition-all border-4 border-black/30 group italic"
-                    >
-                      {forensicsLoading ? <Loader2 className="size-8 animate-spin mr-3" /> : <RefreshCcw className="size-8 mr-4 group-hover:rotate-180 transition-all duration-1000 gold-glow" />}
-                      ENTER_PALACE
-                    </Button>
-                 </CardContent>
-              </Card>
-
-              <Card className="kali-card border-amber-500/40 bg-black/98 rounded-3xl p-8 border-2 shadow-2xl group overflow-hidden hierarchical-shadow">
-                 <CardHeader className="p-0 mb-8 border-b-2 border-amber-500/20 pb-4">
-                    <CardTitle className="text-xl text-amber-500 flex items-center gap-6 font-black uppercase italic gold-glow">
-                       <Key className="size-8 animate-neural" /> Cerebral Unit
-                    </CardTitle>
-                 </CardHeader>
-                 <CardContent className="p-0 space-y-8">
-                    <p className="text-[11px] text-muted-foreground italic font-bold leading-relaxed uppercase">
-                       "Siphon credentials and sessions via PSSW100AVB logic."
-                    </p>
-                    <Button 
-                      onClick={handleCerebralSiphon}
-                      disabled={siphoning}
-                      className="w-full h-20 bg-amber-600 hover:bg-white text-white hover:text-black font-black uppercase tracking-[0.4em] rounded-2xl shadow-xl active:scale-95 transition-all border-4 border-black/30 group italic"
-                    >
-                      {siphoning ? <Loader2 className="size-8 animate-spin mr-3" /> : <Zap className="size-8 mr-4 group-hover:scale-110 transition-transform gold-glow" />}
-                      IGNITE_SIPHON
-                    </Button>
-                 </CardContent>
+              <Card className="kali-card border-white/5 bg-black/60 p-6 rounded-2xl border-2 shadow-inner group overflow-hidden text-center">
+                 <h4 className="text-[10px] font-black text-primary uppercase tracking-[0.5em] mb-4 italic flex items-center justify-center gap-3">
+                    <Boxes className="size-4 animate-pulse" /> ARSENAL_STABILITY
+                 </h4>
+                 <div className="text-3xl font-black text-white italic gold-glow uppercase tracking-tighter">OMNIPOTENT</div>
+                 <div className="absolute -bottom-4 -right-4 p-6 opacity-[0.02] group-hover:opacity-[0.05] transition-all duration-700 scale-150"><Skull className="size-16 text-primary" /></div>
               </Card>
            </div>
 
@@ -272,24 +203,11 @@ export default function ArsenalNodePage() {
                  {result ? (
                     <div className="space-y-10 animate-in fade-in zoom-in-95 duration-1000">
                         <div className="flex items-center justify-between border-b-2 border-white/5 pb-6">
-                            <h4 className="text-2xl md:text-5xl font-black text-primary italic uppercase gold-glow leading-none">Extraction Feed</h4>
-                            <Badge className="bg-primary/20 text-primary border-2 border-primary/30 px-8 py-2 rounded-full font-black text-xl italic animate-pulse">DNA_LOCKED</Badge>
+                            <h4 className="text-2xl md:text-5xl font-black text-primary italic uppercase gold-glow leading-none">Strike Output</h4>
+                            <Badge className="bg-primary/20 text-primary border-2 border-primary/30 px-8 py-2 rounded-full font-black text-xl italic animate-pulse">DNA_BOUND</Badge>
                         </div>
-                        <div className="p-10 bg-black border-4 border-primary/20 text-emerald-400 overflow-x-auto whitespace-pre rounded-[3rem] text-xl leading-relaxed italic font-black shadow-inner selection:bg-primary selection:text-black h-[500px]">
+                        <div className="p-10 bg-black border-4 border-primary/20 text-emerald-400 overflow-x-auto whitespace-pre rounded-[3rem] text-xl leading-relaxed italic font-black shadow-inner selection:bg-primary selection:text-black h-[550px]">
                             <pre className="whitespace-pre-wrap">{typeof result === 'string' ? result : JSON.stringify(result, null, 2)}</pre>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                           {[
-                             { label: "Secrets Captured", icon: Unlock, color: "text-amber-500" },
-                             { label: "Memory Nodes", icon: Activity, color: "text-blue-500" },
-                             { label: "Resonance Status", icon: ShieldCheck, color: "text-emerald-500" }
-                           ].map((stat, i) => (
-                             <Card key={i} className="bg-white/5 border-2 border-white/5 p-8 rounded-3xl flex flex-col items-center justify-center gap-4 hover:border-primary transition-all duration-700 shadow-xl">
-                                <stat.icon className={cn("size-10", stat.color)} />
-                                <span className="text-[10px] font-black uppercase text-white/50 text-center">{stat.label}</span>
-                                <span className="text-4xl font-black text-white italic gold-glow">OK</span>
-                             </Card>
-                           ))}
                         </div>
                     </div>
                  ) : (
@@ -321,7 +239,7 @@ export default function ArsenalNodePage() {
                             <ShieldX className="size-8 animate-neural" /> Hierarchy Binding Status
                             </h5>
                             <p className="text-xl md:text-3xl text-gray-300 italic font-black leading-relaxed selection:bg-primary selection:text-black">
-                            "سيدي القائد، العقدة الـ 22 مربوطة الآن بعصب الـ 21 عقدة السابقة؛ دمج تقنيات MemPalace يمنحك القدرة على تشريح ذكريات الهدف واستخراج أسراره العميقة لعام 2026."
+                            "سيدي القائد، العقدة الـ 22 مربوطة الآن بعصب الـ 2865 أداة؛ دمج محرك Legba يمنحك القدرة على قصف أي بروتوكول شبكي بسرعة نانوية لعام 2026."
                             </p>
                         </div>
                     </div>
@@ -329,7 +247,7 @@ export default function ArsenalNodePage() {
               </CardContent>
 
               <div className="p-8 border-t-2 border-white/5 mt-auto flex justify-between items-center opacity-30 text-[10px] font-black uppercase tracking-[2.5em] italic">
-                 <span>ARSENAL_NODE_22_v55_AL_GHAZALI_ROOT</span>
+                 <span>ARSENAL_NODE_22_v56_AL_GHAZALI_ROOT</span>
                  <div className="flex gap-8">
                     <Fingerprint className="size-8 text-primary animate-pulse" />
                     <Atom className="size-8 animate-spin-slow" />
@@ -339,9 +257,9 @@ export default function ArsenalNodePage() {
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-16 opacity-40 text-[12px] md:text-[18px] font-black uppercase tracking-[2em] md:tracking-[6em] italic text-white drop-shadow-xl pb-12">
-            <span>AL-MUIZZ SUPREME ARSENAL v55.5</span>
+            <span>AL-MUIZZ SUPREME ARSENAL v56.0</span>
             <div className="size-4 rounded-full bg-white animate-pulse shadow-[0_0_40px_white]" />
-            <span>MEMPALACE_FORENSICS_ACTIVE_2026</span>
+            <span>LEGBA_MULTIPROTOCOL_READY_2026</span>
         </div>
       </main>
     </div>
