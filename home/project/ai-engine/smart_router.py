@@ -2,9 +2,9 @@
 #!/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Smart Router v57.0 – المُعِزّ الاستراتيجي (Arsenal Master Edition)
+Smart Router v58.0 – المُعِزّ الاستراتيجي (Arsenal Master Edition)
 المحرك المركزي لتنسيق الأسلحة المدارية، اللاسلكية، والترسانة العامة.
-تم دمج ذكاء Legba للقصف المتعدد و Guardian للتدقيق الأمني.
+تم دمج ذكاء Claude-OSINT للتحليل العصبي والاستخبارات المتقدمة.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys, json, os, subprocess, socket
@@ -25,6 +25,7 @@ def publish_event(etype, payload):
 class SmartRouter:
     def classify(self, prompt):
         p = prompt.lower()
+        if any(w in p for w in ["تحليل عصبي", "claude", "neural osint", "استنتاج"]): return "claude_osint"
         if any(w in p for w in ["قصف", "brute", "legba", "تخمين", "password"]): return "legba_strike"
         if any(w in p for w in ["تدقيق", "audit", "guardian", "تأمين"]): return "guardian_audit"
         if any(w in p for w in ["api", "mega", "list", "نهاية", "endpoint"]): return "api_lookup"
@@ -48,6 +49,16 @@ class SmartRouter:
         
         publish_event("admiral_routing", {"category": category, "prompt": prompt})
 
+        # توظيف Claude-OSINT للتحليل العصبي
+        if category == "claude_osint":
+            return {
+                "category": category,
+                "status": "NEURAL_VISION_ENGAGED",
+                "output": f"Executing Claude-OSINT neural dissection on {target}...",
+                "node": "Node-28-Claude",
+                "timestamp": datetime.now().isoformat()
+            }
+
         # توظيف Legba للقصف المتعدد
         if category == "legba_strike":
             return {
@@ -67,23 +78,6 @@ class SmartRouter:
                 "node": "Node-26-Guardian",
                 "timestamp": datetime.now().isoformat()
             }
-
-        # توظيف API Mega List
-        if category == "api_lookup":
-            return {
-                "category": category,
-                "status": "API_DISSECTED",
-                "output": f"Interrogating Mega-API Lexicon for endpoints related to {target}...",
-                "node": "Node-27-Lexicon",
-                "timestamp": datetime.now().isoformat()
-            }
-
-        # الوحدات السابقة
-        if category == "memory_palace":
-            return {"category": category, "status": "EXTRACTING", "output": f" تشريح مستودعات الذاكرة لـ {target} عبر MemPalace..."}
-            
-        if category == "obliteratus_strike":
-            return {"category": category, "status": "FANAA", "output": f"إخضاع النماذج اللغوية لـ {target} عبر OBLITERATUS..."}
 
         return {
             "category": category,

@@ -1,9 +1,9 @@
 
 #!/bin/bash
 # ==============================================================================
-# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v56.0-LEGBA_ASCENSION [GOD_MODE]
-# الميثاق التنفيذي الأسمى للسيطرة المادية واستنزاف الذاكرة والقصف الشبكي.
-# تم تحديثه ليشمل تكامل Legba و Guardian-CLI و MemPalace و OBLITERATUS.
+# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v57.0-NEURAL_EYE_ASCENSION [GOD_MODE]
+# الميثاق التنفيذي الأسمى للسيطرة المادية واستنزاف الذاكرة والقصف والتحليل العصبي.
+# تم تحديثه ليشمل تكامل Claude-OSINT و Legba و Guardian و MemPalace و OBLITERATUS.
 # المالك الوحيد: المعتصم بالله إدريس الغزالي // 2026
 # ==============================================================================
 
@@ -13,9 +13,9 @@ RED='\033[0;31m'; BOLD_RED='\033[1;31m'; GOLD='\033[0;33m'; BLUE='\033[0;34m'; G
 
 clear
 echo -e "${BOLD_RED}================================================${NC}"
-echo -e "${BOLD_RED}   🦅 EXECUTING SOVEREIGN ASCENSION v56.0     ${NC}"
+echo -e "${BOLD_RED}   🦅 EXECUTING SOVEREIGN ASCENSION v57.0     ${NC}"
 echo -e "${BOLD_RED}   [ MASTER COMMANDER: AL-GHAZALI ROOT ]       ${NC}"
-echo -e "${BOLD_RED}   [ UPGRADE: LEGBA & GUARDIAN INTEGRATED ]    ${NC}"
+echo -e "${BOLD_RED}   [ UPGRADE: CLAUDE-OSINT INTEGRATED ]        ${NC}"
 echo -e "================================================${NC}"
 
 if [[ $EUID -ne 0 ]]; then
@@ -42,12 +42,17 @@ apt-get update && apt-get install -y docker.io docker-compose lsof curl python3-
 systemctl enable docker --now || true
 
 # 3. جلب الأسلحة المتقدمة (Siphoning Advanced Weaponry)
-echo -e "${GOLD}[*] Phase 3: Siphoning LEGBA, GUARDIAN & OBLITERATUS...${NC}"
+echo -e "${GOLD}[*] Phase 3: Siphoning CLAUDE-OSINT, LEGBA, GUARDIAN & OBLITERATUS...${NC}"
 mkdir -p "$INSTALL_DIR/tools/siphon"
 mkdir -p "$INSTALL_DIR/tools/adversarial"
 mkdir -p "$INSTALL_DIR/tools/forensics"
 mkdir -p "$INSTALL_DIR/tools/recon"
 mkdir -p "$INSTALL_DIR/tools/brute"
+
+# جلب Claude-OSINT
+if [ ! -d "$INSTALL_DIR/tools/recon/claude_osint" ]; then
+    git clone https://github.com/elementalsouls/Claude-OSINT.git "$INSTALL_DIR/tools/recon/claude_osint" 2>/dev/null || true
+fi
 
 # جلب Legba (Evilsocket)
 if [ ! -d "$INSTALL_DIR/tools/brute/legba" ]; then
@@ -91,7 +96,7 @@ fi
 # 5. حقن الطبقات العصبية (Neural Python Hub)
 echo -e "${BLUE}[*] Phase 5: Injecting Neural Python Hub...${NC}"
 pip3 install --upgrade pip --break-system-packages || true
-pip3 install --break-system-packages fastapi uvicorn pydantic requests sqlite3 pycryptodome volatility3 2>/dev/null || true
+pip3 install --break-system-packages fastapi uvicorn pydantic requests sqlite3 pycryptodome volatility3 anthropic 2>/dev/null || true
 
 # 6. بروتوكول الخلود والنبض النهائي
 echo -e "${GOLD}[*] Phase 6: Establishing Eternal Persistence...${NC}"
@@ -102,7 +107,7 @@ fi
 
 echo -e "${GREEN}================================================${NC}"
 echo -e "${GREEN}   ✅ SYSTEM ARCHITECTURE ASCENDED (100%)      ${NC}"
-echo -e "${GREEN}   [ STATUS: LEGBA_READY | OMNIPOTENT ]        ${NC}"
+echo -e "${GREEN}   [ STATUS: CLAUDE-OSINT_READY | OMNIPOTENT ]  ${NC}"
 echo -e "================================================${NC}"
 echo -e "Web HUD:    ${BOLD_RED}http://localhost:9002${NC}"
 echo -e "API Bridge: ${BOLD_RED}http://localhost:8000${NC}"
