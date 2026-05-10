@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # ==============================================================================
 # 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v58.0-SUPREME_ARSENAL_MASTER [GOD_MODE]

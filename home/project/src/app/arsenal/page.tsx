@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -270,7 +269,7 @@ export default function ArsenalNodePage() {
                  </div>
                  <div>
                     <h3 className="text-4xl md:text-7xl font-black text-white uppercase italic gold-glow leading-none">Strike Result</h3>
-                    <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-6 py-1 rounded-full font-black italic text-xs tracking-widest mt-4 uppercase">DNA_CAPTURED_v58</Badge>
+                    <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-6 py-1.5 rounded-full font-black italic text-xs tracking-widest mt-4 uppercase">DNA_CAPTURED_v58</Badge>
                  </div>
               </div>
               <div className="flex-1 bg-black/99 rounded-[4rem] border-8 border-white/5 p-12 overflow-y-auto scrollbar-hide shadow-inner font-code text-2xl md:text-5xl leading-tight italic text-emerald-400 selection:bg-primary selection:text-black">

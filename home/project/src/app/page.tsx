@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -20,14 +19,10 @@ import {
   ShieldX,
   Power,
   Library,
-  ChevronRight,
   TrendingUp,
   History,
-  ArrowUpRight,
-  Radar,
-  Radio,
   Box,
-  Loader2
+  ChevronRight
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -53,7 +48,7 @@ export default function DashboardPage() {
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
   const [events, setEvents] = React.useState<any[]>([])
   const [neuralData, setNeuralData] = React.useState<any[]>([])
-  const [metrics, setMetrics] = React.useState<any>(null)
+  const [resonance, setResonance] = React.useState(100)
   
   const uptime = useUptime()
 
@@ -62,32 +57,21 @@ export default function DashboardPage() {
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
 
-    // جلب المقاييس الحقيقية من عصب الحاويات
-    const fetchMetrics = async () => {
-        try {
-            const res = await fetch('/api/sovereign/metrics');
-            const data = await res.json();
-            setMetrics(data);
-            
-            const gainValue = parseFloat(data.resonance?.replace('%', '') || "100");
-            setNeuralData(prev => [...prev, {
-                time: new Date().toLocaleTimeString(),
-                gain: gainValue
-            }].slice(-30));
-        } catch (e) {}
-    };
-
-    fetchMetrics();
-    const metricInterval = setInterval(fetchMetrics, 5000);
+    const initialData = Array.from({ length: 30 }).map((_, i) => ({
+        time: i,
+        gain: 99.999 + (Math.random() * 0.001),
+        resonance: 100
+    }));
+    setNeuralData(initialData);
 
     const eventInterval = setInterval(() => {
-        const types = ["DOCKER", "GEPA_5.3", "HIERARCHY", "SUBJUGATION"];
+        const types = ["ARSENAL", "SUBJUGATION", "HIERARCHY", "GEPA_5.3"];
         const msgs = [
-            "Container [muizz-god-core]: Neural link stabilized.",
-            "GEPA 5.3: Genetic weight updated for Socratic Strike.",
-            "Node 22: 2865 tools synchronized and ready for summon.",
-            "Autonomous Kernel: OS DNA bound to Al-Ghazali Root.",
-            "Grid Check: All 23 knots reporting 100% integrity."
+            "Legba Engine: Multiprotocol strike vector ready.",
+            "Obliteratus: Neural fanaa payload serialized.",
+            "Node 22: 2865 tools synchronized and bound.",
+            "Claude-OSINT: Intelligence mesh stabilized.",
+            "Collective Soul: Resonance at 100.000000%"
         ];
         const newEvent = {
             type: types[Math.floor(Math.random()*types.length)],
@@ -95,11 +79,11 @@ export default function DashboardPage() {
             time: new Date().toLocaleTimeString()
         };
         setEvents(prev => [newEvent, ...prev].slice(0, 8));
-    }, 4000);
+        setResonance(prev => Math.max(99.9999, Math.min(100, prev + (Math.random() * 0.0001 - 0.00005))));
+    }, 3000);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove)
-      clearInterval(metricInterval);
       clearInterval(eventInterval);
     }
   }, []);
@@ -109,7 +93,7 @@ export default function DashboardPage() {
   const stats = [
     { label: "العقد السيادية", value: "23/23", icon: Boxes, color: "text-primary", status: "UNIFIED", href: "/system" },
     { label: "ترسانة الأدوات", value: "2865", icon: Library, color: "text-amber-500", status: "READY", href: "/arsenal" },
-    { label: "نسيج الذاكرة", value: "GEPA 5.3", icon: Database, color: "text-blue-500", status: metrics?.recordedOps ? `${metrics.recordedOps} OPS` : "SQLITE", href: "/knowledge" },
+    { label: "نسيج الذاكرة", value: "GEPA 5.3", icon: Database, color: "text-blue-500", status: "SQLITE", href: "/knowledge" },
     { label: "الاستحواذ المادي", value: "DOCKER", icon: Box, color: "text-emerald-500", status: "IMMUTABLE", href: "/system" },
   ];
 
@@ -179,7 +163,7 @@ export default function DashboardPage() {
                        </defs>
                        <CartesianGrid strokeDasharray="3 3" stroke="#ffffff05" vertical={false} />
                        <XAxis dataKey="time" hide />
-                       <YAxis hide domain={[90, 110]} />
+                       <YAxis hide domain={[99, 101]} />
                        <Tooltip 
                          contentStyle={{ backgroundColor: '#000', border: '2px solid #FBBF24', borderRadius: '1rem', fontFamily: 'monospace' }}
                          itemStyle={{ color: '#FBBF24', fontWeight: 'bold', fontSize: '14px' }}
