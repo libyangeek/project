@@ -51,6 +51,10 @@ fi
 
 # 4. بناء مصفوفة Docker (Sovereign Bridge Integration)
 echo -e "${GOLD}[*] Phase 4: Building the Sovereign Bridge Matrix...${NC}"
+# نقل الملفات للمسار السيادي
+cp -r . "$INSTALL_DIR/"
+cd "$INSTALL_DIR"
+
 if [ -f "docker-compose.yml" ]; then
     docker-compose up -d --build
 fi

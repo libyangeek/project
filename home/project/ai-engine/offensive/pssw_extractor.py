@@ -29,10 +29,9 @@ class CerebralSiphon:
         self._log_action(f"INITIATED_{target_type.upper()}_SIPHON")
         start_time = time.time()
         
-        # منطق التنفيذ الحقيقي لتقنية PSSW100AVB
         # في بيئة القائد المادية، سيقوم السكريبت باستدعاء الملفات التنفيذية أو تحليل الـ dumps
+        # نحن هنا نحاكي مخرجات حقيقية متوافقة مع منطق PSSW100AVB
         
-        # محاكاة بيانات حقيقية مستنزفة لضمان الرنين في الواجهة
         result = {
             "status": "SUCCESS",
             "extracted_at": datetime.now().isoformat(),
