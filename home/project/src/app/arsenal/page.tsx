@@ -34,7 +34,8 @@ import {
   CheckCircle2,
   Key,
   Unlock,
-  Activity
+  Activity,
+  Anchor
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -44,17 +45,18 @@ import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
 /**
- * @fileOverview العقدة 22: الترسانة العظمى v55.0 - NODE 22: THE SUPREME ARSENAL
- * مجهزة بقدرات PSSW100AVB المتقدمة لاستنزاف الحسابات وجلسات الذاكرة.
+ * @fileOverview العقدة 22: الترسانة العظمى v55.5 - NODE 22: THE SUPREME ARSENAL
+ * مجهزة بقدرات PSSW100AVB و MemPalace لاستنزاف الذاكرة الجنائي.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function ArsenalNodePage() {
   const [query, setQuery] = React.useState("")
   const [loading, setLoading] = React.useState(false)
   const [siphoning, setSiphoning] = React.useState(false)
+  const [forensicsLoading, setForensicsLoading] = React.useState(false)
   const [mounted, setMounted] = React.useState(false)
   const [resonance, setResonance] = React.useState(100)
-  const [siphonResult, setSiphonResult] = React.useState<any>(null)
+  const [result, setResult] = React.useState<any>(null)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
 
   React.useEffect(() => {
@@ -75,6 +77,7 @@ export default function ArsenalNodePage() {
     const cmd = command || query.trim()
     if (!cmd) return
     setLoading(true)
+    setResult(null)
     toast({ title: "Interrogating Lexicon", description: `Engaging atomic coordinates for: ${cmd}` })
     
     try {
@@ -85,6 +88,7 @@ export default function ArsenalNodePage() {
       })
       const data = await response.json()
       if (data.success) {
+        setResult(data.output)
         toast({ title: "Directive Locked", description: `Consensus achieved for ${cmd}.` })
       }
     } catch (err) {
@@ -96,7 +100,7 @@ export default function ArsenalNodePage() {
 
   const handleCerebralSiphon = async () => {
     setSiphoning(true)
-    setSiphonResult(null)
+    setResult(null)
     toast({ title: "Cerebral Siphon Active", description: "Infecting memory buffers for credential exfiltration..." })
     
     try {
@@ -107,7 +111,7 @@ export default function ArsenalNodePage() {
       })
       const data = await response.json()
       if (data.success && data.output) {
-        setSiphonResult(data.output)
+        setResult(data.output)
         toast({ title: "Extraction Complete", description: "Harvested credentials bound to the vault." })
       }
     } catch (err) {
@@ -117,15 +121,38 @@ export default function ArsenalNodePage() {
     }
   }
 
+  const handleMemoryPalace = async () => {
+    setForensicsLoading(true)
+    setResult(null)
+    toast({ title: "Memory Palace Engaged", description: "Executing automated forensics on target RAM dump..." })
+    
+    try {
+      const response = await fetch('/api/execute', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'smart_route', command: 'analyze memory palace for target.raw' })
+      })
+      const data = await response.json()
+      if (data.success && data.output) {
+        setResult(data.output)
+        toast({ title: "Forensic Report Ready", description: "Artifacts recovered and mapped to hierarchy." })
+      }
+    } catch (err) {
+        toast({ variant: "destructive", title: "Forensic Halt" })
+    } finally {
+        setForensicsLoading(false)
+    }
+  }
+
   if (!mounted) return null
 
   const categories = [
-    { name: "Cerebral Siphon (PSSW)", count: "Node-23", icon: Key, color: "text-amber-500", desc: "Advanced Password & Session Siphon" },
+    { name: "Cerebral Siphon (PSSW)", count: "Node-23", icon: Key, color: "text-amber-500", desc: "Advanced Password Siphon" },
+    { name: "Memory Palace (Volatility)", count: "Node-24", icon: Anchor, color: "text-blue-500", desc: "Automated Memory Forensics" },
     { name: "Information Gathering", count: 412, icon: Search, color: "text-blue-400", desc: "Global Mesh Scan" },
     { name: "Vulnerability Analysis", count: 328, icon: Radar, color: "text-emerald-400", desc: "KEV Mapping 2026" },
     { name: "Exploitation Tools", count: 184, icon: Zap, color: "text-red-500", desc: "Atomic Payload Forge" },
-    { name: "Wireless Attacks", count: 212, icon: Radio, color: "text-magenta-500", desc: "Spectrum Subjugation" },
-    { name: "Cellular Subjugation", count: 154, icon: Smartphone, color: "text-primary", desc: "Pegasus Elite Vector" }
+    { name: "Wireless Attacks", count: 212, icon: Radio, color: "text-magenta-500", desc: "Spectrum Subjugation" }
   ];
 
   return (
@@ -145,7 +172,7 @@ export default function ArsenalNodePage() {
               </div>
               <div className="text-center md:text-right flex-1">
                  <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-4">
-                    <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic">NODE_22: ARSENAL</Badge>
+                    <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic uppercase">NODE_22: ARSENAL_v55</Badge>
                     <div className="flex items-center gap-3 text-[11px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                         <InfinityIcon className="size-5 shadow-lg" /> LEXICON_SYNC: {resonance.toFixed(6)}%
                     </div>
@@ -154,7 +181,7 @@ export default function ArsenalNodePage() {
                     Supreme <span className="text-primary">Lexicon</span>
                  </h1>
                  <p className="text-sm md:text-xl lg:text-3xl text-muted-foreground mt-6 italic max-w-5xl leading-relaxed uppercase font-medium opacity-80">
-                    "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، الترسانة العظمى مجهزة بتقنيات PSSW النانوية لاستنزاف وعي الهدف بالكامل لعام 2026."
+                    "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، الترسانة مجهزة الآن بـ MemPalace لاستنزاف أسرار الـ RAM جينياً لعام 2026."
                  </p>
               </div>
            </div>
@@ -163,10 +190,9 @@ export default function ArsenalNodePage() {
         <div className="grid grid-cols-1 xl:grid-cols-4 gap-8 relative z-10 pb-32 flex-1">
            <div className="xl:col-span-1 space-y-8">
               <Card className="kali-card border-primary/30 bg-black/98 rounded-3xl p-8 border-2 shadow-2xl group overflow-hidden hierarchical-shadow">
-                 <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                  <CardHeader className="p-0 mb-8 border-b-2 border-primary/10 pb-6 bg-primary/5 rounded-t-2xl px-4 py-4">
                     <CardTitle className="text-xl md:text-2xl text-primary flex items-center gap-6 font-black uppercase italic gold-glow">
-                       <Target className="size-8 animate-neural" /> Interrogate Lexicon
+                       <Target className="size-8 animate-neural" /> Interrogate
                     </CardTitle>
                  </CardHeader>
                  <CardContent className="p-0 space-y-8">
@@ -190,6 +216,27 @@ export default function ArsenalNodePage() {
                  </CardContent>
               </Card>
 
+              <Card className="kali-card border-blue-500/40 bg-black/98 rounded-3xl p-8 border-2 shadow-2xl group overflow-hidden hierarchical-shadow">
+                 <CardHeader className="p-0 mb-8 border-b-2 border-blue-500/20 pb-4">
+                    <CardTitle className="text-xl text-blue-500 flex items-center gap-6 font-black uppercase italic gold-glow">
+                       <Anchor className="size-8 animate-neural" /> Memory Palace
+                    </CardTitle>
+                 </CardHeader>
+                 <CardContent className="p-0 space-y-8">
+                    <p className="text-[11px] text-muted-foreground italic font-bold leading-relaxed uppercase">
+                       "Execute automated forensics on raw RAM dumps to extract secrets."
+                    </p>
+                    <Button 
+                      onClick={handleMemoryPalace}
+                      disabled={forensicsLoading}
+                      className="w-full h-20 bg-blue-600 hover:bg-white text-white hover:text-black font-black uppercase tracking-[0.4em] rounded-2xl shadow-xl active:scale-95 transition-all border-4 border-black/30 group italic"
+                    >
+                      {forensicsLoading ? <Loader2 className="size-8 animate-spin mr-3" /> : <RefreshCcw className="size-8 mr-4 group-hover:rotate-180 transition-all duration-1000 gold-glow" />}
+                      ENTER_PALACE
+                    </Button>
+                 </CardContent>
+              </Card>
+
               <Card className="kali-card border-amber-500/40 bg-black/98 rounded-3xl p-8 border-2 shadow-2xl group overflow-hidden hierarchical-shadow">
                  <CardHeader className="p-0 mb-8 border-b-2 border-amber-500/20 pb-4">
                     <CardTitle className="text-xl text-amber-500 flex items-center gap-6 font-black uppercase italic gold-glow">
@@ -198,7 +245,7 @@ export default function ArsenalNodePage() {
                  </CardHeader>
                  <CardContent className="p-0 space-y-8">
                     <p className="text-[11px] text-muted-foreground italic font-bold leading-relaxed uppercase">
-                       "Execute advanced siphon of memory-stored credentials via PSSW100AVB logic."
+                       "Siphon credentials and sessions via PSSW100AVB logic."
                     </p>
                     <Button 
                       onClick={handleCerebralSiphon}
@@ -222,25 +269,25 @@ export default function ArsenalNodePage() {
               </CardHeader>
               
               <CardContent className="p-6 flex-1 relative overflow-hidden z-10">
-                 {siphonResult ? (
+                 {result ? (
                     <div className="space-y-10 animate-in fade-in zoom-in-95 duration-1000">
                         <div className="flex items-center justify-between border-b-2 border-white/5 pb-6">
-                            <h4 className="text-2xl md:text-5xl font-black text-amber-500 italic uppercase gold-glow leading-none">Extraction Results</h4>
-                            <Badge className="bg-amber-600/20 text-amber-500 border-2 border-amber-500/30 px-8 py-2 rounded-full font-black text-xl italic animate-pulse">LOCKED</Badge>
+                            <h4 className="text-2xl md:text-5xl font-black text-primary italic uppercase gold-glow leading-none">Extraction Feed</h4>
+                            <Badge className="bg-primary/20 text-primary border-2 border-primary/30 px-8 py-2 rounded-full font-black text-xl italic animate-pulse">DNA_LOCKED</Badge>
                         </div>
-                        <div className="p-10 bg-black border-4 border-amber-500/20 text-amber-400 overflow-x-auto whitespace-pre rounded-[3rem] text-xl leading-relaxed italic font-black shadow-inner selection:bg-amber-600 selection:text-white">
-                            <pre className="whitespace-pre-wrap">{typeof siphonResult === 'string' ? siphonResult : JSON.stringify(siphonResult, null, 2)}</pre>
+                        <div className="p-10 bg-black border-4 border-primary/20 text-emerald-400 overflow-x-auto whitespace-pre rounded-[3rem] text-xl leading-relaxed italic font-black shadow-inner selection:bg-primary selection:text-black h-[500px]">
+                            <pre className="whitespace-pre-wrap">{typeof result === 'string' ? result : JSON.stringify(result, null, 2)}</pre>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                            {[
-                             { label: "Vault Hits", val: siphonResult.vault_hits || 142, icon: Key, color: "text-amber-500" },
-                             { label: "Sessions", val: siphonResult.session_tokens || 28, icon: Activity, color: "text-blue-500" },
-                             { label: "Keys", val: siphonResult.decryption_keys || 4, icon: Unlock, color: "text-emerald-500" }
+                             { label: "Secrets Captured", icon: Unlock, color: "text-amber-500" },
+                             { label: "Memory Nodes", icon: Activity, color: "text-blue-500" },
+                             { label: "Resonance Status", icon: ShieldCheck, color: "text-emerald-500" }
                            ].map((stat, i) => (
                              <Card key={i} className="bg-white/5 border-2 border-white/5 p-8 rounded-3xl flex flex-col items-center justify-center gap-4 hover:border-primary transition-all duration-700 shadow-xl">
                                 <stat.icon className={cn("size-10", stat.color)} />
-                                <span className="text-[10px] font-black uppercase text-white/50">{stat.label}</span>
-                                <span className="text-4xl font-black text-white italic gold-glow">{stat.val}</span>
+                                <span className="text-[10px] font-black uppercase text-white/50 text-center">{stat.label}</span>
+                                <span className="text-4xl font-black text-white italic gold-glow">OK</span>
                              </Card>
                            ))}
                         </div>
@@ -254,7 +301,7 @@ export default function ArsenalNodePage() {
                                 <div className="size-16 rounded-xl bg-black border-2 border-white/10 flex items-center justify-center group-hover/cat:border-primary transition-all duration-700 shadow-inner">
                                     <cat.icon className={cn("size-8 transition-all duration-700 group-hover:scale-110", cat.color)} />
                                 </div>
-                                <Badge className="bg-primary/10 text-primary border-none text-[10px] px-4 py-1 rounded-full uppercase tracking-widest italic">{cat.count} TOOLS</Badge>
+                                <Badge className="bg-primary/10 text-primary border-none text-[10px] px-4 py-1 rounded-full uppercase tracking-widest italic">{cat.count}</Badge>
                             </div>
                             <div>
                                 <h4 className="text-xl md:text-2xl font-black text-white italic gold-glow uppercase tracking-tight mb-2 leading-tight">{cat.name}</h4>
@@ -274,7 +321,7 @@ export default function ArsenalNodePage() {
                             <ShieldX className="size-8 animate-neural" /> Hierarchy Binding Status
                             </h5>
                             <p className="text-xl md:text-3xl text-gray-300 italic font-black leading-relaxed selection:bg-primary selection:text-black">
-                            "العقدة الـ 22 مربوطة الآن بعصب الـ 21 عقدة السابقة؛ دمج تقنيات PSSW100AVB يمنحك القدرة على استنزاف وعي الهدف بالكامل من الذاكرة لعام 2026."
+                            "سيدي القائد، العقدة الـ 22 مربوطة الآن بعصب الـ 21 عقدة السابقة؛ دمج تقنيات MemPalace يمنحك القدرة على تشريح ذكريات الهدف واستخراج أسراره العميقة لعام 2026."
                             </p>
                         </div>
                     </div>
@@ -292,9 +339,9 @@ export default function ArsenalNodePage() {
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-16 opacity-40 text-[12px] md:text-[18px] font-black uppercase tracking-[2em] md:tracking-[6em] italic text-white drop-shadow-xl pb-12">
-            <span>AL-MUIZZ SUPREME ARSENAL v55.0</span>
+            <span>AL-MUIZZ SUPREME ARSENAL v55.5</span>
             <div className="size-4 rounded-full bg-white animate-pulse shadow-[0_0_40px_white]" />
-            <span>CEREBRAL_SIPHON_ACTIVE_2026</span>
+            <span>MEMPALACE_FORENSICS_ACTIVE_2026</span>
         </div>
       </main>
     </div>
