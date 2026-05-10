@@ -198,7 +198,7 @@ export default function KnowledgePage() {
                         placeholder="Interrogate the Neural Palace..." 
                         className="h-24 md:h-32 bg-black/99 border-4 border-primary/30 rounded-[3rem] pl-24 pr-40 text-xl md:text-4xl italic font-black focus:border-primary text-white shadow-inner transition-all duration-700 placeholder:text-gray-900 selection:bg-primary selection:text-black"
                     />
-                    <Button onClick={() => handleSearch()} disabled={loading || !query} className="absolute right-4 top-1/2 -translate-y-1/2 size-20 md:size-24 rounded-full bg-primary hover:bg-white text-black border-8 border-black/30 shadow-9xl active:scale-90 transition-all">
+                    <Button onClick={() => handleSearch()} disabled={loading} className="absolute right-4 top-1/2 -translate-y-1/2 size-20 md:size-24 rounded-full bg-primary hover:bg-white text-black border-8 border-black/30 shadow-9xl active:scale-90 transition-all">
                         {loading ? <Loader2 className="size-10 animate-spin" /> : <Zap className="size-10" />}
                     </Button>
                  </div>

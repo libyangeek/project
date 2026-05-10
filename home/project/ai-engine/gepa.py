@@ -1,12 +1,12 @@
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-/**
- * GEPA 5.5 – The Neural Memory Palace (الذاكرة المكانية العصبية)
- * المسؤول عن تنظيم كل نبضة استخباراتية داخل "غرف" معمارية لضمان السطوة المطلقة.
- * تم دمج منطق MemPalace لتحويل الأسرار المستنزفة إلى ركائز في القصر الجيني.
- * (c) 2026 Al-Mu'izz Sovereign Systems
- */
+"""
+GEPA 5.5 – The Neural Memory Palace (الذاكرة المكانية العصبية)
+المسؤول عن تنظيم كل نبضة استخباراتية داخل "غرف" معمارية لضمان السطوة المطلقة.
+تم دمج منطق MemPalace لتحويل الأسرار المستنزفة إلى ركائز في القصر الجيني.
+(c) 2026 Al-Mu'izz Sovereign Systems
+"""
 import sqlite3
 import os
 import json
@@ -23,7 +23,7 @@ class NeuralMemoryPalace:
     def _init_db(self):
         conn = sqlite3.connect(DB_PATH)
         c = conn.cursor()
-        # إضافة عمود spatial_node لتصنيف البيانات داخل "غرف" القصر
+        # نسيج القصر: إضافة عمود spatial_node لتصنيف البيانات داخل "غرف" معمارية
         c.execute("""CREATE TABLE IF NOT EXISTS memory 
                      (id INTEGER PRIMARY KEY AUTOINCREMENT,
                       timestamp TEXT,

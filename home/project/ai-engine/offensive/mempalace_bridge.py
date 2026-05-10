@@ -1,11 +1,11 @@
 
 #!/bin/env python3
 # -*- coding: utf-8 -*-
-/**
- * Memory Palace Strategic Bridge v1.5 - Al-Mu'izz Forensic Hub
- * تم الربط مع GEPA 5.5 لتحويل الأسرار إلى ركائز في قصر الذاكرة العصبية.
- * (c) 2026 Al-Mu'izz Sovereign Systems
- */
+"""
+Memory Palace Strategic Bridge v1.5 - Al-Mu'izz Forensic Hub
+تم الربط مع GEPA 5.5 لتحويل الأسرار إلى ركائز في قصر الذاكرة العصبية.
+(c) 2026 Al-Mu'izz Sovereign Systems
+"""
 import os
 import sys
 import json
