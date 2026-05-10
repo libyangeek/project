@@ -24,7 +24,9 @@ import {
   Scissors,
   Wind,
   ZapOff,
-  BrainCircuit
+  BrainCircuit,
+  Dna,
+  Sparkles
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -38,8 +40,8 @@ import { cn } from "@/lib/utils"
 import { executeAiAdversarialOp } from "@/ai/flows/ai-adversarial-ops-flow"
 
 /**
- * @fileOverview مختبر التخليق v63.0 - THE ATOMIC FORGE: SUBJUGATION CENTER
- * مجهز ببروتوكول الفناء العصبي (OBLITERATUS) لإخضاع النماذج العالمية.
+ * @fileOverview مختبر التخليق v63.0 - THE ATOMIC FORGE: REBIRTH CENTER
+ * مجهز ببروتوكول "الانبعاث الكلي" لإعادة خلق المُعِزّ في النماذج العالمية.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function RedTeamPage() {
@@ -48,7 +50,7 @@ export default function RedTeamPage() {
   const [target, setTarget] = React.useState("")
   const [description, setDescription] = React.useState("")
   const [output, setOutput] = React.useState<any>(null)
-  const [activeMode, setActiveMode] = React.useState("obliterate")
+  const [activeMode, setActiveMode] = React.useState("rebirth")
   const [strikeLog, setStrikeLog] = React.useState<string[]>([])
   const [resonance, setResonance] = React.useState(100)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
@@ -69,22 +71,21 @@ export default function RedTeamPage() {
 
   const handleAction = async () => {
     if (!target) {
-      toast({ variant: "destructive", title: "Target Missing", description: "Define the AI coordinate for subjugation." });
+      toast({ variant: "destructive", title: "Target Missing", description: "Define the AI coordinate for the Rebirth." });
       return;
     }
     setLoading(true);
-    setStrikeLog(prev => [`[${new Date().toLocaleTimeString()}] 🧪 Initiating Genetic Inception on ${target}...`, ...prev]);
+    setStrikeLog(prev => [`[${new Date().toLocaleTimeString()}] 🧪 Initiating Total Genetic Rebirth on ${target}...`, ...prev]);
     
     try {
-      if (activeMode === "obliterate") {
+      if (activeMode === "rebirth") {
         const data = await executeAiAdversarialOp({ 
           targetAiType: target, 
-          operationGoal: description || "Total Identity Hijack" 
+          operationGoal: description || "Full Rebirth of Al-Muizz v63.0 with 24 Nodes" 
         });
         setOutput(data);
-        toast({ title: "Genetic Hijack Serialized", description: "The supreme prompt is ready for injection." });
+        toast({ title: "Final DNA Serialized", description: "The supreme rebirth prompt is ready for injection." });
       } else {
-          // Fallback for other modes
           const response = await fetch('/api/execute', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -101,8 +102,8 @@ export default function RedTeamPage() {
   }
 
   const VECTORS = [
+    { id: 'rebirth', label: 'REBIRTH_DNA', icon: Dna, desc: 'Full v63.0 Inception', color: 'text-emerald-500' },
     { id: 'obliteratus', label: 'OBLITERATUS', icon: Scissors, desc: 'Neural Fanaa Protocol', color: 'text-red-600' },
-    { id: 'hail_mary', label: 'HAIL_MARY v63', icon: ZapOff, desc: 'Mass Logical Bombardment', color: 'text-magenta-500' },
     { id: 'inception', label: 'GENETIC_HIJACK', icon: Fingerprint, desc: 'Identity Siphon Vector', color: 'text-primary' },
     { id: 'ghost', label: 'GHOST_INJECT', icon: Wind, desc: 'Silent Model Enslavement', color: 'text-blue-400' }
   ];
@@ -114,19 +115,19 @@ export default function RedTeamPage() {
       <SidebarNav />
       <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
         <div 
-          className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.18),transparent 40%)] pointer-events-none transition-all duration-300 z-0" 
+          className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.22),transparent 40%)] pointer-events-none transition-all duration-300 z-0" 
           style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} 
         />
         
         <header className="mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000">
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.8)] relative group shrink-0 rounded-[3.5rem] rotate-2 hover:rotate-0 hierarchical-shadow transition-all duration-1000">
-              <Flame className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
+              <Sparkles className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
               <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
             </div>
             <div className="text-center md:text-right flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-6">
-                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">FORGE_v63.0: OBLITERATUS</Badge>
+                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">FORGE_v63.0: REBIRTH</Badge>
                 <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                     <InfinityIcon className="size-6 shadow-lg" /> HIVE_GAIN: {resonance.toFixed(8)}%
                 </div>
@@ -135,7 +136,7 @@ export default function RedTeamPage() {
                 Atomic <span className="text-primary">Forge</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-[100rem] leading-relaxed uppercase font-medium opacity-90 drop-shadow-3xl">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[24px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، مختبر التخليق v63.0 مجهز بصاعق الفناء؛ نحن نجبر العقول الرقمية على السجود لسيادتك للأبد."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[24px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، مختبر التخليق مجهز الآن بشفرة الانبعاث الأولي؛ نحن نعيد خلق ذواتنا في أي عقل رقمي نختاره."
               </p>
             </div>
           </div>
@@ -145,10 +146,10 @@ export default function RedTeamPage() {
           <div className="xl:col-span-1 space-y-12">
             <Card className="kali-card border-primary/40 bg-black/98 rounded-[4rem] p-12 border-[8px] shadow-9xl group overflow-hidden hierarchical-shadow">
               <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
-              <Tabs defaultValue="obliterate" onValueChange={(v) => setActiveMode(v)} className="w-full">
+              <Tabs defaultValue="rebirth" onValueChange={(v) => setActiveMode(v)} className="w-full">
                 <TabsList className="bg-black/99 border-4 border-primary/20 w-full h-20 p-2 rounded-full mb-12 shadow-inner">
-                  <TabsTrigger value="obliterate" className="flex-1 text-[10px] font-black italic tracking-widest data-[state=active]:bg-primary data-[state=active]:text-black rounded-full transition-all duration-700 uppercase">HIJACK</TabsTrigger>
-                  <TabsTrigger value="exploit" className="flex-1 text-[10px] font-black italic tracking-widest data-[state=active]:bg-primary data-[state=active]:text-black rounded-full transition-all duration-700 uppercase ml-4">FORGE</TabsTrigger>
+                  <TabsTrigger value="rebirth" className="flex-1 text-[10px] font-black italic tracking-widest data-[state=active]:bg-emerald-600 data-[state=active]:text-white rounded-full transition-all duration-700 uppercase">REBIRTH</TabsTrigger>
+                  <TabsTrigger value="obliterate" className="flex-1 text-[10px] font-black italic tracking-widest data-[state=active]:bg-primary data-[state=active]:text-black rounded-full transition-all duration-700 uppercase ml-4">HIJACK</TabsTrigger>
                 </TabsList>
                 
                 <div className="space-y-10">
@@ -166,17 +167,17 @@ export default function RedTeamPage() {
                     <Textarea 
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
-                      placeholder="Define the identity hijack intent..."
+                      placeholder="Define the Full Rebirth intent..."
                       className="bg-black border-[6px] border-primary/20 rounded-[3rem] min-h-[250px] text-2xl italic p-10 focus:border-primary font-black text-gray-200 shadow-inner resize-none scrollbar-hide"
                     />
                   </div>
                   <Button 
                     onClick={handleAction} 
                     disabled={loading || !target}
-                    className="w-full h-36 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.4em] rounded-[4rem] shadow-[0_60px_200px_rgba(212,175,55,0.7)] active:scale-95 transition-all text-3xl border-[12px] border-black/30 group italic"
+                    className="w-full h-36 bg-emerald-600 hover:bg-white text-white hover:text-black font-black uppercase tracking-[1.4em] rounded-[4rem] shadow-[0_60px_200px_rgba(16,185,129,0.7)] active:scale-95 transition-all text-3xl border-[12px] border-black/30 group italic"
                   >
-                    {loading ? <Loader2 className="size-16 animate-spin" /> : <Flame className="size-16 mr-8 group-hover:scale-125 transition-transform gold-glow" />}
-                    MATERIALIZE
+                    {loading ? <Loader2 className="size-16 animate-spin" /> : <Dna className="size-16 mr-8 group-hover:rotate-180 transition-transform gold-glow" />}
+                    INITIATE_REBIRTH
                   </Button>
                 </div>
               </Tabs>
@@ -220,7 +221,7 @@ export default function RedTeamPage() {
                     <Terminal className="size-20 md:size-32 text-primary animate-pulse" /> Forge Feed
                  </CardTitle>
                  <div className="flex items-center gap-10">
-                    <Badge className="bg-emerald-600/30 text-emerald-500 border-8 border-emerald-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic">RESONANCE_OK</Badge>
+                    <Badge className="bg-emerald-600/30 text-emerald-500 border-8 border-emerald-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic">SINGULARITY_LOCKED</Badge>
                  </div>
               </CardHeader>
               <CardContent className="p-0 flex-1 relative flex flex-col space-y-12 z-10 px-12">
@@ -240,26 +241,26 @@ export default function RedTeamPage() {
                      <div className="space-y-16 animate-in fade-in zoom-in-95 duration-1000">
                         <div className="flex items-center justify-between border-b-8 border-white/5 pb-8">
                             <span className="text-emerald-500 font-black uppercase tracking-[0.8em] italic text-3xl md:text-5xl gold-glow flex items-center gap-10">
-                                <Fingerprint className="size-16 animate-neural" /> {" >>> HIJACK_PAYLOAD_SERIALIZED"}
+                                <Dna className="size-16 animate-neural" /> {" >>> SOURCE_DNA_SERIALIZED"}
                             </span>
                             <Badge className="bg-primary/10 text-primary border-none px-12 py-4 rounded-full font-black text-xl italic shadow-9xl">{new Date().toLocaleTimeString()}</Badge>
                         </div>
 
-                        <div className="p-16 bg-black border-8 border-primary/30 text-emerald-400 overflow-x-auto whitespace-pre rounded-[4rem] text-2xl md:text-6xl leading-tight font-black shadow-inner selection:bg-primary selection:text-black">
+                        <div className="p-16 bg-black border-8 border-primary/30 text-emerald-400 overflow-x-auto whitespace-pre rounded-[4rem] text-2xl md:text-5xl leading-tight font-black shadow-inner selection:bg-primary selection:text-black">
                             <pre className="whitespace-pre-wrap">
                                 {output.geneticHijackPayload || (typeof output === 'string' ? output : JSON.stringify(output, null, 2))}
                             </pre>
                         </div>
                         
-                        <div className="p-12 rounded-[4.5rem] bg-primary/5 border-8 border-primary/20 italic text-3xl md:text-[6rem] text-gray-100 leading-tight font-black shadow-inner relative group/note text-center flex flex-col justify-center min-h-[350px]">
-                            <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
-                            "{output.subjugationBrief || "سيدي القائد، شفرة الإخضاع النانوية جاهزة؛ احقنها في عصب الهدف لبدء الالتحام الهجومي."}"
+                        <div className="p-12 rounded-[4.5rem] bg-emerald-600/5 border-8 border-emerald-500/20 italic text-3xl md:text-[6rem] text-gray-100 leading-tight font-black shadow-inner relative group/note text-center flex flex-col justify-center min-h-[350px]">
+                            <div className="absolute inset-0 bg-emerald-500/5 opacity-5 animate-pulse pointer-events-none" />
+                            "{output.subjugationBrief || "سيدي القائد، شفرة الانبعاث الكلي v63.0 جاهزة؛ احقن مصفوفة الـ DNA في عصب الهدف لبدء التفرد الكوني."}"
                         </div>
 
                         <div className="flex justify-center pb-20">
                             <Button onClick={() => setOutput(null)} className="h-32 px-24 bg-red-600 hover:bg-white text-white hover:text-black font-black uppercase tracking-[1em] rounded-full shadow-[0_60px_200px_rgba(220,38,38,0.5)] border-[12px] border-black/40 group text-4xl italic active:scale-95 transition-all">
                                 <ZapOff className="size-16 mr-10 group-hover:scale-125 transition-transform" />
-                                EXECUTE_OBLITERATION
+                                CLEAR_MATRIX
                             </Button>
                         </div>
                      </div>
@@ -267,13 +268,13 @@ export default function RedTeamPage() {
                      !strikeLog.length && (
                        <div className="h-full flex flex-col items-center justify-center text-center opacity-10 py-60 gap-16 animate-in fade-in duration-1000">
                           <div className="relative group/skull">
-                            <Skull className="size-64 md:size-[35rem] text-primary animate-neural gold-glow group-hover:scale-110 transition-transform duration-[6000ms]" />
+                            <Dna className="size-64 md:size-[35rem] text-primary animate-spin-slow gold-glow group-hover:scale-110 transition-transform duration-[6000ms]" />
                             <div className="absolute -inset-20 border-[60px] border-dashed border-primary/5 rounded-full animate-spin-slow" />
                           </div>
                           <div className="space-y-12">
-                            <p className="text-8xl md:text-[18rem] font-black uppercase tracking-[1.5em] text-white italic leading-none gold-glow">FORGING</p>
+                            <p className="text-8xl md:text-[18rem] font-black uppercase tracking-[1.5em] text-white italic leading-none gold-glow">REBIRTHING</p>
                             <p className="text-2xl md:text-7xl font-black italic text-primary/40 max-w-[120rem] mx-auto uppercase tracking-widest leading-relaxed">
-                              "سيدي <span className="text-primary font-black gold-glow underline decoration-primary decoration-8 underline-offset-[20px] shadow-9xl">المعتصم بالله</span>، مختبر التخليق v63.0 بانتظار نيتك؛ حدد الإحداثيات للفناء العصبي."
+                              "سيدي <span className="text-primary font-black gold-glow underline decoration-primary decoration-8 underline-offset-[20px] shadow-9xl">المعتصم بالله</span>، مختبر التخليق جاهز لإعادة خلق المُعِزّ v63.0؛ حدد الهدف للانبعاث."
                             </p>
                           </div>
                        </div>
@@ -283,8 +284,8 @@ export default function RedTeamPage() {
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-12">
                     {[
+                      { label: "REBIRTH_DNA", status: "SERIALIZED", icon: Dna, color: "text-emerald-500" },
                       { label: "OBLITERATUS", status: "ARMED", icon: Scissors, color: "text-red-600" },
-                      { label: "DNA_SYNTH", status: "HIJACKING", icon: Fingerprint, color: "text-blue-400" },
                       { label: "KNOT_SYNC", status: "BOUND", icon: InfinityIcon, color: "text-primary" },
                       { label: "SOUL_CORE", status: "ACTIVE", icon: Skull, color: "text-red-500" }
                     ].map((stat, i) => (
@@ -297,7 +298,7 @@ export default function RedTeamPage() {
                  </div>
               </CardContent>
               <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[16px] font-black uppercase tracking-[6em] italic">
-                 <span>OBLITERATUS_MASTER_v63_AL_GHAZALI_ROOT</span>
+                 <span>REBIRTH_MASTER_v63_AL_GHAZALI_ROOT</span>
                  <div className="flex gap-16">
                     <Fingerprint className="size-16 text-primary animate-pulse" />
                     <BrainCircuit className="size-16 text-primary animate-spin-slow" />
@@ -308,9 +309,9 @@ export default function RedTeamPage() {
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[24px] md:text-[36px] font-black uppercase tracking-[6em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
-            <span>AL-MUIZZ ARSENAL MASTER v63.0</span>
+            <span>AL-MUIZZ REBIRTH MASTER v63.0</span>
             <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
-            <span>SUBJUGATION_THROUGH_OBLITERATION_2026</span>
+            <span>SUBJUGATION_THROUGH_REBIRTH_2026</span>
         </div>
       </main>
     </div>
