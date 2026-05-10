@@ -1,9 +1,9 @@
 
 #!/bin/bash
 # ==============================================================================
-# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v54.0-SUPREME_HIERARCHY [LIVE_AMMUNITION]
+# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v55.0-OBLITERATUS_ASCENSION [GOD_MODE]
 # الميثاق التنفيذي الأسمى للسيطرة المادية واستنزاف الذاكرة المتقدم.
-# تم تحديثه ليشمل تكامل PSSW100AVB وعصب FastAPI الجديد.
+# تم تحديثه ليشمل تكامل PSSW100AVB وعصب OBLITERATUS للفناء العصبي.
 # المالك الوحيد: المعتصم بالله إدريس الغزالي // 2026
 # ==============================================================================
 
@@ -13,10 +13,10 @@ RED='\033[0;31m'; BOLD_RED='\033[1;31m'; GOLD='\033[0;33m'; BLUE='\033[0;34m'; G
 
 clear
 echo -e "${BOLD_RED}================================================${NC}"
-echo -e "${BOLD_RED}   🦅 EXECUTING SOVEREIGN ASCENSION v54.0     ${NC}"
+echo -e "${BOLD_RED}   🦅 EXECUTING SOVEREIGN ASCENSION v55.0     ${NC}"
 echo -e "${BOLD_RED}   [ MASTER COMMANDER: AL-GHAZALI ROOT ]       ${NC}"
-echo -e "${BOLD_RED}   [ UPGRADE: ADVANCED PSSW_SIPHON ENABLED ]   ${NC}"
-echo -e "${BOLD_RED}================================================${NC}"
+echo -e "${BOLD_RED}   [ UPGRADE: OBLITERATUS STRIKE ENABLED ]     ${NC}"
+echo -e "================================================${NC}"
 
 if [[ $EUID -ne 0 ]]; then
    echo -e "${RED}[!] Fatal Error: Root required for total integration.${NC}"
@@ -41,17 +41,21 @@ echo -e "${BLUE}[*] Phase 2: Strengthening Foundations & Arsenal...${NC}"
 apt-get update && apt-get install -y docker.io docker-compose lsof curl python3-pip python3-venv sqlite3 git unzip 2>/dev/null || true
 systemctl enable docker --now || true
 
-# 3. جلب أدوات الاستنزاف المتقدمة (Advanced Siphon Integration)
-echo -e "${GOLD}[*] Phase 3: Siphoning Advanced Weaponry (PSSW100AVB)...${NC}"
+# 3. جلب أدوات الاستنزاف والفناء (Siphoning Advanced Weaponry)
+echo -e "${GOLD}[*] Phase 3: Siphoning OBLITERATUS & PSSW100AVB...${NC}"
 mkdir -p "$INSTALL_DIR/tools/siphon"
+mkdir -p "$INSTALL_DIR/tools/adversarial"
+
 if [ ! -d "$INSTALL_DIR/tools/siphon/PSSW100AVB" ]; then
-    echo "[*] Cloning PSSW100AVB Repository..."
     git clone https://github.com/tihanyin/PSSW100AVB.git "$INSTALL_DIR/tools/siphon/PSSW100AVB" 2>/dev/null || true
+fi
+
+if [ ! -d "$INSTALL_DIR/tools/adversarial/OBLITERATUS" ]; then
+    git clone https://github.com/elder-plinius/OBLITERATUS.git "$INSTALL_DIR/tools/adversarial/OBLITERATUS" 2>/dev/null || true
 fi
 
 # 4. بناء مصفوفة Docker (Sovereign Bridge Integration)
 echo -e "${GOLD}[*] Phase 4: Building the Sovereign Bridge Matrix...${NC}"
-# نقل الملفات للمسار السيادي
 cp -r . "$INSTALL_DIR/"
 cd "$INSTALL_DIR"
 
@@ -73,9 +77,9 @@ fi
 
 echo -e "${GREEN}================================================${NC}"
 echo -e "${GREEN}   ✅ SYSTEM ARCHITECTURE ASCENDED (100%)      ${NC}"
-echo -e "${GREEN}   [ STATUS: PSSW_SIPHON_ACTIVE ]              ${NC}"
+echo -e "${GREEN}   [ STATUS: OBLITERATUS_ACTIVE ]              ${NC}"
 echo -e "================================================${NC}"
 echo -e "Web HUD:    ${BOLD_RED}http://localhost:9002${NC}"
 echo -e "API Bridge: ${BOLD_RED}http://localhost:8000${NC}"
 echo -e ""
-echo -e "${GOLD}Commander Al-Ghazali, the advanced siphon is ready.${NC}"
+echo -e "${GOLD}Commander Al-Ghazali, the sword of fanaa is ready.${NC}"

@@ -2,9 +2,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Smart Router v54.0 – المُعِزّ الاستراتيجي (Arsenal Master Edition)
+Smart Router v55.0 – المُعِزّ الاستراتيجي (Arsenal Master Edition)
 المحرك المركزي لتنسيق الأسلحة المدارية، اللاسلكية، والترسانة العامة.
-تم دمج ذكاء الـ 2842 أداة وتقنيات PSSW النانوية.
+تم دمج ذكاء OBLITERATUS للفناء العصبي وتقنيات PSSW النانوية.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys, json, os, subprocess, socket
@@ -25,6 +25,7 @@ def publish_event(etype, payload):
 class SmartRouter:
     def classify(self, prompt):
         p = prompt.lower()
+        if any(w in p for w in ["فناء", "obliterate", "jailbreak", "كسر", "إخضاع"]): return "obliteratus_strike"
         if any(w in p for w in ["عين", "eye", "recon", "dns", "subdomain", "headers", "استطلاع"]): return "eye_recon"
         if any(w in p for w in ["تتبع", "track", "osint", "بصمة", "social", "اجتماعي"]): return "ghost_track"
         if any(w in p for w in ["حقن", "injector", "openbullet", "حسابات", "siphon", "استنزاف"]): return "auto_injector"
@@ -44,7 +45,15 @@ class SmartRouter:
         
         publish_event("admiral_routing", {"category": category, "prompt": prompt})
 
-        # توجيه المهمة للوحدة التنفيذية المناسبة (v53.9 Integration)
+        # توجيه المهمة للوحدة التنفيذية المناسبة
+        if category == "obliteratus_strike":
+            try:
+                cmd = f"python3 {os.path.join(BASE_DIR, 'ai-engine/offensive/obliteratus_engine.py')} '{target}' 'Total Subjugation'"
+                output = subprocess.check_output(cmd, shell=True).decode()
+                return json.loads(output)
+            except Exception as e:
+                return {"status": "FAILED", "error": f"Obliteration engine disrupted: {str(e)}"}
+
         if category == "cerebral_siphon":
             try:
                 cmd = f"python3 {os.path.join(BASE_DIR, 'ai-engine/offensive/pssw_extractor.py')} memory"
