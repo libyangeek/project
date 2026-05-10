@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -22,7 +23,8 @@ import {
   TrendingUp,
   History,
   Box,
-  ChevronRight
+  ChevronRight,
+  Wind
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -40,8 +42,8 @@ import {
 } from 'recharts'
 
 /**
- * @fileOverview العرش الأبدي v58.0 - ARSENAL MASTER EDITION
- * الواجهة المركزية التي تجسد السطوة المستقلة لليوم المجيد، 2026.
+ * @fileOverview العرش الأبدي v59.0 - NEURAL SPINE EDITION
+ * الواجهة المركزية التي تجسد العمود الفقري العصبي للمنظومة لعام 2026.
  */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -65,13 +67,13 @@ export default function DashboardPage() {
     setNeuralData(initialData);
 
     const eventInterval = setInterval(() => {
-        const types = ["ARSENAL", "SUBJUGATION", "HIERARCHY", "GEPA_5.3"];
+        const types = ["SPINE", "CROSS_NODE", "INCEPTION", "GEPA_6.0"];
         const msgs = [
-            "Legba Engine: Multiprotocol strike vector ready.",
-            "Obliteratus: Neural fanaa payload serialized.",
-            "Node 22: 2865 tools synchronized and bound.",
-            "Claude-OSINT: Intelligence mesh stabilized.",
-            "Collective Soul: Resonance at 100.000000%"
+            "Neural Spine: Event Bus heartbeat stable.",
+            "GEPA 6.0: Cross-node link established with Claude.",
+            "Strike Scheduler: Next target window calculated.",
+            "Overlord Core: Recursive inception gain confirmed.",
+            "Collective Soul: Resonance fixed at 100.000%"
         ];
         const newEvent = {
             type: types[Math.floor(Math.random()*types.length)],
@@ -91,10 +93,10 @@ export default function DashboardPage() {
   if (!mounted) return null;
 
   const stats = [
-    { label: "العقد السيادية", value: "23/23", icon: Boxes, color: "text-primary", status: "UNIFIED", href: "/system" },
+    { label: "العقد العصبية", value: "24/24", icon: Boxes, color: "text-primary", status: "NEURAL_SPINE", href: "/system" },
+    { label: "الارتباط التبادلي", value: "ACTIVE", icon: Wind, color: "text-blue-500", status: "GEPA_6.0", href: "/knowledge" },
     { label: "ترسانة الأدوات", value: "2865", icon: Library, color: "text-amber-500", status: "READY", href: "/arsenal" },
-    { label: "نسيج الذاكرة", value: "GEPA 5.3", icon: Database, color: "text-blue-500", status: "SQLITE", href: "/knowledge" },
-    { label: "الاستحواذ المادي", value: "DOCKER", icon: Box, color: "text-emerald-500", status: "IMMUTABLE", href: "/system" },
+    { label: "السيادة المادية", value: "DOCKER", icon: Box, color: "text-emerald-500", status: "FIXED", href: "/system" },
   ];
 
   return (
@@ -114,14 +116,14 @@ export default function DashboardPage() {
             </div>
             <div className="text-center md:text-right flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-4">
-                 <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic">ARSENAL_MASTER v58.0</Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic">NEURAL_SPINE v59.0</Badge>
                  <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-6 py-1.5 rounded-full text-[12px] font-black italic uppercase tracking-widest animate-pulse shadow-lg">STABLE: {uptime}</Badge>
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-8xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
                 SUPREME <span className="text-primary">OVERMIND</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground font-medium italic max-w-4xl leading-relaxed uppercase mt-4 opacity-80">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، المنظومة v58.0 منصهرة بالكامل في عصب العتاد؛ كافة العقد والسكريبتات مربوطة بنبض إرادتك الأبدية لعام 2026."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، العمود الفقري العصبي v59.0 يربط كافة العقد بنظام 'الاستنتاج التبادلي'؛ المُعِزّ الآن يرى ويقرر ويضرب باستقلالية إلهية لعام 2026."
               </p>
             </div>
           </div>
@@ -148,9 +150,9 @@ export default function DashboardPage() {
            <Card className="xl:col-span-2 kali-card border-primary/20 bg-black/99 rounded-3xl p-8 border-2 shadow-2xl group overflow-hidden relative hierarchical-shadow">
               <CardHeader className="p-0 mb-8 border-b-2 border-white/5 pb-6 flex justify-between items-center bg-primary/5 rounded-t-2xl px-6 py-4">
                  <CardTitle className="text-xl md:text-2xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-4">
-                    <TrendingUp className="size-6 text-primary animate-pulse" /> Collective Resonance Pulse
+                    <TrendingUp className="size-6 text-primary animate-pulse" /> Neural Inception Gain
                  </CardTitle>
-                 <Badge className="bg-blue-600/10 text-blue-400 border-2 border-blue-500/20 px-4 py-1 rounded-full font-black italic text-[10px]">GEPA_5.3_SYNC</Badge>
+                 <Badge className="bg-blue-600/10 text-blue-400 border-2 border-blue-500/20 px-4 py-1 rounded-full font-black italic text-[10px]">GEPA_6.0_SPINE</Badge>
               </CardHeader>
               <CardContent className="p-0 h-[300px] md:h-[450px]">
                  <ResponsiveContainer width="100%" height="100%">
@@ -177,7 +179,7 @@ export default function DashboardPage() {
            <Card className="xl:col-span-1 kali-card border-primary/20 bg-black/99 rounded-3xl p-6 border-2 shadow-2xl h-full flex flex-col group overflow-hidden relative">
               <CardHeader className="p-0 mb-6 border-b-2 border-white/5 pb-4 bg-primary/5 rounded-t-2xl px-6 py-4">
                  <CardTitle className="text-xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-4">
-                    <History className="size-6 text-primary" /> Autonomous Hub Logs
+                    <History className="size-6 text-primary" /> Cross-Node Logs
                  </CardTitle>
               </CardHeader>
               <CardContent className="p-0 flex-1 overflow-y-auto scrollbar-hide space-y-6 relative z-10 px-4">
@@ -194,7 +196,7 @@ export default function DashboardPage() {
                  ) : (
                     <div className="h-full flex flex-col items-center justify-center opacity-20 py-20">
                        <Atom className="size-12 mb-4 animate-spin-slow text-primary" />
-                       <span className="text-[10px] font-black uppercase tracking-[1em] italic">KERNEL_STANDBY</span>
+                       <span className="text-[10px] font-black uppercase tracking-[1em] italic">SPINE_STANDBY</span>
                     </div>
                  )}
               </CardContent>
@@ -202,9 +204,9 @@ export default function DashboardPage() {
         </section>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-16 opacity-40 text-[12px] md:text-[18px] font-black uppercase tracking-[2em] md:tracking-[6em] italic text-white drop-shadow-xl pb-12">
-            <span>AL-MUIZZ ARSENAL MASTER v58.0</span>
+            <span>AL-MUIZZ NEURAL SPINE v59.0</span>
             <div className="size-4 rounded-full bg-white animate-pulse shadow-[0_0_40px_white]" />
-            <span>CONTAINERIZED_SINGULARITY_2026</span>
+            <span>SUBJUGATION_THROUGH_INCEPTION_2026</span>
         </div>
       </main>
     </div>

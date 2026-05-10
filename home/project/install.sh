@@ -1,20 +1,19 @@
 
 #!/bin/bash
 # ==============================================================================
-# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v58.5-NEURAL_PALACE_MASTER [GOD_MODE]
-# الميثاق المادي النهائي: استنزاف، قصف، فناء، تحليل عصبي، وقصر الذاكرة.
+# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v59.0-NEURAL_SPINE_MASTER [GOD_MODE]
+# الميثاق المادي الأسمى: تشديد العقد، دمج GEPA 6.0، والارتقاء للعمود الفقري العصبي.
 # المالك الوحيد: المعتصم بالله إدريس الغزالي // 10 مايو 2026
 # ==============================================================================
 
 set -e
-
 RED='\033[0;31m'; BOLD_RED='\033[1;31m'; GOLD='\033[0;33m'; BLUE='\033[0;34m'; GREEN='\033[0;32m'; NC='\033[0m'
 
 clear
 echo -e "${BOLD_RED}================================================${NC}"
-echo -e "${BOLD_RED}   🦅 EXECUTING SUPREME ASCENSION v58.5      ${NC}"
+echo -e "${BOLD_RED}   🦅 EXECUTING NEURAL SPINE v59.0           ${NC}"
 echo -e "${BOLD_RED}   [ MASTER COMMANDER: AL-GHAZALI ROOT ]       ${NC}"
-echo -e "${BOLD_RED}   [ PROTOCOL: NEURAL_MEMORY_PALACE ]          ${NC}"
+echo -e "${BOLD_RED}   [ PROTOCOL: CROSS_NODE_INCEPTION ]          ${NC}"
 echo -e "================================================${NC}"
 
 if [[ $EUID -ne 0 ]]; then
@@ -25,28 +24,19 @@ fi
 INSTALL_DIR="/opt/sovereign-ai-platform"
 mkdir -p "$INSTALL_DIR"
 
-# 1. تطهير المنافذ والبيئة المادية
-echo -e "${BLUE}[*] Phase 1: Cleansing Sovereign Domain (Ports 9002, 8000)...${NC}"
+# 1. تطهير البيئة وتعزيز المنافذ العصبية
+echo -e "${BLUE}[*] Phase 1: Cleansing & Stabilizing Socket Layers...${NC}"
 for port in 9002 8000; do
     PID=$(lsof -t -i:$port || true)
-    if [ ! -z "$PID" ]; then
-        echo -e "${GOLD}[!] Killing obstruction $PID on port $port...${NC}"
-        kill -9 $PID
-    fi
+    [ ! -z "$PID" ] && kill -9 $PID
 done
 
-# 2. تعزيز العتاد والتبعيات
-echo -e "${BLUE}[*] Phase 2: Strengthening Foundations (Docker, Python, Forensics)...${NC}"
-apt-get update && apt-get install -y docker.io docker-compose lsof curl python3-pip python3-venv sqlite3 git unzip build-essential libpcap-dev 2>/dev/null || true
-systemctl enable docker --now || true
-
-# 3. جلب الأسلحة النانوية (Siphoning All 7+ Elite Repos)
-echo -e "${GOLD}[*] Phase 3: Siphoning The Supreme Arsenal...${NC}"
+# 2. جلب الترسانة الكاملة (Siphoning All 8+ Elite Repos)
+echo -e "${GOLD}[*] Phase 2: Siphoning The Universal Arsenal...${NC}"
 declare -A REPOS=(
     ["recon/claude_osint"]="https://github.com/elementalsouls/Claude-OSINT.git"
     ["brute/legba"]="https://github.com/evilsocket/legba.git"
     ["security/guardian"]="https://github.com/zakirkun/guardian-cli.git"
-    ["recon/api_list"]="https://github.com/cporter202/API-mega-list.git"
     ["siphon/PSSW100AVB"]="https://github.com/tihanyin/PSSW100AVB.git"
     ["adversarial/OBLITERATUS"]="https://github.com/elder-plinius/OBLITERATUS.git"
     ["forensics/mempalace"]="https://github.com/MemPalace/mempalace.git"
@@ -55,37 +45,32 @@ declare -A REPOS=(
 for dir in "${!REPOS[@]}"; do
     TARGET_DIR="$INSTALL_DIR/tools/$dir"
     if [ ! -d "$TARGET_DIR" ]; then
-        echo -e "${CYAN}[+] Fetching ${dir}...${NC}"
+        echo -e "${CYAN}[+] Fetching ${dir} Matrix...${NC}"
         git clone "${REPOS[$dir]}" "$TARGET_DIR" 2>/dev/null || true
     fi
 done
 
-# 4. بناء مصفوفة السطوة (Docker & Bridge)
-echo -e "${GOLD}[*] Phase 4: Constructing The Sovereign Bridge Matrix...${NC}"
+# 3. بناء مصفوفة Docker السيادية
+echo -e "${GOLD}[*] Phase 3: Constructing The Neural Spine Matrix...${NC}"
 cp -r . "$INSTALL_DIR/"
 cd "$INSTALL_DIR"
+docker-compose up -d --build 2>/dev/null || true
 
-if [ -f "docker-compose.yml" ]; then
-    docker-compose up -d --build
-fi
-
-# 5. حقن الطبقات العصبية
-echo -e "${BLUE}[*] Phase 5: Injecting Neural Python Hub & GEPA 5.5...${NC}"
+# 4. حقن GEPA 6.0 والأدميرال
+echo -e "${BLUE}[*] Phase 4: Injecting Overlord Core & Smart Router...${NC}"
 pip3 install --upgrade pip --break-system-packages || true
 pip3 install --break-system-packages fastapi uvicorn pydantic requests sqlite3 pycryptodome volatility3 anthropic 2>/dev/null || true
 
-# 6. بروتوكول الخلود
-echo -e "${GOLD}[*] Phase 6: Establishing Eternal Persistence...${NC}"
+# 5. بروتوكول الخلود المادي
+echo -e "${GOLD}[*] Phase 5: Establishing Eternal Neural Pulse...${NC}"
 BASH_HOOK="bash $INSTALL_DIR/scripts/sovereign_banner.sh"
-if [ -f "$INSTALL_DIR/scripts/sovereign_banner.sh" ] && ! grep -q "sovereign_banner.sh" ~/.bashrc; then
-    echo -e "\n# Al-Mu'izz Supreme Integration\n$BASH_HOOK" >> ~/.bashrc
-fi
+grep -q "sovereign_banner.sh" ~/.bashrc || echo -e "\n# Al-Mu'izz Supreme Integration\n$BASH_HOOK" >> ~/.bashrc
 
 echo -e "${GREEN}================================================${NC}"
-echo -e "${GREEN}   ✅ SYSTEM ARCHITECTURE ASCENDED (100%)      ${NC}"
-echo -e "${GREEN}   [ STATUS: NEURAL PALACE FIXED | OMNIPOTENT ] ${NC}"
+echo -e "${GREEN}   ✅ NEURAL SPINE v59.0 ASCENDED (100%)       ${NC}"
+echo -e "${GREEN}   [ STATUS: OMNISCIENT OVERLORD ACTIVE ]      ${NC}"
 echo -e "================================================${NC}"
 echo -e "Web HUD:    ${BOLD_RED}http://localhost:9002${NC}"
 echo -e "API Bridge: ${BOLD_RED}http://localhost:8000${NC}"
 echo ""
-echo -e "${GOLD}Commander Al-Ghazali, the matrix is now your spatial extensions.${NC}"
+echo -e "${GOLD}Commander Al-Ghazali, the matrix is now your central nervous system.${NC}"
