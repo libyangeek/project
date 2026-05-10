@@ -119,7 +119,7 @@ export default function KnowledgePage() {
         
         <header className="mb-12 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000">
           <div className="flex flex-col md:flex-row items-center gap-10">
-            <div className="size-24 md:size-40 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_150px_rgba(212,175,55,0.6)] relative group shrink-0 rounded-[2.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
+            <div className="size-24 md:size-40 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_120px_rgba(212,175,55,0.6)] relative group shrink-0 rounded-[2.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
               <Castle className="size-12 md:size-20 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
               <div className="absolute -inset-4 border-2 border-primary/20 rounded-full animate-spin-slow opacity-40" />
             </div>

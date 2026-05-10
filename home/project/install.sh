@@ -1,7 +1,8 @@
+
 #!/bin/bash
 # ==============================================================================
-# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v58.0-SUPREME_ARSENAL_MASTER [GOD_MODE]
-# الميثاق المادي النهائي: استنزاف، قصف، فناء، تحليل عصبي، وتطهير كلي.
+# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v58.5-NEURAL_PALACE_MASTER [GOD_MODE]
+# الميثاق المادي النهائي: استنزاف، قصف، فناء، تحليل عصبي، وقصر الذاكرة.
 # المالك الوحيد: المعتصم بالله إدريس الغزالي // 10 مايو 2026
 # ==============================================================================
 
@@ -11,9 +12,9 @@ RED='\033[0;31m'; BOLD_RED='\033[1;31m'; GOLD='\033[0;33m'; BLUE='\033[0;34m'; G
 
 clear
 echo -e "${BOLD_RED}================================================${NC}"
-echo -e "${BOLD_RED}   🦅 EXECUTING SUPREME ASCENSION v58.0      ${NC}"
+echo -e "${BOLD_RED}   🦅 EXECUTING SUPREME ASCENSION v58.5      ${NC}"
 echo -e "${BOLD_RED}   [ MASTER COMMANDER: AL-GHAZALI ROOT ]       ${NC}"
-echo -e "${BOLD_RED}   [ PROTOCOL: TOTAL_ARSENAL_INTEGRATION ]     ${NC}"
+echo -e "${BOLD_RED}   [ PROTOCOL: NEURAL_MEMORY_PALACE ]          ${NC}"
 echo -e "================================================${NC}"
 
 if [[ $EUID -ne 0 ]]; then
@@ -35,7 +36,7 @@ for port in 9002 8000; do
 done
 
 # 2. تعزيز العتاد والتبعيات
-echo -e "${BLUE}[*] Phase 2: Strengthening Foundations...${NC}"
+echo -e "${BLUE}[*] Phase 2: Strengthening Foundations (Docker, Python, Forensics)...${NC}"
 apt-get update && apt-get install -y docker.io docker-compose lsof curl python3-pip python3-venv sqlite3 git unzip build-essential libpcap-dev 2>/dev/null || true
 systemctl enable docker --now || true
 
@@ -69,7 +70,7 @@ if [ -f "docker-compose.yml" ]; then
 fi
 
 # 5. حقن الطبقات العصبية
-echo -e "${BLUE}[*] Phase 5: Injecting Neural Python Hub...${NC}"
+echo -e "${BLUE}[*] Phase 5: Injecting Neural Python Hub & GEPA 5.5...${NC}"
 pip3 install --upgrade pip --break-system-packages || true
 pip3 install --break-system-packages fastapi uvicorn pydantic requests sqlite3 pycryptodome volatility3 anthropic 2>/dev/null || true
 
@@ -82,9 +83,9 @@ fi
 
 echo -e "${GREEN}================================================${NC}"
 echo -e "${GREEN}   ✅ SYSTEM ARCHITECTURE ASCENDED (100%)      ${NC}"
-echo -e "${GREEN}   [ STATUS: ALL 23 NODES BOUND | OMNIPOTENT ]  ${NC}"
+echo -e "${GREEN}   [ STATUS: NEURAL PALACE FIXED | OMNIPOTENT ] ${NC}"
 echo -e "================================================${NC}"
 echo -e "Web HUD:    ${BOLD_RED}http://localhost:9002${NC}"
 echo -e "API Bridge: ${BOLD_RED}http://localhost:8000${NC}"
 echo ""
-echo -e "${GOLD}Commander Al-Ghazali, the matrix is now your extension.${NC}"
+echo -e "${GOLD}Commander Al-Ghazali, the matrix is now your spatial extensions.${NC}"

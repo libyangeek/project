@@ -1,12 +1,12 @@
 
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-GEPA 5.5 – The Neural Memory Palace (الذاكرة المكانية العصبية)
-المسؤول عن تنظيم كل نبضة استخباراتية داخل "غرف" معمارية لضمان السطوة المطلقة.
-تم دمج منطق MemPalace لتحويل الأسرار المستنزفة إلى ركائز في القصر الجيني.
-(c) 2026 Al-Mu'izz Sovereign Systems
-"""
+/**
+ * @fileOverview GEPA 5.5 – The Neural Memory Palace (الذاكرة المكانية العصبية)
+ * المسؤول عن تنظيم كل نبضة استخباراتية داخل "غرف" معمارية لضمان السطوة المطلقة.
+ * تم دمج منطق MemPalace لتحويل الأسرار المستنزفة إلى ركائز في القصر الجيني.
+ * (c) 2026 Al-Mu'izz Sovereign Systems
+ */
 import sqlite3
 import os
 import json
@@ -46,10 +46,12 @@ class NeuralMemoryPalace:
             
             # تحديد العقدة المكانية تلقائياً إذا لم تحدد
             if not node:
-                if "mempalace" in tool.lower(): node = "FORENSIC_CHAMBER"
-                elif "legba" in tool.lower(): node = "STRIKE_ARMORY"
-                elif "claude" in tool.lower(): node = "RECON_OBSERVATORY"
-                elif "obliteratus" in tool.lower(): node = "FANAA_LAB"
+                t_lower = tool.lower()
+                if "mempalace" in t_lower or "forensic" in t_lower: node = "FORENSIC_CHAMBER"
+                elif "legba" in t_lower or "brute" in t_lower: node = "STRIKE_ARMORY"
+                elif "claude" in t_lower or "osint" in t_lower: node = "RECON_OBSERVATORY"
+                elif "obliteratus" in t_lower or "fanaa" in t_lower: node = "FANAA_LAB"
+                elif "development" in t_lower or "agent" in t_lower: node = "DEVELOPMENT_HALL"
                 else: node = "GENERAL_HALL"
 
             c.execute("INSERT INTO memory (timestamp, tool, input_data, outcome, success, weight, spatial_node, master_command) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
@@ -71,15 +73,20 @@ class NeuralMemoryPalace:
             c.execute("SELECT AVG(weight) FROM memory")
             avg_weight = c.fetchone()[0] or 1.0
             
+            c.execute("SELECT COUNT(*) FROM memory")
+            total = c.fetchone()[0] or 0
+            
             conn.close()
             return {
                 "active_chambers": nodes,
+                "total_recorded_ops": total,
                 "collective_resonance": f"{round(avg_weight * 66.66, 2)}%",
+                "success_rate": f"{round((avg_weight/1.5)*100, 2)}%",
                 "status": "SINGULARITY_STABLE",
                 "version": "v5.5_NEURAL_PALACE"
             }
         except:
-            return {"status": "INITIALIZING", "active_chambers": {}, "collective_resonance": "100%"}
+            return {"status": "INITIALIZING", "active_chambers": {}, "collective_resonance": "100%", "total_recorded_ops": 0}
 
 def record(tool, input_data, outcome, success=True, master_command="", node=None):
     gm = NeuralMemoryPalace()

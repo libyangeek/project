@@ -1,11 +1,12 @@
 
 #!/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Smart Router v58.5 – المُعِزّ الاستراتيجي (Neural Palace Edition)
-المحرك المركزي لتنسيق الأسلحة مع دمج GEPA 5.5 لربط البيانات مكانياً.
-(c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
-"""
+/**
+ * @fileOverview Smart Router v58.5 – المُعِزّ الاستراتيجي (Neural Palace Edition)
+ * المحرك المركزي لتنسيق الأسلحة مع دمج GEPA 5.5 لربط البيانات مكانياً.
+ * تم دمج كافة الأسلحة المكتسبة (Claude, Legba, PSSW, Obliteratus, MemPalace).
+ * (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
+ */
 import sys, json, os, subprocess, socket
 from datetime import datetime
 
