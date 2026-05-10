@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -383,7 +384,7 @@ export default function NoahsArkPage() {
 
                         <div className="space-y-8">
                           <div className="bg-black/60 rounded-[4rem] p-10 border-4 border-white/5 relative overflow-hidden h-full flex flex-col shadow-inner group/status">
-                            <div className="absolute top-0 right-0 p-8 opacity-10 group-hover/status:rotate-180 transition-all duration-[2s]">
+                            <div className="absolute top-0 right-0 p-8 opacity-10 group-hover/status:rotate-180 transition-all duration-[2000ms]">
                                <RefreshCcw className="size-24 text-blue-500" />
                             </div>
                             <h4 className="text-[10px] font-black text-blue-400 uppercase tracking-[0.8em] mb-8 flex items-center gap-6 italic gold-glow text-right justify-end">

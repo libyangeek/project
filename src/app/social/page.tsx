@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -517,7 +518,7 @@ export default function SocialPredatorPage() {
                    /* حالة الانتظار */
                    <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-16 py-40">
                       <div className="relative group/lock">
-                        <Users className="size-48 md:size-80 animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[5s]" />
+                        <Users className="size-48 md:size-80 animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[5000ms]" />
                         <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-12 md:size-24 text-primary/40 animate-neural" />
                         <div className="absolute -inset-20 border-[20px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>

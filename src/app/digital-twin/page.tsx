@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -151,7 +152,7 @@ export default function DigitalTwinPage() {
                     <Button 
                         disabled={isSimulating}
                         onClick={startSimulation}
-                        className="w-full h-20 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.8em] rounded-2xl shadow-xl active:scale-95 transition-all text-lg border-4 border-black/20 group italic"
+                        className="w-full h-20 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.8em] rounded-2xl shadow-xl active:scale-95 transition-all text-lg border-4 border-black/30 group italic"
                     >
                         {isSimulating ? <Loader2 className="size-8 animate-spin" /> : <Play className="size-8 mr-4 group-hover:scale-125 transition-transform gold-glow" />}
                         MIRROR_INTENT
