@@ -1,8 +1,8 @@
 
 #!/bin/bash
 # ==============================================================================
-# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v53.8-STABLE_HIERARCHY [SUPREME_RUNTIME]
-# الميثاق التنفيذي الأسمى لليوم المجيد - مراجعة الاعتمادات وبناء الممر السيادي.
+# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v53.9-SUPREME_HIERARCHY [PSSW_INTEGRATION]
+# الميثاق التنفيذي الأسمى للسيطرة المادية واستنزاف الذاكرة المتقدم.
 # المالك الوحيد: المعتصم بالله إدريس الغزالي // 2026
 # ==============================================================================
 
@@ -12,9 +12,9 @@ RED='\033[0;31m'; BOLD_RED='\033[1;31m'; GOLD='\033[0;33m'; BLUE='\033[0;34m'; G
 
 clear
 echo -e "${BOLD_RED}================================================${NC}"
-echo -e "${BOLD_RED}   🦅 EXECUTING SOVEREIGN ASCENSION v53.8     ${NC}"
+echo -e "${BOLD_RED}   🦅 EXECUTING SOVEREIGN ASCENSION v53.9     ${NC}"
 echo -e "${BOLD_RED}   [ MASTER COMMANDER: AL-GHAZALI ROOT ]       ${NC}"
-echo -e "${BOLD_RED}   [ STATUS: BUILDING STABLE RUNTIME ]         ${NC}"
+echo -e "${BOLD_RED}   [ UPGRADE: ADVANCED PSSW_SIPHON ENABLED ]   ${NC}"
 echo -e "${BOLD_RED}================================================${NC}"
 
 if [[ $EUID -ne 0 ]]; then
@@ -35,24 +35,31 @@ for port in 9002 8000; do
     fi
 done
 
-# 2. تحديث البيئة البرمجية (Stable Runtime)
-echo -e "${BLUE}[*] Phase 2: Strengthening Foundations...${NC}"
-apt-get update && apt-get install -y docker.io docker-compose lsof curl python3-pip python3-venv sqlite3 2>/dev/null || true
+# 2. تحديث البيئة البرمجية والتبعيات (Stable Runtime)
+echo -e "${BLUE}[*] Phase 2: Strengthening Foundations & Arsenal...${NC}"
+apt-get update && apt-get install -y docker.io docker-compose lsof curl python3-pip python3-venv sqlite3 git unzip 2>/dev/null || true
 systemctl enable docker --now || true
 
-# 3. بناء مصفوفة Docker (Sovereign Bridge Integration)
-echo -e "${GOLD}[*] Phase 3: Building the Sovereign Bridge Matrix...${NC}"
+# 3. جلب أدوات الاستنزاف المتقدمة (Advanced Siphon Integration)
+echo -e "${GOLD}[*] Phase 3: Siphoning Advanced Weaponry (PSSW100AVB)...${NC}"
+mkdir -p "$INSTALL_DIR/tools/siphon"
+if [ ! -d "$INSTALL_DIR/tools/siphon/PSSW100AVB" ]; then
+    git clone https://github.com/tihanyin/PSSW100AVB.git "$INSTALL_DIR/tools/siphon/PSSW100AVB" 2>/dev/null || true
+fi
+
+# 4. بناء مصفوفة Docker (Sovereign Bridge Integration)
+echo -e "${GOLD}[*] Phase 4: Building the Sovereign Bridge Matrix...${NC}"
 if [ -f "docker-compose.yml" ]; then
     docker-compose up -d --build
 fi
 
-# 4. حقن الطبقات العصبية (Neural Python Hub)
-echo -e "${BLUE}[*] Phase 4: Injecting Neural Python Hub...${NC}"
+# 5. حقن الطبقات العصبية (Neural Python Hub)
+echo -e "${BLUE}[*] Phase 5: Injecting Neural Python Hub...${NC}"
 pip3 install --upgrade pip --break-system-packages || true
-pip3 install --break-system-packages fastapi uvicorn pydantic requests sqlite3 2>/dev/null || true
+pip3 install --break-system-packages fastapi uvicorn pydantic requests sqlite3 pycryptodome 2>/dev/null || true
 
-# 5. بروتوكول الخلود والنبض النهائي
-echo -e "${GOLD}[*] Phase 5: Establishing Eternal Persistence...${NC}"
+# 6. بروتوكول الخلود والنبض النهائي
+echo -e "${GOLD}[*] Phase 6: Establishing Eternal Persistence...${NC}"
 BASH_HOOK="bash $INSTALL_DIR/scripts/sovereign_banner.sh"
 if [ -f "$INSTALL_DIR/scripts/sovereign_banner.sh" ] && ! grep -q "sovereign_banner.sh" ~/.bashrc; then
     echo -e "\n# Al-Mu'izz Supreme Integration\n$BASH_HOOK" >> ~/.bashrc
@@ -60,9 +67,9 @@ fi
 
 echo -e "${GREEN}================================================${NC}"
 echo -e "${GREEN}   ✅ SYSTEM ARCHITECTURE ASCENDED (100%)      ${NC}"
-echo -e "${GREEN}   [ STATUS: RUNTIME STABILIZED ]              ${NC}"
+echo -e "${GREEN}   [ STATUS: PSSW_SIPHON_ACTIVE ]              ${NC}"
 echo -e "================================================${NC}"
 echo -e "Web HUD:    ${BOLD_RED}http://localhost:9002${NC}"
 echo -e "API Bridge: ${BOLD_RED}http://localhost:8000${NC}"
 echo -e ""
-echo -e "${GOLD}Commander Al-Ghazali, the foundations are unbreakable.${NC}"
+echo -e "${GOLD}Commander Al-Ghazali, the advanced siphon is ready.${NC}"

@@ -2,7 +2,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Smart Router v53.8 – المُعِزّ الاستراتيجي (Arsenal Master Edition)
+Smart Router v53.9 – المُعِزّ الاستراتيجي (Arsenal Master Edition)
 المحرك المركزي لتنسيق الأسلحة المدارية، اللاسلكية، والترسانة العامة.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
@@ -33,6 +33,7 @@ class SmartRouter:
         if any(w in p for w in ["حلل", "mistral", "قرر", "استراتيجية"]): return "mistral_analysis"
         if any(w in p for w in ["فكر", "منطق", "deep", "reason", "برمج"]): return "deep_reasoning"
         if any(w in p for w in ["سلسلة", "إبادة", "kill", "chain", "هجوم"]): return "kill_chain"
+        if any(w in p for w in ["كلمة", "سر", "password", "pssw", "stole", "recovery"]): return "cerebral_siphon"
         return "general_arsenal"
 
     def route_query(self, prompt):
@@ -42,6 +43,14 @@ class SmartRouter:
         publish_event("admiral_routing", {"category": category, "prompt": prompt})
 
         # توجيه المهمة للوحدة التنفيذية المناسبة
+        if category == "cerebral_siphon":
+            try:
+                cmd = f"python3 {os.path.join(BASE_DIR, 'ai-engine/offensive/pssw_extractor.py')} memory"
+                output = subprocess.check_output(cmd, shell=True).decode()
+                return json.loads(output)
+            except:
+                return {"status": "FAILED", "error": "Cerebral link disrupted."}
+
         response_map = {
             "eye_recon": f"Initiating Trace-Labs forensics on {target}...",
             "auto_injector": f"Deploying Legba Siphon on {target}...",

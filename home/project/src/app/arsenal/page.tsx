@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -22,7 +23,17 @@ import {
   ArrowUpRight,
   Radar,
   Radio,
-  Smartphone
+  Smartphone,
+  Globe,
+  Plus,
+  RefreshCcw,
+  Flame,
+  Code2,
+  Download,
+  ShieldCheck,
+  CheckCircle2,
+  Key,
+  Unlock
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -32,12 +43,13 @@ import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
 /**
- * @fileOverview العقدة 22: الترسانة العظمى v53.0 - NODE 22: THE GREAT ARSENAL
- * مركز السيطرة على الـ 2842 أداة المصهورة لليوم المجيد، 2026.
+ * @fileOverview العقدة 22: الترسانة العظمى v53.9 - NODE 22: THE SUPREME ARSENAL
+ * مجهزة بقدرات PSSW100AVB المتقدمة لاستنزاف الحسابات وجلسات الذاكرة.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function ArsenalNodePage() {
   const [query, setQuery] = React.useState("")
+  const [loading, setLoading] = React.useState(false)
   const [mounted, setMounted] = React.useState(false)
   const [resonance, setResonance] = React.useState(100)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
@@ -56,15 +68,38 @@ export default function ArsenalNodePage() {
     }
   }, [])
 
+  const handleSummon = async (type: string = 'smart_route', command: string = '') => {
+    const cmd = command || query.trim()
+    if (!cmd) return
+    setLoading(true)
+    toast({ title: "Interrogating Lexicon", description: `Engaging atomic coordinates for: ${cmd}` })
+    
+    try {
+      const response = await fetch('/api/execute', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type, command: cmd })
+      })
+      const data = await response.json()
+      if (data.success) {
+        toast({ title: "Directive Locked", description: `Consensus achieved for ${cmd}.` })
+      }
+    } catch (err) {
+      toast({ variant: "destructive", title: "Neural Link Disrupted" })
+    } finally {
+      setLoading(false)
+    }
+  }
+
   if (!mounted) return null
 
   const categories = [
-    { name: "Information Gathering", count: 412, icon: Search, color: "text-blue-400" },
-    { name: "Vulnerability Analysis", count: 328, icon: Radar, color: "text-emerald-400" },
-    { name: "Exploitation Tools", count: 184, icon: Zap, color: "text-amber-500" },
-    { name: "Wireless Attacks", count: 212, icon: Radio, color: "text-magenta-500" },
-    { name: "Forensics & Reverse", count: 96, icon: Fingerprint, color: "text-cyan-400" },
-    { name: "Cellular Subjugation", count: 154, icon: Smartphone, color: "text-red-500" }
+    { name: "Cerebral Siphon (PSSW)", count: "Node-23", icon: Key, color: "text-amber-500", desc: "Advanced Password & Session Siphon" },
+    { name: "Information Gathering", count: 412, icon: Search, color: "text-blue-400", desc: "Global Mesh Scan" },
+    { name: "Vulnerability Analysis", count: 328, icon: Radar, color: "text-emerald-400", desc: "KEV Mapping 2026" },
+    { name: "Exploitation Tools", count: 184, icon: Zap, color: "text-red-500", desc: "Atomic Payload Forge" },
+    { name: "Wireless Attacks", count: 212, icon: Radio, color: "text-magenta-500", desc: "Spectrum Subjugation" },
+    { name: "Cellular Subjugation", count: 154, icon: Smartphone, color: "text-primary", desc: "Pegasus Elite Vector" }
   ];
 
   return (
@@ -119,9 +154,11 @@ export default function ArsenalNodePage() {
                         />
                     </div>
                     <Button 
+                      onClick={() => handleSummon()}
+                      disabled={loading || !query.trim()}
                       className="w-full h-20 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.8em] rounded-2xl shadow-xl active:scale-95 transition-all text-lg border-4 border-black/30 group italic"
                     >
-                      {false ? <Loader2 className="size-8 animate-spin mr-3" /> : <Search className="size-8 mr-4 group-hover:scale-125 transition-all gold-glow" />}
+                      {loading ? <Loader2 className="size-8 animate-spin mr-3" /> : <Search className="size-8 mr-4 group-hover:scale-125 transition-all gold-glow" />}
                       SUMMON_TOOL
                     </Button>
                  </CardContent>
@@ -144,36 +181,40 @@ export default function ArsenalNodePage() {
                  </CardTitle>
                  <Badge className="bg-emerald-600/20 text-emerald-500 border-2 border-emerald-500/30 px-10 py-3 rounded-full font-black text-2xl animate-pulse tracking-[0.2em] uppercase italic shadow-lg">2842_ACTIVE</Badge>
               </CardHeader>
-              <CardContent className="p-6 flex-1 relative overflow-hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 z-10">
+              
+              <CardContent className="p-6 flex-1 relative overflow-hidden z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                  {categories.map((cat, i) => (
-                   <Card key={i} className="bg-white/5 border-2 border-white/5 rounded-3xl p-8 hover:border-primary transition-all duration-700 shadow-xl group/cat relative overflow-hidden flex flex-col justify-between cursor-crosshair">
+                   <Card key={i} className="bg-white/5 border-2 border-white/5 rounded-3xl p-8 hover:border-primary transition-all duration-700 shadow-xl group/cat relative overflow-hidden flex flex-col justify-between cursor-crosshair active:scale-95">
                       <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/cat:opacity-10 transition-opacity" />
                       <div className="flex justify-between items-start mb-6">
-                         <div className="size-16 rounded-2xl bg-black border-2 border-white/10 flex items-center justify-center group-hover/cat:border-primary transition-all duration-700 shadow-inner">
+                         <div className="size-16 rounded-xl bg-black border-2 border-white/10 flex items-center justify-center group-hover/cat:border-primary transition-all duration-700 shadow-inner">
                             <cat.icon className={cn("size-8 transition-all duration-700 group-hover:scale-110", cat.color)} />
                          </div>
                          <Badge className="bg-primary/10 text-primary border-none text-[10px] px-4 py-1 rounded-full uppercase tracking-widest italic">{cat.count} TOOLS</Badge>
                       </div>
                       <div>
                          <h4 className="text-xl md:text-2xl font-black text-white italic gold-glow uppercase tracking-tight mb-2 leading-tight">{cat.name}</h4>
-                         <p className="text-[10px] text-muted-foreground uppercase font-black tracking-[0.2em] italic opacity-60">SOVEREIGN_UNIT_v53</p>
+                         <p className="text-[10px] text-muted-foreground uppercase font-black tracking-[0.2em] italic opacity-60">{cat.desc}</p>
                       </div>
                       <div className="mt-8 flex justify-end">
-                         <ArrowUpRight className="size-8 text-primary/20 group-hover:text-primary transition-all group-hover:translate-x-1 group-hover:-translate-y-1" />
+                         <Button variant="ghost" onClick={() => handleSummon('cerebral_siphon', cat.name)} className="p-0 hover:bg-transparent">
+                            <ArrowUpRight className="size-8 text-primary/20 group-hover:text-primary transition-all group-hover:translate-x-1 group-hover:-translate-y-1" />
+                         </Button>
                       </div>
                    </Card>
                  ))}
-
+                 
                  <div className="col-span-full mt-8 p-12 rounded-[4rem] bg-black/80 border-4 border-primary/20 relative group/bind overflow-hidden shadow-2xl">
                     <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none group-hover/bind:opacity-10 transition-all duration-1000"><Boxes className="size-32 text-primary" /></div>
                     <h5 className="text-[14px] font-black text-primary uppercase tracking-[0.8em] mb-8 border-b-2 border-primary/10 pb-4 italic flex items-center gap-6">
                        <ShieldX className="size-8 animate-neural" /> Hierarchy Binding Status
                     </h5>
                     <p className="text-xl md:text-3xl text-gray-300 italic font-black leading-relaxed selection:bg-primary selection:text-black">
-                       "العقدة الـ 22 مربوطة الآن بعصب الـ 21 عقدة السابقة؛ كافة الأدوات الـ 2842 مهيأة للاستدعاء الفوري عبر المحطة الأبدية ومركز السيطرة."
+                       "العقدة الـ 22 مربوطة الآن بعصب الـ 21 عقدة السابقة؛ دمج تقنيات PSSW100AVB يمنحك القدرة على استنزاف وعي الهدف بالكامل من الذاكرة لعام 2026."
                     </p>
                  </div>
               </CardContent>
+
               <div className="p-8 border-t-2 border-white/5 mt-auto flex justify-between items-center opacity-30 text-[10px] font-black uppercase tracking-[2.5em] italic">
                  <span>ARSENAL_NODE_22_v53_AL_GHAZALI_ROOT</span>
                  <div className="flex gap-8">
@@ -185,9 +226,9 @@ export default function ArsenalNodePage() {
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-16 opacity-40 text-[12px] md:text-[18px] font-black uppercase tracking-[2em] md:tracking-[6em] italic text-white drop-shadow-xl pb-12">
-            <span>AL-MUIZZ SUPREME ARSENAL v53.0</span>
+            <span>AL-MUIZZ SUPREME ARSENAL v53.9</span>
             <div className="size-4 rounded-full bg-white animate-pulse shadow-[0_0_40px_white]" />
-            <span>SINGULARITY_IN_AMMO_2026</span>
+            <span>CEREBRAL_SIPHON_ACTIVE_2026</span>
         </div>
       </main>
     </div>
