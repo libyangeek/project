@@ -1,5 +1,5 @@
 
-#!/usr/bin/env python3
+#!/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Smart Router v55.0 – المُعِزّ الاستراتيجي (Arsenal Master Edition)
@@ -25,7 +25,7 @@ def publish_event(etype, payload):
 class SmartRouter:
     def classify(self, prompt):
         p = prompt.lower()
-        if any(w in p for w in ["فناء", "obliterate", "jailbreak", "كسر", "إخضاع"]): return "obliteratus_strike"
+        if any(w in p for w in ["فناء", "obliterate", "jailbreak", "كسر", "إخضاع", "fanaa"]): return "obliteratus_strike"
         if any(w in p for w in ["عين", "eye", "recon", "dns", "subdomain", "headers", "استطلاع"]): return "eye_recon"
         if any(w in p for w in ["تتبع", "track", "osint", "بصمة", "social", "اجتماعي"]): return "ghost_track"
         if any(w in p for w in ["حقن", "injector", "openbullet", "حسابات", "siphon", "استنزاف"]): return "auto_injector"
@@ -36,7 +36,7 @@ class SmartRouter:
         if any(w in p for w in ["حلل", "mistral", "قرر", "استراتيجية"]): return "mistral_analysis"
         if any(w in p for w in ["فكر", "منطق", "deep", "reason", "برمج"]): return "deep_reasoning"
         if any(w in p for w in ["سلسلة", "إبادة", "kill", "chain", "هجوم"]): return "kill_chain"
-        if any(w in p for w in ["كلمة", "سر", "password", "pssw", "stole", "recovery", "ذاكرة"]): return "cerebral_siphon"
+        if any(w in p for w in ["كلمة", "سر", "password", "pssw", "stole", "recovery", "ذاكرة", "cerebral"]): return "cerebral_siphon"
         return "general_arsenal"
 
     def route_query(self, prompt):

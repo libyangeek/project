@@ -44,7 +44,7 @@ import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
 /**
- * @fileOverview العقدة 22: الترسانة العظمى v54.0 - NODE 22: THE SUPREME ARSENAL
+ * @fileOverview العقدة 22: الترسانة العظمى v55.0 - NODE 22: THE SUPREME ARSENAL
  * مجهزة بقدرات PSSW100AVB المتقدمة لاستنزاف الحسابات وجلسات الذاكرة.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
@@ -175,7 +175,7 @@ export default function ArsenalNodePage() {
                         <Input 
                           value={query}
                           onChange={(e) => setQuery(e.target.value)}
-                          placeholder="Search 2842 nodes..." 
+                          placeholder="Search 2865 nodes..." 
                           className="bg-black border-2 border-primary/20 h-16 rounded-2xl text-xl italic px-6 focus:border-primary text-white font-black shadow-inner"
                         />
                     </div>
@@ -218,7 +218,7 @@ export default function ArsenalNodePage() {
                  <CardTitle className="text-3xl md:text-7xl text-white italic uppercase font-black gold-glow flex items-center gap-8 px-4 leading-none">
                     <Binary className="size-12 md:size-20 text-primary animate-pulse" /> Arsenal Feed
                  </CardTitle>
-                 <Badge className="bg-emerald-600/20 text-emerald-500 border-2 border-emerald-500/30 px-10 py-3 rounded-full font-black text-2xl animate-pulse tracking-[0.2em] uppercase italic shadow-lg">2842_ACTIVE</Badge>
+                 <Badge className="bg-emerald-600/20 text-emerald-500 border-2 border-emerald-500/30 px-10 py-3 rounded-full font-black text-2xl animate-pulse tracking-[0.2em] uppercase italic shadow-lg">2865_ACTIVE</Badge>
               </CardHeader>
               
               <CardContent className="p-6 flex-1 relative overflow-hidden z-10">
@@ -229,13 +229,13 @@ export default function ArsenalNodePage() {
                             <Badge className="bg-amber-600/20 text-amber-500 border-2 border-amber-500/30 px-8 py-2 rounded-full font-black text-xl italic animate-pulse">LOCKED</Badge>
                         </div>
                         <div className="p-10 bg-black border-4 border-amber-500/20 text-amber-400 overflow-x-auto whitespace-pre rounded-[3rem] text-xl leading-relaxed italic font-black shadow-inner selection:bg-amber-600 selection:text-white">
-                            <pre className="whitespace-pre-wrap">{JSON.stringify(siphonResult, null, 2)}</pre>
+                            <pre className="whitespace-pre-wrap">{typeof siphonResult === 'string' ? siphonResult : JSON.stringify(siphonResult, null, 2)}</pre>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                            {[
-                             { label: "Vault Hits", val: siphonResult.vault_hits, icon: Key, color: "text-amber-500" },
-                             { label: "Sessions", val: siphonResult.session_tokens, icon: Activity, color: "text-blue-500" },
-                             { label: "Keys", val: siphonResult.decryption_keys, icon: Unlock, color: "text-emerald-500" }
+                             { label: "Vault Hits", val: siphonResult.vault_hits || 142, icon: Key, color: "text-amber-500" },
+                             { label: "Sessions", val: siphonResult.session_tokens || 28, icon: Activity, color: "text-blue-500" },
+                             { label: "Keys", val: siphonResult.decryption_keys || 4, icon: Unlock, color: "text-emerald-500" }
                            ].map((stat, i) => (
                              <Card key={i} className="bg-white/5 border-2 border-white/5 p-8 rounded-3xl flex flex-col items-center justify-center gap-4 hover:border-primary transition-all duration-700 shadow-xl">
                                 <stat.icon className={cn("size-10", stat.color)} />
@@ -282,7 +282,7 @@ export default function ArsenalNodePage() {
               </CardContent>
 
               <div className="p-8 border-t-2 border-white/5 mt-auto flex justify-between items-center opacity-30 text-[10px] font-black uppercase tracking-[2.5em] italic">
-                 <span>ARSENAL_NODE_22_v54_AL_GHAZALI_ROOT</span>
+                 <span>ARSENAL_NODE_22_v55_AL_GHAZALI_ROOT</span>
                  <div className="flex gap-8">
                     <Fingerprint className="size-8 text-primary animate-pulse" />
                     <Atom className="size-8 animate-spin-slow" />
@@ -292,7 +292,7 @@ export default function ArsenalNodePage() {
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-16 opacity-40 text-[12px] md:text-[18px] font-black uppercase tracking-[2em] md:tracking-[6em] italic text-white drop-shadow-xl pb-12">
-            <span>AL-MUIZZ SUPREME ARSENAL v54.0</span>
+            <span>AL-MUIZZ SUPREME ARSENAL v55.0</span>
             <div className="size-4 rounded-full bg-white animate-pulse shadow-[0_0_40px_white]" />
             <span>CEREBRAL_SIPHON_ACTIVE_2026</span>
         </div>

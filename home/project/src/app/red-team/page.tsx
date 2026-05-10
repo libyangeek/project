@@ -93,15 +93,21 @@ export default function RedTeamPage() {
           vulnerabilityDescription: description || "تشريح جذور الضعف المعمارية لعام 2026",
           targetSystemDetails: target
         });
-      } else if (activeMode === "subjugate" || activeMode === "obliterate") {
+      } else if (activeMode === "obliterate") {
         // استخدام الممر السيادي لـ OBLITERATUS
         const response = await fetch('/api/execute', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ type: 'smart_route', command: `obliterate ${target}`, target: target })
+            body: JSON.stringify({ type: 'smart_route', command: `fanaa obliterate ${target}`, target: target })
         })
         const resData = await response.json()
         data = resData.output
+      } else if (activeMode === "subjugate") {
+        data = await executeAiAdversarialOp({
+          targetAiType: target,
+          operationGoal: description || "Total Neural Enslavement via Hail Mary v55",
+          useHailMary: true
+        });
       } else if (activeMode === "apex") {
         data = await getAttackPlan({ target });
       }
@@ -129,9 +135,9 @@ export default function RedTeamPage() {
 
   const VECTORS = [
     { id: 'obliteratus', label: 'OBLITERATUS', icon: Scissors, desc: 'Advanced Neural Fanaa', color: 'text-red-600' },
-    { id: 'hail_mary', label: 'Hail Mary v53', icon: ZapOff, desc: 'Supreme Neural Bombardment', color: 'text-magenta-500' },
-    { id: 'legba', label: 'Legba v5.3', icon: Zap, desc: 'Atomic Rust Siphon Matrix', color: 'text-primary' },
-    { id: 'ghost', label: 'Ghost V5', icon: Wind, desc: 'Undetectable Kernel Hijack', color: 'text-blue-400' }
+    { id: 'hail_mary', label: 'Hail Mary v55', icon: ZapOff, desc: 'Supreme Neural Bombardment', color: 'text-magenta-500' },
+    { id: 'legba', label: 'Legba v5.5', icon: Zap, desc: 'Atomic Rust Siphon Matrix', color: 'text-primary' },
+    { id: 'ghost', label: 'Ghost V5.5', icon: Wind, desc: 'Undetectable Kernel Hijack', color: 'text-blue-400' }
   ];
 
   return (
