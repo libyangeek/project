@@ -9,7 +9,6 @@ import {
   Zap, 
   Loader2, 
   Skull, 
-  ShieldX, 
   Binary, 
   Crown, 
   Infinity as InfinityIcon,
@@ -21,7 +20,6 @@ import {
   Database,
   Terminal,
   ArrowUpRight,
-  Radio,
   Plus,
   RefreshCcw,
   Flame,
@@ -31,8 +29,7 @@ import {
   Key,
   Shield,
   SearchCode,
-  Bomb,
-  Unplug
+  Bomb
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -43,7 +40,7 @@ import { cn } from "@/lib/utils"
 
 /**
  * @fileOverview العقدة 22: الترسانة العظمى v58.0 - ARSENAL MASTER EDITION
- * مجهزة بدمج حقيقي لـ Legba, Guardian, PSSW, MemPalace.
+ * مجهزة بدمج حقيقي لـ Legba, Guardian, PSSW.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function ArsenalNodePage() {

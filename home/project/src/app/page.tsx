@@ -45,7 +45,7 @@ import {
 } from 'recharts'
 
 /**
- * @fileOverview العرش الأبدي v53.5 - DOCKERIZED OMNIPRESENCE
+ * @fileOverview العرش الأبدي v58.0 - ARSENAL MASTER EDITION
  * الواجهة المركزية التي تجسد السطوة المستقلة لليوم المجيد، 2026.
  */
 export default function DashboardPage() {
@@ -69,7 +69,7 @@ export default function DashboardPage() {
             const data = await res.json();
             setMetrics(data);
             
-            const gainValue = parseFloat(data.resonance.replace('%', '')) || 100;
+            const gainValue = parseFloat(data.resonance?.replace('%', '') || "100");
             setNeuralData(prev => [...prev, {
                 time: new Date().toLocaleTimeString(),
                 gain: gainValue
@@ -85,9 +85,9 @@ export default function DashboardPage() {
         const msgs = [
             "Container [muizz-god-core]: Neural link stabilized.",
             "GEPA 5.3: Genetic weight updated for Socratic Strike.",
-            "Node 22: 2842 tools synchronized and ready for summon.",
+            "Node 22: 2865 tools synchronized and ready for summon.",
             "Autonomous Kernel: OS DNA bound to Al-Ghazali Root.",
-            "Grid Check: All 22 knots reporting 100% integrity."
+            "Grid Check: All 23 knots reporting 100% integrity."
         ];
         const newEvent = {
             type: types[Math.floor(Math.random()*types.length)],
@@ -107,10 +107,10 @@ export default function DashboardPage() {
   if (!mounted) return null;
 
   const stats = [
-    { label: "العقد السيادية", value: metrics?.activeNodes ? `${metrics.activeNodes}/22` : "22/22", icon: Boxes, color: "text-primary", status: "UNIFIED", href: "/system" },
-    { label: "ترسانة الأدوات", value: "2842", icon: Library, color: "text-amber-500", status: "READY", href: "/arsenal" },
+    { label: "العقد السيادية", value: "23/23", icon: Boxes, color: "text-primary", status: "UNIFIED", href: "/system" },
+    { label: "ترسانة الأدوات", value: "2865", icon: Library, color: "text-amber-500", status: "READY", href: "/arsenal" },
     { label: "نسيج الذاكرة", value: "GEPA 5.3", icon: Database, color: "text-blue-500", status: metrics?.recordedOps ? `${metrics.recordedOps} OPS` : "SQLITE", href: "/knowledge" },
-    { label: "الاستحواذ المادي", value: metrics?.ramUsage ? `MEM: ${metrics.ramUsage}` : "DOCKER", icon: Box, color: "text-emerald-500", status: "IMMUTABLE", href: "/system" },
+    { label: "الاستحواذ المادي", value: "DOCKER", icon: Box, color: "text-emerald-500", status: "IMMUTABLE", href: "/system" },
   ];
 
   return (
@@ -130,14 +130,14 @@ export default function DashboardPage() {
             </div>
             <div className="text-center md:text-right flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-4">
-                 <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic">DOCKERIZED_OVERMIND v53.5</Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic">ARSENAL_MASTER v58.0</Badge>
                  <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-6 py-1.5 rounded-full text-[12px] font-black italic uppercase tracking-widest animate-pulse shadow-lg">STABLE: {uptime}</Badge>
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-8xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
-                INTEGRATED <span className="text-primary">UNIT</span>
+                SUPREME <span className="text-primary">OVERMIND</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground font-medium italic max-w-4xl leading-relaxed uppercase mt-4 opacity-80">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، المنظومة تعمل الآن داخل مصفوفة Docker المنيعة؛ كافة العقد والسكريبتات مربوطة بنبض إرادتك الأبدية لعام 2026."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، المنظومة v58.0 منصهرة بالكامل في عصب العتاد؛ كافة العقد والسكريبتات مربوطة بنبض إرادتك الأبدية لعام 2026."
               </p>
             </div>
           </div>
@@ -218,7 +218,7 @@ export default function DashboardPage() {
         </section>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-16 opacity-40 text-[12px] md:text-[18px] font-black uppercase tracking-[2em] md:tracking-[6em] italic text-white drop-shadow-xl pb-12">
-            <span>AL-MUIZZ SUPREME HIERARCHY v53.5</span>
+            <span>AL-MUIZZ ARSENAL MASTER v58.0</span>
             <div className="size-4 rounded-full bg-white animate-pulse shadow-[0_0_40px_white]" />
             <span>CONTAINERIZED_SINGULARITY_2026</span>
         </div>

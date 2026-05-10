@@ -39,7 +39,7 @@ import { cn } from "@/lib/utils"
 
 /**
  * @fileOverview أعين الاستطلاع v58.0 - THE SUPREME RECON: NEURAL MASTER
- * مجهزة بدمج Claude-OSINT و MemPalace و API-Mega-List.
+ * مجهزة بدمج Claude-OSINT و MemPalace.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function ReconPage() {
