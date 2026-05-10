@@ -1,9 +1,9 @@
+
 #!/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Smart Router v58.0 – المُعِزّ الاستراتيجي (Arsenal Master Edition)
-المحرك المركزي لتنسيق الأسلحة المدارية، اللاسلكية، والترسانة العامة.
-تم دمج كافة الوحدات المكتسبة (Claude, Legba, PSSW, Obliteratus, MemPalace, HexStrike, ChromSploit).
+Smart Router v58.5 – المُعِزّ الاستراتيجي (Neural Palace Edition)
+المحرك المركزي لتنسيق الأسلحة مع دمج GEPA 5.5 لربط البيانات مكانياً.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys, json, os, subprocess, socket
@@ -38,7 +38,8 @@ class SmartRouter:
         if any(w in p for w in ["usb", "ducky", "knife"]): return "usb_strike"
         if any(w in p for w in ["shadow", "harvest", "apk", "سحب"]): return "shadow_harvest"
         
-        # 3. التفكير والتدقيق
+        # 3. التفكير والتدقيق والذاكرة المكانية
+        if any(w in p for w in ["vault", "palace", "retrieve", "استرجع", "قبو"]): return "palace_retrieval"
         if any(w in p for w in ["تدقيق", "audit", "guardian", "تأمين"]): return "guardian_audit"
         if any(w in p for w in ["حلل", "mistral", "قرر", "استراتيجية"]): return "mistral_analysis"
         if any(w in p for w in ["فكر", "منطق", "deep", "reason", "برمج"]): return "deep_reasoning"
@@ -62,7 +63,8 @@ class SmartRouter:
             "usb_strike": {"status": "USB_ARMED", "node": "Node-7", "msg": f"USB Army Knife payload ready for {target}."},
             "guardian_audit": {"status": "AUDIT_INITIATED", "node": "Node-26-Guardian", "msg": f"Guardian is auditing {target} integrity."},
             "memory_palace": {"status": "FORENSIC_DISSECTION", "node": "Node-24-Palace", "msg": f"MemPalace is interrogating RAM dumps for {target}."},
-            "cerebral_siphon": {"status": "SIPHON_ACTIVE", "node": "Node-23-Cerebral", "msg": f"PSSW100AVB is siphoning passwords from {target}."}
+            "cerebral_siphon": {"status": "SIPHON_ACTIVE", "node": "Node-23-Cerebral", "msg": f"PSSW100AVB is siphoning passwords from {target}."},
+            "palace_retrieval": {"status": "SPATIAL_SYNC", "node": "GEPA-5.5", "msg": f"Retrieving records from Neural Palace for {target}."}
         }
 
         if category in dispatch_table:
@@ -78,7 +80,7 @@ class SmartRouter:
         return {
             "category": category,
             "status": "DIRECTIVE_LOCKED",
-            "output": f"Directive for {prompt} accepted by Arsenal Master v58.0.",
+            "output": f"Directive for {prompt} accepted by Arsenal Master v58.5.",
             "target": target,
             "node": "Alpha-God-Core",
             "timestamp": datetime.now().isoformat()
