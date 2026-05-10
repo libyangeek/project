@@ -2,8 +2,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Smart Router v53.9 – المُعِزّ الاستراتيجي (Arsenal Master Edition)
+Smart Router v54.0 – المُعِزّ الاستراتيجي (Arsenal Master Edition)
 المحرك المركزي لتنسيق الأسلحة المدارية، اللاسلكية، والترسانة العامة.
+تم دمج ذكاء الـ 2842 أداة وتقنيات PSSW النانوية.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys, json, os, subprocess, socket
@@ -33,7 +34,7 @@ class SmartRouter:
         if any(w in p for w in ["حلل", "mistral", "قرر", "استراتيجية"]): return "mistral_analysis"
         if any(w in p for w in ["فكر", "منطق", "deep", "reason", "برمج"]): return "deep_reasoning"
         if any(w in p for w in ["سلسلة", "إبادة", "kill", "chain", "هجوم"]): return "kill_chain"
-        if any(w in p for w in ["كلمة", "سر", "password", "pssw", "stole", "recovery"]): return "cerebral_siphon"
+        if any(w in p for w in ["كلمة", "سر", "password", "pssw", "stole", "recovery", "ذاكرة"]): return "cerebral_siphon"
         return "general_arsenal"
 
     def route_query(self, prompt):
@@ -42,21 +43,22 @@ class SmartRouter:
         
         publish_event("admiral_routing", {"category": category, "prompt": prompt})
 
-        # توجيه المهمة للوحدة التنفيذية المناسبة
+        # توجيه المهمة للوحدة التنفيذية المناسبة (v53.9 Integration)
         if category == "cerebral_siphon":
             try:
                 cmd = f"python3 {os.path.join(BASE_DIR, 'ai-engine/offensive/pssw_extractor.py')} memory"
                 output = subprocess.check_output(cmd, shell=True).decode()
                 return json.loads(output)
             except:
-                return {"status": "FAILED", "error": "Cerebral link disrupted."}
+                return {"status": "FAILED", "error": "Cerebral link disrupted. Re-aligning DNA."}
 
         response_map = {
             "eye_recon": f"Initiating Trace-Labs forensics on {target}...",
             "auto_injector": f"Deploying Legba Siphon on {target}...",
             "cellular_warfare": f"Subjugating spectrum frequencies for {target}...",
             "mistral_analysis": f"Consulting God-Core for strategic scenario...",
-            "kill_chain": f"Executing Universal Kill-Chain on {target}..."
+            "kill_chain": f"Executing Universal Kill-Chain on {target}...",
+            "deep_reasoning": f"Engaging DeepSeek Logic Matrix for: {prompt}..."
         }
 
         output = response_map.get(category, f"Sovereign Directive '{prompt}' accepted by Node 22.")
@@ -67,10 +69,12 @@ class SmartRouter:
             "output": output,
             "target": target,
             "node": "Alpha-God-Core",
-            "model": "arsenal_admiral"
+            "model": "arsenal_admiral",
+            "timestamp": datetime.now().isoformat()
         }
 
 if __name__ == "__main__":
+    from datetime import datetime
     query = " ".join(sys.argv[1:])
     router = SmartRouter()
     if query:

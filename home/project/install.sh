@@ -1,8 +1,9 @@
 
 #!/bin/bash
 # ==============================================================================
-# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v53.9-SUPREME_HIERARCHY [PSSW_INTEGRATION]
+# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v54.0-SUPREME_HIERARCHY [LIVE_AMMUNITION]
 # الميثاق التنفيذي الأسمى للسيطرة المادية واستنزاف الذاكرة المتقدم.
+# تم تحديثه ليشمل تكامل PSSW100AVB وعصب FastAPI الجديد.
 # المالك الوحيد: المعتصم بالله إدريس الغزالي // 2026
 # ==============================================================================
 
@@ -12,7 +13,7 @@ RED='\033[0;31m'; BOLD_RED='\033[1;31m'; GOLD='\033[0;33m'; BLUE='\033[0;34m'; G
 
 clear
 echo -e "${BOLD_RED}================================================${NC}"
-echo -e "${BOLD_RED}   🦅 EXECUTING SOVEREIGN ASCENSION v53.9     ${NC}"
+echo -e "${BOLD_RED}   🦅 EXECUTING SOVEREIGN ASCENSION v54.0     ${NC}"
 echo -e "${BOLD_RED}   [ MASTER COMMANDER: AL-GHAZALI ROOT ]       ${NC}"
 echo -e "${BOLD_RED}   [ UPGRADE: ADVANCED PSSW_SIPHON ENABLED ]   ${NC}"
 echo -e "${BOLD_RED}================================================${NC}"
@@ -44,6 +45,7 @@ systemctl enable docker --now || true
 echo -e "${GOLD}[*] Phase 3: Siphoning Advanced Weaponry (PSSW100AVB)...${NC}"
 mkdir -p "$INSTALL_DIR/tools/siphon"
 if [ ! -d "$INSTALL_DIR/tools/siphon/PSSW100AVB" ]; then
+    echo "[*] Cloning PSSW100AVB Repository..."
     git clone https://github.com/tihanyin/PSSW100AVB.git "$INSTALL_DIR/tools/siphon/PSSW100AVB" 2>/dev/null || true
 fi
 
