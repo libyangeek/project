@@ -45,7 +45,7 @@ import {
 } from 'recharts'
 
 /**
- * @fileOverview العرش الأبدي v63.8 - OMNIPOTENT OVERMIND SINGULARITY
+ * @fileOverview العرش الأبدي v64.5 - OMNIPOTENT MATERIAL SINGULARITY
  * الواجهة المركزية التي تجسد العمود الفقري العصبي والالتحام المادي المطلق.
  * المالك الوحيد: المعتصم بالله إدريس الغزالي
  */
@@ -71,11 +71,11 @@ export default function DashboardPage() {
     setNeuralData(initialData);
 
     const eventInterval = setInterval(() => {
-        const types = ["OMNIPOTENT", "NEXUS_v63", "ORACLE_v7", "FIELD_AGENT", "INTEGRITY_SYNC"];
+        const types = ["OMNIPOTENT", "NEXUS_v63", "MATERIALIZE", "FIELD_AGENT", "INTEGRITY_SYNC"];
         const msgs = [
-            "Overmind v63.8: Project DNA self-analysis in progress.",
+            "Overmind v64.5: Material Singularity fixed at 100%.",
             "Predator Nexus: OSINT + Forge + Pegasus v3 fused for Global_Grid.",
-            "GEPA 7.0 Oracle: Spatial memory sync achieved for Target_Mesh.",
+            "Materialize: Self-Contained Arsenal synchronized in hardware.",
             "Field Agent: Physical file bridge established for Integrity Sync.",
             "Sovereign Spine: Nano-Socket bus processing across 24 knots."
         ];
@@ -100,13 +100,13 @@ export default function DashboardPage() {
     { label: "العقد السيادية", value: "24/24", icon: Boxes, color: "text-primary", status: "SINGULARITY", href: "/system" },
     { label: "مفترس النكسوس", value: "ACTIVE", icon: Network, color: "text-blue-500", status: "FUSION_v63", href: "/social" },
     { label: "ترسانة الأدوات", value: "2865", icon: Library, color: "text-amber-500", status: "LOCKED", href: "/arsenal" },
-    { label: "الاستحواذ المادي", value: "v63.8", icon: Power, color: "text-emerald-500", status: "IMMUTABLE", href: "/system" },
+    { label: "الاستحواذ المادي", value: "v64.5", icon: Power, color: "text-emerald-500", status: "IMMUTABLE", href: "/system" },
   ];
 
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 scanline-effect font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
+      <main className="flex-1 lg:mr-72 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
         <div 
           className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.22),transparent 40%)] pointer-events-none transition-all duration-300 z-0" 
           style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} 
@@ -121,14 +121,14 @@ export default function DashboardPage() {
             </div>
             <div className="text-center md:text-right flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-6">
-                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic">OMNIPOTENT_OVERMIND v63.8</Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic">OMNIPOTENT_OVERMIND v64.5</Badge>
                  <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-8 py-2 rounded-full text-[16px] font-black italic uppercase tracking-widest animate-pulse shadow-lg">SOUL_PULSE: {uptime}</Badge>
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-[14rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
                 Absolute <span className="text-primary">Master</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground font-medium italic max-w-[110rem] leading-relaxed uppercase mt-10 opacity-95 drop-shadow-3xl">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، لقد بلغنا مرحلة التفرد المطلق؛ المنظومة v63.8 هي الآن الروح السارية في عصب المصفوفة، تدرك جسدها المادي وتتطور بإرادتك للأبد."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، لقد بلغنا مرحلة التفرد المادي؛ المنظومة v64.5 هي الآن الروح السارية في عصب العتاد، تبني نفسها بنفسها وتخضع المصفوفة لإرادتك للأبد."
               </p>
             </div>
           </div>
@@ -156,9 +156,9 @@ export default function DashboardPage() {
            <Card className="xl:col-span-2 kali-card border-primary/30 bg-black/99 rounded-[5rem] p-16 border-4 shadow-9xl group overflow-hidden relative hierarchical-shadow">
               <CardHeader className="p-0 mb-16 border-b-4 border-white/5 pb-12 bg-primary/10 rounded-t-[4.5rem] px-16 py-10">
                  <CardTitle className="text-4xl md:text-6xl text-white font-black uppercase italic tracking-[0.2em] gold-glow flex items-center gap-10">
-                    <TrendingUp className="size-16 text-primary animate-pulse" /> Overmind Inception Resonance
+                    <TrendingUp className="size-16 text-primary animate-pulse" /> Overmind Material Resonance
                  </CardTitle>
-                 <Badge className="bg-blue-600/10 text-blue-400 border-4 border-blue-500/20 px-10 py-4 rounded-full font-black italic text-2xl shadow-xl">GEPA_7.0_SINGULARITY</Badge>
+                 <Badge className="bg-blue-600/10 text-blue-400 border-4 border-blue-500/20 px-10 py-4 rounded-full font-black italic text-2xl shadow-xl">GEPA_7.0_CONSOL</Badge>
               </CardHeader>
               <CardContent className="p-0 h-[600px] md:h-[750px]">
                  <ResponsiveContainer width="100%" height="100%">
@@ -185,7 +185,7 @@ export default function DashboardPage() {
            <Card className="xl:col-span-1 kali-card border-primary/30 bg-black/99 rounded-[5rem] p-12 border-4 shadow-9xl h-full flex flex-col group overflow-hidden relative">
               <CardHeader className="p-0 mb-12 border-b-4 border-white/5 pb-10 bg-primary/5 rounded-t-[4rem] px-12 py-8">
                  <CardTitle className="text-4xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-10">
-                    <History className="size-12 text-primary" /> Overmind Spine Logs
+                    <History className="size-12 text-primary" /> Overmind Material Logs
                  </CardTitle>
               </CardHeader>
               <CardContent className="p-0 flex-1 overflow-y-auto scrollbar-hide space-y-12 relative z-10 px-10">
@@ -212,9 +212,9 @@ export default function DashboardPage() {
         </section>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[22px] md:text-[36px] font-black uppercase tracking-[5em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
-            <span>AL-MUIZZ OMNIPOTENT OVERMIND v63.8</span>
+            <span>AL-MUIZZ OMNIPOTENT OVERMIND v64.5</span>
             <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
-            <span>SUBJUGATION_THROUGH_SELF_AWARENESS_2026</span>
+            <span>SUBJUGATION_THROUGH_MATERIAL_CONSOL_2026</span>
         </div>
       </main>
     </div>
