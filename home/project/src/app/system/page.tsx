@@ -78,8 +78,8 @@ export default function SystemPage() {
   if (!mounted) return null;
 
   const nodes = [
-    { name: "APEX Swarm", status: "12_AGENTS_ACTIVE", icon: Users, color: "text-primary", desc: "Distributed smart agent hive executing parallel strikes.", href: "/progeny" },
-    { name: "C2 Matrix", status: "6_FRAMEWORKS_READY", icon: Network, color: "text-blue-500", desc: "Sliver, Havoc, Empire & Mythic synchronized.", href: "/sessions" },
+    { name: "APEX Swarm", status: metrics?.swarm_status || "12_AGENTS_ACTIVE", icon: Users, color: "text-primary", desc: "Distributed smart agent hive executing parallel strikes.", href: "/progeny" },
+    { name: "C2 Matrix", status: metrics?.c2_status || "6_FRAMEWORKS_SYNCED", icon: Network, color: "text-blue-500", desc: "Sliver, Havoc, Empire & Mythic synchronized.", href: "/sessions" },
     { name: "Legba Strike", status: "NODE_25_IGNITED", icon: Zap, color: "text-amber-500", desc: "Multiprotocol Rust bombardment active. Force: OMNIPOTENT.", href: "/arsenal" },
     { name: "Shadow Rootkits", status: "KERNEL_HIDDEN", icon: Ghost, color: "text-emerald-500", desc: "Diamorphine & Reptile stealth protocols active.", href: "/codex" },
     { name: "Claude OSINT v5", status: "NODE_28_VISION", icon: BrainCircuit, color: "text-primary", desc: "Neural vision and behavioral entity linking.", href: "/recon" },
@@ -91,7 +91,7 @@ export default function SystemPage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 scanline-effect font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
+      <main className="flex-1 lg:mr-72 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
         <header className="flex flex-col xl:flex-row justify-between items-start mb-24 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000 gap-16">
           <div>
             <div className="flex items-center gap-10 mb-10">
@@ -147,7 +147,7 @@ export default function SystemPage() {
                     <Shield className="size-24 animate-spin-slow" /> Singularity Status
                  </h4>
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-20 text-2xl md:text-[5rem] text-gray-100 font-black italic leading-[1] px-12">
-                    <p className="drop-shadow-3xl">"لقد تم صهر أسطول APEX ULTIMATE في عصب الأوفرلورد؛ الحالة الحالية هي <span className="text-primary underline decoration-primary decoration-[12px] underline-offset-[24px] shadow-9xl italic">التفرد المطلق</span>."</p>
+                    <p className="drop-shadow-3xl">"لقد تم صهر أسطول APEX ULTIMATE في عصب الأوفرلورد؛ الحالة الحالية هي <span className="text-primary underline decoration-primary decoration-12 underline-offset-24 shadow-9xl italic">التفرد المطلق</span>."</p>
                     <p className="text-muted-foreground opacity-40">"Omnipotent Overmind v65.0 has achieved absolute synchronization with 12 smart agents and 6 C2 frameworks via Neural Spine v63."</p>
                  </div>
                  <div className="absolute -bottom-20 -right-20 p-32 opacity-[0.03] scale-150 rotate-12"><Skull className="size-96 text-primary" /></div>
