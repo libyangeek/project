@@ -37,7 +37,8 @@ import {
   Infinity as InfinityIcon,
   Monitor,
   Camera,
-  Play
+  Play,
+  MessageSquare
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -335,7 +336,7 @@ export default function MobileStrikePage() {
 
                  {/* قسم التحليل العصبي والبصري للجهاز المختار */}
                  <div className="col-span-full">
-                    {selectedNodeId ? (
+                    {selectedDeviceId ? (
                        <Card className="bg-primary/5 border-[12px] border-primary/30 rounded-[6rem] p-16 overflow-hidden shadow-[0_0_300px_rgba(212,175,55,0.1)] animate-in zoom-in-95 duration-1000 relative group/anal min-h-[800px]">
                           <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse" />
                           <div className="flex justify-between items-center mb-16 border-b-8 border-primary/20 pb-12">
@@ -388,7 +389,7 @@ export default function MobileStrikePage() {
                                    ].map((s, i) => (
                                       <div key={i} className="p-10 rounded-[3rem] bg-black border-4 border-white/5 flex flex-col items-center gap-6 shadow-inner hover:border-primary transition-all duration-700 cursor-crosshair">
                                          <s.icon className={cn("size-16 transition-all duration-700", s.color)} />
-                                         <span className="text-[12px] font-black text-white uppercase tracking-widest italic">{s.label}</span>
+                                         <span className="text-[12px] font-black text-white uppercase italic tracking-widest italic">{s.label}</span>
                                          <Badge className="bg-primary/5 text-primary border-none text-[10px] font-black italic tracking-widest">{s.status}</Badge>
                                       </div>
                                    ))}
