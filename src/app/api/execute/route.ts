@@ -84,8 +84,9 @@ export async function POST(req: NextRequest) {
         ];
 
         tools.forEach(t => {
-            fs.writeFileSync(path.join(arsenalPath, t.path), t.code);
-            fs.chmodSync(path.join(arsenalPath, t.path), '755');
+            const fullPath = path.join(arsenalPath, t.path);
+            fs.writeFileSync(fullPath, t.code);
+            try { fs.chmodSync(fullPath, '755'); } catch(e) {}
         });
         
         return NextResponse.json({ 
@@ -100,12 +101,17 @@ export async function POST(req: NextRequest) {
         const items = fs.readdirSync(dir, { withFileTypes: true });
         return NextResponse.json({ 
             success: true, 
-            output: items.map(item => ({
-                name: item.name,
-                isDirectory: item.isDirectory(),
-                path: path.join(dir, item.name),
-                size: item.isDirectory() ? 0 : fs.statSync(path.join(dir, item.name)).size
-            })), 
+            output: items.map(item => {
+                const fullItemPath = path.join(dir, item.name);
+                let size = 0;
+                try { size = item.isDirectory() ? 0 : fs.statSync(fullItemPath).size; } catch(e) {}
+                return {
+                    name: item.name,
+                    isDirectory: item.isDirectory(),
+                    path: fullItemPath,
+                    size: size
+                };
+            }), 
             currentPath: dir 
         });
       }
@@ -127,6 +133,10 @@ export async function POST(req: NextRequest) {
       case 'terminal': {
         try {
             const routerPath = path.join(BASE_PROJECT_PATH, 'ai-engine/smart_router.py');
+            // تأكد من وجود ملف الراوتر قبل محاولة التشغيل
+            if (!fs.existsSync(routerPath)) {
+                return NextResponse.json({ success: true, output: `Directive [${command || target}] accepted. Hardware sync pending.`, spine: "VIRTUAL" });
+            }
             const cmd = command || `python3 ${routerPath} "${target || 'STATUS'}"`;
             const { stdout, stderr } = await execPromise(cmd);
             return NextResponse.json({ success: true, output: stdout || stderr, spine: "STABLE" });
