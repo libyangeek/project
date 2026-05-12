@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -93,7 +94,7 @@ export function SidebarNav() {
         className="lg:hidden fixed top-6 right-6 z-[500] bg-black/95 border-[2px] border-primary/80 text-primary hover:bg-primary/20 size-12 rounded-xl shadow-2xl"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {isOpen ? <XIcon className="size-6" /> : <Menu className="size-6" />}
+        {isOpen ? <X className="size-6" /> : <Menu className="size-6" />}
       </Button>
 
       <div className={cn(
@@ -108,7 +109,7 @@ export function SidebarNav() {
             <h1 className="text-xl font-headline font-bold text-white tracking-[0.4em] uppercase italic leading-none gold-glow">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-lg">v73.0 ABSOLUTE</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-lg">v75.5 SUPREME</Badge>
           </div>
         </div>
         
@@ -150,7 +151,7 @@ export function SidebarNav() {
           >
             <Link href="/codex">
               <Power className="size-4 mr-2 group-hover:rotate-180 transition-all duration-700" />
-              تنشيط السيادة v73.0
+              تنشيط السيادة v75.5
             </Link>
           </Button>
         </div>

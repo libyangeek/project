@@ -65,7 +65,6 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { aiDrivenSocialEngineeringBots } from "@/ai/flows/ai-driven-social-engineering-bots"
 import { executePredatorNexus } from "@/ai/flows/predator-nexus-flow"
 import { toast } from "@/hooks/use-toast"
 import { Badge } from "@/components/ui/badge"
@@ -74,7 +73,7 @@ import { cn } from "@/lib/utils"
 /**
  * @fileOverview العقدة المفترسة v75.5 - THE OMNIPOTENT IDENTITY SIPHON
  * واجهة الالتحام الهجومي الأسمى: صهر الاستطلاع، الكلمات الجينية، واستنزاف المنصات الـ 12.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي // 11 مايو 2026
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function SocialPredatorPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -313,10 +312,6 @@ export default function SocialPredatorPage() {
                         </div>
                         <div className="p-16 bg-black border-8 border-white/5 text-emerald-400 overflow-x-auto whitespace-pre rounded-[4rem] text-2xl md:text-5xl leading-tight font-black shadow-inner selection:bg-primary">
                             <pre className="whitespace-pre-wrap">{JSON.stringify(scrapeResult, null, 2)}</pre>
-                        </div>
-                        <div className="p-16 rounded-[4.5rem] bg-emerald-600/5 border-8 border-emerald-500/20 italic text-3xl md:text-[6rem] text-gray-100 leading-none font-black shadow-inner relative group/note text-center flex flex-col justify-center min-h-[350px]">
-                            <div className="absolute inset-0 bg-emerald-500/5 opacity-5 animate-pulse pointer-events-none" />
-                            "سيدي القائد، الهوية الرقمية للهدف {targetId} أصبحت الآن قطعة في فسيفساء سلطتك المطلقة."
                         </div>
                     </div>
                  ) : nexusResult ? (

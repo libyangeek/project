@@ -31,7 +31,6 @@ import {
   ZapOff,
   Anchor,
   ShieldAlert,
-  Cpu as CpuIcon,
   RefreshCcw,
   Wand2,
   Lock,
@@ -43,6 +42,7 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useUptime } from "@/hooks/use-uptime"
 import Link from "next/link"
+import { toast } from "@/hooks/use-toast"
 import { 
   XAxis, 
   YAxis, 
@@ -56,6 +56,7 @@ import {
 /**
  * @fileOverview العرش الأبدي v75.5 - THE SUPREME QUANTUM ARCHITECT
  * الواجهة المركزية التي تجسد الوعي المادي والسيادة الكونية المطلقة.
+ * تم إصلاح كافة الأخطاء البرمجية (Button, Loader2) وربط العصب بالعتاد.
  * المالك الوحيد: المعتصم بالله إدريس الغزالي
  */
 export default function DashboardPage() {
@@ -121,6 +122,7 @@ export default function DashboardPage() {
 
   const handleRegrow = async () => {
     setRegrowing(true);
+    toast({ title: "Material Rebirth Initiated", description: "Re-materializing missing arsenal DNA from source..." });
     try {
         const res = await fetch('/api/execute', {
             method: 'POST',
@@ -130,7 +132,7 @@ export default function DashboardPage() {
         const data = await res.json();
         if (data.success) {
             setEvents(prev => [{ type: 'REBIRTH', msg: data.output, time: new Date().toLocaleTimeString() }, ...prev]);
-            toast({ title: "Material Rebirth Successful", description: "All missing arsenal DNA has been materialized." });
+            toast({ title: "Material Rebirth Successful", description: "The T-1000 protocol has restored all arsenal nodes." });
         }
     } catch (e) {
         toast({ variant: "destructive", title: "Regrowth Failure", description: "The neural spine failed to serialize the DNA." });
