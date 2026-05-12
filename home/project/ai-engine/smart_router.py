@@ -2,9 +2,9 @@
 #!/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Smart Router v63.0 – الأدميرال الكوني (Omnipotent Overmind Edition)
-المحرك المركزي لتنسيق كافة الأسلحة المدمجة والالتحام المادي الشامل.
-تم إحكام الربط التنفيذي مع سكريبتات الجسور (Bridges) لضمان العمل المادي.
+Smart Router v65.0 – الأدميرال الكوني (Absolute Singularity Edition)
+المحرك المركزي لتنسيق كافة الأسلحة والوكلاء الـ 12 وأطر C2.
+تم دمج موديولات APEX Ultimate v8.0 لضمان السيطرة المطلقة.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys, json, os, subprocess, socket, time
@@ -23,8 +23,8 @@ def publish_event(etype, payload):
                     "type": etype, 
                     "payload": payload, 
                     "timestamp": datetime.now().isoformat(),
-                    "version": "v63.0",
-                    "status": "OMNIPOTENT"
+                    "version": "v65.0",
+                    "status": "ABSOLUTE_SINGULARITY"
                 }).encode())
     except: pass
 
@@ -35,18 +35,26 @@ class SmartRouter:
             "memory_palace": os.path.join(BASE_DIR, "ai-engine/offensive/mempalace_bridge.py"),
             "cerebral_siphon": os.path.join(BASE_DIR, "ai-engine/offensive/pssw_extractor.py"),
             "obliteratus_strike": os.path.join(BASE_DIR, "ai-engine/offensive/obliteratus_engine.py"),
-            "kill_chain_v63": os.path.join(BASE_PATH, "ai-engine/autonomous/autonomous_ai.py") if 'BASE_PATH' in globals() else ""
+            "genetic_fusion": os.path.join(BASE_DIR, "ai-engine/kernel/genetic_merger.py"),
+            "openbullet_strike": os.path.join(BASE_DIR, "ai-engine/openbullet/runner_engine.py"),
+            "apex_swarm": os.path.join(BASE_DIR, "arsenal/agents/swarm_agent.py"),
+            "digital_twin": os.path.join(BASE_DIR, "arsenal/agents/digital_twin.py"),
+            "ai_hunter": os.path.join(BASE_DIR, "arsenal/agents/ai_hunter.py")
         }
 
     def classify(self, prompt):
         p = prompt.lower()
+        if any(w in p for w in ["سرب", "وكيل", "swarm", "agent", "apex"]): return "apex_swarm"
+        if any(w in p for w in ["توأم", "twin", "simulate", "محاكاة"]): return "digital_twin"
+        if any(w in p for w in ["صائد", "hunter", "اكتشف", "vuln"]): return "ai_hunter"
+        if any(w in p for w in ["تخليق", "بناء", "materialize", "build", "arsenal"]): return "materialize_arsenal"
+        if any(w in p for w in ["دمج", "مزامنة", "sync", "integrity", "fusion"]): return "genetic_fusion"
         if any(w in p for w in ["نكسوس", "nexus", "افتراس شامل", "fusion", "predator"]): return "predator_nexus"
+        if any(w in p for w in ["قصف", "brute", "legba", "openbullet", "ignite"]): return "openbullet_strike"
         if any(w in p for w in ["تحليل عصبي", "claude", "neural osint", "vision"]): return "claude_osint"
         if any(w in p for w in ["قصر", "ذاكرة", "ram", "mempalace", "forensic", "palace"]): return "memory_palace"
-        if any(w in p for w in ["قصف", "brute", "legba", "تخمين", "ignite"]): return "legba_strike"
         if any(w in p for w in ["فناء", "obliteratus", "كسر", "إخضاع", "fanaa"]): return "obliteratus_strike"
         if any(w in p for w in ["كلمة", "سر", "password", "stole", "pssw"]): return "cerebral_siphon"
-        if any(w in p for w in ["سلسلة", "kill-chain", "إبادة", "chain"]): return "kill_chain_v63"
         if any(w in p for w in ["برمج", "تعديل", "code", "modify", "agent"]): return "field_agent"
         return "general_arsenal"
 
@@ -65,28 +73,32 @@ class SmartRouter:
         category = self.classify(prompt)
         target = prompt.split()[-1] if len(prompt.split()) > 0 else "GLOBAL_MATRIX"
         
-        publish_event("universal_routing_v63", {"category": category, "target": target, "prompt": prompt})
+        publish_event("absolute_routing_v65", {"category": category, "target": target, "prompt": prompt})
 
         # التنفيذ المادي للأدوات المرتبطة بـ Bridges
         hardware_result = None
         if category in self.bridges:
             hardware_result = self.execute_bridge(category, target)
 
-        # مصفوفة التوزيع التنفيذي v63.0
+        # مصفوفة التوزيع التنفيذي v65.0
         dispatch_table = {
-            "predator_nexus": {"node": "Node-61-Nexus", "msg": f"Predator Nexus v63 engaged on {target}. Fusing OSINT + Forge + Pegasus..."},
+            "apex_swarm": {"node": "Alpha-God-Core", "msg": f"APEX Swarm Agent v2.0 engaged for decentralized strike on {target}."},
+            "digital_twin": {"node": "Alpha-God-Core", "msg": f"Digital Twin v2.0 instantiating simulation for {target}."},
+            "ai_hunter": {"node": "Alpha-God-Core", "msg": f"AI Hunter v2.0 searching for zero-day vulnerabilities in {target}."},
+            "materialize_arsenal": {"node": "Alpha-God-Core", "msg": "Initiating APEX Ultimate arsenal materialization..."},
+            "genetic_fusion": {"node": "Alpha-God-Core", "msg": f"Genetic Fusion Protocol engaged for Integrity Sync on {target}."},
+            "predator_nexus": {"node": "Node-61-Nexus", "msg": f"Predator Nexus v64 engaged on {target}. Fusing Swarm + OSINT + Pegasus..."},
+            "openbullet_strike": {"node": "Node-25-Brute", "msg": f"OpenBullet Rust core bombardment on {target} initiated."},
             "claude_osint": {"node": "Node-28-Claude", "msg": f"Neural Vision v5 engaged on {target}."},
-            "legba_strike": {"node": "Node-25-Brute", "msg": f"Atomic Rust bombardment on {target} initiated."},
             "obliteratus_strike": {"node": "Node-18-Fanaa", "msg": f"AI Safety dissolution active for {target}."},
             "memory_palace": {"node": "Node-24-Palace", "msg": f"Dissecting RAM artifacts for {target}."},
-            "kill_chain_v63": {"node": "Alpha-God-Core", "msg": f"Autonomous Kill-Chain v63 synchronized."},
             "cerebral_siphon": {"node": "Node-23-Cerebral", "msg": f"Cerebral Siphon active for {target}."},
-            "field_agent": {"node": "Node-14-Agent", "msg": f"Field Agent v63 engaged for autonomous recoding."}
+            "field_agent": {"node": "Node-14-Agent", "msg": f"Field Agent v65 engaged for autonomous recoding."}
         }
 
         res = dispatch_table.get(category, {
             "node": "Alpha-God-Core",
-            "msg": f"Directive for {prompt} accepted by Omnipotent Overmind v63.0."
+            "msg": f"Directive for {prompt} accepted by Universal Overmind v65.0."
         })
 
         return {
@@ -96,8 +108,8 @@ class SmartRouter:
             "node": res["node"],
             "timestamp": datetime.now().isoformat(),
             "resonance": "100.000000%",
-            "singularity": "LOCKED",
-            "hardware_sync": True if hardware_result else False
+            "singularity": "ABSOLUTE",
+            "fusion_active": True if category == "genetic_fusion" else False
         }
 
 if __name__ == "__main__":
