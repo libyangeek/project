@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -51,7 +52,7 @@ import { cn } from "@/lib/utils"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
 /**
- * @fileOverview الوكيل الميداني v73.0 - THE SUPREME SYSTEM ARCHITECT
+ * @fileOverview الوكيل الميداني v73.5 - THE SUPREME SYSTEM ARCHITECT
  * مركز التدقيق المادي والتعافي الذاتي المطلق.
  * مجهز بمحرك "الحقن الجيني Wand3" لإصلاح الأكواد حياً وبدون رصد.
  */
@@ -113,7 +114,7 @@ export default function FieldAgentPage() {
         const data = await response.json();
         if (data.success) {
             const aiResult = await executeFieldDevelopment({
-                userPrompt: "Analyze this project structure and samples. Focus on identifying hydration issues, source logic flaws, and v73.0 absolute material core updates.",
+                userPrompt: "Analyze this project structure and samples. Focus on identifying hydration issues, source logic flaws, and v73.5 absolute material core updates.",
                 projectPath: currentPath,
                 fileContent: JSON.stringify(data.output),
                 mode: 'project_analysis'
@@ -137,7 +138,7 @@ export default function FieldAgentPage() {
     toast({ title: "Self-Healing Wand3 Active", description: "Detecting logic flaws and hardware bus alignment..." });
     try {
         const aiResult = await executeFieldDevelopment({
-            userPrompt: "Completely fix this file. Use Wand3 Genetic Repair. Remove hydration errors, optimize performance, and align with v73.0 absolute standards. Return the final code in 'geneticPlan'.",
+            userPrompt: "Completely fix this file. Use Wand3 Genetic Repair. Remove hydration errors, optimize performance, and align with v73.5 absolute standards. Return the final code in 'geneticPlan'.",
             currentFile: selectedFileName,
             fileContent: selectedFileContent,
             mode: 'file_fix'
@@ -214,7 +215,7 @@ export default function FieldAgentPage() {
               </div>
               <div>
                  <h2 className="text-3xl md:text-5xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Absolute <span className="text-primary">Agent</span></h2>
-                 <Badge className="bg-primary/10 text-primary border-none text-[10px] font-black italic tracking-widest px-6 py-1 rounded-full shadow-lg mt-2 uppercase">v73.0_MATERIAL_CORE</Badge>
+                 <Badge className="bg-primary/10 text-primary border-none text-[10px] font-black italic tracking-widest px-6 py-1 rounded-full shadow-lg mt-2 uppercase">v73.5_MATERIAL_CORE</Badge>
               </div>
            </div>
            
@@ -266,12 +267,6 @@ export default function FieldAgentPage() {
                        <ChevronRight className="size-5 opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-1" />
                     </div>
                  ))}
-                 {files.length === 0 && (
-                    <div className="h-full flex flex-col items-center justify-center opacity-10 gap-6">
-                        <Search className="size-20" />
-                        <span className="text-sm font-black uppercase">Empty Sector</span>
-                    </div>
-                 )}
               </div>
            </aside>
 
@@ -314,7 +309,7 @@ export default function FieldAgentPage() {
                                </div>
                                <h4 className="text-4xl font-black italic gold-glow uppercase leading-none">Living Intelligence</h4>
                            </div>
-                           <Badge className="bg-emerald-600/20 text-emerald-500 border-4 px-8 py-2 rounded-full font-black text-xl italic animate-pulse">v73.0_READY</Badge>
+                           <Badge className="bg-emerald-600/20 text-emerald-500 border-4 px-8 py-2 rounded-full font-black text-xl italic animate-pulse">v73.5_READY</Badge>
                         </div>
                         
                         {analysis ? (
@@ -325,7 +320,7 @@ export default function FieldAgentPage() {
                               <div className="grid grid-cols-1 gap-8 flex-1">
                                  <div className="p-10 bg-black/80 rounded-[3.5rem] border-4 border-white/5 shadow-2xl relative overflow-hidden">
                                     <div className="absolute top-0 right-0 p-6 opacity-[0.02]"><Search className="size-24 text-primary"/></div>
-                                    <span className="text-[12px] font-black text-primary uppercase block mb-4 italic tracking-widest border-b-2 border-primary/10 pb-4">Structural Mapping v73.0</span>
+                                    <span className="text-[12px] font-black text-primary uppercase block mb-4 italic tracking-widest border-b-2 border-primary/10 pb-4">Structural Mapping v73.5</span>
                                     <ScrollArea className="h-48">
                                         <p className="text-2xl text-gray-300 italic font-black leading-relaxed">{analysis.analysis}</p>
                                     </ScrollArea>
@@ -386,7 +381,7 @@ export default function FieldAgentPage() {
         </div>
 
         <div className="shrink-0 p-3 flex justify-center items-center gap-12 opacity-30 text-[10px] font-black uppercase tracking-[4em] italic">
-            <span>AL-MUIZZ SUPREME MATERIAL ARCHITECT v73.0</span>
+            <span>AL-MUIZZ SUPREME MATERIAL ARCHITECT v73.5</span>
             <div className="size-2 rounded-full bg-white animate-pulse" />
             <span>SINGULARITY_OF_EXISTENCE_2026</span>
         </div>

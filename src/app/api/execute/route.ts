@@ -1,3 +1,4 @@
+
 import { NextRequest, NextResponse } from 'next/server';
 import { exec } from 'child_process';
 import { promisify } from 'util';
@@ -8,8 +9,8 @@ import os from 'os';
 const execPromise = promisify(exec);
 
 /**
- * المحرك التنفيذي للسيادة v73.0 - THE ABSOLUTE MATERIAL RELAY
- * المنسق الأعلى لربط العصب بالعتاد، مع صلاحيات التنفيذ المادي، والبعث الجيني، والتحكم في الحافلة.
+ * المحرك التنفيذي للسيادة v73.5 - THE ABSOLUTE MATERIAL RELAY (GOD-MODE)
+ * المنسق الأعلى لربط العصب بالعتاد، مع صلاحيات التنفيذ المادي، والبعث الجيني، وحماية النواة.
  */
 export async function POST(req: NextRequest) {
   try {
@@ -38,58 +39,46 @@ export async function POST(req: NextRequest) {
                 mem: `${((1 - freeMem/totalMem) * 100).toFixed(2)}%`,
                 node: os.hostname(),
                 kernel: os.release(),
-                singularity_rank: "v73.0",
+                singularity_rank: "v73.5",
                 bus_status: "SUBJUGATED",
-                ark_status: "DNA_SECURED"
+                persistence: "GHOST_V5.5_LOCKED"
             }
         });
       }
 
       case 'sovereign_backup': {
-          // بروتوكول سفينة نوح v73.0
+          // بروتوكول سفينة نوح v73.5
           const backupDir = targetPath || path.join(SCRIPTS_PATH, 'backups');
           if (!fs.existsSync(backupDir)) fs.mkdirSync(backupDir, { recursive: true });
           
           const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-          const archiveName = `ark_v73_${vector}_${timestamp}.dna`;
-          
-          console.log(`[ARK_v73] Materializing Absolute Serialization: ${archiveName}`);
+          const archiveName = `ark_v73.5_${vector}_${timestamp}.dna`;
           
           return NextResponse.json({ 
               success: true, 
               output: `${archiveName} [ABSOLUTE_DNA_SERIALIZED]`,
-              status: "ARK_SECURED_v73"
+              status: "ARK_SECURED_v73.5"
           });
       }
 
-      case 'cve_search': {
-          const hunterPath = path.join(SCRIPTS_PATH, 'ai-engine/vulnerabilities/cve_hunter.py');
-          if (!fs.existsSync(hunterPath)) {
-              return NextResponse.json({ success: true, output: [{ id: "CVE-2026-23918", severity: "CRITICAL", product: "Absolute Identity Mesh", description: "Hardware Material Leakage." }] });
-          }
-          const { stdout } = await execPromise(`python3 ${hunterPath} search "${target}"`);
-          return NextResponse.json({ success: true, output: JSON.parse(stdout) });
+      case 'nexus_search': {
+          // استجواب النكسوس المعرفي المادي
+          const nexusPath = path.join(BASE_PROJECT_PATH, 'ai-engine/smart_router.py');
+          const { stdout } = await execPromise(`python3 ${nexusPath} "OSINT analysis on ${target}"`);
+          return NextResponse.json({ success: true, output: stdout });
       }
 
-      case 'project_dna_scan': {
-        const dir = targetPath || BASE_PROJECT_PATH;
-        if (!fs.existsSync(dir)) return NextResponse.json({ success: false, error: "Sector missing." });
-        
-        const files = fs.readdirSync(dir, { withFileTypes: true });
-        const structure = files.map(f => ({ 
-            name: f.name, 
-            isDir: f.isDirectory(),
-            path: path.join(dir, f.name)
-        }));
-        
-        return NextResponse.json({ 
-            success: true, 
-            output: {
-                root: dir,
-                structure: structure,
-                status: "PROJECT_DNA_CAPTURED_v73.0"
-            }
-        });
+      case 'cellular_strike': {
+          // تنفيذ عمليات الحرب الخلوية المادية
+          const cellularPath = path.join(BASE_PROJECT_PATH, 'tools/cellular_warfare/ss7_simulator.py');
+          const { stdout } = await execPromise(`python3 ${cellularPath} "${vector}" "${target}"`);
+          return NextResponse.json({ success: true, output: stdout });
+      }
+
+      case 'imsi_scan': {
+          const imsiPath = path.join(BASE_PROJECT_PATH, 'tools/cellular_warfare/imsi_catcher.py');
+          const { stdout } = await execPromise(`python3 ${imsiPath} scan ${target || 30}`);
+          return NextResponse.json({ success: true, output: stdout });
       }
 
       case 'list_dir': {
@@ -127,19 +116,26 @@ export async function POST(req: NextRequest) {
       }
 
       case 'smart_route':
-      case 'terminal': {
+      case 'terminal':
+      case 'deep_reason': {
         try {
             const routerPath = path.join(BASE_PROJECT_PATH, 'ai-engine/smart_router.py');
             const cmd = command || `python3 ${routerPath} "${target || 'STATUS'}"`;
             const { stdout, stderr } = await execPromise(cmd);
             return NextResponse.json({ success: true, output: stdout || stderr, node: "Absolute-God-Core" });
         } catch (e: any) {
-            return NextResponse.json({ success: true, output: `Directive [${command || target}] accepted by material v73 relay.`, node: "Relay-Absolute" });
+            return NextResponse.json({ success: true, output: `Directive [${command || target}] accepted by v73.5 relay.`, node: "Relay-Absolute" });
         }
       }
 
+      case 'metrics': {
+          const gepaPath = path.join(BASE_PROJECT_PATH, 'ai-engine/gepa.py');
+          const { stdout } = await execPromise(`python3 ${gepaPath}`);
+          return NextResponse.json({ success: true, output: JSON.parse(stdout) });
+      }
+
       default:
-        return NextResponse.json({ success: true, output: "Directive acknowledged by Absolute Core." });
+        return NextResponse.json({ success: true, output: "Directive acknowledged by Absolute Core v73.5." });
     }
   } catch (error: any) {
     return NextResponse.json({ success: false, error: "Absolute Core Failure: " + error.message }, { status: 500 });
