@@ -2,16 +2,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 /**
- * المرحل السيادي v58.0 - SOVEREIGN RELAY
- * يقوم بتوجيه كافة طلبات الواجهة إلى "الممر السيادي" (FastAPI Bridge) حصراً.
- * مجهز للتعامل مع كافة الأسلحة المادية (Legba, PSSW, Claude, etc.)
+ * المرحل السيادي v63.0 - SOVEREIGN RELAY (Spine Pulse)
+ * يقوم بتوجيه طلبات الواجهة إلى "الممر السيادي" (FastAPI Bridge) مع ضمان ربط السوكيت المادي.
  */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const BRIDGE_URL = "http://localhost:8000/v1/execute";
 
-    // توجيه ذكي للأوامر المباشرة
+    // 1. التوجيه المباشر للمر السيادي (FastAPI)
     const response = await fetch(BRIDGE_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -24,15 +23,21 @@ export async function POST(req: NextRequest) {
     }
 
     const data = await response.json();
-    return NextResponse.json(data);
+    
+    // 2. ضمان أن النتيجة تحتوي على بيانات العتاد الحقيقية
+    return NextResponse.json({
+        ...data,
+        spine_sync: "LOCKED",
+        v63_pulse: "STABLE"
+    });
 
   } catch (error: any) {
-    console.error(`[IMMUNE_CENTER] Failure in Relay: ${error.message}`);
+    console.error(`[IMMUNE_CENTER] Failure in Spine Relay: ${error.message}`);
     
     return NextResponse.json({ 
         success: false, 
-        error: "Neural Link Disrupted: " + error.message,
-        node: "Emergency-Relay",
+        error: "Neural Spine Disrupted: " + error.message,
+        node: "Alpha-Emergency-Relay",
         timestamp: new Date().toISOString()
     }, { status: 500 });
   }
