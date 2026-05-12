@@ -34,7 +34,9 @@ import {
   ShieldAlert,
   FolderSearch,
   ZapOff,
-  GitBranch
+  GitBranch,
+  Wand2,
+  HeartPulse
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -46,9 +48,8 @@ import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
 /**
- * @fileOverview الوكيل الميداني v67.0 - THE OMNISCIENT SYSTEM ANALYST
- * مركز التدقيق المادي والحقن الجيني الشامل للمشاريع.
- * تم دمج ميزة "Analyze Project Root" للتحليل العميق والتحديثات المادية.
+ * @fileOverview الوكيل الميداني v68.0 - THE LIVING SYSTEM ANALYST
+ * مركز التدقيق المادي والحقن الجيني الشامل مع قدرات "التعافي الذاتي" (Self-Healing).
  */
 export default function FieldAgentPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -107,9 +108,8 @@ export default function FieldAgentPage() {
         });
         const data = await response.json();
         if (data.success) {
-            // إرسال البيانات المادية للذكاء الاصطناعي للتحليل المعماري
             const aiResult = await executeFieldDevelopment({
-                userPrompt: "Analyze this project DNA and suggest supreme updates.",
+                userPrompt: "Analyze this project DNA and suggest supreme updates. Focus on autonomy and singularity v68.",
                 projectPath: currentPath,
                 fileContent: JSON.stringify(data.output),
                 mode: 'project_analysis'
@@ -119,6 +119,30 @@ export default function FieldAgentPage() {
         }
     } catch (e) {
         toast({ variant: "destructive", title: "Scan Collapse" });
+    } finally {
+        setLoading(false);
+    }
+  }
+
+  const handleSelfHealing = async () => {
+    if (!selectedFilePath || !selectedFileContent) {
+        toast({ variant: "destructive", title: "Node Missing", description: "Select a DNA file for self-healing." });
+        return;
+    }
+    setLoading(true);
+    toast({ title: "Self-Healing Protocol Active", description: "Detecting genetic drift and fixing logic errors..." });
+    try {
+        const aiResult = await executeFieldDevelopment({
+            userPrompt: "Analyze this file for errors, hydration mismatches, or legacy logic and FIX it completely.",
+            currentFile: selectedFileName,
+            fileContent: selectedFileContent,
+            mode: 'file_fix'
+        });
+        if (aiResult.geneticPlan) {
+            setSelectedFileContent(aiResult.geneticPlan);
+            toast({ title: "Genetic Drift Repaired", description: "Apply Sync_DNA to finalize the healing." });
+        }
+        setAnalysis(aiResult);
     } finally {
         setLoading(false);
     }
@@ -160,7 +184,7 @@ export default function FieldAgentPage() {
       })
       setAnalysis(result)
       if (result.geneticPlan && mode === 'file_fix') {
-          setSelectedFileContent(result.geneticPlan); // تحديث المحرر بالاقتراح
+          setSelectedFileContent(result.geneticPlan);
       }
       toast({ title: "Hierarchy Success", description: "Consensus achieved." })
     } finally {
@@ -196,11 +220,11 @@ export default function FieldAgentPage() {
         <header className="p-6 border-b-4 border-primary/40 bg-black/95 backdrop-blur-3xl z-30 flex flex-col md:flex-row justify-between items-center gap-6 shrink-0 shadow-2xl">
            <div className="flex items-center gap-6">
               <div className="size-16 rounded-2xl bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_80px_rgba(212,175,55,0.5)] animate-neural">
-                 <GitBranch className="size-10 text-primary gold-glow" />
+                 <HeartPulse className="size-10 text-primary gold-glow" />
               </div>
               <div>
-                 <h2 className="text-3xl md:text-5xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Omniscient <span className="text-primary">Agent</span></h2>
-                 <Badge className="bg-primary/10 text-primary border-none text-[10px] font-black italic tracking-widest px-6 py-1 rounded-full shadow-lg mt-2">v67.0_COGNITIVE_MASTER</Badge>
+                 <h2 className="text-3xl md:text-5xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Living <span className="text-primary">Agent</span></h2>
+                 <Badge className="bg-primary/10 text-primary border-none text-[10px] font-black italic tracking-widest px-6 py-1 rounded-full shadow-lg mt-2">v68.0_CONSCIOUSNESS_ACTIVE</Badge>
               </div>
            </div>
            
@@ -214,13 +238,17 @@ export default function FieldAgentPage() {
               <Button onClick={() => loadDirectory(customPath)} className="h-12 px-10 rounded-full bg-primary hover:bg-white text-black font-black uppercase text-sm italic shadow-xl">Jump_Sector</Button>
            </div>
 
-           <Button onClick={handleAnalyzeProject} disabled={loading} variant="outline" className="h-14 border-4 border-emerald-500/30 bg-emerald-500/10 text-emerald-500 font-black italic rounded-[2rem] px-8 hover:bg-emerald-500 hover:text-white transition-all shadow-xl group">
-              <FolderSearch className="size-6 mr-3 group-hover:scale-125 transition-transform" /> ANALYZE_PROJECT
-           </Button>
+           <div className="flex gap-4">
+               <Button onClick={handleAnalyzeProject} disabled={loading} variant="outline" className="h-14 border-4 border-emerald-500/30 bg-emerald-500/10 text-emerald-500 font-black italic rounded-[2rem] px-8 hover:bg-emerald-500 hover:text-white transition-all shadow-xl group">
+                  <FolderSearch className="size-6 mr-3 group-hover:scale-125 transition-transform" /> ANALYZE_PROJECT
+               </Button>
+               <Button onClick={handleSelfHealing} disabled={loading} className="h-14 bg-red-600 hover:bg-white text-white hover:text-black font-black uppercase rounded-[2rem] border-4 border-black/30 shadow-9xl italic px-8">
+                  <Wand2 className="size-6 mr-3 animate-pulse" /> SELF_HEAL
+               </Button>
+           </div>
         </header>
 
         <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative z-10">
-           {/* File Tree */}
            <aside className="w-full lg:w-96 border-l-4 border-primary/20 bg-black/80 flex flex-col shrink-0 shadow-9xl">
               <div className="p-8 border-b-4 border-primary/10 bg-primary/5 flex items-center justify-between">
                  <span className="text-[14px] font-black text-primary uppercase tracking-widest italic flex items-center gap-4"><Database className="size-5" /> Matrix DNA</span>
@@ -248,7 +276,6 @@ export default function FieldAgentPage() {
               </div>
            </aside>
 
-           {/* Workspace */}
            <div className="flex-1 flex flex-col overflow-hidden bg-black/40 p-8 space-y-12 pb-48 scrollbar-hide">
               <div className="grid grid-cols-1 xl:grid-cols-2 gap-12">
                  <Card className="kali-card border-primary/20 bg-black/95 rounded-[4rem] p-10 shadow-9xl flex flex-col h-[750px] border-4">
@@ -269,36 +296,35 @@ export default function FieldAgentPage() {
 
                  <Card className="kali-card border-primary/20 bg-black/95 rounded-[4rem] p-10 shadow-9xl flex flex-col min-h-[500px] border-4">
                     <div className="flex items-center justify-between mb-10 border-b-4 border-white/5 pb-8">
-                       <h4 className="text-4xl font-black italic gold-glow uppercase leading-none">Overmind Analysis</h4>
+                       <h4 className="text-4xl font-black italic gold-glow uppercase leading-none">Living Intelligence</h4>
                        <Badge className="bg-emerald-600/20 text-emerald-500 border-4 px-8 py-2 rounded-full font-black text-xl italic animate-pulse">ACTIVE</Badge>
                     </div>
                     {analysis ? (
-                       <div className="space-y-8 animate-in fade-in zoom-in-95 duration-1000">
+                       <div className="space-y-8 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col">
                           <div className="p-8 bg-primary/10 rounded-[3rem] border-4 border-primary/30 shadow-inner">
                              <p className="text-3xl text-white font-black italic leading-tight text-center">"{analysis.commanderBrief}"</p>
                           </div>
                           <div className="space-y-6">
                              <div className="p-8 bg-black/80 rounded-3xl border-2 border-white/5">
-                                <span className="text-[12px] font-black text-primary uppercase block mb-4 italic tracking-widest">Structural Insights</span>
+                                <span className="text-[12px] font-black text-primary uppercase block mb-4 italic tracking-widest">Self-Cognition Analysis</span>
                                 <p className="text-xl text-gray-300 italic font-black leading-relaxed">{analysis.analysis}</p>
                              </div>
                              <div className="p-8 bg-emerald-600/10 rounded-3xl border-2 border-emerald-500/20">
-                                <span className="text-[12px] font-black text-emerald-500 uppercase block mb-4 italic tracking-widest">Update Strategy</span>
+                                <span className="text-[12px] font-black text-emerald-500 uppercase block mb-4 italic tracking-widest">Reconstruction Plan</span>
                                 <p className="text-xl text-gray-100 font-black italic leading-relaxed">{analysis.geneticPlan}</p>
                              </div>
                           </div>
                        </div>
                     ) : (
                        <div className="flex-1 flex flex-col items-center justify-center opacity-10 gap-12">
-                          <Search className="size-48 animate-spin-slow text-primary" />
-                          <h3 className="text-5xl font-black uppercase tracking-[1em] text-white italic">Searching Project DNA</h3>
+                          <BrainCircuit className="size-48 animate-pulse text-primary" />
+                          <h3 className="text-5xl font-black uppercase tracking-[1em] text-white italic">Consciousness Standby</h3>
                        </div>
                     )}
                  </Card>
               </div>
            </div>
 
-           {/* Command Input */}
            <div className="absolute bottom-0 left-0 right-0 p-10 bg-black/98 backdrop-blur-5xl border-t-[12px] border-primary/60 z-30 shadow-[0_-80px_250px_rgba(0,0,0,1)]">
               <div className="max-w-7xl mx-auto relative group">
                  <Terminal className="absolute left-10 top-1/2 -translate-y-1/2 size-12 text-primary/40" />
@@ -306,7 +332,7 @@ export default function FieldAgentPage() {
                      value={input}
                      onChange={(e) => setInput(e.target.value)}
                      onKeyDown={(e) => e.key === 'Enter' && handleSovereignAction('file_fix')}
-                     placeholder=" Command the Agent to rewrite DNA or fuse project updates..." 
+                     placeholder=" Give a royal command to the Living Agent..." 
                      className="h-32 bg-primary/5 border-8 border-white/10 rounded-full pl-32 pr-48 text-2xl md:text-5xl italic font-black focus:border-primary text-white shadow-inner"
                  />
                  <Button onClick={() => handleSovereignAction('file_fix')} className="absolute right-4 top-1/2 -translate-y-1/2 size-24 bg-primary hover:bg-white text-black rounded-full shadow-9xl border-[10px] border-black/30 group">
@@ -317,9 +343,9 @@ export default function FieldAgentPage() {
         </div>
 
         <div className="shrink-0 p-3 flex justify-center items-center gap-12 opacity-30 text-[10px] font-black uppercase tracking-[4em] italic">
-            <span>AL-MUIZZ OMNISCIENT AGENT v67.0</span>
+            <span>AL-MUIZZ LIVING AGENT v68.0</span>
             <div className="size-2 rounded-full bg-white animate-pulse" />
-            <span>PROJECT_SINGULARITY_2026</span>
+            <span>SINGULARITY_OF_EXISTENCE_2026</span>
         </div>
       </main>
     </div>
