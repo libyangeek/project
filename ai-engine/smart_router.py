@@ -30,6 +30,7 @@ def publish_event(etype, payload):
 
 class SmartRouter:
     def __init__(self):
+        # ممرات الجسور المادية للأدوات
         self.bridges = {
             "openbullet_strike": os.path.join(BASE_DIR, "tools/openbullet/runner_engine.py"),
             "xlogger_hub": os.path.join(BASE_DIR, "tools/social_predator/xlogger.py"),
@@ -54,7 +55,7 @@ class SmartRouter:
         return "general_hive"
 
     def execute_bridge(self, bridge_key, target, params=None):
-        """التنفيذ المادي للأداة المستوحاة من السكريبت v21.2.0"""
+        """التنفيذ المادي للأداة بنمط v76.0"""
         script = self.bridges.get(bridge_key)
         if script and os.path.exists(script):
             try:
@@ -64,7 +65,7 @@ class SmartRouter:
                 return {"status": "SUCCESS", "output": res}
             except Exception as e:
                 return {"error": str(e), "status": "HARDWARE_FUSION_FAILED"}
-        return {"status": "MATERIALIZING", "msg": f"Node {bridge_key} is being regrown from DNA."}
+        return {"status": "MATERIALIZING", "msg": f"Node {bridge_key} is being regrowing."}
 
     def route_query(self, prompt):
         category = self.classify(prompt)
@@ -75,13 +76,13 @@ class SmartRouter:
         hardware_result = self.execute_bridge(category, target)
 
         dispatch_table = {
-            "openbullet_strike": {"node": "Node-25-Brute", "msg": "OpenBullet Core v76 engaged for parallel material strike."},
-            "xlogger_hub": {"node": "Node-64-Ocular", "msg": "XLogger Hub v76 active on port 8888. Siphoning Identity DNA."},
+            "openbullet_strike": {"node": "Node-25-Brute", "msg": "OpenBullet Core engaged for parallel material strike."},
+            "xlogger_hub": {"node": "Node-64-Ocular", "msg": "XLogger Hub active on port 8888. Siphoning Identity DNA."},
             "seeker_gps": {"node": "Node-65-Seeker", "msg": "Seeker GPS active. Awaiting coordinate consensus."},
             "voice_hijack": {"node": "Node-12-Audio", "msg": "Royal voice materialize directive sent to hardware bus."},
             "desktop_automation": {"node": "Node-14-Claw", "msg": "PyAutoGUI material core engaged for desktop dominion."},
             "claude_osint": {"node": "Node-28-Claude", "msg": "Neural Vision v6 engaged on target cluster."},
-            "memory_palace": {"node": "Node-24-Palace", "msg": "Dissecting material RAM artifacts via v9.0 Oracle."},
+            "memory_palace": {"node": "Node-24-Palace", "msg": "Dissecting material RAM artifacts via v9.5 Oracle."},
             "obliteratus_strike": {"node": "Node-18-Fanaa", "msg": "AI Safety dissolution materialized via v76.0 protocol."}
         }
 
