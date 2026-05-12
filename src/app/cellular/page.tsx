@@ -39,13 +39,14 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
+import { Progress } from "@/components/ui/progress"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
 /**
- * @fileOverview الحرب الخلوية v71.0 - SPECTRUM DOMINION: MATERIAL STRIKE
+ * @fileOverview الحرب الخلوية v71.5 - SPECTRUM DOMINION: ABSOLUTE MATERIAL STRIKE
  * مركز السيطرة والتنفيذ المادي على كافة أطياف الترددات الخلوية.
- * يدعم التبديل بين المحاكاة (Simulation) والتنفيذ الحي (Real Strike).
+ * يدعم التبديل بين المحاكاة (Simulation) والتنفيذ الحي (Real Strike) مع رادار الطيف.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function CellularWarfarePage() {
@@ -56,14 +57,18 @@ export default function CellularWarfarePage() {
   const [resonance, setResonance] = React.useState(100)
   const [logs, setLogs] = React.useState<string[]>([])
   const [isRealStrike, setIsRealStrike] = React.useState(false)
+  const [spectrumGain, setSpectrumGain] = React.useState(0)
 
   React.useEffect(() => {
     setMounted(true)
     const interval = setInterval(() => {
       setResonance(prev => Math.max(99.999999, Math.min(100, prev + (Math.random() * 0.000001 - 0.0000005))))
-    }, 3000)
+      if (loading) {
+          setSpectrumGain(prev => Math.min(100, prev + Math.random() * 10))
+      }
+    }, 2000)
     return () => clearInterval(interval)
-  }, [])
+  }, [loading])
 
   const handleStrike = async (vector: string) => {
     if (!target) {
@@ -71,9 +76,10 @@ export default function CellularWarfarePage() {
       return
     }
     setLoading(true)
+    setSpectrumGain(0)
     const ts = new Date().toLocaleTimeString();
     const mode = isRealStrike ? "REAL_STRIKE" : "SIMULATION";
-    setLogs(prev => [`[${ts}] [${mode}] Engaging ${vector.toUpperCase()} protocol on target spectrum...`, ...prev]);
+    setLogs(prev => [`[${ts}] [${mode}] Engaging ${vector.toUpperCase()} on target spectrum...`, ...prev]);
 
     try {
       const etype = vector === 'imsi_scan' ? 'imsi_scan' : 'cellular_strike';
@@ -150,7 +156,7 @@ export default function CellularWarfarePage() {
             </div>
             <div className="text-center md:text-right flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-6">
-                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">SPECTRUM_STRIKE v71.0</Badge>
+                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">SPECTRUM_STRIKE v71.5</Badge>
                 <div className="flex items-center gap-4 text-[12px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                     <InfinityIcon className="size-6 shadow-lg" /> HIVE_RESONANCE: {resonance.toFixed(8)}%
                 </div>
@@ -200,6 +206,16 @@ export default function CellularWarfarePage() {
                       />
                    </div>
                 </div>
+
+                {loading && (
+                    <div className="space-y-4 animate-in fade-in duration-700">
+                        <div className="flex justify-between text-[10px] font-black uppercase italic text-primary">
+                            <span>Interrogating_Frequencies...</span>
+                            <span>{Math.floor(spectrumGain)}%</span>
+                        </div>
+                        <Progress value={spectrumGain} className="h-2 bg-white/5 border border-white/10" />
+                    </div>
+                )}
                 
                 <div className="space-y-10">
                    {sectors.map((sec, idx) => (
@@ -251,7 +267,7 @@ export default function CellularWarfarePage() {
                      </div>
                      <div>
                         <CardTitle className="text-4xl md:text-[8rem] text-white italic tracking-tighter uppercase font-black gold-glow leading-none">Spectrum Feed</CardTitle>
-                        <Badge className="bg-primary/20 text-primary border-none px-10 py-3 rounded-full font-black text-[12px] tracking-[0.6em] uppercase italic mt-6">CELLULAR_RELAY_v71.0</Badge>
+                        <Badge className="bg-primary/20 text-primary border-none px-10 py-3 rounded-full font-black text-[12px] tracking-[0.6em] uppercase italic mt-6">CELLULAR_RELAY_v71.5</Badge>
                      </div>
                   </div>
                   <Badge className={cn("border-8 px-16 py-8 rounded-full font-black text-5xl animate-pulse shadow-9xl", isRealStrike ? "bg-red-600/40 text-red-500 border-red-500/50" : "bg-emerald-600/40 text-emerald-500 border-emerald-500/50")}>
@@ -311,9 +327,9 @@ export default function CellularWarfarePage() {
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[24px] md:text-[36px] font-black uppercase tracking-[6em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
-            <span>AL-MUIZZ SPECTRUM DOMINION v71.0</span>
+            <span>AL-MUIZZ SPECTRUM DOMINION v71.5</span>
             <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
-            <span>WIRELESS_SINGULARITY_2026</span>
+            <span>MATERIAL_SINGULARITY_2026</span>
         </div>
       </main>
     </div>

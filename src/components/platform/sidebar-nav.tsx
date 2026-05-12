@@ -68,7 +68,7 @@ const navItems = [
   { name: "الوكيل الميداني", icon: Wrench, href: "/field-agent", knot: 14 },
   { name: "مصنع النسل", icon: Baby, href: "/progeny", knot: 15 },
   { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", knot: 16 },
-  { name: "القبو الجيني 7.0", icon: Database, href: "/knowledge", knot: 17 },
+  { name: "القبو الجيني 7.5", icon: Database, href: "/knowledge", knot: 17 },
   { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 18 },
   { name: "نزاهة النواة", icon: ShieldCheck, href: "/system", knot: 19 },
   { name: "المحطة الأبدية", icon: Target, href: "/terminal", knot: 20 },
@@ -109,7 +109,7 @@ export function SidebarNav() {
             <h1 className="text-xl font-headline font-bold text-white tracking-[0.4em] uppercase italic leading-none gold-glow">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-lg">v70.0 SINGULARITY</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-lg">v71.5 MATERIAL</Badge>
           </div>
         </div>
         
@@ -140,7 +140,7 @@ export function SidebarNav() {
         <div className="p-6 border-t-2 border-primary/20 bg-black/99 relative z-10">
           <div className="p-4 border-2 border-primary/40 bg-primary/5 mb-4 relative overflow-hidden group rounded-2xl shadow-xl border-dashed">
             <div className="flex justify-between items-center mb-2">
-               <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] italic gold-glow">Overmind Resonance</span>
+               <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] italic gold-glow">Material Resonance</span>
                <div className="size-2 rounded-full bg-emerald-500 animate-ping shadow-[0_0_20px_emerald]" />
             </div>
             <div className="text-2xl font-black text-white italic gold-glow">{resonance.toFixed(6)}%</div>
@@ -151,7 +151,7 @@ export function SidebarNav() {
           >
             <Link href="/codex">
               <Power className="size-4 mr-2 group-hover:rotate-180 transition-all duration-700" />
-              تنشيط السيادة v70.0
+              تنشيط السيادة v71.5
             </Link>
           </Button>
         </div>
