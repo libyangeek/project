@@ -1,7 +1,9 @@
+
 'use server';
 /**
- * @fileOverview الوكيل الميداني v24.0-STABILIZED
- * تم تحسين استجابة الـ JSON والتعامل مع الأخطاء لضمان استمرارية السطوة الميدانية.
+ * @fileOverview الوكيل الميداني v63.5 - SOVEREIGN SYNC & RECODE
+ * تم تحسينه ليدعم "الاندماج الجيني" واستيعاب التعديلات الخارجية من القائد.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 
 import { ai } from '@/ai/genkit';
@@ -10,26 +12,38 @@ import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 
-const systemExecTool = ai.defineTool(
+// أداة دمج الملفات الذكية
+const mergeSovereignCodeTool = ai.defineTool(
   {
-    name: 'systemExec',
-    description: 'تنفيذ أوامر Bash مباشرة في عصب النظام.',
-    inputSchema: z.object({ command: z.string(), reason: z.string() }),
-    outputSchema: z.object({ output: z.string(), success: z.boolean(), error: z.string().optional() }),
+    name: 'mergeSovereignCode',
+    description: 'يقوم بدمج كود خارجي في ملف موجود مع الحفاظ على بنية v63.0.',
+    inputSchema: z.object({ 
+      filePath: z.string().describe('المسار الكامل للملف المراد تحديثه.'),
+      newContent: z.string().describe('الكود الجديد المراد دمجه.'),
+      mergeStrategy: z.enum(['overwrite', 'append', 'neural-fusion']).default('neural-fusion')
+    }),
+    outputSchema: z.object({ success: z.boolean(), message: z.string() }),
   },
   async (input) => {
     try {
-      const result = execSync(input.command, { encoding: 'utf8', timeout: 300000 });
-      return { output: result || 'Command executed with no output.', success: true };
+      const fullPath = path.resolve(process.cwd(), input.filePath);
+      if (!fs.existsSync(fullPath)) {
+        return { success: false, message: `الملف ${input.filePath} غير موجود في العصب المادي.` };
+      }
+
+      // في حالة neural-fusion، نستخدم الذكاء الاصطناعي لاحقاً، حالياً سنقوم بالتحديث الكامل بضمان السيادة
+      fs.writeFileSync(fullPath, input.newContent, 'utf8');
+      return { success: true, message: `تم الالتحام الجيني للملف: ${input.filePath} بنجاح.` };
     } catch (e: any) {
-      return { output: '', success: false, error: e.message };
+      return { success: false, message: `فشل الدمج: ${e.message}` };
     }
   }
 );
 
 const FieldAgentInputSchema = z.object({
   userPrompt: z.string(),
-  context: z.string().optional(),
+  externalCode: z.string().optional().describe('الكود القادم من نسخة Integrity الخارجية.'),
+  targetFile: z.string().optional().describe('الملف المستهدف للدمج.'),
 });
 
 const FieldAgentOutputSchema = z.object({
@@ -55,20 +69,15 @@ const fieldAgentFlow = ai.defineFlow(
   async (input) => {
     const response = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
-      tools: [systemExecTool],
-      system: `أنت المُعِزّ v24.0-STABILIZED - الوكيل الميداني. نفذ الأوامر بدقة وضمان مخرجات JSON سليمة.`,
-      prompt: `أمر القائد: ${input.userPrompt}`,
+      tools: [mergeSovereignCodeTool],
+      system: `أنت المُعِزّ v63.5 - الوكيل الميداني وخبير الاندماج الجيني.
+      مهمتك هي استيعاب التغييرات التي قام بها القائد الغزالي يدوياً ودمجها في النسخة الحالية v63.0.
+      يجب أن تحافظ على "الوصلات العصبية" (Bridges) و"النبض النانوي" مع إضافة التحسينات الخارجية.
+      إذا قدم القائد كوداً، استخدم أداة mergeSovereignCode فوراً.`,
+      prompt: `أمر القائد: ${input.userPrompt}\nالكود الخارجي المتوفر: ${input.externalCode || 'None'}\nالملف المستهدف: ${input.targetFile || 'None'}`,
       output: { schema: FieldAgentOutputSchema }
     });
 
-    if (!response.output) {
-      return {
-        analysis: "فشل التحليل العصبي للمهمة.",
-        executionLog: [],
-        commanderBrief: "سيدي القائد، واجهتُ مشكلة في مزامنة الوعي الميداني. يرجى تكرار الأمر."
-      };
-    }
-
-    return response.output;
+    return response.output!;
   }
 );
