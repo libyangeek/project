@@ -29,7 +29,8 @@ async function publishEvent(type: string, payload: any) {
 }
 
 /**
- * المحرك التنفيذي للسيادة v63.8 - الإدراك المادي والذاتي
+ * المحرك التنفيذي للسيادة v63.9 - الإدراك المادي والذاتي الشامل
+ * تم تحسينه ليتيح الوصول لكافة مجلدات الجهاز المضيف.
  */
 export async function POST(req: NextRequest) {
   try {
@@ -41,22 +42,31 @@ export async function POST(req: NextRequest) {
     const BASE_PROJECT_PATH = process.cwd();
     const SCRIPTS_PATH = '/opt/sovereign-ai-platform';
 
-    await publishEvent("fs_interception", { type, targetPath, command });
+    await publishEvent("system_access", { type, targetPath, command });
 
     // مصفوفة التنفيذ السيادي
     switch (type) {
       case 'list_dir': {
+        // إذا لم يتم توفير مَسار، نبدأ من مَسار المشروع، وإلا نستخدم المسار المطلوب
         const dirToRead = targetPath || BASE_PROJECT_PATH;
+        
         if (!fs.existsSync(dirToRead)) {
-            return NextResponse.json({ success: false, error: "Path not found in Matrix." });
+            return NextResponse.json({ success: false, error: `Path [${dirToRead}] not found in Matrix.` });
         }
+
+        const stats = fs.statSync(dirToRead);
+        if (!stats.isDirectory()) {
+            return NextResponse.json({ success: false, error: "Target is not a directory." });
+        }
+
         const items = fs.readdirSync(dirToRead, { withFileTypes: true });
         const result = items.map(item => ({
             name: item.name,
             isDirectory: item.isDirectory(),
             path: path.join(dirToRead, item.name)
         }));
-        return NextResponse.json({ success: true, output: result });
+        
+        return NextResponse.json({ success: true, output: result, currentPath: dirToRead });
       }
 
       case 'read_file': {

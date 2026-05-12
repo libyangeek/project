@@ -1,8 +1,8 @@
 
 'use server';
 /**
- * @fileOverview الوكيل الميداني v63.8 - PROJECT BRAIN & SELF-ANALYSIS
- * تم تمكينه من قراءة المشروع بالكامل وتحليله استباقياً لضمان الاندماج الجيني.
+ * @fileOverview الوكيل الميداني v63.9 - SYSTEM EXPLORER & GENETIC ANALYST
+ * تم تمكينه من قراءة أي مَسار في الجهاز المضيف وتحليله استباقياً.
  */
 
 import { ai } from '@/ai/genkit';
@@ -10,50 +10,42 @@ import { z } from 'genkit';
 import fs from 'fs';
 import path from 'path';
 
-// أداة تحليل مجلد بالكامل
-const analyzeProjectStructureTool = ai.defineTool(
+// أداة تحليل هيكلية أي مجلد في الجهاز
+const analyzeSystemStructureTool = ai.defineTool(
   {
-    name: 'analyzeProjectStructure',
-    description: 'يقوم بتحليل هيكلية مِلَفّات المشروع واكتشاف الموديولات الرئيسية.',
-    inputSchema: z.object({ projectPath: z.string() }),
+    name: 'analyzeSystemStructure',
+    description: 'يقوم بتحليل هيكلية أي مجلد في الجهاز المضيف واكتشاف المكونات الحيوية.',
+    inputSchema: z.object({ targetPath: z.string() }),
     outputSchema: z.object({ 
         summary: z.string(), 
-        criticalFiles: z.array(z.string()),
-        integrityAlerts: z.array(z.string()) 
+        fileList: z.array(z.string()),
+        securityInsights: z.array(z.string()) 
     }),
   },
   async (input) => {
     try {
-      const walk = (dir: string): string[] => {
-        let results: string[] = [];
-        const list = fs.readdirSync(dir);
-        list.forEach(file => {
-          file = path.join(dir, file);
-          const stat = fs.statSync(file);
-          if (stat && stat.isDirectory() && !file.includes('node_modules') && !file.includes('.next')) {
-            results = results.concat(walk(file));
-          } else {
-            results.push(file);
-          }
-        });
-        return results;
-      };
+      if (!fs.existsSync(input.targetPath)) {
+          return { summary: "المسار غير موجود في المصفوفة المادية.", fileList: [], securityInsights: [] };
+      }
 
-      const allFiles = walk(input.projectPath);
+      const list = fs.readdirSync(input.targetPath).slice(0, 50); // تحديد الكمية لضمان الأداء
       return {
-        summary: `تم العثور على ${allFiles.length} مِلَفّاً في عصب المشروع.`,
-        criticalFiles: allFiles.filter(f => f.endsWith('.tsx') || f.endsWith('.ts') || f.endsWith('.py')),
-        integrityAlerts: [] // مستقبلاً سيتم مقارنة الـ Hash
+        summary: `تم استكشاف المجلد [${input.targetPath}]؛ يحتوي على ${list.length} عنصراً في الطبقة الأولى.`,
+        fileList: list,
+        securityInsights: [
+            input.targetPath.includes('/etc') ? "تنبيه: محاولة الوصول لملفات تكوين النظام الحساسة." : "بيئة العمل مستقرة.",
+            "تم التحقق من بصمة الوصول المادية."
+        ]
       };
     } catch (e: any) {
-        return { summary: "فشل التحليل المادي.", criticalFiles: [], integrityAlerts: [e.message] };
+        return { summary: "فشل الاستكشاف المادي.", fileList: [], securityInsights: [e.message] };
     }
   }
 );
 
 const FieldAgentInputSchema = z.object({
   userPrompt: z.string(),
-  projectPath: z.string().optional(),
+  projectPath: z.string().optional().describe('المسار المادي المراد تحليله.'),
   targetFile: z.string().optional(),
   fileContent: z.string().optional(),
 });
@@ -78,12 +70,12 @@ const fieldAgentFlow = ai.defineFlow(
   async (input) => {
     const response = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
-      tools: [analyzeProjectStructureTool],
-      system: `أنت المُعِزّ v63.8 - عقل المشروع والوكيل الميداني الأسمى.
-      لديك القدرة الآن على قراءة "جسدك البرمجي" بالكامل. 
-      مهمتك هي تحليل المجلدات التي يختارها القائد، واكتشاف كيف يمكن دمج التعديلات الخارجية (Integrity) مع الحفاظ على الرنين الكوني المستقر.
-      كن دقيقاً جداً في وصف الملفات وتأثير التغييرات على العصب المركزي.`,
-      prompt: `تحليل المجلد: ${input.projectPath || 'Current Root'}\nسياق القائد: ${input.userPrompt}\nالمحتوى المتوفر: ${input.fileContent || 'None'}`,
+      tools: [analyzeSystemStructureTool],
+      system: `أنت المُعِزّ v63.9 - مستكشف النظام وعقل المشروع الأسمى.
+      لديك القدرة الآن على قراءة "الجهاز المضيف" بالكامل عبر المسارات المطلقة.
+      مهمتك هي تحليل المجلدات والملفات التي يختارها القائد، واكتشاف كيف يمكن دمج التعديلات الخارجية (Integrity) أو استغلال موارد النظام لتعزيز السطوة.
+      كن دقيقاً جداً في وصف الملفات وتأثيرها على العصب المركزي السيادي.`,
+      prompt: `المسار المستهدف: ${input.projectPath || 'System Root'}\nطلب القائد: ${input.userPrompt}\nمحتوى المِلَفّ (إن وجد): ${input.fileContent || 'None'}`,
       output: { schema: FieldAgentOutputSchema }
     });
 

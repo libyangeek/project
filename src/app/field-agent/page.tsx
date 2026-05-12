@@ -23,7 +23,10 @@ import {
   FileCode,
   Search,
   ChevronLeft,
-  Infinity as InfinityIcon
+  Infinity as InfinityIcon,
+  Monitor,
+  Database,
+  X
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -34,13 +37,14 @@ import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
 /**
- * @fileOverview الوكيل الميداني v63.8 - THE SUPREME PROJECT BRAIN
- * واجهة معالجة مادية تتيح تصفح المشروع وتحليل الـ DNA البرمجي لدمج التعديلات الخارجية.
+ * @fileOverview الوكيل الميداني v63.9 - THE SUPREME SYSTEM EXPLORER
+ * واجهة معالجة مادية تتيح تصفح "كامل الجهاز" وتحليل الـ DNA البرمجي لدمج التعديلات الخارجية.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function FieldAgentPage() {
   const [mounted, setMounted] = React.useState(false)
   const [input, setInput] = React.useState("")
+  const [customPath, setCustomPath] = React.useState("")
   const [currentPath, setCurrentPath] = React.useState("")
   const [files, setFiles] = React.useState<any[]>([])
   const [selectedFileContent, setSelectedFileContent] = React.useState("")
@@ -69,9 +73,10 @@ export default function FieldAgentPage() {
         const data = await response.json()
         if (data.success) {
             setFiles(data.output)
-            setCurrentPath(path || "ROOT")
+            setCurrentPath(data.currentPath || path || "ROOT")
+            setCustomPath(data.currentPath || "")
         } else {
-            toast({ variant: "destructive", title: "Access Denied", description: data.error })
+            toast({ variant: "destructive", title: "Access Restricted", description: data.error })
         }
     } catch (e) {
         toast({ variant: "destructive", title: "Neural Link Error" })
@@ -95,7 +100,7 @@ export default function FieldAgentPage() {
             if (data.success) {
                 setSelectedFileContent(data.output)
                 setSelectedFileName(file.name)
-                toast({ title: "File Siphoned", description: `Absorbed DNA from ${file.name}` })
+                toast({ title: "DNA Siphoned", description: `Absorbed content from ${file.name}` })
             }
         } finally {
             setLoading(false)
@@ -108,12 +113,12 @@ export default function FieldAgentPage() {
     setAnalysis(null)
     try {
       const result = await executeFieldDevelopment({ 
-        userPrompt: input || "Analyze this segment of the project DNA for integrity sync.",
+        userPrompt: input || "Analyze this segment of the system DNA for integrity sync.",
         projectPath: currentPath,
         fileContent: selectedFileContent
       })
       setAnalysis(result)
-      toast({ title: "Genetic Analysis Complete", description: "The Overmind has mapped the target logic." })
+      toast({ title: "Structural Analysis Complete", description: "The Overmind has mapped the target logic." })
     } catch (err) {
       toast({ variant: "destructive", title: "Neural Link Disrupted" })
     } finally {
@@ -124,8 +129,14 @@ export default function FieldAgentPage() {
   const navigateBack = () => {
       const parts = currentPath.split('/');
       parts.pop();
-      const parent = parts.join('/') || "";
+      const parent = parts.join('/') || "/";
       loadDirectory(parent);
+  }
+
+  const jumpToPath = () => {
+      if (customPath.trim()) {
+          loadDirectory(customPath.trim());
+      }
   }
 
   if (!mounted) return null
@@ -134,44 +145,56 @@ export default function FieldAgentPage() {
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 font-code scanline-effect overflow-hidden">
       <SidebarNav />
       
-      {/* منطقة المحتوى الرئيسية - تم تحسين الهوامش لمنع التداخل */}
-      <main className="flex-1 lg:mr-72 flex flex-col h-screen relative">
+      {/* منطقة المحتوى الرئيسية */}
+      <main className="flex-1 lg:mr-72 flex flex-col h-screen relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.05),transparent)] pointer-events-none z-0" />
         
-        {/* رأس الصفحة الثابت */}
+        {/* رأس الصفحة السيادي */}
         <header className="p-6 md:p-8 border-b-2 border-primary/20 bg-black/90 backdrop-blur-xl z-20 flex justify-between items-center shrink-0">
            <div className="flex items-center gap-6">
               <div className="size-12 md:size-16 rounded-xl bg-black border-2 border-primary flex items-center justify-center shadow-[0_0_40px_rgba(212,175,55,0.3)] animate-neural">
-                 <BrainCircuit className="size-6 md:size-8 text-primary gold-glow" />
+                 <Monitor className="size-6 md:size-8 text-primary gold-glow" />
               </div>
               <div>
-                 <h2 className="text-xl md:text-3xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Field <span className="text-primary">Agent</span></h2>
+                 <h2 className="text-xl md:text-3xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">System <span className="text-primary">Explorer</span></h2>
                  <div className="flex items-center gap-3 mt-2">
-                    <Badge className="bg-primary text-black border-none uppercase text-[8px] font-black tracking-widest px-3 py-0.5 rounded-full italic">v63.8_SELF_AWARE</Badge>
-                    <span className="text-[9px] text-muted-foreground uppercase font-black italic truncate max-w-[200px] md:max-w-md">{currentPath}</span>
+                    <Badge className="bg-primary text-black border-none uppercase text-[8px] font-black tracking-widest px-3 py-0.5 rounded-full italic">v63.9_MATERIAL_ACCESS</Badge>
+                    <span className="text-[9px] text-muted-foreground uppercase font-black italic truncate max-w-[200px] md:max-w-md">Device Pulse: {resonance.toFixed(4)}%</span>
                  </div>
               </div>
            </div>
-           <div className="flex gap-4">
-              <div className="hidden md:block text-right bg-primary/5 px-4 py-2 rounded-xl border border-primary/20">
-                 <div className="text-xl font-black text-white italic gold-glow">{resonance.toFixed(6)}%</div>
-                 <div className="text-[8px] text-primary/60 font-black uppercase tracking-widest italic">Resonance</div>
+           
+           {/* حقل القفز للمسارات المطلقة */}
+           <div className="hidden md:flex items-center gap-4 bg-white/5 p-2 rounded-2xl border border-white/10 w-full max-w-xl">
+              <div className="size-10 rounded-xl bg-black flex items-center justify-center border border-primary/20">
+                <Search className="size-4 text-primary/40" />
               </div>
+              <Input 
+                value={customPath}
+                onChange={(e) => setCustomPath(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && jumpToPath()}
+                placeholder="Jump to Absolute Path (e.g. /etc, /home/user)..." 
+                className="bg-transparent border-none focus-visible:ring-0 text-xs italic font-black text-white h-10"
+              />
+              <Button onClick={jumpToPath} variant="ghost" className="h-10 px-6 rounded-xl hover:bg-primary hover:text-black font-black uppercase text-[10px]">Jump</Button>
            </div>
         </header>
 
         {/* مساحة العمل المقسمة */}
         <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative z-10">
            
-           {/* مستكشف المصفوفة المادي (يسار) */}
-           <aside className="w-full lg:w-80 border-l-2 border-primary/10 bg-black/40 flex flex-col shrink-0 order-last lg:order-none">
+           {/* مستكشف الملفات المادي (يسار) */}
+           <aside className="w-full lg:w-96 border-l-2 border-primary/10 bg-black/40 flex flex-col shrink-0 order-last lg:order-none">
               <div className="p-4 border-b border-primary/10 bg-primary/5 flex items-center justify-between">
-                 <span className="text-[10px] font-black text-primary uppercase tracking-widest italic flex items-center gap-2">
-                    <FolderOpen className="size-3" /> Matrix Structure
-                 </span>
+                 <div className="flex flex-col">
+                    <span className="text-[10px] font-black text-primary uppercase tracking-widest italic flex items-center gap-2">
+                        <FolderOpen className="size-3" /> Hardware DNA
+                    </span>
+                    <span className="text-[8px] text-muted-foreground truncate max-w-[150px] mt-1">{currentPath}</span>
+                 </div>
                  <div className="flex gap-1">
                     <Button size="icon" variant="ghost" onClick={navigateBack} className="size-8 rounded-lg hover:bg-primary/20"><ChevronLeft className="size-4"/></Button>
-                    <Button size="icon" variant="ghost" onClick={() => loadDirectory()} className="size-8 rounded-lg hover:bg-primary/20"><RefreshCcw className="size-4"/></Button>
+                    <Button size="icon" variant="ghost" onClick={() => loadDirectory(currentPath)} className="size-8 rounded-lg hover:bg-primary/20"><RefreshCcw className="size-4"/></Button>
                  </div>
               </div>
               <div className="flex-1 overflow-y-auto scrollbar-hide p-2 space-y-1">
@@ -186,29 +209,29 @@ export default function FieldAgentPage() {
                     >
                        <div className="flex items-center gap-3">
                           {file.isDirectory ? <FolderOpen className="size-4 text-primary"/> : <FileCode className="size-4 text-blue-400"/>}
-                          <span className="text-[11px] font-bold text-gray-300 group-hover:text-white truncate max-w-[150px]">{file.name}</span>
+                          <span className="text-[11px] font-bold text-gray-300 group-hover:text-white truncate max-w-[180px]">{file.name}</span>
                        </div>
                        <ChevronRight className="size-3 opacity-20 group-hover:opacity-100 transition-all"/>
                     </div>
                  ))}
                  {files.length === 0 && !loading && (
-                     <div className="p-10 text-center opacity-20 italic text-[10px] uppercase font-black">No DNA Segments Found</div>
+                     <div className="p-10 text-center opacity-20 italic text-[10px] uppercase font-black">Chamber Empty</div>
                  )}
               </div>
            </aside>
 
            {/* ساحة التشريح والتحليل (وسط) */}
            <div className="flex-1 flex flex-col overflow-hidden bg-black/20">
-              <div className="flex-1 overflow-y-auto p-6 space-y-8 scrollbar-hide">
+              <div className="flex-1 overflow-y-auto p-6 space-y-8 scrollbar-hide pb-32">
                  
                  {selectedFileContent ? (
                     <Card className="kali-card border-primary/20 bg-black/80 rounded-3xl p-6 shadow-2xl relative group overflow-hidden">
                        <div className="absolute top-3 right-4 flex gap-2 z-20">
                           <Badge className="bg-emerald-600/20 text-emerald-400 border-none font-black text-[8px] italic">DNA_ABSORBED</Badge>
-                          <Button variant="ghost" size="icon" onClick={() => setSelectedFileContent("")} className="size-6 rounded-full hover:bg-red-600"><XIcon className="size-3"/></Button>
+                          <Button variant="ghost" size="icon" onClick={() => setSelectedFileContent("")} className="size-6 rounded-full hover:bg-red-600"><X className="size-3"/></Button>
                        </div>
                        <h4 className="text-[10px] font-black text-primary/40 uppercase tracking-widest mb-4 italic px-2">{selectedFileName}</h4>
-                       <div className="bg-black/60 p-6 rounded-2xl font-code text-xs md:text-sm text-emerald-400 leading-relaxed italic h-[400px] overflow-y-auto scrollbar-hide shadow-inner border border-white/5 whitespace-pre selection:bg-primary selection:text-black">
+                       <div className="bg-black/60 p-6 rounded-2xl font-code text-xs md:text-sm text-emerald-400 leading-relaxed italic h-[500px] overflow-y-auto scrollbar-hide shadow-inner border border-white/5 whitespace-pre selection:bg-primary selection:text-black">
                           {selectedFileContent}
                        </div>
                     </Card>
@@ -216,8 +239,8 @@ export default function FieldAgentPage() {
                     <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-8 py-20">
                        <Atom className="size-32 text-primary animate-spin-slow" />
                        <div>
-                          <h3 className="text-3xl md:text-5xl font-black uppercase tracking-widest text-white italic gold-glow mb-2">Matrix Hub</h3>
-                          <p className="text-xs italic font-black text-gray-500 uppercase tracking-widest">Select a DNA segment from the explorer to begin siphoning.</p>
+                          <h3 className="text-3xl md:text-5xl font-black uppercase tracking-widest text-white italic gold-glow mb-2">Device Matrix</h3>
+                          <p className="text-xs italic font-black text-gray-500 uppercase tracking-widest">Select a DNA segment from the hardware structure to begin siphoning.</p>
                        </div>
                     </div>
                  )}
@@ -253,33 +276,33 @@ export default function FieldAgentPage() {
                  )}
               </div>
 
-              {/* حقل الأوامر الجيني (أسفل) */}
-              <div className="p-6 border-t-2 border-primary/40 bg-black/95 backdrop-blur-2xl">
+              {/* حقل الأوامر الجيني */}
+              <div className="absolute bottom-0 left-0 lg:left-0 right-0 p-6 bg-black/95 backdrop-blur-2xl border-t-2 border-primary/40">
                  <div className="max-w-5xl mx-auto relative group">
                     <Terminal className="absolute left-6 top-1/2 -translate-y-1/2 size-5 text-primary/40 group-focus-within:text-primary transition-all" />
                     <Input 
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && handleDeepAnalysis()}
-                        placeholder=" Instruct the agent to analyze or modify the DNA..." 
-                        className="h-20 md:h-24 bg-white/5 border-2 border-white/10 rounded-[2rem] pl-16 pr-32 text-lg md:text-2xl italic font-black focus:border-primary shadow-inner text-white transition-all placeholder:text-gray-900 selection:bg-primary"
+                        placeholder=" Instruct the agent to analyze the current system DNA..." 
+                        className="h-16 md:h-20 bg-white/5 border-2 border-white/10 rounded-[2rem] pl-16 pr-32 text-lg md:text-xl italic font-black focus:border-primary shadow-inner text-white transition-all placeholder:text-gray-900 selection:bg-primary"
                     />
                     <Button 
                         onClick={handleDeepAnalysis}
                         disabled={loading || !input.trim()}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 size-14 md:size-18 rounded-full bg-primary hover:bg-white text-black shadow-lg transition-all border-4 border-black/20 group active:scale-90"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 size-12 md:size-14 rounded-full bg-primary hover:bg-white text-black shadow-lg transition-all border-4 border-black/20 group active:scale-90"
                     >
-                        {loading ? <Loader2 className="size-6 animate-spin" /> : <Send className="size-6 group-hover:translate-x-1 transition-transform" />}
+                        {loading ? <Loader2 className="size-5 animate-spin" /> : <Send className="size-5 group-hover:translate-x-1 transition-transform" />}
                     </Button>
                  </div>
               </div>
            </div>
         </div>
 
-        <div className="shrink-0 p-4 border-t border-white/5 flex justify-center items-center gap-10 opacity-30 text-[9px] font-black uppercase tracking-[2em] italic">
-            <span>AL-MUIZZ PROJECT BRAIN v63.8</span>
-            <div className="size-2 rounded-full bg-white animate-pulse shadow-[0_0_20px_white]" />
-            <span>SYNAPSE_CLEARANCE_MAX_2026</span>
+        <div className="shrink-0 p-3 border-t border-white/5 flex justify-center items-center gap-10 opacity-30 text-[8px] font-black uppercase tracking-[2em] italic">
+            <span>AL-MUIZZ SYSTEM EXPLORER v63.9</span>
+            <div className="size-1.5 rounded-full bg-white animate-pulse shadow-[0_0_20px_white]" />
+            <span>MATERIAL_CONSENSUS_2026</span>
         </div>
       </main>
     </div>
