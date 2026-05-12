@@ -24,7 +24,8 @@ import {
   Radio,
   Gamepad2,
   MousePointer2,
-  Monitor
+  Monitor,
+  Flame
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -192,10 +193,10 @@ export default function ClassicHubPage() {
                  <div className="flex-1 bg-white p-2 overflow-y-auto font-sans text-xs">
                     <div className="flex items-center gap-2"><FolderOpen className="size-3 text-yellow-600"/> Al-Mu'izz.vbp</div>
                     <div className="ml-4 flex items-center gap-2"><Monitor className="size-3 text-blue-600"/> Forms</div>
-                    <div className="ml-8 flex items-center gap-2"><FileCode className="size-3"/> frmMainStrike</div>
+                    <div className="ml-8 flex items-center gap-2"><FileCodeIcon className="size-3"/> frmMainStrike</div>
                     <div className="ml-4 flex items-center gap-2"><Settings className="size-3 text-gray-600"/> Modules</div>
-                    <div className="ml-8 flex items-center gap-2"><FileCode className="size-3"/> modSiphon</div>
-                    <div className="ml-8 flex items-center gap-2"><FileCode className="size-3"/> modMaterial</div>
+                    <div className="ml-8 flex items-center gap-2"><FileCodeIcon className="size-3"/> modSiphon</div>
+                    <div className="ml-8 flex items-center gap-2"><FileCodeIcon className="size-3"/> modMaterial</div>
                  </div>
               </div>
            </div>
@@ -235,7 +236,7 @@ export default function ClassicHubPage() {
   )
 }
 
-function FileCode({className}: {className?: string}) {
+function FileCodeIcon({className}: {className?: string}) {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M10 12.5 8 15l2 2.5"/><path d="m14 12.5 2 2.5-2 2.5"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/></svg>
     )
