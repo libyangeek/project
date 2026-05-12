@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -55,7 +56,7 @@
 
   .scanline-effect::after {
     content: "";
-    @apply absolute inset-0 pointer-events-none opacity-[0.08] z-[999];
+    @apply absolute inset-0 pointer-events-none opacity-[0.04] z-[10]; /* Lowered z-index and opacity to prevent overlap issues */
     background: linear-gradient(rgba(212,175,55,0) 50%, rgba(0, 0, 0, 0.4) 50%), 
                 linear-gradient(90deg, rgba(212,175,55,0.05), rgba(255, 255, 255, 0.02), rgba(212,175,55,0.05));
     background-size: 100% 2px, 2px 100%;
