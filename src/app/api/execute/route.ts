@@ -4,11 +4,12 @@ import { exec } from 'child_process';
 import { promisify } from 'util';
 import path from 'path';
 import net from 'net';
+import fs from 'fs';
 
 const execPromise = promisify(exec);
 
 /**
- * دالة بث الأحداث لناقل الأحداث المركزي لضمان الاستجابة المستقلة
+ * دالة بث الأحداث لناقل الأحداث المركزي
  */
 async function publishEvent(type: string, payload: any) {
   return new Promise((resolve) => {
@@ -28,75 +29,60 @@ async function publishEvent(type: string, payload: any) {
 }
 
 /**
- * المحرك التنفيذي للسيادة v53.5 - الاستقلالية المطلقة
+ * المحرك التنفيذي للسيادة v63.8 - الإدراك المادي والذاتي
  */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { 
-        command, target, type, config, context, 
-        vector, text, first, last, year, prompt 
+        command, target, type, path: targetPath 
     } = body;
 
-    const BASE_PATH = '/opt/sovereign-ai-platform';
-    const SCRIPTS = {
-      router: path.join(BASE_PATH, 'ai-engine/smart_router.py'),
-      cve: path.join(BASE_PATH, 'ai-engine/vulnerabilities/cve_hunter.py'),
-      audit: path.join(BASE_PATH, 'ai-engine/kernel/kernel_monitor.py'),
-      autonomous: path.join(BASE_PATH, 'ai-engine/autonomous/autonomous_ai.py')
-    };
+    const BASE_PROJECT_PATH = process.cwd();
+    const SCRIPTS_PATH = '/opt/sovereign-ai-platform';
 
-    // تسجيل نية القائد وبثها للنواة المستقلة
-    await publishEvent("command_intercepted", { type, target, command });
+    await publishEvent("fs_interception", { type, targetPath, command });
 
-    let cmdToExec = "";
-
+    // مصفوفة التنفيذ السيادي
     switch (type) {
-      case 'smart_route':
-      case 'terminal':
-        cmdToExec = `python3 ${SCRIPTS.router} "${command || target}"`;
-        break;
-      case 'kill_chain':
-        // استدعاء سلسلة الإبادة المستقلة
-        cmdToExec = `python3 ${SCRIPTS.autonomous} ${target}`;
-        break;
-      case 'kernel_audit':
-        cmdToExec = `python3 ${SCRIPTS.audit}`;
-        break;
-      case 'cve_search':
-        cmdToExec = `python3 ${SCRIPTS.cve} search "${target}"`;
-        break;
-      default:
-        cmdToExec = command ? command : `echo "Directive ${type} acknowledged by Overmind."`;
-    }
+      case 'list_dir': {
+        const dirToRead = targetPath || BASE_PROJECT_PATH;
+        if (!fs.existsSync(dirToRead)) {
+            return NextResponse.json({ success: false, error: "Path not found in Matrix." });
+        }
+        const items = fs.readdirSync(dirToRead, { withFileTypes: true });
+        const result = items.map(item => ({
+            name: item.name,
+            isDirectory: item.isDirectory(),
+            path: path.join(dirToRead, item.name)
+        }));
+        return NextResponse.json({ success: true, output: result });
+      }
 
-    // التنفيذ مع حماية ضد أخطاء الـ JSON
-    try {
-      const { stdout, stderr } = await execPromise(cmdToExec, { timeout: 300000 });
-      const output = stdout || stderr || "Success: Objective Neutralized.";
-      
-      await publishEvent("directive_completed", { type, target, success: true });
-      
-      return NextResponse.json({
-        output: output.trim(),
-        success: true,
-        node: "Alpha-Core",
-        timestamp: new Date().toISOString()
-      });
-    } catch (error: any) {
-      await publishEvent("directive_completed", { type, target, success: false, error: error.message });
-      return NextResponse.json({
-        output: error.stdout || error.stderr || `Execution Failure: ${error.message}`,
-        success: false,
-        error: error.message
-      });
+      case 'read_file': {
+        if (!targetPath || !fs.existsSync(targetPath)) {
+            return NextResponse.json({ success: false, error: "Target file non-existent." });
+        }
+        const content = fs.readFileSync(targetPath, 'utf8');
+        return NextResponse.json({ success: true, output: content });
+      }
+
+      case 'smart_route':
+      case 'terminal': {
+        const routerScript = path.join(SCRIPTS_PATH, 'ai-engine/smart_router.py');
+        const cmdToExec = `python3 ${routerScript} "${command || target}"`;
+        const { stdout, stderr } = await execPromise(cmdToExec);
+        return NextResponse.json({ success: true, output: stdout || stderr });
+      }
+
+      default:
+        return NextResponse.json({ success: true, output: "Directive acknowledged by Overmind." });
     }
 
   } catch (error: any) {
     return NextResponse.json({ 
-        output: "Critical Neural Link Error.", 
         success: false, 
-        error: error.message 
+        error: "Neural Spine Disruption: " + error.message 
     }, { status: 500 });
   }
 }
