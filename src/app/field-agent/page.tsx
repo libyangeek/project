@@ -31,7 +31,8 @@ import {
   Dna,
   History,
   HardDrive,
-  Boxes
+  Boxes,
+  FileText
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -46,7 +47,7 @@ import { cn } from "@/lib/utils"
 /**
  * @fileOverview الوكيل الميداني v64.0 - THE SUPREME SYSTEM EXPLORER & INJECTOR
  * واجهة السيطرة المادية الكاملة والمزامنة الجينية مع Integrity.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي
+ * تم تمكين القدرات الحقيقية للتعامل مع القرص الصلب لعام 2026.
  */
 export default function FieldAgentPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -120,13 +121,29 @@ export default function FieldAgentPage() {
   const handleSovereignAction = async (mode: 'project_analysis' | 'integrity_sync' | 'file_fix') => {
     setLoading(true)
     setAnalysis(null)
+    
+    // إذا كان التحليل للمشروع بالكامل، نقوم بقراءة عينة من الملفات أولاً
+    let contextData = selectedFileContent;
+    if (mode === 'project_analysis') {
+        const importantFiles = files.filter(f => !f.isDirectory && f.name.match(/\.(ts|tsx|json|sh|py)$/)).slice(0, 5);
+        const batchRes = await fetch('/api/execute', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type: 'read_batch', batchPaths: importantFiles.map(f => f.path) })
+        });
+        const batchData = await batchRes.json();
+        if (batchData.success) {
+            contextData = JSON.stringify(batchData.output);
+        }
+    }
+
     try {
       toast({ title: "Hierarchy Engaging", description: `Orchestrating ${mode.replace('_', ' ')}...` })
       const result = await executeFieldDevelopment({ 
         userPrompt: input || "Execute absolute project DNA analysis.",
         projectPath: currentPath,
         currentFile: selectedFileName,
-        fileContent: selectedFileContent,
+        fileContent: contextData,
         mode: mode
       })
       setAnalysis(result)
@@ -200,7 +217,7 @@ export default function FieldAgentPage() {
                 value={customPath}
                 onChange={(e) => setCustomPath(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && loadDirectory(customPath)}
-                placeholder="Enter Physical Sector Path (e.g. /etc, /home, /opt)..." 
+                placeholder="Enter Sector Path (e.g. /home/project, /etc)..." 
                 className="bg-transparent border-none focus-visible:ring-0 text-sm italic font-black text-white h-10 placeholder:text-gray-800"
               />
               <Button onClick={() => loadDirectory(customPath)} className="h-10 px-8 rounded-xl bg-primary hover:bg-white text-black font-black uppercase text-xs italic shadow-xl active:scale-95 transition-all">Jump_Sector</Button>
@@ -270,7 +287,7 @@ export default function FieldAgentPage() {
                           </div>
                           {selectedFileName && (
                             <Button onClick={handleGeneticInjection} className="h-12 bg-emerald-600 hover:bg-white text-white hover:text-black font-black uppercase tracking-[0.2em] rounded-xl border-4 border-black/30 shadow-9xl italic active:scale-95 transition-all px-8">
-                               <Save className="size-5 mr-3" /> Sync_Integrity
+                               <Save className="size-5 mr-3" /> Sync_DNA
                             </Button>
                           )}
                        </div>
@@ -333,7 +350,7 @@ export default function FieldAgentPage() {
                              className="h-28 bg-white/5 border-4 border-primary/20 hover:border-primary hover:bg-primary/10 rounded-[2.5rem] flex flex-col items-center justify-center gap-3 transition-all duration-700 shadow-xl group active:scale-95"
                           >
                              <Search className="size-10 text-primary group-hover:scale-125 transition-transform gold-glow" />
-                             <span className="text-[10px] font-black uppercase tracking-widest text-white italic">Analyze_Full_Project</span>
+                             <span className="text-[10px] font-black uppercase tracking-widest text-white italic">Analyze_Sector_DNA</span>
                           </Button>
                           <Button 
                              onClick={() => handleSovereignAction('integrity_sync')}
@@ -355,12 +372,12 @@ export default function FieldAgentPage() {
                     <Input 
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
-                        onKeyDown={(e) => e.key === 'Enter' && handleSovereignAction('project_analysis')}
-                        placeholder=" Direct the Agent to analyze sector DNA or fuse Integrity mutations..." 
+                        onKeyDown={(e) => e.key === 'Enter' && handleSovereignAction('file_fix')}
+                        placeholder=" Direct the Agent to analyze DNA or fuse Integrity mutations..." 
                         className="h-24 md:h-28 bg-primary/5 border-4 border-white/10 rounded-full pl-24 pr-40 text-xl md:text-3xl italic font-black focus:border-primary shadow-inner text-white transition-all duration-700 placeholder:text-gray-900 selection:bg-primary selection:text-black"
                     />
                     <Button 
-                        onClick={() => handleSovereignAction('project_analysis')}
+                        onClick={() => handleSovereignAction('file_fix')}
                         disabled={loading || !input.trim()}
                         className="absolute right-3 top-1/2 -translate-y-1/2 size-16 md:size-20 bg-primary hover:bg-white text-black rounded-full shadow-9xl transition-all active:scale-90 border-[10px] border-black/30 group italic"
                     >
