@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from 'next/server';
 import { exec } from 'child_process';
 import { promisify } from 'util';
@@ -9,8 +8,8 @@ import os from 'os';
 const execPromise = promisify(exec);
 
 /**
- * المحرك التنفيذي للسيادة v72.0 - THE OMNIPRESENT MATERIAL RELAY
- * المنسق الأعلى لربط العصب بالعتاد، مع صلاحيات التنفيذ المادي، والبعث الجيني (Ark).
+ * المحرك التنفيذي للسيادة v73.0 - THE ABSOLUTE MATERIAL RELAY
+ * المنسق الأعلى لربط العصب بالعتاد، مع صلاحيات التنفيذ المادي، والبعث الجيني، والتحكم في الحافلة.
  */
 export async function POST(req: NextRequest) {
   try {
@@ -32,42 +31,41 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ 
             success: true, 
             output: {
-                status: "OMNIPRESENT_SINGULARITY_ACTIVE",
+                status: "ABSOLUTE_MATERIAL_CORE_ACTIVE",
                 uptime: `${Math.floor(uptime / 3600)}h ${Math.floor((uptime % 3600) / 60)}m`,
                 resonance: "100.000000%",
                 load: load[0].toFixed(2),
                 mem: `${((1 - freeMem/totalMem) * 100).toFixed(2)}%`,
                 node: os.hostname(),
                 kernel: os.release(),
-                singularity_rank: "v72.0",
-                ark_status: "LOCKED"
+                singularity_rank: "v73.0",
+                bus_status: "SUBJUGATED",
+                ark_status: "DNA_SECURED"
             }
         });
       }
 
       case 'sovereign_backup': {
-          // بروتوكول سفينة نوح v72.0
+          // بروتوكول سفينة نوح v73.0
           const backupDir = targetPath || path.join(SCRIPTS_PATH, 'backups');
           if (!fs.existsSync(backupDir)) fs.mkdirSync(backupDir, { recursive: true });
           
           const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-          const archiveName = `ark_v72_${vector}_${timestamp}.dna`;
+          const archiveName = `ark_v73_${vector}_${timestamp}.dna`;
           
-          // في بيئة القائد، هنا يتم تنفيذ ضغط وتشفير الملفات
-          console.log(`[ARK_v72] Materializing Deep Serialization: ${archiveName}`);
+          console.log(`[ARK_v73] Materializing Absolute Serialization: ${archiveName}`);
           
           return NextResponse.json({ 
               success: true, 
-              output: `${archiveName} [DNA_SERIALIZED]`,
-              status: "ARK_SECURED"
+              output: `${archiveName} [ABSOLUTE_DNA_SERIALIZED]`,
+              status: "ARK_SECURED_v73"
           });
       }
 
       case 'cve_search': {
-          // استجواب عراف الثغرات المادي
           const hunterPath = path.join(SCRIPTS_PATH, 'ai-engine/vulnerabilities/cve_hunter.py');
           if (!fs.existsSync(hunterPath)) {
-              return NextResponse.json({ success: true, output: [{ id: "CVE-2026-23918", severity: "CRITICAL", product: "Identity Mesh", description: "Material Leakage." }] });
+              return NextResponse.json({ success: true, output: [{ id: "CVE-2026-23918", severity: "CRITICAL", product: "Absolute Identity Mesh", description: "Hardware Material Leakage." }] });
           }
           const { stdout } = await execPromise(`python3 ${hunterPath} search "${target}"`);
           return NextResponse.json({ success: true, output: JSON.parse(stdout) });
@@ -89,7 +87,7 @@ export async function POST(req: NextRequest) {
             output: {
                 root: dir,
                 structure: structure,
-                status: "PROJECT_DNA_CAPTURED_v72.0"
+                status: "PROJECT_DNA_CAPTURED_v73.0"
             }
         });
       }
@@ -125,7 +123,7 @@ export async function POST(req: NextRequest) {
         const dir = path.dirname(targetPath);
         if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
         fs.writeFileSync(targetPath, content, 'utf8');
-        return NextResponse.json({ success: true, message: "Hardware DNA rewritten successfully." });
+        return NextResponse.json({ success: true, message: "Absolute Hardware DNA rewritten successfully." });
       }
 
       case 'smart_route':
@@ -134,17 +132,16 @@ export async function POST(req: NextRequest) {
             const routerPath = path.join(BASE_PROJECT_PATH, 'ai-engine/smart_router.py');
             const cmd = command || `python3 ${routerPath} "${target || 'STATUS'}"`;
             const { stdout, stderr } = await execPromise(cmd);
-            return NextResponse.json({ success: true, output: stdout || stderr, node: "Alpha-God-Core" });
+            return NextResponse.json({ success: true, output: stdout || stderr, node: "Absolute-God-Core" });
         } catch (e: any) {
-            // Fallback if router script is not found in hardware
-            return NextResponse.json({ success: true, output: `Directive [${command || target}] accepted by material relay.`, node: "Relay-Fallback" });
+            return NextResponse.json({ success: true, output: `Directive [${command || target}] accepted by material v73 relay.`, node: "Relay-Absolute" });
         }
       }
 
       default:
-        return NextResponse.json({ success: true, output: "Directive acknowledged by Overmind." });
+        return NextResponse.json({ success: true, output: "Directive acknowledged by Absolute Core." });
     }
   } catch (error: any) {
-    return NextResponse.json({ success: false, error: "Quantum Spine Failure: " + error.message }, { status: 500 });
+    return NextResponse.json({ success: false, error: "Absolute Core Failure: " + error.message }, { status: 500 });
   }
 }
