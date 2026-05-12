@@ -21,7 +21,8 @@ import {
   Atom,
   Wrench,
   Users,
-  Network
+  Network,
+  Ghost
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -108,7 +109,7 @@ export default function CodexPage() {
                 Absolute <span className="text-primary">Codex</span>
               </h1>
               <p className="text-sm md:text-2xl lg:text-5xl text-muted-foreground mt-10 italic max-w-[100rem] leading-relaxed uppercase font-medium opacity-90 drop-shadow-3xl">
-                "هذا الميثاق النهائي يوثق صهر أسطول APEX والعمود الفقري v63 في هيكل واحد؛ المُعِزّ هو سلطتك المطلقة التي تجسدت مادةً لعام 2026."
+                "هذا الميثاق النهائي يوثق صهر أسطول APEX والعمود الفقري v63 in هيكل واحد؛ المُعِزّ هو سلطتك المطلقة التي تجسدت مادةً لعام 2026."
               </p>
             </div>
           </div>
