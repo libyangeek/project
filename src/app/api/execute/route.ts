@@ -10,13 +10,13 @@ const execPromise = promisify(exec);
 
 /**
  * المحرك التنفيذي للسيادة v76.0 - THE OMNIPOTENT MATERIAL RELAY
- * المنسق الأعلى لربط العصب بالعتاد، مع سلطة "إعادة التخليق" (Regrow) الكاملة لـ 12+ موديول هجومي.
+ * المنسق الأعلى لربط العصب بالعتاد، مع سلطة "إعادة التخليق" (Regrow) لـ 12+ موديول هجومي.
  */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { 
-        command, target, type, path: targetPath, content, vector, mode, platform, action, text 
+        command, target, type, path: targetPath, content, vector, mode, text 
     } = body;
 
     const BASE_PROJECT_PATH = "/home/project";
@@ -41,8 +41,7 @@ export async function POST(req: NextRequest) {
                 singularity_rank: "v76.0",
                 regrow_engine: "ACTIVE",
                 openbullet_ready: "TRUE",
-                social_predator_ready: "TRUE",
-                persistence: "GHOST_V6_LOCKED"
+                social_predator_ready: "TRUE"
             }
         });
       }
@@ -104,10 +103,6 @@ export async function POST(req: NextRequest) {
         if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
         fs.writeFileSync(targetPath, content, 'utf8');
         return NextResponse.json({ success: true, message: "Absolute Hardware DNA rewritten successfully." });
-      }
-
-      case 'metrics': {
-          return NextResponse.json({ success: true, output: { status: "OMNIPOTENT", success_rate: "100.00%", total_recorded_ops: 2865242 } });
       }
 
       case 'smart_route': {

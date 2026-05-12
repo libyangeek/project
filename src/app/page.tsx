@@ -27,13 +27,7 @@ import {
   Users,
   Sparkles,
   HeartPulse,
-  LayoutGrid,
-  ZapOff,
-  Anchor,
-  ShieldAlert,
   RefreshCcw,
-  Wand2,
-  Lock,
   Loader2
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
