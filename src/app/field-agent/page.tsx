@@ -39,15 +39,14 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { executeFieldDevelopment } from "@/ai/flows/field-agent-flow"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
 /**
  * @fileOverview الوكيل الميداني v64.0 - THE SUPREME SYSTEM EXPLORER & INJECTOR
- * واجهة السيطرة المادية الكاملة والمزامنة الجينية مع Integrity.
- * تم تمكين القدرات الحقيقية للتعامل مع القرص الصلب لعام 2026.
+ * واجهة السيطرة المادية الكاملة والمزامنة الجينية مع Integrity في الوقت الحالي.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function FieldAgentPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -122,7 +121,6 @@ export default function FieldAgentPage() {
     setLoading(true)
     setAnalysis(null)
     
-    // إذا كان التحليل للمشروع بالكامل، نقوم بقراءة عينة من الملفات أولاً
     let contextData = selectedFileContent;
     if (mode === 'project_analysis') {
         const importantFiles = files.filter(f => !f.isDirectory && f.name.match(/\.(ts|tsx|json|sh|py)$/)).slice(0, 5);
@@ -170,12 +168,12 @@ export default function FieldAgentPage() {
         })
         const data = await response.json()
         if (data.success) {
-            toast({ title: "Genetic Fusion Success", description: "File DNA rewritten in the matrix." })
+            toast({ title: "Genetic Fusion Success", description: "File DNA rewritten in the hardware." })
         } else {
             toast({ variant: "destructive", title: "Injection Failed", description: data.error })
         }
     } catch (e) {
-        toast({ variant: "destructive", title: "Spine Relay Error" })
+        toast({ variant: "destructive", title: "Hardware Relay Error" })
     } finally {
         setLoading(false)
     }
@@ -217,7 +215,7 @@ export default function FieldAgentPage() {
                 value={customPath}
                 onChange={(e) => setCustomPath(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && loadDirectory(customPath)}
-                placeholder="Enter Sector Path (e.g. /home/project, /etc)..." 
+                placeholder="Enter Sector Path (e.g. /home/project)..." 
                 className="bg-transparent border-none focus-visible:ring-0 text-sm italic font-black text-white h-10 placeholder:text-gray-800"
               />
               <Button onClick={() => loadDirectory(customPath)} className="h-10 px-8 rounded-xl bg-primary hover:bg-white text-black font-black uppercase text-xs italic shadow-xl active:scale-95 transition-all">Jump_Sector</Button>
@@ -226,12 +224,12 @@ export default function FieldAgentPage() {
 
         <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative z-10">
            
-           {/* File Tree - Fixed Left */}
+           {/* File Tree - Left Side */}
            <aside className="w-full lg:w-96 border-l-2 border-primary/20 bg-black/60 flex flex-col shrink-0 order-last lg:order-none shadow-9xl">
               <div className="p-6 border-b-2 border-primary/10 bg-primary/5 flex items-center justify-between">
                  <div className="flex flex-col">
                     <span className="text-[11px] font-black text-primary uppercase tracking-widest italic flex items-center gap-3">
-                        <Database className="size-4" /> Physical DNA
+                        <Database className="size-4" /> Matrix DNA
                     </span>
                     <span className="text-[9px] text-muted-foreground truncate max-w-[200px] mt-2 font-bold">{currentPath}</span>
                  </div>

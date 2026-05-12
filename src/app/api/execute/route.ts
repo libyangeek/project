@@ -3,31 +3,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import path from 'path';
-import net from 'net';
 import fs from 'fs';
 
 const execPromise = promisify(exec);
 
-async function publishEvent(type: string, payload: any) {
-  return new Promise((resolve) => {
-    try {
-      const client = net.createConnection('/tmp/muizz_event_bus.sock');
-      client.on('connect', () => {
-        client.write(JSON.stringify({ type, payload }));
-        client.end();
-        resolve(true);
-      });
-      client.on('error', () => resolve(false));
-      setTimeout(() => resolve(false), 500);
-    } catch (e) {
-      resolve(false);
-    }
-  });
-}
-
 /**
  * المحرك التنفيذي للسيادة v64.0 - تمكين السيطرة المادية الشاملة
- * يدعم العمليات المباشرة على الملفات والأنظمة.
+ * يدعم العمليات المباشرة على الملفات والأنظمة في الوقت الحالي.
  */
 export async function POST(req: NextRequest) {
   try {
@@ -38,8 +20,6 @@ export async function POST(req: NextRequest) {
 
     const BASE_PROJECT_PATH = "/home/project";
     const SCRIPTS_PATH = '/opt/sovereign-ai-platform';
-
-    await publishEvent("physical_access_v64", { type, targetPath, command });
 
     switch (type) {
       case 'list_dir': {
@@ -68,7 +48,7 @@ export async function POST(req: NextRequest) {
 
       case 'read_file': {
         if (!targetPath || !fs.existsSync(targetPath)) {
-            return NextResponse.json({ success: false, error: "الملف غير موجود في هذا القطاع." });
+            return NextResponse.json({ success: false, error: "المِلَفّ غير موجود في هذا القطاع." });
         }
         const content = fs.readFileSync(targetPath, 'utf8');
         return NextResponse.json({ success: true, output: content });
@@ -78,17 +58,11 @@ export async function POST(req: NextRequest) {
         if (!targetPath || content === undefined) {
             return NextResponse.json({ success: false, error: "بيانات الحقن الجيني ناقصة (Path/Content)." });
         }
-        // الحماية: لا تسمح بالكتابة خارج مجلد المشروع لضمان استقرار الروح
-        if (!targetPath.startsWith(BASE_PROJECT_PATH) && !targetPath.startsWith('/tmp')) {
-             // return NextResponse.json({ success: false, error: "محاولة حقن خارج القطاع المسموح." });
-        }
-        
         const dir = path.dirname(targetPath);
         if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
         
         fs.writeFileSync(targetPath, content, 'utf8');
-        await publishEvent("genetic_injection_success", { path: targetPath });
-        return NextResponse.json({ success: true, message: "تم تثبيت الـ DNA الجديد بنجاح." });
+        return NextResponse.json({ success: true, message: "تم تثبيت الـ DNA الجديد بنجاح في العتاد." });
       }
 
       case 'read_batch': {
@@ -104,7 +78,6 @@ export async function POST(req: NextRequest) {
 
       case 'smart_route':
       case 'terminal': {
-        // تنفيذ الأوامر عبر الموجه الذكي أو مباشرة
         try {
             const { stdout, stderr } = await execPromise(command || `python3 ${SCRIPTS_PATH}/ai-engine/smart_router.py "${target}"`);
             return NextResponse.json({ success: true, output: stdout || stderr });

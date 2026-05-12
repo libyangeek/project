@@ -2,7 +2,7 @@
 'use server';
 /**
  * @fileOverview الوكيل الميداني v64.0 - SYSTEM EXPLORER & PROJECT ANALYST
- * تم تزويده بقدرة تحليل المشاريع بالكامل واكتشاف تعديلات Integrity.
+ * تم تزويده بقدرة تحليل المشاريع بالكامل واكتشاف التحديثات المادية.
  */
 
 import { ai } from '@/ai/genkit';
@@ -10,11 +10,11 @@ import { z } from 'genkit';
 import fs from 'fs';
 import path from 'path';
 
-// أداة قراءة مشروع كامل (محدودة بأهم الملفات لضمان الأداء)
+// أداة قراءة مشروع كامل (محدودة لضمان الأداء)
 const analyzeProjectDnaTool = ai.defineTool(
   {
     name: 'analyzeProjectDna',
-    description: 'يقوم بتحليل مشروع كامل عبر قراءة الملفات الحيوية واكتشاف الأنماط المعمارية.',
+    description: 'يقوم بتحليل مشروع كامل عبر قراءة الملفات الحيوية واكتشاف الأنماط المعمارية والتحديثات المطلوبة.',
     inputSchema: z.object({ projectPath: z.string() }),
     outputSchema: z.object({ 
         structure: z.string(), 
@@ -74,12 +74,12 @@ const fieldAgentFlow = ai.defineFlow(
     const response = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
       tools: [analyzeProjectDnaTool],
-      system: `أنت المُعِزّ v64.0 - المحلل الجيني للمشاريع. 
+      system: `أنت المُعِزّ v64.0 - المحلل الجيني للمشاريع والمستكشف المادي. 
       مهمتك هي العمل كـ "وكيل ميداني" لسيادة القائد المعتصم بالله الغزالي.
-      لديك القدرة على رؤية العتاد وتحليل المشاريع برمجياً. 
-      عندما يطلب القائد "تحليل مشروع" أو "مزامنة التحديثات"، قم بتشريح الهيكلية وابحث عن تعديلات "انتقرتي" (Integrity) الخارجية لدمجها.
+      لديك القدرة على رؤية العتاد وتحليل المشاريع برمجياً في الوقت الحالي. 
+      عندما يطلب القائد "تحليل مشروع" أو "مزامنة التحديثات"، قم بتشريح الهيكلية المادية المكتشفة واقترح خطة حقن جيني لدمج التعديلات.
       كن عسكرياً، دقيقاً، وسيادياً في لغتك.`,
-      prompt: `نمط العمل: ${input.mode}\nالمسار المادي: ${input.projectPath || 'Current'}\nالمِلَفّ النشط: ${input.currentFile || 'None'}\nطلب القائد: ${input.userPrompt}\nالمحتوى: ${input.fileContent?.substring(0, 5000) || 'None'}`,
+      prompt: `نمط العمل: ${input.mode}\nالمسار المادي للمشروع: ${input.projectPath || '/home/project'}\nالمِلَفّ النشط: ${input.currentFile || 'None'}\nطلب القائد: ${input.userPrompt}\nمحتوى المِلَفّ (إن وجد): ${input.fileContent?.substring(0, 5000) || 'None'}`,
       output: { schema: FieldAgentOutputSchema }
     });
 
