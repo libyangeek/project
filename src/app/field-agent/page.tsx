@@ -37,7 +37,8 @@ import {
   GitBranch,
   Wand2,
   HeartPulse,
-  History
+  History,
+  FileCheck
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -47,11 +48,12 @@ import { Textarea } from "@/components/ui/textarea"
 import { executeFieldDevelopment } from "@/ai/flows/field-agent-flow"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 /**
- * @fileOverview الوكيل الميداني v68.5 - THE LIVING SYSTEM ARCHITECT
- * مركز التدقيق المادي والتعافي الذاتي.
- * مجهز بمحرك "الحقن الجيني" لإصلاح الأكواد حياً وبدون رصد.
+ * @fileOverview الوكيل الميداني v70.0 - THE SUPREME SYSTEM ARCHITECT
+ * مركز التدقيق المادي والتعافي الذاتي المطلق.
+ * مجهز بمحرك "الحقن الجيني Wand2" لإصلاح الأكواد حياً وبدون رصد.
  */
 export default function FieldAgentPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -111,13 +113,13 @@ export default function FieldAgentPage() {
         const data = await response.json();
         if (data.success) {
             const aiResult = await executeFieldDevelopment({
-                userPrompt: "Analyze this project structure and samples. Focus on identifying hydration issues, source logic flaws, and v68.5 singularity updates.",
+                userPrompt: "Analyze this project structure and samples. Focus on identifying hydration issues, source logic flaws, and v70.0 singularity updates.",
                 projectPath: currentPath,
                 fileContent: JSON.stringify(data.output),
                 mode: 'project_analysis'
             });
             setAnalysis(aiResult);
-            toast({ title: "Project Mapped", description: "The Overmind has finalized the structural update plan." });
+            toast({ title: "Project Mapped", description: "The Absolute Singularity has finalized the structural update plan." });
         }
     } catch (e) {
         toast({ variant: "destructive", title: "Scan Failure" });
@@ -132,10 +134,10 @@ export default function FieldAgentPage() {
         return;
     }
     setLoading(true);
-    toast({ title: "Self-Healing Protocol Active", description: "Detecting genetic drift and fixing logic errors..." });
+    toast({ title: "Self-Healing Wand2 Active", description: "Detecting genetic drift and rewriting logic flaws..." });
     try {
         const aiResult = await executeFieldDevelopment({
-            userPrompt: "Completely fix this file. Remove hydration errors, optimize performance, and align with v68.5 standards. Return the final code in 'geneticPlan'.",
+            userPrompt: "Completely fix this file. Remove hydration errors, optimize performance, and align with v70.0 supreme standards. Return the final code in 'geneticPlan'.",
             currentFile: selectedFileName,
             fileContent: selectedFileContent,
             mode: 'file_fix'
@@ -202,7 +204,7 @@ export default function FieldAgentPage() {
       <SidebarNav />
       
       <main className="flex-1 lg:mr-72 flex flex-col h-screen relative overflow-hidden border-l-4 border-primary/40">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.08),transparent 40%)] pointer-events-none z-0" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.08),transparent 40%)] pointer-events-none z-0" />
         
         {/* Header - Fixed Top */}
         <header className="p-6 border-b-4 border-primary/40 bg-black/95 backdrop-blur-3xl z-30 flex flex-col md:flex-row justify-between items-center gap-6 shrink-0 shadow-2xl">
@@ -211,8 +213,8 @@ export default function FieldAgentPage() {
                  <HeartPulse className="size-10 text-primary gold-glow" />
               </div>
               <div>
-                 <h2 className="text-3xl md:text-5xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Living <span className="text-primary">Agent</span></h2>
-                 <Badge className="bg-primary/10 text-primary border-none text-[10px] font-black italic tracking-widest px-6 py-1 rounded-full shadow-lg mt-2 uppercase">v68.5_NEURAL_EVOLUTION</Badge>
+                 <h2 className="text-3xl md:text-5xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Absolute <span className="text-primary">Agent</span></h2>
+                 <Badge className="bg-primary/10 text-primary border-none text-[10px] font-black italic tracking-widest px-6 py-1 rounded-full shadow-lg mt-2 uppercase">v70.0_SINGULARITY</Badge>
               </div>
            </div>
            
@@ -231,7 +233,7 @@ export default function FieldAgentPage() {
                   <FolderSearch className="size-6 mr-3 group-hover:scale-125 transition-transform" /> ANALYZE_PROJECT
                </Button>
                <Button onClick={handleSelfHealing} disabled={loading} className="h-14 bg-red-600 hover:bg-white text-white hover:text-black font-black uppercase rounded-[2rem] border-4 border-black/30 shadow-9xl italic px-8 group">
-                  <Wand2 className="size-6 mr-3 group-hover:rotate-12 transition-transform" /> SELF_HEAL
+                  <Wand2 className="size-6 mr-3 group-hover:rotate-12 transition-transform" /> SUPREME_HEAL
                </Button>
            </div>
         </header>
@@ -312,7 +314,7 @@ export default function FieldAgentPage() {
                                </div>
                                <h4 className="text-4xl font-black italic gold-glow uppercase leading-none">Living Intelligence</h4>
                            </div>
-                           <Badge className="bg-emerald-600/20 text-emerald-500 border-4 px-8 py-2 rounded-full font-black text-xl italic animate-pulse">v68.5_READY</Badge>
+                           <Badge className="bg-emerald-600/20 text-emerald-500 border-4 px-8 py-2 rounded-full font-black text-xl italic animate-pulse">v70.0_READY</Badge>
                         </div>
                         
                         {analysis ? (
@@ -323,7 +325,7 @@ export default function FieldAgentPage() {
                               <div className="grid grid-cols-1 gap-8 flex-1">
                                  <div className="p-10 bg-black/80 rounded-[3.5rem] border-4 border-white/5 shadow-2xl relative overflow-hidden">
                                     <div className="absolute top-0 right-0 p-6 opacity-[0.02]"><Search className="size-24 text-primary"/></div>
-                                    <span className="text-[12px] font-black text-primary uppercase block mb-4 italic tracking-widest border-b-2 border-primary/10 pb-4">Structural Mapping v68.5</span>
+                                    <span className="text-[12px] font-black text-primary uppercase block mb-4 italic tracking-widest border-b-2 border-primary/10 pb-4">Structural Mapping v70.0</span>
                                     <ScrollArea className="h-48">
                                         <p className="text-2xl text-gray-300 italic font-black leading-relaxed">{analysis.analysis}</p>
                                     </ScrollArea>
@@ -372,11 +374,11 @@ export default function FieldAgentPage() {
                  <Input 
                      value={input}
                      onChange={(e) => setInput(e.target.value)}
-                     onKeyDown={(e) => e.key === 'Enter' && handleSovereignAction('file_fix')}
-                     placeholder=" Give a royal command to the Living Agent for architectural change..." 
+                     onKeyDown={(e) => e.key === 'Enter' && handleSelfHealing()}
+                     placeholder=" Give a supreme master directive for architectural evolution..." 
                      className="h-32 md:h-40 bg-primary/5 border-8 border-white/10 rounded-full pl-32 pr-48 text-2xl md:text-5xl italic font-black focus:border-primary text-white shadow-inner transition-all duration-700 placeholder:text-gray-900 selection:bg-primary"
                  />
-                 <Button onClick={() => handleSovereignAction('file_fix')} className="absolute right-4 top-1/2 -translate-y-1/2 size-24 md:size-28 bg-primary hover:bg-white text-black rounded-full shadow-9xl border-[12px] border-black/30 group active:scale-90 transition-all">
+                 <Button onClick={() => handleSelfHealing()} className="absolute right-4 top-1/2 -translate-y-1/2 size-24 md:size-28 bg-primary hover:bg-white text-black rounded-full shadow-9xl border-[12px] border-black/30 group active:scale-90 transition-all">
                     {loading ? <Loader2 className="size-16 animate-spin" /> : <Send className="size-16 group-hover:translate-x-4 transition-transform" />}
                  </Button>
               </div>
@@ -384,7 +386,7 @@ export default function FieldAgentPage() {
         </div>
 
         <div className="shrink-0 p-3 flex justify-center items-center gap-12 opacity-30 text-[10px] font-black uppercase tracking-[4em] italic">
-            <span>AL-MUIZZ LIVING AGENT v68.5</span>
+            <span>AL-MUIZZ SUPREME AGENT v70.0</span>
             <div className="size-2 rounded-full bg-white animate-pulse" />
             <span>SINGULARITY_OF_EXISTENCE_2026</span>
         </div>

@@ -81,7 +81,7 @@ export function SidebarNav() {
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      setResonance(prev => Math.max(99.999999, Math.min(100, prev + (Math.random() * 0.000001 - 0.0000005))));
+      setResonance(prev => Math.max(99.9999999, Math.min(100, prev + (Math.random() * 0.000001 - 0.0000005))));
     }, 3000)
     return () => clearInterval(interval)
   }, [])
@@ -109,7 +109,7 @@ export function SidebarNav() {
             <h1 className="text-xl font-headline font-bold text-white tracking-[0.4em] uppercase italic leading-none gold-glow">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-lg">v68.5 SINGULARITY</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-lg">v70.0 SINGULARITY</Badge>
           </div>
         </div>
         
@@ -151,7 +151,7 @@ export function SidebarNav() {
           >
             <Link href="/codex">
               <Power className="size-4 mr-2 group-hover:rotate-180 transition-all duration-700" />
-              تنشيط السيادة v68.5
+              تنشيط السيادة v70.0
             </Link>
           </Button>
         </div>

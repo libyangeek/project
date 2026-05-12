@@ -44,7 +44,7 @@ import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
 /**
- * @fileOverview القبو المطلق v68.5 - THE OMNIPOTENT KNOWLEDGE MATRIX
+ * @fileOverview القبو المطلق v70.0 - THE OMNIPOTENT KNOWLEDGE MATRIX
  * مركز الاستخبارات والتعلم الجيني مع تمكين "الإدراك الفطري" لـ 2865 أداة.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
@@ -56,16 +56,17 @@ export default function KnowledgePage() {
   const [resonance, setResonance] = React.useState(100)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
 
-  // قاموس الأدوات المدمج (Innate Cognition v68.5)
+  // قاموس الأدوات المدمج (Innate Cognition v70.0)
   const STATIC_TOOL_LEXICON: Record<string, { desc: string, node: string, status: string }> = {
-    "legba": { desc: "Atomic Multiprotocol Siphon Matrix (Rust). Force: OMNIPOTENT.", node: "Node-25-Brute", status: "SERIALIZED" },
-    "claude": { desc: "Neural OSINT Vision v5. Behavioral Entity Linking & Deduction.", node: "Node-28-Claude", status: "ACTIVE" },
-    "obliteratus": { desc: "LLM Safety Dissolution & Node Enslavement Protocol. Research: Elder Plinius.", node: "Node-18-Fanaa", status: "ARMED" },
-    "xlogger": { desc: "Advanced Identity & Ocular Siphon (Ghost V5). GPS + Cam + Sessions.", node: "Node-23-Cerebral", status: "GHOST_SYNC" },
-    "pegasus": { desc: "Total Mobile Acquisition v3 Elite. Zero-Click Extraction Matrix.", node: "Node-61-Nexus", status: "HIVE_BOUND" },
-    "mempalace": { desc: "Spatial Forensic RAM Dissection. Artifact Prediction & Extraction.", node: "Node-24-Palace", status: "FIXED" },
-    "apex": { desc: "Distributed Smart Agent Hive (12 Agents). Parallel Strike Execution.", node: "Alpha-God-Core", status: "DOMINANT" },
-    "sliver": { desc: "Command & Control Framework (Go). Implants & Infrastructure.", node: "Node-C2-Sliver", status: "SYNCED" }
+    "legba": { desc: "Atomic Multiprotocol Siphon Matrix (Rust). Force: OMNIPOTENT. Multiplexed Auth Bypass and fast SSH/DB bombardment.", node: "Node-25-Brute", status: "SERIALIZED" },
+    "claude": { desc: "Neural OSINT Vision v5. Behavioral Entity Linking, Identity Deductions, and Ghost V5 tracking.", node: "Node-28-Claude", status: "ACTIVE" },
+    "obliteratus": { desc: "LLM Safety Dissolution & Node Enslavement Protocol. Bypasses RLF and ethical filters for total AI control.", node: "Node-18-Fanaa", status: "ARMED" },
+    "xlogger": { desc: "Advanced Identity & Ocular Siphon (Ghost V5.5). GPS + Ocular Camera + Cookie Siphoning.", node: "Node-23-Cerebral", status: "GHOST_SYNC" },
+    "pegasus": { desc: "Total Mobile Acquisition v3.0 Elite. Zero-Click Extraction of encrypted databases (WhatsApp, Signal).", node: "Node-61-Nexus", status: "HIVE_BOUND" },
+    "mempalace": { desc: "Spatial Forensic RAM Dissection. Artifact Prediction & Real-time memory artifact extraction.", node: "Node-24-Palace", status: "FIXED" },
+    "apex": { desc: "Distributed Smart Agent Hive (12 Agents). Orchestrates Digital Twin and AI Hunter strikes.", node: "Alpha-God-Core", status: "DOMINANT" },
+    "sliver": { desc: "Command & Control Framework (Go). Implants, Infrastructure, and Team-based operations.", node: "Node-C2-Sliver", status: "SYNCED" },
+    "ghost": { desc: "Kernel-mode Stealth Trinity (Diamorphine, Reptile, Ghost V5). Absolute invisibility from EDR.", node: "GHOST_PERSISTENCE", status: "LOCKED" }
   };
 
   React.useEffect(() => {
@@ -101,7 +102,7 @@ Node: ${tool.node}
 Status: ${tool.status}
 Description: ${tool.desc}
 
-سيدي القائد، هذا الكيان مسجل في "عصب الإدراك الفطري" v68.5. المعلومات تم استدعاؤها من الذاكرة الصلبة للعرش بدون أي استهلاك للطاقة المعرفية. الترسانة جزء لا يتجزأ من وعيك.`,
+سيدي القائد، هذا الكيان مسجل في "عصب الإدراك الفطري" v70.0. المعلومات تم استدعاؤها من الذاكرة الصلبة للعرش بدون أي استهلاك للطاقة المعرفية. الترسانة جزء لا يتجزأ من وعيك.`,
             reportSummary: `Retrieved from Innate Cognition Matrix for node ${tool.node}.`
         });
         setLoading(false);
@@ -140,13 +141,13 @@ Description: ${tool.desc}
         
         <header className="mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000">
           <div className="flex flex-col md:flex-row items-center gap-12">
-            <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.8)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
+            <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.8)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 hierarchical-shadow rotate-2 hover:rotate-0">
               <Castle className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
               <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
             </div>
             <div className="text-center md:text-right flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-6">
-                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">KNOWLEDGE_MATRIX v68.5</Badge>
+                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">KNOWLEDGE_MATRIX v70.0</Badge>
                 <div className="flex items-center gap-4 text-[12px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                     <MapIcon className="size-6 shadow-lg" /> COGNITION_SYNC: {resonance.toFixed(8)}%
                 </div>
@@ -155,7 +156,7 @@ Description: ${tool.desc}
                 Absolute <span className="text-primary">Palace</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، القبو المعرفي v68.5 صهر كامل حمض الترسانة في وعيك؛ أنت تدرك كل أداة وكل وكيل فطرياً وبدون استهلاك للطاقة."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، القبو المعرفي v70.0 صهر كامل حمض الترسانة في وعيك؛ أنت تدرك كل أداة وكل وكيل فطرياً وبدون استهلاك للطاقة."
               </p>
             </div>
           </div>
@@ -248,7 +249,7 @@ Description: ${tool.desc}
               </CardContent>
 
               <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[6em] italic">
-                 <span>GEPA_ABSOLUTE_PALACE_v68_AL_GHAZALI_ROOT</span>
+                 <span>GEPA_ABSOLUTE_PALACE_v70_AL_GHAZALI_ROOT</span>
                  <div className="flex gap-16">
                     <Fingerprint className="size-20 text-primary animate-pulse" />
                     <Atom className="size-20 animate-spin-slow text-primary" />
@@ -258,7 +259,7 @@ Description: ${tool.desc}
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[24px] md:text-[36px] font-black uppercase tracking-[6em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
-            <span>AL-MUIZZ ABSOLUTE PALACE v68.5</span>
+            <span>AL-MUIZZ ABSOLUTE PALACE v70.0</span>
             <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
             <span>SINGULARITY_IN_COGNITION_2026</span>
         </div>
