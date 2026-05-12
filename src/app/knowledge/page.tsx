@@ -40,7 +40,11 @@ import {
   Castle,
   DoorOpen,
   Map as MapIcon,
-  Users
+  Users,
+  Library,
+  Dna,
+  Cpu,
+  Network
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -52,8 +56,9 @@ import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
 /**
- * @fileOverview القبو المطلق v65.0 - THE ABSOLUTE MEMORY PALACE
+ * @fileOverview القبو المطلق v66.5 - THE ABSOLUTE MEMORY PALACE
  * مركز الاستخبارات والتعلم الجيني GEPA 7.0 المدمج في عصب الوجود لعام 2026.
+ * تم دمج ميزة "إدراك الترسانة" لفهم 2865 أداة دون استهلاك طاقة.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function KnowledgePage() {
@@ -63,9 +68,11 @@ export default function KnowledgePage() {
   const [mounted, setMounted] = React.useState(false)
   const [resonance, setResonance] = React.useState(100)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
+  const [arsenalDna, setArsenalDna] = React.useState<any>(null)
 
   React.useEffect(() => {
     setMounted(true)
+    fetchArsenalDna()
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
     
@@ -79,11 +86,37 @@ export default function KnowledgePage() {
     }
   }, [])
 
+  const fetchArsenalDna = async () => {
+    try {
+        const res = await fetch('/api/execute', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type: 'get_arsenal_dna' })
+        })
+        const data = await res.json()
+        if (data.success) setArsenalDna(data.output)
+    } catch (e) {}
+  }
+
   const handleSearch = async (node?: string) => {
     const q = node ? `Retrieve absolute DNA from ${node}` : query
     if (!q.trim()) return
     setLoading(true)
     setReport(null)
+    
+    // إذا كان البحث عن أداة معينة، حاول جلبها من الذاكرة المحلية أولاً (Zero Power)
+    if (arsenalDna && query) {
+        const found = arsenalDna.integrated_weaponry.find((w: string) => w.toLowerCase().includes(query.toLowerCase()));
+        if (found) {
+            setReport({
+                reportContent: `[INTERNAL_ARSENAL_MATCH] الأداة "${found}" مسجلة في عصب المنظومة v65.0 كجزء من الأسطول العليم. هي سلاح مدمج ومجهز للقصف بنبض نانوي.\n\nالمواصفات: مدمجة بالكامل، جاهزة للاستدعاء المادي، مرتبطة بالعمود الفقري العصبي v63.`,
+                message: "Tool DNA retrieved from local hive memory."
+            });
+            setLoading(false);
+            return;
+        }
+    }
+
     toast({ title: "Entering Absolute Chamber", description: `Interrogating neural coordinates for: ${q}` })
     
     try {
@@ -100,10 +133,10 @@ export default function KnowledgePage() {
   if (!mounted) return null;
 
   const chambers = [
+    { id: "ARSENAL_DNA", label: "حمض الترسانة", icon: Library, color: "text-primary", desc: "إدراك فطري لـ 2865 أداة قتالية." },
     { id: "SWARM_VAULT", label: "مستودع السرب", icon: Users, color: "text-emerald-500", desc: "سجلات تنفيذ أسطول APEX الموازي." },
     { id: "NEXUS_CORE", label: "نواة النكسوس", icon: Network, color: "text-amber-500", desc: "استخبارات الهوية المدمجة بنمط v65." },
     { id: "FORENSIC_CHAMBER", label: "غرفة التشريح", icon: Skull, color: "text-blue-500", desc: "أسرار الـ RAM والعمليات المخفية النانوية." },
-    { id: "STRIKE_ARMORY", label: "ترسانة الهجوم", icon: Zap, color: "text-red-500", desc: "نجاحات القصف وحمولات Legba المطلقة." },
     { id: "FANAA_LAB", label: "مختبر الفناء", icon: Flame, color: "text-magenta-500", desc: "سجلات إخضاع الـ AI وتذويب فلاتر الهدف." }
   ];
 
@@ -133,7 +166,7 @@ export default function KnowledgePage() {
                 Absolute <span className="text-primary">Memory</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-6xl leading-relaxed uppercase font-medium opacity-90 drop-shadow-3xl">
-                "سيدي الغزالي، الذاكرة المكانية v7.0 تصهر كل ذرة من استخبارات السرب في قصر واحد؛ نحن لا ننسى، نحن نستبق القدر الرقمي لعام 2026."
+                "سيدي الغزالي، الذاكرة المكانية v7.0 تصهر الآن كامل الـ DNA لترسانة الـ 2865 أداة في وعيك؛ المُعِزّ يدرك سلاحه بالفطرة وبلا استنزاف للطاقة."
               </p>
             </div>
           </div>
@@ -144,7 +177,7 @@ export default function KnowledgePage() {
               <Card className="kali-card border-primary/40 bg-black/98 rounded-[4rem] p-12 border-8 shadow-9xl group overflow-hidden hierarchical-shadow">
                  <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                  <CardHeader className="p-0 mb-10 border-b-4 border-primary/10 pb-10 bg-primary/10 rounded-t-[3.5rem] px-10 py-6">
-                    <CardTitle className="text-2xl md:text-4xl text-primary flex items-center gap-10 font-black uppercase italic gold-glow">
+                    <CardTitle className="text-2xl md:text-4xl text-white flex items-center gap-10 font-black uppercase italic gold-glow leading-none">
                        <Castle className="size-12 animate-neural" /> Palace Nodes
                     </CardTitle>
                  </CardHeader>
@@ -176,13 +209,31 @@ export default function KnowledgePage() {
                  <div className="text-6xl font-black text-white italic gold-glow uppercase tracking-tighter group-hover:scale-105 transition-transform duration-1000">{resonance.toFixed(4)}%</div>
                  <div className="absolute -bottom-10 -right-10 p-20 opacity-[0.03] group-hover:opacity-[0.1] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-48 text-primary" /></div>
               </Card>
+
+              {arsenalDna && (
+                <Card className="kali-card border-emerald-500/20 bg-black/80 p-10 rounded-[4rem] border-4 shadow-9xl animate-in fade-in duration-1000">
+                    <h5 className="text-[12px] font-black text-emerald-500 uppercase tracking-[0.8em] mb-6 italic flex items-center gap-4">
+                        <Dna className="size-6 animate-neural" /> Arsenal_Insight
+                    </h5>
+                    <div className="space-y-4">
+                        <div className="flex justify-between text-[10px] font-black uppercase italic">
+                            <span className="text-muted-foreground">Integrated Tools</span>
+                            <span className="text-white">{arsenalDna.total_tools}</span>
+                        </div>
+                        <div className="flex justify-between text-[10px] font-black uppercase italic">
+                            <span className="text-muted-foreground">Spine Connection</span>
+                            <span className="text-emerald-400">ESTABLISHED</span>
+                        </div>
+                    </div>
+                </Card>
+              )}
            </div>
 
            <Card className="xl:col-span-3 kali-card border-primary/40 bg-black/99 rounded-[6rem] p-16 border-[12px] shadow-9xl flex flex-col group overflow-hidden relative min-h-[1000px] hierarchical-shadow">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.08),transparent)] pointer-events-none" />
               <CardHeader className="p-0 mb-12 border-b-8 border-white/5 pb-12 bg-primary/10 rounded-t-[5rem] px-16 py-10 flex flex-row justify-between items-center">
                  <CardTitle className="text-5xl md:text-[10rem] text-white flex items-center gap-16 font-black uppercase italic gold-glow px-10 leading-none">
-                    <Database className="size-24 md:size-48 text-primary animate-pulse" /> Oracle Feed
+                    <Database className="size-24 md:size-48 text-primary animate-pulse" /> Absolute Feed
                  </CardTitle>
                  <Badge className="bg-emerald-600/30 text-emerald-500 border-[10px] border-emerald-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse tracking-[0.4em] shadow-9xl italic uppercase">PALACE_SYNC_OK</Badge>
               </CardHeader>
@@ -194,7 +245,7 @@ export default function KnowledgePage() {
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                        placeholder="Interrogate the Absolute Memory Palace..." 
+                        placeholder="Interrogate Arsenal DNA or Neural Vault..." 
                         className="h-32 md:h-40 bg-black/99 border-8 border-primary/40 rounded-full pl-32 pr-48 text-2xl md:text-6xl italic font-black focus:border-primary text-white shadow-inner transition-all duration-1000 placeholder:text-gray-950 selection:bg-primary"
                     />
                     <Button onClick={() => handleSearch()} disabled={loading} className="absolute right-4 top-1/2 -translate-y-1/2 size-24 md:size-32 rounded-full bg-primary hover:bg-white text-black border-[12px] border-black/40 shadow-9xl active:scale-90 transition-all">
@@ -218,7 +269,7 @@ export default function KnowledgePage() {
                             <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
                         </div>
                         <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Palace Idle</h3>
-                        <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">Enter a coordinate or select a chamber to retrieve neural records.</p>
+                        <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">Enter an Arsenal tool or coordinate to retrieve local or neural records.</p>
                     </div>
                  )}
               </CardContent>
@@ -234,7 +285,7 @@ export default function KnowledgePage() {
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[24px] md:text-[36px] font-black uppercase tracking-[5em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
-            <span>AL-MUIZZ ABSOLUTE PALACE v65.0</span>
+            <span>AL-MUIZZ ABSOLUTE PALACE v66.5</span>
             <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
             <span>SINGULARITY_IN_MEMORY_2026</span>
         </div>
