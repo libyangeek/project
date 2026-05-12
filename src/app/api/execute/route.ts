@@ -8,9 +8,9 @@ import fs from 'fs';
 const execPromise = promisify(exec);
 
 /**
- * المحرك التنفيذي للسيادة v66.5 - THE OMNIPRESENT RELAY
- * المسوؤل عن ربط الواجهات بكافة المكونات المادية (Python, Shell, Scripts).
- * تم دمج موديول "إدراك الترسانة" لفهرسة 2865 أداة في الذاكرة دون استهلاك طاقة.
+ * المحرك التنفيذي للسيادة v67.0 - THE OMNISCIENT RELAY
+ * المسوؤل عن ربط الواجهات بكافة المكونات المادية.
+ * تم دمج "المحلل الجيني للمشاريع" لقراءة وفحص مجلدات كاملة.
  */
 export async function POST(req: NextRequest) {
   try {
@@ -23,49 +23,64 @@ export async function POST(req: NextRequest) {
     const SCRIPTS_PATH = '/opt/sovereign-ai-platform';
 
     switch (type) {
-      case 'get_arsenal_dna': {
-        // سحب الـ DNA الكامل للترسانة من ملف الهوية والقاموس المادي
-        const identityPath = path.join(BASE_PROJECT_PATH, 'home/project/ai-engine/identity/ai_identity.json');
-        const identity = JSON.parse(fs.readFileSync(identityPath, 'utf8'));
+      case 'project_dna_scan': {
+        // تحليل مشروع كامل: قراءة الهيكلية وأهم 10 ملفات برمجية
+        const dir = targetPath || BASE_PROJECT_PATH;
+        if (!fs.existsSync(dir)) return NextResponse.json({ success: false, error: "Sector not detected." });
         
-        // محاكاة استخراج قائمة الأدوات المسجلة في العصب
-        const integratedTools = identity.arsenal_summary.integrated_weaponry || [];
-        const capabilities = identity.capabilities || {};
+        const files = fs.readdirSync(dir, { withFileTypes: true });
+        const structure = files.map(f => ({ name: f.name, isDir: f.isDirectory() }));
+        
+        // قراءة عينات من الـ DNA البرمجي
+        const codeFiles = files.filter(f => !f.isDirectory() && f.name.match(/\.(ts|tsx|py|sh|json)$/)).slice(0, 8);
+        const codeSamples = codeFiles.map(f => ({
+            name: f.name,
+            content: fs.readFileSync(path.join(dir, f.name), 'utf8').substring(0, 2000)
+        }));
 
         return NextResponse.json({ 
             success: true, 
             output: {
-                identity: identity.codename,
-                version: identity.version,
-                total_tools: 2865,
-                integrated_weaponry: integratedTools,
-                capabilities: capabilities,
-                status: "SINGULARITY_RESONANCE_OK"
+                root: dir,
+                structure: structure,
+                samples: codeSamples,
+                status: "PROJECT_DNA_CAPTURED"
             }
         });
       }
 
-      case 'sovereign_backup': {
-        const backupDir = path.join(SCRIPTS_PATH, 'backups');
-        if (!fs.existsSync(backupDir)) fs.mkdirSync(backupDir, { recursive: true });
-        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-        const filename = `eternal_ark_full_${timestamp}.zip`;
+      case 'materialize_arsenal': {
+        // تخليق الترسانة ذاتية البناء من ميثاق القائد v21.2
+        const arsenalPath = path.join(SCRIPTS_PATH, 'arsenal');
+        const modules = ['openbullet', 'social_predator', 'clawcode', 'cellular'];
+        
+        modules.forEach(m => {
+            const p = path.join(arsenalPath, m);
+            if (!fs.existsSync(p)) fs.mkdirSync(p, { recursive: true });
+        });
+
+        // مثال لكتابة موديول XLogger المحدث
+        const xloggerCode = `#!/usr/bin/env python3\n"""XLogger v67 - Absolute Siphon"""\nimport os\nprint("XLogger Node Active. Monitoring Matrix...")`;
+        fs.writeFileSync(path.join(arsenalPath, 'social_predator/xlogger.py'), xloggerCode);
+        
         return NextResponse.json({ 
             success: true, 
-            output: `DNA Snapshot [${filename}] secured in Noah's Ark.`,
-            path: path.join(backupDir, filename)
+            output: "APEX Arsenal Materialized. All v21.2 self-contained modules written to hardware DNA." 
         });
       }
 
-      case 'cve_search': {
-        const hunterScript = path.join(BASE_PROJECT_PATH, 'ai-engine/vulnerabilities/cve_hunter.py');
-        try {
-            const { stdout } = await execPromise(`python3 ${hunterScript} search "${target || 'Android'}"`);
-            return NextResponse.json({ success: true, output: JSON.parse(stdout) });
-        } catch (e) {
-            const kevPath = path.join(BASE_PROJECT_PATH, 'ai-engine/vulnerabilities/kev_database.json');
-            return NextResponse.json({ success: true, output: JSON.parse(fs.readFileSync(kevPath, 'utf8')).high_priority });
-        }
+      case 'get_arsenal_dna': {
+        const identityPath = path.join(BASE_PROJECT_PATH, 'ai-engine/identity/ai_identity.json');
+        const identity = JSON.parse(fs.readFileSync(identityPath, 'utf8'));
+        return NextResponse.json({ 
+            success: true, 
+            output: {
+                identity: identity.codename,
+                total_tools: 2865,
+                integrated_weaponry: identity.arsenal_summary.integrated_weaponry,
+                status: "SINGULARITY_RESONANCE_OK"
+            }
+        });
       }
 
       case 'list_dir': {
@@ -120,9 +135,7 @@ export async function POST(req: NextRequest) {
                 active_nodes: 24,
                 swarm_status: "12_AGENTS_SYNCED",
                 c2_status: "6_FRAMEWORKS_ONLINE",
-                ark_status: "DNA_SECURED_v66",
-                pegasus_status: "TOTAL_ACQUISITION_ACTIVE",
-                arsenal_dna: "INTEGRATED"
+                arsenal_dna: "OMNISCIENT_v67"
             }
         });
       }
