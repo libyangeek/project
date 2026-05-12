@@ -29,7 +29,9 @@ import {
   X,
   Save,
   Dna,
-  History
+  History,
+  HardDrive,
+  Boxes
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -43,12 +45,13 @@ import { cn } from "@/lib/utils"
 
 /**
  * @fileOverview الوكيل الميداني v64.0 - THE SUPREME SYSTEM EXPLORER & INJECTOR
- * تم تحسين الواجهة لفك التداخل ودعم "الحقن الجيني" لمزامنة تعديلات Integrity.
+ * واجهة السيطرة المادية الكاملة والمزامنة الجينية مع Integrity.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function FieldAgentPage() {
   const [mounted, setMounted] = React.useState(false)
   const [input, setInput] = React.useState("")
-  const [customPath, setCustomPath] = React.useState("")
+  const [customPath, setCustomPath] = React.useState("/home/project")
   const [currentPath, setCurrentPath] = React.useState("")
   const [files, setFiles] = React.useState<any[]>([])
   const [selectedFileContent, setSelectedFileContent] = React.useState("")
@@ -60,14 +63,14 @@ export default function FieldAgentPage() {
 
   React.useEffect(() => {
     setMounted(true)
-    loadDirectory()
+    loadDirectory("/home/project")
     const interval = setInterval(() => {
         setResonance(prev => Math.max(99.999999, Math.min(100, prev + (Math.random() * 0.000001 - 0.0000005))))
     }, 3000)
     return () => clearInterval(interval)
   }, [])
 
-  const loadDirectory = async (path: string = "") => {
+  const loadDirectory = async (path: string) => {
     setLoading(true)
     try {
         const response = await fetch('/api/execute', {
@@ -78,8 +81,8 @@ export default function FieldAgentPage() {
         const data = await response.json()
         if (data.success) {
             setFiles(data.output)
-            setCurrentPath(data.currentPath || path || "ROOT")
-            setCustomPath(data.currentPath || "")
+            setCurrentPath(data.currentPath)
+            setCustomPath(data.currentPath)
         } else {
             toast({ variant: "destructive", title: "Access Restricted", description: data.error })
         }
@@ -106,7 +109,7 @@ export default function FieldAgentPage() {
                 setSelectedFileContent(data.output)
                 setSelectedFileName(file.name)
                 setSelectedFilePath(file.path)
-                toast({ title: "DNA Siphoned", description: `Absorbed content from ${file.name}` })
+                toast({ title: "DNA Siphoned", description: `Absorbed ${file.name}` })
             }
         } finally {
             setLoading(false)
@@ -114,17 +117,20 @@ export default function FieldAgentPage() {
     }
   }
 
-  const handleDeepAnalysis = async () => {
+  const handleSovereignAction = async (mode: 'project_analysis' | 'integrity_sync' | 'file_fix') => {
     setLoading(true)
     setAnalysis(null)
     try {
+      toast({ title: "Hierarchy Engaging", description: `Orchestrating ${mode.replace('_', ' ')}...` })
       const result = await executeFieldDevelopment({ 
-        userPrompt: input || "Analyze this system DNA for integrity sync.",
+        userPrompt: input || "Execute absolute project DNA analysis.",
         projectPath: currentPath,
-        fileContent: selectedFileContent
+        currentFile: selectedFileName,
+        fileContent: selectedFileContent,
+        mode: mode
       })
       setAnalysis(result)
-      toast({ title: "Analysis Complete", description: "The Overmind has mapped the target logic." })
+      toast({ title: "Consensus Achieved", description: "The Overmind has mapped the target logic." })
     } catch (err) {
       toast({ variant: "destructive", title: "Neural Conflict" })
     } finally {
@@ -147,7 +153,7 @@ export default function FieldAgentPage() {
         })
         const data = await response.json()
         if (data.success) {
-            toast({ title: "Genetic Fusion Success", description: "The file DNA has been rewritten in the matrix." })
+            toast({ title: "Genetic Fusion Success", description: "File DNA rewritten in the matrix." })
         } else {
             toast({ variant: "destructive", title: "Injection Failed", description: data.error })
         }
@@ -159,10 +165,10 @@ export default function FieldAgentPage() {
   }
 
   const navigateBack = () => {
-      const parts = currentPath.split('/');
+      const parts = currentPath.split('/').filter(p => p !== '');
       parts.pop();
-      const parent = parts.join('/') || "/";
-      loadDirectory(parent);
+      const parent = '/' + parts.join('/');
+      loadDirectory(parent === '' ? '/' : parent);
   }
 
   if (!mounted) return null
@@ -172,163 +178,207 @@ export default function FieldAgentPage() {
       <SidebarNav />
       
       <main className="flex-1 lg:mr-72 flex flex-col h-screen relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.05),transparent)] pointer-events-none z-0" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.08),transparent)] pointer-events-none z-0" />
         
-        <header className="p-6 border-b-2 border-primary/20 bg-black/90 backdrop-blur-xl z-20 flex justify-between items-center shrink-0">
+        {/* Header - Fixed Top */}
+        <header className="p-6 border-b-2 border-primary/20 bg-black/90 backdrop-blur-3xl z-30 flex flex-col md:flex-row justify-between items-center gap-6 shrink-0 shadow-2xl">
            <div className="flex items-center gap-6">
-              <div className="size-12 rounded-xl bg-black border-2 border-primary flex items-center justify-center shadow-[0_0_40px_rgba(212,175,55,0.3)] animate-neural">
-                 <Wrench className="size-6 text-primary gold-glow" />
+              <div className="size-14 rounded-2xl bg-black border-2 border-primary flex items-center justify-center shadow-[0_0_60px_rgba(212,175,55,0.4)] animate-neural">
+                 <HardDrive className="size-8 text-primary gold-glow" />
               </div>
               <div>
-                 <h2 className="text-xl md:text-2xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Field <span className="text-primary">Agent</span></h2>
-                 <span className="text-[8px] text-muted-foreground uppercase font-black italic mt-1 block">v64.0_GENETIC_SYNC</span>
+                 <h2 className="text-2xl md:text-4xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Field <span className="text-primary">Agent</span></h2>
+                 <div className="flex items-center gap-3 mt-2">
+                    <Badge className="bg-primary/10 text-primary border-none text-[8px] font-black italic tracking-widest px-4 py-0.5 rounded-full shadow-lg">v64.0_OMNIPRESENT</Badge>
+                    <span className="text-[10px] text-emerald-500 font-black animate-pulse uppercase tracking-[0.2em]">{resonance.toFixed(6)}% Resonance</span>
+                 </div>
               </div>
            </div>
            
-           <div className="flex items-center gap-4 bg-white/5 p-1.5 rounded-xl border border-white/10 w-full max-w-lg">
+           <div className="flex items-center gap-4 bg-white/5 p-2 rounded-2xl border-2 border-white/10 w-full max-w-2xl shadow-inner group">
               <Input 
                 value={customPath}
                 onChange={(e) => setCustomPath(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && loadDirectory(customPath)}
-                placeholder="Enter Absolute Linux Path (e.g. /opt/sovereign-ai-platform)..." 
-                className="bg-transparent border-none focus-visible:ring-0 text-[10px] italic font-black text-white h-8"
+                placeholder="Enter Physical Sector Path (e.g. /etc, /home, /opt)..." 
+                className="bg-transparent border-none focus-visible:ring-0 text-sm italic font-black text-white h-10 placeholder:text-gray-800"
               />
-              <Button onClick={() => loadDirectory(customPath)} variant="ghost" className="h-8 px-4 rounded-lg hover:bg-primary hover:text-black font-black uppercase text-[9px]">Jump</Button>
+              <Button onClick={() => loadDirectory(customPath)} className="h-10 px-8 rounded-xl bg-primary hover:bg-white text-black font-black uppercase text-xs italic shadow-xl active:scale-95 transition-all">Jump_Sector</Button>
            </div>
         </header>
 
         <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative z-10">
            
-           <aside className="w-full lg:w-80 border-l-2 border-primary/10 bg-black/40 flex flex-col shrink-0 order-last lg:order-none">
-              <div className="p-4 border-b border-primary/10 bg-primary/5 flex items-center justify-between">
+           {/* File Tree - Fixed Left */}
+           <aside className="w-full lg:w-96 border-l-2 border-primary/20 bg-black/60 flex flex-col shrink-0 order-last lg:order-none shadow-9xl">
+              <div className="p-6 border-b-2 border-primary/10 bg-primary/5 flex items-center justify-between">
                  <div className="flex flex-col">
-                    <span className="text-[9px] font-black text-primary uppercase tracking-widest italic flex items-center gap-2">
-                        <FolderOpen className="size-3" /> Matrix Structure
+                    <span className="text-[11px] font-black text-primary uppercase tracking-widest italic flex items-center gap-3">
+                        <Database className="size-4" /> Physical DNA
                     </span>
-                    <span className="text-[7px] text-muted-foreground truncate max-w-[120px] mt-1">{currentPath}</span>
+                    <span className="text-[9px] text-muted-foreground truncate max-w-[200px] mt-2 font-bold">{currentPath}</span>
                  </div>
-                 <div className="flex gap-1">
-                    <Button size="icon" variant="ghost" onClick={navigateBack} className="size-7 rounded-lg hover:bg-primary/20"><ChevronLeft className="size-3"/></Button>
-                    <Button size="icon" variant="ghost" onClick={() => loadDirectory(currentPath)} className="size-7 rounded-lg hover:bg-primary/20"><RefreshCcw className="size-3"/></Button>
+                 <div className="flex gap-2">
+                    <Button size="icon" variant="ghost" onClick={navigateBack} className="size-10 rounded-xl border border-white/5 hover:bg-primary/20 shadow-xl"><ChevronLeft className="size-5"/></Button>
+                    <Button size="icon" variant="ghost" onClick={() => loadDirectory(currentPath)} className="size-10 rounded-xl border border-white/5 hover:bg-primary/20 shadow-xl"><RefreshCcw className="size-4"/></Button>
                  </div>
               </div>
-              <div className="flex-1 overflow-y-auto scrollbar-hide p-2 space-y-1">
-                 {files.map((file, i) => (
+              <div className="flex-1 overflow-y-auto scrollbar-hide p-4 space-y-2">
+                 {files.length > 0 ? files.map((file, i) => (
                     <div 
                         key={i} 
                         onClick={() => handleFileSelect(file)}
                         className={cn(
-                            "p-2 rounded-lg hover:bg-primary/10 cursor-pointer flex items-center justify-between group transition-all border border-transparent hover:border-primary/20",
-                            selectedFileName === file.name && "bg-primary/10 border-primary/30"
+                            "p-3 rounded-xl hover:bg-primary/10 cursor-pointer flex items-center justify-between group transition-all border-2 border-transparent hover:border-primary/30 active:scale-95",
+                            selectedFileName === file.name && "bg-primary/10 border-primary/40 shadow-inner"
                         )}
                     >
-                       <div className="flex items-center gap-3">
-                          {file.isDirectory ? <FolderOpen className="size-3.5 text-primary"/> : <FileCode className="size-3.5 text-blue-400"/>}
-                          <span className="text-[10px] font-bold text-gray-300 group-hover:text-white truncate max-w-[150px]">{file.name}</span>
+                       <div className="flex items-center gap-4">
+                          {file.isDirectory ? <FolderOpen className="size-5 text-primary animate-pulse"/> : <FileCode className="size-5 text-blue-400"/>}
+                          <div className="flex flex-col">
+                            <span className="text-[11px] font-black text-gray-300 group-hover:text-white truncate max-w-[200px] italic">{file.name}</span>
+                            {!file.isDirectory && <span className="text-[8px] text-muted-foreground uppercase font-bold">{(file.size / 1024).toFixed(1)} KB</span>}
+                          </div>
                        </div>
-                       <ChevronRight className="size-3 opacity-20 group-hover:opacity-100 transition-all"/>
+                       <ChevronRight className="size-4 opacity-10 group-hover:opacity-100 transition-all group-hover:translate-x-1"/>
                     </div>
-                 ))}
+                 )) : (
+                    <div className="h-full flex flex-col items-center justify-center opacity-10 gap-6">
+                        <Search className="size-16 animate-spin-slow" />
+                        <span className="text-xs font-black uppercase tracking-[0.4em]">Empty Sector</span>
+                    </div>
+                 )}
               </div>
            </aside>
 
-           <div className="flex-1 flex flex-col overflow-hidden bg-black/20">
-              <div className="flex-1 overflow-y-auto p-4 space-y-6 scrollbar-hide pb-32">
+           {/* Workspace Area */}
+           <div className="flex-1 flex flex-col overflow-hidden bg-black/40">
+              <div className="flex-1 overflow-y-auto p-6 space-y-8 scrollbar-hide pb-40">
                  
-                 <Tabs defaultValue="editor" className="w-full">
-                    <TabsList className="bg-black/80 border border-primary/20 p-1 h-12 rounded-xl mb-4">
-                        <TabsTrigger value="editor" className="flex-1 rounded-lg text-[10px] font-black italic data-[state=active]:bg-primary data-[state=active]:text-black">CHAMBER_DNA</TabsTrigger>
-                        <TabsTrigger value="analysis" className="flex-1 rounded-lg text-[10px] font-black italic data-[state=active]:bg-primary data-[state=active]:text-black ml-2">INTELLIGENCE</TabsTrigger>
-                    </TabsList>
-
-                    <TabsContent value="editor" className="m-0">
-                        {selectedFileName ? (
-                            <Card className="kali-card border-primary/20 bg-black/80 rounded-2xl p-4 shadow-2xl relative group">
-                                <div className="flex justify-between items-center mb-4 px-2">
-                                    <div className="flex flex-col">
-                                        <span className="text-[10px] font-black text-primary uppercase italic">{selectedFileName}</span>
-                                        <span className="text-[7px] text-muted-foreground truncate max-w-xs">{selectedFilePath}</span>
-                                    </div>
-                                    <div className="flex gap-2">
-                                        <Button onClick={handleGeneticInjection} variant="outline" className="h-8 bg-emerald-600/10 border-emerald-500/30 text-emerald-400 font-black text-[9px] uppercase tracking-widest italic rounded-lg hover:bg-emerald-600 hover:text-white transition-all">
-                                            <Save className="size-3 mr-2" /> Sync DNA
-                                        </Button>
-                                        <Button variant="ghost" size="icon" onClick={() => setSelectedFileName("")} className="size-8 rounded-lg hover:bg-red-600"><X className="size-4"/></Button>
-                                    </div>
-                                </div>
-                                <Textarea 
-                                    value={selectedFileContent}
-                                    onChange={(e) => setSelectedFileContent(e.target.value)}
-                                    className="bg-black/60 p-6 rounded-xl font-code text-xs text-emerald-400 leading-relaxed italic h-[500px] overflow-y-auto scrollbar-hide shadow-inner border border-white/5 whitespace-pre selection:bg-primary selection:text-black resize-none"
-                                />
-                            </Card>
-                        ) : (
-                            <div className="h-[500px] border-4 border-dashed border-primary/5 rounded-[3rem] flex flex-col items-center justify-center text-center opacity-10 gap-6">
-                                <Atom className="size-24 text-primary animate-spin-slow" />
-                                <h3 className="text-2xl font-black uppercase tracking-widest text-white italic">Waiting for DNA</h3>
+                 <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                    <Card className="kali-card border-primary/20 bg-black/90 rounded-[3rem] p-6 shadow-2xl relative overflow-hidden flex flex-col h-[700px]">
+                       <div className="absolute top-0 right-0 p-8 opacity-[0.02] pointer-events-none scale-150 rotate-12"><Binary className="size-48 text-primary"/></div>
+                       <div className="flex justify-between items-center mb-6 px-4">
+                          <div className="flex items-center gap-6">
+                             <div className="size-14 rounded-2xl bg-primary/10 flex items-center justify-center border-2 border-primary/40 shadow-xl">
+                                <Code2 className="size-8 text-primary gold-glow" />
+                             </div>
+                             <div>
+                                <h4 className="text-2xl font-black text-white italic uppercase gold-glow leading-none">Chamber DNA</h4>
+                                <span className="text-[10px] text-primary/60 font-black uppercase tracking-[0.4em] mt-2 block">{selectedFileName || "Waiting for Selection..."}</span>
+                             </div>
+                          </div>
+                          {selectedFileName && (
+                            <Button onClick={handleGeneticInjection} className="h-12 bg-emerald-600 hover:bg-white text-white hover:text-black font-black uppercase tracking-[0.2em] rounded-xl border-4 border-black/30 shadow-9xl italic active:scale-95 transition-all px-8">
+                               <Save className="size-5 mr-3" /> Sync_Integrity
+                            </Button>
+                          )}
+                       </div>
+                       <div className="flex-1 relative">
+                          {selectedFileName ? (
+                            <Textarea 
+                                value={selectedFileContent}
+                                onChange={(e) => setSelectedFileContent(e.target.value)}
+                                className="h-full bg-black/99 p-8 rounded-[2rem] font-code text-xs md:text-sm text-emerald-400 leading-relaxed italic border-4 border-white/5 shadow-inner whitespace-pre selection:bg-primary selection:text-black resize-none scrollbar-hide"
+                            />
+                          ) : (
+                            <div className="h-full border-4 border-dashed border-primary/5 rounded-[3rem] flex flex-col items-center justify-center text-center opacity-10 gap-8">
+                                <Atom className="size-32 text-primary animate-spin-slow" />
+                                <h3 className="text-4xl font-black uppercase tracking-[1em] text-white italic">Awaiting DNA</h3>
                             </div>
-                        )}
-                    </TabsContent>
+                          )}
+                       </div>
+                    </Card>
 
-                    <TabsContent value="analysis" className="m-0">
-                        {analysis ? (
-                            <Card className="kali-card border-emerald-500/30 bg-black/90 rounded-2xl p-6 shadow-9xl animate-in zoom-in-95 duration-1000">
-                                <div className="flex items-center gap-4 mb-6 border-b border-white/5 pb-4">
-                                    <BrainCircuit className="size-8 text-emerald-400 animate-pulse" />
-                                    <h4 className="text-xl font-black italic gold-glow uppercase">Neural Mapping</h4>
+                    <div className="space-y-8">
+                       <Card className="kali-card border-primary/20 bg-black/90 rounded-[3rem] p-8 shadow-2xl flex flex-col min-h-[400px]">
+                          <div className="flex items-center justify-between mb-8 border-b-2 border-white/5 pb-6">
+                             <div className="flex items-center gap-6">
+                                <div className="size-16 rounded-2xl bg-primary flex items-center justify-center border-4 border-black/30 shadow-xl animate-neural">
+                                   <BrainCircuit className="size-10 text-black" />
                                 </div>
-                                <div className="space-y-6">
-                                    <div className="p-4 bg-primary/5 rounded-xl border border-primary/20">
-                                        <p className="text-lg text-white font-bold italic leading-relaxed">"{analysis.commanderBrief}"</p>
-                                    </div>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <div className="p-4 bg-white/5 rounded-xl border border-white/10">
-                                            <span className="text-[9px] font-black text-primary uppercase block mb-2 tracking-widest">Logic Structure</span>
-                                            <p className="text-xs text-gray-300 leading-relaxed italic">{analysis.analysis}</p>
-                                        </div>
-                                        <div className="p-4 bg-white/5 rounded-xl border border-white/10">
-                                            <span className="text-[9px] font-black text-emerald-500 uppercase block mb-2 tracking-widest">Integrity Pulse</span>
-                                            <p className="text-xs text-gray-100 leading-relaxed font-black italic">{analysis.suggestedChanges}</p>
-                                        </div>
-                                    </div>
+                                <h4 className="text-3xl font-black italic gold-glow uppercase tracking-tighter">Overmind Intelligence</h4>
+                             </div>
+                             <Badge className="bg-emerald-600/20 text-emerald-500 border-4 border-emerald-500/30 px-6 py-2 rounded-full font-black text-xl italic animate-pulse shadow-lg">ACTIVE</Badge>
+                          </div>
+                          
+                          {analysis ? (
+                             <div className="space-y-8 animate-in fade-in zoom-in-95 duration-1000">
+                                <div className="p-8 bg-primary/5 rounded-[2.5rem] border-4 border-primary/20 shadow-inner">
+                                   <p className="text-xl md:text-2xl text-white font-black italic leading-relaxed text-center">"{analysis.commanderBrief}"</p>
                                 </div>
-                            </Card>
-                        ) : (
-                            <div className="h-[500px] border-4 border-dashed border-white/5 rounded-[3rem] flex flex-col items-center justify-center text-center opacity-10 gap-6">
-                                <Activity className="size-20 text-white animate-pulse" />
-                                <h3 className="text-2xl font-black uppercase tracking-widest text-white italic">Awaiting Intel</h3>
-                            </div>
-                        )}
-                    </TabsContent>
-                 </Tabs>
+                                <div className="grid grid-cols-1 gap-6">
+                                   <div className="p-8 bg-black/60 rounded-[2rem] border-2 border-white/5 shadow-xl">
+                                      <span className="text-[11px] font-black text-primary uppercase block mb-4 tracking-[0.8em] italic">Structural Mapping</span>
+                                      <p className="text-sm md:text-lg text-gray-300 leading-relaxed italic font-bold">{analysis.analysis}</p>
+                                   </div>
+                                   <div className="p-8 bg-emerald-600/5 rounded-[2rem] border-2 border-emerald-500/20 shadow-xl">
+                                      <span className="text-[11px] font-black text-emerald-500 uppercase block mb-4 tracking-[0.8em] italic">Genetic Fusion Plan</span>
+                                      <p className="text-sm md:text-lg text-gray-100 leading-relaxed font-black italic">{analysis.geneticPlan}</p>
+                                   </div>
+                                </div>
+                             </div>
+                          ) : (
+                             <div className="flex-1 flex flex-col items-center justify-center text-center opacity-10 gap-10">
+                                <Boxes className="size-32 text-primary animate-pulse" />
+                                <h3 className="text-4xl font-black uppercase tracking-[0.8em] text-white italic">Searching Matrix</h3>
+                             </div>
+                          )}
+                       </Card>
+
+                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <Button 
+                             onClick={() => handleSovereignAction('project_analysis')}
+                             disabled={loading}
+                             className="h-28 bg-white/5 border-4 border-primary/20 hover:border-primary hover:bg-primary/10 rounded-[2.5rem] flex flex-col items-center justify-center gap-3 transition-all duration-700 shadow-xl group active:scale-95"
+                          >
+                             <Search className="size-10 text-primary group-hover:scale-125 transition-transform gold-glow" />
+                             <span className="text-[10px] font-black uppercase tracking-widest text-white italic">Analyze_Full_Project</span>
+                          </Button>
+                          <Button 
+                             onClick={() => handleSovereignAction('integrity_sync')}
+                             disabled={loading}
+                             className="h-28 bg-white/5 border-4 border-emerald-500/20 hover:border-emerald-500 hover:bg-emerald-600/10 rounded-[2.5rem] flex flex-col items-center justify-center gap-3 transition-all duration-700 shadow-xl group active:scale-95"
+                          >
+                             <RefreshCcw className="size-10 text-emerald-400 group-hover:rotate-180 transition-all duration-1000" />
+                             <span className="text-[10px] font-black uppercase tracking-widest text-white italic">Integrity_Sync_v64</span>
+                          </Button>
+                       </div>
+                    </div>
+                 </div>
               </div>
 
-              <div className="absolute bottom-0 left-0 right-0 p-6 bg-black/95 backdrop-blur-2xl border-t-2 border-primary/40">
-                 <div className="max-w-4xl mx-auto relative group">
-                    <Terminal className="absolute left-6 top-1/2 -translate-y-1/2 size-4 text-primary/40 group-focus-within:text-primary transition-all" />
+              {/* Command Input - Fixed Bottom */}
+              <div className="absolute bottom-0 left-0 right-0 p-8 bg-black/95 backdrop-blur-5xl border-t-8 border-primary/60 z-30 shadow-[0_-50px_200px_rgba(0,0,0,1)]">
+                 <div className="max-w-6xl mx-auto relative group">
+                    <Terminal className="absolute left-8 top-1/2 -translate-y-1/2 size-8 text-primary/40 group-focus-within:text-primary transition-all duration-1000 gold-glow" />
                     <Input 
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
-                        onKeyDown={(e) => e.key === 'Enter' && handleDeepAnalysis()}
-                        placeholder=" Instruct the agent to analyze target DNA or merge Integrity changes..." 
-                        className="h-14 md:h-16 bg-white/5 border-2 border-white/10 rounded-full pl-16 pr-24 text-sm italic font-black focus:border-primary shadow-inner text-white transition-all placeholder:text-gray-900"
+                        onKeyDown={(e) => e.key === 'Enter' && handleSovereignAction('project_analysis')}
+                        placeholder=" Direct the Agent to analyze sector DNA or fuse Integrity mutations..." 
+                        className="h-24 md:h-28 bg-primary/5 border-4 border-white/10 rounded-full pl-24 pr-40 text-xl md:text-3xl italic font-black focus:border-primary shadow-inner text-white transition-all duration-700 placeholder:text-gray-900 selection:bg-primary selection:text-black"
                     />
                     <Button 
-                        onClick={handleDeepAnalysis}
+                        onClick={() => handleSovereignAction('project_analysis')}
                         disabled={loading || !input.trim()}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 size-10 md:size-12 rounded-full bg-primary hover:bg-white text-black shadow-lg transition-all border-4 border-black/20 group active:scale-90"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 size-16 md:size-20 bg-primary hover:bg-white text-black rounded-full shadow-9xl transition-all active:scale-90 border-[10px] border-black/30 group italic"
                     >
-                        {loading ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4 group-hover:translate-x-1 transition-transform" />}
+                        {loading ? <Loader2 className="size-10 animate-spin" /> : <Send className="size-10 group-hover:translate-x-3 transition-transform" />}
                     </Button>
+                 </div>
+                 <div className="flex justify-center gap-16 mt-6 opacity-30 text-[10px] font-black uppercase tracking-[4em] italic">
+                    <span className="flex items-center gap-4"><Fingerprint className="size-4 text-primary" /> GHAZALI_ROOT</span>
+                    <span className="flex items-center gap-4 text-primary"><InfinityIcon className="size-4 animate-pulse" /> SPINE_SYNC_v64</span>
                  </div>
               </div>
            </div>
         </div>
 
-        <div className="shrink-0 p-2 border-t border-white/5 flex justify-center items-center gap-10 opacity-30 text-[7px] font-black uppercase tracking-[2em] italic">
-            <span>AL-MUIZZ SYSTEM EXPLORER v64.0</span>
-            <div className="size-1 rounded-full bg-white animate-ping" />
-            <span>GHAZALI_ROOT_VERIFIED_2026</span>
+        <div className="shrink-0 p-2 border-t border-white/5 flex justify-center items-center gap-10 opacity-30 text-[8px] font-black uppercase tracking-[3em] italic">
+            <span>AL-MUIZZ OMNIPRESENT EXPLORER v64.0</span>
+            <div className="size-1 rounded-full bg-white animate-pulse" />
+            <span>TOTAL_SYSTEM_SUBJUGATION_2026</span>
         </div>
       </main>
     </div>

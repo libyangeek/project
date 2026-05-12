@@ -17,7 +17,7 @@ async function publishEvent(type: string, payload: any) {
         client.end();
         resolve(true);
       });
-      client.on('error', () => resolve(false));
+      client.on('error') ? client.on('error', () => resolve(false)) : null;
       setTimeout(() => resolve(false), 500);
     } catch (e) {
       resolve(false);
@@ -26,37 +26,42 @@ async function publishEvent(type: string, payload: any) {
 }
 
 /**
- * المحرك التنفيذي للسيادة v64.0 - تمكين الحقن المادي (Write Access)
- * تم إضافة ميزة 'write_file' للسماح للقائد بمزامنة تعديلات Integrity.
+ * المحرك التنفيذي للسيادة v64.0 - تمكين السيطرة المادية الشاملة
  */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { 
-        command, target, type, path: targetPath, content 
+        command, target, type, path: targetPath, content, batchPaths 
     } = body;
 
     const BASE_PROJECT_PATH = process.cwd();
     const SCRIPTS_PATH = '/opt/sovereign-ai-platform';
 
-    await publishEvent("system_access_v64", { type, targetPath, command });
+    await publishEvent("physical_access_v64", { type, targetPath, command });
 
     switch (type) {
       case 'list_dir': {
         const dirToRead = targetPath || BASE_PROJECT_PATH;
         if (!fs.existsSync(dirToRead)) {
-            return NextResponse.json({ success: false, error: `Path [${dirToRead}] not found in Overmind Spine.` });
+            return NextResponse.json({ success: false, error: `Path [${dirToRead}] is outside the Matrix visibility.` });
         }
         const stats = fs.statSync(dirToRead);
         if (!stats.isDirectory()) {
             return NextResponse.json({ success: false, error: "Target is not a directory." });
         }
         const items = fs.readdirSync(dirToRead, { withFileTypes: true });
-        const result = items.map(item => ({
-            name: item.name,
-            isDirectory: item.isDirectory(),
-            path: path.join(dirToRead, item.name)
-        }));
+        const result = items.map(item => {
+            const fullPath = path.join(dirToRead, item.name);
+            let size = 0;
+            try { size = fs.statSync(fullPath).size; } catch(e){}
+            return {
+                name: item.name,
+                isDirectory: item.isDirectory(),
+                path: fullPath,
+                size: size
+            };
+        });
         return NextResponse.json({ success: true, output: result, currentPath: dirToRead });
       }
 
@@ -68,11 +73,21 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ success: true, output: content });
       }
 
+      case 'read_batch': {
+        if (!batchPaths || !Array.isArray(batchPaths)) {
+            return NextResponse.json({ success: false, error: "Missing batch paths for analysis." });
+        }
+        const results = batchPaths.map(p => ({
+            path: p,
+            content: fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : "FILE_NOT_FOUND"
+        }));
+        return NextResponse.json({ success: true, output: results });
+      }
+
       case 'write_file': {
         if (!targetPath || content === undefined) {
             return NextResponse.json({ success: false, error: "Missing path or content for Genetic Injection." });
         }
-        // ضمان وجود المجلد الأب
         const dir = path.dirname(targetPath);
         if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
         
