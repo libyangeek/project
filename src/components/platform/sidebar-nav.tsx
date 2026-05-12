@@ -109,7 +109,7 @@ export function SidebarNav() {
             <h1 className="text-xl font-headline font-bold text-white tracking-[0.4em] uppercase italic leading-none gold-glow">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-lg">v64.5 OVERMIND</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-lg">v65.0 OVERMIND</Badge>
           </div>
         </div>
         
@@ -151,7 +151,7 @@ export function SidebarNav() {
           >
             <Link href="/codex">
               <Power className="size-4 mr-2 group-hover:rotate-180 transition-all duration-700" />
-              تنشيط السيادة v64.5
+              تنشيط السيادة v65.0
             </Link>
           </Button>
         </div>
