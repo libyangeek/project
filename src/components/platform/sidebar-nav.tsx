@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -40,8 +39,9 @@ import {
   Search,
   Network,
   Wrench,
+  ShieldAlert,
   Flame,
-  Hammer
+  Monitor
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -50,6 +50,7 @@ import Link from "next/link"
 
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
+  { name: "المحراب الكلاسيكي", icon: Monitor, href: "/classic-hub", knot: 23 },
   { name: "الترسانة العظمى", icon: Library, href: "/arsenal", knot: 22 },
   { name: "سفينة نوح", icon: Anchor, href: "/ark", knot: 21 },
   { name: "الافتراس الاجتماعي", icon: Users, href: "/social", knot: 1 },
@@ -109,7 +110,7 @@ export function SidebarNav() {
             <h1 className="text-xl font-headline font-bold text-white tracking-[0.4em] uppercase italic leading-none gold-glow">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-lg">v76.0 HIVE MASTER</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-lg">v76.5 HIVE MASTER</Badge>
           </div>
         </div>
         
@@ -151,7 +152,7 @@ export function SidebarNav() {
           >
             <Link href="/codex">
               <Power className="size-4 mr-2 group-hover:rotate-180 transition-all duration-700" />
-              تنشيط السيادة v76.0
+              تنشيط السيادة v76.5
             </Link>
           </Button>
         </div>
