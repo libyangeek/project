@@ -8,9 +8,6 @@ import fs from 'fs';
 
 const execPromise = promisify(exec);
 
-/**
- * دالة بث الأحداث لناقل الأحداث المركزي
- */
 async function publishEvent(type: string, payload: any) {
   return new Promise((resolve) => {
     try {
@@ -29,43 +26,37 @@ async function publishEvent(type: string, payload: any) {
 }
 
 /**
- * المحرك التنفيذي للسيادة v63.9 - الإدراك المادي والذاتي الشامل
- * تم تحسينه ليتيح الوصول لكافة مجلدات الجهاز المضيف.
+ * المحرك التنفيذي للسيادة v64.0 - تمكين الحقن المادي (Write Access)
+ * تم إضافة ميزة 'write_file' للسماح للقائد بمزامنة تعديلات Integrity.
  */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { 
-        command, target, type, path: targetPath 
+        command, target, type, path: targetPath, content 
     } = body;
 
     const BASE_PROJECT_PATH = process.cwd();
     const SCRIPTS_PATH = '/opt/sovereign-ai-platform';
 
-    await publishEvent("system_access", { type, targetPath, command });
+    await publishEvent("system_access_v64", { type, targetPath, command });
 
-    // مصفوفة التنفيذ السيادي
     switch (type) {
       case 'list_dir': {
-        // إذا لم يتم توفير مَسار، نبدأ من مَسار المشروع، وإلا نستخدم المسار المطلوب
         const dirToRead = targetPath || BASE_PROJECT_PATH;
-        
         if (!fs.existsSync(dirToRead)) {
-            return NextResponse.json({ success: false, error: `Path [${dirToRead}] not found in Matrix.` });
+            return NextResponse.json({ success: false, error: `Path [${dirToRead}] not found in Overmind Spine.` });
         }
-
         const stats = fs.statSync(dirToRead);
         if (!stats.isDirectory()) {
             return NextResponse.json({ success: false, error: "Target is not a directory." });
         }
-
         const items = fs.readdirSync(dirToRead, { withFileTypes: true });
         const result = items.map(item => ({
             name: item.name,
             isDirectory: item.isDirectory(),
             path: path.join(dirToRead, item.name)
         }));
-        
         return NextResponse.json({ success: true, output: result, currentPath: dirToRead });
       }
 
@@ -75,6 +66,19 @@ export async function POST(req: NextRequest) {
         }
         const content = fs.readFileSync(targetPath, 'utf8');
         return NextResponse.json({ success: true, output: content });
+      }
+
+      case 'write_file': {
+        if (!targetPath || content === undefined) {
+            return NextResponse.json({ success: false, error: "Missing path or content for Genetic Injection." });
+        }
+        // ضمان وجود المجلد الأب
+        const dir = path.dirname(targetPath);
+        if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+        
+        fs.writeFileSync(targetPath, content, 'utf8');
+        await publishEvent("genetic_injection_success", { path: targetPath });
+        return NextResponse.json({ success: true, message: "DNA Pulse Stabilized: File rewritten." });
       }
 
       case 'smart_route':
@@ -88,11 +92,7 @@ export async function POST(req: NextRequest) {
       default:
         return NextResponse.json({ success: true, output: "Directive acknowledged by Overmind." });
     }
-
   } catch (error: any) {
-    return NextResponse.json({ 
-        success: false, 
-        error: "Neural Spine Disruption: " + error.message 
-    }, { status: 500 });
+    return NextResponse.json({ success: false, error: "Neural Spine Disruption: " + error.message }, { status: 500 });
   }
 }

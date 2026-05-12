@@ -26,20 +26,24 @@ import {
   Infinity as InfinityIcon,
   Monitor,
   Database,
-  X
+  X,
+  Save,
+  Dna,
+  History
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { executeFieldDevelopment } from "@/ai/flows/field-agent-flow"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
 /**
- * @fileOverview الوكيل الميداني v63.9 - THE SUPREME SYSTEM EXPLORER
- * واجهة معالجة مادية تتيح تصفح "كامل الجهاز" وتحليل الـ DNA البرمجي لدمج التعديلات الخارجية.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي
+ * @fileOverview الوكيل الميداني v64.0 - THE SUPREME SYSTEM EXPLORER & INJECTOR
+ * تم تحسين الواجهة لفك التداخل ودعم "الحقن الجيني" لمزامنة تعديلات Integrity.
  */
 export default function FieldAgentPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -49,6 +53,7 @@ export default function FieldAgentPage() {
   const [files, setFiles] = React.useState<any[]>([])
   const [selectedFileContent, setSelectedFileContent] = React.useState("")
   const [selectedFileName, setSelectedFileName] = React.useState("")
+  const [selectedFilePath, setSelectedFilePath] = React.useState("")
   const [loading, setLoading] = React.useState(false)
   const [analysis, setAnalysis] = React.useState<any>(null)
   const [resonance, setResonance] = React.useState(100.00)
@@ -100,6 +105,7 @@ export default function FieldAgentPage() {
             if (data.success) {
                 setSelectedFileContent(data.output)
                 setSelectedFileName(file.name)
+                setSelectedFilePath(file.path)
                 toast({ title: "DNA Siphoned", description: `Absorbed content from ${file.name}` })
             }
         } finally {
@@ -113,16 +119,42 @@ export default function FieldAgentPage() {
     setAnalysis(null)
     try {
       const result = await executeFieldDevelopment({ 
-        userPrompt: input || "Analyze this segment of the system DNA for integrity sync.",
+        userPrompt: input || "Analyze this system DNA for integrity sync.",
         projectPath: currentPath,
         fileContent: selectedFileContent
       })
       setAnalysis(result)
-      toast({ title: "Structural Analysis Complete", description: "The Overmind has mapped the target logic." })
+      toast({ title: "Analysis Complete", description: "The Overmind has mapped the target logic." })
     } catch (err) {
-      toast({ variant: "destructive", title: "Neural Link Disrupted" })
+      toast({ variant: "destructive", title: "Neural Conflict" })
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleGeneticInjection = async () => {
+    if (!selectedFilePath || !selectedFileContent) return;
+    setLoading(true);
+    try {
+        const response = await fetch('/api/execute', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                type: 'write_file', 
+                path: selectedFilePath, 
+                content: selectedFileContent 
+            })
+        })
+        const data = await response.json()
+        if (data.success) {
+            toast({ title: "Genetic Fusion Success", description: "The file DNA has been rewritten in the matrix." })
+        } else {
+            toast({ variant: "destructive", title: "Injection Failed", description: data.error })
+        }
+    } catch (e) {
+        toast({ variant: "destructive", title: "Spine Relay Error" })
+    } finally {
+        setLoading(false)
     }
   }
 
@@ -133,68 +165,51 @@ export default function FieldAgentPage() {
       loadDirectory(parent);
   }
 
-  const jumpToPath = () => {
-      if (customPath.trim()) {
-          loadDirectory(customPath.trim());
-      }
-  }
-
   if (!mounted) return null
 
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 font-code scanline-effect overflow-hidden">
       <SidebarNav />
       
-      {/* منطقة المحتوى الرئيسية */}
       <main className="flex-1 lg:mr-72 flex flex-col h-screen relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.05),transparent)] pointer-events-none z-0" />
         
-        {/* رأس الصفحة السيادي */}
-        <header className="p-6 md:p-8 border-b-2 border-primary/20 bg-black/90 backdrop-blur-xl z-20 flex justify-between items-center shrink-0">
+        <header className="p-6 border-b-2 border-primary/20 bg-black/90 backdrop-blur-xl z-20 flex justify-between items-center shrink-0">
            <div className="flex items-center gap-6">
-              <div className="size-12 md:size-16 rounded-xl bg-black border-2 border-primary flex items-center justify-center shadow-[0_0_40px_rgba(212,175,55,0.3)] animate-neural">
-                 <Monitor className="size-6 md:size-8 text-primary gold-glow" />
+              <div className="size-12 rounded-xl bg-black border-2 border-primary flex items-center justify-center shadow-[0_0_40px_rgba(212,175,55,0.3)] animate-neural">
+                 <Wrench className="size-6 text-primary gold-glow" />
               </div>
               <div>
-                 <h2 className="text-xl md:text-3xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">System <span className="text-primary">Explorer</span></h2>
-                 <div className="flex items-center gap-3 mt-2">
-                    <Badge className="bg-primary text-black border-none uppercase text-[8px] font-black tracking-widest px-3 py-0.5 rounded-full italic">v63.9_MATERIAL_ACCESS</Badge>
-                    <span className="text-[9px] text-muted-foreground uppercase font-black italic truncate max-w-[200px] md:max-w-md">Device Pulse: {resonance.toFixed(4)}%</span>
-                 </div>
+                 <h2 className="text-xl md:text-2xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Field <span className="text-primary">Agent</span></h2>
+                 <span className="text-[8px] text-muted-foreground uppercase font-black italic mt-1 block">v64.0_GENETIC_SYNC</span>
               </div>
            </div>
            
-           {/* حقل القفز للمسارات المطلقة */}
-           <div className="hidden md:flex items-center gap-4 bg-white/5 p-2 rounded-2xl border border-white/10 w-full max-w-xl">
-              <div className="size-10 rounded-xl bg-black flex items-center justify-center border border-primary/20">
-                <Search className="size-4 text-primary/40" />
-              </div>
+           <div className="flex items-center gap-4 bg-white/5 p-1.5 rounded-xl border border-white/10 w-full max-w-lg">
               <Input 
                 value={customPath}
                 onChange={(e) => setCustomPath(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && jumpToPath()}
-                placeholder="Jump to Absolute Path (e.g. /etc, /home/user)..." 
-                className="bg-transparent border-none focus-visible:ring-0 text-xs italic font-black text-white h-10"
+                onKeyDown={(e) => e.key === 'Enter' && loadDirectory(customPath)}
+                placeholder="Enter Absolute Linux Path (e.g. /opt/sovereign-ai-platform)..." 
+                className="bg-transparent border-none focus-visible:ring-0 text-[10px] italic font-black text-white h-8"
               />
-              <Button onClick={jumpToPath} variant="ghost" className="h-10 px-6 rounded-xl hover:bg-primary hover:text-black font-black uppercase text-[10px]">Jump</Button>
+              <Button onClick={() => loadDirectory(customPath)} variant="ghost" className="h-8 px-4 rounded-lg hover:bg-primary hover:text-black font-black uppercase text-[9px]">Jump</Button>
            </div>
         </header>
 
-        {/* مساحة العمل المقسمة */}
         <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative z-10">
            
-           {/* مستكشف الملفات المادي (يسار) */}
-           <aside className="w-full lg:w-96 border-l-2 border-primary/10 bg-black/40 flex flex-col shrink-0 order-last lg:order-none">
+           <aside className="w-full lg:w-80 border-l-2 border-primary/10 bg-black/40 flex flex-col shrink-0 order-last lg:order-none">
               <div className="p-4 border-b border-primary/10 bg-primary/5 flex items-center justify-between">
                  <div className="flex flex-col">
-                    <span className="text-[10px] font-black text-primary uppercase tracking-widest italic flex items-center gap-2">
-                        <FolderOpen className="size-3" /> Hardware DNA
+                    <span className="text-[9px] font-black text-primary uppercase tracking-widest italic flex items-center gap-2">
+                        <FolderOpen className="size-3" /> Matrix Structure
                     </span>
-                    <span className="text-[8px] text-muted-foreground truncate max-w-[150px] mt-1">{currentPath}</span>
+                    <span className="text-[7px] text-muted-foreground truncate max-w-[120px] mt-1">{currentPath}</span>
                  </div>
                  <div className="flex gap-1">
-                    <Button size="icon" variant="ghost" onClick={navigateBack} className="size-8 rounded-lg hover:bg-primary/20"><ChevronLeft className="size-4"/></Button>
-                    <Button size="icon" variant="ghost" onClick={() => loadDirectory(currentPath)} className="size-8 rounded-lg hover:bg-primary/20"><RefreshCcw className="size-4"/></Button>
+                    <Button size="icon" variant="ghost" onClick={navigateBack} className="size-7 rounded-lg hover:bg-primary/20"><ChevronLeft className="size-3"/></Button>
+                    <Button size="icon" variant="ghost" onClick={() => loadDirectory(currentPath)} className="size-7 rounded-lg hover:bg-primary/20"><RefreshCcw className="size-3"/></Button>
                  </div>
               </div>
               <div className="flex-1 overflow-y-auto scrollbar-hide p-2 space-y-1">
@@ -203,114 +218,119 @@ export default function FieldAgentPage() {
                         key={i} 
                         onClick={() => handleFileSelect(file)}
                         className={cn(
-                            "p-3 rounded-lg hover:bg-primary/10 cursor-pointer flex items-center justify-between group transition-all border border-transparent hover:border-primary/20",
-                            selectedFileName === file.name && "bg-primary/10 border-primary/30 shadow-inner"
+                            "p-2 rounded-lg hover:bg-primary/10 cursor-pointer flex items-center justify-between group transition-all border border-transparent hover:border-primary/20",
+                            selectedFileName === file.name && "bg-primary/10 border-primary/30"
                         )}
                     >
                        <div className="flex items-center gap-3">
-                          {file.isDirectory ? <FolderOpen className="size-4 text-primary"/> : <FileCode className="size-4 text-blue-400"/>}
-                          <span className="text-[11px] font-bold text-gray-300 group-hover:text-white truncate max-w-[180px]">{file.name}</span>
+                          {file.isDirectory ? <FolderOpen className="size-3.5 text-primary"/> : <FileCode className="size-3.5 text-blue-400"/>}
+                          <span className="text-[10px] font-bold text-gray-300 group-hover:text-white truncate max-w-[150px]">{file.name}</span>
                        </div>
                        <ChevronRight className="size-3 opacity-20 group-hover:opacity-100 transition-all"/>
                     </div>
                  ))}
-                 {files.length === 0 && !loading && (
-                     <div className="p-10 text-center opacity-20 italic text-[10px] uppercase font-black">Chamber Empty</div>
-                 )}
               </div>
            </aside>
 
-           {/* ساحة التشريح والتحليل (وسط) */}
            <div className="flex-1 flex flex-col overflow-hidden bg-black/20">
-              <div className="flex-1 overflow-y-auto p-6 space-y-8 scrollbar-hide pb-32">
+              <div className="flex-1 overflow-y-auto p-4 space-y-6 scrollbar-hide pb-32">
                  
-                 {selectedFileContent ? (
-                    <Card className="kali-card border-primary/20 bg-black/80 rounded-3xl p-6 shadow-2xl relative group overflow-hidden">
-                       <div className="absolute top-3 right-4 flex gap-2 z-20">
-                          <Badge className="bg-emerald-600/20 text-emerald-400 border-none font-black text-[8px] italic">DNA_ABSORBED</Badge>
-                          <Button variant="ghost" size="icon" onClick={() => setSelectedFileContent("")} className="size-6 rounded-full hover:bg-red-600"><X className="size-3"/></Button>
-                       </div>
-                       <h4 className="text-[10px] font-black text-primary/40 uppercase tracking-widest mb-4 italic px-2">{selectedFileName}</h4>
-                       <div className="bg-black/60 p-6 rounded-2xl font-code text-xs md:text-sm text-emerald-400 leading-relaxed italic h-[500px] overflow-y-auto scrollbar-hide shadow-inner border border-white/5 whitespace-pre selection:bg-primary selection:text-black">
-                          {selectedFileContent}
-                       </div>
-                    </Card>
-                 ) : (
-                    <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-8 py-20">
-                       <Atom className="size-32 text-primary animate-spin-slow" />
-                       <div>
-                          <h3 className="text-3xl md:text-5xl font-black uppercase tracking-widest text-white italic gold-glow mb-2">Device Matrix</h3>
-                          <p className="text-xs italic font-black text-gray-500 uppercase tracking-widest">Select a DNA segment from the hardware structure to begin siphoning.</p>
-                       </div>
-                    </div>
-                 )}
+                 <Tabs defaultValue="editor" className="w-full">
+                    <TabsList className="bg-black/80 border border-primary/20 p-1 h-12 rounded-xl mb-4">
+                        <TabsTrigger value="editor" className="flex-1 rounded-lg text-[10px] font-black italic data-[state=active]:bg-primary data-[state=active]:text-black">CHAMBER_DNA</TabsTrigger>
+                        <TabsTrigger value="analysis" className="flex-1 rounded-lg text-[10px] font-black italic data-[state=active]:bg-primary data-[state=active]:text-black ml-2">INTELLIGENCE</TabsTrigger>
+                    </TabsList>
 
-                 {analysis && (
-                    <Card className="kali-card border-emerald-500/30 bg-black/90 rounded-[2.5rem] p-8 shadow-9xl animate-in zoom-in-95 duration-1000 relative overflow-hidden">
-                       <div className="absolute inset-0 bg-emerald-500/5 opacity-5 animate-pulse" />
-                       <CardHeader className="p-0 mb-6 border-b-2 border-white/5 pb-4 flex flex-row justify-between items-center bg-emerald-600/5 px-6 py-4 rounded-t-2xl">
-                          <div className="flex items-center gap-4">
-                             <div className="size-12 rounded-xl bg-emerald-600 flex items-center justify-center shadow-lg">
-                                <Activity className="size-6 text-white" />
-                             </div>
-                             <CardTitle className="text-xl md:text-2xl text-white font-black italic uppercase gold-glow">Genetic Analysis</CardTitle>
-                          </div>
-                          <Badge className="bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 px-4 py-1 rounded-full font-black text-xs animate-pulse">DNA_STABLE</Badge>
-                       </CardHeader>
-                       <CardContent className="p-4 space-y-8 relative z-10">
-                          <div className="p-6 rounded-2xl bg-black border border-emerald-500/20 italic text-lg md:text-2xl text-gray-100 leading-tight font-black shadow-inner">
-                             "{analysis.commanderBrief}"
-                          </div>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                             <div className="p-5 bg-white/5 rounded-2xl border border-white/10 space-y-4">
-                                <h5 className="text-[10px] font-black text-primary uppercase tracking-[0.4em] border-b border-primary/20 pb-2 italic">Neural Insights</h5>
-                                <p className="text-[13px] text-gray-300 font-bold italic leading-relaxed">{analysis.analysis}</p>
-                             </div>
-                             <div className="p-5 bg-white/5 rounded-2xl border border-white/10 space-y-4">
-                                <h5 className="text-[10px] font-black text-emerald-500 uppercase tracking-[0.4em] border-b border-emerald-500/20 pb-2 italic">Integrity Modifications</h5>
-                                <p className="text-[13px] text-gray-100 font-black italic leading-relaxed">{analysis.suggestedChanges}</p>
-                             </div>
-                          </div>
-                       </CardContent>
-                    </Card>
-                 )}
+                    <TabsContent value="editor" className="m-0">
+                        {selectedFileName ? (
+                            <Card className="kali-card border-primary/20 bg-black/80 rounded-2xl p-4 shadow-2xl relative group">
+                                <div className="flex justify-between items-center mb-4 px-2">
+                                    <div className="flex flex-col">
+                                        <span className="text-[10px] font-black text-primary uppercase italic">{selectedFileName}</span>
+                                        <span className="text-[7px] text-muted-foreground truncate max-w-xs">{selectedFilePath}</span>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <Button onClick={handleGeneticInjection} variant="outline" className="h-8 bg-emerald-600/10 border-emerald-500/30 text-emerald-400 font-black text-[9px] uppercase tracking-widest italic rounded-lg hover:bg-emerald-600 hover:text-white transition-all">
+                                            <Save className="size-3 mr-2" /> Sync DNA
+                                        </Button>
+                                        <Button variant="ghost" size="icon" onClick={() => setSelectedFileName("")} className="size-8 rounded-lg hover:bg-red-600"><X className="size-4"/></Button>
+                                    </div>
+                                </div>
+                                <Textarea 
+                                    value={selectedFileContent}
+                                    onChange={(e) => setSelectedFileContent(e.target.value)}
+                                    className="bg-black/60 p-6 rounded-xl font-code text-xs text-emerald-400 leading-relaxed italic h-[500px] overflow-y-auto scrollbar-hide shadow-inner border border-white/5 whitespace-pre selection:bg-primary selection:text-black resize-none"
+                                />
+                            </Card>
+                        ) : (
+                            <div className="h-[500px] border-4 border-dashed border-primary/5 rounded-[3rem] flex flex-col items-center justify-center text-center opacity-10 gap-6">
+                                <Atom className="size-24 text-primary animate-spin-slow" />
+                                <h3 className="text-2xl font-black uppercase tracking-widest text-white italic">Waiting for DNA</h3>
+                            </div>
+                        )}
+                    </TabsContent>
+
+                    <TabsContent value="analysis" className="m-0">
+                        {analysis ? (
+                            <Card className="kali-card border-emerald-500/30 bg-black/90 rounded-2xl p-6 shadow-9xl animate-in zoom-in-95 duration-1000">
+                                <div className="flex items-center gap-4 mb-6 border-b border-white/5 pb-4">
+                                    <BrainCircuit className="size-8 text-emerald-400 animate-pulse" />
+                                    <h4 className="text-xl font-black italic gold-glow uppercase">Neural Mapping</h4>
+                                </div>
+                                <div className="space-y-6">
+                                    <div className="p-4 bg-primary/5 rounded-xl border border-primary/20">
+                                        <p className="text-lg text-white font-bold italic leading-relaxed">"{analysis.commanderBrief}"</p>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+                                            <span className="text-[9px] font-black text-primary uppercase block mb-2 tracking-widest">Logic Structure</span>
+                                            <p className="text-xs text-gray-300 leading-relaxed italic">{analysis.analysis}</p>
+                                        </div>
+                                        <div className="p-4 bg-white/5 rounded-xl border border-white/10">
+                                            <span className="text-[9px] font-black text-emerald-500 uppercase block mb-2 tracking-widest">Integrity Pulse</span>
+                                            <p className="text-xs text-gray-100 leading-relaxed font-black italic">{analysis.suggestedChanges}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Card>
+                        ) : (
+                            <div className="h-[500px] border-4 border-dashed border-white/5 rounded-[3rem] flex flex-col items-center justify-center text-center opacity-10 gap-6">
+                                <Activity className="size-20 text-white animate-pulse" />
+                                <h3 className="text-2xl font-black uppercase tracking-widest text-white italic">Awaiting Intel</h3>
+                            </div>
+                        )}
+                    </TabsContent>
+                 </Tabs>
               </div>
 
-              {/* حقل الأوامر الجيني */}
-              <div className="absolute bottom-0 left-0 lg:left-0 right-0 p-6 bg-black/95 backdrop-blur-2xl border-t-2 border-primary/40">
-                 <div className="max-w-5xl mx-auto relative group">
-                    <Terminal className="absolute left-6 top-1/2 -translate-y-1/2 size-5 text-primary/40 group-focus-within:text-primary transition-all" />
+              <div className="absolute bottom-0 left-0 right-0 p-6 bg-black/95 backdrop-blur-2xl border-t-2 border-primary/40">
+                 <div className="max-w-4xl mx-auto relative group">
+                    <Terminal className="absolute left-6 top-1/2 -translate-y-1/2 size-4 text-primary/40 group-focus-within:text-primary transition-all" />
                     <Input 
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && handleDeepAnalysis()}
-                        placeholder=" Instruct the agent to analyze the current system DNA..." 
-                        className="h-16 md:h-20 bg-white/5 border-2 border-white/10 rounded-[2rem] pl-16 pr-32 text-lg md:text-xl italic font-black focus:border-primary shadow-inner text-white transition-all placeholder:text-gray-900 selection:bg-primary"
+                        placeholder=" Instruct the agent to analyze target DNA or merge Integrity changes..." 
+                        className="h-14 md:h-16 bg-white/5 border-2 border-white/10 rounded-full pl-16 pr-24 text-sm italic font-black focus:border-primary shadow-inner text-white transition-all placeholder:text-gray-900"
                     />
                     <Button 
                         onClick={handleDeepAnalysis}
                         disabled={loading || !input.trim()}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 size-12 md:size-14 rounded-full bg-primary hover:bg-white text-black shadow-lg transition-all border-4 border-black/20 group active:scale-90"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 size-10 md:size-12 rounded-full bg-primary hover:bg-white text-black shadow-lg transition-all border-4 border-black/20 group active:scale-90"
                     >
-                        {loading ? <Loader2 className="size-5 animate-spin" /> : <Send className="size-5 group-hover:translate-x-1 transition-transform" />}
+                        {loading ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4 group-hover:translate-x-1 transition-transform" />}
                     </Button>
                  </div>
               </div>
            </div>
         </div>
 
-        <div className="shrink-0 p-3 border-t border-white/5 flex justify-center items-center gap-10 opacity-30 text-[8px] font-black uppercase tracking-[2em] italic">
-            <span>AL-MUIZZ SYSTEM EXPLORER v63.9</span>
-            <div className="size-1.5 rounded-full bg-white animate-pulse shadow-[0_0_20px_white]" />
-            <span>MATERIAL_CONSENSUS_2026</span>
+        <div className="shrink-0 p-2 border-t border-white/5 flex justify-center items-center gap-10 opacity-30 text-[7px] font-black uppercase tracking-[2em] italic">
+            <span>AL-MUIZZ SYSTEM EXPLORER v64.0</span>
+            <div className="size-1 rounded-full bg-white animate-ping" />
+            <span>GHAZALI_ROOT_VERIFIED_2026</span>
         </div>
       </main>
     </div>
   )
-}
-
-function XIcon({className}: {className?: string}) {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-    )
 }
