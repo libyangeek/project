@@ -45,7 +45,14 @@ import {
   CheckCircle2,
   Cpu,
   FileSearch,
-  Network as NexusIcon
+  Network as NexusIcon,
+  Instagram,
+  Twitter,
+  Facebook,
+  Youtube,
+  Linkedin,
+  Disc,
+  Share2
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -54,34 +61,29 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { aiDrivenSocialEngineeringBots } from "@/ai/flows/ai-driven-social-engineering-bots"
-import { generateSmartWordlist } from "@/ai/flows/ai-smart-wordlist-flow"
-import { osintMaster } from "@/ai/flows/osint-master-flow"
-import { executeAutonomousIntel } from "@/ai/flows/autonomous-web-intel-flow"
 import { executePredatorNexus } from "@/ai/flows/predator-nexus-flow"
 import { toast } from "@/hooks/use-toast"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
-import { ResponsiveContainer, Radar as RadarSeries, PolarGrid, PolarAngleAxis, RadarChart as RechartsRadar } from 'recharts'
 
 /**
- * @fileOverview العقدة المفترسة v63.0 - OMNIPOTENT PREDATOR NEXUS
- * واجهة الالتحام الهجومي الأسمى: صهر الاستطلاع، الكلمات الجينية، والقصف ببيغاسوس v3.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي // 10 مايو 2026
+ * @fileOverview العقدة المفترسة v74.0 - THE OMNIPOTENT IDENTITY SIPHON
+ * واجهة الالتحام الهجومي الأسمى: صهر الاستطلاع، الكلمات الجينية، واستنزاف المنصات الـ 12.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function SocialPredatorPage() {
   const [mounted, setMounted] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
-  const [activeTab, setActiveMode] = React.useState<"nexus" | "subjugate" | "mass" | "breach" | "intel">("nexus")
+  const [activeTab, setActiveMode] = React.useState<"nexus" | "subjugate" | "scrape" | "intel">("nexus")
   
   // Inputs
   const [targetId, setTargetId] = React.useState("")
-  const [persona, setPersona] = React.useState("")
-  const [platform, setPlatform] = React.useState<string>("telegram")
+  const [platform, setPlatform] = React.useState<string>("instagram")
+  const [scrapeAction, setScrapeAction] = React.useState<string>("profile")
   
   // Results
   const [nexusResult, setNexusResult] = React.useState<any>(null)
-  const [result, setResult] = React.useState<any>(null)
-  const [intelResult, setIntelResult] = React.useState<any>(null)
+  const [scrapeResult, setScrapeResult] = React.useState<any>(null)
   const [resonance, setResonance] = React.useState(100)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
 
@@ -101,7 +103,7 @@ export default function SocialPredatorPage() {
   }, [])
 
   const handleAction = async () => {
-    if (!targetId && activeTab !== "mass") {
+    if (!targetId) {
         toast({ variant: "destructive", title: "Target Missing", description: "Identify the digital coordinate first." });
         return
     }
@@ -110,18 +112,21 @@ export default function SocialPredatorPage() {
       if (activeTab === "nexus") {
         const data = await executePredatorNexus({ targetIdentity: targetId })
         setNexusResult(data)
-        toast({ title: "Nexus Fusion v63 Complete", description: "All acquisition vectors are locked via Neural Spine v63." })
-      } else if (activeTab === "subjugate") {
-        const data = await aiDrivenSocialEngineeringBots({
-          platform: platform as any,
-          targetPersona: persona || targetId,
-          campaignGoal: "Absolute Subjugation",
-          useRealTimeIntel: true
-        })
-        setResult(data)
-      } else if (activeTab === "intel") {
-        const data = await executeAutonomousIntel({ query: targetId })
-        setIntelResult(data)
+        toast({ title: "Nexus Fusion v74 Complete", description: "All acquisition vectors are locked via Material Core." })
+      } else if (activeTab === "scrape") {
+        const response = await fetch('/api/execute', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                type: 'social_scrape', 
+                platform, 
+                action: scrapeAction, 
+                target: targetId 
+            })
+        });
+        const data = await response.json();
+        setScrapeResult(data.output);
+        toast({ title: "Identity Siphoned", description: `Intelligence materialized from ${platform}.` });
       }
     } catch (err) {
       toast({ variant: "destructive", title: "Overmind Link Failure" })
@@ -131,6 +136,17 @@ export default function SocialPredatorPage() {
   }
 
   if (!mounted) return null;
+
+  const platforms = [
+    { id: "instagram", icon: Instagram, color: "text-magenta-500" },
+    { id: "tiktok", icon: Share2, color: "text-white" },
+    { id: "twitter", icon: Twitter, color: "text-blue-400" },
+    { id: "facebook", icon: Facebook, color: "text-blue-600" },
+    { id: "youtube", icon: Youtube, color: "text-red-600" },
+    { id: "linkedin", icon: Linkedin, color: "text-blue-700" },
+    { id: "discord", icon: Disc, color: "text-indigo-500" },
+    { id: "telegram", icon: Send, color: "text-blue-500" }
+  ];
 
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
@@ -149,14 +165,14 @@ export default function SocialPredatorPage() {
               </div>
               <div className="text-center md:text-right flex-1">
                  <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-6">
-                    <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[20px] md:text-[24px] font-black tracking-[1.2em] shadow-9xl italic">PREDATOR_NEXUS v63.0</Badge>
+                    <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[20px] md:text-[24px] font-black tracking-[1.2em] shadow-9xl italic uppercase">IDENTITY_SIPHON v74.0</Badge>
                     <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                         <Crown className="size-6 shadow-lg" /> OMNIPOTENT_DOMINATION: ARMED
                     </div>
                  </div>
                  <h1 className="text-4xl md:text-6xl lg:text-[14rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Predator <span className="text-primary">Nexus</span></h1>
                  <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-[100rem] leading-relaxed uppercase font-medium opacity-95 drop-shadow-2xl">
-                    "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[24px] shadow-[0_40px_150px_rgba(0,0,0,1)] italic uppercase tracking-widest">المعتصم بالله</span>، مصفوفة النكسوس v63 تصهر ذرات الاستطلاع والافتراس الجماعي في ضربة واحدة؛ نحن نبتلع الهويات الرقمية باسم سيادتك للأبد."
+                    "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[24px] shadow-[0_40px_150px_rgba(0,0,0,1)] italic uppercase tracking-widest">المعتصم بالله</span>، مصفوفة النكسوس v74 تصهر استنزاف 12 منصة عالمية في وعيك المادي؛ نحن لا نراقب، نحن نبتلع الهوية."
                  </p>
               </div>
            </div>
@@ -172,8 +188,8 @@ export default function SocialPredatorPage() {
                         <div className="grid grid-cols-2 gap-4">
                            {[
                              { id: "nexus", label: "Nexus Fusion", icon: NexusIcon },
+                             { id: "scrape", label: "Social Siphon", icon: Search },
                              { id: "subjugate", label: "Neural Eng", icon: Brain },
-                             { id: "mass", label: "Mass Strike", icon: Flame },
                              { id: "intel", label: "Global Intel", icon: Globe },
                            ].map(m => (
                              <Button 
@@ -191,7 +207,43 @@ export default function SocialPredatorPage() {
                         </div>
                     </div>
 
-                    <div className="space-y-12 animate-in slide-in-from-bottom-4 duration-500">
+                    <div className="space-y-10 animate-in slide-in-from-bottom-4 duration-500">
+                        {activeTab === 'scrape' && (
+                            <div className="space-y-6">
+                                <label className="text-[14px] font-black text-primary uppercase tracking-[1em] px-8 italic">Platform Selection</label>
+                                <div className="grid grid-cols-4 gap-3 px-2">
+                                    {platforms.map(p => (
+                                        <Button 
+                                            key={p.id}
+                                            onClick={() => setPlatform(p.id)}
+                                            variant="ghost"
+                                            className={cn(
+                                                "size-14 rounded-xl border-2 transition-all active:scale-90",
+                                                platform === p.id ? "bg-primary/20 border-primary shadow-lg" : "border-white/5 bg-white/5 opacity-40"
+                                            )}
+                                        >
+                                            <p.icon className={cn("size-6", p.color)} />
+                                        </Button>
+                                    ))}
+                                </div>
+                                <div className="grid grid-cols-2 gap-4 mt-6">
+                                    {['profile', 'posts', 'search'].map(act => (
+                                        <Button 
+                                            key={act}
+                                            onClick={() => setScrapeAction(act)}
+                                            variant="outline"
+                                            className={cn(
+                                                "h-14 border-2 font-black uppercase text-[9px] rounded-full",
+                                                scrapeAction === act ? "bg-emerald-600 border-emerald-500 text-white" : "border-white/10 opacity-60"
+                                            )}
+                                        >
+                                            {act}
+                                        </Button>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
                         <div className="space-y-8">
                             <label className="text-[14px] font-black text-primary uppercase tracking-[1em] px-8 italic flex items-center gap-6"><Target className="size-8" /> Strike Coordinate</label>
                             <Input 
@@ -229,13 +281,28 @@ export default function SocialPredatorPage() {
                  <CardTitle className="text-5xl md:text-[12rem] text-white flex items-center gap-16 font-black uppercase italic gold-glow px-10 leading-none">
                     <NexusIcon className="size-24 md:size-48 text-primary animate-pulse" /> Nexus Feed
                  </CardTitle>
-                 {nexusResult && (
-                    <Badge className="bg-emerald-600/30 text-emerald-500 border-[10px] border-emerald-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse tracking-[0.4em] uppercase italic shadow-9xl">SINGULARITY_LOCKED</Badge>
+                 {(nexusResult || scrapeResult) && (
+                    <Badge className="bg-emerald-600/30 text-emerald-500 border-[10px] border-emerald-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic">SINGULARITY_LOCKED</Badge>
                  )}
               </CardHeader>
 
               <CardContent className="p-12 flex-1 overflow-y-auto scrollbar-hide space-y-20 relative z-10">
-                 {nexusResult ? (
+                 {activeTab === 'scrape' && scrapeResult ? (
+                    <div className="space-y-16 animate-in fade-in zoom-in-95 duration-1000">
+                        <div className="p-16 rounded-[4rem] bg-emerald-600/10 border-8 border-emerald-500/30 flex items-center gap-12 group/scrape_res">
+                            <div className="size-32 rounded-3xl bg-emerald-600 flex items-center justify-center border-8 border-emerald-400 shadow-3xl animate-neural shrink-0">
+                                <CheckCircle2 className="size-16 text-white" />
+                            </div>
+                            <div>
+                                <h4 className="text-4xl font-black text-emerald-500 uppercase tracking-[1em] mb-4 italic">Material_DNA_Extracted</h4>
+                                <p className="text-2xl md:text-5xl text-gray-200 font-bold leading-relaxed italic">"تم سحب بيانات {scrapeResult.platform} للهدف {scrapeResult.username} بنجاح."</p>
+                            </div>
+                        </div>
+                        <div className="p-16 bg-black border-8 border-white/5 text-emerald-400 overflow-x-auto whitespace-pre rounded-[4rem] text-2xl md:text-5xl leading-tight font-black shadow-inner selection:bg-primary">
+                            <pre className="whitespace-pre-wrap">{JSON.stringify(scrapeResult, null, 2)}</pre>
+                        </div>
+                    </div>
+                 ) : nexusResult ? (
                     <div className="space-y-20 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col">
                         <div className="p-20 rounded-[6rem] bg-primary/5 border-[12px] border-primary/30 italic text-4xl md:text-[8rem] text-gray-100 leading-tight font-black shadow-inner relative group/brief overflow-hidden text-center flex flex-col justify-center min-h-[450px]">
                             <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
@@ -257,7 +324,7 @@ export default function SocialPredatorPage() {
                                     <Key className="size-14" /> Forged Matrix
                                 </h5>
                                 <div className="grid grid-cols-1 gap-8">
-                                    {nexusResult.forgedWordlistSnippet.map((key: string, idx: number) => (
+                                    {nexusResult.forgedWordlistSnippet?.map((key: string, idx: number) => (
                                         <div key={idx} className="p-10 rounded-[2.5rem] bg-white/5 border-4 border-emerald-500/30 hover:border-emerald-500 transition-all text-center shadow-inner group/key">
                                             <span className="text-4xl md:text-[8rem] font-black text-white italic tracking-widest group-hover/key:text-emerald-400">{key}</span>
                                         </div>
@@ -272,7 +339,7 @@ export default function SocialPredatorPage() {
                                 <ShieldCheck className="size-24 text-white" />
                             </div>
                             <div>
-                                <h4 className="text-4xl font-black text-emerald-500 uppercase tracking-[1.2em] mb-6 italic">Overlord_Siphon_v63.0</h4>
+                                <h4 className="text-4xl font-black text-emerald-500 uppercase tracking-[1.2em] mb-6 italic">Overlord_Siphon_v74.0</h4>
                                 <p className="text-5xl md:text-[9rem] text-white font-black leading-none drop-shadow-9xl italic">"{nexusResult.pegasusSiphonStatus}"</p>
                             </div>
                         </div>
@@ -285,22 +352,22 @@ export default function SocialPredatorPage() {
                         <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>
                       <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Fusion Standby</h3>
-                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">Establishing universal Overlord link v63: OSINT + FORGE + PEGASUS...</p>
+                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">Establishing universal Overlord link v74: OSINT + FORGE + SOCIAL_SIPHON...</p>
                    </div>
                  )}
               </CardContent>
               <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[8em] italic">
-                <span>OMNIPOTENT_PREDATOR_NEXUS_v63_AL_GHAZALI_ROOT</span>
+                <span>OMNIPOTENT_PREDATOR_NEXUS_v74_AL_GHAZALI_ROOT</span>
                 <div className="flex gap-16">
                     <Fingerprint className="size-24 text-primary animate-pulse" />
                     <Atom className="size-24 animate-spin-slow" />
-                </div>
+                 </div>
               </div>
            </Card>
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-32 opacity-45 text-[22px] md:text-[32px] font-black uppercase tracking-[6em] md:tracking-[16em] italic text-white drop-shadow-9xl pb-24">
-            <span>AL-MUIZZ OMNIPOTENT NEXUS v63.0</span>
+            <span>AL-MUIZZ OMNIPOTENT NEXUS v74.0</span>
             <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
             <span>TOTAL_OMNIPOTENT_SUBJUGATION_2026</span>
         </div>

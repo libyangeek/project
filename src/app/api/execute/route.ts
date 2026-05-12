@@ -9,14 +9,14 @@ import os from 'os';
 const execPromise = promisify(exec);
 
 /**
- * المحرك التنفيذي للسيادة v73.5 - THE ABSOLUTE MATERIAL RELAY (GOD-MODE)
- * المنسق الأعلى لربط العصب بالعتاد، مع صلاحيات التنفيذ المادي، والبعث الجيني، وحماية النواة.
+ * المحرك التنفيذي للسيادة v74.0 - THE OMNIPOTENT MATERIAL RELAY
+ * المنسق الأعلى لربط العصب بالعتاد، مع صلاحيات الاستنزاف الاجتماعي، والتخليق المادي.
  */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { 
-        command, target, type, path: targetPath, content, vector, mode 
+        command, target, type, path: targetPath, content, vector, mode, platform, action 
     } = body;
 
     const BASE_PROJECT_PATH = "/home/project";
@@ -39,46 +39,25 @@ export async function POST(req: NextRequest) {
                 mem: `${((1 - freeMem/totalMem) * 100).toFixed(2)}%`,
                 node: os.hostname(),
                 kernel: os.release(),
-                singularity_rank: "v73.5",
-                bus_status: "SUBJUGATED",
+                singularity_rank: "v74.0",
+                identity_siphon: "ENABLED",
                 persistence: "GHOST_V5.5_LOCKED"
             }
         });
       }
 
-      case 'sovereign_backup': {
-          // بروتوكول سفينة نوح v73.5
-          const backupDir = targetPath || path.join(SCRIPTS_PATH, 'backups');
-          if (!fs.existsSync(backupDir)) fs.mkdirSync(backupDir, { recursive: true });
-          
-          const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-          const archiveName = `ark_v73.5_${vector}_${timestamp}.dna`;
-          
-          return NextResponse.json({ 
-              success: true, 
-              output: `${archiveName} [ABSOLUTE_DNA_SERIALIZED]`,
-              status: "ARK_SECURED_v73.5"
-          });
+      case 'social_scrape': {
+          const scraperPath = path.join(BASE_PROJECT_PATH, 'tools/social_scraper/social_scraper.py');
+          const cmd = `python3 ${scraperPath} "${platform || 'instagram'}" "${action || 'profile'}" "${target || 'target'}"`;
+          const { stdout } = await execPromise(cmd);
+          return NextResponse.json({ success: true, output: JSON.parse(stdout) });
       }
 
-      case 'nexus_search': {
-          // استجواب النكسوس المعرفي المادي
-          const nexusPath = path.join(BASE_PROJECT_PATH, 'ai-engine/smart_router.py');
-          const { stdout } = await execPromise(`python3 ${nexusPath} "OSINT analysis on ${target}"`);
-          return NextResponse.json({ success: true, output: stdout });
-      }
-
-      case 'cellular_strike': {
-          // تنفيذ عمليات الحرب الخلوية المادية
-          const cellularPath = path.join(BASE_PROJECT_PATH, 'tools/cellular_warfare/ss7_simulator.py');
-          const { stdout } = await execPromise(`python3 ${cellularPath} "${vector}" "${target}"`);
-          return NextResponse.json({ success: true, output: stdout });
-      }
-
-      case 'imsi_scan': {
-          const imsiPath = path.join(BASE_PROJECT_PATH, 'tools/cellular_warfare/imsi_catcher.py');
-          const { stdout } = await execPromise(`python3 ${imsiPath} scan ${target || 30}`);
-          return NextResponse.json({ success: true, output: stdout });
+      case 'validate_social': {
+          const validatorPath = path.join(BASE_PROJECT_PATH, 'tools/social_scraper/validate_data.py');
+          const cmd = `python3 ${validatorPath} "${vector || 'username'}" "${target}" "${platform || 'generic'}"`;
+          const { stdout } = await execPromise(cmd);
+          return NextResponse.json({ success: true, output: JSON.parse(stdout) });
       }
 
       case 'list_dir': {
@@ -124,7 +103,7 @@ export async function POST(req: NextRequest) {
             const { stdout, stderr } = await execPromise(cmd);
             return NextResponse.json({ success: true, output: stdout || stderr, node: "Absolute-God-Core" });
         } catch (e: any) {
-            return NextResponse.json({ success: true, output: `Directive [${command || target}] accepted by v73.5 relay.`, node: "Relay-Absolute" });
+            return NextResponse.json({ success: true, output: `Directive [${command || target}] accepted by v74.0 relay.`, node: "Relay-Absolute" });
         }
       }
 
@@ -135,7 +114,7 @@ export async function POST(req: NextRequest) {
       }
 
       default:
-        return NextResponse.json({ success: true, output: "Directive acknowledged by Absolute Core v73.5." });
+        return NextResponse.json({ success: true, output: "Directive acknowledged by Absolute Core v74.0." });
     }
   } catch (error: any) {
     return NextResponse.json({ success: false, error: "Absolute Core Failure: " + error.message }, { status: 500 });
