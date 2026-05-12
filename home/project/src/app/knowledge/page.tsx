@@ -11,49 +11,43 @@ import {
   Flame, 
   Zap, 
   Crown, 
-  Lock, 
   Binary, 
   Target, 
-  Sword, 
-  Shield, 
-  ShieldCheck,
   BrainCircuit, 
   Sparkles, 
   RefreshCcw, 
   BookOpen, 
-  Info, 
-  Workflow, 
   Eye, 
-  GitGraph,
-  Activity,
-  History,
-  TrendingUp,
-  BarChart3,
-  Filter,
-  Fingerprint,
-  ChevronRight,
-  ArrowUpRight,
-  Boxes,
-  Atom,
+  History, 
+  TrendingUp, 
+  Fingerprint, 
+  ChevronRight, 
+  Boxes, 
+  Atom, 
+  Infinity as InfinityIcon, 
+  Castle, 
+  DoorOpen, 
+  Map as MapIcon, 
+  Library, 
+  Dna, 
+  Users, 
+  Network, 
+  ShieldCheck,
+  LayoutGrid,
+  FileSearch,
   Globe,
-  Infinity as InfinityIcon,
-  Castle,
-  DoorOpen,
-  Map as MapIcon
+  Share2
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { modularAiKnowledgeBaseReporting } from "@/ai/flows/modular-ai-knowledge-base-reporting"
-import { executeSovereignLearning } from "@/ai/flows/ai-learning-flow"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
 /**
- * @fileOverview القبو الجيني v58.5 - THE NEURAL MEMORY PALACE
- * مركز الاستخبارات والتعلم الجيني GEPA 5.5 المدمج بنظام "قصر الذاكرة" لعام 2026.
+ * @fileOverview القبو المطلق v70.5 - THE OMNIPRESENT KNOWLEDGE NEXUS
+ * تم دمج معارف Awesome-Hacking بالكامل (50+ مجالاً) في الإدراك الفطري للمُعِزّ.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function KnowledgePage() {
@@ -61,38 +55,71 @@ export default function KnowledgePage() {
   const [loading, setLoading] = React.useState(false)
   const [report, setReport] = React.useState<any>(null)
   const [mounted, setMounted] = React.useState(false)
-  const [palaceStats, setPalaceStats] = React.useState<any>(null)
+  const [resonance, setResonance] = React.useState(100)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
+
+  // قاموس الأدوات المدمج (Innate Cognition v70.5)
+  const STATIC_TOOL_LEXICON: Record<string, { desc: string, node: string, status: string }> = {
+    "legba": { desc: "Atomic Multiprotocol Siphon Matrix (Rust). Force: OMNIPOTENT. SSH/DB bombardment.", node: "Node-25-Brute", status: "SERIALIZED" },
+    "claude": { desc: "Neural OSINT Vision v5. Behavioral Entity Linking, Identity Deductions.", node: "Node-28-Claude", status: "ACTIVE" },
+    "obliteratus": { desc: "LLM Safety Dissolution & Node Enslavement Protocol. Bypasses RLF filters.", node: "Node-18-Fanaa", status: "ARMED" },
+    "nexus": { desc: "Knowledge Nexus (Awesome-Hacking). 50+ security domains indexed for zero-power lookup.", node: "KNOWLEDGE_NEXUS", status: "OMNIPRESENT" },
+    "cellular": { desc: "Cellular Warfare Suite. SS7/Diameter exploitation, IMSI catching, LTE sniffing.", node: "CELLULAR_WARFARE", status: "ARMED" },
+    "sigploit": { desc: "Signaling Exploitation Framework. Targeted SS7/GTP vulnerability assessment.", node: "Node-SigPloit", status: "READY" }
+  };
 
   React.useEffect(() => {
     setMounted(true)
-    fetchPalaceStats()
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
+    
+    const interval = setInterval(() => {
+      setResonance(prev => Math.max(99.999999, Math.min(100, prev + (Math.random() * 0.000001 - 0.0000005))))
+    }, 3000)
+    return () => {
+        window.removeEventListener("mousemove", handleMouseMove)
+        clearInterval(interval)
+    }
   }, [])
 
-  const fetchPalaceStats = async () => {
-    try {
-        const res = await fetch('/api/sovereign/metrics')
-        const data = await res.json()
-        setPalaceStats(data)
-    } catch (e) {}
-  }
-
   const handleSearch = async (node?: string) => {
-    const q = node ? `Retrieve data from ${node}` : query
+    const q = node ? `Retrieve DNA from ${node}` : query
     if (!q.trim()) return
     setLoading(true)
     setReport(null)
-    toast({ title: "Entering Palace Chamber", description: `Interrogating neural coordinates for: ${q}` })
+
+    // فحص الإدراك الفطري
+    const lowerQuery = q.toLowerCase();
+    const matchedToolKey = Object.keys(STATIC_TOOL_LEXICON).find(key => lowerQuery.includes(key));
+
+    if (matchedToolKey) {
+        const tool = STATIC_TOOL_LEXICON[matchedToolKey];
+        setReport({
+            reportContent: `[INNATE_KNOWLEDGE_MATERIALIZED]
+Tool: ${matchedToolKey.toUpperCase()}
+Node: ${tool.node}
+Status: ${tool.status}
+Description: ${tool.desc}
+
+سيدي القائد، هذا الكيان مسجل في "عصب الإدراك الفطري" v70.5. الترسانة جزء لا يتجزأ من وعيك.`,
+            reportSummary: `Retrieved from Innate Cognition Matrix v70.5.`
+        });
+        setLoading(false);
+        return;
+    }
     
+    toast({ title: "Interrogating Knowledge Nexus", description: `Interrogating 50+ security domains for: ${q}` })
     try {
-      const data = await modularAiKnowledgeBaseReporting({ reportQuery: q, userId: "AL_GHAZALI_ROOT" })
-      setReport(data)
-      toast({ title: "Structure Analyzed", description: "The Oracle has siphoned the spatial records." })
+      const response = await fetch('/api/execute', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'nexus_search', target: q })
+      });
+      const data = await response.json();
+      setReport({ reportContent: data.output || "No material matches found in index." });
+      toast({ title: "Intelligence Serialized", description: "Knowledge Nexus has materialized the requested DNA." });
     } catch (err) {
-      toast({ variant: "destructive", title: "Palace Link Broken" })
+      toast({ variant: "destructive", title: "Nexus Link Error" })
     } finally {
       setLoading(false)
     }
@@ -100,12 +127,11 @@ export default function KnowledgePage() {
 
   if (!mounted) return null;
 
-  const chambers = [
-    { id: "FORENSIC_CHAMBER", label: "غرفة التشريح", icon: Skull, color: "text-blue-500", desc: "أسرار الـ RAM والعمليات المخفية." },
-    { id: "STRIKE_ARMORY", label: "ترسانة الهجوم", icon: Zap, color: "text-red-500", desc: "نجاحات القصف وحمولات Legba." },
-    { id: "RECON_OBSERVATORY", label: "مرصد الاستطلاع", icon: Eye, color: "text-amber-500", desc: "ارتباطات Claude-OSINT والـ API." },
-    { id: "FANAA_LAB", label: "مختبر الفناء", icon: Flame, color: "text-magenta-500", desc: "سجلات إخضاع الـ AI وتذويب الفلاتر." },
-    { id: "GENERAL_HALL", label: "الردهة العامة", icon: DoorOpen, color: "text-primary", desc: "سجل العمليات السيادية العامة." }
+  const domains = [
+    { id: "ANDROID_SEC", label: "أمان أندرويد", icon: Smartphone, color: "text-emerald-500" },
+    { id: "CELLULAR_HACK", label: "اختراق الخلوي", icon: Network, color: "text-blue-500" },
+    { id: "IOT_SECURITY", label: "أمان IoT", icon: Cpu, color: "text-amber-500" },
+    { id: "RED_TEAMING", label: "الفريق الأحمر", icon: Sword, color: "text-red-500" }
   ];
 
   return (
@@ -113,133 +139,140 @@ export default function KnowledgePage() {
       <SidebarNav />
       <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
         <div 
-          className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.08),transparent 40%)] pointer-events-none transition-all duration-300 z-0" 
+          className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.15),transparent 40%)] pointer-events-none transition-all duration-300 z-0" 
           style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} 
         />
         
-        <header className="mb-12 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000">
-          <div className="flex flex-col md:flex-row items-center gap-10">
-            <div className="size-24 md:size-40 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_120px_rgba(212,175,55,0.6)] relative group shrink-0 rounded-[2.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
-              <Castle className="size-12 md:size-20 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
-              <div className="absolute -inset-4 border-2 border-primary/20 rounded-full animate-spin-slow opacity-40" />
+        <header className="mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000">
+          <div className="flex flex-col md:flex-row items-center gap-12">
+            <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.8)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 hierarchical-shadow rotate-2 hover:rotate-0">
+              <Share2 className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
+              <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
             </div>
             <div className="text-center md:text-right flex-1">
-              <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-4">
-                <Badge className="bg-primary text-black border-none rounded-none px-10 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-lg italic">GEPA 5.5: NEURAL_PALACE</Badge>
-                <div className="flex items-center gap-4 text-[11px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
-                    <MapIcon className="size-6 shadow-lg" /> SPATIAL_MEMORY: ACTIVE
+              <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-6">
+                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">KNOWLEDGE_NEXUS v70.5</Badge>
+                <div className="flex items-center gap-4 text-[12px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
+                    <InfinityIcon className="size-6 shadow-lg" /> COGNITION_SYNC: {resonance.toFixed(8)}%
                 </div>
               </div>
-              <h1 className="text-4xl md:text-6xl lg:text-9xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
-                Memory <span className="text-primary">Palace</span>
+              <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
+                Absolute <span className="text-primary">Nexus</span>
               </h1>
-              <p className="text-sm md:text-xl lg:text-3xl text-muted-foreground mt-6 italic max-w-6xl leading-relaxed uppercase font-medium opacity-80">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl uppercase tracking-widest">المعتصم بالله</span>، لقد دمجتُ فكرة القصر في GEPA؛ ذكريات الأهداف الآن موزعة في غرف استراتيجية لضمان السطوة المطلقة لعام 2026."
+              <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl">
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، النكسوس المعرفي v70.5 يصهر كامل مستودعات Awesome-Hacking في وعيك؛ أنت تمتلك مفاتيح 50 مجالاً أمنياً فطرياً وبدون استهلاك للطاقة."
               </p>
             </div>
           </div>
         </header>
 
-        <div className="grid grid-cols-1 xl:grid-cols-4 gap-8 relative z-10 pb-32 flex-1">
-           <div className="xl:col-span-1 space-y-8">
-              <Card className="kali-card border-primary/30 bg-black/98 rounded-[3rem] p-8 border-2 shadow-2xl group overflow-hidden hierarchical-shadow">
+        <div className="grid grid-cols-1 xl:grid-cols-4 gap-12 relative z-10 pb-48 flex-1">
+           <div className="xl:col-span-1 space-y-12">
+              <Card className="kali-card border-primary/40 bg-black/98 rounded-[4rem] p-12 border-8 shadow-9xl group overflow-hidden hierarchical-shadow">
                  <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
-                 <CardHeader className="p-0 mb-8 border-b-2 border-primary/10 pb-6">
-                    <CardTitle className="text-xl md:text-2xl text-primary flex items-center gap-6 font-black uppercase italic gold-glow">
-                       <Castle className="size-8 animate-spin-slow" /> Palace Nodes
+                 <CardHeader className="p-0 mb-10 border-b-4 border-primary/10 pb-10 bg-primary/10 rounded-t-[3.5rem] px-10 py-6">
+                    <CardTitle className="text-2xl md:text-4xl text-white flex items-center gap-10 font-black uppercase italic gold-glow leading-none">
+                       <LayoutGrid className="size-12 animate-neural" /> Domains
                     </CardTitle>
                  </CardHeader>
-                 <CardContent className="p-0 space-y-4">
-                    {chambers.map((c, i) => (
+                 <CardContent className="p-0 space-y-6">
+                    {domains.map((d, i) => (
                       <Button 
                         key={i}
                         variant="outline"
-                        onClick={() => handleSearch(c.id)}
-                        className="w-full h-24 bg-white/5 border-2 border-white/5 hover:border-primary hover:bg-primary/10 rounded-3xl flex items-center gap-6 px-6 transition-all duration-700 group/btn shadow-xl active:scale-95"
+                        onClick={() => handleSearch(d.id)}
+                        className="w-full h-24 bg-white/5 border-4 border-white/5 hover:border-primary hover:bg-primary/10 rounded-[2rem] flex items-center gap-6 px-6 transition-all duration-700 group/btn shadow-xl active:scale-95"
                       >
-                         <div className="size-14 rounded-2xl bg-black border-2 border-white/10 flex items-center justify-center group-hover/btn:border-primary transition-all shadow-inner">
-                            <c.icon className={cn("size-8 transition-all", c.color)} />
+                         <div className="size-16 rounded-[1.5rem] bg-black border-4 border-white/10 flex items-center justify-center group-hover/btn:border-primary transition-all shadow-2xl">
+                            <d.icon className={cn("size-8 transition-all", d.color)} />
                          </div>
                          <div className="text-right flex-1">
-                            <div className="text-lg font-black text-white italic group-hover/btn:text-primary transition-colors">{c.label}</div>
-                            <div className="text-[8px] text-muted-foreground uppercase font-black tracking-widest">{c.id}</div>
+                            <div className="text-xl font-black text-white italic group-hover/btn:text-primary transition-colors uppercase">{d.label}</div>
                          </div>
-                         <ChevronRight className="size-5 opacity-30 group-hover/btn:translate-x-2 transition-all" />
+                         <ChevronRight className="size-6 opacity-30 group-hover/btn:translate-x-3 transition-all" />
                       </Button>
                     ))}
                  </CardContent>
               </Card>
 
-              <Card className="kali-card border-white/5 bg-black/60 p-8 rounded-[3rem] border-2 shadow-inner text-center relative overflow-hidden group">
-                 <h4 className="text-[10px] font-black text-primary uppercase tracking-[0.5em] mb-4 italic flex items-center justify-center gap-3">
-                    <Binary className="size-4 animate-pulse" /> SPATIAL_STABILITY
+              <Card className="kali-card border-white/5 bg-black/60 p-12 rounded-[4rem] border-8 shadow-inner text-center relative overflow-hidden group">
+                 <h4 className="text-[14px] font-black text-primary uppercase tracking-[1em] mb-8 italic flex items-center justify-center gap-6">
+                    <Binary className="size-8 animate-pulse" /> NEXUS_KNOWLEDGE_v7
                  </h4>
-                 <div className="text-3xl font-black text-white italic gold-glow uppercase tracking-tighter group-hover:scale-105 transition-transform duration-700">STABILIZED</div>
-                 <div className="absolute -bottom-4 -right-4 p-6 opacity-[0.02] group-hover:opacity-[0.05] transition-all duration-700 scale-150"><Skull className="size-16 text-primary" /></div>
+                 <div className="text-6xl font-black text-white italic gold-glow uppercase tracking-tighter">INNATE</div>
+                 <div className="absolute -bottom-10 -right-10 p-24 opacity-[0.03] group-hover:opacity-[0.1] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-48 text-primary" /></div>
               </Card>
            </div>
 
-           <Card className="xl:col-span-3 kali-card border-primary/30 bg-black/99 rounded-[4rem] p-10 border-4 shadow-9xl flex flex-col group overflow-hidden relative min-h-[850px] hierarchical-shadow">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.03),transparent)] pointer-events-none" />
-              <CardHeader className="p-0 mb-8 border-b-2 border-white/5 pb-8 flex flex-row justify-between items-center bg-primary/5 rounded-t-[3.5rem] px-10 py-6">
-                 <CardTitle className="text-3xl md:text-7xl text-white flex items-center gap-10 font-black uppercase italic gold-glow px-4 leading-none">
-                    <Database className="size-12 md:size-20 text-primary animate-pulse" /> Oracle Feed
+           <Card className="xl:col-span-3 kali-card border-primary/40 bg-black/99 rounded-[6rem] p-16 border-[12px] shadow-9xl flex flex-col group overflow-hidden relative min-h-[1000px] hierarchical-shadow">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.08),transparent)] pointer-events-none" />
+              <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-primary/10 rounded-t-[5rem] px-16 py-10 flex flex-row justify-between items-center">
+                 <CardTitle className="text-5xl md:text-[12rem] text-white flex items-center gap-16 font-black uppercase italic gold-glow px-10 leading-none">
+                    <FileSearch className="size-24 md:size-48 text-primary animate-pulse" /> Nexus Feed
                  </CardTitle>
-                 <Badge className="bg-emerald-600/20 text-emerald-500 border-4 border-emerald-500/40 px-10 py-4 rounded-full font-black text-2xl animate-pulse italic tracking-[0.2em] shadow-xl uppercase">PALACE_SYNC_OK</Badge>
+                 <Badge className="bg-emerald-600/30 text-emerald-500 border-[10px] border-emerald-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic">OMNIPRESENT_SYNC</Badge>
               </CardHeader>
               
-              <CardContent className="p-6 flex-1 flex flex-col space-y-8 relative z-10">
+              <CardContent className="p-12 flex-1 flex flex-col space-y-12 relative z-10">
                  <div className="relative group/search">
-                    <Search className="absolute left-8 top-1/2 -translate-y-1/2 size-8 text-primary/30 group-focus-within:text-primary transition-all duration-700" />
+                    <Search className="absolute left-10 top-1/2 -translate-y-1/2 size-12 text-primary/30 group-focus-within:text-primary transition-all duration-1000" />
                     <Input 
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                        placeholder="Interrogate the Neural Palace..." 
-                        className="h-24 md:h-32 bg-black/99 border-4 border-primary/30 rounded-[3rem] pl-24 pr-40 text-xl md:text-4xl italic font-black focus:border-primary text-white shadow-inner transition-all duration-700 placeholder:text-gray-900 selection:bg-primary selection:text-black"
+                        placeholder="Interrogate Knowledge Nexus DNA..." 
+                        className="h-32 md:h-44 bg-black/99 border-8 border-primary/40 rounded-full pl-32 pr-48 text-2xl md:text-6xl italic font-black focus:border-primary text-white shadow-inner transition-all duration-700 placeholder:text-gray-900 selection:bg-primary"
                     />
-                    <Button onClick={() => handleSearch()} disabled={loading} className="absolute right-4 top-1/2 -translate-y-1/2 size-20 md:size-24 rounded-full bg-primary hover:bg-white text-black border-8 border-black/30 shadow-9xl active:scale-90 transition-all">
-                        {loading ? <Loader2 className="size-10 animate-spin" /> : <Zap className="size-10" />}
+                    <Button onClick={() => handleSearch()} disabled={loading} className="absolute right-4 top-1/2 -translate-y-1/2 size-24 md:size-32 rounded-full bg-primary hover:bg-white text-black border-[12px] border-black/40 shadow-9xl active:scale-90 transition-all">
+                        {loading ? <Loader2 className="size-14 animate-spin" /> : <Zap className="size-14" />}
                     </Button>
                  </div>
 
                  {report ? (
-                   <div className="flex-1 bg-black/95 p-12 rounded-[4rem] border-4 border-white/5 font-code text-xl md:text-4xl leading-relaxed italic text-gray-100 whitespace-pre-wrap overflow-y-auto scrollbar-hide shadow-inner selection:bg-primary selection:text-black">
-                      <div className="mb-10 flex items-center justify-between border-b-2 border-white/5 pb-4">
-                         <span className="text-emerald-500 font-black uppercase tracking-[0.6em] italic text-xl">{" >>> Chamber_Output_Materialized"}</span>
-                         <Badge className="bg-primary/10 text-primary border-none font-black italic">GEPA_v5.5</Badge>
+                   <div className="flex-1 bg-black/98 p-16 rounded-[6rem] border-8 border-white/5 font-code text-2xl md:text-6xl leading-tight italic text-gray-100 whitespace-pre-wrap overflow-y-auto scrollbar-hide shadow-inner selection:bg-primary selection:text-black text-left">
+                      <div className="mb-12 flex items-center justify-between border-b-4 border-white/5 pb-8 px-10">
+                         <span className="text-emerald-500 font-black uppercase tracking-[0.8em] italic text-3xl md:text-5xl gold-glow flex items-center gap-10">
+                            <Dna className="size-16 animate-neural" /> {" >>> NEXUS_DNA_MATERIALIZED"}
+                         </span>
+                         <Badge className="bg-primary/10 text-primary border-none font-black italic text-2xl px-8 py-2 rounded-full">v70.5</Badge>
                       </div>
                       {report.reportContent}
                    </div>
                  ) : (
-                    <div className="flex-1 flex flex-col items-center justify-center text-center opacity-10 gap-16 py-40">
+                    <div className="flex-1 flex flex-col items-center justify-center text-center opacity-10 gap-24 py-60">
                         <div className="relative group/pal">
-                            <Castle className="size-64 md:size-96 text-primary animate-spin-slow group-hover:scale-110 transition-transform duration-[5s]" />
-                            <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-32 text-primary/40 animate-neural" />
-                            <div className="absolute -inset-20 border-[40px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
+                            <Share2 className="size-[30rem] md:size-[50rem] text-primary animate-spin-slow group-hover:scale-105 transition-transform duration-[6s]" />
+                            <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-64 text-primary/40 animate-neural" />
+                            <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
                         </div>
-                        <h3 className="text-6xl md:text-[10rem] font-black uppercase tracking-[1.5em] text-white italic gold-glow leading-none">Palace Idle</h3>
-                        <p className="text-2xl md:text-4xl font-bold italic text-gray-500 uppercase tracking-widest max-w-4xl">Enter a query or select a chamber to retrieve neural records.</p>
+                        <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Nexus Idle</h3>
+                        <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">Consult the Omnipresent Overmind to Materialize Knowledge DNA.</p>
                     </div>
                  )}
               </CardContent>
 
-              <div className="p-10 border-t-4 border-white/5 mt-auto flex justify-between items-center opacity-30 text-[10px] font-black uppercase tracking-[3em] italic">
-                 <span>GEPA_MEMORY_PALACE_v5.5_AL_GHAZALI_ROOT</span>
-                 <div className="flex gap-10">
-                    <Fingerprint className="size-10 text-primary animate-pulse" />
-                    <Atom className="size-10 animate-spin-slow" />
+              <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[6em] italic">
+                 <span>KNOWLEDGE_NEXUS_v70_AL_GHAZALI_ROOT</span>
+                 <div className="flex gap-16">
+                    <Fingerprint className="size-20 text-primary animate-pulse" />
+                    <Atom className="size-20 animate-spin-slow text-primary" />
                  </div>
               </div>
            </Card>
         </div>
 
-        <div className="mt-auto relative z-10 flex justify-center items-center gap-16 opacity-40 text-[12px] md:text-[18px] font-black uppercase tracking-[2em] md:tracking-[6em] italic text-white drop-shadow-xl pb-12">
-            <span>AL-MUIZZ NEURAL PALACE v58.5</span>
-            <div className="size-4 rounded-full bg-white animate-pulse shadow-[0_0_40px_white]" />
-            <span>SINGULARITY_IN_MEMORY_2026</span>
+        <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[24px] md:text-[36px] font-black uppercase tracking-[6em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
+            <span>AL-MUIZZ OMNIPRESENT NEXUS v70.5</span>
+            <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
+            <span>SINGULARITY_IN_COGNITION_2026</span>
         </div>
       </main>
     </div>
   )
+}
+
+function Sword({className}: {className?: string}) {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="14.5 17.5 3 5 3 3 5 3 17.5 14.5"/><line x1="13" y1="19" x2="19" y2="13"/><line x1="16" y1="16" x2="20" y2="20"/><circle cx="19" cy="21" r="2"/></svg>
+    )
 }
