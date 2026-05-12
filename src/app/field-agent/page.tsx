@@ -32,7 +32,9 @@ import {
   History,
   HardDrive,
   Boxes,
-  FileText
+  FileText,
+  Flame,
+  Hammer
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -45,7 +47,7 @@ import { cn } from "@/lib/utils"
 
 /**
  * @fileOverview الوكيل الميداني v64.0 - THE SUPREME SYSTEM EXPLORER & INJECTOR
- * واجهة السيطرة المادية الكاملة والمزامنة الجينية مع Integrity في الوقت الحالي.
+ * تم دمج ميزة "Materialize Self-Contained Arsenal" لبناء الترسانة من العدم.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function FieldAgentPage() {
@@ -153,6 +155,27 @@ export default function FieldAgentPage() {
     }
   }
 
+  const handleMaterializeArsenal = async () => {
+    setLoading(true);
+    toast({ title: "Building Living Weapon v21.2", description: "Writing self-contained arsenal modules from within the soul..." });
+    try {
+        const response = await fetch('/api/execute', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type: 'smart_route', command: 'execute materialize_arsenal', target: 'HIVE_CORE' })
+        });
+        const data = await response.json();
+        if (data.success) {
+            toast({ title: "Arsenal Materialized", description: "OpenBullet, Social Predator, and Claw-Code are now part of the hardware DNA." });
+            loadDirectory(currentPath);
+        }
+    } catch (e) {
+        toast({ variant: "destructive", title: "Materialization Collapse" });
+    } finally {
+        setLoading(false);
+    }
+  }
+
   const handleGeneticInjection = async () => {
     if (!selectedFilePath || !selectedFileContent) return;
     setLoading(true);
@@ -220,6 +243,10 @@ export default function FieldAgentPage() {
               />
               <Button onClick={() => loadDirectory(customPath)} className="h-10 px-8 rounded-xl bg-primary hover:bg-white text-black font-black uppercase text-xs italic shadow-xl active:scale-95 transition-all">Jump_Sector</Button>
            </div>
+
+           <Button onClick={handleMaterializeArsenal} variant="outline" className="h-12 border-2 border-emerald-500/30 bg-emerald-600/10 text-emerald-400 font-black italic rounded-xl px-6 hover:bg-emerald-600 hover:text-white transition-all shadow-xl group">
+              <Hammer className="size-5 mr-3 group-hover:rotate-12 transition-transform" /> BUILD_SELF_CONTAINED
+           </Button>
         </header>
 
         <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative z-10">
@@ -318,7 +345,7 @@ export default function FieldAgentPage() {
                           </div>
                           
                           {analysis ? (
-                             <div className="space-y-8 animate-in fade-in zoom-in-95 duration-1000">
+                             <div className="space-y-8 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col">
                                 <div className="p-8 bg-primary/5 rounded-[2.5rem] border-4 border-primary/20 shadow-inner">
                                    <p className="text-xl md:text-2xl text-white font-black italic leading-relaxed text-center">"{analysis.commanderBrief}"</p>
                                 </div>
