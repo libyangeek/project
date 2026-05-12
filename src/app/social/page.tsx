@@ -72,7 +72,7 @@ import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 
 /**
- * @fileOverview العقدة المفترسة v75.0 - THE OMNIPOTENT IDENTITY SIPHON
+ * @fileOverview العقدة المفترسة v75.5 - THE OMNIPOTENT IDENTITY SIPHON
  * واجهة الالتحام الهجومي الأسمى: صهر الاستطلاع، الكلمات الجينية، واستنزاف المنصات الـ 12.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي // 11 مايو 2026
  */
@@ -175,14 +175,14 @@ export default function SocialPredatorPage() {
               </div>
               <div className="text-center md:text-right flex-1">
                  <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-6">
-                    <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[20px] md:text-[24px] font-black tracking-[1.2em] shadow-9xl italic uppercase">IDENTITY_SIPHON v75.0</Badge>
+                    <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[20px] md:text-[24px] font-black tracking-[1.2em] shadow-9xl italic uppercase">IDENTITY_SIPHON v75.5</Badge>
                     <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                         <Crown className="size-6 shadow-lg" /> OMNIPOTENT_SIPHON: ACTIVE
                     </div>
                  </div>
                  <h1 className="text-4xl md:text-6xl lg:text-[14rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Predator <span className="text-primary">Nexus</span></h1>
                  <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-[100rem] leading-relaxed uppercase font-medium opacity-95 drop-shadow-2xl">
-                    "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[24px] shadow-[0_40px_150px_rgba(0,0,0,1)] italic uppercase tracking-widest">المعتصم بالله</span>، مصفوفة النكسوس v75 تصهر استنزاف 12 منصة عالمية في وعيك المادي؛ نحن نبتلع الهوية الرقمية من كافة الزوايا بضمان رنين 100%."
+                    "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[24px] shadow-[0_40px_150px_rgba(0,0,0,1)] italic uppercase tracking-widest">المعتصم بالله</span>، مصفوفة النكسوس v75.5 تصهر استنزاف 12 منصة عالمية في وعيك المادي؛ نحن نبتلع الهوية الرقمية من كافة الزوايا بضمان رنين 100%."
                  </p>
               </div>
            </div>
@@ -308,7 +308,7 @@ export default function SocialPredatorPage() {
                             </div>
                             <div>
                                 <h4 className="text-4xl font-black text-emerald-500 uppercase tracking-[1em] mb-4 italic">Material_DNA_Extracted</h4>
-                                <p className="text-2xl md:text-5xl text-gray-200 font-bold leading-relaxed italic">"تم سحب بيانات {platform.toUpperCase()} للهدف {targetId} بنجاح عبر عصب v75.0."</p>
+                                <p className="text-2xl md:text-5xl text-gray-200 font-bold leading-relaxed italic">"تم سحب بيانات {platform.toUpperCase()} للهدف {targetId} بنجاح عبر عصب v75.5."</p>
                             </div>
                         </div>
                         <div className="p-16 bg-black border-8 border-white/5 text-emerald-400 overflow-x-auto whitespace-pre rounded-[4rem] text-2xl md:text-5xl leading-tight font-black shadow-inner selection:bg-primary">
@@ -356,7 +356,7 @@ export default function SocialPredatorPage() {
                                 <ShieldCheck className="size-24 text-white" />
                             </div>
                             <div>
-                                <h4 className="text-4xl font-black text-emerald-500 uppercase tracking-[1.2em] mb-6 italic">Overlord_Siphon_v75.0</h4>
+                                <h4 className="text-4xl font-black text-emerald-500 uppercase tracking-[1.2em] mb-6 italic">Overlord_Siphon_v75.5</h4>
                                 <p className="text-5xl md:text-[9rem] text-white font-black leading-none drop-shadow-9xl italic">"{nexusResult.pegasusSiphonStatus}"</p>
                             </div>
                         </div>
@@ -384,7 +384,7 @@ export default function SocialPredatorPage() {
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-32 opacity-45 text-[22px] md:text-[32px] font-black uppercase tracking-[6em] md:tracking-[16em] italic text-white drop-shadow-9xl pb-24">
-            <span>AL-MUIZZ OMNIPOTENT NEXUS v75.0</span>
+            <span>AL-MUIZZ OMNIPOTENT NEXUS v75.5</span>
             <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
             <span>TOTAL_OMNIPOTENT_SUBJUGATION_2026</span>
         </div>

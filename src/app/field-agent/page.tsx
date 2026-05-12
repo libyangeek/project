@@ -52,7 +52,7 @@ import { cn } from "@/lib/utils"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
 /**
- * @fileOverview الوكيل الميداني v75.0 - THE SUPREME QUANTUM ARCHITECT
+ * @fileOverview الوكيل الميداني v75.5 - THE SUPREME QUANTUM ARCHITECT
  * مركز التدقيق المادي والتعافي الذاتي المطلق.
  * مجهز بمحرك "الحقن الجيني Wand3" لإصلاح الأكواد حياً وبدون رصد.
  */
@@ -107,7 +107,7 @@ export default function FieldAgentPage() {
     toast({ title: "Project DNA Scan Active", description: `Interrogating all nodes in ${currentPath}...` });
     try {
         const aiResult = await executeFieldDevelopment({
-            userPrompt: "Analyze this project structure and detect any missing tools or logic flaws. Focus on v75.0 quantum material core updates and self-materialization readiness.",
+            userPrompt: "Analyze this project structure and detect any missing tools or logic flaws. Focus on v75.5 quantum material core updates and self-materialization readiness.",
             projectPath: currentPath,
             mode: 'project_analysis'
         });
@@ -129,7 +129,7 @@ export default function FieldAgentPage() {
     toast({ title: "Wand3 Genetic Repair Active", description: "Screeening for logic flaws and anti-forensic alignment..." });
     try {
         const aiResult = await executeFieldDevelopment({
-            userPrompt: "Completely repair this file. Use Wand3 Genetic Repair. Remove hydration errors, optimize logic for v75.0 standards, and ensure 100% stealth. Return the final code in 'geneticPlan'.",
+            userPrompt: "Completely repair this file. Use Wand3 Genetic Repair. Remove hydration errors, optimize logic for v75.5 standards, and ensure 100% stealth. Return the final code in 'geneticPlan'.",
             currentFile: selectedFileName,
             fileContent: selectedFileContent,
             mode: 'file_fix'
@@ -205,7 +205,7 @@ export default function FieldAgentPage() {
               </div>
               <div>
                  <h2 className="text-3xl md:text-5xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Supreme <span className="text-primary">Architect</span></h2>
-                 <Badge className="bg-primary/10 text-primary border-none text-[10px] font-black italic tracking-widest px-6 py-1 rounded-full shadow-lg mt-2 uppercase">v75.0_QUANTUM_CORE</Badge>
+                 <Badge className="bg-primary/10 text-primary border-none text-[10px] font-black italic tracking-widest px-6 py-1 rounded-full shadow-lg mt-2 uppercase">v75.5_QUANTUM_CORE</Badge>
               </div>
            </div>
            
@@ -216,7 +216,7 @@ export default function FieldAgentPage() {
                 onKeyDown={(e) => e.key === 'Enter' && loadDirectory(customPath)}
                 className="bg-transparent border-none focus-visible:ring-0 text-xl italic font-black text-white h-12"
               />
-              <Button onClick={() => loadDirectory(customPath)} className="h-12 px-10 rounded-full bg-primary hover:bg-white text-black font-black uppercase text-sm italic shadow-xl transition-all">Jump_Sector</Button>
+              <Button onClick={() => loadDirectory(customPath)} className="h-12 px-10 rounded-full bg-primary hover:bg-white text-black font-black uppercase text-sm italic shadow-xl transition-all border-2 border-black/20">Jump_Sector</Button>
            </div>
 
            <div className="flex gap-4">
@@ -299,7 +299,7 @@ export default function FieldAgentPage() {
                                </div>
                                <h4 className="text-4xl font-black italic gold-glow uppercase leading-none">Supreme Logic</h4>
                            </div>
-                           <Badge className="bg-emerald-600/20 text-emerald-500 border-4 px-8 py-2 rounded-full font-black text-xl italic animate-pulse shadow-9xl">v75.0_READY</Badge>
+                           <Badge className="bg-emerald-600/20 text-emerald-500 border-4 px-8 py-2 rounded-full font-black text-xl italic animate-pulse shadow-9xl">v75.5_READY</Badge>
                         </div>
                         
                         {analysis ? (
@@ -376,7 +376,7 @@ export default function FieldAgentPage() {
         </div>
 
         <div className="shrink-0 p-3 border-t border-white/5 flex justify-center items-center gap-12 opacity-30 text-[10px] font-black uppercase tracking-[4em] italic">
-            <span>AL-MUIZZ SUPREME QUANTUM ARCHITECT v75.0</span>
+            <span>AL-MUIZZ SUPREME QUANTUM ARCHITECT v75.5</span>
             <div className="size-2 rounded-full bg-white animate-pulse" />
             <span>SINGULARITY_OF_EXISTENCE_2026</span>
         </div>

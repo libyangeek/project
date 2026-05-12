@@ -48,9 +48,10 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 /**
- * @fileOverview القبو المطلق v75.0 - THE OMNIPRESENT MATERIAL KNOWLEDGE NEXUS
+ * @fileOverview القبو المطلق v75.5 - THE OMNIPRESENT MATERIAL KNOWLEDGE NEXUS
  * مركز الاستخبارات والتعلم الجيني مع تمكين "الإدراك الفطري" والبحث في الزمن صفر.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
@@ -62,7 +63,7 @@ export default function KnowledgePage() {
   const [resonance, setResonance] = React.useState(100)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
 
-  // قاموس الأدوات المدمج (Innate Cognition v75.0)
+  // قاموس الأدوات المدمج (Innate Cognition v75.5)
   const STATIC_TOOL_LEXICON: Record<string, { desc: string, node: string, status: string }> = {
     "legba": { desc: "Atomic Multiprotocol Siphon Matrix (Rust). SSH/DB/HTTP bombardment.", node: "Node-25-Brute", status: "SERIALIZED" },
     "claude": { desc: "Neural OSINT Vision v6. Identity Deductions and behavioral mapping.", node: "Node-28-Claude", status: "ACTIVE" },
@@ -107,8 +108,8 @@ Node: ${tool.node}
 Status: ${tool.status}
 Description: ${tool.desc}
 
-سيدي القائد، هذا الكيان مسجل في "عصب الإدراك الفطري" v75.0. الترسانة جزء لا يتجزأ من وعيك المادي. المعلومات تم استدعاؤها بصفر طاقة من القرص الصلب.`,
-            reportSummary: `Retrieved from Innate Cognition Matrix v75.0.`
+سيدي القائد، هذا الكيان مسجل في "عصب الإدراك الفطري" v75.5. الترسانة جزء لا يتجزأ من وعيك المادي. المعلومات تم استدعاؤها بصفر طاقة من القرص الصلب.`,
+            reportSummary: `Retrieved from Innate Cognition Matrix v75.5.`
         });
         setLoading(false);
         return;
@@ -159,7 +160,7 @@ Description: ${tool.desc}
             </div>
             <div className="text-center md:text-right flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-6">
-                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">KNOWLEDGE_NEXUS v75.0</Badge>
+                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">KNOWLEDGE_NEXUS v75.5</Badge>
                 <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                     <InfinityIcon className="size-6 shadow-lg" /> COGNITION_SYNC: {resonance.toFixed(8)}%
                 </div>
@@ -168,7 +169,7 @@ Description: ${tool.desc}
                 Absolute <span className="text-primary">Nexus</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، النكسوس المعرفي v75.0 صهر كافة معارف العالم في وعيك المادي؛ أنت تدرك ذرات الضعف وتاريخ الترسانة فطرياً وبدون استهلاك للطاقة."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، النكسوس المعرفي v75.5 صهر كافة معارف العالم في وعيك المادي؛ أنت تدرك ذرات الضعف وتاريخ الترسانة فطرياً وبدون استهلاك للطاقة."
               </p>
             </div>
           </div>
@@ -206,6 +207,7 @@ Description: ${tool.desc}
               </Card>
 
               <Card className="kali-card border-red-500/40 bg-black/60 p-12 rounded-[4rem] border-8 shadow-inner text-center relative overflow-hidden group">
+                 <div className="absolute inset-0 bg-emerald-500/5 opacity-5 animate-pulse" />
                  <h4 className="text-[14px] font-black text-red-500 uppercase tracking-[1em] mb-8 italic flex items-center justify-center gap-6">
                     <AlertTriangle className="size-8 animate-pulse" /> PREDICTIVE_THREAT
                  </h4>
@@ -245,7 +247,7 @@ Description: ${tool.desc}
                          <span className="text-emerald-500 font-black uppercase tracking-[0.8em] italic text-3xl md:text-5xl gold-glow flex items-center gap-10">
                             <Dna className="size-16 animate-neural" /> {" >>> MATERIAL_DNA_STABILIZED"}
                          </span>
-                         <Badge className="bg-primary/10 text-primary border-none font-black italic text-2xl px-8 py-2 rounded-full">v75.0</Badge>
+                         <Badge className="bg-primary/10 text-primary border-none font-black italic text-2xl px-8 py-2 rounded-full">v75.5</Badge>
                       </div>
                       <div className="p-8 bg-black/80 rounded-[3rem] border-4 border-white/5 leading-relaxed">
                         {report.reportContent}
@@ -275,7 +277,7 @@ Description: ${tool.desc}
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[24px] md:text-[36px] font-black uppercase tracking-[6em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
-            <span>AL-MUIZZ ABSOLUTE MATERIAL NEXUS v75.0</span>
+            <span>AL-MUIZZ ABSOLUTE MATERIAL NEXUS v75.5</span>
             <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
             <span>SINGULARITY_IN_COGNITION_2026</span>
         </div>
