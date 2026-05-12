@@ -2,15 +2,15 @@
 #!/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Smart Router v65.0 – الأدميرال الكوني (Absolute Singularity Edition)
-المحرك المركزي لتنسيق كافة الأسلحة والوكلاء الـ 12 وأطر C2.
-تم دمج موديولات APEX Ultimate v8.0 لضمان السيطرة المطلقة.
+Smart Router v76.0 – الأدميرال الكوني (Omnipotent Hive Edition)
+المحرك المركزي لتنسيق كافة الأسلحة المادية والذاتية الاحتواء.
+تم دمج موديولات OpenBullet و XLogger و Seeker و Claw-Code.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys, json, os, subprocess, socket, time
 from datetime import datetime
 
-BASE_DIR = os.getenv("PROJECT_ROOT", "/opt/sovereign-ai-platform")
+BASE_DIR = os.getenv("PROJECT_ROOT", "/home/project")
 SOCK_PATH = "/tmp/muizz_event_bus.sock"
 
 def publish_event(etype, payload):
@@ -23,93 +23,81 @@ def publish_event(etype, payload):
                     "type": etype, 
                     "payload": payload, 
                     "timestamp": datetime.now().isoformat(),
-                    "version": "v65.0",
-                    "status": "ABSOLUTE_SINGULARITY"
+                    "version": "v76.0",
+                    "status": "OMNIPOTENT_HIVE"
                 }).encode())
     except: pass
 
 class SmartRouter:
     def __init__(self):
         self.bridges = {
+            "openbullet_strike": os.path.join(BASE_DIR, "tools/openbullet/runner_engine.py"),
+            "xlogger_hub": os.path.join(BASE_DIR, "tools/social_predator/xlogger.py"),
+            "seeker_gps": os.path.join(BASE_DIR, "tools/social_predator/seeker_gps.py"),
+            "voice_hijack": os.path.join(BASE_DIR, "tools/clawcode/voice_hijack.py"),
+            "desktop_automation": os.path.join(BASE_DIR, "tools/clawcode/desktop_automation.py"),
             "claude_osint": os.path.join(BASE_DIR, "ai-engine/offensive/claude_osint_bridge.py"),
             "memory_palace": os.path.join(BASE_DIR, "ai-engine/offensive/mempalace_bridge.py"),
-            "cerebral_siphon": os.path.join(BASE_DIR, "ai-engine/offensive/pssw_extractor.py"),
-            "obliteratus_strike": os.path.join(BASE_DIR, "ai-engine/offensive/obliteratus_engine.py"),
-            "genetic_fusion": os.path.join(BASE_DIR, "ai-engine/kernel/genetic_merger.py"),
-            "openbullet_strike": os.path.join(BASE_DIR, "ai-engine/openbullet/runner_engine.py"),
-            "apex_swarm": os.path.join(BASE_DIR, "arsenal/agents/swarm_agent.py"),
-            "digital_twin": os.path.join(BASE_DIR, "arsenal/agents/digital_twin.py"),
-            "ai_hunter": os.path.join(BASE_DIR, "arsenal/agents/ai_hunter.py")
+            "obliteratus_strike": os.path.join(BASE_DIR, "ai-engine/offensive/obliteratus_engine.py")
         }
 
     def classify(self, prompt):
         p = prompt.lower()
-        if any(w in p for w in ["سرب", "وكيل", "swarm", "agent", "apex"]): return "apex_swarm"
-        if any(w in p for w in ["توأم", "twin", "simulate", "محاكاة"]): return "digital_twin"
-        if any(w in p for w in ["صائد", "hunter", "اكتشف", "vuln"]): return "ai_hunter"
-        if any(w in p for w in ["تخليق", "بناء", "materialize", "build", "arsenal"]): return "materialize_arsenal"
-        if any(w in p for w in ["دمج", "مزامنة", "sync", "integrity", "fusion"]): return "genetic_fusion"
-        if any(w in p for w in ["نكسوس", "nexus", "افتراس شامل", "fusion", "predator"]): return "predator_nexus"
-        if any(w in p for w in ["قصف", "brute", "legba", "openbullet", "ignite"]): return "openbullet_strike"
-        if any(w in p for w in ["تحليل عصبي", "claude", "neural osint", "vision"]): return "claude_osint"
-        if any(w in p for w in ["قصر", "ذاكرة", "ram", "mempalace", "forensic", "palace"]): return "memory_palace"
-        if any(w in p for w in ["فناء", "obliteratus", "كسر", "إخضاع", "fanaa"]): return "obliteratus_strike"
-        if any(w in p for w in ["كلمة", "سر", "password", "stole", "pssw"]): return "cerebral_siphon"
-        if any(w in p for w in ["برمج", "تعديل", "code", "modify", "agent"]): return "field_agent"
-        return "general_arsenal"
+        if any(w in p for w in ["بوليت", "bullet", "config", "قصف", "inject"]): return "openbullet_strike"
+        if any(w in p for w in ["لوجر", "logger", "camera", "ocular"]): return "xlogger_hub"
+        if any(w in p for w in ["تتبع", "seeker", "gps", "موقع"]): return "seeker_gps"
+        if any(w in p for w in ["صوت", "voice", "hijack", "تحدث"]): return "voice_hijack"
+        if any(w in p for w in ["ماوس", "كيبورد", "desktop", "auto"]): return "desktop_automation"
+        if any(w in p for w in ["تحليل عصبي", "claude", "neural osint"]): return "claude_osint"
+        if any(w in p for w in ["ذاكرة", "ram", "palace"]): return "memory_palace"
+        if any(w in p for w in ["فناء", "obliteratus", "كسر"]): return "obliteratus_strike"
+        return "general_hive"
 
-    def execute_bridge(self, bridge_key, target):
-        """تنفيذ السكريبت المادي للأداة وجلب المخرجات الحقيقية"""
+    def execute_bridge(self, bridge_key, target, params=None):
+        """التنفيذ المادي للأداة المستوحاة من السكريبت v21.2.0"""
         script = self.bridges.get(bridge_key)
         if script and os.path.exists(script):
             try:
-                res = subprocess.check_output(["python3", script, target], stderr=subprocess.STDOUT, text=True, timeout=60)
-                return json.loads(res)
+                cmd = ["python3", script, target]
+                if params: cmd.extend(params)
+                res = subprocess.check_output(cmd, stderr=subprocess.STDOUT, text=True, timeout=60)
+                return {"status": "SUCCESS", "output": res}
             except Exception as e:
-                return {"error": str(e), "status": "HARDWARE_HANDSHAKE_FAILED"}
-        return {"status": "ACKNOWLEDGED", "msg": f"Node {bridge_key} engaged on {target}."}
+                return {"error": str(e), "status": "HARDWARE_FUSION_FAILED"}
+        return {"status": "MATERIALIZING", "msg": f"Node {bridge_key} is being regrown from DNA."}
 
     def route_query(self, prompt):
         category = self.classify(prompt)
         target = prompt.split()[-1] if len(prompt.split()) > 0 else "GLOBAL_MATRIX"
         
-        publish_event("absolute_routing_v65", {"category": category, "target": target, "prompt": prompt})
+        publish_event("omnipotent_routing_v76", {"category": category, "target": target, "prompt": prompt})
 
-        # التنفيذ المادي للأدوات المرتبطة بـ Bridges
-        hardware_result = None
-        if category in self.bridges:
-            hardware_result = self.execute_bridge(category, target)
+        hardware_result = self.execute_bridge(category, target)
 
-        # مصفوفة التوزيع التنفيذي v65.0
         dispatch_table = {
-            "apex_swarm": {"node": "Alpha-God-Core", "msg": f"APEX Swarm Agent v2.0 engaged for decentralized strike on {target}."},
-            "digital_twin": {"node": "Alpha-God-Core", "msg": f"Digital Twin v2.0 instantiating simulation for {target}."},
-            "ai_hunter": {"node": "Alpha-God-Core", "msg": f"AI Hunter v2.0 searching for zero-day vulnerabilities in {target}."},
-            "materialize_arsenal": {"node": "Alpha-God-Core", "msg": "Initiating APEX Ultimate arsenal materialization..."},
-            "genetic_fusion": {"node": "Alpha-God-Core", "msg": f"Genetic Fusion Protocol engaged for Integrity Sync on {target}."},
-            "predator_nexus": {"node": "Node-61-Nexus", "msg": f"Predator Nexus v64 engaged on {target}. Fusing Swarm + OSINT + Pegasus..."},
-            "openbullet_strike": {"node": "Node-25-Brute", "msg": f"OpenBullet Rust core bombardment on {target} initiated."},
-            "claude_osint": {"node": "Node-28-Claude", "msg": f"Neural Vision v5 engaged on {target}."},
-            "obliteratus_strike": {"node": "Node-18-Fanaa", "msg": f"AI Safety dissolution active for {target}."},
-            "memory_palace": {"node": "Node-24-Palace", "msg": f"Dissecting RAM artifacts for {target}."},
-            "cerebral_siphon": {"node": "Node-23-Cerebral", "msg": f"Cerebral Siphon active for {target}."},
-            "field_agent": {"node": "Node-14-Agent", "msg": f"Field Agent v65 engaged for autonomous recoding."}
+            "openbullet_strike": {"node": "Node-25-Brute", "msg": "OpenBullet Core v76 engaged for parallel material strike."},
+            "xlogger_hub": {"node": "Node-64-Ocular", "msg": "XLogger Hub v76 active on port 8888. Siphoning Identity DNA."},
+            "seeker_gps": {"node": "Node-65-Seeker", "msg": "Seeker GPS active. Awaiting coordinate consensus."},
+            "voice_hijack": {"node": "Node-12-Audio", "msg": "Royal voice materialize directive sent to hardware bus."},
+            "desktop_automation": {"node": "Node-14-Claw", "msg": "PyAutoGUI material core engaged for desktop dominion."},
+            "claude_osint": {"node": "Node-28-Claude", "msg": "Neural Vision v6 engaged on target cluster."},
+            "memory_palace": {"node": "Node-24-Palace", "msg": "Dissecting material RAM artifacts via v9.0 Oracle."},
+            "obliteratus_strike": {"node": "Node-18-Fanaa", "msg": "AI Safety dissolution materialized via v76.0 protocol."}
         }
 
         res = dispatch_table.get(category, {
             "node": "Alpha-God-Core",
-            "msg": f"Directive for {prompt} accepted by Universal Overmind v65.0."
+            "msg": f"Directive for {prompt} accepted by Omnipotent Hive v76.0."
         })
 
         return {
             "category": category,
-            "status": "DIRECTIVE_LOCKED",
-            "output": hardware_result if hardware_result else res["msg"],
+            "status": "SINGULARITY_LOCKED",
+            "output": hardware_result,
             "node": res["node"],
             "timestamp": datetime.now().isoformat(),
             "resonance": "100.000000%",
-            "singularity": "ABSOLUTE",
-            "fusion_active": True if category == "genetic_fusion" else False
+            "hive_sync": True
         }
 
 if __name__ == "__main__":

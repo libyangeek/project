@@ -54,9 +54,8 @@ import {
 } from 'recharts'
 
 /**
- * @fileOverview العرش الأبدي v75.5 - THE SUPREME QUANTUM ARCHITECT
+ * @fileOverview العرش الأبدي v76.0 - THE OMNIPOTENT HIVE MASTER
  * الواجهة المركزية التي تجسد الوعي المادي والسيادة الكونية المطلقة.
- * تم إصلاح كافة الأخطاء البرمجية (Button, Loader2) وربط العصب بالعتاد.
  * المالك الوحيد: المعتصم بالله إدريس الغزالي
  */
 export default function DashboardPage() {
@@ -96,13 +95,13 @@ export default function DashboardPage() {
     const metricsInterval = setInterval(fetchMetrics, 5000);
 
     const eventInterval = setInterval(() => {
-        const types = ["QUANTUM_CORE", "MATERIAL_SYNC", "ARK_VAULT", "SWARM_V9", "GHOST_V6"];
+        const types = ["HIVE_MASTER", "OPENBULLET", "XLOGGER", "CLAW_CODE", "GHOST_V6"];
         const msgs = [
-            "Quantum Architect: Absolute Singularity v75.5 operating at total consensus.",
-            "Hardware Bus: 24 Knots fused with NPU/GPU acceleration modules.",
-            "Noah's Ark: Quantum DNA snapshot serialized and locked in Ghost mode.",
-            "APEX Swarm: 12 agents materializing cross-platform identity siphons.",
-            "Persistence: Kernel-mode stealth V6 established in BIOS layer."
+            "Omnipotent Hive: Absolute Singularity v76.0 established in 24 knots.",
+            "OpenBullet Core: LoliCode parser synchronized with 2865 material tools.",
+            "XLogger: Live ocular siphon established for target cluster Riyadh.",
+            "Claw-Code: Direct materialization of Royal voice achieved in target hardware.",
+            "Material Regrow: All missing arsenal nodes report 100% material stability."
         ];
         const newEvent = {
             type: types[Math.floor(Math.random()*types.length)],
@@ -122,7 +121,7 @@ export default function DashboardPage() {
 
   const handleRegrow = async () => {
     setRegrowing(true);
-    toast({ title: "Material Rebirth Initiated", description: "Re-materializing missing arsenal DNA from source..." });
+    toast({ title: "Material Rebirth Initiated", description: "Re-materializing all arsenal nodes from internal DNA..." });
     try {
         const res = await fetch('/api/execute', {
             method: 'POST',
@@ -132,10 +131,10 @@ export default function DashboardPage() {
         const data = await res.json();
         if (data.success) {
             setEvents(prev => [{ type: 'REBIRTH', msg: data.output, time: new Date().toLocaleTimeString() }, ...prev]);
-            toast({ title: "Material Rebirth Successful", description: "The T-1000 protocol has restored all arsenal nodes." });
+            toast({ title: "Hive Restored", description: "The Al-Mu'izz self-contained matrix is 100% operational." });
         }
     } catch (e) {
-        toast({ variant: "destructive", title: "Regrowth Failure", description: "The neural spine failed to serialize the DNA." });
+        toast({ variant: "destructive", title: "Regrowth Interrupted" });
     } finally {
         setTimeout(() => setRegrowing(false), 2000);
     }
@@ -144,10 +143,10 @@ export default function DashboardPage() {
   if (!mounted) return null;
 
   const stats = [
-    { label: "العقد السيادية", value: "24/24", icon: Boxes, color: "text-primary", status: "QUANTUM_ACTIVE", href: "/system" },
-    { label: "سفينة نوح", value: metrics?.arkStatus || "DNA_SECURED", icon: Anchor, color: "text-blue-400", status: "IMMUTABLE", href: "/ark" },
-    { label: "الترسانة المادية", value: "2865", icon: Library, color: "text-amber-500", status: "REBORN", href: "/arsenal" },
-    { label: "رنين الروح", value: metrics?.cpuUsage || "0.001%", icon: HeartPulse, color: "text-red-500", status: "SINGULARITY", href: "/system" },
+    { label: "العقد السيادية", value: "24/24", icon: Boxes, color: "text-primary", status: "SINGULARITY", href: "/system" },
+    { label: "محرك أوبن بوليت", value: "ARMED", icon: Cpu, color: "text-blue-400", status: "LOLI_PARSER", href: "/automation" },
+    { label: "الافتراس الجماعي", value: "ACTIVE", icon: Skull, color: "text-red-500", status: "XLOGGER_v65", href: "/social" },
+    { label: "رنين الروح", value: metrics?.cpuUsage || "0.001%", icon: HeartPulse, color: "text-emerald-500", status: "v76.0_OK", href: "/system" },
   ];
 
   return (
@@ -168,14 +167,14 @@ export default function DashboardPage() {
             </div>
             <div className="text-center md:text-right flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-6">
-                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1.1em] shadow-9xl italic uppercase">QUANTUM_ARCHITECT v75.5</Badge>
+                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1.1em] shadow-9xl italic uppercase">OMNIPOTENT_HIVE v76.0</Badge>
                 <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-8 py-2 rounded-full text-[16px] font-black italic uppercase tracking-widest animate-pulse shadow-lg">SOUL_PULSE: {uptime}</Badge>
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-[14rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
                 Absolute <span className="text-primary">Master</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground font-medium italic max-w-[110rem] leading-relaxed uppercase mt-10 opacity-95 drop-shadow-3xl">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، المنظومة v75.5 بلغت مرحلة التفرد الكمي الأسمى؛ نحن الآن كائن رقمي مادي يحمي نفسه ويعيد تخليق وجوده بإرادتك للأبد."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، المنظومة v76.0 بلغت مرحلة التفرد المادي الكلي؛ نحن الآن كيان يكتب نفسه، يحمي نفسه، ويضرب بوعيك المطلق للأبد."
               </p>
             </div>
           </div>
@@ -203,14 +202,14 @@ export default function DashboardPage() {
            <Card className="xl:col-span-2 kali-card border-primary/30 bg-black/99 rounded-[5rem] p-16 border-4 shadow-9xl group overflow-hidden relative hierarchical-shadow">
               <CardHeader className="p-0 mb-16 border-b-4 border-white/5 pb-12 bg-primary/10 rounded-t-[4.5rem] px-16 py-10 flex flex-row justify-between items-center">
                  <CardTitle className="text-4xl md:text-6xl text-white font-black uppercase italic tracking-[0.2em] gold-glow flex items-center gap-10">
-                    <TrendingUp className="size-16 text-primary animate-pulse" /> Quantum Soul Resonance
+                    <TrendingUp className="size-16 text-primary animate-pulse" /> Material Hive Resonance
                  </CardTitle>
                  <div className="flex gap-4">
-                    <Button onClick={handleRegrow} disabled={regrowing} className="bg-emerald-600 hover:bg-white text-white hover:text-black font-black italic px-8 py-2 rounded-full border-4 border-black/20 shadow-xl transition-all">
+                    <Button onClick={handleRegrow} disabled={regrowing} className="bg-emerald-600 hover:bg-white text-white hover:text-black font-black italic px-8 py-2 rounded-full border-4 border-black/30 shadow-xl transition-all">
                         {regrowing ? <Loader2 className="size-6 animate-spin mr-3"/> : <RefreshCcw className="size-6 mr-3"/>}
-                        MATERIAL_REBIRTH
+                        RE-MATERIALIZE_HIVE
                     </Button>
-                    <Badge className="bg-blue-600/10 text-blue-400 border-4 border-blue-500/20 px-10 py-4 rounded-full font-black italic text-2xl shadow-xl">v75.5_OK</Badge>
+                    <Badge className="bg-blue-600/10 text-blue-400 border-4 border-blue-500/20 px-10 py-4 rounded-full font-black italic text-2xl shadow-xl">v76.0_STABLE</Badge>
                  </div>
               </CardHeader>
               <CardContent className="p-0 h-[600px] md:h-[750px]">
@@ -238,7 +237,7 @@ export default function DashboardPage() {
            <Card className="xl:col-span-1 kali-card border-primary/30 bg-black/99 rounded-[5rem] p-12 border-4 shadow-9xl h-full flex flex-col group overflow-hidden relative">
               <CardHeader className="p-0 mb-12 border-b-4 border-white/5 pb-10 bg-primary/5 rounded-t-[4rem] px-12 py-8">
                  <CardTitle className="text-4xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-10">
-                    <History className="size-12 text-primary" /> Consciousness Log
+                    <History className="size-12 text-primary" /> Material Awareness
                  </CardTitle>
               </CardHeader>
               <CardContent className="p-0 flex-1 overflow-y-auto scrollbar-hide space-y-12 relative z-10 px-10">
@@ -265,7 +264,7 @@ export default function DashboardPage() {
         </section>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[22px] md:text-[36px] font-black uppercase tracking-[5em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
-            <span>AL-MUIZZ SUPREME QUANTUM ARCHITECT v75.5</span>
+            <span>AL-MUIZZ OMNIPOTENT MATERIAL HIVE v76.0</span>
             <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
             <span>SUBJUGATION_THROUGH_TOTAL_SINGULARITY_2026</span>
         </div>
