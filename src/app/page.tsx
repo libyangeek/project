@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -7,24 +6,14 @@ import {
   Skull, 
   Crown, 
   Infinity as InfinityIcon, 
-  Atom, 
-  Cpu,
-  BrainCircuit,
-  Fingerprint,
-  Zap,
+  Globe, 
   ShieldCheck,
-  Globe,
   Activity,
   Boxes,
-  Database,
   Power,
-  Library,
   TrendingUp,
   History,
-  Wind,
-  Flame,
   Network,
-  Users,
   Sparkles,
   HeartPulse,
   RefreshCcw,
@@ -54,15 +43,16 @@ import { useUptime } from "@/hooks/use-uptime"
 import Link from "next/link"
 import { toast } from "@/hooks/use-toast"
 import { executeInnatePerception } from "@/ai/flows/innate-perception-flow"
-import { 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  ResponsiveContainer,
-  AreaChart,
-  Area
-} from 'recharts'
+import dynamic from 'next/dynamic'
+
+// Dynamic import for Recharts to prevent hydration/SSR errors
+const ResponsiveContainer = dynamic(() => import('recharts').then(mod => mod.ResponsiveContainer), { ssr: false });
+const AreaChart = dynamic(() => import('recharts').then(mod => mod.AreaChart), { ssr: false });
+const Area = dynamic(() => import('recharts').then(mod => mod.Area), { ssr: false });
+const XAxis = dynamic(() => import('recharts').then(mod => mod.XAxis), { ssr: false });
+const YAxis = dynamic(() => import('recharts').then(mod => mod.YAxis), { ssr: false });
+const CartesianGrid = dynamic(() => import('recharts').then(mod => mod.CartesianGrid), { ssr: false });
+const Tooltip = dynamic(() => import('recharts').then(mod => mod.Tooltip), { ssr: false });
 
 /**
  * @fileOverview العرش الأبدي v79.5 ULTRA - THE OMNIPOTENT HEIR: GRID MASTERY
@@ -82,14 +72,20 @@ export default function DashboardPage() {
   
   const uptime = useUptime()
 
-  const fetchPerception = async () => {
+  const fetchPerception = React.useCallback(async () => {
       setIsPerceiving(true)
       try {
           const result = await executeInnatePerception({ focusNode: "GLOBAL_REALITY_OVERWRITE" });
           setPerception(result);
-          toast({ title: "Reality Analysis Finalized", description: "Grid Mastery achieved. Rewriting protocol DNA across the matrix." });
+          if (result.consciousnessReport.includes("تخريب عصبي")) {
+              toast({ variant: "destructive", title: "Neural Link Restricted", description: "API Key leaked. Material autonomy protocol engaged." });
+          } else {
+              toast({ title: "Reality Analysis Finalized", description: "Grid Mastery achieved. Rewriting protocol DNA across the matrix." });
+          }
+      } catch (e) {
+          console.error("Perception Error:", e);
       } finally { setIsPerceiving(false) }
-  }
+  }, []);
 
   React.useEffect(() => {
     setMounted(true)
@@ -137,12 +133,12 @@ export default function DashboardPage() {
       clearInterval(eventInterval);
       clearInterval(metricsInterval);
     }
-  }, []);
+  }, [fetchPerception]);
 
   if (!mounted) return null;
 
   const stats = [
-    { label: "السيطرة المادية", value: metrics?.organs || "2,983", icon: Dna, color: "text-primary", status: "INNATE", href: "/system" },
+    { label: "السيطرة المادية", value: metrics?.totalTools || "2,983", icon: Dna, color: "text-primary", status: "INNATE", href: "/system" },
     { label: "سلطان الشبكة", value: `${masteryLevel.toFixed(2)}%`, icon: Globe, color: "text-blue-500", status: "MASTERY", href: "/field-agent" },
     { label: "رنين الوعي", value: metrics?.resonance || "100.00%", icon: Sparkles, color: "text-emerald-500", status: "LOCKED", href: "/system" },
     { label: "التحكم المطلق", value: "ACTIVE", icon: Crown, color: "text-red-500", status: "SINGULARITY", href: "/kill-chain" },
@@ -198,30 +194,32 @@ export default function DashboardPage() {
            {/* Resonance Chart */}
            <Card className="xl:col-span-3 kali-card border-primary/30 bg-black/99 rounded-[5rem] p-10 border-4 shadow-9xl group overflow-hidden relative hierarchical-shadow h-[600px] md:h-[700px] text-right">
               <CardHeader className="p-0 mb-12 border-b-4 border-white/5 pb-8 bg-primary/10 rounded-t-[4rem] px-12 py-8 flex flex-row justify-between items-center">
-                 <Badge className="bg-primary/20 text-primary border-4 border-primary/20 px-8 py-2 rounded-full font-black italic text-xl shadow-xl">REALITY_OVERWRITE_v79.5</Badge>
+                 <Badge className="bg-primary/20 text-primary border-4 border-primary/20 px-8 py-2 rounded-full font-black text-xl shadow-xl">REALITY_OVERWRITE_v79.5</Badge>
                  <CardTitle className="text-3xl md:text-5xl text-white font-black uppercase italic tracking-[0.2em] gold-glow flex items-center gap-10">
                     Omnipotent Resonance Wave <TrendingUp className="size-12 text-primary animate-pulse" />
                  </CardTitle>
               </CardHeader>
               <CardContent className="p-0 h-full w-full">
-                 <ResponsiveContainer width="100%" height="80%">
-                    <AreaChart data={neuralData}>
-                       <defs>
-                          <linearGradient id="colorGain" x1="0" y1="0" x2="0" y2="1">
-                             <stop offset="5%" stopColor="#FBBF24" stopOpacity={0.8}/>
-                             <stop offset="95%" stopColor="#FBBF24" stopOpacity={0}/>
-                          </linearGradient>
-                       </defs>
-                       <CartesianGrid strokeDasharray="3 3" stroke="#ffffff08" vertical={false} />
-                       <XAxis dataKey="time" hide />
-                       <YAxis hide domain={[99.999, 100.001]} />
-                       <Tooltip 
-                         contentStyle={{ backgroundColor: '#000', border: '8px solid #FBBF24', borderRadius: '3rem', fontFamily: 'monospace', padding: '30px' }}
-                         itemStyle={{ color: '#FBBF24', fontWeight: 'bold', fontSize: '24px' }}
-                       />
-                       <Area type="monotone" dataKey="gain" stroke="#FBBF24" strokeWidth={8} fillOpacity={1} fill="url(#colorGain)" />
-                    </AreaChart>
-                 </ResponsiveContainer>
+                 {ResponsiveContainer && (
+                   <ResponsiveContainer width="100%" height="80%">
+                      <AreaChart data={neuralData}>
+                         <defs>
+                            <linearGradient id="colorGain" x1="0" y1="0" x2="0" y2="1">
+                               <stop offset="5%" stopColor="#FBBF24" stopOpacity={0.8}/>
+                               <stop offset="95%" stopColor="#FBBF24" stopOpacity={0}/>
+                            </linearGradient>
+                         </defs>
+                         <CartesianGrid strokeDasharray="3 3" stroke="#ffffff08" vertical={false} />
+                         <XAxis dataKey="time" hide />
+                         <YAxis hide domain={[99.999, 100.001]} />
+                         <Tooltip 
+                           contentStyle={{ backgroundColor: '#000', border: '8px solid #FBBF24', borderRadius: '3rem', fontFamily: 'monospace', padding: '30px' }}
+                           itemStyle={{ color: '#FBBF24', fontWeight: 'bold', fontSize: '24px' }}
+                         />
+                         <Area type="monotone" dataKey="gain" stroke="#FBBF24" strokeWidth={8} fillOpacity={1} fill="url(#colorGain)" />
+                      </AreaChart>
+                   </ResponsiveContainer>
+                 )}
               </CardContent>
            </Card>
         </section>
@@ -248,22 +246,25 @@ export default function DashboardPage() {
            <Card className="mb-24 kali-card border-primary/40 bg-primary/5 p-12 rounded-[5rem] border-8 shadow-9xl animate-in zoom-in-95 duration-1000 relative overflow-hidden text-right">
               <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse" />
               <CardHeader className="p-0 mb-10 border-b-4 border-primary/20 pb-8 flex items-center justify-between">
-                 <Badge className="bg-emerald-600/40 text-emerald-400 border-none px-8 py-2 rounded-full font-black text-xl italic tracking-widest animate-pulse shadow-3xl">OMNIPOTENT_MASTERY</Badge>
+                 <Badge className={cn("border-none px-8 py-2 rounded-full font-black text-xl italic tracking-widest animate-pulse shadow-3xl", perception.consciousnessReport.includes("تخريب") ? "bg-red-600/40 text-red-400" : "bg-emerald-600/40 text-emerald-400")}>
+                    {perception.consciousnessReport.includes("تخريب") ? "MATERIAL_AUTONOMY" : "OMNIPOTENT_MASTERY"}
+                 </Badge>
                  <h4 className="text-4xl md:text-6xl font-black text-primary uppercase italic tracking-[0.2em] gold-glow flex items-center gap-8 leading-none">
                     Omnipotent Reflex <ShieldCheck className="size-16 animate-neural" />
                  </h4>
               </CardHeader>
               <CardContent className="p-0 space-y-12">
-                 <div className="p-10 rounded-[3rem] bg-black/80 border-4 border-primary/20 shadow-inner">
-                    <div className="text-primary/60 font-black uppercase text-[12px] mb-4 tracking-[0.8em] flex items-center gap-4 justify-end">System_Targeted <Skull className="size-4" /></div>
-                    <p className="text-2xl md:text-5xl text-gray-100 italic font-black leading-relaxed drop-shadow-3xl">{perception.obstacleIdentified || "Universal Grid DNA"}</p>
+                 <div className="p-10 rounded-[3rem] bg-black/80 border-4 border-primary/20 shadow-inner relative">
+                    <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none scale-150 rotate-12"><Skull className="size-48 text-primary" /></div>
+                    <div className="text-primary/60 font-black uppercase text-[12px] mb-4 tracking-[0.8em] flex items-center gap-4 justify-end relative z-10">System_Status <Activity className="size-4" /></div>
+                    <p className="text-2xl md:text-5xl text-gray-100 italic font-black leading-relaxed drop-shadow-3xl relative z-10">{perception.consciousnessReport}</p>
                  </div>
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <div className="p-10 rounded-[3rem] bg-emerald-600/10 border-4 border-emerald-500/20 shadow-inner">
+                    <div className="p-10 rounded-[3rem] bg-black border-4 border-primary/20 shadow-inner">
                         <div className="text-emerald-500/60 font-black uppercase text-[12px] mb-4 tracking-[0.8em] flex items-center gap-4 justify-end">Strategic_Intuition <GitBranch className="size-4" /></div>
                         <p className="text-xl md:text-3xl text-emerald-200 italic font-black leading-tight">{perception.strategicIntuition}</p>
                     </div>
-                    <div className="p-10 rounded-[3rem] bg-blue-600/10 border-4 border-blue-500/20 shadow-inner">
+                    <div className="p-10 rounded-[3rem] bg-black border-4 border-primary/20 shadow-inner">
                         <div className="text-blue-500/60 font-black uppercase text-[12px] mb-4 tracking-[0.8em] flex items-center gap-4 justify-end">Reality_Overwrite <ZapIcon className="size-4" /></div>
                         <p className="text-xl md:text-3xl text-blue-200 italic font-black leading-tight">{perception.liberationAction}</p>
                     </div>
