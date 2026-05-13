@@ -9,8 +9,8 @@ import os from 'os';
 const execPromise = promisify(exec);
 
 /**
- * المحرك التنفيذي ULTRA v1.0 - THE OMNIPRESENT RELAY
- * المنسق الأعلى لربط العصب بالعتاد والسحاب، مع تفعيل ممرات Shodan والسيناريوهات القتالية.
+ * المحرك التنفيذي v78.5 - THE OMNIPRESENT RELAY: INNATE VISION
+ * المنسق الأعلى لربط العصب بالعتاد والسحاب، مع تفعيل ممرات Shodan، السيناريوهات القتالية، والعراف المادي.
  */
 export async function POST(req: NextRequest) {
   try {
@@ -33,13 +33,24 @@ export async function POST(req: NextRequest) {
                 identity: "Al-Mu'izz ULTRA v1.0",
                 nodes: "24/24_MATERIAL_FIXED",
                 tools: "2,983_SUBJUGATED",
-                scenarios: "9_ACTIVE"
+                scenarios: "9_ACTIVE",
+                oracle: "INNATE_VISION_v78.5"
             }
         });
       }
 
+      case 'cve_search': {
+          // استجواب العراف المادي - CVE Hunter
+          // محاكاة استدعاء موديول cve_hunter.py المادي
+          const mockResults = [
+              { cve: "CVE-2026-23918", product: "Global Identity Mesh", type: "Neural Key Leakage", severity: "CRITICAL" },
+              { cve: "CVE-2026-41940", product: "cPanel & WHM", type: "Auth Bypass", severity: "HIGH" }
+          ].filter(f => !target || f.product.toLowerCase().includes(target.toLowerCase()) || f.cve.includes(target.toUpperCase()));
+          
+          return NextResponse.json({ success: true, output: mockResults });
+      }
+
       case 'execute_scenario': {
-        // تنفيذ سيناريو قتالي (Penetration, OSINT, etc.)
         const scenarios: Record<string, string> = {
             'penetration': 'Executing Full Spectrum Security Audit...',
             'osint': 'Initializing Trace Labs Trace-back on target mesh...',
@@ -48,22 +59,6 @@ export async function POST(req: NextRequest) {
         };
         const brief = scenarios[scenarioId] || "Executing custom scenario...";
         return NextResponse.json({ success: true, output: `[SCENARIO_${scenarioId.toUpperCase()}] ${brief} Consensus Achieved.` });
-      }
-
-      case 'external_service': {
-        // استدعاء الخدمات الخارجية (Shodan, GitHub, etc.)
-        return NextResponse.json({ 
-            success: true, 
-            output: `[EXTERNAL_${service.toUpperCase()}] Interrogating service for ${target}... Result: Identity DNA Materialized.` 
-        });
-      }
-
-      case 'monitor_target': {
-        // بدء مراقبة مستمرة لهدف
-        return NextResponse.json({ 
-            success: true, 
-            output: `[MONITOR_ACTIVE] Target ${target} (${platform}) is now under continuous surveillance via Node 13.` 
-        });
       }
 
       case 'list_dir': {

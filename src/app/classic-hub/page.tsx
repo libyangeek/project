@@ -37,7 +37,11 @@ import {
   CheckCircle2,
   Binary,
   Clock,
-  LayoutGrid
+  LayoutGrid,
+  Radar,
+  Eye,
+  Flame,
+  ShieldCheck
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { toast } from "@/hooks/use-toast"
@@ -46,7 +50,7 @@ import { Badge } from "@/components/ui/badge"
 
 /**
  * @fileOverview سطح مكتب المُعِزّ ULTRA v1.0 - THE OMNIPOTENT OVERMIND OS
- * نظام تشغيل سيادي كامل يدعم السيناريوهات القتالية، المراقبة المستمرة، والربط السحابي العالمي.
+ * نظام تشغيل سيادي كامل يدعم السيناريوهات القتالية، المراقبة المستمرة، والارتباط الفطري بالعراف.
  */
 
 interface WindowState {
@@ -58,17 +62,18 @@ interface WindowState {
   zIndex: number;
   x: number;
   y: number;
-  content: 'audit' | 'terminal' | 'siphon' | 'explorer' | 'scenarios' | 'integrations' | 'monitors';
+  content: 'audit' | 'terminal' | 'siphon' | 'explorer' | 'scenarios' | 'integrations' | 'monitors' | 'oracle';
 }
 
 export default function SovereignDesktop() {
   const [mounted, setMounted] = React.useState(false)
   const [windows, setWindows] = React.useState<WindowState[]>([
     { id: 'audit', title: 'Supreme_Pulse_v78.exe', icon: Activity, isOpen: true, isMinimized: false, zIndex: 10, x: 40, y: 40, content: 'audit' },
-    { id: 'scenarios', title: 'Battle_Scenarios.lib', icon: Workflow, isOpen: false, isMinimized: false, zIndex: 11, x: 100, y: 100, content: 'scenarios' },
-    { id: 'integrations', title: 'Cloud_Uplink.arc', icon: Cloud, isOpen: false, isMinimized: false, zIndex: 12, x: 450, y: 80, content: 'integrations' },
-    { id: 'terminal', title: 'ULTRA_Shell.com', icon: Terminal, isOpen: false, isMinimized: false, zIndex: 13, x: 200, y: 150, content: 'terminal' },
-    { id: 'monitors', title: 'Live_Eye_Monitor.sys', icon: Eye, isOpen: false, isMinimized: false, zIndex: 14, x: 300, y: 200, content: 'monitors' }
+    { id: 'oracle', title: 'Absolute_Oracle_v78.sys', icon: Radar, isOpen: false, isMinimized: false, zIndex: 11, x: 150, y: 80, content: 'oracle' },
+    { id: 'scenarios', title: 'Battle_Scenarios.lib', icon: Workflow, isOpen: false, isMinimized: false, zIndex: 12, x: 100, y: 100, content: 'scenarios' },
+    { id: 'integrations', title: 'Cloud_Uplink.arc', icon: Cloud, isOpen: false, isMinimized: false, zIndex: 13, x: 450, y: 80, content: 'integrations' },
+    { id: 'terminal', title: 'ULTRA_Shell.com', icon: Terminal, isOpen: false, isMinimized: false, zIndex: 14, x: 200, y: 150, content: 'terminal' },
+    { id: 'monitors', title: 'Live_Eye_Monitor.sys', icon: Eye, isOpen: false, isMinimized: false, zIndex: 15, x: 300, y: 200, content: 'monitors' }
   ])
   const [maxZ, setMaxZ] = React.useState(30)
   const [time, setTime] = React.useState("")
@@ -155,6 +160,7 @@ export default function SovereignDesktop() {
       <div className="absolute inset-0 p-10 grid grid-flow-col grid-rows-6 gap-12 w-fit h-full z-0">
          {[
             { id: 'audit', label: 'System Pulse', icon: Activity },
+            { id: 'oracle', label: 'Absolute Oracle', icon: Radar },
             { id: 'scenarios', label: 'Battle Scenarios', icon: Workflow },
             { id: 'integrations', label: 'Cloud Uplink', icon: Cloud },
             { id: 'terminal', label: 'ULTRA Shell', icon: Terminal },
@@ -243,6 +249,29 @@ export default function SovereignDesktop() {
                             </div>
                         )}
 
+                        {win.content === 'oracle' && (
+                             <div className="space-y-10 text-black h-full flex flex-col">
+                                <h3 className="font-black border-b-4 border-black pb-4 flex items-center gap-6 text-3xl uppercase italic"><Radar className="size-10 text-primary animate-pulse"/> Innate Oracle Vision</h3>
+                                <div className="p-8 bg-[#c0c0c0] border-4 border-white/50 retro-outset space-y-6">
+                                    <div className="flex justify-between items-center text-xl font-black uppercase italic text-blue-900 border-b-2 border-black/10 pb-4">
+                                        <span>Predictive Threat DNA</span>
+                                        <Badge className="bg-emerald-600 text-white font-black italic">INNATE_v78.5</Badge>
+                                    </div>
+                                    <p className="text-2xl text-gray-700 font-bold italic leading-relaxed">
+                                        "سيدي القائد، العراف الآن صامد في عصب الإدراك الفطري؛ نحن نستشعر الثغرات المادية والبرمجية عبر الـ 2,983 أداة المدمجة حياً."
+                                    </p>
+                                </div>
+                                <div className="flex-1 retro-inset p-6 bg-black text-emerald-400 font-mono text-lg overflow-y-auto scrollbar-hide">
+                                    <div className="animate-pulse mb-4 text-primary font-black uppercase italic">{">>>"} Material Oracle Siphon Active...</div>
+                                    <div className="space-y-2">
+                                        <div>[OK] CVE-2026-23918: Global Identity Mesh - Neural Key Leakage (Material Link)</div>
+                                        <div>[OK] Android Bulletin 2026-05: Zero-Click Qualcomm Logic Enslaved.</div>
+                                        <div>[OK] Linux Kernel v6.0 Ghost Persistence Bypassed.</div>
+                                    </div>
+                                </div>
+                             </div>
+                        )}
+
                         {win.content === 'scenarios' && (
                             <div className="space-y-10 text-black">
                                 <h3 className="font-black border-b-4 border-black pb-4 flex items-center gap-6 text-3xl uppercase italic"><Workflow className="size-10 text-blue-800"/> Battle Scenarios</h3>
@@ -276,7 +305,7 @@ export default function SovereignDesktop() {
                                     {[
                                         { id: 'shodan', label: 'Shodan API', status: 'CONNECTED', icon: Search },
                                         { id: 'aws', label: 'AWS Sovereign Console', status: 'LOCKED', icon: Cloud },
-                                        { id: 'github', label: 'Git Siphon Node', status: 'ACTIVE', icon: Code2 },
+                                        { id: 'github', label: 'Git Siphon Node', status: 'ACTIVE', icon: FileCode },
                                         { id: 'firebase', label: 'Firebase Matrix', status: 'SYNCED', icon: Database }
                                     ].map(item => (
                                         <div key={item.id} className="retro-outset p-8 bg-[#c0c0c0] flex items-center justify-between shadow-lg">
@@ -390,6 +419,7 @@ export default function SovereignDesktop() {
                 </div>
                 <div className="p-4 space-y-4 overflow-y-auto scrollbar-hide max-h-[550px]">
                     {[
+                        { id: 'oracle', label: 'Absolute Oracle', icon: Radar, color: "text-primary" },
                         { id: 'scenarios', label: 'Battle Scenarios', icon: Workflow, color: "text-blue-800" },
                         { id: 'integrations', label: 'Global Uplinks', icon: Cloud, color: "text-green-800" },
                         { id: 'terminal', label: 'Supreme Shell', icon: Terminal, color: "text-magenta-800" },
