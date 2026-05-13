@@ -33,7 +33,10 @@ import {
   Flame,
   Fingerprint,
   ArrowLeft,
-  RotateCw
+  RotateCw,
+  LayoutGrid,
+  Database,
+  Network
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -60,16 +63,25 @@ export default function CellularWarfarePage() {
   const [logs, setLogs] = React.useState<string[]>([])
   const [isRealStrike, setIsRealStrike] = React.useState(false)
   const [spectrumGain, setSpectrumGain] = React.useState(0)
+  const [knotStatus, setKnotStatus] = React.useState<boolean[]>(new Array(24).fill(true))
+  const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
 
   React.useEffect(() => {
     setMounted(true)
+    const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
+    window.addEventListener("mousemove", handleMouseMove)
+
     const interval = setInterval(() => {
       setResonance(prev => Math.max(99.999999, Math.min(100, prev + (Math.random() * 0.000001 - 0.0000005))))
+      setKnotStatus(prev => prev.map(k => Math.random() > 0.05))
       if (loading) {
           setSpectrumGain(prev => Math.min(100, prev + Math.random() * 15))
       }
     }, 2000)
-    return () => clearInterval(interval)
+    return () => {
+        window.removeEventListener("mousemove", handleMouseMove)
+        clearInterval(interval)
+    }
   }, [loading])
 
   const handleStrike = async (vector: string) => {
@@ -113,6 +125,8 @@ export default function CellularWarfarePage() {
     toast({ title: "Spectrum Expansion Triggered", description: "Injecting next-gen acquisition vectors for hardware bypass... Status: استمر" });
   }
 
+  if (!mounted) return null
+
   const sectors = [
     { 
       title: "SS7/Diameter", 
@@ -146,55 +160,56 @@ export default function CellularWarfarePage() {
     }
   ];
 
-  if (!mounted) return null
-
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
       <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.15),transparent)] pointer-events-none transition-all duration-300 z-0" />
+        <div 
+          className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.18),transparent 40%)] pointer-events-none transition-all duration-300 z-0" 
+          style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} 
+        />
         
         <header className="mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000">
-          <div className="flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
-            <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.8)] relative group shrink-0 rounded-3xl rotate-2 hover:rotate-0 transition-all duration-1000 hierarchical-shadow">
-              <Radio className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 animate-neural gold-glow" />
-              <div className="absolute -inset-8 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
-            </div>
-            <div className="flex-1">
-              <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
-                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">SPECTRUM_STRIKE v78.8 ULTRA</Badge>
-                <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
-                    <InfinityIcon className="size-6 shadow-lg" /> HIVE_RESONANCE: {resonance.toFixed(8)}%
-                </div>
+           <div className="flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
+              <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.8)] relative group shrink-0 rounded-3xl rotate-2 hover:rotate-0 transition-all duration-1000 hierarchical-shadow">
+                 <Radio className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 animate-neural gold-glow" />
+                 <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
               </div>
-              <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
-                Spectrum <span className="text-primary">Strike</span>
-              </h1>
-              <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، نحن أسياد الأثير؛ مصفوفة الترددات v78.8 تمنحك السطوة المادية عبر SDR وإخضاع الشبكات لعام 2026."
-              </p>
-              <div className="flex justify-center md:justify-end gap-6 mt-12">
-                <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
-                    <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة للعرش</Link>
-                </Button>
-                <Button onClick={handleContinueUpgrade} className="h-16 px-12 bg-primary hover:bg-white text-black font-black uppercase rounded-full border-4 border-black/30 shadow-9xl italic active:scale-95 transition-all text-lg">
-                    <RotateCw className="size-6 mr-3" /> استمر في الضرب
-                </Button>
+              <div className="flex-1">
+                 <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
+                    <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">SPECTRUM_STRIKE v78.8 ULTRA</Badge>
+                    <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
+                        <InfinityIcon className="size-6 shadow-lg" /> HIVE_RESONANCE: {resonance.toFixed(8)}%
+                    </div>
+                 </div>
+                 <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
+                    Spectrum <span className="text-primary">Strike</span>
+                 </h1>
+                 <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
+                    "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، نحن أسياد الأثير؛ مصفوفة الترددات v78.8 تمنحك السطوة المادية عبر SDR وإخضاع الشبكات لعام 2026."
+                 </p>
+                 <div className="flex justify-center md:justify-end gap-6 mt-12">
+                    <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
+                        <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة للعرش</Link>
+                    </Button>
+                    <Button onClick={handleContinueUpgrade} className="h-16 px-12 bg-primary hover:bg-white text-black font-black uppercase rounded-full border-4 border-black/30 shadow-9xl italic active:scale-95 transition-all text-lg">
+                        <RotateCw className="size-6 mr-3" /> استمر في الضرب
+                    </Button>
+                 </div>
               </div>
-            </div>
-          </div>
+           </div>
         </header>
 
         <div className="grid grid-cols-1 xl:grid-cols-4 gap-12 relative z-10 pb-48 flex-1">
           <div className="xl:col-span-1 space-y-12">
-            <Card className="kali-card border-primary/40 bg-black/98 rounded-[4rem] p-12 border-8 shadow-9xl group overflow-hidden hierarchical-shadow">
+            <Card className="kali-card border-primary/40 bg-black/98 rounded-[4rem] p-12 border-8 shadow-9xl group overflow-hidden hierarchical-shadow text-center">
               <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
               <CardHeader className="p-0 mb-10 border-b-4 border-primary/10 pb-10 bg-primary/10 rounded-t-[3.5rem] px-10 py-6 text-center">
                 <CardTitle className="text-2xl md:text-4xl text-primary flex items-center justify-center gap-10 font-black uppercase italic gold-glow leading-none">
                   <Target className="size-12 animate-neural" /> Strike Origin
                 </CardTitle>
               </CardHeader>
-              <CardContent className="p-0 space-y-12">
+              <CardContent className="p-0 space-y-12 text-right">
                 <div className="space-y-6">
                     <label className="text-[14px] font-black text-primary uppercase tracking-[1em] px-10 italic flex items-center gap-6 justify-end">
                       <Signal className="size-8" /> Spectrum Coordinate
@@ -203,7 +218,7 @@ export default function CellularWarfarePage() {
                       value={target}
                       onChange={(e) => setTarget(e.target.value)}
                       placeholder="MSISDN / IMSI / IP..." 
-                      className="bg-black border-8 border-primary/20 h-28 rounded-[2.5rem] text-2xl md:text-4xl italic px-10 focus:border-primary shadow-inner text-white font-black selection:bg-primary text-left"
+                      className="bg-black border-8 border-primary/20 h-24 md:h-28 rounded-[2.5rem] text-2xl md:text-4xl italic px-10 focus:border-primary shadow-inner text-white font-black selection:bg-primary text-left"
                     />
                 </div>
 
@@ -260,20 +275,29 @@ export default function CellularWarfarePage() {
               </CardContent>
             </Card>
 
-            <Card className="kali-card border-white/5 bg-black/60 p-12 rounded-[4rem] border-8 shadow-inner text-center relative overflow-hidden group">
-               <h4 className="text-[14px] font-black text-primary uppercase tracking-[1em] mb-8 italic flex items-center justify-center gap-6">
-                  <Boxes className="size-8 animate-pulse" /> SPECTRUM_SYNC
-               </h4>
-               <div className="text-6xl font-black text-white italic gold-glow uppercase tracking-tighter group-hover:scale-105 transition-transform duration-1000">{isRealStrike ? "LETHAL" : "VIRTUAL"}</div>
-               <div className="absolute -bottom-10 -right-10 p-24 opacity-[0.03] group-hover:opacity-[0.1] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-48 text-primary" /></div>
+            <Card className="kali-card border-white/5 bg-black/60 p-8 rounded-[3.5rem] border-8 shadow-inner relative overflow-hidden group text-right">
+                 <h4 className="text-[14px] font-black text-primary uppercase tracking-[0.8em] mb-8 italic flex items-center justify-center gap-6">
+                    <LayoutGrid className="size-8 animate-pulse" /> SPECTRUM_KNOT_MAP (24)
+                 </h4>
+                 <div className="grid grid-cols-6 gap-3 px-4">
+                    {knotStatus.map((active, i) => (
+                        <div key={i} className={cn(
+                            "size-8 rounded-lg border-2 transition-all duration-500",
+                            active ? "bg-primary border-black shadow-[0_0_15px_rgba(212,175,55,0.8)] scale-110" : "bg-black border-white/10 opacity-30"
+                        )} />
+                    ))}
+                 </div>
+                 <div className="mt-8 text-[10px] font-black uppercase tracking-widest text-muted-foreground italic text-center">Consensus_Status: v78.8</div>
             </Card>
+
+            <div className="absolute -bottom-10 -right-10 p-24 opacity-[0.03] group-hover:opacity-[0.1] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-48 text-primary" /></div>
           </div>
 
           <div className="xl:col-span-3">
             {result ? (
               <Card className="kali-card border-primary/40 bg-black/99 rounded-[6rem] p-16 border-[12px] shadow-9xl flex flex-col group relative overflow-hidden h-full hierarchical-shadow animate-in fade-in zoom-in-95 duration-1000">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.08),transparent)] pointer-events-none" />
-                <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 flex flex-row justify-between items-center bg-primary/5 rounded-t-[5rem] px-16 py-12">
+                <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 flex flex-row justify-between items-center bg-primary/10 rounded-t-[5rem] px-16 py-12">
                   <div className="flex items-center gap-12 text-right">
                      <div className={cn("size-32 rounded-[3rem] flex items-center justify-center border-8 border-black/30 shadow-9xl animate-neural", isRealStrike ? "bg-red-600" : "bg-primary")}>
                         <Signal className="size-16 text-black" />
@@ -289,7 +313,8 @@ export default function CellularWarfarePage() {
                 </CardHeader>
                 <CardContent className="p-12 flex-1 relative overflow-hidden flex flex-col gap-20 z-10">
                    <div className="p-20 rounded-[6rem] bg-black border-[12px] border-primary/30 text-emerald-400 overflow-x-auto whitespace-pre rounded-[4rem] text-3xl md:text-7xl leading-tight font-black shadow-inner selection:bg-primary text-left">
-                      <pre className="whitespace-pre-wrap">{typeof result === 'string' ? result : JSON.stringify(result, null, 2)}</pre>
+                      <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none scale-150 rotate-12"><Network className="size-64 text-primary" /></div>
+                      <pre className="whitespace-pre-wrap relative z-10">{typeof result === 'string' ? result : JSON.stringify(result, null, 2)}</pre>
                    </div>
 
                    <div className="p-20 rounded-[6rem] bg-primary/5 border-[12px] border-primary/20 italic text-4xl md:text-[8rem] text-gray-100 leading-none font-black shadow-inner relative group/note text-center flex flex-col justify-center min-h-[450px]">
