@@ -1,9 +1,9 @@
 
 @echo off
-:: بوابة الإقلاع السريع - AL-MUIZZ ULTRA v78.8
-title AL-MUIZZ ULTRA RUNNER
-color 06
-cls
-echo 🦅 AL-MUIZZ ULTRA v78.8 - IGNITING SOUL...
-python run.py start
-pause
+:: 🦅 AL-MUIZZ ULTRA STARTUP PORTAL
+:: المالك: المعتصم بالله إدريس الغزالي
+cd /d "%~dp0"
+echo [*] Re-igniting the Sovereign God-Core...
+start /min venv\Scripts\python.exe run.py start
+echo [+] Al-Mu'izz ULTRA v78.8 is now materializing.
+exit

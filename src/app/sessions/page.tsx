@@ -80,6 +80,9 @@ export default function ShadowGridPage() {
   
   const { data: sessions, isLoading } = useCollection(sessionsQuery);
 
+  // تعريف activeNode بناءً على الجلسات الموجودة والمعرف المختار
+  const activeNode = sessions?.find(s => s.id === selectedNodeId);
+
   React.useEffect(() => {
     setMounted(true)
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
@@ -204,7 +207,7 @@ export default function ShadowGridPage() {
            <Card className="lg:col-span-2 kali-card border-primary/40 bg-black/99 rounded-[6rem] p-12 border-[12px] shadow-9xl flex flex-col group overflow-hidden relative min-h-[900px] hierarchical-shadow">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.06),transparent)] pointer-events-none" />
               <CardHeader className="p-0 mb-12 border-b-8 border-white/5 pb-12 bg-primary/10 rounded-t-[5rem] px-10 py-8 flex flex-row justify-between items-center text-right">
-                 <Badge className="bg-emerald-600/30 text-emerald-500 border-8 border-emerald-500/40 px-12 py-4 rounded-full font-black text-3xl animate-pulse shadow-3xl uppercase italic order-last md:order-none">EXTRACTION_OK</Badge>
+                 <Badge className="bg-emerald-600/30 text-emerald-500 border-8 border-emerald-500/40 px-16 py-8 rounded-full font-black text-3xl animate-pulse shadow-3xl uppercase italic order-last md:order-none">EXTRACTION_OK</Badge>
                  <CardTitle className="text-4xl md:text-[8rem] text-white flex items-center gap-12 font-black uppercase italic gold-glow px-10 leading-none">Siphon Feed <Activity className="size-16 md:size-24 text-primary animate-pulse" /></CardTitle>
               </CardHeader>
               <CardContent className="p-6 flex-1 flex flex-col space-y-12 relative z-10 text-right">

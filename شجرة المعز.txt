@@ -30,7 +30,7 @@
 ├── 📁 clawcode/                <-- وحدة القبض المادي (Direct Hijack).
 └── 📁 cellular_warfare/        <-- الحرب الخلوية المادية (SigPloit / IMSI).
 
-📁 src/app/ [ العرش الحي - THE UNIVERSAL HUD ]
+📁 src/app/ [ العرش الحي - THE ABSOLUTE HUD ]
 ├── 📄 page.tsx                  <-- العرش الأبدي (الرنين المادي v78.8).
 ├── 📁 classic-hub/              <-- سطح مكتب السطوة (ULTRA OS Desktop).
 ├── 📁 kill-chain/               <-- سلسلة الإبادة (Autonomous Strike).
