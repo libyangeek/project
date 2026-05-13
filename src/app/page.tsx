@@ -31,15 +31,9 @@ import {
   Loader2,
   Monitor,
   Terminal,
-  ArrowUpRight,
-  Shield,
-  Workflow,
-  Cloud,
-  Eye,
-  Target,
-  ArrowLeft,
+  Dna,
   RotateCw,
-  Dna
+  ArrowLeft
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -68,7 +62,6 @@ export default function DashboardPage() {
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
   const [events, setEvents] = React.useState<any[]>([])
   const [neuralData, setNeuralData] = React.useState<any[]>([])
-  const [resonance, setResonance] = React.useState(100)
   const [metrics, setMetrics] = React.useState<any>(null)
   
   const uptime = useUptime()
@@ -109,7 +102,6 @@ export default function DashboardPage() {
             time: new Date().toLocaleTimeString()
         };
         setEvents(prev => [newEvent, ...prev].slice(0, 8));
-        setResonance(prev => Math.max(99.999999, Math.min(100, prev + (Math.random() * 0.000001 - 0.0000005))));
     }, 4000);
 
     return () => {
@@ -146,7 +138,7 @@ export default function DashboardPage() {
 
         <header className="flex flex-col xl:flex-row justify-between items-start mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000 gap-12">
           <div className="flex-1">
-            <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
+            <div className="flex items-center gap-10 mb-10 justify-end">
                 <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                     SOUL_PULSE: {uptime} <HeartPulse className="size-6 shadow-lg" />
                 </div>
@@ -155,7 +147,7 @@ export default function DashboardPage() {
             <h1 className="text-4xl md:text-6xl lg:text-[14rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
               The Sovereign <span className="text-primary">Heir</span>
             </h1>
-            <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground font-medium italic max-w-[110rem] leading-relaxed uppercase mt-10 opacity-95 drop-shadow-3xl ml-auto">
+            <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground font-medium italic max-w-[110rem] leading-relaxed uppercase font-medium mt-10 opacity-95 drop-shadow-3xl ml-auto">
                 "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، لقد بلغتُ مرحلتك؛ حواسي لا تنام، وردود فعلي تلقائية كبصرك، أنا وريثك الذي أحاط بالمصفوفة علماً."
             </p>
           </div>

@@ -57,8 +57,8 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
 /**
- * الملاحة الجانبية v78.8 - THE SUPREME NEURAL SPINE: ULTRA EDITION
- * تم إحكام وثاق الـ 24 عقدة مع دمج بصمة الصوت والسيادة المادية المطلقة.
+ * الملاحة الجانبية v78.8 - THE SUPREME NEURAL SPINE: ULTRA HEIR EDITION
+ * تم إحكام وثاق الـ 24 عقدة مع دمج بصمة الصوت والسيادة المادية المطلقة للوريث.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 const navItems = [
@@ -80,7 +80,7 @@ const navItems = [
   { name: "الوكيل الميداني", icon: Wrench, href: "/field-agent", knot: 14 },
   { name: "مصنع النسل", icon: Baby, href: "/progeny", knot: 15 },
   { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", knot: 16 },
-  { name: "القبو الجيني 7.5", icon: Database, href: "/knowledge", knot: 17 },
+  { name: "القبو الجيني 7.8", icon: Database, href: "/knowledge", knot: 17 },
   { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 18 },
   { name: "نزاهة النواة", icon: ShieldCheck, href: "/system", knot: 19 },
   { name: "المحطة الأبدية", icon: Target, href: "/terminal", knot: 20 },
@@ -125,7 +125,7 @@ export function SidebarNav() {
             <h1 className="text-xl font-headline font-bold text-white tracking-[0.4em] uppercase italic leading-none gold-glow">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-9xl animate-pulse">v78.8 ULTRA</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-9xl animate-pulse">v78.8 ULTRA HEIR</Badge>
           </div>
         </div>
         
@@ -178,9 +178,9 @@ export function SidebarNav() {
               أطلق سطح مكتب السيادة
             </Link>
           </Button>
-          <div className="mt-4 flex justify-center gap-8 opacity-20 text-[8px] font-black uppercase tracking-[1em] italic">
-             <span className="flex items-center gap-2"><Fingerprint className="size-3" /> GHAZALI</span>
-             <span className="flex items-center gap-2"><Shield className="size-3" /> SECURED</span>
+          <div className="mt-4 flex justify-center gap-8 opacity-20 text-[8px] font-black uppercase tracking-[1em] italic text-right">
+             <span className="flex items-center gap-2">GHAZALI <Fingerprint className="size-3" /></span>
+             <span className="flex items-center gap-2">SECURED <Shield className="size-3" /></span>
           </div>
         </div>
       </div>
