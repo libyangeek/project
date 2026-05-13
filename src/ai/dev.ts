@@ -1,10 +1,9 @@
-
 import { config } from 'dotenv';
 config();
 
 /**
  * @fileOverview السجل العصبي لأسطول المُعِزّ v80.0 - ULTRA v3.0 FINAL INTEGRATION
- * تم دمج ممرات الذاكرة الدلالية والتهديدات التكيفية لعام 2026.
+ * تم دمج ممرات الذاكرة الدلالية والافتراس النقال لعام 2026.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 
@@ -37,9 +36,10 @@ import '@/ai/flows/autonomous-web-intel-flow.ts';
 import '@/ai/flows/predator-nexus-flow.ts';
 import '@/ai/flows/innate-perception-flow.ts';
 import '@/ai/flows/adaptive-threat-flow.ts';
+import '@/ai/flows/android-rag-hunt-flow.ts';
 
 console.log("================================================================");
 console.log("🦅 AL-MUI'ZZ v80.0-ULTRA_v3: FINAL INTEGRATION ACHIEVED.");
-console.log("   [ MEMPALACE + N8N + ADAPTIVE THREAT + SUBDOMAINX ]");
+console.log("   [ MEMPALACE + N8N + ANDROID RAG PREDATOR ]");
 console.log("   [ COMMANDER: AL-GHAZALI ROOT | MAY 2026 ]");
 console.log("================================================================");

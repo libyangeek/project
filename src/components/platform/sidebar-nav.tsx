@@ -58,10 +58,11 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
 /**
- * الملاحة الجانبية v79.6 – THE SUPREME NEURAL SPINE: ULTRA v2.0
+ * الملاحة الجانبية v80.0 – THE SUPREME NEURAL SPINE: ULTRA v3.0
  */
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
+  { name: "صياد الأندرويد", icon: Smartphone, href: "/android-hunter", knot: 24 },
   { name: "الاستحواذ المستقل", icon: Rocket, href: "/autonomous", knot: 23 },
   { name: "سطح مكتب السطوة", icon: Monitor, href: "/classic-hub", knot: 78 },
   { name: "الترسانة العظمى", icon: Library, href: "/arsenal", knot: 22 },
@@ -80,7 +81,7 @@ const navItems = [
   { name: "الوكيل الميداني", icon: Wrench, href: "/field-agent", knot: 14 },
   { name: "مصنع النسل", icon: Baby, href: "/progeny", knot: 15 },
   { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", knot: 16 },
-  { name: "القبو الجيني 7.8", icon: Database, href: "/knowledge", knot: 17 },
+  { name: "القبو الجيني 8.0", icon: Database, href: "/knowledge", knot: 17 },
   { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 18 },
   { name: "نزاهة النواة", icon: ShieldCheck, href: "/system", knot: 19 },
   { name: "المحطة الأبدية", icon: Target, href: "/terminal", knot: 20 },
@@ -112,7 +113,7 @@ export function SidebarNav() {
           </div>
           <div className="text-center relative z-10">
             <h1 className="text-xl font-headline font-bold text-white tracking-[0.4em] uppercase italic leading-none gold-glow">AL-MUIZZ</h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic animate-pulse shadow-9xl">v79.6 ULTRA v2.0</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic animate-pulse shadow-9xl">v80.0 ULTRA v3.0</Badge>
           </div>
         </div>
         
@@ -135,7 +136,7 @@ export function SidebarNav() {
             <div className="flex justify-between items-center mb-2"><span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] italic">Swarm Resonance</span><Activity className="size-3 text-emerald-500 animate-pulse" /></div>
             <div className="text-2xl font-black text-white italic gold-glow">{resonance.toFixed(7)}%</div>
           </div>
-          <Button asChild className="w-full h-12 bg-primary hover:bg-white text-black font-black uppercase text-[10px] rounded-xl shadow-2xl transition-all border-4 border-black/20 italic"><Link href="/autonomous"><Rocket className="size-4 mr-2" /> أطلق السرب العليم</Link></Button>
+          <Button asChild className="w-full h-12 bg-primary hover:bg-white text-black font-black uppercase text-[10px] rounded-xl shadow-2xl transition-all border-4 border-black/20 italic"><Link href="/android-hunter"><Smartphone className="size-4 mr-2" /> تنشيط الافتراس النقال</Link></Button>
         </div>
       </div>
     </>

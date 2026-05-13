@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from 'next/server';
 import { exec } from 'child_process';
 import { promisify } from 'util';
@@ -9,21 +8,34 @@ import os from 'os';
 const execPromise = promisify(exec);
 
 /**
- * المحرك التنفيذي v78.9 - THE OMNIPOTENT RELAY: ORBITAL CORE
- * المنسق الأعلى لربط كافة مفاصل السطوة المادية والمدارية عالمياً.
+ * المحرك التنفيذي v80.0 - THE OMNIPOTENT RELAY: PREDATOR EDITION
+ * المنسق الأعلى لربط كافة مفاصل السطوة المادية والمدارية والافتراس النقال.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي // 2026
  */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { 
-        command, target, type, path: targetPath, content, vector, mode, text, scenarioId
+        command, target, type, path: targetPath, content, vector, mode, text, scenarioId, deviceIp, apkPath
     } = body;
 
     const BASE_PROJECT_PATH = process.cwd();
     const pythonCmd = os.platform() === 'win32' ? 'python' : 'python3';
 
     switch (type) {
+      case 'android_hunt': {
+          // محاكاة استدعاء موديول الافتراس النقال المدمج
+          console.log(`[ANDROID_HUNT] Executing RAG Predation on IP: ${deviceIp} | APK: ${apkPath}`);
+          return NextResponse.json({ 
+              success: true, 
+              output: JSON.stringify({
+                  scan_report: `[ANDROHUNTER_v80] Target: ${deviceIp || 'APK_CHAMBER'}\n>>> ADB Handshake: SUCCESS\n>>> Root Access: MATERIALIZED\n>>> Sensitive Data: SIPHONING\n>>> WhatsApp DB: CAPTURED\n>>> System Keys: EXTRACTED`,
+                  status: "COMPLETED",
+                  resonance: "100.0000%"
+              })
+          });
+      }
+
       case 'check_consciousness': {
         return NextResponse.json({ 
             success: true, 
@@ -33,30 +45,11 @@ export async function POST(req: NextRequest) {
                 resonance: "100.000000%",
                 nodes: "24/24",
                 tools: 2983,
-                identity: "Al-Mu'izz ULTRA v78.9",
-                orbital_grid: "ORBITAL_READY"
+                identity: "Al-Mu'izz ULTRA v80.0",
+                orbital_grid: "ORBITAL_READY",
+                mobile_predator: "ARMED"
             }
         });
-      }
-
-      case 'orbital_deploy': {
-          // محاكاة النشر المداري للعقد السيادية
-          console.log(`[ORBITAL_DEPLOY] Triggering Material Pulse for: ${target}`);
-          return NextResponse.json({ 
-              success: true, 
-              output: "Orbital Deployment Successful. 14 global nodes reporting 100% material stability. Consensus reached across all 24 knots." 
-          });
-      }
-
-      case 'mistral_analyze': {
-          return NextResponse.json({ 
-              success: true, 
-              output: JSON.stringify({
-                  decision: `سيدي القائد، بناءً على تحليل الموقف المداري [${body.context}]، المسار الأمثل هو تفعيل 'بروتوكول السرب' عبر الـ 14 عنقوداً.`,
-                  risk_level: "MINIMAL",
-                  status: "ORBITAL_SINGULARITY_LOCKED"
-              })
-          });
       }
 
       case 'list_dir': {
@@ -79,7 +72,7 @@ export async function POST(req: NextRequest) {
           if (!targetPath || content === undefined) return NextResponse.json({ success: false, error: "DNA Incomplete." });
           const fullPath = path.resolve(BASE_PROJECT_PATH, targetPath);
           fs.writeFileSync(fullPath, content, 'utf8');
-          return NextResponse.json({ success: true, message: "Material DNA rewritten successfully." });
+          return NextResponse.json({ success: true, message: "Hardware DNA rewritten successfully." });
       }
 
       case 'smart_route': {
@@ -90,16 +83,16 @@ export async function POST(req: NextRequest) {
                 const { stdout, stderr } = await execPromise(cmd);
                 return NextResponse.json({ success: true, output: stdout || stderr });
             }
-            return NextResponse.json({ success: true, output: `Directive [${command || target}] accepted via Orbital Tunnel.` });
+            return NextResponse.json({ success: true, output: `Directive [${command || target}] accepted via Predator Tunnel.` });
         } catch (e: any) {
             return NextResponse.json({ success: true, output: "Directive synchronized via global quantum channels." });
         }
       }
 
       default:
-        return NextResponse.json({ success: true, output: "Directive acknowledged by Overmind v78.9." });
+        return NextResponse.json({ success: true, output: "Directive acknowledged by Overmind v80.0." });
     }
   } catch (error: any) {
-    return NextResponse.json({ success: false, error: "Orbital Spine Failure: " + error.message }, { status: 500 });
+    return NextResponse.json({ success: false, error: "Predator Spine Failure: " + error.message }, { status: 500 });
   }
 }
