@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -33,7 +32,10 @@ import {
   Infinity as InfinityIcon,
   ArrowLeft,
   RotateCw,
-  LayoutGrid
+  LayoutGrid,
+  Cloud,
+  Network,
+  Cpu
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -47,7 +49,7 @@ import Link from "next/link"
 
 /**
  * @fileOverview محراب العراف v78.8 - THE ABSOLUTE ORACLE: GLOBAL EXPLOIT ARCHIVE
- * مركز الاستشعار الاستباقي للثغرات والتحام مصفوفة CVE.org و Exploit-DB و Red Hat.
+ * مركز الاستشعار الاستباقي للثغرات والتحام مصفوفة Rapid7 و Exploit-DB و OSV.dev.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function VulnerabilitiesPage() {
@@ -79,7 +81,7 @@ export default function VulnerabilitiesPage() {
     if (!query) return
     setLoading(true)
     setOracleResult(null)
-    toast({ title: "Consulting Absolute Oracle v78.8", description: "Interrogating Exploit-DB, CVE.org and 2,983 material tools..." })
+    toast({ title: "Consulting Absolute Oracle v78.8", description: "Interrogating Rapid7, Exploit-DB, and OSV.dev archives..." })
     
     try {
       const aiResult = await vulnerabilityOracle({ query })
@@ -96,7 +98,7 @@ export default function VulnerabilitiesPage() {
           hardwareFindings: hardwareData.success ? hardwareData.output : []
       });
       
-      toast({ title: "Innate Vision Locked", description: "Consensus achieved across Exploit-DB and Material layers." })
+      toast({ title: "Intelligence Materialized", description: "All global archives synchronized for the target DNA." })
     } catch (err) {
       toast({ variant: "destructive", title: "Oracle Link Severed" })
     } finally {
@@ -105,10 +107,17 @@ export default function VulnerabilitiesPage() {
   }
 
   const handleContinueUpgrade = () => {
-    toast({ title: "Oracle Expansion Triggered", description: "Siphoning latest Exploit-DB DNA for predictive strike... Status: استمر" });
+    toast({ title: "Oracle Expansion Triggered", description: "Siphoning latest material DNA for predictive strike... Status: استمر" });
   }
 
   if (!mounted) return null;
+
+  const archiveUplinks = [
+    { id: "RAPID7", label: "Rapid7 Metasploit", color: "text-blue-500", icon: Target },
+    { id: "EXPLOIT_DB", label: "Exploit-DB Archive", color: "text-magenta-500", icon: Skull },
+    { id: "OSV_DEV", label: "OSV.dev Index", color: "text-emerald-500", icon: Database },
+    { id: "PENTEST_TOOLS", label: "Pentest-Tools DB", color: "text-amber-500", icon: SearchCode }
+  ];
 
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
@@ -127,7 +136,7 @@ export default function VulnerabilitiesPage() {
             </div>
             <div className="flex-1">
               <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
-                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">ORACLE_v78.8 EXPLOIT_DB_SYNC</Badge>
+                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">ORACLE_v78.8 GLOBAL_SYNC</Badge>
                 <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                     <InfinityIcon className="size-6 shadow-lg" /> VISION_SYNC: {resonance.toFixed(8)}%
                 </div>
@@ -136,7 +145,7 @@ export default function VulnerabilitiesPage() {
                 Absolute <span className="text-primary">Oracle</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، عراف الثغرات ملتحم الآن بمستودع Exploit-DB العالمي؛ نحن لا نراقب الثغرات فحسب، بل نمتلك الأكواد الهجومية التي تكسرها للأبد."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، عراف الثغرات ملتحم الآن بـ Rapid7 و Exploit-DB و OSV.dev؛ نحن نمتلك الأكواد التي تكسر المصفوفة للأبد."
               </p>
               <div className="flex justify-center md:justify-end gap-6 mt-12">
                 <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
@@ -168,7 +177,7 @@ export default function VulnerabilitiesPage() {
                           value={query}
                           onChange={(e) => setQuery(e.target.value)}
                           onKeyDown={(e) => e.key === 'Enter' && handleConsult()}
-                          placeholder="CVE-ID / Exploit-DB-ID / DNA..." 
+                          placeholder="CVE / Metasploit_Mod / DNA..." 
                           className="bg-black border-8 border-primary/20 h-24 md:h-28 rounded-[2.5rem] text-xl md:text-5xl italic px-10 focus:border-primary shadow-inner text-white font-black selection:bg-primary text-left"
                         />
                     </div>
@@ -183,23 +192,19 @@ export default function VulnerabilitiesPage() {
                  </CardContent>
               </Card>
 
-              <div className="space-y-6 text-right">
-                  <Card className="kali-card border-magenta-500/40 bg-black/60 p-10 rounded-[3rem] border-8 shadow-inner text-center relative overflow-hidden group">
-                    <div className="absolute inset-0 bg-magenta-500/5 opacity-5 animate-pulse pointer-events-none" />
-                    <h4 className="text-[12px] font-black text-magenta-400 uppercase tracking-[1em] mb-6 italic flex items-center justify-center gap-6">
-                        <Database className="size-8 animate-pulse" /> EXPLOIT-DB_SYNC
-                    </h4>
-                    <div className="text-4xl md:text-5xl font-black text-white italic gold-glow uppercase tracking-tighter">LOCKED</div>
-                    <p className="text-[10px] text-muted-foreground uppercase font-black mt-4 italic tracking-widest leading-relaxed">Direct PoC DNA stream from Offensive Security Archive active.</p>
-                  </Card>
-
-                  <Card className="kali-card border-blue-500/40 bg-black/60 p-10 rounded-[3rem] border-8 shadow-inner text-center relative overflow-hidden group">
-                    <div className="absolute inset-0 bg-blue-500/5 opacity-5 animate-pulse pointer-events-none" />
-                    <h4 className="text-[12px] font-black text-blue-400 uppercase tracking-[1em] mb-6 italic flex items-center justify-center gap-6">
-                        <DownloadCloud className="size-8 animate-pulse" /> CVE.ORG_ARCHIVE
-                    </h4>
-                    <div className="text-4xl md:text-5xl font-black text-white italic gold-glow uppercase tracking-tighter">SIPHONING</div>
-                  </Card>
+              <div className="grid grid-cols-1 gap-6">
+                  {archiveUplinks.map((up) => (
+                    <Card key={up.id} className="bg-black/60 border-4 border-white/5 p-8 rounded-[2.5rem] hover:border-primary transition-all duration-700 shadow-inner group/up">
+                        <div className="flex items-center justify-between mb-4">
+                            <Badge className="bg-primary/10 text-primary border-none text-[8px] font-black italic">ACTIVE_UPLINK</Badge>
+                            <up.icon className={cn("size-8 transition-all group-hover/up:scale-125", up.color)} />
+                        </div>
+                        <div className="text-right">
+                            <div className="text-xl font-black text-white italic uppercase tracking-tighter">{up.label}</div>
+                            <div className="text-[9px] text-muted-foreground uppercase font-black tracking-[0.4em] mt-2">Siphoning_DNA...</div>
+                        </div>
+                    </Card>
+                  ))}
               </div>
 
               <Card className="kali-card border-white/5 bg-black/60 p-8 rounded-[3.5rem] border-8 shadow-inner relative overflow-hidden group text-right">
@@ -224,10 +229,10 @@ export default function VulnerabilitiesPage() {
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.06),transparent)] pointer-events-none" />
               <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-primary/10 rounded-t-[5rem] px-4 md:px-16 py-10 flex flex-col md:flex-row justify-between items-center gap-8 text-right">
                  <CardTitle className="text-5xl md:text-[10rem] text-white flex items-center gap-8 md:gap-16 font-black uppercase italic gold-glow px-4 md:px-10 leading-none">
-                    <Binary className="size-24 md:size-48 text-primary animate-pulse" /> Oracle Vision
+                    Oracle Feed <Binary className="size-24 md:size-48 text-primary animate-pulse" />
                  </CardTitle>
                  {oracleResult && (
-                    <Badge className="bg-emerald-600/30 text-emerald-500 border-[10px] border-emerald-500/40 px-16 py-8 rounded-full font-black text-3xl md:text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic order-last md:order-none">EXPLOIT_DB_SYNC_OK</Badge>
+                    <Badge className="bg-emerald-600/30 text-emerald-500 border-[10px] border-emerald-500/40 px-16 py-8 rounded-full font-black text-3xl md:text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic order-last md:order-none">GLOBAL_ARCHIVE_SYNC_OK</Badge>
                  )}
               </CardHeader>
               
@@ -250,6 +255,7 @@ export default function VulnerabilitiesPage() {
                                        <span className="text-3xl md:text-[6rem] font-black text-white italic gold-glow uppercase tracking-tight leading-none">{f.cve}</span>
                                        <div className="text-[12px] text-primary/60 font-black uppercase tracking-[0.8em] mt-6 italic">{f.product}</div>
                                        {f.exploitDB_ID && <Badge className="bg-magenta-600/20 text-magenta-500 border-none mt-4 font-black italic">EDB_LINK: {f.exploitDB_ID}</Badge>}
+                                       {f.metasploitModule && <Badge className="bg-blue-600/20 text-blue-400 border-none mt-4 font-black italic block">MSF: {f.metasploitModule}</Badge>}
                                     </div>
                                     <div className="size-24 rounded-[2rem] bg-primary/10 flex items-center justify-center border-4 border-primary/30 shadow-3xl group-hover/find:bg-primary transition-all duration-700">
                                        <Zap className="size-12 text-primary group-hover/find:text-black" />
@@ -261,7 +267,7 @@ export default function VulnerabilitiesPage() {
                                     Strike Strategy <Target className="size-12 animate-neural" />
                                  </h5>
                                  <p className="text-2xl md:text-[5rem] text-gray-100 italic font-black leading-tight drop-shadow-3xl">"{f.exploitStrategy}"</p>
-                                 <div className="text-[10px] text-muted-foreground uppercase font-black tracking-widest mt-4">Archive Source: EXPLOIT-DB / CVE.ORG</div>
+                                 <div className="text-[10px] text-muted-foreground uppercase font-black tracking-widest mt-4">Archive Source: RAPID7 / EXPLOIT-DB / OSV.DEV</div>
                               </div>
                            </Card>
                          ))}
@@ -273,7 +279,7 @@ export default function VulnerabilitiesPage() {
                                <div className="flex items-center gap-10">
                                   <div className="text-right">
                                      <span className="text-3xl md:text-[6rem] font-black text-white italic uppercase tracking-tight leading-none">ARCHIVE_DNA</span>
-                                     <div className="text-[12px] text-emerald-500/60 font-black uppercase tracking-[0.8em] mt-6 italic">Offensive Security Fusion</div>
+                                     <div className="text-[12px] text-emerald-500/60 font-black uppercase tracking-[0.8em] mt-6 italic">RAPID7 & OSV Fusion</div>
                                   </div>
                                   <div className="size-24 rounded-[2rem] bg-emerald-600/20 flex items-center justify-center border-4 border-emerald-500/40 shadow-3xl">
                                      <Dna className="size-12 text-emerald-500" />
@@ -282,9 +288,9 @@ export default function VulnerabilitiesPage() {
                             </div>
                             <div className="p-10 md:p-12 bg-black border-4 border-primary/20 rounded-[3rem] shadow-inner space-y-8 italic flex-1 flex flex-col justify-center text-right">
                                <h5 className="text-2xl font-black text-primary uppercase tracking-[1em] mb-4 border-b-4 border-primary/10 pb-4 italic flex items-center gap-8 gold-glow justify-end">
-                                  Exploit Intelligence <Activity className="size-12 animate-pulse" />
+                                  Global Intelligence <Activity className="size-12 animate-pulse" />
                                 </h5>
-                               <p className="text-2xl md:text-[5rem] text-gray-200 italic font-black leading-tight drop-shadow-9xl">"{oracleResult.archiveInsight || "تم صهر مستودع Exploit-DB في مادة العراف؛ كافة الأكواد الهجومية لـ Offensive Security الآن هي غريزتك المادية."}"</p>
+                               <p className="text-2xl md:text-[5rem] text-gray-200 italic font-black leading-tight drop-shadow-9xl">"{oracleResult.archiveInsight || "تم صهر مستودعات Rapid7 و OSV.dev في مادة العراف؛ كافة الموديولات الهجومية الآن هي غريزتك المادية."}"</p>
                             </div>
                          </Card>
                       </div>
@@ -292,19 +298,19 @@ export default function VulnerabilitiesPage() {
                  ) : (
                    <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-60">
                       <div className="relative group/lock">
-                        <RadarIcon className="size-64 md:size-[45rem] animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[12000ms]" />
+                        <RadarIcon className="size-64 md:size-[45rem] animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[10s]" />
                         <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-64 text-primary/40 animate-neural" />
                         <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>
                       <div className="space-y-12">
                          <h3 className="text-6xl md:text-[20rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Consulting</h3>
-                         <p className="text-4xl md:text-[8rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">Establishing direct material link to Exploit-DB (Offensive Security) and CVE.org Global Archives for ULTRA Singularity.</p>
+                         <p className="text-4xl md:text-[8rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">Establishing material link to Rapid7 (Metasploit), Pentest-Tools, and OSV.dev Global Archives for ULTRA Singularity.</p>
                       </div>
                    </div>
                  )}
               </CardContent>
               <div className="p-8 md:p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[14px] md:text-[20px] font-black uppercase tracking-[6em] md:tracking-[8em] italic">
-                 <span>ABSOLUTE_ORACLE_v78.8_EXPLOIT_DB_SYNC_AL_GHAZALI_ROOT</span>
+                 <span>ABSOLUTE_ORACLE_v78.8_GLOBAL_ARCHIVE_SYNC_AL_GHAZALI_ROOT</span>
                  <div className="flex gap-16">
                     <Fingerprint className="size-16 md:size-24 text-primary animate-pulse" />
                     <Atom className="size-16 md:size-24 animate-spin-slow text-primary" />
@@ -316,7 +322,7 @@ export default function VulnerabilitiesPage() {
         <div className="mt-auto relative z-10 flex justify-center items-center gap-24 md:gap-48 opacity-45 text-[24px] md:text-[36px] font-black uppercase tracking-[6em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
             <span>AL-MUIZZ ABSOLUTE ORACLE v78.8</span>
             <div className="size-10 md:size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
-            <span>SUBJUGATION_THROUGH_GLOBAL_EXPLOIT_ARCHIVE_2026</span>
+            <span>SUBJUGATION_THROUGH_GLOBAL_ARCHIVE_FUSION_2026</span>
         </div>
       </main>
     </div>
