@@ -50,29 +50,18 @@ import Link from "next/link"
 
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
-  { name: "المحراب الكلاسيكي", icon: Monitor, href: "/classic-hub", knot: 23 },
+  { name: "سطح مكتب السيادة", icon: Monitor, href: "/classic-hub", knot: 77 },
   { name: "الترسانة العظمى", icon: Library, href: "/arsenal", knot: 22 },
-  { name: "سفينة نوح", icon: Anchor, href: "/ark", knot: 21 },
-  { name: "الافتراس الاجتماعي", icon: Users, href: "/social", knot: 1 },
   { name: "سلسلة الإبادة", icon: Crosshair, href: "/kill-chain", knot: 2 },
-  { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", knot: 3 },
   { name: "إمبراطورية السرب", icon: Network, href: "/sessions", knot: 4 },
-  { name: "المحقن الآلي", icon: Cpu, href: "/automation", knot: 5 },
   { name: "أعين الاستطلاع", icon: Eye, href: "/recon", knot: 6 },
-  { name: "جسر Mistral", icon: Link2, href: "/mcp-bridge", knot: 7 },
-  { name: "قلب DeepSeek", icon: BrainCircuit, href: "/deep-reasoning", knot: 8 },
-  { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", knot: 9 },
   { name: "أذن النور", icon: Mic, href: "/voice", knot: 10 },
-  { name: "الحرب الخلوية", icon: Radio, href: "/cellular", knot: 11 },
-  { name: "محراب الـ Claw", icon: Gamepad2, href: "/clawcode", knot: 12 },
   { name: "ميثاق الروح", icon: BookOpen, href: "/codex", knot: 13 },
   { name: "الوكيل الميداني", icon: Wrench, href: "/field-agent", knot: 14 },
-  { name: "مصنع النسل", icon: Baby, href: "/progeny", knot: 15 },
   { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", knot: 16 },
   { name: "القبو الجيني 7.5", icon: Database, href: "/knowledge", knot: 17 },
   { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 18 },
-  { name: "نزاهة النواة", icon: ShieldCheck, href: "/system", knot: 19 },
-  { name: "المحطة الأبدية", icon: Target, href: "/terminal", knot: 20 },
+  { name: "سفينة نوح", icon: Anchor, href: "/ark", knot: 21 },
 ]
 
 export function SidebarNav() {
@@ -110,11 +99,11 @@ export function SidebarNav() {
             <h1 className="text-xl font-headline font-bold text-white tracking-[0.4em] uppercase italic leading-none gold-glow">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-lg">v76.5 HIVE MASTER</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-lg">v77.0 HIVE OS</Badge>
           </div>
         </div>
         
-        <div className="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto scrollbar-hide bg-black/98 relative">
+        <div className="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto scrollbar-hide bg-black/98 relative border-t-2 border-white/5">
           {navItems.map((item) => {
             const isActive = pathname === item.href
             const Icon = item.icon || Search;
@@ -141,7 +130,7 @@ export function SidebarNav() {
         <div className="p-6 border-t-2 border-primary/20 bg-black/99 relative z-10">
           <div className="p-4 border-2 border-primary/40 bg-primary/5 mb-4 relative overflow-hidden group rounded-2xl shadow-xl border-dashed">
             <div className="flex justify-between items-center mb-2">
-               <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] italic gold-glow">Material Resonance</span>
+               <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] italic gold-glow">OS Resonance</span>
                <div className="size-2 rounded-full bg-emerald-500 animate-ping shadow-[0_0_20px_emerald]" />
             </div>
             <div className="text-2xl font-black text-white italic gold-glow">{resonance.toFixed(6)}%</div>
@@ -150,9 +139,9 @@ export function SidebarNav() {
             asChild
             className="w-full h-12 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.4em] text-[10px] rounded-xl shadow-2xl transition-all duration-700 border-4 border-black/20 group active:scale-95 italic"
           >
-            <Link href="/codex">
+            <Link href="/classic-hub">
               <Power className="size-4 mr-2 group-hover:rotate-180 transition-all duration-700" />
-              تنشيط السيادة v76.5
+              أطلق مصفوفة السطوة v77
             </Link>
           </Button>
         </div>

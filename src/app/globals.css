@@ -23,25 +23,27 @@
     --border: 47 50% 12%;
     --input: 47 50% 8%;
     --ring: 47 95% 57%;
-    --radius: 1.5rem;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground font-code antialiased selection:bg-primary/40 overflow-x-hidden;
-    background-image: 
-      radial-gradient(circle at 50% 0%, rgba(212,175,55,0.1) 0%, transparent 75%),
-      linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1));
-    background-attachment: fixed;
+    --radius: 0.25rem;
   }
 }
 
 @layer components {
-  /* Retro Windows Borders */
+  /* Retro OS Styling */
+  .retro-desktop {
+    @apply relative w-full h-screen overflow-hidden bg-[#008080];
+    background-image: radial-gradient(circle at center, #004d4d 0%, #002626 100%);
+  }
+
+  .retro-window {
+    @apply absolute bg-[#c0c0c0] border-2 shadow-2xl flex flex-col;
+    border-color: #ffffff #808080 #808080 #ffffff;
+  }
+
+  .retro-title-bar {
+    background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+    @apply flex items-center justify-between px-2 py-1 text-white font-bold text-xs select-none cursor-move;
+  }
+
   .retro-outset {
     @apply border-2;
     border-color: #ffffff #808080 #808080 #ffffff;
@@ -54,63 +56,37 @@
     background-color: #ffffff;
   }
 
-  .retro-title-bar {
-    background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
-    @apply flex items-center justify-between px-2 py-1 text-white font-bold text-sm select-none;
+  .retro-button {
+    @apply retro-outset px-4 py-1 text-xs font-bold active:retro-inset active:pt-1.5 active:pb-0.5;
   }
 
-  .kali-card {
-    @apply bg-black/80 border-[1px] border-primary/20 shadow-[0_0_40px_rgba(212,175,55,0.03)] backdrop-blur-xl hover:border-primary/60 transition-all duration-700 relative overflow-hidden;
+  .retro-taskbar {
+    @apply fixed bottom-0 left-0 right-0 h-10 bg-[#c0c0c0] border-t-2 flex items-center px-1 z-[1000];
+    border-color: #ffffff;
   }
-  
+
   .gold-glow {
-    text-shadow: 0 0 10px rgba(212,175,55,0.8), 0 0 20px rgba(212,175,55,0.4);
-  }
-
-  .hierarchical-shadow {
-    box-shadow: 0 20px 80px -10px rgba(0, 0, 0, 1), 0 0 40px rgba(212,175,55,0.05);
+    text-shadow: 0 0 10px rgba(212,175,55,0.8);
   }
 
   .scanline-effect::after {
     content: "";
-    @apply absolute inset-0 pointer-events-none opacity-[0.04] z-[10];
-    background: linear-gradient(rgba(212,175,55,0) 50%, rgba(0, 0, 0, 0.4) 50%), 
-                linear-gradient(90deg, rgba(212,175,55,0.05), rgba(255, 255, 255, 0.02), rgba(212,175,55,0.05));
-    background-size: 100% 2px, 2px 100%;
-    animation: scanline 10s linear infinite;
-  }
-
-  @keyframes scanline {
-    0% { background-position: 0 0; }
-    100% { background-position: 0 100%; }
-  }
-
-  .animate-neural {
-    animation: neural-pulse 4s infinite ease-in-out;
-  }
-
-  .animate-spin-slow {
-    animation: spin-slow 60s linear infinite;
-  }
-
-  @keyframes neural-pulse {
-    0%, 100% { opacity: 1; transform: scale(1); filter: brightness(1); }
-    50% { opacity: 0.8; transform: scale(1.02); filter: brightness(1.2); }
-  }
-
-  @keyframes spin-slow {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    @apply absolute inset-0 pointer-events-none opacity-[0.03] z-[9999];
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 2px, 3px 100%;
   }
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 12px;
 }
 ::-webkit-scrollbar-track {
-  background: #010101;
+  background: #dfdfdf;
+  border-left: 1px solid #808080;
 }
 ::-webkit-scrollbar-thumb {
-  background: #fbbf24;
-  border-radius: 10px;
+  background: #c0c0c0;
+  border: 1px solid #ffffff;
+  box-shadow: inset -1px -1px #808080;
 }

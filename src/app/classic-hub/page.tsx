@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import { SidebarNav } from "@/components/platform/sidebar-nav"
 import { 
   X, 
   Minus, 
@@ -20,225 +19,252 @@ import {
   HelpCircle,
   Smartphone,
   Network,
-  Hammer,
   Radio,
   Gamepad2,
   MousePointer2,
   Monitor,
   Flame,
-  Fingerprint
+  Fingerprint,
+  Anchor,
+  Wind,
+  ShieldCheck,
+  Maximize2,
+  Activity,
+  History,
+  Box
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 
 /**
- * @fileOverview المحراب الكلاسيكي v76.5 - THE RETRO COMMANDER: VB6 EDITION
- * واجهة تحاكي تصميم الفيجوال بيسك الكلاسيكي لعام 2026.
+ * @fileOverview سطح مكتب المُعِزّ v77.0 - THE SOVEREIGN DESKTOP ENVIRONMENT
+ * بيئة عمل متكاملة تدعم النوافذ المتعددة لمحاكاة السيطرة المادية المطلقة.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
-export default function ClassicHubPage() {
+
+interface WindowState {
+  id: string;
+  title: string;
+  icon: any;
+  isOpen: boolean;
+  isMinimized: boolean;
+  zIndex: number;
+  x: number;
+  y: number;
+  content: string;
+}
+
+export default function SovereignDesktop() {
   const [mounted, setMounted] = React.useState(false)
-  const [status, setStatus] = React.useState("Ready.")
-  const [output, setOutput] = React.useState<string[]>([])
-  const [target, setTarget] = React.useState("")
+  const [windows, setWindows] = React.useState<WindowState[]>([
+    { id: 'audit', title: 'System_Audit.exe', icon: Activity, isOpen: true, isMinimized: false, zIndex: 10, x: 50, y: 50, content: 'audit' },
+    { id: 'terminal', title: 'Supreme_Shell.com', icon: Terminal, isOpen: false, isMinimized: false, zIndex: 11, x: 400, y: 100, content: 'terminal' },
+    { id: 'siphon', title: 'Identity_Siphon.vbp', icon: Network, isOpen: false, isMinimized: false, zIndex: 12, x: 200, y: 150, content: 'siphon' }
+  ])
+  const [maxZ, setMaxZ] = React.useState(20)
+  const [time, setTime] = React.useState("")
+  const [metrics, setMetrics] = React.useState({ cpu: "0.01%", ram: "142MB" })
 
   React.useEffect(() => {
     setMounted(true)
+    const updateTime = () => setTime(new Date().toLocaleTimeString())
+    updateTime()
+    const timer = setInterval(updateTime, 1000)
+    
+    const metricTimer = setInterval(() => {
+        setMetrics({
+            cpu: (Math.random() * 0.05).toFixed(2) + "%",
+            ram: (140 + Math.random() * 5).toFixed(0) + "MB"
+        })
+    }, 3000)
+
+    return () => {
+        clearInterval(timer)
+        clearInterval(metricTimer)
+    }
   }, [])
 
-  const appendLog = (msg: string) => {
-    setOutput(prev => [`[${new Date().toLocaleTimeString()}] ${msg}`, ...prev])
+  const toggleWindow = (id: string) => {
+    setWindows(prev => prev.map(w => {
+        if (w.id === id) {
+            const nextZ = maxZ + 1
+            setMaxZ(nextZ)
+            return { ...w, isOpen: !w.isOpen, isMinimized: false, zIndex: nextZ }
+        }
+        return w
+    }))
   }
 
-  const handleExecute = async (action: string) => {
-    if (!target && action !== 'system_audit') {
-        toast({ variant: "destructive", title: "Missing Argument", description: "Target coordinate required." })
-        return
-    }
-    setStatus("Executing...")
-    appendLog(`Initiating ${action} on ${target || 'LOCAL_HIVE'}...`)
-    
-    try {
-        const response = await fetch('/api/execute', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ type: 'smart_route', command: `${action} ${target}`, target: target })
-        })
-        const data = await response.json()
-        if (data.success) {
-            appendLog(`Consensus achieved: ${typeof data.output === 'string' ? data.output : 'Directive Finalized.'}`)
-            setStatus("Success.")
-        }
-    } catch (e) {
-        appendLog("Neural Link Interrupted.")
-        setStatus("Error.")
-    }
+  const focusWindow = (id: string) => {
+    const nextZ = maxZ + 1
+    setMaxZ(nextZ)
+    setWindows(prev => prev.map(w => w.id === id ? { ...w, zIndex: nextZ, isMinimized: false } : w))
+  }
+
+  const closeWindow = (id: string) => {
+    setWindows(prev => prev.map(w => w.id === id ? { ...w, isOpen: false } : w))
   }
 
   if (!mounted) return null
 
+  const desktopIcons = [
+    { id: 'audit', label: 'System Audit', icon: ShieldCheck },
+    { id: 'arsenal', label: 'Arsenal Master', icon: Box },
+    { id: 'siphon', label: 'Social Siphon', icon: Network },
+    { id: 'terminal', label: 'Supreme Shell', icon: Terminal },
+    { id: 'ark', label: "Noah's Ark", icon: Anchor },
+    { id: 'oracle', label: 'Vulnerability Oracle', icon: Search }
+  ]
+
   return (
-    <div className="flex min-h-screen bg-[#008080] text-black font-sans selection:bg-[#000080] selection:text-white">
-      <SidebarNav />
+    <div className="retro-desktop scanline-effect font-sans">
       
-      <main className="flex-1 lg:mr-72 p-4 flex flex-col items-center justify-center relative overflow-hidden">
-        
-        {/* Main VB Window */}
-        <div className="w-full max-w-6xl retro-outset flex flex-col shadow-[10px_10px_0px_rgba(0,0,0,0.5)]">
-           <div className="retro-title-bar">
-              <div className="flex items-center gap-2">
-                 <Gamepad2 className="size-4" />
-                 <span>Al-Mu'izz Sovereign Commander - [v76.5.0-Classic]</span>
-              </div>
-              <div className="flex gap-1">
-                 <button className="retro-outset size-5 flex items-center justify-center hover:bg-[#d0d0d0] text-xs font-bold"><Minus className="size-3"/></button>
-                 <button className="retro-outset size-5 flex items-center justify-center hover:bg-[#d0d0d0] text-xs font-bold"><Square className="size-3"/></button>
-                 <button className="retro-outset size-5 flex items-center justify-center bg-[#c0c0c0] hover:bg-red-600 hover:text-white text-xs font-bold"><X className="size-3"/></button>
-              </div>
-           </div>
+      {/* Desktop Workspace */}
+      <div className="p-4 grid grid-cols-1 gap-12 w-32 h-full content-start">
+         {desktopIcons.map(icon => (
+            <div 
+                key={icon.id}
+                onDoubleClick={() => toggleWindow(icon.id)}
+                className="flex flex-col items-center gap-2 group cursor-pointer"
+            >
+                <div className="size-12 flex items-center justify-center relative group-hover:bg-blue-900/30 rounded p-2 transition-all">
+                    <icon.icon className="size-10 text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]" />
+                </div>
+                <span className="text-[10px] text-white font-bold text-center drop-shadow-[1px_1px_0px_rgba(0,0,0,1)] group-hover:bg-blue-800 px-1">{icon.label}</span>
+            </div>
+         ))}
+      </div>
 
-           {/* Toolbar */}
-           <div className="p-1 border-b border-[#808080] flex gap-1 bg-[#c0c0c0]">
-              <button onClick={() => handleExecute('system_audit')} className="retro-outset px-4 py-1 flex items-center gap-2 text-xs hover:bg-[#d0d0d0] active:retro-inset"><Save className="size-3"/> Audit</button>
-              <button className="retro-outset px-4 py-1 flex items-center gap-2 text-xs hover:bg-[#d0d0d0] active:retro-inset"><FolderOpen className="size-3"/> Project</button>
-              <div className="w-[1px] bg-[#808080] mx-1 h-6 self-center" />
-              <button onClick={() => handleExecute('strike')} className="retro-outset px-4 py-1 flex items-center gap-2 text-xs hover:bg-[#d0d0d0] active:retro-inset"><Play className="size-3 text-green-700"/> Run</button>
-              <button className="retro-outset px-4 py-1 flex items-center gap-2 text-xs hover:bg-[#d0d0d0] active:retro-inset text-red-700"><Skull className="size-3"/> Terminate</button>
-           </div>
-
-           <div className="flex-1 flex min-h-[600px]">
-              {/* Toolbox - Left */}
-              <div className="w-16 bg-[#c0c0c0] border-r border-[#808080] p-2 flex flex-col gap-2">
-                 <div className="text-[9px] font-bold text-center mb-1 uppercase">Tools</div>
-                 {[
-                   { id: 'pointer', icon: MousePointer2 },
-                   { id: 'network', icon: Network },
-                   { id: 'terminal', icon: Terminal },
-                   { id: 'phone', icon: Smartphone },
-                   { id: 'radio', icon: Radio },
-                   { id: 'database', icon: Database },
-                   { id: 'search', icon: Search },
-                   { id: 'flame', icon: Flame }
-                 ].map(t => (
-                   <button key={t.id} className="retro-outset size-10 flex items-center justify-center hover:bg-[#d0d0d0] active:retro-inset">
-                      <t.icon className="size-5" />
-                   </button>
-                 ))}
-              </div>
-
-              {/* Form Workspace */}
-              <div className="flex-1 bg-[#808080] p-10 relative overflow-hidden flex items-center justify-center">
-                 <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] pointer-events-none" />
-                 
-                 {/* Internal Form Window */}
-                 <div className="w-full max-w-2xl retro-outset flex flex-col shadow-2xl relative z-10">
-                    <div className="bg-[#c0c0c0] p-1 border-b border-[#808080] flex justify-between items-center px-4">
-                       <span className="text-xs font-bold">frmMainStrike</span>
-                       <X className="size-3 cursor-pointer" />
+      {/* Draggable Windows Container */}
+      <div className="absolute inset-0 pointer-events-none">
+        {windows.filter(w => w.isOpen && !w.isMinimized).map(win => (
+            <div 
+                key={win.id}
+                style={{ zIndex: win.zIndex, left: win.x, top: win.y }}
+                onClick={() => focusWindow(win.id)}
+                className="retro-window w-[600px] h-[450px] pointer-events-auto animate-in zoom-in-95 duration-200"
+            >
+                <div className={cn("retro-title-bar", win.zIndex === maxZ ? "bg-[#000080]" : "bg-[#808080]")}>
+                    <div className="flex items-center gap-2">
+                        <win.icon className="size-3" />
+                        <span>{win.title}</span>
                     </div>
-                    <div className="p-8 space-y-8 bg-[#c0c0c0]">
-                       <div className="space-y-2">
-                          <label className="text-xs font-bold">Project Target (Coordinate):</label>
-                          <Input 
-                            value={target}
-                            onChange={(e) => setTarget(e.target.value)}
-                            className="retro-inset h-10 rounded-none border-2 text-blue-900 font-bold" 
-                            placeholder="Enter IP / URL / @Identity"
-                          />
-                       </div>
-
-                       <div className="grid grid-cols-2 gap-4">
-                          <div className="retro-outset p-4 space-y-4">
-                             <span className="text-[10px] font-bold block border-b border-[#808080] mb-2 uppercase">Siphon Vectors</span>
-                             <button onClick={() => handleExecute('scrape')} className="w-full retro-outset py-2 text-xs font-bold hover:bg-[#d0d0d0]">Social Siphon</button>
-                             <button onClick={() => handleExecute('xlogger')} className="w-full retro-outset py-2 text-xs font-bold hover:bg-[#d0d0d0]">Ocular Hub</button>
-                             <button onClick={() => handleExecute('seeker')} className="w-full retro-outset py-2 text-xs font-bold hover:bg-[#d0d0d0]">GPS Seeker</button>
-                          </div>
-                          <div className="retro-outset p-4 space-y-4">
-                             <span className="text-[10px] font-bold block border-b border-[#808080] mb-2 uppercase">Material Control</span>
-                             <button onClick={() => handleExecute('voice_hijack')} className="w-full retro-outset py-2 text-xs font-bold hover:bg-[#d0d0d0]">Voice Hijack</button>
-                             <button onClick={() => handleExecute('automation')} className="w-full retro-outset py-2 text-xs font-bold hover:bg-[#d0d0d0]">Desktop Sync</button>
-                             <button onClick={() => handleExecute('openbullet')} className="w-full retro-outset py-2 text-xs font-bold hover:bg-[#d0d0d0]">LoliCode Runner</button>
-                          </div>
-                       </div>
-
-                       <div className="flex justify-end gap-2 pt-4">
-                          <button onClick={() => setTarget("")} className="retro-outset px-8 py-2 text-xs font-bold hover:bg-[#d0d0d0] active:retro-inset">Clear</button>
-                          <button onClick={() => handleExecute('ignite')} className="retro-outset px-12 py-2 text-xs font-bold hover:bg-[#d0d0d0] active:retro-inset border-2 border-blue-900 bg-primary/20">EXECUTE</button>
-                       </div>
+                    <div className="flex gap-1">
+                        <button className="retro-outset size-4 flex items-center justify-center hover:bg-[#d0d0d0] text-[8px] font-bold"><Minus className="size-2"/></button>
+                        <button className="retro-outset size-4 flex items-center justify-center hover:bg-[#d0d0d0] text-[8px] font-bold"><Square className="size-2"/></button>
+                        <button onClick={(e) => { e.stopPropagation(); closeWindow(win.id) }} className="retro-outset size-4 flex items-center justify-center hover:bg-red-600 hover:text-white text-[8px] font-bold"><X className="size-2"/></button>
                     </div>
-                 </div>
-              </div>
+                </div>
+                <div className="p-1 border-b border-[#808080] flex gap-1 bg-[#c0c0c0] text-[10px]">
+                    <button className="px-2 hover:bg-[#d0d0d0] border border-transparent hover:border-[#808080]">File</button>
+                    <button className="px-2 hover:bg-[#d0d0d0] border border-transparent hover:border-[#808080]">Edit</button>
+                    <button className="px-2 hover:bg-[#d0d0d0] border border-transparent hover:border-[#808080]">Search</button>
+                    <button className="px-2 hover:bg-[#d0d0d0] border border-transparent hover:border-[#808080]">Directives</button>
+                </div>
+                <div className="flex-1 bg-white m-1 retro-inset p-4 overflow-y-auto scrollbar-hide font-mono text-xs">
+                    {win.content === 'audit' && (
+                        <div className="space-y-4">
+                            <h3 className="font-bold border-b-2 border-black pb-2 flex items-center gap-2"><Activity className="size-4"/> System Pulse Audit</h3>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="retro-outset p-2">
+                                    <div className="text-[9px] uppercase font-bold text-gray-600">CPU Load</div>
+                                    <div className="text-2xl font-bold text-green-700">{metrics.cpu}</div>
+                                </div>
+                                <div className="retro-outset p-2">
+                                    <div className="text-[9px] uppercase font-bold text-gray-600">RAM Reserved</div>
+                                    <div className="text-2xl font-bold text-blue-700">{metrics.ram}</div>
+                                </div>
+                            </div>
+                            <div className="retro-inset p-4 h-40 bg-black text-green-500 overflow-hidden relative">
+                                <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/grid.png')]" />
+                                <div className="animate-pulse">>>> Monitoring Hierarchy Resonance...</div>
+                                <div className="mt-2 text-[10px]">Node 01: OMNIPOTENT<br/>Node 24: LOCKED<br/>Spine Bus: v76_STABLE</div>
+                            </div>
+                        </div>
+                    )}
+                    {win.id === 'terminal' && (
+                        <div className="h-full bg-black text-emerald-400 p-4 font-code text-sm">
+                            <div>Al-Mu'izz Master Shell [v77.0]</div>
+                            <div>(c) 2026 Sovereign Systems. All rights reserved.</div>
+                            <div className="mt-4">Sovereign-Admin@GHAZALI_ROOT:~$ <span className="animate-pulse">_</span></div>
+                        </div>
+                    )}
+                    {win.id === 'siphon' && (
+                        <div className="space-y-6">
+                            <div className="retro-outset p-4 flex items-center gap-4 bg-primary/10 border-primary">
+                                <Zap className="size-8 text-primary animate-pulse" />
+                                <div>
+                                    <h4 className="font-bold text-lg">Social Predator v76</h4>
+                                    <span className="text-[10px] uppercase font-bold opacity-60">Ready for Identity Absorption</span>
+                                </div>
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-bold uppercase">Target Cluster:</label>
+                                <input className="w-full retro-inset h-8 px-2 text-sm" placeholder="MSISDN / @Handle" />
+                            </div>
+                            <div className="grid grid-cols-2 gap-2">
+                                <button className="retro-button bg-blue-900/10">XLogger Hub</button>
+                                <button className="retro-button bg-emerald-600/10">Seeker GPS</button>
+                                <button className="retro-button col-span-2 bg-red-600/10 h-10">IGNITE_TOTAL_ACQUISITION</button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+                <div className="h-4 bg-[#c0c0c0] border-t border-[#808080] text-[9px] flex items-center px-2 italic text-gray-600">
+                    Status: {win.zIndex === maxZ ? "In Focus" : "Background Process"}
+                </div>
+            </div>
+        ))}
+      </div>
 
-              {/* Property Grid - Right */}
-              <div className="w-64 bg-[#c0c0c0] border-l border-[#808080] flex flex-col">
-                 <div className="bg-[#c0c0c0] border-b border-[#808080] p-1 px-3 text-[10px] font-bold uppercase">Properties - frmMain</div>
-                 <div className="flex-1 overflow-y-auto bg-white border-b border-[#808080]">
-                    <table className="w-full text-[10px]">
-                       <tbody className="divide-y divide-[#f0f0f0]">
-                          <tr><td className="bg-[#f0f0f0] p-1 font-bold w-24">Version</td><td className="p-1">76.5.0</td></tr>
-                          <tr><td className="bg-[#f0f0f0] p-1 font-bold">Owner</td><td className="p-1">Al-Ghazali</td></tr>
-                          <tr><td className="bg-[#f0f0f0] p-1 font-bold">Status</td><td className="p-1">{status}</td></tr>
-                          <tr><td className="bg-[#f0f0f0] p-1 font-bold">Resonance</td><td className="p-1">100.000%</td></tr>
-                          <tr><td className="bg-[#f0f0f0] p-1 font-bold">Nodes</td><td className="p-1">24 knots</td></tr>
-                          <tr><td className="bg-[#f0f0f0] p-1 font-bold">Arsenal</td><td className="p-1">2865 tools</td></tr>
-                          <tr><td className="bg-[#f0f0f0] p-1 font-bold">Stealth</td><td className="p-1">GHOST_V6</td></tr>
-                          <tr><td className="bg-[#f0f0f0] p-1 font-bold">OS</td><td className="p-1">Kali Al-Mu'izz</td></tr>
-                       </tbody>
-                    </table>
-                 </div>
-                 {/* Project Explorer */}
-                 <div className="bg-[#c0c0c0] border-b border-[#808080] p-1 px-3 text-[10px] font-bold uppercase">Project Explorer</div>
-                 <div className="flex-1 bg-white p-2 overflow-y-auto font-sans text-xs">
-                    <div className="flex items-center gap-2"><FolderOpen className="size-3 text-yellow-600"/> Al-Mu'izz.vbp</div>
-                    <div className="ml-4 flex items-center gap-2"><Monitor className="size-3 text-blue-600"/> Forms</div>
-                    <div className="ml-8 flex items-center gap-2"><FileCodeIcon className="size-3"/> frmMainStrike</div>
-                    <div className="ml-4 flex items-center gap-2"><Settings className="size-3 text-gray-600"/> Modules</div>
-                    <div className="ml-8 flex items-center gap-2"><FileCodeIcon className="size-3"/> modSiphon</div>
-                    <div className="ml-8 flex items-center gap-2"><FileCodeIcon className="size-3"/> modMaterial</div>
-                 </div>
-              </div>
-           </div>
+      {/* Taskbar */}
+      <div className="retro-taskbar">
+         <button className="retro-outset h-8 px-2 flex items-center gap-1 hover:bg-[#d0d0d0] active:retro-inset group">
+            <div className="bg-primary size-6 rounded-sm flex items-center justify-center group-hover:rotate-12 transition-transform">
+                <Skull className="size-4 text-black" />
+            </div>
+            <span className="font-bold text-sm">Start</span>
+         </button>
+         
+         <div className="flex-1 flex gap-1 px-4 overflow-hidden">
+            {windows.filter(w => w.isOpen).map(win => (
+                <button 
+                    key={win.id}
+                    onClick={() => focusWindow(win.id)}
+                    className={cn(
+                        "retro-outset h-8 px-3 flex items-center gap-2 max-w-[150px] truncate transition-all",
+                        win.zIndex === maxZ && !win.isMinimized ? "retro-inset bg-white/50" : "bg-[#c0c0c0]"
+                    )}
+                >
+                    <win.icon className="size-3 shrink-0" />
+                    <span className="text-xs font-bold truncate">{win.title}</span>
+                </button>
+            ))}
+         </div>
 
-           {/* Debug Output - Bottom */}
-           <div className="h-48 bg-[#c0c0c0] border-t border-[#808080] flex flex-col">
-              <div className="bg-[#c0c0c0] border-b border-[#808080] p-1 px-3 text-[10px] font-bold uppercase flex justify-between">
-                 <span>Immediate / Debug Window</span>
-                 <Terminal className="size-3" />
-              </div>
-              <div className="flex-1 bg-white m-1 retro-inset p-4 overflow-y-auto scrollbar-hide font-mono text-[11px] leading-tight">
-                 {output.map((line, i) => (
-                    <div key={i} className="mb-1">{line}</div>
-                 ))}
-                 {output.length === 0 && <div className="text-gray-400 italic">Awaiting execution trace...</div>}
-              </div>
-           </div>
+         <div className="retro-inset h-8 px-3 flex items-center gap-4 bg-[#c0c0c0]">
+            <div className="flex items-center gap-2">
+                <Cpu className="size-3 text-primary animate-pulse" />
+                <span className="text-[10px] font-bold">{metrics.cpu}</span>
+            </div>
+            <div className="flex items-center gap-2 border-l border-[#808080] pl-4">
+                <History className="size-3 text-blue-700" />
+                <span className="text-[10px] font-bold uppercase">{time}</span>
+            </div>
+         </div>
+      </div>
 
-           {/* Status Bar */}
-           <div className="h-6 bg-[#c0c0c0] border-t border-[#ffffff] flex items-center px-4 text-[10px] gap-10">
-              <div className="flex-1 border-r border-[#808080] pr-4">Status: {status}</div>
-              <div className="w-32 border-r border-[#808080] pr-4">CPU: 0.01%</div>
-              <div className="w-32">RAM: 142MB</div>
-           </div>
-        </div>
+      {/* Global Suffix Overlay */}
+      <div className="fixed top-4 right-4 flex flex-col items-end opacity-20 pointer-events-none select-none z-0">
+          <h2 className="text-6xl font-black text-white italic uppercase tracking-widest gold-glow">AL-MUIZZ</h2>
+          <span className="text-[10px] font-bold text-white uppercase tracking-[1em]">Sovereign_OS_v77_Materialized</span>
+      </div>
+      
+      <div className="absolute bottom-16 right-16 p-40 opacity-5 pointer-events-none scale-150 rotate-12 z-0">
+         <Skull className="size-96 text-white" />
+      </div>
 
-        {/* Global Banner Overlay */}
-        <div className="mt-10 flex items-center gap-10 opacity-30 text-[10px] font-bold uppercase tracking-[1em] text-black">
-           <Fingerprint className="size-4" /> GHAZALI_ROOT // CLASSIC_HUB_v76
-        </div>
-
-        <div className="absolute -bottom-20 -right-20 p-40 opacity-10 pointer-events-none scale-150 rotate-12">
-           <Skull className="size-96 text-black" />
-        </div>
-      </main>
     </div>
   )
-}
-
-function FileCodeIcon({className}: {className?: string}) {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M10 12.5 8 15l2 2.5"/><path d="m14 12.5 2 2.5-2 2.5"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/></svg>
-    )
 }
