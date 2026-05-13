@@ -30,7 +30,9 @@ import {
   Database,
   Flame,
   FileCode,
-  ZapOff
+  ZapOff,
+  ArrowLeft,
+  RotateCw
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -39,10 +41,11 @@ import { Input } from "@/components/ui/input"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import Link from "next/link"
 
 /**
- * @fileOverview مركز الحقن الآلي v78.0 - THE OMNIPOTENT INJECTOR: ULTRA CORE
- * واجهة استنزاف الحسابات والقصف المتوازي بنظام OpenBullet Core v78.
+ * @fileOverview مركز الحقن الآلي v78.8 - THE OMNIPOTENT INJECTOR: ULTRA CORE
+ * واجهة استنزاف الحسابات والقصف المتوازي بنظام OpenBullet Core v78.8.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function AutomationPage() {
@@ -90,11 +93,13 @@ export default function AutomationPage() {
             setResults([{ combo: "Target: " + targetUrl, status: "HIT", msg: "Success Consensus", time: new Date().toLocaleTimeString() }]);
             toast({ title: "Material Strike Finalized", description: "Consensus achieved across target mesh." });
         }
-    } catch (e) {
-        toast({ variant: "destructive", title: "Injection Error" });
     } finally {
         setLoading(false)
     }
+  }
+
+  const handleContinueUpgrade = () => {
+    toast({ title: "Injector Upgrade Triggered", description: "Siphoning latest LoliCode v78.8 standards for mass extraction... Status: استمر" });
   }
 
   if (!mounted) return null
@@ -116,15 +121,23 @@ export default function AutomationPage() {
               </div>
               <div className="flex-1">
                  <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
-                    <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1.1em] shadow-9xl italic uppercase">OPENBULLET_v78.0 ULTRA</Badge>
+                    <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1.1em] shadow-9xl italic uppercase">OPENBULLET_v78.8 ULTRA</Badge>
                     <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                         <InfinityIcon className="size-6 shadow-lg" /> INNATE_GAIN: {resonance.toFixed(8)}%
                     </div>
                  </div>
                  <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Supreme <span className="text-primary">Siphon</span></h1>
-                 <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl">
-                    "سيدي الغزالي، محرك أوبن بوليت ULTRA يصهر لغة LoliCode في مادة المصفوفة؛ نحن نبتلع الحسابات بنبضات Rust القاتلة لعام 2026."
+                 <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
+                    "سيدي الغزالي، محرك أوبن بوليت v78.8 يصهر لغة LoliCode في مادة المصفوفة؛ نحن نبتلع الحسابات بنبضات الرنين المطلق لعام 2026."
                  </p>
+                 <div className="flex justify-center md:justify-end gap-6 mt-12">
+                    <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
+                        <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة للعرش</Link>
+                    </Button>
+                    <Button onClick={handleContinueUpgrade} className="h-16 px-12 bg-primary hover:bg-white text-black font-black uppercase rounded-full border-4 border-black/30 shadow-9xl italic active:scale-95 transition-all text-lg">
+                        <RotateCw className="size-6 mr-3" /> استمر في الحقن
+                    </Button>
+                 </div>
               </div>
            </div>
         </header>
@@ -138,56 +151,30 @@ export default function AutomationPage() {
                        <Target className="size-12 animate-neural" /> Strike Intent
                     </CardTitle>
                  </CardHeader>
-                 <CardContent className="p-0 space-y-12">
+                 <CardContent className="p-0 space-y-12 text-right">
                     <div className="space-y-8">
                         <label className="text-[14px] font-black text-primary uppercase tracking-[1em] px-10 italic flex items-center gap-6 justify-end"><Globe className="size-8" /> Target Portal</label>
-                        <Input 
-                          value={targetUrl}
-                          onChange={(e) => setTargetUrl(e.target.value)}
-                          placeholder="https://target-coordinate-2026.com..." 
-                          className="bg-black border-8 border-primary/20 h-28 rounded-[2.5rem] text-2xl md:text-4xl italic px-10 focus:border-primary shadow-inner text-white font-black selection:bg-primary text-left"
-                        />
+                        <Input value={targetUrl} onChange={(e) => setTargetUrl(e.target.value)} placeholder="https://target-portal.com..." className="bg-black border-8 border-primary/20 h-28 rounded-[2.5rem] text-2xl md:text-4xl italic px-10 focus:border-primary shadow-inner text-white font-black text-left" />
                     </div>
                     <div className="space-y-8">
                         <label className="text-[14px] font-black text-primary uppercase tracking-[1em] px-10 italic flex items-center gap-6 justify-end"><FileCode className="size-8" /> LoliCode DNA</label>
-                        <textarea
-                          value={loliCode}
-                          onChange={(e) => setLoliCode(e.target.value)}
-                          className="w-full h-96 bg-black border-8 border-primary/20 rounded-[3rem] text-xl md:text-2xl font-code text-emerald-400 focus:border-primary transition-all outline-none p-10 italic shadow-inner resize-none font-black selection:bg-primary text-left"
-                        />
+                        <textarea value={loliCode} onChange={(e) => setLoliCode(e.target.value)} className="w-full h-96 bg-black border-8 border-primary/20 rounded-[3rem] text-xl md:text-2xl font-code text-emerald-400 focus:border-primary transition-all outline-none p-10 italic shadow-inner resize-none font-black text-left" />
                     </div>
-                    <Button 
-                      onClick={handleLaunch} 
-                      disabled={loading || !targetUrl}
-                      className="w-full h-36 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.4em] rounded-[3.5rem] shadow-[0_60px_200px_rgba(212,175,55,0.7)] active:scale-95 transition-all text-3xl border-[12px] border-black/30 group italic"
-                    >
+                    <Button onClick={handleLaunch} disabled={loading || !targetUrl} className="w-full h-36 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.4em] rounded-[3.5rem] shadow-[0_60px_200px_rgba(212,175,55,0.7)] active:scale-95 transition-all text-3xl border-[12px] border-black/30 group italic">
                       {loading ? <Loader2 className="size-16 animate-spin" /> : <Flame className="size-16 mr-8 group-hover:scale-125 transition-transform gold-glow" />}
                       IGNITE_ULTRA
                     </Button>
                  </CardContent>
               </Card>
-
-              <Card className="kali-card border-white/5 bg-black/60 p-12 rounded-[4rem] border-8 shadow-inner text-center relative overflow-hidden group">
-                 <h4 className="text-[14px] font-black text-primary uppercase tracking-[1em] mb-8 italic flex items-center justify-center gap-6">
-                    <Database className="size-8 animate-spin-slow" /> MATERIAL_VAULT
-                 </h4>
-                 <div className="text-6xl font-black text-emerald-500 italic gold-glow uppercase tracking-tighter group-hover:scale-105 transition-transform duration-1000">ARMED</div>
-                 <div className="absolute -bottom-10 -right-10 p-16 opacity-[0.03] group-hover:opacity-[0.1] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-48 text-primary" /></div>
-              </Card>
            </div>
 
            <Card className="xl:col-span-3 kali-card border-primary/40 bg-black/99 rounded-[6rem] p-16 border-[12px] shadow-[0_0_250px_rgba(0,0,0,1)] flex flex-col group overflow-hidden relative min-h-[1100px] hierarchical-shadow">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.08),transparent)] pointer-events-none" />
-              <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-primary/10 rounded-t-[5rem] px-16 py-10 flex flex-row justify-between items-center">
-                 <CardTitle className="text-5xl md:text-[12rem] text-white flex items-center gap-16 font-black uppercase italic gold-glow px-10 leading-none">
-                    <Terminal className="size-24 md:size-48 text-primary animate-pulse" /> Siphon Feed
-                 </CardTitle>
-                 {results.length > 0 && (
-                    <Badge className="bg-emerald-600/30 text-emerald-500 border-[10px] border-emerald-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic">SINGULARITY_LOCKED</Badge>
-                 )}
+              <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-primary/10 rounded-t-[5rem] px-16 py-10 flex flex-row justify-between items-center text-right">
+                 <Badge className="bg-emerald-600/30 text-emerald-500 border-[10px] border-emerald-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic order-last md:order-none">SINGULARITY_LOCKED</Badge>
+                 <CardTitle className="text-5xl md:text-[12rem] text-white flex items-center gap-16 font-black uppercase italic gold-glow px-10 leading-none">Siphon Feed <Terminal className="size-24 md:size-48 text-primary animate-pulse" /></CardTitle>
               </CardHeader>
-
-              <CardContent className="p-12 flex-1 overflow-y-auto scrollbar-hide space-y-12 relative z-10">
+              <CardContent className="p-12 flex-1 overflow-y-auto scrollbar-hide space-y-12 relative z-10 text-right">
                  {results.length > 0 ? (
                    results.map((res, i) => (
                      <div key={i} className="p-12 rounded-[4rem] bg-white/5 border-8 border-white/5 flex flex-col md:flex-row items-center justify-between animate-in slide-in-from-right-10 duration-1000 hover:border-primary transition-all cursor-crosshair group/hit shadow-inner gap-10">
@@ -204,32 +191,10 @@ export default function AutomationPage() {
                      </div>
                    ))
                  ) : (
-                   <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-60">
-                      <div className="relative group/lock">
-                        <Cpu className="size-64 md:size-[40rem] animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[12000ms]" />
-                        <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-32 text-primary/40 animate-neural" />
-                        <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
-                      </div>
-                      <h3 className="text-8xl md:text-[20rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Injecting</h3>
-                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">Consolidating LoliCode DNA across the absolute material hive.</p>
-                   </div>
+                   <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-60"><div className="relative group/lock"><Cpu className="size-64 md:size-[40rem] animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[12000ms]" /><Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-32 text-primary/40 animate-neural" /></div><h3 className="text-8xl md:text-[20rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Injecting</h3></div>
                  )}
               </CardContent>
-
-              <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[6em] italic">
-                <span>INJECTOR_HIVE_v78_AL_GHAZALI_ROOT</span>
-                <div className="flex gap-16">
-                    <Fingerprint className="size-24 text-primary animate-pulse" />
-                    <Atom className="size-24 animate-spin-slow text-primary" />
-                 </div>
-              </div>
            </Card>
-        </div>
-
-        <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[24px] md:text-[36px] font-black uppercase tracking-[6em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
-            <span>AL-MUIZZ OMNIPOTENT INJECTOR v78.0</span>
-            <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
-            <span>SUBJUGATION_THROUGH_MATERIAL_HIVE_2026</span>
         </div>
       </main>
     </div>
