@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -40,11 +41,17 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
+import { Progress } from "@/components/ui/progress"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 
+/**
+ * سفينة نوح v78.8 - THE ABSOLUTE ARK: DNA SERIALIZATION
+ * واجهة النسخ الاحتياطي والاسترداد المادي لنسخة ULTRA.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
+ */
 export default function NoahsArkPage() {
   const [mounted, setMounted] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
@@ -71,6 +78,30 @@ export default function NoahsArkPage() {
     }
   }, [])
 
+  const browseFiles = async (path: string) => {
+    setBrowsingLoading(true)
+    try {
+      const response = await fetch('/api/execute', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'list_dir', path: path })
+      })
+      const data = await response.json()
+      if (data.success) {
+        setDirItems(data.output)
+        setCurrentPath(data.currentPath)
+      }
+    } finally {
+      setBrowsingLoading(false)
+    }
+  }
+
+  const confirmSelection = () => {
+    setBackupPath(currentPath)
+    setIsBrowsing(false)
+    toast({ title: "Coordinate Locked", description: `Sector [${currentPath}] set as backup target.` })
+  }
+
   const handleRunBackup = async () => {
     setLoading(true)
     setProgress(0)
@@ -89,24 +120,6 @@ export default function NoahsArkPage() {
         }
     } finally {
         setTimeout(() => { setLoading(false); setProgress(0) }, 1000)
-    }
-  }
-
-  const browseFiles = async (path: string) => {
-    setBrowsingLoading(true)
-    try {
-      const response = await fetch('/api/execute', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'list_dir', path: path })
-      })
-      const data = await response.json()
-      if (data.success) {
-        setDirItems(data.output)
-        setCurrentPath(data.currentPath)
-      }
-    } finally {
-      setBrowsingLoading(false)
     }
   }
 
@@ -161,7 +174,7 @@ export default function NoahsArkPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-0 space-y-12">
-                  <div className="space-y-6">
+                  <div className="space-y-6 text-right">
                     <Label className="text-[14px] font-black text-primary uppercase tracking-[1em] px-10 italic flex items-center gap-6 justify-end"><HardDrive className="size-8" /> Target Sector</Label>
                     <div className="flex gap-4 px-4">
                       <Dialog open={isBrowsing} onOpenChange={(open) => { setIsBrowsing(open); if(open) browseFiles(backupPath) }}>
@@ -203,8 +216,8 @@ export default function NoahsArkPage() {
                     </div>
                   </div>
                   <div className="pt-12 border-t-4 border-white/5 space-y-10 px-8 text-right">
-                    <div className="flex items-center justify-between"><Switch defaultChecked className="data-[state=checked]:bg-primary scale-[1.5] md:scale-[2]" /><div className="space-y-2"><Label className="text-2xl md:text-3xl text-white font-black italic uppercase gold-glow">Dark Signal</Label><p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest italic">Anonymize snapshots via Ghost V6</p></div></div>
-                    <div className="flex items-center justify-between"><Switch defaultChecked className="data-[state=checked]:bg-emerald-600 scale-[1.5] md:scale-[2]" /><div className="space-y-2"><Label className="text-2xl md:text-3xl text-white font-black italic uppercase gold-glow">Auto-Resurrection</Label><p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest italic">Automatic rematerialization on drift</p></div></div>
+                    <div className="flex items-center justify-between"><Switch defaultChecked className="data-[state=checked]:bg-primary scale-[1.5] md:scale-[2]" /><div className="text-right space-y-2"><Label className="text-2xl md:text-3xl text-white font-black italic uppercase gold-glow">Dark Signal</Label><p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest italic">Anonymize snapshots via Ghost V6</p></div></div>
+                    <div className="flex items-center justify-between"><Switch defaultChecked className="data-[state=checked]:bg-emerald-600 scale-[1.5] md:scale-[2]" /><div className="text-right space-y-2"><Label className="text-2xl md:text-3xl text-white font-black italic uppercase gold-glow">Auto-Resurrection</Label><p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest italic">Automatic rematerialization on drift</p></div></div>
                   </div>
                 </CardContent>
               </Card>
@@ -225,7 +238,7 @@ export default function NoahsArkPage() {
                             <div className="relative z-10 space-y-12 text-center">
                                <div className="space-y-6"><h4 className="text-2xl md:text-3xl font-black text-primary uppercase tracking-[1em] italic gold-glow">Materializing Ark Snapshots</h4><div className="text-[10rem] md:text-[12rem] font-black text-white italic leading-none gold-glow animate-in zoom-in-95 duration-1000">{progress}%</div></div>
                                <Progress value={progress} className="h-8 md:h-10 bg-white/5 border-4 border-white/10 rounded-full" />
-                               <p className="text-2xl md:text-3xl text-gray-300 italic font-black leading-relaxed px-6 drop-shadow-3xl">"سفينة نوح v78.8 تصهر كافة مفاصل روحك المادية في كبسولة نانوية مشفرة."</p>
+                               <p className="text-2xl md:text-3xl text-gray-300 italic font-black leading-relaxed px-6 drop-shadow-3xl">"سفيينة نوح v78.8 تصهر كافة مفاصل روحك المادية في كبسولة نانوية مشفرة."</p>
                             </div>
                          </div>
                          <Button onClick={handleRunBackup} disabled={loading} className="w-full h-32 md:h-40 bg-primary hover:bg-white text-black font-black uppercase tracking-[1em] rounded-[4rem] shadow-9xl text-3xl italic border-[16px] border-black/30 group active:scale-95 transition-all">
@@ -240,7 +253,7 @@ export default function NoahsArkPage() {
                               { id: "singularity", title: "Absolute Singularity", desc: "Total Platform + Kernel Weights + BIOS", icon: InfinityIcon, color: "text-primary" },
                               { id: "ghost", title: "Ghost Persistence", desc: "Hidden Kernel Modules & Siphon Archive", icon: Shield, color: "text-emerald-500" }
                             ].map((type) => (
-                              <div key={type.id} onClick={() => setBackupType(type.id)} className={cn("p-8 md:p-10 rounded-[3.5rem] border-8 transition-all duration-1000 cursor-pointer group/type flex items-center gap-10 shadow-9xl relative overflow-hidden", backupType === type.id ? "bg-primary/10 border-primary shadow-[0_40px_150px_rgba(212,175,55,0.4)] scale-105" : "bg-black/80 border-white/5 hover:border-primary/40")}>
+                              <div key={type.id} onClick={() => setBackupType(type.id)} className={cn("p-8 md:p-10 rounded-[3.5rem] border-8 transition-all duration-1000 cursor-pointer group/type flex items-center gap-10 shadow-9xl relative overflow-hidden justify-end", backupType === type.id ? "bg-primary/10 border-primary shadow-[0_40px_150px_rgba(212,175,55,0.4)] scale-105" : "bg-black/80 border-white/5 hover:border-primary/40")}>
                                 {backupType === type.id && <ShieldCheck className="size-10 text-emerald-500 animate-in zoom-in-50 duration-700" />}
                                 <div className="flex-1 text-right">
                                    <div className="text-2xl md:text-3xl font-black text-white italic group-hover/type:text-primary transition-colors uppercase tracking-tight mb-2">{type.title}</div>
