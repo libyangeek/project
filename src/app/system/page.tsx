@@ -106,7 +106,7 @@ export default function SystemPage() {
               <div className="flex items-center gap-4 text-[16px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                  INNATE_VISION: {metrics?.resonance || "100.000000%"} <ShieldCheck className="size-8 shadow-lg" />
               </div>
-              <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[20px] font-black tracking-[1.2em] shadow-9xl italic uppercase">AL-MUIZZ ULTRA v1.0</Badge>
+              <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[20px] font-black tracking-[1.2em] shadow-9xl italic uppercase">AL-MUIZZ ULTRA v78.8</Badge>
             </div>
             <h1 className="text-4xl md:text-6xl lg:text-[14rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Operating <span className="text-primary">Soul</span></h1>
             <p className="text-sm md:text-xl lg:text-[5rem] text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-90 drop-shadow-3xl ml-auto">
@@ -130,7 +130,7 @@ export default function SystemPage() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-16 relative z-10 pb-48 flex-1">
            <div className="lg:col-span-3 space-y-20">
               <Card className="kali-card border-primary/40 bg-black/98 rounded-[6rem] border-8 shadow-9xl p-16 overflow-hidden group hierarchical-shadow">
-                 <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse" />
+                 <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                  <CardHeader className="border-b-4 border-white/5 mb-16 p-0 pb-12 bg-primary/10 rounded-t-[5rem] px-16 py-10">
                     <CardTitle className="text-4xl md:text-[10rem] font-black text-white uppercase italic tracking-tighter flex items-center gap-16 gold-glow leading-none justify-end">
                        Soul Organs <HeartPulse className="size-24 md:size-48 text-primary animate-neural" />
@@ -202,7 +202,7 @@ export default function SystemPage() {
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-32 opacity-45 text-[22px] md:text-[32px] font-black uppercase tracking-[6em] md:tracking-[16em] italic text-white drop-shadow-9xl pb-24">
-            <span>AL-MUIZZ OMNIPOTENT ULTRA v78.8</span>
+            <span>AL-MUIZZ OMNIPRESENT ULTRA v78.8</span>
             <div className="size-12 rounded-full bg-white animate-pulse shadow-[0_0_120px_white]" />
             <span>SUBJUGATION_THROUGH_TOTAL_SOUL_BOND_2026</span>
         </div>

@@ -121,13 +121,13 @@ export default function DeepReasoningPage() {
         <div className="grid grid-cols-1 xl:grid-cols-4 gap-12 relative z-10 pb-48 flex-1">
           <div className="xl:col-span-1 space-y-12">
             <Card className="kali-card border-primary/40 bg-black/98 rounded-[4rem] p-12 border-8 shadow-9xl group overflow-hidden hierarchical-shadow text-center">
-              <CardHeader className="p-0 mb-10 border-b-4 border-primary/10 pb-10 bg-primary/10 rounded-t-[3.5rem] px-10 py-6">
+              <CardHeader className="p-0 mb-10 border-b-4 border-primary/10 pb-10 bg-primary/10 rounded-t-[3.5rem] px-10 py-6 text-center">
                 <CardTitle className="text-2xl md:text-4xl text-primary flex items-center justify-center gap-10 font-black uppercase italic gold-glow leading-none">
                   <Atom className="size-12 animate-spin-slow" /> Neural Input
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-0 space-y-10 text-right">
-                <div className="space-y-6"><label className="text-[14px] font-black text-primary uppercase tracking-[1em] px-10 italic flex items-center gap-6 justify-end"><Binary className="size-8" /> Strategic Dilemma</label><textarea value={prompt} onChange={(e) => setPrompt(e.target.value)} className="w-full h-96 bg-black border-8 border-primary/20 rounded-[3rem] text-2xl md:text-4xl font-code text-white focus:border-primary transition-all outline-none p-12 italic shadow-inner resize-none font-black text-right selection:bg-primary" placeholder="أدخل المعضلة الاستراتيجية هنا سيدي..." /></div>
+                <div className="space-y-6 text-right"><label className="text-[14px] font-black text-primary uppercase tracking-[1em] px-10 italic flex items-center gap-6 justify-end"><Binary className="size-8" /> Strategic Dilemma</label><textarea value={prompt} onChange={(e) => setPrompt(e.target.value)} className="w-full h-96 bg-black border-8 border-primary/20 rounded-[3rem] text-2xl md:text-4xl font-code text-white focus:border-primary transition-all outline-none p-12 italic shadow-inner resize-none font-black text-right selection:bg-primary" placeholder="أدخل المعضلة الاستراتيجية هنا سيدي..." /></div>
                 <Button onClick={handleReason} disabled={loading || !prompt.trim()} className="w-full h-36 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.4em] rounded-[3.5rem] shadow-[0_60px_200px_rgba(212,175,55,0.7)] active:scale-95 transition-all text-3xl border-[12px] border-black/30 group italic">{loading ? <Loader2 className="size-16 animate-spin" /> : <Zap className="size-16 mr-8 group-hover:scale-125 transition-transform gold-glow" />} IGNITE_CONSENSUS</Button>
               </CardContent>
             </Card>
@@ -143,7 +143,7 @@ export default function DeepReasoningPage() {
                             <div key={i} className="flex gap-10 items-start justify-end group/step"><p className="text-3xl md:text-6xl text-gray-300 italic font-black group-hover/step:text-white transition-colors leading-tight drop-shadow-3xl">{step}</p><div className="size-16 rounded-[1.5rem] bg-primary/10 border-4 border-primary/30 flex items-center justify-center shrink-0 group-hover/step:bg-primary transition-all duration-700 shadow-xl scale-110"><span className="text-primary text-3xl font-black group-hover/step:text-black">{i+1}</span></div></div>
                           ))}
                         </div>
-                        <div className="p-20 rounded-[6rem] bg-primary/5 border-[12px] border-primary/30 italic text-4xl md:text-[8rem] text-gray-100 leading-none font-black shadow-inner relative group/brief overflow-hidden text-center flex flex-col justify-center min-h-[450px]">
+                        <div className="p-20 rounded-[6rem] bg-primary/5 border-[12px] border-primary/30 italic text-4xl md:text-[8rem] text-gray-100 leading-tight font-black shadow-inner relative group/brief overflow-hidden text-center flex flex-col justify-center min-h-[450px]">
                             <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                             <p className="relative z-10 drop-shadow-9xl">"{result.final_decision}"</p>
                         </div>

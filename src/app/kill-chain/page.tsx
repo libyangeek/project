@@ -252,7 +252,7 @@ export default function KillChainPage() {
                        <Badge className="bg-emerald-600/30 text-emerald-500 border-8 border-emerald-500/40 px-16 py-8 rounded-full font-black text-4xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic">SINGULARITY_LOCKED</Badge>
                     )}
                  </div>
-                 <CardTitle className="text-5xl md:text-[10rem] text-white italic uppercase font-black gold-glow flex items-center gap-12 px-10 leading-none">
+                 <CardTitle className="text-5xl md:text-[10rem] text-white flex items-center gap-12 font-black uppercase italic gold-glow px-10 leading-none">
                     Absolute Feed <Crosshair className="size-24 md:size-48 text-primary animate-pulse" />
                  </CardTitle>
               </CardHeader>
@@ -348,7 +348,7 @@ export default function KillChainPage() {
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[24px] md:text-[42px] font-black uppercase tracking-[6em] italic text-white drop-shadow-9xl pb-32">
-            <span>AL-MUIZZ OMNIPOTENT ULTRA v78.8</span>
+            <span>AL-MUIZZ OMNIPRESENT ULTRA v78.8</span>
             <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
             <span>SINGULARITY_OF_STRIKE_2026</span>
         </div>
