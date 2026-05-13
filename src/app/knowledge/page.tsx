@@ -153,19 +153,19 @@ Description: ${tool.desc}
         />
         
         <header className="mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000">
-          <div className="flex flex-col md:flex-row items-center gap-12">
+          <div className="flex flex-col md:flex-row items-center gap-12 text-center md:text-right">
             <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.8)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 hierarchical-shadow rotate-2 hover:rotate-0">
               <Share2 className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
               <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
             </div>
-            <div className="text-center md:text-right flex-1">
+            <div className="flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-6">
                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">KNOWLEDGE_NEXUS v75.5</Badge>
                 <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                     <InfinityIcon className="size-6 shadow-lg" /> COGNITION_SYNC: {resonance.toFixed(8)}%
                 </div>
               </div>
-              <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
+              <h1 className="text-4xl md:text-6xl lg:text-[14rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
                 Absolute <span className="text-primary">Nexus</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl">
@@ -207,7 +207,7 @@ Description: ${tool.desc}
               </Card>
 
               <Card className="kali-card border-red-500/40 bg-black/60 p-12 rounded-[4rem] border-8 shadow-inner text-center relative overflow-hidden group">
-                 <div className="absolute inset-0 bg-emerald-500/5 opacity-5 animate-pulse" />
+                 <div className="absolute inset-0 bg-emerald-500/5 opacity-5 animate-pulse pointer-events-none" />
                  <h4 className="text-[14px] font-black text-red-500 uppercase tracking-[1em] mb-8 italic flex items-center justify-center gap-6">
                     <AlertTriangle className="size-8 animate-pulse" /> PREDICTIVE_THREAT
                  </h4>
@@ -217,13 +217,13 @@ Description: ${tool.desc}
               </Card>
            </div>
 
-           <Card className="xl:col-span-3 kali-card border-primary/40 bg-black/99 rounded-[6rem] p-16 border-[12px] shadow-9xl flex flex-col group overflow-hidden relative min-h-[1000px] hierarchical-shadow">
+           <Card className="xl:col-span-3 kali-card border-primary/40 bg-black/99 rounded-[6rem] p-16 border-[12px] shadow-[0_0_250px_rgba(0,0,0,1)] flex flex-col group overflow-hidden relative min-h-[1000px] hierarchical-shadow">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.08),transparent)] pointer-events-none" />
               <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-primary/10 rounded-t-[5rem] px-16 py-10 flex flex-row justify-between items-center">
                  <CardTitle className="text-5xl md:text-[12rem] text-white flex items-center gap-16 font-black uppercase italic gold-glow px-10 leading-none">
                     <FileSearch className="size-24 md:size-48 text-primary animate-pulse" /> Material Feed
                  </CardTitle>
-                 <Badge className="bg-emerald-600/30 text-emerald-500 border-[10px] border-emerald-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic">CORE_SYNC_v75</Badge>
+                 <Badge className="bg-emerald-600/30 text-emerald-500 border-[10px] border-emerald-500/40 px-16 py-8 rounded-full font-black text-3xl md:text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic">CORE_SYNC_v75</Badge>
               </CardHeader>
               
               <CardContent className="p-12 flex-1 flex flex-col space-y-12 relative z-10">
@@ -266,8 +266,8 @@ Description: ${tool.desc}
                  )}
               </CardContent>
 
-              <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[6em] italic">
-                 <span>ABSOLUTE_NEXUS_v75_AL_GHAZALI_ROOT</span>
+              <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[8em] italic">
+                 <span>ABSOLUTE_NEX_v75_AL_GHAZALI_ROOT</span>
                  <div className="flex gap-16">
                     <Fingerprint className="size-20 text-primary animate-pulse" />
                     <Atom className="size-20 animate-spin-slow text-primary" />

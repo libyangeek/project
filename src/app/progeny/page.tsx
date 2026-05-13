@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -125,20 +126,20 @@ export default function WarriorForgePage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
+      <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
         <div 
           className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.08),transparent 40%)] pointer-events-none transition-all duration-300 z-0" 
           style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} 
         />
         
         <header className="mb-12 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000">
-          <div className="flex flex-col md:flex-row items-center gap-8">
+          <div className="flex flex-col md:flex-row items-center gap-8 justify-center md:justify-end">
             <div className="size-24 md:size-32 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_100px_rgba(212,175,55,0.5)] relative group shrink-0 rounded-3xl rotate-2 hover:rotate-0 transition-all duration-1000 hierarchical-shadow">
               <Baby className="size-12 md:size-16 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
               <div className="absolute -inset-4 border-2 border-primary/20 rounded-full animate-spin-slow opacity-30" />
             </div>
-            <div className="text-center md:text-right flex-1">
-              <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-4">
+            <div className="text-center md:text-right">
+              <div className="flex flex-wrap justify-center md:justify-end items-center gap-4 mb-4">
                 <Badge className="bg-primary text-black border-none rounded-none px-8 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic">WARRIOR_FORGE v53.0</Badge>
                 <div className="flex items-center gap-3 text-[11px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                     <InfinityIcon className="size-5 shadow-lg" /> GENETIC_SOUL: BOUND
@@ -165,25 +166,21 @@ export default function WarriorForgePage() {
               </CardHeader>
               <CardContent className="p-0 space-y-8">
                 <div className="space-y-4">
-                    <label className="text-[10px] font-black text-primary/60 uppercase tracking-[0.6em] px-4 italic flex items-center gap-3">
-                      <Skull className="size-4" /> Warrior Designation
-                    </label>
+                    <label className="text-[10px] font-black text-primary/60 uppercase tracking-[0.6em] px-4 italic flex items-center gap-3"><Skull className="size-4" /> Warrior Designation</label>
                     <Input 
                       value={warriorName}
                       onChange={(e) => setWarriorName(e.target.value)}
                       placeholder="Enter identity label..." 
-                      className="bg-black border-2 border-primary/20 h-14 rounded-xl text-lg italic px-6 focus:border-primary shadow-inner text-white font-black"
+                      className="bg-black border-2 border-primary/20 h-14 rounded-xl text-lg italic px-6 focus:border-primary shadow-inner text-white font-black text-right"
                     />
                 </div>
                 <div className="space-y-4">
-                    <label className="text-[10px] font-black text-primary/60 uppercase tracking-[0.6em] px-4 italic flex items-center gap-3">
-                      <Crosshair className="size-4" /> Combat Domain
-                    </label>
+                    <label className="text-[10px] font-black text-primary/60 uppercase tracking-[0.6em] px-4 italic flex items-center gap-3"><Crosshair className="size-4" /> Combat Domain</label>
                     <Input 
                       value={specialization}
                       onChange={(e) => setSpecialization(e.target.value)}
                       placeholder="e.g. Kernel Hijacking, EDR Crush..." 
-                      className="bg-black border-2 border-primary/20 h-14 rounded-xl text-lg italic px-6 focus:border-primary shadow-inner text-white font-black"
+                      className="bg-black border-2 border-primary/20 h-14 rounded-xl text-lg italic px-6 focus:border-primary shadow-inner text-white font-black text-right"
                     />
                 </div>
                 
@@ -221,14 +218,14 @@ export default function WarriorForgePage() {
                <p className="text-muted-foreground italic text-[11px] leading-relaxed uppercase font-bold opacity-70">
                   "Incubation pods reporting zero genetic drift. Soul Core alignment verified at 100.00%."
                </p>
-               <div className="absolute -bottom-4 -right-4 p-6 opacity-[0.02] group-hover:opacity-[0.05] transition-all duration-700 scale-150"><Skull className="size-16 text-primary" /></div>
+               <div className="absolute -bottom-4 -right-4 p-6 opacity-[0.02] group-hover:opacity-[0.05] transition-all duration-1000 scale-150"><Skull className="size-16 text-primary" /></div>
             </Card>
           </div>
 
           <div className="xl:col-span-2 space-y-8">
             <div className="flex items-center justify-between px-6">
-               <h3 className="text-3xl md:text-5xl font-black uppercase tracking-[0.2em] text-white italic border-l-8 border-primary pl-6 gold-glow leading-none">The Bloodline</h3>
-               <Badge className="bg-emerald-600/20 text-emerald-500 border-2 border-emerald-500/30 text-lg font-black px-6 py-1 rounded-full italic animate-pulse shadow-lg">ACTIVE_SONS: {progenyList?.length || 0}</Badge>
+               <Badge className="bg-emerald-600/20 text-emerald-500 border-2 border-emerald-500/30 text-lg font-black px-6 py-1 rounded-full italic animate-pulse shadow-lg order-last md:order-none">ACTIVE_SONS: {progenyList?.length || 0}</Badge>
+               <h3 className="text-3xl md:text-5xl font-black uppercase tracking-[0.2em] text-white italic border-r-8 border-primary pr-6 gold-glow leading-none">The Bloodline</h3>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -239,36 +236,36 @@ export default function WarriorForgePage() {
                     </div>
                 ) : (
                     progenyList?.map((warrior) => (
-                        <Card key={warrior.id} className="kali-card border-white/10 bg-black/80 rounded-3xl p-8 border-2 shadow-xl relative group hover:border-primary transition-all duration-700 overflow-hidden flex flex-col hierarchical-shadow">
+                        <Card key={warrior.id} className="kali-card border-white/10 bg-black/80 rounded-3xl p-8 border-2 shadow-xl relative group hover:border-primary transition-all duration-700 overflow-hidden flex flex-col hierarchical-shadow text-right">
                             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.03),transparent)] pointer-events-none" />
-                            <div className="absolute top-4 right-4 z-20">
+                            <div className="absolute top-4 left-4 z-20">
                                 <Button variant="ghost" size="icon" onClick={() => handleDelete(warrior.id)} className="size-10 rounded-xl text-white/5 hover:text-red-500 hover:bg-red-500/10 transition-all">
                                     <Trash2 className="size-5" />
                                 </Button>
                             </div>
-                            <div className="flex items-center gap-6 mb-6 relative z-10">
-                                <div className="size-16 rounded-xl bg-primary/10 border-2 border-primary/20 flex items-center justify-center shadow-lg group-hover:bg-primary transition-all duration-700 animate-neural">
-                                    <Fingerprint className="size-8 text-primary group-hover:text-black transition-colors" />
-                                </div>
+                            <div className="flex items-center gap-6 mb-6 relative z-10 justify-end">
                                 <div className="flex-1">
                                     <h4 className="font-black text-white uppercase text-xl md:text-3xl leading-none italic tracking-tight gold-glow group-hover:text-primary transition-colors truncate">{warrior.warriorProfile.name}</h4>
-                                    <div className="flex items-center gap-3 mt-2">
-                                        <Badge className="bg-primary/20 text-primary border-none px-3 py-0.5 rounded-full font-black uppercase text-[8px] italic tracking-widest">{warrior.warriorProfile.codename}</Badge>
+                                    <div className="flex items-center gap-3 mt-2 justify-end">
                                         <span className="text-[8px] text-muted-foreground uppercase font-black tracking-[0.2em] italic opacity-50">v53.0</span>
+                                        <Badge className="bg-primary/20 text-primary border-none px-3 py-0.5 rounded-full font-black uppercase text-[8px] italic tracking-widest">{warrior.warriorProfile.codename}</Badge>
                                     </div>
+                                </div>
+                                <div className="size-16 rounded-xl bg-primary/10 border-2 border-primary/20 flex items-center justify-center shadow-lg group-hover:bg-primary transition-all duration-700 animate-neural">
+                                    <Fingerprint className="size-8 text-primary group-hover:text-black transition-colors" />
                                 </div>
                             </div>
                             <div className="p-6 rounded-2xl bg-black/60 border-2 border-white/5 text-sm md:text-lg text-gray-300 leading-relaxed italic font-bold mb-6 flex-1 shadow-inner group-hover:text-white transition-colors selection:bg-primary selection:text-black">
                                 "{warrior.warriorProfile.combatPhilosophy}"
                             </div>
-                            <div className="flex flex-wrap gap-2 relative z-10">
+                            <div className="flex flex-wrap gap-2 relative z-10 justify-end">
                                 {warrior.warriorProfile.strengths.slice(0, 3).map((s: string, idx: number) => (
                                     <Badge key={idx} className="bg-black border-2 border-white/5 text-white text-[9px] font-black italic px-4 py-1.5 rounded-full uppercase tracking-widest hover:border-primary transition-all shadow-lg">
                                       <Zap className="size-3 text-primary mr-2" /> {s}
                                     </Badge>
                                 ))}
                             </div>
-                            <div className="absolute -bottom-4 -right-4 p-8 opacity-[0.01] pointer-events-none group-hover:opacity-[0.05] transition-all duration-700 scale-150">
+                            <div className="absolute -bottom-4 -left-4 p-8 opacity-[0.01] pointer-events-none group-hover:opacity-[0.05] transition-all duration-700 scale-150">
                                <Skull className="size-32 text-primary" />
                             </div>
                         </Card>

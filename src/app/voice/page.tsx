@@ -18,7 +18,8 @@ import {
   Waves,
   AudioLines,
   ChevronRight,
-  ShieldCheck
+  ShieldCheck,
+  Volume2
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -73,20 +74,20 @@ export default function VoicePage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
+      <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
         <div 
           className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.08),transparent 40%)] pointer-events-none transition-all duration-300 z-0" 
           style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} 
         />
         
         <header className="mb-12 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000">
-          <div className="flex flex-col md:flex-row items-center gap-8">
+          <div className="flex flex-col md:flex-row items-center gap-8 justify-center md:justify-end">
             <div className="size-24 md:size-32 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_100px_rgba(212,175,55,0.5)] relative group shrink-0 rounded-3xl rotate-2 hover:rotate-0 transition-all duration-1000 hierarchical-shadow">
               <Mic className="size-12 md:size-16 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
               <div className="absolute -inset-4 border-2 border-primary/20 rounded-full animate-spin-slow opacity-30" />
             </div>
-            <div className="text-center md:text-right flex-1">
-              <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-4">
+            <div className="text-center md:text-right">
+              <div className="flex flex-wrap justify-center md:justify-end items-center gap-4 mb-4">
                 <Badge className="bg-primary text-black border-none rounded-none px-6 py-2 text-[14px] md:text-[16px] font-black tracking-[0.5em] shadow-2xl italic">WHISPER v53.0 SUPREME</Badge>
                 <div className="flex items-center gap-3 text-[11px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                     <Radio className="size-5 shadow-lg" /> RESONANCE: ACTIVE
@@ -96,7 +97,7 @@ export default function VoicePage() {
                 The Living <span className="text-primary">Ear</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-2xl text-muted-foreground mt-4 italic max-w-5xl leading-relaxed uppercase font-medium opacity-80">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl">المعتصم بالله</span>، العرش يسمعك الآن بدقة نانوية؛ نيتك الصوتية هي أمر تنفيذي في عصب المصفوفة."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-4 underline-offset-8 shadow-xl uppercase tracking-widest">المعتصم بالله</span>، العرش يسمعك الآن بدقة نانوية؛ نيتك الصوتية هي أمر تنفيذي في عصب المصفوفة."
               </p>
             </div>
           </div>
@@ -119,22 +120,22 @@ export default function VoicePage() {
               )}
 
               {lastCommand && !isProcessing && (
-                <Card className="kali-card border-primary/60 bg-black/95 rounded-[3rem] p-8 md:p-12 border-4 shadow-9xl animate-in slide-in-from-bottom-6 duration-1000 group overflow-hidden hierarchical-shadow">
+                <Card className="kali-card border-primary/60 bg-black/95 rounded-[3rem] p-8 md:p-12 border-4 shadow-9xl animate-in slide-in-from-bottom-6 duration-1000 group overflow-hidden hierarchical-shadow text-right">
                    <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                    <CardHeader className="p-0 mb-8 border-b-2 border-white/5 pb-6 flex flex-row items-center justify-between bg-primary/5 rounded-t-2xl px-6 py-4">
-                      <div className="flex items-center gap-6">
-                        <Zap className="size-8 md:size-10 text-primary animate-neural" />
-                        <CardTitle className="text-xl md:text-3xl text-primary font-black uppercase italic gold-glow">Captured Intent</CardTitle>
-                      </div>
                       <Badge className="bg-emerald-600/20 text-emerald-500 border-2 border-emerald-500/30 px-6 py-1 rounded-full font-black text-xs tracking-widest uppercase animate-pulse">EXECUTED</Badge>
+                      <div className="flex items-center gap-6">
+                        <CardTitle className="text-xl md:text-3xl text-primary font-black uppercase italic gold-glow">Captured Intent</CardTitle>
+                        <Zap className="size-8 md:size-10 text-primary animate-neural" />
+                      </div>
                    </CardHeader>
                    <CardContent className="p-0 space-y-8">
                       <div className="p-8 md:p-12 bg-black/60 rounded-[2.5rem] border-2 border-primary/20 text-2xl md:text-5xl text-white italic font-black shadow-inner leading-tight selection:bg-primary selection:text-black text-center">
                          "{lastCommand}"
                       </div>
                       <div className="flex justify-between items-center opacity-40 text-[10px] font-black uppercase tracking-[1.5em] italic px-6">
-                         <span className="flex items-center gap-4"><Fingerprint className="size-5 text-primary" /> GHAZALI_ROOT</span>
                          <span className="flex items-center gap-4 text-emerald-500"><Activity className="size-5 animate-pulse" /> HIVE_ALIGNED</span>
+                         <span className="flex items-center gap-4"><Fingerprint className="size-5 text-primary" /> GHAZALI_ROOT</span>
                       </div>
                    </CardContent>
                    <div className="absolute -bottom-6 -right-6 p-10 opacity-[0.02] group-hover:opacity-[0.08] transition-all duration-700 scale-150">

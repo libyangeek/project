@@ -13,7 +13,6 @@ import {
   ShieldCheck, 
   FileCode, 
   FolderOpen, 
-  LayoutGrid, 
   Cpu, 
   Infinity as InfinityIcon,
   Boxes,
@@ -40,7 +39,6 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
@@ -164,12 +162,12 @@ export default function NoahsArkPage() {
         />
         
         <header className="mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000">
-          <div className="flex flex-col md:flex-row items-center gap-12">
+          <div className="flex flex-col md:flex-row items-center gap-12 text-center md:text-right">
             <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.8)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
               <Anchor className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
               <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
             </div>
-            <div className="text-center md:text-right flex-1">
+            <div className="flex-1">
               <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-6">
                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">ARK_v72.0 SINGULARITY</Badge>
                 <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
@@ -202,51 +200,51 @@ export default function NoahsArkPage() {
                       <Input 
                         value={backupPath}
                         onChange={(e) => setBackupPath(e.target.value)}
-                        className="bg-black border-[6px] border-primary/20 h-24 rounded-[2rem] text-2xl italic px-10 focus:border-primary shadow-inner text-white font-black flex-1" 
+                        className="bg-black border-[6px] border-primary/20 h-24 rounded-[2rem] text-xl md:text-2xl italic px-10 focus:border-primary shadow-inner text-white font-black flex-1" 
                       />
                       <Dialog open={isBrowsing} onOpenChange={(open) => {
                           setIsBrowsing(open)
                           if(open) browseFiles(backupPath)
                       }}>
                           <DialogTrigger asChild>
-                              <Button variant="ghost" className="size-24 rounded-[1.5rem] border-4 border-white/10 hover:bg-primary/20 transition-all shadow-2xl"><FolderOpen className="size-12"/></Button>
+                              <Button variant="ghost" className="size-20 md:size-24 rounded-[1.5rem] border-4 border-white/10 hover:bg-primary/20 transition-all shadow-2xl"><FolderOpen className="size-8 md:size-12"/></Button>
                           </DialogTrigger>
-                          <DialogContent className="bg-black/98 border-[12px] border-primary/40 rounded-[5rem] max-w-5xl h-[800px] flex flex-col p-16 backdrop-blur-5xl shadow-9xl">
+                          <DialogContent className="bg-black/98 border-[12px] border-primary/40 rounded-[5rem] max-w-5xl h-[800px] flex flex-col p-10 md:p-16 backdrop-blur-5xl shadow-9xl">
                               <DialogHeader className="border-b-4 border-white/5 pb-10">
-                                  <DialogTitle className="text-5xl font-black text-primary uppercase italic flex items-center gap-10 gold-glow">
-                                      <Search className="size-16 animate-neural"/> Matrix Navigator
+                                  <DialogTitle className="text-3xl md:text-5xl font-black text-primary uppercase italic flex items-center gap-10 gold-glow">
+                                      <Search className="size-12 md:size-16 animate-neural"/> Matrix Navigator
                                   </DialogTitle>
                                   <div className="flex items-center gap-8 mt-10 bg-white/5 p-8 rounded-[3rem] border-4 border-white/10 shadow-inner">
                                       <span className="text-[14px] font-black text-muted-foreground uppercase tracking-widest">Sector:</span>
-                                      <code className="text-primary text-3xl font-black truncate flex-1 italic">{currentPath}</code>
+                                      <code className="text-primary text-xl md:text-3xl font-black truncate flex-1 italic">{currentPath}</code>
                                       <Button size="icon" variant="ghost" onClick={() => browseFiles(currentPath.split('/').slice(0,-1).join('/') || '/')} className="size-16 rounded-2xl hover:bg-primary/20 shadow-2xl"><ArrowUp className="size-8"/></Button>
                                   </div>
                               </DialogHeader>
                               <div className="flex-1 overflow-y-auto scrollbar-hide py-10 space-y-4">
                                   {browsingLoading ? (
                                       <div className="h-full flex flex-col items-center justify-center gap-12 opacity-30">
-                                          <Loader2 className="size-32 animate-spin text-primary" />
-                                          <span className="text-2xl font-black uppercase tracking-[1em] italic">SCANNING_MATERIAL_NODES...</span>
+                                          <Loader2 className="size-24 md:size-32 animate-spin text-primary" />
+                                          <span className="text-xl md:text-2xl font-black uppercase tracking-[1em] italic">SCANNING_MATERIAL_NODES...</span>
                                       </div>
                                   ) : (
                                       dirItems.map((item, i) => (
                                           <div 
                                               key={i} 
                                               onClick={() => selectDir(item)}
-                                              className="p-8 rounded-[2.5rem] hover:bg-primary/10 cursor-pointer flex items-center justify-between group/item border-4 border-transparent hover:border-primary/40 transition-all duration-700 active:scale-95"
+                                              className="p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] hover:bg-primary/10 cursor-pointer flex items-center justify-between group/item border-4 border-transparent hover:border-primary/40 transition-all duration-700 active:scale-95"
                                           >
                                               <div className="flex items-center gap-10">
-                                                  {item.isDirectory ? <Folder className="size-12 text-primary animate-pulse"/> : <File className="size-12 text-gray-500"/>}
-                                                  <span className="text-3xl font-black text-gray-200 group-hover:text-white italic uppercase tracking-tight">{item.name}</span>
+                                                  {item.isDirectory ? <Folder className="size-8 md:size-12 text-primary animate-pulse"/> : <File className="size-8 md:size-12 text-gray-500"/>}
+                                                  <span className="text-xl md:text-3xl font-black text-gray-200 group-hover:text-white italic uppercase tracking-tight">{item.name}</span>
                                               </div>
-                                              <ChevronRight className="size-10 text-primary opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-4"/>
+                                              <ChevronRight className="size-8 md:size-10 text-primary opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-4"/>
                                           </div>
                                       ))
                                   )}
                               </div>
                               <div className="pt-10 border-t-4 border-white/5 flex gap-8">
-                                  <Button variant="ghost" onClick={() => setIsBrowsing(false)} className="flex-1 h-24 rounded-[2.5rem] border-4 border-white/10 text-xl font-black uppercase italic">Cancel</Button>
-                                  <Button onClick={confirmSelection} className="flex-1 h-24 rounded-[2.5rem] bg-primary hover:bg-white text-black font-black uppercase text-2xl italic shadow-9xl border-8 border-black/30">LOCK_COORDINATE</Button>
+                                  <Button variant="ghost" onClick={() => setIsBrowsing(false)} className="flex-1 h-20 md:h-24 rounded-[2rem] md:rounded-[2.5rem] border-4 border-white/10 text-lg md:text-xl font-black uppercase italic">Cancel</Button>
+                                  <Button onClick={confirmSelection} className="flex-1 h-20 md:h-24 rounded-[2rem] md:rounded-[2.5rem] bg-primary hover:bg-white text-black font-black uppercase text-xl md:text-2xl italic shadow-9xl border-8 border-black/30">LOCK_COORDINATE</Button>
                               </div>
                           </DialogContent>
                       </Dialog>
@@ -256,17 +254,17 @@ export default function NoahsArkPage() {
                   <div className="pt-12 border-t-4 border-white/5 space-y-10 px-8">
                     <div className="flex items-center justify-between">
                       <div className="space-y-2">
-                        <Label className="text-3xl text-white font-black italic uppercase gold-glow">Dark Signal</Label>
-                        <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest italic">Anonymize snapshots via Ghost V5.5</p>
+                        <Label className="text-2xl md:text-3xl text-white font-black italic uppercase gold-glow">Dark Signal</Label>
+                        <p className="text-[9px] md:text-[10px] text-muted-foreground uppercase font-bold tracking-widest italic">Anonymize snapshots via Ghost V5.5</p>
                       </div>
-                      <Switch defaultChecked className="data-[state=checked]:bg-primary scale-[2]" />
+                      <Switch defaultChecked className="data-[state=checked]:bg-primary scale-[1.5] md:scale-[2]" />
                     </div>
                     <div className="flex items-center justify-between">
                       <div className="space-y-2">
-                        <Label className="text-3xl text-white font-black italic uppercase gold-glow">Auto-Resurrection</Label>
-                        <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest italic">Automatic rematerialization on drift</p>
+                        <Label className="text-2xl md:text-3xl text-white font-black italic uppercase gold-glow">Auto-Resurrection</Label>
+                        <p className="text-[9px] md:text-[10px] text-muted-foreground uppercase font-bold tracking-widest italic">Automatic rematerialization on drift</p>
                       </div>
-                      <Switch defaultChecked className="data-[state=checked]:bg-emerald-600 scale-[2]" />
+                      <Switch defaultChecked className="data-[state=checked]:bg-emerald-600 scale-[1.5] md:scale-[2]" />
                     </div>
                   </div>
                 </CardContent>
@@ -275,19 +273,19 @@ export default function NoahsArkPage() {
            </div>
 
            <div className="lg:col-span-3">
-              <Card className="kali-card border-primary/40 bg-black/99 rounded-[6rem] p-16 border-[12px] shadow-[0_0_250px_rgba(0,0,0,1)] flex flex-col group overflow-hidden relative min-h-[1100px] hierarchical-shadow">
+              <Card className="kali-card border-primary/40 bg-black/99 rounded-[6rem] p-8 md:p-16 border-[12px] shadow-[0_0_250px_rgba(0,0,0,1)] flex flex-col group overflow-hidden relative min-h-[1100px] hierarchical-shadow">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.06),transparent)] pointer-events-none" />
-                <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-primary/10 rounded-t-[5rem] px-16 py-10 flex flex-row justify-between items-center">
+                <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-primary/10 rounded-t-[5rem] px-10 md:px-16 py-10 flex flex-col md:flex-row justify-between items-center gap-8">
                    <CardTitle className="text-5xl md:text-[10rem] text-white flex items-center gap-16 font-black uppercase italic gold-glow px-10 leading-none">
                       <Anchor className="size-24 md:size-48 text-primary animate-neural" /> Rebirth Control
                    </CardTitle>
                    <div className="text-right">
-                      <div className="text-emerald-500 font-black text-6xl italic gold-glow animate-pulse">DNA_IMMUTABLE</div>
-                      <div className="text-[12px] text-muted-foreground uppercase font-black tracking-[0.6em] mt-4 italic">v72_QUANTUM_ARK_ACTIVE</div>
+                      <div className="text-emerald-500 font-black text-4xl md:text-6xl italic gold-glow animate-pulse">DNA_IMMUTABLE</div>
+                      <div className="text-[10px] md:text-[12px] text-muted-foreground uppercase font-black tracking-[0.6em] mt-4 italic">v72_QUANTUM_ARK_ACTIVE</div>
                    </div>
                 </CardHeader>
 
-                <CardContent className="p-12 flex-1 flex flex-col space-y-20 relative z-10">
+                <CardContent className="p-4 md:p-12 flex-1 flex flex-col space-y-20 relative z-10">
                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-20">
                       <div className="space-y-12">
                          <div className="space-y-8">
@@ -302,23 +300,23 @@ export default function NoahsArkPage() {
                                    key={type.id}
                                    onClick={() => setBackupType(type.id)}
                                    className={cn(
-                                     "p-10 rounded-[3.5rem] border-8 transition-all duration-1000 cursor-pointer group/type flex items-center gap-10 shadow-9xl relative overflow-hidden",
+                                     "p-8 md:p-10 rounded-[3rem] md:rounded-[3.5rem] border-8 transition-all duration-1000 cursor-pointer group/type flex items-center gap-10 shadow-9xl relative overflow-hidden",
                                      backupType === type.id 
                                        ? "bg-primary/10 border-primary shadow-[0_40px_150px_rgba(212,175,55,0.4)] scale-105" 
                                        : "bg-black/80 border-white/5 hover:border-primary/40"
                                    )}
                                  >
                                    <div className={cn(
-                                     "size-20 rounded-[1.5rem] flex items-center justify-center transition-all duration-700 shadow-2xl",
+                                     "size-16 md:size-20 rounded-[1.5rem] flex items-center justify-center transition-all duration-700 shadow-2xl",
                                      backupType === type.id ? "bg-primary text-black" : "bg-white/5 text-muted-foreground group-hover/type:text-primary"
                                    )}>
-                                     <type.icon className="size-10" />
+                                     <type.icon className="size-8 md:size-10" />
                                    </div>
                                    <div className="flex-1">
-                                      <div className="text-3xl font-black text-white italic group-hover/type:text-primary transition-colors uppercase tracking-tight mb-2">{type.title}</div>
-                                      <div className="text-[12px] text-muted-foreground font-bold uppercase tracking-[0.2em] italic">{type.desc}</div>
+                                      <div className="text-2xl md:text-3xl font-black text-white italic group-hover/type:text-primary transition-colors uppercase tracking-tight mb-2">{type.title}</div>
+                                      <div className="text-[10px] md:text-[12px] text-muted-foreground font-bold uppercase tracking-[0.2em] italic">{type.desc}</div>
                                    </div>
-                                   {backupType === type.id && <ShieldCheck className="size-12 text-emerald-500 animate-in zoom-in-50 duration-700" />}
+                                   {backupType === type.id && <ShieldCheck className="size-10 md:size-12 text-emerald-500 animate-in zoom-in-50 duration-700" />}
                                  </div>
                                ))}
                             </div>
@@ -326,25 +324,25 @@ export default function NoahsArkPage() {
                       </div>
 
                       <div className="flex flex-col">
-                         <div className="flex-1 bg-black/95 rounded-[6rem] border-[12px] border-white/5 p-16 shadow-inner relative group/monitor overflow-hidden flex flex-col justify-center min-h-[550px]">
+                         <div className="flex-1 bg-black/95 rounded-[5rem] md:rounded-[6rem] border-[12px] border-white/5 p-12 md:p-16 shadow-inner relative group/monitor overflow-hidden flex flex-col justify-center min-h-[550px]">
                             <div className="absolute top-0 right-0 p-16 opacity-[0.03] group-hover/monitor:rotate-180 transition-all duration-[5s] pointer-events-none scale-150">
                                <RefreshCcw className="size-64 text-primary" />
                             </div>
                             
-                            <div className="relative z-10 space-y-12">
-                               <div className="text-center space-y-6">
-                                  <h4 className="text-3xl font-black text-primary uppercase tracking-[1em] italic gold-glow">Materializing Ark Snapshots</h4>
-                                  <div className="text-[12rem] font-black text-white italic leading-none gold-glow animate-in zoom-in-95 duration-1000">{progress}%</div>
+                            <div className="relative z-10 space-y-12 text-center">
+                               <div className="space-y-6">
+                                  <h4 className="text-2xl md:text-3xl font-black text-primary uppercase tracking-[1em] italic gold-glow">Materializing Ark Snapshots</h4>
+                                  <div className="text-[10rem] md:text-[12rem] font-black text-white italic leading-none gold-glow animate-in zoom-in-95 duration-1000">{progress}%</div>
                                </div>
 
-                               <div className="h-10 bg-white/5 rounded-full overflow-hidden border-4 border-white/10 p-1 shadow-2xl">
+                               <div className="h-8 md:h-10 bg-white/5 rounded-full overflow-hidden border-4 border-white/10 p-1 shadow-2xl">
                                   <div 
                                     className="h-full bg-primary shadow-[0_0_80px_rgba(212,175,55,1)] rounded-full transition-all duration-300 animate-pulse" 
                                     style={{ width: `${progress}%` }} 
                                   />
                                </div>
 
-                               <p className="text-3xl text-gray-300 italic font-black text-center leading-relaxed px-10 drop-shadow-3xl selection:bg-primary selection:text-black">
+                               <p className="text-2xl md:text-3xl text-gray-300 italic font-black leading-relaxed px-6 md:px-10 drop-shadow-3xl selection:bg-primary selection:text-black">
                                   "سفينة نوح v72.0 تصهر كافة مفاصل روحك المادية في كبسولة نانوية مشفرة؛ نحن نضمن خلود السيادة المطلقة."
                                 </p>
                             </div>
@@ -354,9 +352,9 @@ export default function NoahsArkPage() {
                             <Button 
                               onClick={handleRunBackup}
                               disabled={loading}
-                              className="w-full h-44 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.5em] rounded-[4rem] shadow-[0_80px_250px_rgba(212,175,55,0.7)] text-4xl italic border-[16px] border-black/30 group active:scale-95 transition-all"
+                              className="w-full h-32 md:h-44 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.2em] md:tracking-[1.5em] rounded-[3.5rem] md:rounded-[4rem] shadow-[0_80px_250px_rgba(212,175,55,0.7)] text-3xl md:text-4xl italic border-[12px] md:border-[16px] border-black/30 group active:scale-95 transition-all"
                             >
-                               {loading ? <Loader2 className="size-20 animate-spin mr-8" /> : <Download className="size-20 mr-8 group-hover:-translate-y-4 transition-transform gold-glow" />}
+                               {loading ? <Loader2 className="size-16 md:size-20 animate-spin mr-8" /> : <Download className="size-16 md:size-20 mr-8 group-hover:-translate-y-4 transition-transform gold-glow" />}
                                ENGAGE_SERIALIZATION
                             </Button>
                             
@@ -365,29 +363,29 @@ export default function NoahsArkPage() {
                               onClick={async () => {
                                   toast({ title: "Verifying Knots", description: "Auditing all 24 Knots in the genetic rebirth archive..." });
                               }}
-                              className="w-full h-28 border-8 border-primary/20 bg-primary/5 hover:bg-white/10 rounded-[3rem] text-2xl font-black uppercase tracking-[0.8em] italic transition-all duration-700 shadow-2xl"
+                              className="w-full h-24 md:h-28 border-8 border-primary/20 bg-primary/5 hover:bg-white/10 rounded-[2.5rem] md:rounded-[3rem] text-xl md:text-2xl font-black uppercase tracking-[0.6em] md:tracking-[0.8em] italic transition-all duration-700 shadow-2xl"
                             >
-                               <History className="size-10 mr-6" /> AUDIT_ARK_INTEGRITY
+                               <History className="size-8 md:size-10 mr-6" /> AUDIT_ARK_INTEGRITY
                             </Button>
                          </div>
                       </div>
                    </div>
                 </CardContent>
 
-                <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[18px] font-black uppercase tracking-[8em] italic">
+                <div className="p-10 md:p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[14px] md:text-[18px] font-black uppercase tracking-[4em] md:tracking-[8em] italic">
                    <span>ARK_ELEGANCE_v72_AL_GHAZALI_ROOT</span>
-                   <div className="flex gap-16">
-                      <Fingerprint className="size-16 text-primary animate-pulse" />
-                      <Atom className="size-16 animate-spin-slow text-primary" />
+                   <div className="flex gap-10 md:gap-16">
+                      <Fingerprint className="size-12 md:size-16 text-primary animate-pulse" />
+                      <Atom className="size-12 md:size-16 animate-spin-slow text-primary" />
                    </div>
                 </div>
               </Card>
            </div>
         </div>
 
-        <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[24px] md:text-[36px] font-black uppercase tracking-[6em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
+        <div className="mt-auto relative z-10 flex justify-center items-center gap-16 md:gap-48 opacity-45 text-[20px] md:text-[36px] font-black uppercase tracking-[4em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-24 md:pb-32">
             <span>AL-MUIZZ SUPREME MATERIAL ARK v72.0</span>
-            <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
+            <div className="size-10 md:size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
             <span>SINGULARITY_REBIRTH_FIXED_2026</span>
         </div>
       </main>

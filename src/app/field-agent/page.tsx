@@ -198,6 +198,7 @@ export default function FieldAgentPage() {
       <main className="flex-1 lg:mr-72 flex flex-col h-screen relative overflow-hidden border-l-4 border-primary/40">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.08),transparent 40%)] pointer-events-none z-0" />
         
+        {/* Header - Fixed Top */}
         <header className="p-6 border-b-4 border-primary/40 bg-black/95 backdrop-blur-3xl z-30 flex flex-col md:flex-row justify-between items-center gap-6 shrink-0 shadow-2xl">
            <div className="flex items-center gap-6">
               <div className="size-16 rounded-2xl bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_80px_rgba(212,175,55,0.5)] animate-neural">
@@ -214,7 +215,7 @@ export default function FieldAgentPage() {
                 value={customPath}
                 onChange={(e) => setCustomPath(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && loadDirectory(customPath)}
-                className="bg-transparent border-none focus-visible:ring-0 text-xl italic font-black text-white h-12"
+                className="bg-transparent border-none focus-visible:ring-0 text-xl italic font-black text-white h-12 placeholder:text-gray-900"
               />
               <Button onClick={() => loadDirectory(customPath)} className="h-12 px-10 rounded-full bg-primary hover:bg-white text-black font-black uppercase text-sm italic shadow-xl transition-all border-2 border-black/20">Jump_Sector</Button>
            </div>
@@ -240,7 +241,7 @@ export default function FieldAgentPage() {
                     <Button size="icon" variant="ghost" onClick={() => loadDirectory(currentPath)} className="size-10 rounded-xl hover:bg-primary/20 transition-all"><RefreshCcw className="size-4"/></Button>
                  </div>
               </div>
-              <div className="flex-1 overflow-y-auto scrollbar-hide p-6 space-y-3">
+              <div className="flex-1 overflow-y-auto scrollbar-hide p-6 space-y-3 text-right">
                  {files.map((file, i) => (
                     <div 
                         key={i} 
@@ -270,7 +271,7 @@ export default function FieldAgentPage() {
                            <div className="size-14 rounded-2xl bg-primary/10 flex items-center justify-center border-2 border-primary/40 shadow-xl animate-neural">
                                <Code2 className="size-8 text-primary gold-glow" />
                            </div>
-                           <div>
+                           <div className="text-right">
                                <h4 className="text-3xl font-black text-white italic uppercase gold-glow leading-none">Chamber DNA</h4>
                                <span className="text-[10px] text-primary/60 font-black uppercase mt-2 block tracking-widest italic">{selectedFileName || "Awaiting Node Selection..."}</span>
                            </div>
@@ -285,12 +286,12 @@ export default function FieldAgentPage() {
                         <Textarea 
                             value={selectedFileContent}
                             onChange={(e) => setSelectedFileContent(e.target.value)}
-                            className="h-full bg-black/99 p-10 rounded-[3rem] font-code text-xl text-emerald-400 leading-relaxed italic border-8 border-white/5 shadow-inner whitespace-pre selection:bg-primary resize-none scrollbar-hide"
+                            className="h-full bg-black/99 p-10 rounded-[3rem] font-code text-xl text-emerald-400 leading-relaxed italic border-8 border-white/5 shadow-inner whitespace-pre selection:bg-primary resize-none scrollbar-hide text-left"
                         />
                     </div>
                  </Card>
 
-                 <div className="space-y-12">
+                 <div className="space-y-12 text-right">
                     <Card className="kali-card border-primary/20 bg-black/95 rounded-[4rem] p-10 shadow-9xl flex flex-col min-h-[500px] border-4 relative overflow-hidden">
                         <div className="flex items-center justify-between mb-10 border-b-4 border-white/5 pb-8 relative z-10">
                            <div className="flex items-center gap-6">
