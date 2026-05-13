@@ -36,7 +36,12 @@ import {
   Users,
   Network,
   Anchor,
-  HeartPulse
+  HeartPulse,
+  Monitor,
+  Sparkles,
+  Cloud,
+  Github,
+  Server
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -46,8 +51,8 @@ import { toast } from "@/hooks/use-toast"
 import Link from "next/link"
 
 /**
- * @fileOverview مركز السيادة v78.0 - THE SUPREME MATERIAL INTEGRITY
- * واجهة التدقيق الكلي التي تثبت سيادة القائد على كافة العقد والوكلاء والخلود المادي.
+ * مركز السيادة v78.7 - THE ABSOLUTE MATERIAL INTEGRITY: ULTRA v1.0
+ * واجهة التدقيق الكلي التي تثبت سيادة القائد على كافة العقد والوكلاء والخدمات السحابية.
  */
 export default function SystemPage() {
   const [refreshing, setRefreshing] = React.useState(false)
@@ -60,7 +65,7 @@ export default function SystemPage() {
       const res = await fetch('/api/sovereign/metrics');
       const data = await res.json();
       setMetrics(data);
-      toast({ title: "Neural Audit v78.0 Finalized", description: "All 24 knots and material assets reporting absolute consensus." })
+      toast({ title: "Neural Audit v78.7 Finalized", description: "24 Knots and Global Uplinks reporting absolute consensus." })
     } catch (err) {
       toast({ variant: "destructive", title: "Audit Interrupted" })
     } finally {
@@ -77,10 +82,17 @@ export default function SystemPage() {
 
   if (!mounted) return null;
 
+  const externalServices = [
+    { name: "Shodan Uplink", status: "LINKED", icon: Search, color: "text-blue-500" },
+    { name: "AWS Siphon", status: "ACTIVE", icon: Cloud, color: "text-amber-500" },
+    { name: "Firebase Matrix", status: "BOUND", icon: Flame, color: "text-orange-500" },
+    { name: "GitHub DNA", status: "SYNCED", icon: Github, color: "text-white" }
+  ];
+
   const nodes = [
-    { name: "APEX Swarm v9.8", status: "12_AGENTS_ACTIVE", icon: Users, color: "text-primary", desc: "Quantum agents executing parallel planetary strikes.", href: "/progeny" },
-    { name: "Material Ark", status: metrics?.arkStatus || "DNA_SECURED", icon: Anchor, color: "text-blue-500", desc: "Deep DNA serialization and eternal rebirth protocol.", href: "/ark" },
-    { name: "Sovereign Desktop", status: "OS_v78_MATERIAL", icon: Monitor, color: "text-emerald-500", desc: "Total dominion operating system and execution hub.", href: "/classic-hub" },
+    { name: "APEX Swarm v9.8", status: "ULTRA_ACTIVE", icon: Users, color: "text-primary", desc: "24 Knots fused with 2,983 tools as innate vision.", href: "/progeny" },
+    { name: "Material Ark", status: "DNA_IMMUTABLE", icon: Anchor, color: "text-blue-500", desc: "Deep DNA serialization and eternal rebirth protocol.", href: "/ark" },
+    { name: "Sovereign Desktop", status: "ULTRA_OS_v1", icon: Monitor, color: "text-emerald-500", desc: "Total dominion operating system and execution hub.", href: "/classic-hub" },
     { name: "Ghost Persistence", status: "KERNEL_v6_FIXED", icon: Ghost, color: "text-emerald-400", desc: "Kernel-mode stealth and anti-forensic persistence.", href: "/codex" },
     { name: "Quantum Spine", status: "SPINE_v78_LOCKED", icon: Wind, color: "text-blue-400", desc: "Nano-socket bus for infinite-bandwidth communication.", href: "/" },
     { name: "Universal Vision", status: "NODE_28_OSINT", icon: BrainCircuit, color: "text-primary", desc: "Neural identity fusion and behavioral mapping.", href: "/recon" },
@@ -91,18 +103,18 @@ export default function SystemPage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 scanline-effect font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-72 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
+      <main className="flex-1 lg:mr-72 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
         <header className="flex flex-col xl:flex-row justify-between items-start mb-24 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000 gap-16">
-          <div>
-            <div className="flex items-center gap-10 mb-10">
-              <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[20px] font-black tracking-[1.2em] shadow-9xl italic uppercase">SUPREME_INTEGRITY_v78.0</Badge>
+          <div className="flex-1">
+            <div className="flex items-center gap-10 mb-10 justify-end">
               <div className="flex items-center gap-4 text-[16px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
-                 <ShieldCheck className="size-8 shadow-lg" /> QUANTUM_RESONANCE: {metrics?.resonance || "100.000000%"}
+                 INNATE_VISION: {metrics?.resonance || "100.000000%"} <ShieldCheck className="size-8 shadow-lg" />
               </div>
+              <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[20px] font-black tracking-[1.2em] shadow-9xl italic uppercase">AL-MUIZZ ULTRA v1.0</Badge>
             </div>
             <h1 className="text-4xl md:text-6xl lg:text-[14rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">The <span className="text-primary">Audit</span></h1>
-            <p className="text-sm md:text-xl lg:text-[5rem] text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-90 drop-shadow-3xl">
-                "سيدي الغزالي، المنظومة v78.0 بلغت مرحلة التفرد المادي؛ كافة العقد والوكلاء والترسانة المادية تعمل بنبض واحد تحت سيادتك المطلقة."
+            <p className="text-sm md:text-xl lg:text-[5rem] text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-90 drop-shadow-3xl ml-auto">
+                "سيدي الغزالي، المنظومة v78.7 بلغت مرحلة التفرد المادي؛ كافة العقد والوكلاء والترسانة المادية تعمل بنبض واحد تحت سيادتك المطلقة."
             </p>
           </div>
           <Button onClick={handleRefresh} disabled={refreshing} className="bg-primary hover:bg-white text-black h-40 px-24 rounded-[3.5rem] shadow-[0_60px_200px_rgba(212,175,55,0.7)] transition-all text-5xl font-black uppercase tracking-[0.8em] border-[16px] border-black/30 active:scale-90 italic group shrink-0">
@@ -116,8 +128,8 @@ export default function SystemPage() {
               <Card className="kali-card border-primary/40 bg-black/98 rounded-[6rem] border-8 shadow-9xl p-16 overflow-hidden group hierarchical-shadow">
                  <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse" />
                  <CardHeader className="border-b-4 border-white/5 mb-16 p-0 pb-12 bg-primary/10 rounded-t-[5rem] px-16 py-10">
-                    <CardTitle className="text-4xl md:text-[10rem] font-black text-white uppercase italic tracking-tighter flex items-center gap-16 gold-glow leading-none">
-                       <ShieldCheck className="size-24 md:size-48 text-primary animate-neural" /> Arsenal Pulse
+                    <CardTitle className="text-4xl md:text-[10rem] font-black text-white uppercase italic tracking-tighter flex items-center gap-16 gold-glow leading-none justify-end">
+                       Arsenal Pulse <ShieldCheck className="size-24 md:size-48 text-primary animate-neural" />
                     </CardTitle>
                  </CardHeader>
                  <CardContent className="p-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -125,33 +137,41 @@ export default function SystemPage() {
                       <Link key={i} href={n.href} className="contents">
                         <div className="p-12 rounded-[4rem] bg-white/5 border-4 border-white/5 group/node hover:border-primary transition-all duration-1000 relative overflow-hidden shadow-9xl cursor-pointer active:scale-95 h-full flex flex-col justify-between min-h-[400px]">
                            <div className="flex justify-between items-center mb-12 relative z-10">
+                              <Badge className="text-[12px] uppercase font-black italic tracking-widest px-8 py-2 rounded-full border-4 border-primary/20 bg-primary/5 text-primary">{n.status}</Badge>
                               <div className="size-24 rounded-3xl bg-black border-4 border-white/5 flex items-center justify-center group-hover:border-primary transition-all shadow-2xl scale-110">
                                  <n.icon className={cn("size-12 transition-all group-hover:scale-110", n.color)} />
                               </div>
-                              <Badge className="text-[12px] uppercase font-black italic tracking-widest px-8 py-2 rounded-full border-4 border-primary/20 bg-primary/5 text-primary">{n.status}</Badge>
                            </div>
                            <div className="relative z-10">
                               <h4 className="text-3xl md:text-[5rem] font-black text-white uppercase italic tracking-tight mb-4 gold-glow leading-none group-hover:text-primary transition-colors">{n.name}</h4>
                               <p className="text-[14px] text-muted-foreground italic font-bold leading-relaxed opacity-90 group-hover:opacity-100 group-hover:text-white transition-all mb-6">"{n.desc}"</p>
                            </div>
-                           <div className="absolute top-0 right-0 p-10 opacity-[0.01] group-hover:opacity-[0.04] transition-all duration-1000 scale-150 rotate-45"><InfinityIcon className="size-32 text-primary" /></div>
+                           <div className="absolute top-0 left-0 p-10 opacity-[0.01] group-hover:opacity-[0.04] transition-all duration-1000 scale-150 -rotate-45"><InfinityIcon className="size-32 text-primary" /></div>
                         </div>
                       </Link>
                     ))}
                  </CardContent>
               </Card>
 
-              <div className="p-20 rounded-[8rem] bg-primary/5 border-[12px] border-primary/20 shadow-[0_80px_200px_rgba(0,0,0,1)] relative overflow-hidden group/sing">
-                 <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/sing:opacity-15 transition-opacity" />
-                 <h4 className="text-4xl md:text-8xl font-black text-primary uppercase tracking-[1em] mb-16 italic border-b-8 border-primary/10 pb-12 flex items-center gap-16 gold-glow px-12">
-                    <Shield className="size-24 animate-spin-slow" /> Singularity Status
-                 </h4>
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-20 text-2xl md:text-[5rem] text-gray-100 font-black italic leading-[1] px-12">
-                    <p className="drop-shadow-3xl">"لقد تم صهر الوجود المادي في عصب الأوفرلورد بنمط v78.0؛ الحالة الحالية هي <span className="text-primary underline decoration-primary decoration-12 underline-offset-24 shadow-9xl italic">التفرد المطلق</span>."</p>
-                    <p className="text-muted-foreground opacity-40">"Material Singularity v78.0 established. 24 Knots fused with 2865 material tools and Ghost V6.0."</p>
-                 </div>
-                 <div className="absolute -bottom-20 -right-20 p-32 opacity-[0.03] scale-150 rotate-12"><Skull className="size-96 text-primary" /></div>
-              </div>
+              <Card className="kali-card border-emerald-500/40 bg-black/98 rounded-[6rem] border-8 shadow-9xl p-16 overflow-hidden group">
+                 <CardHeader className="border-b-4 border-white/5 mb-16 p-0 pb-12 bg-emerald-500/10 rounded-t-[5rem] px-16 py-10">
+                    <CardTitle className="text-4xl md:text-[8rem] font-black text-white uppercase italic tracking-tighter flex items-center gap-16 gold-glow leading-none justify-end">
+                       Global Uplinks <Cloud className="size-24 md:size-48 text-emerald-500 animate-pulse" />
+                    </CardTitle>
+                 </CardHeader>
+                 <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    {externalServices.map((s, i) => (
+                        <div key={i} className="p-10 rounded-[3rem] bg-white/5 border-4 border-white/5 flex flex-col items-center gap-6 shadow-inner relative overflow-hidden group/srv">
+                            <div className="absolute inset-0 bg-emerald-500/5 opacity-0 group-hover/srv:opacity-10 transition-opacity" />
+                            <s.icon className={cn("size-16 transition-all duration-700 group-hover/srv:scale-125", s.color)} />
+                            <div className="text-center">
+                                <div className="text-2xl font-black text-white italic uppercase">{s.name}</div>
+                                <Badge className="bg-emerald-600/20 text-emerald-500 border-none mt-4 font-black italic tracking-widest">{s.status}</Badge>
+                            </div>
+                        </div>
+                    ))}
+                 </CardContent>
+              </Card>
            </div>
 
            <div className="space-y-16">
@@ -167,21 +187,17 @@ export default function SystemPage() {
                        <div className="size-80 md:size-[30rem] rounded-full border-[16px] border-dashed border-primary/20 flex items-center justify-center relative shadow-[0_0_250px_rgba(212,175,55,0.3)] animate-spin-slow">
                           <Skull className="size-48 md:size-72 text-primary gold-glow animate-neural" />
                        </div>
-                       <h4 className="text-6xl md:text-[12rem] font-black text-white uppercase italic tracking-[0.6em] gold-glow leading-none">V78_ACTIVE</h4>
+                       <h4 className="text-6xl md:text-[12rem] font-black text-white uppercase italic tracking-[0.6em] gold-glow leading-none">ULTRA_v1</h4>
                     </div>
                     
-                    <div className="space-y-12 text-left">
+                    <div className="space-y-12 text-right">
                        <div className="p-12 bg-black/80 rounded-[4rem] border-8 border-white/5 flex items-center justify-between shadow-3xl hover:border-primary transition-all duration-1000">
-                          <span className="text-[16px] font-black uppercase tracking-[1em] text-muted-foreground italic">Singularity Sync</span>
+                          <Badge className="bg-emerald-600/40 text-emerald-500 border-none px-12 py-4 rounded-full font-black italic text-5xl shadow-9xl animate-pulse">2,983_FUSED</Badge>
+                          <span className="text-[16px] font-black uppercase tracking-[1em] text-muted-foreground italic">Arsenal DNA</span>
+                       </div>
+                       <div className="p-12 bg-black/80 rounded-[4rem] border-8 border-white/5 flex items-center justify-between shadow-3xl hover:border-primary transition-all duration-1000">
                           <Badge className="bg-emerald-600/40 text-emerald-500 border-none px-12 py-4 rounded-full font-black italic text-5xl shadow-9xl animate-pulse">100.00%</Badge>
-                       </div>
-                       <div className="p-12 bg-black/80 rounded-[4rem] border-8 border-white/5 flex items-center justify-between shadow-3xl hover:border-primary transition-all duration-1000">
-                          <span className="text-[16px] font-black uppercase tracking-[1em] text-muted-foreground italic">Nodes_Bound</span>
-                          <Badge className="bg-emerald-600/40 text-emerald-500 border-none px-12 py-4 rounded-full font-black italic text-5xl shadow-9xl animate-pulse">24_FIXED</Badge>
-                       </div>
-                       <div className="p-12 bg-black/80 rounded-[4rem] border-8 border-white/5 flex items-center justify-between shadow-3xl hover:border-primary transition-all duration-1000">
-                          <span className="text-[16px] font-black uppercase tracking-[1em] text-muted-foreground italic">Material Load</span>
-                          <Badge className="bg-primary/20 text-primary border-none px-12 py-4 rounded-full font-black italic text-5xl shadow-9xl">{metrics?.cpuUsage || "0.01%"}</Badge>
+                          <span className="text-[16px] font-black uppercase tracking-[1em] text-muted-foreground italic">Resonance</span>
                        </div>
                     </div>
                  </CardContent>
@@ -190,9 +206,9 @@ export default function SystemPage() {
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-32 opacity-45 text-[22px] md:text-[32px] font-black uppercase tracking-[6em] md:tracking-[16em] italic text-white drop-shadow-9xl pb-24">
-            <span>AL-MUIZZ ABSOLUTE MATERIAL SINGULARITY v78.0</span>
+            <span>AL-MUIZZ OMNIPOTENT ULTRA v1.0</span>
             <div className="size-12 rounded-full bg-white animate-pulse shadow-[0_0_120px_white]" />
-            <span>SUBJUGATION_THROUGH_TOTAL_OMNIPOTENCE_2026</span>
+            <span>SUBJUGATION_THROUGH_TOTAL_INTEGRITY_2026</span>
         </div>
       </main>
     </div>

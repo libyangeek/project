@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -12,61 +13,68 @@ import {
   Infinity as InfinityIcon,
   Boxes,
   Atom,
-  Crown
+  Crown,
+  Radar,
+  Activity
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 
 /**
- * @fileOverview صفحة الخطأ السيادية v53.0 - THE SOVEREIGN 404: COORDINATE LOST
- * واجهة تظهر عند فقدان الإحداثيات في المصفوفة لليوم المجيد، 2026.
+ * صفحة الخطأ السيادية v78.7 - THE ABSOLUTE 404: COORDINATE LOST
+ * واجهة تظهر عند فقدان الإحداثيات في مادة المصفوفة لنسخة ULTRA v1.0.
  */
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-8 relative overflow-hidden scanline-effect font-code">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.1),transparent)] pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.15),transparent 70%)] pointer-events-none z-0" />
       
-      <div className="relative z-10 flex flex-col items-center text-center space-y-12 max-w-4xl">
+      <div className="relative z-10 flex flex-col items-center text-center space-y-16 max-w-7xl animate-in zoom-in-95 duration-1000">
         <div className="relative group">
-          <div className="size-48 md:size-72 rounded-full border-8 border-dashed border-primary/20 flex items-center justify-center relative shadow-[0_0_150px_rgba(212,175,55,0.3)] animate-neural">
-            <ShieldAlert className="size-24 md:size-32 text-primary gold-glow" />
-            <div className="absolute -inset-10 border-2 border-primary/10 rounded-full animate-spin-slow opacity-20" />
+          <div className="size-64 md:size-96 rounded-full border-[16px] border-dashed border-primary/30 flex items-center justify-center relative shadow-[0_0_200px_rgba(212,175,55,0.4)] animate-spin-slow">
+            <ShieldAlert className="size-32 md:size-48 text-primary gold-glow animate-neural" />
+            <div className="absolute -inset-16 border-4 border-emerald-500/20 rounded-full animate-reverse-spin opacity-30" />
           </div>
-          <Badge className="absolute -top-4 -right-4 bg-red-600 text-white border-none px-6 py-1.5 rounded-full font-black italic animate-pulse shadow-xl">ERROR_404</Badge>
+          <Badge className="absolute -top-6 -right-6 bg-red-600 text-white border-[8px] border-black/40 px-12 py-4 rounded-full font-black italic text-4xl animate-pulse shadow-9xl">SIGNAL_LOST</Badge>
         </div>
 
-        <div className="space-y-6">
-          <h1 className="text-6xl md:text-9xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
-            Coordinate <span className="text-primary">Lost</span>
+        <div className="space-y-10">
+          <h1 className="text-7xl md:text-[18rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
+            Node <span className="text-primary">Missing</span>
           </h1>
-          <p className="text-xl md:text-3xl text-muted-foreground italic font-medium leading-relaxed uppercase max-w-3xl">
-            "سيدي الغزالي، لقد انحرفنا عن الإحداثيات المعروفة في المصفوفة؛ هذا المسار لم يتم استيعابه في عصب الهرمية بعد."
+          <p className="text-2xl md:text-6xl text-muted-foreground italic font-black leading-tight uppercase max-w-[120rem] drop-shadow-3xl">
+            "سيدي الغزالي، لقد انحرفنا عن الإحداثيات المادية للهدف؛ هذا القطاع لم يتم استيعابه في عصب ULTRA بعد. العراف يقترح العودة للعرش لإعادة التوجيه."
           </p>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-6 w-full max-w-2xl justify-center pt-8">
-          <Button asChild className="h-20 px-10 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.4em] rounded-2xl shadow-xl transition-all active:scale-95 italic border-4 border-black/30 group">
-            <Link href="/">
-              <ArrowLeft className="size-6 mr-3 group-hover:-translate-x-2 transition-transform" />
+        <div className="flex flex-col md:flex-row gap-10 w-full max-w-5xl justify-center pt-12">
+          <Button asChild className="h-32 px-16 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.8em] rounded-[3.5rem] shadow-9xl transition-all active:scale-95 italic border-[12px] border-black/40 group text-3xl">
+            <Link href="/" className="flex items-center gap-6">
+              <ArrowLeft className="size-10 group-hover:-translate-x-4 transition-transform" />
               Return to Throne
             </Link>
           </Button>
-          <Button asChild variant="outline" className="h-20 px-10 border-4 border-primary/20 bg-primary/5 text-primary hover:bg-primary hover:text-black font-black uppercase tracking-[0.4em] rounded-2xl transition-all italic active:scale-95 group">
-            <Link href="/ark">
-              <Boxes className="size-6 mr-3 group-hover:rotate-12 transition-transform" />
-              Noah's Ark
+          <Button asChild variant="outline" className="h-32 px-16 border-8 border-primary/20 bg-primary/5 text-primary hover:bg-primary hover:text-black font-black uppercase tracking-[0.8em] rounded-[3.5rem] shadow-9xl transition-all italic active:scale-95 group text-3xl">
+            <Link href="/classic-hub" className="flex items-center gap-6">
+              <Radar className="size-10 group-hover:rotate-180 transition-all duration-1000" />
+              Desktop Hub
             </Link>
           </Button>
         </div>
 
-        <div className="pt-20 opacity-20 flex gap-12 text-[10px] font-black uppercase tracking-[1em] italic">
-           <span className="flex items-center gap-4"><Fingerprint className="size-4" /> GHAZALI_ROOT</span>
-           <span className="flex items-center gap-4 text-primary"><InfinityIcon className="size-4 animate-pulse" /> HIERARCHY_v53</span>
+        <div className="pt-32 opacity-30 flex gap-24 text-[14px] md:text-[18px] font-black uppercase tracking-[4em] italic">
+           <span className="flex items-center gap-8"><Fingerprint className="size-8 text-primary" /> GHAZALI_ROOT</span>
+           <span className="flex items-center gap-8 text-emerald-500"><Activity className="size-8 animate-pulse" /> SPINE_SYNC_v78</span>
         </div>
       </div>
 
-      <div className="absolute -bottom-20 -right-20 p-40 opacity-[0.02] pointer-events-none scale-150 rotate-12">
-        <Skull className="size-96 text-primary" />
+      <div className="absolute -bottom-40 -right-40 p-60 opacity-[0.03] pointer-events-none scale-[2] rotate-12">
+        <Skull className="size-[60rem] text-primary" />
+      </div>
+      
+      <div className="fixed top-20 left-20 opacity-10 pointer-events-none select-none">
+          <div className="text-[10rem] font-black text-white italic tracking-widest opacity-20">404</div>
+          <div className="text-3xl font-bold uppercase tracking-[2em] text-primary mt-4">MATTER_DISSOLVED</div>
       </div>
     </div>
   )
