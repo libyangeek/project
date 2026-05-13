@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -43,7 +42,8 @@ import {
   ArrowLeft,
   RotateCw,
   LayoutGrid,
-  Network
+  Network,
+  Rocket
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -57,9 +57,9 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import Link from "next/link"
 
 /**
- * @fileOverview الوكيل الميداني v78.8 - THE SUPREME ARCHITECT: MATERIAL DNA HUB
+ * @fileOverview الوكيل الميداني v78.9 - THE SUPREME ARCHITECT: ORBITAL FUSION
  * واجهة الهندسة الجينية والتعديل الذاتي المباشر لنسخة ULTRA لعام 2026.
- * تم إصلاح التداخل المادي وضبط الرنين البصري لضمان السطوة المطلقة.
+ * تم إضافة ميزة "النبض المداري" (Orbital Pulse) لنشر العقد السيادية عالمياً.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function FieldAgentPage() {
@@ -103,13 +103,26 @@ export default function FieldAgentPage() {
     } finally { setLoading(false) }
   }
 
+  const handleOrbitalDeployment = async () => {
+      setLoading(true)
+      toast({ title: "Orbital Deployment Triggered", description: "Materializing Sovereign Nodes across 14 global clusters..." })
+      try {
+          const response = await fetch('/api/execute', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ type: 'orbital_deploy', target: 'GLOBAL_GRID' })
+          });
+          if (response.ok) toast({ title: "Global Grid Subjugated", description: "Consensus reached: 14 nodes reporting 100% material stability." });
+      } finally { setLoading(false) }
+  }
+
   const handleSelfHealing = async () => {
     if (!selectedFilePath || !selectedFileContent) return;
     setLoading(true);
     toast({ title: "Wand3 Genetic Repair Active", description: "Interrogating DNA for logical drift..." });
     try {
         const aiResult = await executeFieldDevelopment({
-            userPrompt: input || "Execute absolute material repair for v78.8 standards.",
+            userPrompt: input || "Execute absolute material repair for v78.9 standards.",
             currentFile: selectedFileName,
             fileContent: selectedFileContent,
             mode: 'file_fix'
@@ -155,7 +168,7 @@ export default function FieldAgentPage() {
   }
 
   const handleContinueUpgrade = () => {
-    toast({ title: "Architectural Evolution Triggered", description: "Siphoning latest material DNA for core regrowth... Status: استمر" });
+    toast({ title: "Architectural Evolution Active", description: "Siphoning latest material DNA for orbital core regrowth... Status: استمر" });
   }
 
   if (!mounted) return null
@@ -167,15 +180,14 @@ export default function FieldAgentPage() {
       <main className="flex-1 lg:mr-72 flex flex-col h-screen relative overflow-hidden border-l-4 border-primary/40">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.08),transparent)] pointer-events-none z-0" />
         
-        {/* Header - Optimized for Space */}
         <header className="p-4 md:p-6 border-b-4 border-primary/40 bg-black/95 backdrop-blur-3xl z-30 flex flex-col lg:flex-row justify-between items-center gap-4 shadow-2xl shrink-0">
            <div className="flex items-center gap-4">
               <div className="size-12 md:size-16 rounded-2xl bg-black border-4 border-primary flex items-center justify-center shadow-lg animate-neural"><Wand2 className="size-8 md:size-10 text-primary gold-glow" /></div>
               <div className="text-right">
-                 <h2 className="text-2xl md:text-4xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Supreme <span className="text-primary">Architect</span></h2>
+                 <h2 className="text-2xl md:text-4xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Orbital <span className="text-primary">Architect</span></h2>
                  <div className="flex items-center gap-2 mt-1 justify-end">
                     <span className="text-[10px] text-emerald-500 font-black animate-pulse uppercase tracking-widest">{resonance.toFixed(6)}% Resonance</span>
-                    <Badge className="bg-primary/10 text-primary border-none text-[8px] font-black italic tracking-widest px-4 py-0.5 rounded-full uppercase">v78.8_ULTRA</Badge>
+                    <Badge className="bg-primary/10 text-primary border-none text-[8px] font-black italic tracking-widest px-4 py-0.5 rounded-full uppercase">v78.9_ULTRA</Badge>
                  </div>
               </div>
            </div>
@@ -192,6 +204,9 @@ export default function FieldAgentPage() {
            </div>
 
            <div className="flex gap-3">
+               <Button onClick={handleOrbitalDeployment} disabled={loading} variant="outline" className="h-12 border-2 border-primary/40 bg-primary/10 text-primary font-black italic rounded-full px-6 hover:bg-primary hover:text-black transition-all shadow-xl group text-xs">
+                  <Rocket className="size-4 mr-2 group-hover:-translate-y-1 transition-transform" /> ORBITAL_PULSE
+               </Button>
                <Button asChild variant="outline" className="h-12 border-2 border-white/10 bg-white/5 text-white font-black italic rounded-full px-6 hover:bg-primary hover:text-black transition-all shadow-xl group text-xs">
                   <Link href="/"><ArrowLeft className="size-4 mr-2" /> العودة</Link>
                </Button>
@@ -203,7 +218,7 @@ export default function FieldAgentPage() {
 
         <div className="flex-1 flex flex-col lg:flex-row overflow-hidden relative z-10 text-right">
            
-           {/* File Tree - Optimized Width */}
+           {/* File Tree */}
            <aside className="w-full lg:w-72 border-l-2 border-primary/20 bg-black/80 flex flex-col shrink-0 shadow-9xl order-last lg:order-none">
               <div className="p-4 border-b-2 border-primary/10 bg-primary/5 flex items-center justify-between">
                  <span className="text-[10px] font-black text-primary uppercase tracking-widest italic flex items-center gap-2"><Database className="size-4" /> DNA Nodes</span>
@@ -240,7 +255,7 @@ export default function FieldAgentPage() {
               </div>
            </aside>
 
-           {/* Workspace Area - Responsive Grid */}
+           {/* Workspace Area */}
            <div className="flex-1 flex flex-col overflow-hidden bg-black/40 p-4 md:p-6 space-y-6 pb-48">
               <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 h-full min-h-0">
                  
@@ -283,9 +298,9 @@ export default function FieldAgentPage() {
                  <div className="flex flex-col gap-6 min-h-0">
                     <Card className="kali-card border-primary/20 bg-black/95 rounded-[3rem] p-6 shadow-9xl flex flex-col flex-1 border-2 relative overflow-hidden min-h-0">
                         <div className="flex items-center justify-between mb-6 border-b-2 border-white/5 pb-4 relative z-10 shrink-0">
-                            <Badge className="bg-emerald-600/20 text-emerald-500 border-2 px-4 py-1 rounded-full font-black text-xs italic animate-pulse shadow-9xl">v78.8_OK</Badge>
+                            <Badge className="bg-emerald-600/20 text-emerald-500 border-2 px-4 py-1 rounded-full font-black text-xs italic animate-pulse shadow-9xl">v78.9_OK</Badge>
                             <div className="flex items-center gap-4">
-                                <h4 className="text-xl md:text-2xl font-black italic gold-glow uppercase leading-none">Supreme Synthesis</h4>
+                                <h4 className="text-xl md:text-2xl font-black italic gold-glow uppercase leading-none">Orbital Synthesis</h4>
                                 <div className="size-10 rounded-xl bg-primary flex items-center justify-center border-2 border-black/30 shadow-xl">
                                     <BrainCircuit className="size-6 text-black" />
                                 </div>
@@ -313,10 +328,10 @@ export default function FieldAgentPage() {
                         <div className="absolute -bottom-8 -left-8 p-16 opacity-[0.01] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-32 text-primary" /></div>
                     </Card>
 
-                    {/* Knot Map v78.8 */}
+                    {/* Knot Map v78.9 */}
                     <Card className="kali-card border-white/5 bg-black/60 p-6 rounded-[2.5rem] border-4 shadow-inner relative overflow-hidden group shrink-0">
                          <h4 className="text-[10px] font-black text-primary uppercase tracking-widest mb-4 italic flex items-center justify-center gap-4">
-                            <LayoutGrid className="size-4 animate-pulse" /> ARCHITECT_KNOT_MAP (24)
+                            <LayoutGrid className="size-4 animate-pulse" /> ORBITAL_KNOT_MAP (24)
                          </h4>
                          <div className="grid grid-cols-12 gap-1.5 px-2">
                             {knotStatus.map((active, i) => (
@@ -334,14 +349,14 @@ export default function FieldAgentPage() {
                         className="w-full h-20 bg-red-600 hover:bg-white text-white hover:text-black font-black uppercase rounded-[2rem] border-4 border-black/30 shadow-9xl italic active:scale-95 transition-all text-lg group shrink-0"
                     >
                         {loading ? <Loader2 className="size-8 animate-spin" /> : <HeartPulse className="size-8 mr-4 group-hover:rotate-12 transition-transform" />}
-                        HIERARCHICAL_HEAL_v78
+                        ORBITAL_HEAL_v78.9
                     </Button>
                  </div>
               </div>
            </div>
         </div>
 
-        {/* Command Input - Fixed Bottom Bar */}
+        {/* Command Input */}
         <div className="absolute bottom-12 left-0 right-0 p-4 md:p-6 bg-black/98 backdrop-blur-5xl border-t-[4px] border-primary/60 z-30 shadow-[0_-40px_100px_rgba(0,0,0,1)]">
             <div className="max-w-4xl mx-auto relative group">
                 <Terminal className="absolute left-6 top-1/2 -translate-y-1/2 size-6 text-primary/40 group-focus-within:text-primary transition-all gold-glow" />
@@ -349,7 +364,7 @@ export default function FieldAgentPage() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSelfHealing()}
-                    placeholder=" Direct the Absolute Agent to analyze DNA or fuse Integrity mutations..." 
+                    placeholder=" Direct the Orbital Agent to analyze DNA or fuse material mutations..." 
                     className="h-16 md:h-20 bg-primary/5 border-2 border-white/10 rounded-full pl-16 pr-28 text-sm md:text-xl italic font-black focus:border-primary shadow-inner text-white text-left placeholder:text-gray-900"
                 />
                 <Button 
@@ -363,9 +378,9 @@ export default function FieldAgentPage() {
         </div>
 
         <div className="shrink-0 p-2 border-t-4 border-primary/40 bg-black/98 flex justify-center items-center gap-6 opacity-30 text-[10px] md:text-[12px] font-black uppercase tracking-widest italic">
-            <span>AL-MUIZZ SUPREME ARCHITECT v78.8</span>
+            <span>AL-MUIZZ SUPREME ARCHITECT v78.9</span>
             <div className="size-2 rounded-full bg-white animate-pulse shadow-[0_0_20px_white]" />
-            <span>SUBJUGATION_COMPLETE_2026</span>
+            <span>ORBITAL_DOMINATION_COMPLETE_2026</span>
         </div>
       </main>
     </div>

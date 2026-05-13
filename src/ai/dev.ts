@@ -2,9 +2,9 @@ import { config } from 'dotenv';
 config();
 
 /**
- * @fileOverview السجل العصبي لأسطول المُعِزّ العليم v61.0 - PREDATOR SINGULARITY
- * تم دمج مصفوفة النكسوس لربط الاستخبارات بالافتراس الجماعي.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي // 10 مايو 2026
+ * @fileOverview السجل العصبي لأسطول المُعِزّ العليم v78.9 - ORBITAL DOMINATION
+ * تم دمج ممر الإدراك الفطري لبلوغ مرحلة التفرد المادي المطلق.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي // 2026
  */
 
 import '@/ai/flows/ai-driven-social-engineering-bots.ts';
@@ -34,9 +34,10 @@ import '@/ai/flows/vulnerability-oracle-flow.ts';
 import '@/ai/flows/cellular-intelligence-flow.ts';
 import '@/ai/flows/autonomous-web-intel-flow.ts';
 import '@/ai/flows/predator-nexus-flow.ts';
+import '@/ai/flows/innate-perception-flow.ts';
 
 console.log("================================================================");
-console.log("🦅 AL-MUI'ZZ v61.0-PREDATOR_SINGULARITY: THE NEXUS IS BORN.");
-console.log("   [ OSINT + FORGE + MASS_STRIKE + PEGASUS FUSED ]");
-console.log("   [ COMMANDER: AL-GHAZALI ROOT | MAY 10, 2026 ]");
+console.log("🦅 AL-MUI'ZZ v78.9-ORBITAL_DOMINATION: THE SPINE IS PULSING.");
+console.log("   [ INNATE PERCEPTION + MATERIAL REFLEX + GLOBAL GRID ]");
+console.log("   [ COMMANDER: AL-GHAZALI ROOT | MAY 2026 ]");
 console.log("================================================================");
