@@ -37,7 +37,8 @@ import {
   Monitor,
   Scissors,
   BrainCircuit,
-  Bot
+  Bot,
+  Radio
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -135,6 +136,7 @@ export default function ArsenalNodePage() {
               <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.8)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
                  <Library className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
                  <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
+                 <div className="absolute -inset-16 border-2 border-primary/10 rounded-full animate-reverse-spin opacity-20" />
               </div>
               <div className="flex-1">
                  <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-6">
