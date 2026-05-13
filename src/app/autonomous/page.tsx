@@ -29,7 +29,8 @@ import {
   CheckCircle2,
   AlertCircle,
   Network,
-  History
+  History,
+  Workflow
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -203,13 +204,16 @@ export default function AutonomousPage() {
                     </div>
                  ) : (
                    <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-80">
-                      <div className="relative group/nexus">
+                      <div className="relative group/lock">
                         <Rocket className="size-64 md:size-[50rem] animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[12000ms]" />
                         <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-64 text-primary/40 animate-neural" />
                         <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>
                       <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Swarm Standby</h3>
                       <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">The Armada v3.0 is fusing 4,343 scenarios with 165 agents for the final integration pulse.</p>
+                      <div className="absolute bottom-20 left-1/2 -translate-x-1/2 opacity-20">
+                          <Workflow className="size-64 animate-spin-slow text-primary" />
+                      </div>
                    </div>
                  )}
               </CardContent>
