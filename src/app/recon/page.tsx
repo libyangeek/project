@@ -31,7 +31,8 @@ import {
   Anchor,
   Wind,
   ArrowLeft,
-  RotateCw
+  RotateCw,
+  Share2
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -105,7 +106,10 @@ export default function ReconPage() {
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
       <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.12),transparent 40%)] pointer-events-none transition-all duration-300 z-0" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
+        <div 
+          className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.12),transparent 40%)] pointer-events-none transition-all duration-300 z-0" 
+          style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} 
+        />
         
         <header className="mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000">
           <div className="flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
@@ -141,7 +145,7 @@ export default function ReconPage() {
             <Card className="kali-card border-primary/40 bg-black/98 rounded-[3rem] p-10 border-4 shadow-9xl group hierarchical-shadow text-center">
               <CardHeader className="p-0 mb-10 border-b-4 border-primary/10 pb-6 bg-primary/10 rounded-t-[2.5rem] px-4 py-4"><CardTitle className="text-2xl text-primary flex items-center justify-center gap-6 font-black uppercase italic gold-glow"><Target className="size-10 text-primary animate-pulse" /> Target Lock</CardTitle></CardHeader>
               <CardContent className="p-0 space-y-10 text-right">
-                <div className="space-y-6"><label className="text-[12px] font-black text-primary uppercase tracking-[0.8em] px-6 italic flex items-center gap-4 justify-end"><SearchCode className="size-6" /> Coordinate</label><Input placeholder="IP / @User / RAM Path..." className="w-full h-20 bg-black border-4 border-white/5 rounded-2xl text-2xl font-code text-white focus:border-primary shadow-inner px-8 italic font-black text-left" value={target} onChange={(e) => setTarget(e.target.value)} /></div>
+                <div className="space-y-6"><label className="text-[14px] font-black text-primary uppercase tracking-[0.8em] px-6 italic flex items-center gap-4 justify-end"><SearchCode className="size-6" /> Coordinate</label><Input placeholder="IP / @User / RAM Path..." className="w-full h-20 bg-black border-4 border-white/5 rounded-2xl text-2xl font-code text-white focus:border-primary shadow-inner px-8 italic font-black text-left" value={target} onChange={(e) => setTarget(e.target.value)} /></div>
                 <div className="grid grid-cols-1 gap-4">
                     {RECON_TYPES.map((t) => (
                       <Button key={t.id} onClick={() => handleStrike(t.id)} disabled={loading || !target} variant="outline" className="h-20 bg-white/5 border-4 border-primary/10 hover:border-primary hover:bg-primary/15 rounded-2xl font-black uppercase italic tracking-widest text-sm justify-between px-8 group/btn active:scale-95">
@@ -161,10 +165,31 @@ export default function ReconPage() {
                        <pre className="whitespace-pre-wrap">{typeof results === 'string' ? results : JSON.stringify(results, null, 2)}</pre>
                     </div>
                 ) : (
-                   <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-60"><div className="relative group/nexus"><Share2 className="size-64 md:size-[50rem] animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[12000ms]" /><Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-64 text-primary/40 animate-neural" /></div><h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Fusion Standby</h3></div>
+                   <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-60">
+                      <div className="relative group/nexus">
+                        <Share2 className="size-64 md:size-[50rem] animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[12000ms]" />
+                        <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-64 text-primary/40 animate-neural" />
+                        <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
+                      </div>
+                      <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Fusion Standby</h3>
+                      <p className="text-4xl md:text-8xl font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">Establishing universal Overlord link v78.8: CLAUDE_OSINT + MEMPALACE + SHODAN...</p>
+                   </div>
                 )}
               </CardContent>
+              <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[8em] italic">
+                 <span>NEURAL_VISION_v78.8_AL_GHAZALI_ROOT</span>
+                 <div className="flex gap-16">
+                    <Fingerprint className="size-20 text-primary animate-pulse" />
+                    <Atom className="size-20 animate-spin-slow text-primary" />
+                 </div>
+              </div>
           </Card>
+        </div>
+
+        <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[24px] md:text-[36px] font-black uppercase tracking-[6em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
+            <span>AL-MUIZZ NEURAL RECON v78.8</span>
+            <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
+            <span>SINGULARITY_OF_VISION_2026</span>
         </div>
       </main>
     </div>
