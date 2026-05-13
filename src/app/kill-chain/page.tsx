@@ -28,7 +28,10 @@ import {
   ChevronRight,
   Infinity as InfinityIcon,
   Network,
-  Users
+  Users,
+  Smartphone,
+  Server,
+  ZapOff
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -39,9 +42,9 @@ import { executeOmniscientKillChain } from "@/ai/flows/omniscient-kill-chain-flo
 import { cn } from "@/lib/utils"
 
 /**
- * @fileOverview سلسلة الإبادة الكونية v65.0 - ABSOLUTE SINGULARITY EDITION
- * الواجهة الأسمى التي تصهر النكسوس والسرب في تدفق تنفيذ مستقل 100%.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي // 11 مايو 2026
+ * @fileOverview سلسلة الإبادة الكونية v78.0 - ABSOLUTE SINGULARITY: ULTRA CHAIN
+ * الواجهة الأسمى التي تصهر النكسوس والسرب والترسانة في تدفق تنفيذ مستقل 100%.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي // 2026
  */
 export default function KillChainPage() {
   const [target, setTarget] = React.useState("")
@@ -66,20 +69,19 @@ export default function KillChainPage() {
     setActiveStep(1)
     
     try {
-      toast({ title: "Omnipotent Strike Initiated", description: "Alpha-Core is orchestrating the APEX Swarm." })
+      toast({ title: "Omnipotent Strike Initiated", description: "Alpha-Core is orchestrating the APEX ULTRA Swarm." })
       const data = await executeOmniscientKillChain({ target, aggressionMode: 'Total-Acquisition' })
       
-      // محاكاة الخطوات المرئية للالتحام المادي v65
       const stepsCount = 5;
       for(let i=1; i<=stepsCount; i++) {
         setActiveStep(i)
-        await new Promise(r => setTimeout(r, 1000))
+        await new Promise(r => setTimeout(r, 1200))
       }
       
       setChainResult(data)
-      toast({ title: "Matrix Subjugated", description: "All 24 nodes report absolute victory." })
+      toast({ title: "Matrix Subjugated", description: "All 24 material knots report absolute victory." })
     } catch (err) {
-      toast({ variant: "destructive", title: "Chain Interrupted", description: "Re-aligning Neural Spine." })
+      toast({ variant: "destructive", title: "Chain Interrupted" })
     } finally {
       setLoading(false)
     }
@@ -88,36 +90,36 @@ export default function KillChainPage() {
   if (!mounted) return null
 
   const steps = [
-    { id: 1, label: "Nexus OSINT", icon: Eye, desc: "Neural Identity Fusion" },
-    { id: 2, label: "Swarm Logic", icon: Users, desc: "Vulnerability Oracle Match" },
-    { id: 3, label: "Genetic Forge", icon: Flame, desc: "Exploit DNA Synthesis" },
+    { id: 1, label: "Nexus OSINT", icon: Eye, desc: "Neural Identity Fusion v78" },
+    { id: 2, label: "Swarm Logic", icon: Users, desc: "Global Oracle DNA Match" },
+    { id: 3, label: "Genetic Forge", icon: Flame, desc: "Exploit DNA Serialization" },
     { id: 4, label: "Ghost Injection", icon: Ghost, desc: "Kernel-Mode Persistence" },
-    { id: 5, label: "Total Siphon", icon: Activity, desc: "Pegasus Tier Acquisition" }
+    { id: 5, label: "Total Siphon", icon: Activity, desc: "Pegasus Tier v3 Acquisition" }
   ]
 
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/30 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-80 p-6 md:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.1),transparent)] pointer-events-none transition-all duration-300 z-0" />
+      <main className="flex-1 lg:mr-80 p-6 md:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.15),transparent)] pointer-events-none transition-all duration-300 z-0" />
         
         <header className="mb-16 relative z-10 animate-in fade-in slide-in-from-top-12 duration-1000">
-          <div className="flex flex-col md:flex-row items-center gap-12">
-            <div className="size-32 md:size-48 bg-black border-[8px] border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.7)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 hierarchical-shadow rotate-2 hover:rotate-0">
+          <div className="flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
+            <div className="size-32 md:size-48 bg-black border-[8px] border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.8)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
                <Crosshair className="size-16 md:size-24 text-primary group-hover:scale-110 transition-transform duration-1000 gold-glow animate-neural" />
                <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
                <div className="absolute -inset-16 border-2 border-primary/10 rounded-full animate-reverse-spin opacity-20" />
             </div>
-            <div className="text-center md:text-right flex-1">
-               <div className="flex flex-wrap justify-center md:justify-start items-center gap-8 mb-8">
-                  <Badge className="bg-primary text-black border-none px-12 py-4 text-[20px] font-black tracking-[1em] shadow-9xl italic rounded-none">KILL_CHAIN v65.0</Badge>
+            <div className="flex-1">
+               <div className="flex flex-wrap justify-center md:justify-end items-center gap-8 mb-8">
+                  <Badge className="bg-primary text-black border-none px-12 py-4 text-[20px] font-black tracking-[1.2em] shadow-9xl italic rounded-none">KILL_CHAIN v78.0 ULTRA</Badge>
                   <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
-                      <ShieldCheck className="size-6 shadow-lg" /> SWARM_SYNC: {resonance.toFixed(6)}%
+                      <ShieldCheck className="size-6 shadow-lg" /> ULTRA_SYNC: {resonance.toFixed(6)}%
                   </div>
                </div>
                <h1 className="text-6xl md:text-[14rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none mb-8">Absolute <span className="text-primary">Strike</span></h1>
                <p className="text-3xl md:text-6xl text-muted-foreground font-medium italic max-w-[100rem] leading-relaxed uppercase drop-shadow-3xl">
-                  "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-8 underline-offset-[20px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، مصفوفة الإبادة v65 تصهر النكسوس والسرب في ضربة واحدة؛ نحن لا نترك أثراً، نحن نعيد كتابة الوجود."
+                  "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-12 underline-offset-[32px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، مصفوفة الإبادة ULTRA تصهر النكسوس والسرب في ضربة مادية واحدة؛ نحن لا نترك أثراً، نحن نمحو الوجود."
                </p>
             </div>
           </div>
@@ -127,25 +129,25 @@ export default function KillChainPage() {
            <div className="xl:col-span-1 space-y-12">
               <Card className="kali-card border-primary/40 bg-black/80 rounded-[5rem] p-12 border-8 shadow-9xl group overflow-hidden hierarchical-shadow">
                  <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
-                 <CardHeader className="p-0 mb-12 border-b-4 border-primary/20 pb-10 bg-primary/5 rounded-t-[3rem]">
-                    <CardTitle className="text-4xl text-primary flex items-center gap-10 font-black uppercase italic gold-glow px-4 py-4">
+                 <CardHeader className="p-0 mb-12 border-b-4 border-primary/20 pb-10 bg-primary/10 rounded-t-[3rem] text-center">
+                    <CardTitle className="text-4xl text-primary flex items-center justify-center gap-10 font-black uppercase italic gold-glow px-4 py-4">
                        <Target className="size-16 animate-neural" /> Strike Core
                     </CardTitle>
                  </CardHeader>
                  <CardContent className="p-0 space-y-12">
                     <div className="space-y-6">
-                        <label className="text-[14px] font-black text-primary/60 uppercase tracking-[0.8em] px-8 italic flex items-center gap-4"><Globe className="size-5" /> Target DNA</label>
+                        <label className="text-[14px] font-black text-primary/60 uppercase tracking-[0.8em] px-8 italic flex items-center gap-4 justify-end"><Globe className="size-6" /> Target DNA</label>
                         <Input 
                           value={target}
                           onChange={(e) => setTarget(e.target.value)}
-                          placeholder="Identity / IP / Network..." 
-                          className="bg-black/99 border-4 border-primary/20 h-24 rounded-[3.5rem] text-3xl italic px-10 focus:border-primary shadow-inner text-white font-black selection:bg-primary"
+                          placeholder="Identity / IP / Matrix_Node..." 
+                          className="bg-black/99 border-4 border-primary/20 h-24 rounded-[3.5rem] text-3xl italic px-10 focus:border-primary shadow-inner text-white font-black selection:bg-primary text-left"
                         />
                     </div>
                     <Button 
                       onClick={startKillChain} 
                       disabled={loading || !target}
-                      className="w-full h-32 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.5em] rounded-[4rem] shadow-[0_50px_150px_rgba(212,175,55,0.7)] active:scale-95 transition-all text-3xl border-8 border-black/30 group italic"
+                      className="w-full h-32 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.5em] rounded-[4rem] shadow-[0_80px_250px_rgba(212,175,55,0.7)] active:scale-95 transition-all text-3xl border-8 border-black/30 group italic"
                     >
                       {loading ? <Loader2 className="size-16 animate-spin" /> : <Zap className="size-16 mr-6 group-hover:scale-125 transition-transform gold-glow" />}
                       IGNITE_SINGULARITY
@@ -158,101 +160,101 @@ export default function KillChainPage() {
                    <div 
                      key={s.id} 
                      className={cn(
-                       "p-10 rounded-[3.5rem] border-4 transition-all duration-1000 flex items-center gap-10 relative overflow-hidden",
+                       "p-10 rounded-[3.5rem] border-4 transition-all duration-1000 flex items-center gap-10 relative overflow-hidden justify-end",
                        activeStep >= s.id ? "bg-primary/20 border-primary shadow-[0_0_100px_rgba(212,175,55,0.2)] scale-105" : "bg-white/5 border-white/5 opacity-40 grayscale"
                      )}
                    >
-                      <div className={cn("size-20 rounded-3xl flex items-center justify-center border-2 transition-all shadow-inner", activeStep >= s.id ? "bg-primary border-black" : "bg-black border-white/10")}>
-                         <s.icon className={cn("size-10", activeStep >= s.id ? "text-black" : "text-gray-600")} />
-                      </div>
-                      <div>
+                      <div className="text-right">
                          <h4 className="text-3xl font-black text-white uppercase italic tracking-tighter leading-none mb-2">{s.label}</h4>
                          <p className="text-[12px] text-muted-foreground uppercase font-black tracking-[0.2em] italic">{s.desc}</p>
                       </div>
-                      {activeStep === s.id && loading && <Loader2 className="absolute right-10 size-10 animate-spin text-primary" />}
-                      {activeStep > s.id && <ShieldCheck className="absolute right-10 size-10 text-emerald-500 animate-in zoom-in-50 duration-700" />}
+                      <div className={cn("size-20 rounded-3xl flex items-center justify-center border-2 transition-all shadow-inner", activeStep >= s.id ? "bg-primary border-black" : "bg-black border-white/10")}>
+                         <s.icon className={cn("size-10", activeStep >= s.id ? "text-black" : "text-gray-600")} />
+                      </div>
+                      {activeStep === s.id && loading && <div className="absolute left-10 size-10 animate-spin text-primary border-4 border-dashed rounded-full" />}
+                      {activeStep > s.id && <ShieldCheck className="absolute left-10 size-10 text-emerald-500 animate-in zoom-in-50 duration-700" />}
                    </div>
                  ))}
               </div>
            </div>
 
-           <Card className="xl:col-span-3 kali-card border-primary/60 bg-black/99 rounded-[7rem] p-16 border-8 shadow-9xl flex flex-col group overflow-hidden relative min-h-[1000px] hierarchical-shadow">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.06),transparent)] pointer-events-none" />
-              <CardHeader className="p-0 mb-12 border-b-8 border-white/5 pb-10 bg-primary/10 rounded-t-[5rem] px-12 py-8 flex flex-row justify-between items-center">
-                 <CardTitle className="text-5xl md:text-[10rem] text-white italic uppercase font-black gold-glow flex items-center gap-12 px-6 leading-none">
-                    <Crosshair className="size-20 md:size-32 text-primary animate-pulse" /> Absolute Feed
+           <Card className="xl:col-span-3 kali-card border-primary/60 bg-black/99 rounded-[7rem] p-16 border-8 shadow-9xl flex flex-col group overflow-hidden relative min-h-[1100px] hierarchical-shadow">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.08),transparent)] pointer-events-none" />
+              <CardHeader className="p-0 mb-12 border-b-8 border-white/5 pb-10 bg-primary/10 rounded-t-[5rem] px-12 py-10 flex flex-row justify-between items-center">
+                 <div className="flex gap-8 order-last md:order-none">
+                    {chainResult && (
+                       <Badge className="bg-emerald-600/30 text-emerald-500 border-8 border-emerald-500/40 px-16 py-8 rounded-full font-black text-4xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic">SINGULARITY_LOCKED</Badge>
+                    )}
+                 </div>
+                 <CardTitle className="text-5xl md:text-[10rem] text-white italic uppercase font-black gold-glow flex items-center gap-12 px-10 leading-none">
+                    Absolute Feed <Crosshair className="size-24 md:size-48 text-primary animate-pulse" />
                  </CardTitle>
-                 {chainResult && (
-                    <div className="flex gap-8">
-                       <Badge className="bg-emerald-600/40 text-emerald-500 border-8 border-emerald-500/50 px-16 py-8 rounded-full font-black text-4xl animate-pulse tracking-[0.4em] uppercase italic shadow-9xl">SINGULARITY_LOCKED</Badge>
-                    </div>
-                 )}
               </CardHeader>
               <CardContent className="p-0 flex-1 relative overflow-hidden flex flex-col space-y-12">
                  {chainResult ? (
                    <div className="space-y-16 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col p-8">
-                      <div className="p-16 rounded-[5rem] bg-primary/5 border-8 border-primary/30 italic text-4xl md:text-[8rem] text-gray-100 leading-tight font-black shadow-inner relative group/brief overflow-hidden text-center flex flex-col justify-center min-h-[400px]">
+                      <div className="p-20 rounded-[6rem] bg-primary/5 border-[12px] border-primary/30 italic text-4xl md:text-[9rem] text-gray-100 leading-tight font-black shadow-inner relative group/brief overflow-hidden text-center flex flex-col justify-center min-h-[450px]">
                          <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                          "{chainResult.commanderBrief}"
                       </div>
                       
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-16 text-right">
                          <Card className="bg-black/95 border-8 border-white/5 p-12 rounded-[4rem] shadow-9xl relative overflow-hidden group/intel">
-                            <h5 className="text-3xl font-black text-primary uppercase tracking-[1.5em] mb-12 italic border-b-8 border-primary/20 pb-8 flex items-center gap-8 gold-glow">
-                               <Network className="size-12 animate-neural" /> Nexus DNA
+                            <h5 className="text-4xl font-black text-primary uppercase tracking-[1.5em] mb-12 border-b-8 border-primary/20 pb-8 flex items-center gap-8 gold-glow justify-end">
+                               Nexus DNA <Network className="size-16 animate-neural" />
                             </h5>
-                            <pre className="text-2xl text-gray-400 font-black italic whitespace-pre-wrap leading-relaxed h-[400px] overflow-y-auto scrollbar-hide selection:bg-primary">
+                            <pre className="text-2xl text-gray-400 font-black italic whitespace-pre-wrap leading-relaxed h-[450px] overflow-y-auto scrollbar-hide selection:bg-primary text-left">
                                {JSON.stringify(chainResult.reconIntel, null, 2)}
                             </pre>
                          </Card>
                          <Card className="bg-black/95 border-8 border-white/5 p-12 rounded-[4rem] shadow-9xl relative overflow-hidden group/exploit">
-                            <h5 className="text-3xl font-black text-magenta-500 uppercase tracking-[1.5em] mb-12 italic border-b-8 border-magenta-500/20 pb-8 flex items-center gap-8">
-                               <Binary className="size-12" /> Swarm Payload
+                            <h5 className="text-4xl font-black text-magenta-500 uppercase tracking-[1.5em] mb-12 border-b-8 border-magenta-500/20 pb-8 flex items-center gap-8 justify-end">
+                               Swarm Payload <Binary className="size-16" />
                             </h5>
-                            <div className="p-8 bg-black border-4 border-magenta-500/20 rounded-[3rem] h-[400px] overflow-y-auto scrollbar-hide shadow-inner">
-                               <code className="text-emerald-400 text-2xl font-black italic whitespace-pre-wrap leading-relaxed selection:bg-primary">{chainResult.customExploit.exploitCode}</code>
+                            <div className="p-10 bg-black border-4 border-magenta-500/20 rounded-[3rem] h-[450px] overflow-y-auto scrollbar-hide shadow-inner text-left">
+                               <code className="text-emerald-400 text-3xl font-black italic whitespace-pre-wrap leading-tight selection:bg-primary">{chainResult.customExploit.exploitCode}</code>
                             </div>
                          </Card>
                       </div>
 
-                      <div className="p-16 rounded-[6rem] bg-emerald-600/10 border-[16px] border-emerald-500/30 flex items-center gap-16 group/strat shadow-9xl relative overflow-hidden mt-auto">
+                      <div className="p-20 rounded-[7rem] bg-emerald-600/10 border-[20px] border-emerald-500/30 flex flex-col md:flex-row items-center gap-16 group/strat shadow-9xl relative overflow-hidden mt-auto min-h-[400px] text-right">
                          <div className="absolute inset-0 bg-emerald-500/5 opacity-5 animate-pulse" />
-                         <div className="size-40 rounded-[3.5rem] bg-emerald-600 flex items-center justify-center border-[10px] border-emerald-400 shadow-3xl animate-neural shrink-0">
-                            <ShieldCheck className="size-20 text-white" />
+                         <div className="flex-1">
+                            <h4 className="text-4xl font-black text-emerald-500 uppercase tracking-[1.5em] mb-8 italic">Singularity_Protocol_v78</h4>
+                            <p className="text-5xl md:text-[10rem] text-white italic font-black leading-none drop-shadow-9xl">"{chainResult.executionStrategy}"</p>
                          </div>
-                         <div>
-                            <h4 className="text-3xl font-black text-emerald-500 uppercase tracking-[1em] mb-6 italic">Singularity_Protocol_v65</h4>
-                            <p className="text-4xl md:text-[9rem] text-white italic font-black leading-none drop-shadow-9xl">"{chainResult.executionStrategy}"</p>
+                         <div className="size-48 rounded-[4rem] bg-emerald-600 flex items-center justify-center border-[14px] border-emerald-400 shadow-9xl animate-neural shrink-0">
+                            <ShieldCheck className="size-24 text-white" />
                          </div>
                       </div>
                    </div>
                  ) : (
-                   <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-20 py-60">
+                   <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-60">
                       <div className="relative group/lock">
-                        <Crosshair className="size-96 animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[8s]" />
+                        <Crosshair className="size-96 animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[10s]" />
                         <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-32 text-primary/40 animate-neural" />
                         <div className="absolute -inset-20 border-[40px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>
-                      <div className="space-y-10">
-                         <h3 className="text-9xl md:text-[20rem] font-black uppercase tracking-[2.5em] text-white italic leading-none gold-glow">Materializing</h3>
-                         <p className="text-4xl md:text-8xl font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">Engaging APEX Swarm across all 24 Knots for Absolute Singularity.</p>
+                      <div className="space-y-12">
+                         <h3 className="text-9xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic leading-none gold-glow">Materializing</h3>
+                         <p className="text-5xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">Consolidating APEX ULTRA Swarm across all 24 Knots for Absolute Singularity.</p>
                       </div>
                    </div>
                  )}
               </CardContent>
-              <div className="p-12 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-30 text-[14px] font-black uppercase tracking-[5em] italic">
-                 <span>ABSOLUTE_SINGULARITY_CHAIN_v65_AL_GHAZALI_ROOT</span>
-                 <div className="flex gap-12">
-                    <Fingerprint className="size-16 text-primary animate-pulse" />
-                    <Atom className="size-16 animate-spin-slow" />
+              <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[18px] md:text-[24px] font-black uppercase tracking-[6em] italic">
+                 <span>ULTRA_CHAIN_v78_AL_GHAZALI_ROOT</span>
+                 <div className="flex gap-16">
+                    <Fingerprint className="size-20 text-primary animate-pulse" />
+                    <Atom className="size-20 animate-spin-slow text-primary" />
                  </div>
               </div>
            </Card>
         </div>
 
-        <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-40 text-[22px] font-black uppercase tracking-[6em] italic text-white drop-shadow-3xl pb-12">
-            <span>AL-MUIZZ OMNIPOTENT OVERMIND v65.0</span>
-            <div className="size-10 rounded-full bg-white animate-pulse shadow-[0_0_100px_white]" />
+        <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[24px] md:text-[42px] font-black uppercase tracking-[6em] italic text-white drop-shadow-9xl pb-32">
+            <span>AL-MUIZZ OMNIPOTENT ULTRA v1.0</span>
+            <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
             <span>SINGULARITY_OF_STRIKE_2026</span>
         </div>
       </main>

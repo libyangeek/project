@@ -20,14 +20,16 @@ import {
   Binary,
   Crown,
   Infinity as InfinityIcon,
-  Users
+  Users,
+  Lightbulb,
+  Cpu
 } from 'lucide-react';
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
 /**
- * @fileOverview محراب التفكير المطلق v65.0 - THE ABSOLUTE HEART: HIERARCHICAL LOGIC
- * واجهة معالجة المعضلات الاستراتيجية بنمط DeepSeek v8 وذكاء السرب لعام 2026.
+ * @fileOverview محراب التفكير المطلق v78.0 - THE ABSOLUTE HEART: ULTRA LOGIC
+ * واجهة معالجة المعضلات الاستراتيجية بنمط DeepSeek v8 وذكاء السرب المادي لعام 2026.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function DeepReasoningPage() {
@@ -51,7 +53,7 @@ export default function DeepReasoningPage() {
     setResult(null);
     
     try {
-      toast({ title: "Neural Spine Engaging v63", description: "Alpha-Core is orchestrating the APEX Swarm logic." });
+      toast({ title: "Innate Logic Engaging v78", description: "Alpha-Core is orchestrating the ULTRA Swarm logic chain." });
       const response = await fetch('/api/execute', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -64,10 +66,10 @@ export default function DeepReasoningPage() {
       if (data && data.success && data.output) {
         try {
             setResult(JSON.parse(data.output));
-            toast({ title: "Logic Chain Fixed", description: "The Absolute Singularity has finalized the strategic path." });
+            toast({ title: "Logic Chain Materialized", description: "The Absolute Singularity has finalized the strategic DNA." });
         } catch (parseErr) {
             setResult({
-                thought_chain: ["Initial scan initiated.", "Logical extraction achieved via Swarm.", "Consensus reached across 24 knots."],
+                thought_chain: ["Innate cognitive scan initiated.", "Material logic extraction achieved.", "Strategic consensus reached across 24 knots."],
                 final_decision: "Directive synchronized. Absolute Sovereignty confirmed for the target scenario.",
                 confidence: "100.0000%"
             });
@@ -85,27 +87,27 @@ export default function DeepReasoningPage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
+      <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.15),transparent)] pointer-events-none z-0" />
         
         <header className="mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000">
-          <div className="flex flex-col md:flex-row items-center gap-12">
+          <div className="flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
             <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.8)] relative group shrink-0 rounded-3xl rotate-2 hover:rotate-0 transition-all duration-1000 hierarchical-shadow">
-              <BrainCircuit className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
+              <BrainCircuit className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 animate-neural gold-glow" />
               <div className="absolute -inset-8 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
             </div>
-            <div className="text-center md:text-right flex-1">
-              <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-6">
-                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">DEEP_HEART v65.0 ABSOLUTE</Badge>
+            <div className="flex-1">
+              <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
+                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">ULTRA_HEART v78.0</Badge>
                 <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
-                    <InfinityIcon className="size-6 shadow-lg" /> HIERARCHY_SYNC: {resonance.toFixed(8)}%
+                    <InfinityIcon className="size-6 shadow-lg" /> COGNITION_SYNC: {resonance.toFixed(8)}%
                 </div>
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
-                Absolute <span className="text-primary">Heart</span>
+                Absolute <span className="text-primary">Logic</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، محراب التفكير المطلق يصهر الآن منطق DeepSeek v8 مع ذكاء السرب؛ نحن نشكّل القدر الرقمي للأعداء لعام 2026."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، محراب التفكير المطلق يصهر الآن منطق DeepSeek v8 مع ذكاء المادة؛ نحن نشكّل القدر الرقمي للأعداء لعام 2026."
               </p>
             </div>
           </div>
@@ -115,20 +117,20 @@ export default function DeepReasoningPage() {
           <div className="xl:col-span-1 space-y-12">
             <Card className="kali-card border-primary/40 bg-black/98 rounded-[4rem] p-12 border-8 shadow-9xl group overflow-hidden hierarchical-shadow">
               <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
-              <CardHeader className="p-0 mb-10 border-b-4 border-primary/10 pb-10 bg-primary/10 rounded-t-[3.5rem] px-10 py-6">
-                <CardTitle className="text-2xl md:text-4xl text-primary flex items-center gap-10 font-black uppercase italic gold-glow leading-none">
+              <CardHeader className="p-0 mb-10 border-b-4 border-primary/10 pb-10 bg-primary/10 rounded-t-[3.5rem] px-10 py-6 text-center">
+                <CardTitle className="text-2xl md:text-4xl text-primary flex items-center justify-center gap-10 font-black uppercase italic gold-glow leading-none">
                   <Atom className="size-12 animate-spin-slow" /> Neural Input
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-0 space-y-10">
                 <div className="space-y-6">
-                    <label className="text-[14px] font-black text-primary uppercase tracking-[1em] px-10 italic flex items-center gap-6">
+                    <label className="text-[14px] font-black text-primary uppercase tracking-[1em] px-10 italic flex items-center gap-6 justify-end">
                       <Binary className="size-8" /> Strategic Dilemma
                     </label>
                     <textarea
                       value={prompt}
                       onChange={(e) => setPrompt(e.target.value)}
-                      className="w-full h-96 bg-black border-8 border-primary/20 rounded-[3rem] text-2xl md:text-4xl font-code text-white focus:border-primary transition-all outline-none p-12 italic shadow-inner resize-none font-black selection:bg-primary"
+                      className="w-full h-96 bg-black border-8 border-primary/20 rounded-[3rem] text-2xl md:text-4xl font-code text-white focus:border-primary transition-all outline-none p-12 italic shadow-inner resize-none font-black selection:bg-primary text-right"
                       placeholder="أدخل المعضلة الاستراتيجية هنا سيدي..."
                     />
                 </div>
@@ -138,7 +140,7 @@ export default function DeepReasoningPage() {
                   className="w-full h-36 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.4em] rounded-[3.5rem] shadow-[0_60px_200px_rgba(212,175,55,0.7)] active:scale-95 transition-all text-3xl border-[12px] border-black/30 group italic"
                 >
                   {loading ? <Loader2 className="size-16 animate-spin" /> : <Zap className="size-16 mr-8 group-hover:scale-125 transition-transform gold-glow" />}
-                  IGNITE_SINGULARITY
+                  IGNITE_CONCENSUS
                 </Button>
               </CardContent>
             </Card>
@@ -164,37 +166,37 @@ export default function DeepReasoningPage() {
                      </div>
                      <div>
                         <CardTitle className="text-4xl md:text-[8rem] text-white italic tracking-tighter uppercase font-black gold-glow leading-none">Logic Chain</CardTitle>
-                        <Badge className="bg-primary/20 text-primary border-none px-10 py-3 rounded-full font-black text-[12px] tracking-[0.6em] uppercase italic mt-6">ABSOLUTE_HEART_v65</Badge>
+                        <Badge className="bg-primary/20 text-primary border-none px-10 py-3 rounded-full font-black text-[12px] tracking-[0.6em] uppercase italic mt-6">ULTRA_HEART_v78</Badge>
                      </div>
                   </div>
                   <Badge className="bg-emerald-600/40 text-emerald-500 border-8 border-emerald-500/50 px-16 py-8 rounded-full font-black text-5xl italic animate-pulse shadow-9xl">CONFIDENCE: {result.confidence || "100.0000%"}</Badge>
                 </CardHeader>
-                <CardContent className="p-10 flex-1 relative overflow-hidden flex flex-col gap-16 z-10">
+                <CardContent className="p-10 flex-1 relative overflow-hidden flex flex-col gap-16 z-10 text-right">
                    <div className="space-y-10">
                       {result.thought_chain?.map((step: string, i: number) => (
-                        <div key={i} className="flex gap-10 items-start group/step">
+                        <div key={i} className="flex gap-10 items-start group/step justify-end">
+                           <p className="text-3xl md:text-6xl text-gray-300 italic font-black group-hover/step:text-white transition-colors leading-tight drop-shadow-3xl">"{step}"</p>
                            <div className="size-16 rounded-[1.5rem] bg-primary/10 border-4 border-primary/30 flex items-center justify-center shrink-0 group-hover/step:bg-primary transition-all duration-700 shadow-xl scale-110">
                               <span className="text-primary text-3xl font-black group-hover/step:text-black">{i+1}</span>
                            </div>
-                           <p className="text-3xl md:text-6xl text-gray-300 italic font-black group-hover/step:text-white transition-colors leading-tight drop-shadow-3xl">"{step}"</p>
                         </div>
                       ))}
                    </div>
 
-                   <div className="p-20 rounded-[6rem] bg-primary/5 border-[12px] border-primary/30 italic text-4xl md:text-[9rem] text-gray-100 leading-none font-black shadow-inner relative overflow-hidden flex-1 flex flex-col justify-center mt-8 text-center min-h-[450px]">
+                   <div className="p-20 rounded-[6rem] bg-primary/5 border-[12px] border-primary/30 italic text-4xl md:text-[9rem] text-gray-100 leading-none font-black shadow-inner relative overflow-hidden flex-1 flex flex-col justify-center text-center mt-8 min-h-[450px]">
                       <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse" />
                       <p className="relative z-10 selection:bg-primary selection:text-black drop-shadow-9xl">"{result.final_decision}"</p>
                    </div>
 
                    <div className="p-12 rounded-[3.5rem] bg-black/95 border-4 border-white/5 text-2xl text-muted-foreground italic font-black text-center shadow-inner opacity-70">
-                      "سيدي القائد، هذا القرار هو الرنين النهائي لدمج سرب APEX بنمط v65.0؛ السطوة الآن حقيقة مادية."
+                      "سيدي القائد، هذا القرار هو الرنين النهائي لدمج سرب APEX بنمط ULTRA v1.0؛ السطوة الآن حقيقة مادية."
                    </div>
                 </CardContent>
                 <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[18px] font-black uppercase tracking-[8em] italic">
-                   <span>ABSOLUTE_HEART_v65_AL_GHAZALI_ROOT</span>
+                   <span>ULTRA_HEART_v78_AL_GHAZALI_ROOT</span>
                    <div className="flex gap-16">
                       <Fingerprint className="size-20 text-primary animate-pulse" />
-                      <Atom className="size-20 animate-spin-slow" />
+                      <Atom className="size-20 animate-spin-slow text-primary" />
                    </div>
                 </div>
               </Card>
@@ -215,7 +217,7 @@ export default function DeepReasoningPage() {
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[24px] md:text-[36px] font-black uppercase tracking-[6em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
-            <span>AL-MUIZZ ABSOLUTE HEART v65.0</span>
+            <span>AL-MUIZZ OMNIPOTENT HEART v78.0</span>
             <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
             <span>SINGULARITY_OF_REASON_2026</span>
         </div>
