@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -50,7 +51,7 @@ import Link from "next/link"
 
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
-  { name: "سطح مكتب السيادة", icon: Monitor, href: "/classic-hub", knot: 77 },
+  { name: "سطح مكتب السطوة", icon: Monitor, href: "/classic-hub", knot: 78 },
   { name: "الترسانة العظمى", icon: Library, href: "/arsenal", knot: 22 },
   { name: "سلسلة الإبادة", icon: Crosshair, href: "/kill-chain", knot: 2 },
   { name: "إمبراطورية السرب", icon: Network, href: "/sessions", knot: 4 },
@@ -72,20 +73,18 @@ export function SidebarNav() {
   React.useEffect(() => {
     const interval = setInterval(() => {
       setResonance(prev => Math.max(99.9999999, Math.min(100, prev + (Math.random() * 0.000001 - 0.0000005))));
-    }, 3000)
+    }, 5000)
     return () => clearInterval(interval)
   }, [])
 
   return (
     <>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="lg:hidden fixed top-6 right-6 z-[500] bg-black/95 border-[2px] border-primary/80 text-primary hover:bg-primary/20 size-12 rounded-xl shadow-2xl"
+      <button
+        className="lg:hidden fixed top-6 right-6 z-[500] bg-black/95 border-[2px] border-primary/80 text-primary p-3 rounded-xl shadow-2xl active:scale-90 transition-all"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {isOpen ? <XIcon className="size-6" /> : <Menu className="size-6" />}
-      </Button>
+        {isOpen ? <X className="size-6" /> : <Menu className="size-6" />}
+      </button>
 
       <div className={cn(
         "flex flex-col h-full bg-black border-l-[4px] border-primary/60 w-64 lg:w-72 fixed right-0 top-0 z-[400] overflow-hidden shadow-2xl transition-transform duration-500 ease-in-out font-code backdrop-blur-xl",
@@ -99,7 +98,7 @@ export function SidebarNav() {
             <h1 className="text-xl font-headline font-bold text-white tracking-[0.4em] uppercase italic leading-none gold-glow">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-lg">v77.0 HIVE OS</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-lg">v78.0 OMNIPOTENT</Badge>
           </div>
         </div>
         
@@ -130,7 +129,7 @@ export function SidebarNav() {
         <div className="p-6 border-t-2 border-primary/20 bg-black/99 relative z-10">
           <div className="p-4 border-2 border-primary/40 bg-primary/5 mb-4 relative overflow-hidden group rounded-2xl shadow-xl border-dashed">
             <div className="flex justify-between items-center mb-2">
-               <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] italic gold-glow">OS Resonance</span>
+               <span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] italic gold-glow">Material Resonance</span>
                <div className="size-2 rounded-full bg-emerald-500 animate-ping shadow-[0_0_20px_emerald]" />
             </div>
             <div className="text-2xl font-black text-white italic gold-glow">{resonance.toFixed(6)}%</div>
@@ -141,17 +140,11 @@ export function SidebarNav() {
           >
             <Link href="/classic-hub">
               <Power className="size-4 mr-2 group-hover:rotate-180 transition-all duration-700" />
-              أطلق مصفوفة السطوة v77
+              أطلق سطح مكتب السيادة v78
             </Link>
           </Button>
         </div>
       </div>
     </>
   )
-}
-
-function XIcon({className}: {className?: string}) {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-    )
 }
