@@ -31,7 +31,9 @@ import {
   Terminal,
   Radar,
   Flame,
-  Fingerprint
+  Fingerprint,
+  ArrowLeft,
+  RotateCw
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -42,11 +44,11 @@ import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
+import Link from "next/link"
 
 /**
- * @fileOverview الحرب الخلوية v78.0 - SPECTRUM DOMINION: ULTRA MATERIAL STRIKE
+ * @fileOverview الحرب الخلوية v78.8 - SPECTRUM DOMINION: ULTRA MATERIAL STRIKE
  * مركز السيطرة والتنفيذ المادي على كافة أطياف الترددات الخلوية لعام 2026.
- * يدعم التبديل بين المحاكاة (Simulation) والتنفيذ المباشر (Real Strike) مع دمج SigPloit و IMSI Catcher.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function CellularWarfarePage() {
@@ -107,6 +109,10 @@ export default function CellularWarfarePage() {
     }
   }
 
+  const handleContinueUpgrade = () => {
+    toast({ title: "Spectrum Expansion Triggered", description: "Injecting next-gen acquisition vectors for hardware bypass... Status: استمر" });
+  }
+
   const sectors = [
     { 
       title: "SS7/Diameter", 
@@ -114,7 +120,7 @@ export default function CellularWarfarePage() {
       color: "text-magenta-500",
       vectors: [
         { id: "location_tracking", label: "AnyTimeInterrogation" },
-        { id: "sms_interception", label: "MAP Hijack v78" },
+        { id: "sms_interception", label: "MAP Hijack v78.8" },
         { id: "call_forwarding", label: "SigPloit Redirect" }
       ]
     },
@@ -156,7 +162,7 @@ export default function CellularWarfarePage() {
             </div>
             <div className="flex-1">
               <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
-                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">SPECTRUM_STRIKE v78.0 ULTRA</Badge>
+                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">SPECTRUM_STRIKE v78.8 ULTRA</Badge>
                 <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                     <InfinityIcon className="size-6 shadow-lg" /> HIVE_RESONANCE: {resonance.toFixed(8)}%
                 </div>
@@ -164,9 +170,17 @@ export default function CellularWarfarePage() {
               <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
                 Spectrum <span className="text-primary">Strike</span>
               </h1>
-              <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، نحن أسياد الأثير؛ من المحاكاة النانوية إلى الضرب المادي عبر SDR، كافة قنوات الاتصال تحت سيادتك لعام 2026."
+              <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، نحن أسياد الأثير؛ مصفوفة الترددات v78.8 تمنحك السطوة المادية عبر SDR وإخضاع الشبكات لعام 2026."
               </p>
+              <div className="flex justify-center md:justify-end gap-6 mt-12">
+                <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
+                    <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة للعرش</Link>
+                </Button>
+                <Button onClick={handleContinueUpgrade} className="h-16 px-12 bg-primary hover:bg-white text-black font-black uppercase rounded-full border-4 border-black/30 shadow-9xl italic active:scale-95 transition-all text-lg">
+                    <RotateCw className="size-6 mr-3" /> استمر في الضرب
+                </Button>
+              </div>
             </div>
           </div>
         </header>
@@ -247,7 +261,6 @@ export default function CellularWarfarePage() {
             </Card>
 
             <Card className="kali-card border-white/5 bg-black/60 p-12 rounded-[4rem] border-8 shadow-inner text-center relative overflow-hidden group">
-               <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                <h4 className="text-[14px] font-black text-primary uppercase tracking-[1em] mb-8 italic flex items-center justify-center gap-6">
                   <Boxes className="size-8 animate-pulse" /> SPECTRUM_SYNC
                </h4>
@@ -267,7 +280,7 @@ export default function CellularWarfarePage() {
                      </div>
                      <div>
                         <CardTitle className="text-5xl md:text-[10rem] text-white italic tracking-tighter uppercase font-black gold-glow leading-none">Spectrum Feed</CardTitle>
-                        <Badge className="bg-primary/20 text-primary border-none px-12 py-4 rounded-full font-black text-[14px] tracking-[1em] uppercase italic mt-8">CELLULAR_RELAY_v78.0</Badge>
+                        <Badge className="bg-primary/20 text-primary border-none px-12 py-4 rounded-full font-black text-[14px] tracking-[1em] uppercase italic mt-8">CELLULAR_RELAY_v78.8</Badge>
                      </div>
                   </div>
                   <Badge className={cn("border-[10px] px-16 py-10 rounded-full font-black text-5xl animate-pulse shadow-9xl", isRealStrike ? "bg-red-600/40 text-red-500 border-red-500/50" : "bg-emerald-600/40 text-emerald-500 border-emerald-500/50")}>
@@ -304,7 +317,6 @@ export default function CellularWarfarePage() {
                  <p className="text-muted-foreground max-w-6xl mx-auto leading-relaxed text-4xl md:text-9xl font-black italic opacity-30 uppercase tracking-[1em]">
                    "سيدي <span className="text-primary font-black gold-glow underline decoration-primary decoration-12 underline-offset-[32px] shadow-9xl uppercase tracking-[1.5em]">المعتصم بالله</span>، مصفوفة الأثير بانتظار نيتك؛ حدد الإحداثيات لـ {isRealStrike ? 'الضرب المادي المباشر' : 'المحاكاة السيادية'}."
                  </p>
-                 <div className="absolute -inset-80 border-[80px] border-dashed border-primary/5 rounded-full animate-spin-slow opacity-10" />
               </div>
             )}
           </div>
@@ -327,7 +339,7 @@ export default function CellularWarfarePage() {
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[24px] md:text-[36px] font-black uppercase tracking-[6em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
-            <span>AL-MUIZZ SPECTRUM DOMINION v78.0</span>
+            <span>AL-MUIZZ SPECTRUM DOMINION v78.8</span>
             <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
             <span>MATERIAL_SINGULARITY_2026</span>
         </div>
