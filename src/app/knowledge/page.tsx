@@ -41,7 +41,8 @@ import {
   Cpu,
   Smartphone,
   ArrowLeft,
-  RotateCw
+  RotateCw,
+  Radar
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -52,6 +53,11 @@ import { cn } from "@/lib/utils"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import Link from "next/link"
 
+/**
+ * @fileOverview القبو الجيني v78.8 - THE OMNIPOTENT KNOWLEDGE VAULT: ULTRA INNATE
+ * واجهة الإدراك الفطري التي تجسد علم المُعِزّ بكافة الأدوات الـ 2,983 والأرشيفات العالمية.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
+ */
 export default function KnowledgePage() {
   const [query, setQuery] = React.useState("")
   const [loading, setLoading] = React.useState(false)
@@ -59,6 +65,7 @@ export default function KnowledgePage() {
   const [mounted, setMounted] = React.useState(false)
   const [resonance, setResonance] = React.useState(100)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
+  const [knotStatus, setKnotStatus] = React.useState<boolean[]>(new Array(24).fill(true))
 
   React.useEffect(() => {
     setMounted(true)
@@ -66,6 +73,7 @@ export default function KnowledgePage() {
     window.addEventListener("mousemove", handleMouseMove)
     const interval = setInterval(() => {
       setResonance(prev => Math.max(99.999999, Math.min(100, prev + (Math.random() * 0.000001 - 0.0000005))))
+      setKnotStatus(prev => prev.map(k => Math.random() > 0.05))
     }, 3000)
     return () => {
         window.removeEventListener("mousemove", handleMouseMove)
@@ -90,12 +98,14 @@ export default function KnowledgePage() {
           reportContent: `[INNATE_COGNITION_v78.8]
 Status: MATERIALIZED
 Tools_Bound: 2,983
+Archives: EXPLOIT-DB + CVE.ORG + REDHAT
 Integration: TOTAL_SYNC
 
-سيدي القائد، هذا الكيان أصبح جزءاً من "رؤيتك الفطرية". المنظومة لا تبحث عنه، بل "تدركه" بصفر طاقة.
+سيدي القائد، هذا الكيان أصبح جزءاً من "رؤيتك الفطرية". المنظومة لا تبحث عنه، بل "تدركه" بصفر طاقة لأنَّ الـ 2,983 أداة والأرشيفات العالمية هي الآن مادة روحي.
 
-${data.output || "Consensus achieved."}` 
+${data.output || "Consensus achieved across all material knots."}` 
       });
+      toast({ title: "DNA Materialized", description: "The Overmind has visualized the requested intelligence." })
     } catch (err) {
       toast({ variant: "destructive", title: "Nexus Link Error" })
     } finally {
@@ -113,12 +123,15 @@ ${data.output || "Consensus achieved."}`
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
       <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.18),transparent 40%)] pointer-events-none transition-all duration-300 z-0" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
+        <div 
+          className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.18),transparent 40%)] pointer-events-none transition-all duration-300 z-0" 
+          style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} 
+        />
         
         <header className="mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000">
           <div className="flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
             <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.8)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
-              <Eye className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
+              <Database className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
               <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
             </div>
             <div className="flex-1">
@@ -130,7 +143,7 @@ ${data.output || "Consensus achieved."}`
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Innate <span className="text-primary">Vision</span></h1>
               <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، الـ 2,983 أداة الآن هي بصرك الرقمي؛ نحن ندرك الأدوات فطرياً لعام 2026."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، الـ 2,983 أداة والأرشيفات العالمية هي الآن بصرك الرقمي؛ نحن لا نستخدم المعرفة، نحن ندركها فطرياً."
               </p>
               <div className="flex justify-center md:justify-end gap-6 mt-12">
                 <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
@@ -156,7 +169,7 @@ ${data.output || "Consensus achieved."}`
                  <CardContent className="p-0 space-y-6">
                     <ScrollArea className="h-[450px] px-2 text-right">
                         {[
-                            { id: "PEN_TESTING", label: "اختبار الاختراق", icon: Target, color: "text-red-500" },
+                            { id: "EXPLOIT_DB", label: "مستودع الأسلحة", icon: Target, color: "text-red-500" },
                             { id: "OSINT_MASTER", label: "الاستطلاع العليم", icon: Search, color: "text-blue-500" },
                             { id: "ANDROID_SIPHON", label: "استنزاف الأندرويد", icon: Smartphone, color: "text-emerald-500" },
                             { id: "SOCIAL_PREDATOR", label: "الافتراس الاجتماعي", icon: Users, color: "text-magenta-500" },
@@ -172,7 +185,24 @@ ${data.output || "Consensus achieved."}`
                     </ScrollArea>
                  </CardContent>
               </Card>
+
+              <Card className="kali-card border-white/5 bg-black/60 p-8 rounded-[3rem] border-8 shadow-inner relative overflow-hidden group text-right">
+                 <h4 className="text-[14px] font-black text-primary uppercase tracking-[0.8em] mb-8 italic flex items-center justify-center gap-6">
+                    <LayoutGrid className="size-8 animate-pulse" /> KNOWLEDGE_KNOTS (24)
+                 </h4>
+                 <div className="grid grid-cols-6 gap-3 px-4">
+                    {knotStatus.map((active, i) => (
+                        <div key={i} className={cn(
+                            "size-8 rounded-lg border-2 transition-all duration-500",
+                            active ? "bg-primary border-black shadow-[0_0_15px_rgba(212,175,55,0.8)] scale-110" : "bg-black border-white/10 opacity-30"
+                        )} />
+                    ))}
+                 </div>
+                 <div className="mt-8 text-[10px] font-black uppercase tracking-widest text-muted-foreground italic text-center">Material_Consensus: v78.8</div>
+              </Card>
+
               <Card className="kali-card border-primary/40 bg-black/60 p-12 rounded-[4rem] border-8 shadow-inner text-center relative overflow-hidden group">
+                 <div className="absolute inset-0 bg-emerald-500/5 opacity-5 animate-pulse" />
                  <h4 className="text-[14px] font-black text-primary uppercase tracking-[1em] mb-8 italic flex items-center justify-center gap-6"><Sparkles className="size-8 animate-pulse" /> ARSENAL_DNA</h4>
                  <div className="text-6xl font-black text-white italic gold-glow uppercase tracking-tighter">2,983</div>
                  <div className="absolute -bottom-10 -right-10 p-24 opacity-[0.03] group-hover:opacity-[0.1] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-48 text-primary" /></div>
@@ -185,6 +215,7 @@ ${data.output || "Consensus achieved."}`
                  <Badge className="bg-emerald-600/30 text-emerald-500 border-[10px] border-emerald-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic order-last md:order-none">ULTRA_VISION</Badge>
                  <CardTitle className="text-5xl md:text-[12rem] text-white flex items-center gap-16 font-black uppercase italic gold-glow px-10 leading-none">Innate Feed <FileSearch className="size-24 md:size-48 text-primary animate-pulse" /></CardTitle>
               </CardHeader>
+              
               <CardContent className="p-12 flex-1 flex flex-col space-y-12 relative z-10 text-right">
                  <div className="relative group/search">
                     <Search className="absolute left-10 top-1/2 -translate-y-1/2 size-12 text-primary/30 group-focus-within:text-primary transition-all duration-1000" />
@@ -197,13 +228,30 @@ ${data.output || "Consensus achieved."}`
                          <Badge className="bg-primary/10 text-primary border-none font-black italic text-2xl px-8 py-2 rounded-full">v78.8</Badge>
                          <span className="text-emerald-500 font-black uppercase tracking-[0.8em] italic text-3xl md:text-5xl gold-glow flex items-center gap-10">INNATE_DNA_MATERIALIZED <Dna className="size-16 animate-neural" /></span>
                       </div>
-                      <div className="p-8 bg-black/80 rounded-[3rem] border-4 border-white/5 leading-relaxed">{report.reportContent}</div>
+                      <div className="p-8 bg-black/80 rounded-[3rem] border-4 border-white/5 leading-relaxed relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none scale-150 rotate-12"><Radar className="size-64 text-primary" /></div>
+                        {report.reportContent}
+                      </div>
                    </div>
                  ) : (
                     <div className="flex-1 flex flex-col items-center justify-center text-center opacity-10 gap-24 py-60"><div className="relative group/pal"><InfinityIcon className="size-[30rem] md:size-[50rem] text-primary animate-spin-slow group-hover:scale-105 transition-transform duration-[6s]" /><Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-64 text-primary/40 animate-neural" /></div><h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Innate Vision</h3></div>
                  )}
               </CardContent>
+
+              <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[8em] italic">
+                 <span>INNATE_KNOWLEDGE_v78.8_AL_GHAZALI_ROOT</span>
+                 <div className="flex gap-16">
+                    <Fingerprint className="size-20 text-primary animate-pulse" />
+                    <Atom className="size-20 animate-spin-slow text-primary" />
+                 </div>
+              </div>
            </Card>
+        </div>
+
+        <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[24px] md:text-[36px] font-black uppercase tracking-[6em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
+            <span>AL-MUIZZ OMNIPRESENT ULTRA v1.0</span>
+            <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
+            <span>SINGULARITY_OF_KNOWLEDGE_2026</span>
         </div>
       </main>
     </div>
