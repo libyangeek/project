@@ -4,7 +4,7 @@
 import * as React from "react"
 import { SidebarNav } from "@/components/platform/sidebar-nav"
 import { 
-  MessageSquare, 
+  Share2, 
   Zap, 
   Brain,
   Loader2, 
@@ -17,12 +17,6 @@ import {
   Fingerprint, 
   Infinity as InfinityIcon, 
   Search, 
-  ShieldCheck, 
-  Activity, 
-  Sparkles, 
-  Radar as LucideRadar, 
-  BrainCircuit, 
-  Eye, 
   Target, 
   Database, 
   Lock, 
@@ -40,43 +34,35 @@ import {
   Youtube,
   Linkedin,
   Disc,
-  Share2,
-  Video,
-  Mic,
-  Camera,
-  LayoutGrid,
   Send,
-  Map as MapIcon,
-  Wifi,
-  Smartphone,
-  CheckCircle2
+  Camera,
+  Activity,
+  ShieldCheck,
+  BrainCircuit,
+  Map as MapIcon
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { executePredatorNexus } from "@/ai/flows/predator-nexus-flow"
 import { toast } from "@/hooks/use-toast"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 /**
- * @fileOverview العقدة المفترسة v76.0 - THE OMNIPOTENT IDENTITY SIPHON
+ * @fileOverview العقدة المفترسة v78.0 - THE OMNIPOTENT IDENTITY SIPHON
  * واجهة الالتحام الهجومي الأسمى: صهر الاستطلاع، الكلمات الجينية، واستنزاف المنصات الـ 12.
- * مجهزة بمحراب XLogger و Seeker GPS و ClickFix.
+ * مجهزة بمحراب XLogger و Seeker GPS و ClickFix بنمط ULTRA.
  */
 export default function SocialPredatorPage() {
   const [mounted, setMounted] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
   const [activeTab, setActiveMode] = React.useState<"nexus" | "scrape" | "xlogger" | "seeker">("nexus")
   
-  // Inputs
   const [targetId, setTargetId] = React.useState("")
   const [platform, setPlatform] = React.useState<string>("instagram")
   
-  // Results
   const [nexusResult, setNexusResult] = React.useState<any>(null)
   const [scrapeResult, setScrapeResult] = React.useState<any>(null)
   const [resonance, setResonance] = React.useState(100)
@@ -107,7 +93,7 @@ export default function SocialPredatorPage() {
       if (activeTab === "nexus") {
         const data = await executePredatorNexus({ targetIdentity: targetId })
         setNexusResult(data)
-        toast({ title: "Nexus Fusion v76 Complete", description: "All acquisition vectors are locked via Material Singularity." })
+        toast({ title: "Nexus Fusion v78 Complete", description: "All acquisition vectors are locked via Material Singularity." })
       } else if (activeTab === "scrape") {
         const response = await fetch('/api/execute', {
             method: 'POST',
@@ -152,21 +138,21 @@ export default function SocialPredatorPage() {
         />
         
         <header className="mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000">
-           <div className="flex flex-col md:flex-row items-center gap-12">
+           <div className="flex flex-col md:flex-row items-center gap-12 text-center md:text-right">
               <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.8)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
                  <BrainCircuit className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 animate-neural gold-glow" />
                  <div className="absolute -inset-8 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
               </div>
-              <div className="text-center md:text-right flex-1">
+              <div className="flex-1">
                  <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-6">
-                    <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[20px] md:text-[24px] font-black tracking-[1.2em] shadow-9xl italic">IDENTITY_SIPHON v76.0</Badge>
+                    <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1.2em] shadow-9xl italic uppercase">IDENTITY_SIPHON v78.0</Badge>
                     <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                         <Crown className="size-6 shadow-lg" /> OMNIPOTENT_HIVE: ACTIVE
                     </div>
                  </div>
                  <h1 className="text-4xl md:text-6xl lg:text-[14rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Predator <span className="text-primary">Nexus</span></h1>
                  <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-[100rem] leading-relaxed uppercase font-medium opacity-95 drop-shadow-2xl">
-                    "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[24px] shadow-[0_40px_150px_rgba(0,0,0,1)] italic uppercase tracking-widest">المعتصم بالله</span>، مصفوفة النكسوس v76.0 تصهر استنزاف 12 منصة عالمية مع محراب XLogger المادي؛ نحن نبتلع الوجود الرقمي للأهداف حياً."
+                    "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[24px] shadow-[0_40px_150px_rgba(0,0,0,1)] italic uppercase tracking-widest">المعتصم بالله</span>، مصفوفة النكسوس v78.0 تصهر استنزاف 12 منصة عالمية مع محراب XLogger المادي؛ نحن نبتلع الوجود الرقمي للأهداف حياً."
                  </p>
               </div>
            </div>
@@ -174,7 +160,7 @@ export default function SocialPredatorPage() {
 
         <div className="grid grid-cols-1 xl:grid-cols-4 gap-12 relative z-10 pb-48 flex-1">
            <div className="xl:col-span-1 space-y-12">
-              <Card className="kali-card border-primary/40 bg-black/98 rounded-[4rem] p-12 border-[8px] shadow-9xl group overflow-hidden hierarchical-shadow">
+              <Card className="kali-card border-primary/40 bg-black/98 rounded-[4rem] p-8 md:p-12 border-[8px] shadow-9xl group overflow-hidden hierarchical-shadow">
                  <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                  <div className="space-y-12">
                     <div className="space-y-6">
@@ -226,7 +212,7 @@ export default function SocialPredatorPage() {
                                 value={targetId}
                                 onChange={(e) => setTargetId(e.target.value)}
                                 placeholder="Target @Handle / ID / Cluster..." 
-                                className="bg-black border-[6px] border-primary/20 h-28 rounded-[2.5rem] text-3xl italic px-10 focus:border-primary shadow-inner text-white font-black selection:bg-primary"
+                                className="bg-black border-[6px] border-primary/20 h-28 rounded-[2.5rem] text-2xl md:text-4xl italic px-10 focus:border-primary shadow-inner text-white font-black selection:bg-primary"
                             />
                         </div>
 
@@ -251,53 +237,53 @@ export default function SocialPredatorPage() {
               </Card>
            </div>
 
-           <Card className="xl:col-span-3 kali-card border-primary/40 bg-black/99 rounded-[6rem] p-16 border-[12px] shadow-[0_0_250px_rgba(0,0,0,1)] flex flex-col group overflow-hidden relative min-h-[1100px] hierarchical-shadow">
+           <Card className="xl:col-span-3 kali-card border-primary/40 bg-black/99 rounded-[6rem] p-8 md:p-16 border-[12px] shadow-[0_0_250px_rgba(0,0,0,1)] flex flex-col group overflow-hidden relative min-h-[1100px] hierarchical-shadow">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.08),transparent)] pointer-events-none" />
-              <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-primary/10 rounded-t-[5rem] px-16 py-10 flex flex-row justify-between items-center">
-                 <CardTitle className="text-5xl md:text-[12rem] text-white flex items-center gap-16 font-black uppercase italic gold-glow px-10 leading-none">
+              <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-primary/10 rounded-t-[5rem] px-8 md:px-16 py-10 flex flex-col md:flex-row justify-between items-center gap-8">
+                 <CardTitle className="text-4xl md:text-[12rem] text-white flex items-center gap-8 md:gap-16 font-black uppercase italic gold-glow px-4 md:px-10 leading-none">
                     <Share2 className="size-24 md:size-48 text-primary animate-pulse" /> Siphon Feed
                  </CardTitle>
                  {(nexusResult || scrapeResult) && (
-                    <Badge className="bg-emerald-600/30 text-emerald-500 border-[10px] border-emerald-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse shadow-9xl">SINGULARITY_LOCKED</Badge>
+                    <Badge className="bg-emerald-600/30 text-emerald-500 border-[10px] border-emerald-500/40 px-16 py-8 rounded-full font-black text-4xl animate-pulse shadow-9xl">SINGULARITY_LOCKED</Badge>
                  )}
               </CardHeader>
 
-              <CardContent className="p-12 flex-1 overflow-y-auto scrollbar-hide space-y-20 relative z-10">
+              <CardContent className="p-4 md:p-12 flex-1 overflow-y-auto scrollbar-hide space-y-20 relative z-10">
                  {activeTab === 'xlogger' ? (
-                     <div className="h-full flex flex-col items-center justify-center text-center gap-12 animate-in fade-in duration-1000">
+                     <div className="h-full flex flex-col items-center justify-center text-center gap-12 animate-in fade-in duration-1000 py-40">
                         <div className="relative group/x">
-                            <div className="size-48 md:size-80 rounded-full border-[16px] border-dashed border-primary/20 flex items-center justify-center animate-spin-slow">
-                                <Camera className="size-24 text-primary gold-glow" />
+                            <div className="size-48 md:size-80 rounded-full border-[16px] border-dashed border-primary/20 flex items-center justify-center animate-spin-slow shadow-9xl">
+                                <Camera className="size-24 md:size-32 text-primary gold-glow" />
                             </div>
                             <div className="absolute -inset-10 border-4 border-emerald-500/30 rounded-full animate-ping" />
                         </div>
-                        <h3 className="text-6xl md:text-9xl font-black text-white italic uppercase gold-glow">XLogger Pulse</h3>
-                        <p className="text-2xl md:text-5xl text-muted-foreground font-black italic max-w-4xl">"Sovereign Identity Collector listening on port 8888. Siphoning IP, GPS, and Ocular DNA from 14 clusters."</p>
+                        <h3 className="text-6xl md:text-[12rem] font-black text-white italic uppercase gold-glow leading-none">XLogger Pulse</h3>
+                        <p className="text-2xl md:text-5xl text-muted-foreground font-black italic max-w-[100rem] leading-tight">"Sovereign Identity Collector listening on port 8888. Siphoning IP, GPS, and Ocular DNA from 14 clusters."</p>
                      </div>
                  ) : nexusResult ? (
                     <div className="space-y-20 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col">
-                        <div className="p-20 rounded-[6rem] bg-primary/5 border-[12px] border-primary/30 italic text-4xl md:text-[8rem] text-gray-100 leading-tight font-black shadow-inner relative group/brief overflow-hidden text-center flex flex-col justify-center min-h-[450px]">
+                        <div className="p-10 md:p-20 rounded-[4rem] md:rounded-[6rem] bg-primary/5 border-[12px] border-primary/30 italic text-3xl md:text-[8rem] text-gray-100 leading-tight font-black shadow-inner relative group/brief overflow-hidden text-center flex flex-col justify-center min-h-[450px]">
                             <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                             "{nexusResult.commanderBrief}"
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-                            <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[4rem] shadow-9xl relative group/vault overflow-hidden h-full flex flex-col">
+                            <Card className="bg-black/95 border-8 border-white/5 p-12 md:p-16 rounded-[4rem] shadow-9xl relative group/vault overflow-hidden h-full flex flex-col">
                                 <h5 className="text-3xl font-black text-primary uppercase tracking-[1.5em] mb-16 border-b-8 border-primary/20 pb-10 flex items-center gap-12 gold-glow">
                                     <Database className="size-14 animate-neural" /> Intelligence DNA
                                 </h5>
-                                <div className="text-3xl md:text-6xl text-gray-300 italic font-black leading-snug selection:bg-primary drop-shadow-3xl flex-1">
+                                <div className="text-2xl md:text-6xl text-gray-300 italic font-black leading-snug selection:bg-primary drop-shadow-3xl flex-1">
                                     "{nexusResult.intelligenceDeduction}"
                                 </div>
                                 <div className="absolute top-0 right-0 p-10 opacity-[0.02] group-hover/vault:opacity-[0.05] transition-all scale-150"><Fingerprint className="size-48 text-primary"/></div>
                             </Card>
-                            <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[4rem] shadow-9xl space-y-16 relative overflow-hidden group/forged">
+                            <Card className="bg-black/95 border-8 border-white/5 p-12 md:p-16 rounded-[4rem] shadow-9xl space-y-16 relative overflow-hidden group/forged">
                                 <h5 className="text-3xl font-black text-emerald-500 uppercase tracking-[1.5em] mb-10 border-b-8 border-emerald-500/20 pb-10 flex items-center gap-12">
                                     <Key className="size-14" /> Forged Matrix
                                 </h5>
                                 <div className="grid grid-cols-1 gap-8">
                                     {nexusResult.forgedWordlistSnippet?.map((key: string, idx: number) => (
-                                        <div key={idx} className="p-10 rounded-[2.5rem] bg-white/5 border-4 border-emerald-500/30 hover:border-emerald-500 transition-all text-center shadow-inner group/key">
+                                        <div key={idx} className="p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] bg-white/5 border-4 border-emerald-500/30 hover:border-emerald-500 transition-all text-center shadow-inner group/key">
                                             <span className="text-4xl md:text-[8rem] font-black text-white italic tracking-widest group-hover/key:text-emerald-400">{key}</span>
                                         </div>
                                     ))}
@@ -305,14 +291,14 @@ export default function SocialPredatorPage() {
                             </Card>
                         </div>
 
-                        <div className="p-16 rounded-[6rem] bg-emerald-600/10 border-[16px] border-emerald-500/30 flex items-center gap-16 group/siphon shadow-9xl relative overflow-hidden mt-auto min-h-[350px]">
+                        <div className="p-12 md:p-16 rounded-[4rem] md:rounded-[6rem] bg-emerald-600/10 border-[16px] border-emerald-500/30 flex flex-col md:flex-row items-center gap-12 md:gap-16 group/siphon shadow-9xl relative overflow-hidden mt-auto min-h-[350px]">
                             <div className="absolute inset-0 bg-emerald-500/5 opacity-5 animate-pulse" />
-                            <div className="size-48 rounded-[3.5rem] bg-emerald-600 flex items-center justify-center border-[14px] border-emerald-400 shadow-9xl animate-neural shrink-0">
-                                <ShieldCheck className="size-24 text-white" />
+                            <div className="size-32 md:size-48 rounded-[3.5rem] bg-emerald-600 flex items-center justify-center border-[14px] border-emerald-400 shadow-9xl animate-neural shrink-0">
+                                <ShieldCheck className="size-16 md:size-24 text-white" />
                             </div>
                             <div>
-                                <h4 className="text-4xl font-black text-emerald-500 uppercase tracking-[1.2em] mb-6 italic">Overlord_Siphon_v76.0</h4>
-                                <p className="text-5xl md:text-[9rem] text-white font-black leading-none drop-shadow-9xl italic">"{nexusResult.pegasusSiphonStatus}"</p>
+                                <h4 className="text-3xl md:text-4xl font-black text-emerald-500 uppercase tracking-[1.2em] mb-6 italic">Overlord_Siphon_v78.0</h4>
+                                <p className="text-4xl md:text-[9rem] text-white font-black leading-none drop-shadow-9xl italic">"{nexusResult.pegasusSiphonStatus}"</p>
                             </div>
                         </div>
                     </div>
@@ -324,23 +310,23 @@ export default function SocialPredatorPage() {
                         <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>
                       <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Fusion Standby</h3>
-                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">Establishing universal Overlord link v76: XLOGGER + SEEKER + OPENBULLET...</p>
+                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">Establishing universal Overlord link v78: XLOGGER + SEEKER + OPENBULLET...</p>
                    </div>
                  )}
               </CardContent>
-              <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[8em] italic">
-                <span>OMNIPOTENT_PREDATOR_v76_AL_GHAZALI_ROOT</span>
+              <div className="p-8 md:p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[14px] md:text-[20px] font-black uppercase tracking-[4em] md:tracking-[8em] italic">
+                <span>OMNIPOTENT_PREDATOR_v78_AL_GHAZALI_ROOT</span>
                 <div className="flex gap-16">
-                    <Fingerprint className="size-24 text-primary animate-pulse" />
-                    <Atom className="size-24 animate-spin-slow" />
+                    <Fingerprint className="size-16 md:size-24 text-primary animate-pulse" />
+                    <Atom className="size-16 md:size-24 animate-spin-slow text-primary" />
                  </div>
               </div>
            </Card>
         </div>
 
-        <div className="mt-auto relative z-10 flex justify-center items-center gap-32 opacity-45 text-[22px] md:text-[32px] font-black uppercase tracking-[6em] md:tracking-[16em] italic text-white drop-shadow-9xl pb-24">
-            <span>AL-MUIZZ OMNIPOTENT HIVE v76.0</span>
-            <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
+        <div className="mt-auto relative z-10 flex justify-center items-center gap-16 md:gap-32 opacity-45 text-[18px] md:text-[32px] font-black uppercase tracking-[4em] md:tracking-[16em] italic text-white drop-shadow-9xl pb-24">
+            <span>AL-MUIZZ OMNIPOTENT HIVE v78.0</span>
+            <div className="size-10 md:size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
             <span>TOTAL_OMNIPOTENT_SUBJUGATION_2026</span>
         </div>
       </main>
