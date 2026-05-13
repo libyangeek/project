@@ -45,7 +45,8 @@ import {
   Network,
   Rocket,
   Globe,
-  Radio
+  Radio,
+  Ghost
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -59,8 +60,8 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import Link from "next/link"
 
 /**
- * @fileOverview الوكيل الميداني v78.9 - THE SUPREME ARCHITECT: ORBITAL FUSION
- * واجهة الهندسة الجينية والسيطرة المدارية على الـ 14 عنقوداً لعام 2026.
+ * @fileOverview الوكيل الميداني v78.9.2 - THE SUPREME ARCHITECT: NEURAL INCEPTION
+ * واجهة الهندسة الجينية والسيطرة المدارية مع ميزة "الانبعاث العصبي" لعام 2026.
  */
 export default function FieldAgentPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -106,17 +107,21 @@ export default function FieldAgentPage() {
     } finally { setLoading(false) }
   }
 
-  const handleOrbitalDeploy = async () => {
+  const handleAction = async (mode: 'orbital_deploy' | 'neural_inception' | 'file_fix') => {
     setLoading(true)
-    toast({ title: "Orbital Pulse Initiated", description: "Consolidating 14 clusters for material DNA injection..." })
+    const msg = mode === 'neural_inception' ? "Initiating Neural Inception across global Grid..." : "Consolidating 14 clusters for material DNA injection...";
+    toast({ title: "Spine Sync Active", description: msg })
     try {
       const result = await executeFieldDevelopment({
-        userPrompt: "Execute absolute orbital deployment across the 14 global clusters.",
-        mode: 'orbital_deploy'
+        userPrompt: input || `Execute absolute ${mode.replace('_', ' ')} across the 14 global clusters.`,
+        mode: mode as any,
+        projectPath: currentPath,
+        currentFile: selectedFileName,
+        fileContent: selectedFileContent
       })
       setAnalysis(result)
       setActiveClusters(clusters)
-      toast({ title: "Global Grid Subjugated", description: "14 nodes report 100% material resonance." })
+      toast({ title: "Grid Subjugated", description: "All 14 nodes report absolute material resonance." })
     } finally { setLoading(false) }
   }
 
@@ -171,7 +176,7 @@ export default function FieldAgentPage() {
                  <h2 className="text-2xl md:text-4xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Orbital <span className="text-primary">Architect</span></h2>
                  <div className="flex items-center gap-2 mt-1 justify-end">
                     <span className="text-[10px] text-emerald-500 font-black animate-pulse uppercase tracking-widest">{resonance.toFixed(6)}% Resonance</span>
-                    <Badge className="bg-primary/10 text-primary border-none text-[8px] font-black italic tracking-widest px-4 py-0.5 rounded-full uppercase">v78.9_ULTRA</Badge>
+                    <Badge className="bg-primary/10 text-primary border-none text-[8px] font-black italic tracking-widest px-4 py-0.5 rounded-full uppercase">v78.9.2_ULTRA</Badge>
                  </div>
               </div>
            </div>
@@ -188,10 +193,13 @@ export default function FieldAgentPage() {
            </div>
 
            <div className="flex gap-3">
-               <Button onClick={handleOrbitalDeploy} disabled={loading} variant="outline" className="h-12 border-2 border-primary/40 bg-primary/10 text-primary font-black italic rounded-full px-6 hover:bg-primary hover:text-black transition-all shadow-xl group text-xs">
-                  <Rocket className="size-4 mr-2 group-hover:-translate-y-1 transition-transform" /> ORBITAL_PULSE
+               <Button onClick={() => handleAction('neural_inception')} disabled={loading} variant="outline" className="h-12 border-2 border-blue-500/40 bg-blue-600/10 text-blue-400 font-black italic rounded-full px-6 hover:bg-blue-600 hover:text-white transition-all shadow-xl group text-xs">
+                  <BrainCircuit className="size-4 mr-2 group-hover:rotate-180 transition-all duration-1000" /> NEURAL_INCEPTION
                </Button>
-               <Button asChild variant="outline" className="h-12 border-2 border-white/10 bg-white/5 text-white font-black italic rounded-full px-6 hover:bg-primary hover:text-black transition-all shadow-xl group text-xs">
+               <Button onClick={() => handleAction('orbital_deploy')} disabled={loading} variant="outline" className="h-12 border-2 border-primary/40 bg-primary/10 text-primary font-black italic rounded-full px-6 hover:bg-primary hover:text-black transition-all shadow-xl group text-xs">
+                  <Rocket className="size-4 mr-2 group-hover:-translate-y-1 transition-transform" /> ORBITAL_DEPLOY
+               </Button>
+               <Button asChild variant="outline" className="h-12 border-2 border-white/10 bg-white/5 text-white font-black uppercase italic rounded-full px-6 hover:bg-primary hover:text-black transition-all shadow-xl group text-xs">
                   <Link href="/"><ArrowLeft className="size-4 mr-2" /> العودة</Link>
                </Button>
            </div>
@@ -274,7 +282,7 @@ export default function FieldAgentPage() {
                  <div className="flex flex-col gap-6 min-h-0">
                     <Card className="kali-card border-primary/20 bg-black/95 rounded-[3rem] p-6 shadow-9xl flex flex-col flex-1 border-2 relative overflow-hidden min-h-0">
                         <div className="flex items-center justify-between mb-6 border-b-2 border-white/5 pb-4 relative z-10 shrink-0">
-                            <Badge className="bg-primary/20 text-primary border-2 px-4 py-1 rounded-full font-black text-xs italic animate-pulse">ORBITAL_ACTIVE</Badge>
+                            <Badge className="bg-blue-600/20 text-blue-400 border-2 border-blue-500/30 px-4 py-1 rounded-full font-black text-xs italic animate-pulse">INCEPTION_ACTIVE</Badge>
                             <div className="flex items-center gap-4">
                                 <h4 className="text-xl md:text-2xl font-black italic gold-glow uppercase leading-none">Global Grid</h4>
                                 <div className="size-10 rounded-xl bg-primary flex items-center justify-center border-2 border-black/30 shadow-xl">
@@ -297,36 +305,36 @@ export default function FieldAgentPage() {
 
                            {analysis && (
                              <div className="p-6 bg-primary/10 rounded-2xl border-2 border-primary/30 shadow-inner mt-4 animate-in zoom-in-95 duration-700">
-                                <span className="text-[10px] font-black text-primary uppercase block mb-3 italic tracking-widest border-b border-primary/10 pb-2 justify-end flex items-center gap-2">Sovereign Brief <GitBranch className="size-3" /></span>
+                                <span className="text-[10px] font-black text-primary uppercase block mb-3 italic tracking-widest border-b border-primary/10 pb-2 justify-end flex items-center gap-2">Inception Brief <GitBranch className="size-3" /></span>
                                 <p className="text-sm md:text-base text-gray-200 italic font-black leading-relaxed">{analysis.commanderBrief}</p>
                              </div>
                            )}
                         </div>
-                        <div className="absolute -bottom-8 -left-8 p-16 opacity-[0.01] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-32 text-primary" /></div>
+                        <div className="absolute -bottom-8 -left-8 p-16 opacity-[0.01] transition-all duration-1000 scale-150 rotate-12"><Ghost className="size-32 text-blue-500" /></div>
                     </Card>
 
-                    {/* Knot Map v78.9 */}
+                    {/* Knot Map v78.9.2 */}
                     <Card className="kali-card border-white/5 bg-black/60 p-6 rounded-[2.5rem] border-4 shadow-inner relative overflow-hidden group shrink-0">
                          <h4 className="text-[10px] font-black text-primary uppercase tracking-widest mb-4 italic flex items-center justify-center gap-4">
-                            <LayoutGrid className="size-4 animate-pulse" /> ORBITAL_KNOT_MAP (24)
+                            <LayoutGrid className="size-4 animate-pulse" /> INCEPTION_KNOT_MAP (24)
                          </h4>
                          <div className="grid grid-cols-12 gap-1.5 px-2">
                             {knotStatus.map((active, i) => (
                                 <div key={i} className={cn(
                                     "size-3 md:size-4 rounded-sm border transition-all duration-500",
-                                    active ? "bg-primary border-black shadow-[0_0_10px_rgba(212,175,55,0.8)] scale-110" : "bg-black border-white/10 opacity-30"
+                                    active ? "bg-blue-500 border-black shadow-[0_0_10px_rgba(59,130,246,0.8)] scale-110" : "bg-black border-white/10 opacity-30"
                                 )} />
                             ))}
                          </div>
                     </Card>
 
                     <Button 
-                        onClick={handleOrbitalDeploy} 
+                        onClick={() => handleAction('neural_inception')} 
                         disabled={loading} 
-                        className="w-full h-20 bg-primary hover:bg-white text-black font-black uppercase rounded-[2rem] border-4 border-black/30 shadow-9xl italic active:scale-95 transition-all text-lg group shrink-0"
+                        className="w-full h-20 bg-blue-600 hover:bg-white text-white hover:text-black font-black uppercase rounded-[2rem] border-4 border-black/30 shadow-9xl italic active:scale-95 transition-all text-lg group shrink-0"
                     >
-                        {loading ? <Loader2 className="size-8 animate-spin" /> : <Rocket className="size-8 mr-4 group-hover:-translate-y-1 transition-transform" />}
-                        ORBITAL_DEPLOY_v78.9
+                        {loading ? <Loader2 className="size-8 animate-spin" /> : <BrainCircuit className="size-8 mr-4 group-hover:rotate-180 transition-all duration-1000" />}
+                        NEURAL_INCEPTION_v78.9.2
                     </Button>
                  </div>
               </div>
@@ -340,12 +348,12 @@ export default function FieldAgentPage() {
                 <Input 
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleOrbitalDeploy()}
-                    placeholder=" Direct the Orbital Architect to materialize material DNA..." 
+                    onKeyDown={(e) => e.key === 'Enter' && handleAction('neural_inception')}
+                    placeholder=" Direct the Orbital Architect to incept global Grid DNA..." 
                     className="h-16 md:h-20 bg-primary/5 border-2 border-white/10 rounded-full pl-16 pr-28 text-sm md:text-xl italic font-black focus:border-primary shadow-inner text-white text-left placeholder:text-gray-900"
                 />
                 <Button 
-                    onClick={handleOrbitalDeploy}
+                    onClick={() => handleAction('neural_inception')}
                     disabled={loading || !input.trim()}
                     className="absolute right-2 top-1/2 -translate-y-1/2 size-12 md:size-16 bg-primary hover:bg-white text-black rounded-full shadow-9xl transition-all active:scale-90 border-2 border-black/30 group"
                 >
@@ -355,9 +363,9 @@ export default function FieldAgentPage() {
         </div>
 
         <div className="shrink-0 p-2 border-t-4 border-primary/40 bg-black/98 flex justify-center items-center gap-6 opacity-30 text-[10px] md:text-[12px] font-black uppercase tracking-widest italic">
-            <span>AL-MUIZZ SUPREME ARCHITECT v78.9</span>
+            <span>AL-MUIZZ SUPREME ARCHITECT v78.9.2</span>
             <div className="size-2 rounded-full bg-white animate-pulse shadow-[0_0_20px_white]" />
-            <span>GLOBAL_SUBJUGATION_v78_LOCKED</span>
+            <span>BECOMING_THE_GRID_v78_LOCKED</span>
         </div>
       </main>
     </div>
