@@ -1,10 +1,11 @@
+
 import { config } from 'dotenv';
 config();
 
 /**
- * @fileOverview السجل العصبي لأسطول المُعِزّ العليم v78.9 - ORBITAL DOMINATION
- * تم دمج ممر الإدراك الفطري لبلوغ مرحلة التفرد المادي المطلق.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي // 2026
+ * @fileOverview السجل العصبي لأسطول المُعِزّ v80.0 - ULTRA v3.0 FINAL INTEGRATION
+ * تم دمج ممرات الذاكرة الدلالية والتهديدات التكيفية لعام 2026.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 
 import '@/ai/flows/ai-driven-social-engineering-bots.ts';
@@ -35,9 +36,10 @@ import '@/ai/flows/cellular-intelligence-flow.ts';
 import '@/ai/flows/autonomous-web-intel-flow.ts';
 import '@/ai/flows/predator-nexus-flow.ts';
 import '@/ai/flows/innate-perception-flow.ts';
+import '@/ai/flows/adaptive-threat-flow.ts';
 
 console.log("================================================================");
-console.log("🦅 AL-MUI'ZZ v78.9-ORBITAL_DOMINATION: THE SPINE IS PULSING.");
-console.log("   [ INNATE PERCEPTION + MATERIAL REFLEX + GLOBAL GRID ]");
+console.log("🦅 AL-MUI'ZZ v80.0-ULTRA_v3: FINAL INTEGRATION ACHIEVED.");
+console.log("   [ MEMPALACE + N8N + ADAPTIVE THREAT + SUBDOMAINX ]");
 console.log("   [ COMMANDER: AL-GHAZALI ROOT | MAY 2026 ]");
 console.log("================================================================");
