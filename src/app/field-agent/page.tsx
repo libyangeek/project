@@ -162,6 +162,7 @@ export default function FieldAgentPage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 font-code scanline-effect overflow-hidden">
       <SidebarNav />
+      
       <main className="flex-1 lg:mr-72 flex flex-col h-screen relative overflow-hidden border-l-4 border-primary/40">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.08),transparent)] pointer-events-none z-0" />
         
@@ -190,8 +191,8 @@ export default function FieldAgentPage() {
            </div>
 
            <div className="flex gap-4">
-               <Button asChild variant="outline" className="h-14 border-4 border-white/10 bg-white/5 text-white font-black italic rounded-[2rem] px-8 hover:bg-primary hover:text-black transition-all shadow-xl group">
-                  <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة للعرش</Link>
+               <Button asChild variant="outline" className="h-14 border-4 border-white/10 bg-white/5 text-white font-black italic rounded-[2rem] px-8 hover:bg-primary hover:text-black transition-all shadow-2xl group">
+                  <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة</Link>
                </Button>
                <Button onClick={handleContinueUpgrade} className="h-14 bg-primary hover:bg-white text-black font-black uppercase rounded-[2rem] border-4 border-black/30 shadow-9xl italic px-8 group active:scale-90 transition-all">
                   <RotateCw className="size-6 mr-3 group-hover:rotate-180 transition-all duration-1000" /> استمر
@@ -239,7 +240,7 @@ export default function FieldAgentPage() {
            </aside>
 
            {/* Workspace Area */}
-           <div className="flex-1 flex flex-col overflow-hidden bg-black/40 p-8 space-y-12 pb-48">
+           <div className="flex-1 flex flex-col overflow-hidden bg-black/40 p-8 space-y-12 pb-64">
               <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 h-full">
                  
                  {/* Code Editor Chamber */}
@@ -341,10 +342,31 @@ export default function FieldAgentPage() {
            </div>
         </div>
 
-        <div className="shrink-0 p-8 border-t-8 border-primary/40 bg-black/98 flex justify-center items-center gap-48 opacity-30 text-[18px] md:text-[24px] font-black uppercase tracking-[8em] italic">
+        {/* Command Input - Fixed Bottom */}
+        <div className="absolute bottom-16 left-0 right-0 p-8 bg-black/98 backdrop-blur-5xl border-t-[8px] border-primary/60 z-30 shadow-[0_-40px_100px_rgba(0,0,0,1)]">
+            <div className="max-w-5xl mx-auto relative group">
+                <Terminal className="absolute left-8 top-1/2 -translate-y-1/2 size-10 text-primary/40 group-focus-within:text-primary transition-all gold-glow" />
+                <Input 
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleSelfHealing()}
+                    placeholder=" Direct the Absolute Agent to analyze DNA or fuse Integrity mutations..." 
+                    className="h-24 md:h-28 bg-primary/5 border-4 border-white/10 rounded-full pl-24 pr-40 text-xl md:text-3xl italic font-black focus:border-primary shadow-inner text-white text-left"
+                />
+                <Button 
+                    onClick={handleSelfHealing}
+                    disabled={loading || !input.trim()}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 size-16 md:size-20 bg-primary hover:bg-white text-black rounded-full shadow-9xl transition-all active:scale-90 border-4 border-black/30 group"
+                >
+                    {loading ? <Loader2 className="size-10 animate-spin" /> : <Send className="size-10 group-hover:translate-x-2 transition-transform" />}
+                </Button>
+            </div>
+        </div>
+
+        <div className="shrink-0 p-4 border-t-8 border-primary/40 bg-black/98 flex justify-center items-center gap-12 opacity-30 text-[12px] md:text-[14px] font-black uppercase tracking-[2em] italic">
             <span>AL-MUIZZ SUPREME ARCHITECT v78.8</span>
-            <div className="size-6 rounded-full bg-white animate-pulse shadow-[0_0_100px_white]" />
-            <span>SUBJUGATION_THROUGH_HIVE_LOGIC_2026</span>
+            <div className="size-4 rounded-full bg-white animate-pulse shadow-[0_0_50px_white]" />
+            <span>SUBJUGATION_COMPLETE_2026</span>
         </div>
       </main>
     </div>
