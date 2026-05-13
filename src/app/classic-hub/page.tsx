@@ -31,7 +31,8 @@ import {
   Maximize2,
   Activity,
   History,
-  Box
+  Box,
+  MessageSquare
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { toast } from "@/hooks/use-toast"
@@ -86,14 +87,19 @@ export default function SovereignDesktop() {
   }, [])
 
   const toggleWindow = (id: string) => {
-    setWindows(prev => prev.map(w => {
-        if (w.id === id) {
-            const nextZ = maxZ + 1
-            setMaxZ(nextZ)
-            return { ...w, isOpen: !w.isOpen, isMinimized: false, zIndex: nextZ }
+    setWindows(prev => {
+        const win = prev.find(w => w.id === id);
+        if (win && win.isOpen && !win.isMinimized) {
+            return prev.map(w => w.id === id ? { ...w, isOpen: false } : w);
         }
-        return w
-    }))
+        const nextZ = maxZ + 1
+        setMaxZ(nextZ)
+        if (win && !win.isOpen) {
+            return prev.map(w => w.id === id ? { ...w, isOpen: true, isMinimized: false, zIndex: nextZ } : w);
+        }
+        // If not created, we can add it here but keeping it simple for now
+        return prev;
+    })
   }
 
   const focusWindow = (id: string) => {
@@ -121,7 +127,7 @@ export default function SovereignDesktop() {
     <div className="retro-desktop scanline-effect font-sans">
       
       {/* Desktop Workspace */}
-      <div className="p-4 grid grid-cols-1 gap-12 w-32 h-full content-start">
+      <div className="p-4 grid grid-cols-1 gap-12 w-32 h-full content-start z-0">
          {desktopIcons.map(icon => (
             <div 
                 key={icon.id}
@@ -164,21 +170,21 @@ export default function SovereignDesktop() {
                 </div>
                 <div className="flex-1 bg-white m-1 retro-inset p-4 overflow-y-auto scrollbar-hide font-mono text-xs">
                     {win.content === 'audit' && (
-                        <div className="space-y-4">
+                        <div className="space-y-4 text-black">
                             <h3 className="font-bold border-b-2 border-black pb-2 flex items-center gap-2"><Activity className="size-4"/> System Pulse Audit</h3>
                             <div className="grid grid-cols-2 gap-4">
-                                <div className="retro-outset p-2">
+                                <div className="retro-outset p-2 bg-[#c0c0c0]">
                                     <div className="text-[9px] uppercase font-bold text-gray-600">CPU Load</div>
                                     <div className="text-2xl font-bold text-green-700">{metrics.cpu}</div>
                                 </div>
-                                <div className="retro-outset p-2">
+                                <div className="retro-outset p-2 bg-[#c0c0c0]">
                                     <div className="text-[9px] uppercase font-bold text-gray-600">RAM Reserved</div>
                                     <div className="text-2xl font-bold text-blue-700">{metrics.ram}</div>
                                 </div>
                             </div>
                             <div className="retro-inset p-4 h-40 bg-black text-green-500 overflow-hidden relative">
                                 <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/grid.png')]" />
-                                <div className="animate-pulse">>>> Monitoring Hierarchy Resonance...</div>
+                                <div className="animate-pulse">{">>>"} Monitoring Hierarchy Resonance...</div>
                                 <div className="mt-2 text-[10px]">Node 01: OMNIPOTENT<br/>Node 24: LOCKED<br/>Spine Bus: v76_STABLE</div>
                             </div>
                         </div>
@@ -191,7 +197,7 @@ export default function SovereignDesktop() {
                         </div>
                     )}
                     {win.id === 'siphon' && (
-                        <div className="space-y-6">
+                        <div className="space-y-6 text-black">
                             <div className="retro-outset p-4 flex items-center gap-4 bg-primary/10 border-primary">
                                 <Zap className="size-8 text-primary animate-pulse" />
                                 <div>
@@ -201,12 +207,12 @@ export default function SovereignDesktop() {
                             </div>
                             <div className="space-y-2">
                                 <label className="text-[10px] font-bold uppercase">Target Cluster:</label>
-                                <input className="w-full retro-inset h-8 px-2 text-sm" placeholder="MSISDN / @Handle" />
+                                <input className="w-full retro-inset h-8 px-2 text-sm text-black" placeholder="MSISDN / @Handle" />
                             </div>
                             <div className="grid grid-cols-2 gap-2">
-                                <button className="retro-button bg-blue-900/10">XLogger Hub</button>
-                                <button className="retro-button bg-emerald-600/10">Seeker GPS</button>
-                                <button className="retro-button col-span-2 bg-red-600/10 h-10">IGNITE_TOTAL_ACQUISITION</button>
+                                <button className="retro-button bg-[#c0c0c0] hover:bg-[#d0d0d0]">XLogger Hub</button>
+                                <button className="retro-button bg-[#c0c0c0] hover:bg-[#d0d0d0]">Seeker GPS</button>
+                                <button className="retro-button col-span-2 bg-[#c0c0c0] hover:bg-red-600 hover:text-white h-10">IGNITE_TOTAL_ACQUISITION</button>
                             </div>
                         </div>
                     )}
@@ -224,7 +230,7 @@ export default function SovereignDesktop() {
             <div className="bg-primary size-6 rounded-sm flex items-center justify-center group-hover:rotate-12 transition-transform">
                 <Skull className="size-4 text-black" />
             </div>
-            <span className="font-bold text-sm">Start</span>
+            <span className="font-bold text-sm text-black">Start</span>
          </button>
          
          <div className="flex-1 flex gap-1 px-4 overflow-hidden">
@@ -233,7 +239,7 @@ export default function SovereignDesktop() {
                     key={win.id}
                     onClick={() => focusWindow(win.id)}
                     className={cn(
-                        "retro-outset h-8 px-3 flex items-center gap-2 max-w-[150px] truncate transition-all",
+                        "retro-outset h-8 px-3 flex items-center gap-2 max-w-[150px] truncate transition-all text-black",
                         win.zIndex === maxZ && !win.isMinimized ? "retro-inset bg-white/50" : "bg-[#c0c0c0]"
                     )}
                 >
@@ -243,7 +249,7 @@ export default function SovereignDesktop() {
             ))}
          </div>
 
-         <div className="retro-inset h-8 px-3 flex items-center gap-4 bg-[#c0c0c0]">
+         <div className="retro-inset h-8 px-3 flex items-center gap-4 bg-[#c0c0c0] text-black">
             <div className="flex items-center gap-2">
                 <Cpu className="size-3 text-primary animate-pulse" />
                 <span className="text-[10px] font-bold">{metrics.cpu}</span>
@@ -261,8 +267,13 @@ export default function SovereignDesktop() {
           <span className="text-[10px] font-bold text-white uppercase tracking-[1em]">Sovereign_OS_v77_Materialized</span>
       </div>
       
-      <div className="absolute bottom-16 right-16 p-40 opacity-5 pointer-events-none scale-150 rotate-12 z-0">
-         <Skull className="size-96 text-white" />
+      {/* Global Banner Overlay */}
+      <div className="fixed bottom-12 right-4 flex items-center gap-10 opacity-30 text-[10px] font-bold uppercase tracking-[1em] text-white z-[50]">
+          <Fingerprint className="size-4" /> GHAZALI_ROOT // HIVE_OS_v77
+      </div>
+
+      <div className="absolute bottom-16 right-16 p-40 opacity-5 pointer-events-none scale-150 rotate-12 z-0 text-white">
+         <Skull className="size-96" />
       </div>
 
     </div>
