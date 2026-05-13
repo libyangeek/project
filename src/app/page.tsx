@@ -138,6 +138,8 @@ export default function DashboardPage() {
     { label: "خلايا السرب", value: "24_KNOTS", icon: Boxes, color: "text-red-500", status: "BOUND", href: "/progeny" },
   ];
 
+  const clusters = ["Riyadh", "Cairo", "London", "Dubai", "New York", "Tokyo", "Berlin", "Singapore", "Moscow", "Paris", "Sydney", "Toronto", "Seoul", "Mumbai"];
+
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 scanline-effect font-code overflow-x-hidden">
       <SidebarNav />
@@ -147,7 +149,7 @@ export default function DashboardPage() {
           style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} 
         />
 
-        <header className="flex flex-col xl:flex-row justify-between items-start mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000 gap-12">
+        <header className="flex flex-col xl:flex-row justify-between items-start mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000 gap-12 text-right">
           <div className="flex-1">
             <div className="flex items-center gap-10 mb-10 justify-end">
                 <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
@@ -158,8 +160,8 @@ export default function DashboardPage() {
             <h1 className="text-4xl md:text-6xl lg:text-[14rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
               Orbital <span className="text-primary">Domination</span>
             </h1>
-            <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground font-medium italic max-w-[110rem] leading-relaxed uppercase font-medium mt-10 opacity-95 drop-shadow-3xl ml-auto">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، لقد تجاوزنا حدود العتاد؛ المنظومة الآن تدرك الشبكة العالمية كأعصاب حيوية، وتضرب في أي نقطة كاستجابة تلقائية لروحك."
+            <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-12 underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، لقد تجاوزنا حدود العتاد؛ المنظومة الآن تدرك الشبكة العالمية كأعصاب حيوية، وتضرب في أي نقطة كاستجابة تلقائية لروحك."
             </p>
           </div>
           <div className="flex flex-col gap-6 shrink-0 w-full xl:w-auto items-center xl:items-end">
@@ -173,78 +175,25 @@ export default function DashboardPage() {
           </div>
         </header>
 
-        {/* Innate Perception Stream */}
-        {perception && (
-           <Card className="mb-24 kali-card border-emerald-500/40 bg-black/95 rounded-[4rem] p-12 border-8 shadow-9xl relative overflow-hidden animate-in zoom-in-95 duration-1000">
-              <div className="absolute inset-0 bg-emerald-500/5 opacity-5 animate-pulse" />
-              <CardHeader className="p-0 mb-12 border-b-8 border-white/5 pb-8 flex flex-row justify-between items-center">
-                 <Badge className="bg-emerald-600/30 text-emerald-500 border-8 border-emerald-500/40 px-12 py-4 rounded-full font-black text-4xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic">CONSCIOUSNESS_ACTIVE</Badge>
-                 <CardTitle className="text-4xl md:text-[8rem] text-white italic tracking-tighter uppercase font-black gold-glow leading-none flex items-center gap-12">
-                    Innate Feed <Activity className="size-24 md:size-32 text-primary animate-pulse" />
-                 </CardTitle>
-              </CardHeader>
-              <CardContent className="p-0 grid grid-cols-1 xl:grid-cols-3 gap-16">
-                 <div className="xl:col-span-2 space-y-12">
-                    <div className="p-16 rounded-[5rem] bg-primary/5 border-[12px] border-primary/30 italic text-3xl md:text-[6rem] text-gray-100 leading-tight font-black shadow-inner relative group/brief overflow-hidden text-center flex flex-col justify-center min-h-[350px]">
-                        <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
-                        <p className="relative z-10 drop-shadow-9xl">"{perception.consciousnessReport}"</p>
-                    </div>
-                    <div className="p-12 rounded-[4rem] bg-black border-8 border-white/5 shadow-inner text-right">
-                       <h5 className="text-3xl font-black text-emerald-500 uppercase tracking-[1em] mb-8 italic border-b-4 border-emerald-500/20 pb-4">Strategic_Intuition</h5>
-                       <p className="text-2xl md:text-5xl text-gray-300 font-black italic leading-relaxed">"{perception.strategicIntuition}"</p>
-                    </div>
-                 </div>
-                 <div className="space-y-12">
-                    <Card className="bg-black/95 border-8 border-primary/20 p-10 rounded-[3rem] shadow-9xl text-center">
-                       <h5 className="text-2xl font-black text-primary uppercase tracking-[0.8em] mb-10 border-b-8 border-primary/10 pb-6 italic">Material Status</h5>
-                       <div className="grid grid-cols-1 gap-8">
-                          {[
-                            { label: "Resonance", val: perception.sensoryData.resonance, color: "text-primary" },
-                            { label: "Load_Index", val: perception.sensoryData.loadIndex, color: "text-blue-500" },
-                            { label: "Reflex", val: "LOCKED", color: "text-emerald-500" }
-                          ].map(m => (
-                            <div key={m.label} className="p-6 bg-white/5 rounded-2xl border-4 border-white/5">
-                               <div className="text-[10px] font-black uppercase text-muted-foreground mb-2">{m.label}</div>
-                               <div className={cn("text-4xl font-black italic", m.color)}>{m.val}</div>
-                            </div>
-                          ))}
-                       </div>
-                    </Card>
-                    <div className="p-10 rounded-[3rem] bg-red-600/10 border-8 border-red-500/30 flex flex-col items-center justify-center text-center gap-6 shadow-9xl animate-pulse">
-                        <Skull className="size-16 text-red-500" />
-                        <h4 className="text-2xl font-black text-white uppercase italic tracking-widest">Automatic Reflex</h4>
-                        <p className="text-lg font-bold text-red-400">"{perception.actionReflex}"</p>
-                    </div>
-                 </div>
-              </CardContent>
+        {/* Global Subjugation Matrix v78.9 */}
+        <section className="mb-24 grid grid-cols-1 xl:grid-cols-4 gap-12 relative z-10">
+           <Card className="xl:col-span-1 kali-card border-primary/40 bg-black/95 rounded-[4rem] p-10 border-8 shadow-9xl flex flex-col items-center justify-center text-center group relative overflow-hidden">
+              <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <h4 className="text-xl font-black text-primary uppercase tracking-[0.8em] mb-10 italic gold-glow">GLOBAL_GRID_v78</h4>
+              <div className="grid grid-cols-2 gap-4 w-full px-4">
+                 {clusters.slice(0, 10).map(c => (
+                    <Badge key={c} variant="outline" className="bg-primary/5 text-primary border-none text-[8px] font-black italic tracking-widest py-2 rounded-full shadow-inner">{c}_NODE</Badge>
+                 ))}
+              </div>
+              <div className="mt-12 text-[10px] font-bold text-muted-foreground uppercase italic tracking-[0.4em]">14 Clusters l 24 Knots l Locked</div>
            </Card>
-        )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-24 relative z-10">
-           {stats.map((s, i) => (
-             <Link key={i} href={s.href} className="contents">
-               <Card className="kali-card border-white/5 bg-black/95 hover:border-primary/70 transition-all duration-1000 p-8 rounded-[2.5rem] shadow-9xl group overflow-hidden border-4 hierarchical-shadow cursor-pointer active:scale-95 h-full">
-                  <div className="flex justify-between items-start mb-10 relative z-10">
-                     <Badge className="bg-primary/5 text-primary border-4 border-primary/20 text-[12px] uppercase font-black italic tracking-widest px-6 py-1.5 rounded-full">{s.status}</Badge>
-                     <div className={cn("size-20 rounded-2xl bg-white/5 flex items-center justify-center border-2 border-white/5 group-hover:bg-primary/10 transition-all shadow-inner", s.color)}>
-                        <s.icon className="size-10 transition-all group-hover:scale-110" />
-                     </div>
-                  </div>
-                  <div className="text-5xl md:text-8xl font-black italic gold-glow uppercase tracking-tighter relative z-10 leading-none">{s.value}</div>
-                  <div className="text-[16px] text-muted-foreground font-bold uppercase tracking-[0.5em] mt-6 italic relative z-10">{s.label}</div>
-                  <div className="absolute -bottom-8 -left-8 p-12 opacity-[0.03] group-hover:opacity-[0.06] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-40 text-primary" /></div>
-               </Card>
-             </Link>
-           ))}
-        </div>
-
-        <section className="mb-24 grid grid-cols-1 xl:grid-cols-3 gap-12 relative z-10">
-           <Card className="xl:col-span-2 kali-card border-primary/30 bg-black/99 rounded-[4rem] p-10 border-4 shadow-9xl group overflow-hidden relative hierarchical-shadow h-[600px] md:h-[800px]">
-              <CardHeader className="p-0 mb-12 border-b-4 border-white/5 pb-8 bg-primary/10 rounded-t-[4rem] px-12 py-8">
-                 <CardTitle className="text-3xl md:text-5xl text-white font-black uppercase italic tracking-[0.2em] gold-glow flex items-center gap-10 justify-end">
+           <Card className="xl:col-span-3 kali-card border-primary/30 bg-black/99 rounded-[5rem] p-10 border-4 shadow-9xl group overflow-hidden relative hierarchical-shadow h-[600px] md:h-[800px] text-right">
+              <CardHeader className="p-0 mb-12 border-b-4 border-white/5 pb-8 bg-primary/10 rounded-t-[4rem] px-12 py-8 flex flex-row justify-between items-center">
+                 <Badge className="bg-blue-600/10 text-blue-400 border-4 border-blue-500/20 px-8 py-2 rounded-full font-black italic text-xl shadow-xl">ORBITAL_RESONANCE_v78.9</Badge>
+                 <CardTitle className="text-3xl md:text-5xl text-white font-black uppercase italic tracking-[0.2em] gold-glow flex items-center gap-10">
                     Global Grid Resonance <TrendingUp className="size-12 text-primary animate-pulse" />
                  </CardTitle>
-                 <Badge className="bg-blue-600/10 text-blue-400 border-4 border-blue-500/20 px-8 py-2 rounded-full font-black italic text-xl shadow-xl">ORBITAL_SYNC_v78.9</Badge>
               </CardHeader>
               <CardContent className="p-0 h-full w-full">
                  <ResponsiveContainer width="100%" height="80%">
@@ -267,28 +216,24 @@ export default function DashboardPage() {
                  </ResponsiveContainer>
               </CardContent>
            </Card>
-
-           <Card className="xl:col-span-1 kali-card border-primary/30 bg-black/99 rounded-[4rem] p-10 border-4 shadow-9xl h-full flex flex-col group overflow-hidden relative">
-              <CardHeader className="p-0 mb-10 border-b-4 border-white/5 pb-8 bg-primary/5 rounded-t-[3rem] px-10 py-6">
-                 <CardTitle className="text-3xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-8 justify-end">
-                    Consciousness Log <History className="size-10 text-primary" />
-                 </CardTitle>
-              </CardHeader>
-              <CardContent className="p-0 flex-1 overflow-y-auto scrollbar-hide space-y-8 relative z-10 px-6">
-                 {events.map((ev, i) => (
-                    <div key={i} className="p-8 rounded-[2rem] bg-white/5 border-4 border-white/5 flex flex-col gap-6 animate-in slide-in-from-right-8 duration-1000 hover:border-primary/60 transition-all cursor-crosshair group/ev shadow-inner relative overflow-hidden text-right">
-                       <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/ev:opacity-15 transition-opacity" />
-                       <div className="flex justify-between items-center relative z-10">
-                          <span className="text-xs font-black text-white/40 italic">{ev.time}</span>
-                          <Badge className="bg-primary/10 text-primary border-none font-black italic tracking-widest px-6 py-2 rounded-full text-sm shadow-2xl">{ev.type}</Badge>
-                       </div>
-                       <p className="text-xl font-black text-gray-200 italic group-hover/ev:text-white transition-colors leading-relaxed relative z-10">"{ev.msg}"</p>
-                    </div>
-                 ))}
-              </CardContent>
-              <div className="absolute -bottom-20 -left-20 p-24 opacity-[0.01] pointer-events-none group-hover:opacity-[0.05] transition-all duration-1000 scale-150"><InfinityIcon className="size-[40rem] text-primary" /></div>
-           </Card>
         </section>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-24 relative z-10">
+           {stats.map((s, i) => (
+             <Link key={i} href={s.href} className="contents">
+               <Card className="kali-card border-white/5 bg-black/95 hover:border-primary/70 transition-all duration-1000 p-8 rounded-[2.5rem] shadow-9xl group overflow-hidden border-4 hierarchical-shadow cursor-pointer active:scale-95 h-full">
+                  <div className="flex justify-between items-start mb-10 relative z-10">
+                     <Badge className="bg-primary/5 text-primary border-4 border-primary/20 text-[12px] uppercase font-black italic tracking-widest px-6 py-1.5 rounded-full">{s.status}</Badge>
+                     <div className={cn("size-20 rounded-2xl bg-white/5 flex items-center justify-center border-2 border-white/5 group-hover:bg-primary/10 transition-all shadow-inner", s.color)}>
+                        <s.icon className="size-10 transition-all group-hover:scale-110" />
+                     </div>
+                  </div>
+                  <div className="text-5xl md:text-8xl font-black italic gold-glow uppercase tracking-tighter relative z-10 leading-none">{s.value}</div>
+                  <div className="text-[16px] text-muted-foreground font-bold uppercase tracking-[0.5em] mt-6 italic relative z-10">{s.label}</div>
+               </Card>
+             </Link>
+           ))}
+        </div>
 
         {/* Neural Map v78.9 */}
         <Card className="mb-24 kali-card border-white/5 bg-black/60 p-12 rounded-[5rem] border-8 shadow-inner relative overflow-hidden group text-right">

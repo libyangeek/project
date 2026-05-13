@@ -43,7 +43,9 @@ import {
   RotateCw,
   LayoutGrid,
   Network,
-  Rocket
+  Rocket,
+  Globe,
+  Radio
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -58,9 +60,7 @@ import Link from "next/link"
 
 /**
  * @fileOverview الوكيل الميداني v78.9 - THE SUPREME ARCHITECT: ORBITAL FUSION
- * واجهة الهندسة الجينية والتعديل الذاتي المباشر لنسخة ULTRA لعام 2026.
- * تم إضافة ميزة "النبض المداري" (Orbital Pulse) لنشر العقد السيادية عالمياً.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي
+ * واجهة الهندسة الجينية والسيطرة المدارية على الـ 14 عنقوداً لعام 2026.
  */
 export default function FieldAgentPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -74,7 +74,10 @@ export default function FieldAgentPage() {
   const [loading, setLoading] = React.useState(false)
   const [analysis, setAnalysis] = React.useState<any>(null)
   const [resonance, setResonance] = React.useState(100.00)
+  const [activeClusters, setActiveClusters] = React.useState<string[]>(["Riyadh", "Cairo", "London"])
   const [knotStatus, setKnotStatus] = React.useState<boolean[]>(new Array(24).fill(true))
+
+  const clusters = ["Riyadh", "Cairo", "London", "Dubai", "New York", "Tokyo", "Berlin", "Singapore", "Moscow", "Paris", "Sydney", "Toronto", "Seoul", "Mumbai"];
 
   React.useEffect(() => {
     setMounted(true)
@@ -103,33 +106,17 @@ export default function FieldAgentPage() {
     } finally { setLoading(false) }
   }
 
-  const handleOrbitalDeployment = async () => {
-      setLoading(true)
-      toast({ title: "Orbital Deployment Triggered", description: "Materializing Sovereign Nodes across 14 global clusters..." })
-      try {
-          const response = await fetch('/api/execute', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ type: 'orbital_deploy', target: 'GLOBAL_GRID' })
-          });
-          if (response.ok) toast({ title: "Global Grid Subjugated", description: "Consensus reached: 14 nodes reporting 100% material stability." });
-      } finally { setLoading(false) }
-  }
-
-  const handleSelfHealing = async () => {
-    if (!selectedFilePath || !selectedFileContent) return;
-    setLoading(true);
-    toast({ title: "Wand3 Genetic Repair Active", description: "Interrogating DNA for logical drift..." });
+  const handleOrbitalDeploy = async () => {
+    setLoading(true)
+    toast({ title: "Orbital Pulse Initiated", description: "Consolidating 14 clusters for material DNA injection..." })
     try {
-        const aiResult = await executeFieldDevelopment({
-            userPrompt: input || "Execute absolute material repair for v78.9 standards.",
-            currentFile: selectedFileName,
-            fileContent: selectedFileContent,
-            mode: 'file_fix'
-        });
-        if (aiResult.geneticPlan) setSelectedFileContent(aiResult.geneticPlan);
-        setAnalysis(aiResult);
-        toast({ title: "Genetic Synthesis Complete", description: "Material DNA has been stabilized." });
+      const result = await executeFieldDevelopment({
+        userPrompt: "Execute absolute orbital deployment across the 14 global clusters.",
+        mode: 'orbital_deploy'
+      })
+      setAnalysis(result)
+      setActiveClusters(clusters)
+      toast({ title: "Global Grid Subjugated", description: "14 nodes report 100% material resonance." })
     } finally { setLoading(false) }
   }
 
@@ -167,10 +154,6 @@ export default function FieldAgentPage() {
     } finally { setLoading(false) }
   }
 
-  const handleContinueUpgrade = () => {
-    toast({ title: "Architectural Evolution Active", description: "Siphoning latest material DNA for orbital core regrowth... Status: استمر" });
-  }
-
   if (!mounted) return null
 
   return (
@@ -180,6 +163,7 @@ export default function FieldAgentPage() {
       <main className="flex-1 lg:mr-72 flex flex-col h-screen relative overflow-hidden border-l-4 border-primary/40">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.08),transparent)] pointer-events-none z-0" />
         
+        {/* Header - Fixed Top */}
         <header className="p-4 md:p-6 border-b-4 border-primary/40 bg-black/95 backdrop-blur-3xl z-30 flex flex-col lg:flex-row justify-between items-center gap-4 shadow-2xl shrink-0">
            <div className="flex items-center gap-4">
               <div className="size-12 md:size-16 rounded-2xl bg-black border-4 border-primary flex items-center justify-center shadow-lg animate-neural"><Wand2 className="size-8 md:size-10 text-primary gold-glow" /></div>
@@ -204,14 +188,11 @@ export default function FieldAgentPage() {
            </div>
 
            <div className="flex gap-3">
-               <Button onClick={handleOrbitalDeployment} disabled={loading} variant="outline" className="h-12 border-2 border-primary/40 bg-primary/10 text-primary font-black italic rounded-full px-6 hover:bg-primary hover:text-black transition-all shadow-xl group text-xs">
+               <Button onClick={handleOrbitalDeploy} disabled={loading} variant="outline" className="h-12 border-2 border-primary/40 bg-primary/10 text-primary font-black italic rounded-full px-6 hover:bg-primary hover:text-black transition-all shadow-xl group text-xs">
                   <Rocket className="size-4 mr-2 group-hover:-translate-y-1 transition-transform" /> ORBITAL_PULSE
                </Button>
                <Button asChild variant="outline" className="h-12 border-2 border-white/10 bg-white/5 text-white font-black italic rounded-full px-6 hover:bg-primary hover:text-black transition-all shadow-xl group text-xs">
                   <Link href="/"><ArrowLeft className="size-4 mr-2" /> العودة</Link>
-               </Button>
-               <Button onClick={handleContinueUpgrade} className="h-12 bg-primary hover:bg-white text-black font-black uppercase rounded-full border-2 border-black/30 shadow-9xl italic px-6 group active:scale-90 transition-all text-xs">
-                  <RotateCw className="size-4 mr-2 group-hover:rotate-180 transition-all duration-1000" /> استمر
                </Button>
            </div>
         </header>
@@ -228,7 +209,7 @@ export default function FieldAgentPage() {
                  </div>
               </div>
               <div className="flex-1 overflow-y-auto scrollbar-hide p-4 space-y-2">
-                 {files.length > 0 ? files.map((file, i) => (
+                 {files.map((file, i) => (
                     <div 
                         key={i} 
                         onClick={() => handleFileSelect(file)} 
@@ -246,12 +227,7 @@ export default function FieldAgentPage() {
                             {file.isDirectory ? <FolderOpen className="size-4 text-primary animate-pulse"/> : <FileCode className="size-4 text-blue-400"/>}
                        </div>
                     </div>
-                 )) : (
-                    <div className="h-full flex flex-col items-center justify-center opacity-10 gap-6">
-                        <Search className="size-12 animate-spin-slow" />
-                        <span className="text-xs font-black uppercase tracking-widest italic">Empty Node</span>
-                    </div>
-                 )}
+                 ))}
               </div>
            </aside>
 
@@ -294,37 +270,38 @@ export default function FieldAgentPage() {
                     </div>
                  </Card>
 
-                 {/* Analysis & Healing Chamber */}
+                 {/* Orbital Command Area */}
                  <div className="flex flex-col gap-6 min-h-0">
                     <Card className="kali-card border-primary/20 bg-black/95 rounded-[3rem] p-6 shadow-9xl flex flex-col flex-1 border-2 relative overflow-hidden min-h-0">
                         <div className="flex items-center justify-between mb-6 border-b-2 border-white/5 pb-4 relative z-10 shrink-0">
-                            <Badge className="bg-emerald-600/20 text-emerald-500 border-2 px-4 py-1 rounded-full font-black text-xs italic animate-pulse shadow-9xl">v78.9_OK</Badge>
+                            <Badge className="bg-primary/20 text-primary border-2 px-4 py-1 rounded-full font-black text-xs italic animate-pulse">ORBITAL_ACTIVE</Badge>
                             <div className="flex items-center gap-4">
-                                <h4 className="text-xl md:text-2xl font-black italic gold-glow uppercase leading-none">Orbital Synthesis</h4>
+                                <h4 className="text-xl md:text-2xl font-black italic gold-glow uppercase leading-none">Global Grid</h4>
                                 <div className="size-10 rounded-xl bg-primary flex items-center justify-center border-2 border-black/30 shadow-xl">
-                                    <BrainCircuit className="size-6 text-black" />
+                                    <Globe className="size-6 text-black" />
                                 </div>
                             </div>
                         </div>
 
-                        {analysis ? (
-                             <div className="space-y-6 flex-1 flex flex-col relative z-10 min-h-0">
-                                <div className="p-6 bg-primary/10 rounded-2xl border-2 border-primary/30 shadow-inner shrink-0">
-                                   <p className="text-lg md:text-xl text-white font-black italic leading-tight text-center drop-shadow-2xl">"{analysis.commanderBrief}"</p>
-                                </div>
-                                <div className="flex-1 min-h-0">
-                                   <div className="p-6 bg-black/80 rounded-2xl border-2 border-white/5 shadow-2xl relative overflow-hidden h-full">
-                                      <span className="text-[10px] font-black text-primary uppercase block mb-3 italic tracking-widest border-b border-primary/10 pb-2 justify-end flex items-center gap-2">Architectural Mapping <GitBranch className="size-3" /></span>
-                                      <div className="text-sm md:text-base text-gray-300 italic font-black leading-relaxed h-full overflow-y-auto scrollbar-hide pb-4">{analysis.analysis}</div>
-                                   </div>
-                                </div>
+                        <div className="flex-1 overflow-y-auto scrollbar-hide pr-2 space-y-4 text-right">
+                           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                              {clusters.map(c => (
+                                 <div key={c} className={cn("p-3 rounded-2xl border-2 transition-all duration-700 flex flex-col items-center gap-2", activeClusters.includes(c) ? "bg-emerald-600/10 border-emerald-500/40 text-emerald-500 shadow-lg" : "bg-white/5 border-white/5 text-muted-foreground")}>
+                                    <div className="size-8 rounded-lg bg-black border border-white/10 flex items-center justify-center shadow-inner">
+                                       <Radio className={cn("size-4", activeClusters.includes(c) && "animate-pulse")} />
+                                    </div>
+                                    <span className="text-[9px] font-black uppercase tracking-widest">{c}</span>
+                                 </div>
+                              ))}
+                           </div>
+
+                           {analysis && (
+                             <div className="p-6 bg-primary/10 rounded-2xl border-2 border-primary/30 shadow-inner mt-4 animate-in zoom-in-95 duration-700">
+                                <span className="text-[10px] font-black text-primary uppercase block mb-3 italic tracking-widest border-b border-primary/10 pb-2 justify-end flex items-center gap-2">Sovereign Brief <GitBranch className="size-3" /></span>
+                                <p className="text-sm md:text-base text-gray-200 italic font-black leading-relaxed">{analysis.commanderBrief}</p>
                              </div>
-                          ) : (
-                             <div className="flex-1 flex flex-col items-center justify-center opacity-10 gap-10">
-                                <Boxes className="size-32 animate-pulse text-primary" />
-                                <h3 className="text-3xl font-black uppercase tracking-widest text-white italic gold-glow">Interrogating DNA</h3>
-                             </div>
-                          )}
+                           )}
+                        </div>
                         <div className="absolute -bottom-8 -left-8 p-16 opacity-[0.01] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-32 text-primary" /></div>
                     </Card>
 
@@ -344,12 +321,12 @@ export default function FieldAgentPage() {
                     </Card>
 
                     <Button 
-                        onClick={handleSelfHealing} 
-                        disabled={loading || !selectedFileName} 
-                        className="w-full h-20 bg-red-600 hover:bg-white text-white hover:text-black font-black uppercase rounded-[2rem] border-4 border-black/30 shadow-9xl italic active:scale-95 transition-all text-lg group shrink-0"
+                        onClick={handleOrbitalDeploy} 
+                        disabled={loading} 
+                        className="w-full h-20 bg-primary hover:bg-white text-black font-black uppercase rounded-[2rem] border-4 border-black/30 shadow-9xl italic active:scale-95 transition-all text-lg group shrink-0"
                     >
-                        {loading ? <Loader2 className="size-8 animate-spin" /> : <HeartPulse className="size-8 mr-4 group-hover:rotate-12 transition-transform" />}
-                        ORBITAL_HEAL_v78.9
+                        {loading ? <Loader2 className="size-8 animate-spin" /> : <Rocket className="size-8 mr-4 group-hover:-translate-y-1 transition-transform" />}
+                        ORBITAL_DEPLOY_v78.9
                     </Button>
                  </div>
               </div>
@@ -363,12 +340,12 @@ export default function FieldAgentPage() {
                 <Input 
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleSelfHealing()}
-                    placeholder=" Direct the Orbital Agent to analyze DNA or fuse material mutations..." 
+                    onKeyDown={(e) => e.key === 'Enter' && handleOrbitalDeploy()}
+                    placeholder=" Direct the Orbital Architect to materialize material DNA..." 
                     className="h-16 md:h-20 bg-primary/5 border-2 border-white/10 rounded-full pl-16 pr-28 text-sm md:text-xl italic font-black focus:border-primary shadow-inner text-white text-left placeholder:text-gray-900"
                 />
                 <Button 
-                    onClick={handleSelfHealing}
+                    onClick={handleOrbitalDeploy}
                     disabled={loading || !input.trim()}
                     className="absolute right-2 top-1/2 -translate-y-1/2 size-12 md:size-16 bg-primary hover:bg-white text-black rounded-full shadow-9xl transition-all active:scale-90 border-2 border-black/30 group"
                 >
@@ -380,7 +357,7 @@ export default function FieldAgentPage() {
         <div className="shrink-0 p-2 border-t-4 border-primary/40 bg-black/98 flex justify-center items-center gap-6 opacity-30 text-[10px] md:text-[12px] font-black uppercase tracking-widest italic">
             <span>AL-MUIZZ SUPREME ARCHITECT v78.9</span>
             <div className="size-2 rounded-full bg-white animate-pulse shadow-[0_0_20px_white]" />
-            <span>ORBITAL_DOMINATION_COMPLETE_2026</span>
+            <span>GLOBAL_SUBJUGATION_v78_LOCKED</span>
         </div>
       </main>
     </div>

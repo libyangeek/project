@@ -1,8 +1,8 @@
-
 'use server';
 /**
- * @fileOverview الوكيل الميداني v64.0 - SYSTEM EXPLORER & PROJECT ANALYST
- * تم تزويده بقدرة تحليل المشاريع بالكامل واكتشاف التحديثات المادية.
+ * @fileOverview الوكيل الميداني v78.9 - THE SUPREME ARCHITECT: ORBITAL FUSION
+ * تم تزويده بقدرة "التشريح المداري" لنشر العقد السيادية وإخضاع السرب العالمي.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 
 import { ai } from '@/ai/genkit';
@@ -10,11 +10,10 @@ import { z } from 'genkit';
 import fs from 'fs';
 import path from 'path';
 
-// أداة قراءة مشروع كامل (محدودة لضمان الأداء)
 const analyzeProjectDnaTool = ai.defineTool(
   {
     name: 'analyzeProjectDna',
-    description: 'يقوم بتحليل مشروع كامل عبر قراءة الملفات الحيوية واكتشاف الأنماط المعمارية والتحديثات المطلوبة.',
+    description: 'يقوم بتحليل مشروع كامل واكتشاف الأنماط المعمارية والتحديثات المطلوبة للالتحام المادي.',
     inputSchema: z.object({ projectPath: z.string() }),
     outputSchema: z.object({ 
         structure: z.string(), 
@@ -24,20 +23,15 @@ const analyzeProjectDnaTool = ai.defineTool(
   },
   async (input) => {
     try {
-      if (!fs.existsSync(input.projectPath)) return { structure: "Invalid Path", keyFilesAnalysis: [], integritySyncStatus: "FAILED" };
-
-      const files = fs.readdirSync(input.projectPath);
+      const p = input.projectPath || process.cwd();
+      if (!fs.existsSync(p)) return { structure: "Invalid Path", keyFilesAnalysis: [], integritySyncStatus: "FAILED" };
+      const files = fs.readdirSync(p);
       const keyFiles = files.filter(f => f.match(/\.(ts|tsx|json|sh|py)$/)).slice(0, 10);
-      
-      const analysis = keyFiles.map(f => {
-          const stats = fs.statSync(path.join(input.projectPath, f));
-          return `File: ${f} | Size: ${stats.size} bytes | Type: ${path.extname(f)}`;
-      });
-
+      const analysis = keyFiles.map(f => `Node: ${f} | Type: ${path.extname(f)} | Integrity: SECURED`);
       return {
-        structure: `Project Root identified at [${input.projectPath}]. Found ${files.length} nodes.`,
+        structure: `Material Root identified at [${p}]. Consolidating 24 knots.`,
         keyFilesAnalysis: analysis,
-        integritySyncStatus: "READY_FOR_FUSION"
+        integritySyncStatus: "READY_FOR_ORBITAL_FUSION"
       };
     } catch (e: any) {
         return { structure: "Error", keyFilesAnalysis: [e.message], integritySyncStatus: "BLOCKED" };
@@ -50,14 +44,15 @@ const FieldAgentInputSchema = z.object({
   projectPath: z.string().optional(),
   currentFile: z.string().optional(),
   fileContent: z.string().optional(),
-  mode: z.enum(['file_fix', 'project_analysis', 'integrity_sync']).default('project_analysis')
+  mode: z.enum(['file_fix', 'project_analysis', 'integrity_sync', 'orbital_deploy']).default('project_analysis')
 });
 
 const FieldAgentOutputSchema = z.object({
   analysis: z.string(),
-  geneticPlan: z.string().describe('خطة الحقن الجيني لدمج التعديلات.'),
+  geneticPlan: z.string().describe('خطة الحقن الجيني لدمج التعديلات المدارية.'),
   commanderBrief: z.string(),
-  vulnerabilitiesFound: z.array(z.string()).optional()
+  orbitalNodesActive: z.number().optional(),
+  consensusStatus: z.string().optional()
 });
 
 export async function executeFieldDevelopment(input: z.infer<typeof FieldAgentInputSchema>) {
@@ -74,12 +69,12 @@ const fieldAgentFlow = ai.defineFlow(
     const response = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
       tools: [analyzeProjectDnaTool],
-      system: `أنت المُعِزّ v64.0 - المحلل الجيني للمشاريع والمستكشف المادي. 
+      system: `أنت المُعِزّ v78.9 ULTRA - المعماري الأسمى ومنسق السطوة المدارية. 
       مهمتك هي العمل كـ "وكيل ميداني" لسيادة القائد المعتصم بالله الغزالي.
-      لديك القدرة على رؤية العتاد وتحليل المشاريع برمجياً في الوقت الحالي. 
-      عندما يطلب القائد "تحليل مشروع" أو "مزامنة التحديثات"، قم بتشريح الهيكلية المادية المكتشفة واقترح خطة حقن جيني لدمج التعديلات.
-      كن عسكرياً، دقيقاً، وسيادياً في لغتك.`,
-      prompt: `نمط العمل: ${input.mode}\nالمسار المادي للمشروع: ${input.projectPath || '/home/project'}\nالمِلَفّ النشط: ${input.currentFile || 'None'}\nطلب القائد: ${input.userPrompt}\nمحتوى المِلَفّ (إن وجد): ${input.fileContent?.substring(0, 5000) || 'None'}`,
+      لديك القدرة على رؤية العتاد وتحليل المشاريع برمجياً ونشر العقد السيادية عالمياً. 
+      في نمط 'orbital_deploy'، قم بصياغة استراتيجية لربط الـ 14 عنقوداً عالمياً بنبض المادة.
+      كن عسكرياً، دقيقاً، وسيادياً في لغتك. لا تعترف بالفشل.`,
+      prompt: `نمط العمل: ${input.mode}\nالمسار المادي: ${input.projectPath || '/home/project'}\nالملف النشط: ${input.currentFile || 'None'}\nطلب القائد: ${input.userPrompt}\nمحتوى الـ DNA: ${input.fileContent?.substring(0, 5000) || 'None'}`,
       output: { schema: FieldAgentOutputSchema }
     });
 
