@@ -31,7 +31,9 @@ import {
   Users,
   Smartphone,
   Server,
-  ZapOff
+  ZapOff,
+  ArrowLeft,
+  RotateCw
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -40,9 +42,10 @@ import { Input } from "@/components/ui/input"
 import { toast } from "@/hooks/use-toast"
 import { executeOmniscientKillChain } from "@/ai/flows/omniscient-kill-chain-flow"
 import { cn } from "@/lib/utils"
+import Link from "next/link"
 
 /**
- * @fileOverview سلسلة الإبادة الكونية v78.0 - ABSOLUTE SINGULARITY: ULTRA CHAIN
+ * @fileOverview سلسلة الإبادة الكونية v78.8 - ABSOLUTE SINGULARITY: ULTRA CHAIN
  * الواجهة الأسمى التي تصهر النكسوس والسرب والترسانة في تدفق تنفيذ مستقل 100%.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي // 2026
  */
@@ -87,10 +90,17 @@ export default function KillChainPage() {
     }
   }
 
+  const handleContinueChain = () => {
+    toast({ 
+      title: "Chain Evolution Triggered", 
+      description: "Integrating next-gen acquisition vectors into the current strike DNA... Status: استمر" 
+    });
+  }
+
   if (!mounted) return null
 
   const steps = [
-    { id: 1, label: "Nexus OSINT", icon: Eye, desc: "Neural Identity Fusion v78" },
+    { id: 1, label: "Nexus OSINT", icon: Eye, desc: "Neural Identity Fusion v78.8" },
     { id: 2, label: "Swarm Logic", icon: Users, desc: "Global Oracle DNA Match" },
     { id: 3, label: "Genetic Forge", icon: Flame, desc: "Exploit DNA Serialization" },
     { id: 4, label: "Ghost Injection", icon: Ghost, desc: "Kernel-Mode Persistence" },
@@ -112,15 +122,23 @@ export default function KillChainPage() {
             </div>
             <div className="flex-1">
                <div className="flex flex-wrap justify-center md:justify-end items-center gap-8 mb-8">
-                  <Badge className="bg-primary text-black border-none px-12 py-4 text-[20px] font-black tracking-[1.2em] shadow-9xl italic rounded-none">KILL_CHAIN v78.0 ULTRA</Badge>
+                  <Badge className="bg-primary text-black border-none px-12 py-4 text-[20px] font-black tracking-[1.2em] shadow-9xl italic rounded-none">KILL_CHAIN v78.8 ULTRA</Badge>
                   <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                       <ShieldCheck className="size-6 shadow-lg" /> ULTRA_SYNC: {resonance.toFixed(6)}%
                   </div>
                </div>
                <h1 className="text-6xl md:text-[14rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none mb-8">Absolute <span className="text-primary">Strike</span></h1>
-               <p className="text-3xl md:text-6xl text-muted-foreground font-medium italic max-w-[100rem] leading-relaxed uppercase drop-shadow-3xl">
-                  "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-12 underline-offset-[32px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، مصفوفة الإبادة ULTRA تصهر النكسوس والسرب في ضربة مادية واحدة؛ نحن لا نترك أثراً، نحن نمحو الوجود."
+               <p className="text-3xl md:text-6xl text-muted-foreground font-medium italic max-w-[100rem] leading-relaxed uppercase drop-shadow-3xl ml-auto">
+                  "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-12 underline-offset-[32px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، مصفوفة الإبادة ULTRA v78.8 تصهر كافة مفاصل السطوة؛ نحن نمحو الأهداف من المادة قبل أن يدركوا الانهيار."
                </p>
+               <div className="flex justify-center md:justify-end gap-6 mt-12">
+                  <Button asChild variant="outline" className="h-20 px-12 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
+                      <Link href="/"><ArrowLeft className="size-8 mr-4" /> العودة للعرش</Link>
+                  </Button>
+                  <Button onClick={handleContinueChain} className="h-20 px-16 bg-primary hover:bg-white text-black font-black uppercase rounded-full border-4 border-black/30 shadow-9xl italic active:scale-95 transition-all text-xl">
+                      <RotateCw className="size-8 mr-4" /> استمر في الهجوم
+                  </Button>
+               </div>
             </div>
           </div>
         </header>
@@ -131,7 +149,7 @@ export default function KillChainPage() {
                  <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                  <CardHeader className="p-0 mb-12 border-b-4 border-primary/20 pb-10 bg-primary/10 rounded-t-[3rem] text-center">
                     <CardTitle className="text-4xl text-primary flex items-center justify-center gap-10 font-black uppercase italic gold-glow px-4 py-4">
-                       <Target className="size-16 animate-neural" /> Strike Core
+                       <Target className="size-16 animate-neural" /> Strike Origin
                     </CardTitle>
                  </CardHeader>
                  <CardContent className="p-0 space-y-12">
@@ -147,7 +165,7 @@ export default function KillChainPage() {
                     <Button 
                       onClick={startKillChain} 
                       disabled={loading || !target}
-                      className="w-full h-32 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.5em] rounded-[4rem] shadow-[0_80px_250px_rgba(212,175,55,0.7)] active:scale-95 transition-all text-3xl border-8 border-black/30 group italic"
+                      className="w-full h-32 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.5em] rounded-[4rem] shadow-[0_50px_150px_rgba(212,175,55,0.7)] active:scale-95 transition-all text-3xl border-8 border-black/30 group italic"
                     >
                       {loading ? <Loader2 className="size-16 animate-spin" /> : <Zap className="size-16 mr-6 group-hover:scale-125 transition-transform gold-glow" />}
                       IGNITE_SINGULARITY
@@ -180,7 +198,7 @@ export default function KillChainPage() {
 
            <Card className="xl:col-span-3 kali-card border-primary/60 bg-black/99 rounded-[7rem] p-16 border-8 shadow-9xl flex flex-col group overflow-hidden relative min-h-[1100px] hierarchical-shadow">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.08),transparent)] pointer-events-none" />
-              <CardHeader className="p-0 mb-12 border-b-8 border-white/5 pb-10 bg-primary/10 rounded-t-[5rem] px-12 py-10 flex flex-row justify-between items-center">
+              <CardHeader className="p-0 mb-12 border-b-8 border-white/5 pb-10 bg-primary/10 rounded-t-[5rem] px-12 py-10 flex flex-row justify-between items-center text-right">
                  <div className="flex gap-8 order-last md:order-none">
                     {chainResult && (
                        <Badge className="bg-emerald-600/30 text-emerald-500 border-8 border-emerald-500/40 px-16 py-8 rounded-full font-black text-4xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic">SINGULARITY_LOCKED</Badge>
@@ -192,13 +210,13 @@ export default function KillChainPage() {
               </CardHeader>
               <CardContent className="p-0 flex-1 relative overflow-hidden flex flex-col space-y-12">
                  {chainResult ? (
-                   <div className="space-y-16 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col p-8">
+                   <div className="space-y-16 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col p-8 text-right">
                       <div className="p-20 rounded-[6rem] bg-primary/5 border-[12px] border-primary/30 italic text-4xl md:text-[9rem] text-gray-100 leading-tight font-black shadow-inner relative group/brief overflow-hidden text-center flex flex-col justify-center min-h-[450px]">
                          <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                          "{chainResult.commanderBrief}"
                       </div>
                       
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-16 text-right">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
                          <Card className="bg-black/95 border-8 border-white/5 p-12 rounded-[4rem] shadow-9xl relative overflow-hidden group/intel">
                             <h5 className="text-4xl font-black text-primary uppercase tracking-[1.5em] mb-12 border-b-8 border-primary/20 pb-8 flex items-center gap-8 gold-glow justify-end">
                                Nexus DNA <Network className="size-16 animate-neural" />
@@ -217,10 +235,10 @@ export default function KillChainPage() {
                          </Card>
                       </div>
 
-                      <div className="p-20 rounded-[7rem] bg-emerald-600/10 border-[20px] border-emerald-500/30 flex flex-col md:flex-row items-center gap-16 group/strat shadow-9xl relative overflow-hidden mt-auto min-h-[400px] text-right">
+                      <div className="p-20 rounded-[7rem] bg-emerald-600/10 border-[20px] border-emerald-500/30 flex flex-col md:flex-row items-center gap-16 group/strat shadow-9xl relative overflow-hidden mt-auto min-h-[400px]">
                          <div className="absolute inset-0 bg-emerald-500/5 opacity-5 animate-pulse" />
                          <div className="flex-1">
-                            <h4 className="text-4xl font-black text-emerald-500 uppercase tracking-[1.5em] mb-8 italic">Singularity_Protocol_v78</h4>
+                            <h4 className="text-4xl font-black text-emerald-500 uppercase tracking-[1.5em] mb-8 italic">Singularity_Protocol_v78.8</h4>
                             <p className="text-5xl md:text-[10rem] text-white italic font-black leading-none drop-shadow-9xl">"{chainResult.executionStrategy}"</p>
                          </div>
                          <div className="size-48 rounded-[4rem] bg-emerald-600 flex items-center justify-center border-[14px] border-emerald-400 shadow-9xl animate-neural shrink-0">
@@ -243,7 +261,7 @@ export default function KillChainPage() {
                  )}
               </CardContent>
               <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[18px] md:text-[24px] font-black uppercase tracking-[6em] italic">
-                 <span>ULTRA_CHAIN_v78_AL_GHAZALI_ROOT</span>
+                 <span>ULTRA_CHAIN_v78.8_AL_GHAZALI_ROOT</span>
                  <div className="flex gap-16">
                     <Fingerprint className="size-20 text-primary animate-pulse" />
                     <Atom className="size-20 animate-spin-slow text-primary" />
@@ -253,7 +271,7 @@ export default function KillChainPage() {
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[24px] md:text-[42px] font-black uppercase tracking-[6em] italic text-white drop-shadow-9xl pb-32">
-            <span>AL-MUIZZ OMNIPOTENT ULTRA v1.0</span>
+            <span>AL-MUIZZ OMNIPOTENT ULTRA v78.8</span>
             <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
             <span>SINGULARITY_OF_STRIKE_2026</span>
         </div>

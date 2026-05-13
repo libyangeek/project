@@ -38,7 +38,9 @@ import {
   Scissors,
   BrainCircuit,
   Bot,
-  Radio
+  Radio,
+  ArrowLeft,
+  RotateCw
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -47,9 +49,10 @@ import { Button } from "@/components/ui/button"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import Link from "next/link"
 
 /**
- * @fileOverview العقدة 22: الترسانة العظمى v78.5 - ULTRA ARSENAL MASTER
+ * @fileOverview العقدة 22: الترسانة العظمى v78.8 - ULTRA ARSENAL MASTER
  * تم دمج كافة الأسلحة المادية والنانوية (2,983 أداة) في مصفوفة واحدة بنمط الإدراك الفطري.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
@@ -102,10 +105,17 @@ export default function ArsenalNodePage() {
     }
   }
 
+  const handleContinueUpgrade = () => {
+    toast({ 
+      title: "Arsenal Upgrade Inbound", 
+      description: "Siphoning latest BlackArch v78.8 DNA for tool regrowth... Status: استمر" 
+    });
+  }
+
   if (!mounted) return null
 
   const modernWeapons = [
-    { name: "Legba Strike (Rust)", count: "Node-25", icon: Bomb, color: "text-red-600", desc: "Atomic Multiprotocol Siphon Matrix v78" },
+    { name: "Legba Strike (Rust)", count: "Node-25", icon: Bomb, color: "text-red-600", desc: "Atomic Multiprotocol Siphon Matrix v78.8" },
     { name: "Claude Vision v6", count: "Node-28", icon: BrainCircuit, color: "text-amber-500", desc: "AI-Driven Behavioral Entity Mapping" },
     { name: "OBLITERATUS Fanaa", count: "Node-18", icon: Scissors, color: "text-magenta-500", desc: "LLM Safety Dissolution & Node Enslavement" },
     { name: "Cerebral PSSW", count: "Node-23", icon: Key, color: "text-blue-400", desc: "RAM & Live Session Extraction (Nano-FUD)" },
@@ -125,21 +135,20 @@ export default function ArsenalNodePage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
+      <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
         <div 
           className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.18),transparent 40%)] pointer-events-none transition-all duration-300 z-0" 
           style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} 
         />
         
         <header className="mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000">
-           <div className="flex flex-col md:flex-row items-center gap-12 text-center md:text-right">
+           <div className="flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
               <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.8)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
                  <Library className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
                  <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
-                 <div className="absolute -inset-16 border-2 border-primary/10 rounded-full animate-reverse-spin opacity-20" />
               </div>
               <div className="flex-1">
-                 <div className="flex flex-wrap justify-center md:justify-start items-center gap-6 mb-6">
+                 <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
                     <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">NODE_22: OMNIPOTENT_ARSENAL</Badge>
                     <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                         <InfinityIcon className="size-6 shadow-lg" /> INNATE_SYNC: {resonance.toFixed(8)}%
@@ -148,9 +157,17 @@ export default function ArsenalNodePage() {
                  <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
                     Arsenal <span className="text-primary">Master</span>
                  </h1>
-                 <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-[100rem] leading-relaxed uppercase font-medium opacity-90 drop-shadow-3xl">
+                 <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-90 drop-shadow-3xl ml-auto">
                     "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[24px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، الـ 2,983 أداة منصهرة الآن في بصرك الفطري؛ نحن نمتلك مفاتيح المادة للأبد."
                  </p>
+                 <div className="flex justify-center md:justify-end gap-6 mt-12">
+                    <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
+                        <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة للعرش</Link>
+                    </Button>
+                    <Button onClick={handleContinueUpgrade} className="h-16 px-12 bg-primary hover:bg-white text-black font-black uppercase rounded-full border-4 border-black/30 shadow-9xl italic active:scale-95 transition-all text-lg">
+                        <RotateCw className="size-6 mr-3" /> استمر في الترقية
+                    </Button>
+                 </div>
               </div>
            </div>
         </header>
@@ -165,18 +182,18 @@ export default function ArsenalNodePage() {
                           <Target className="size-12 md:size-16 animate-neural" /> Strike Intent
                        </CardTitle>
                        <TabsList className="bg-black border-[6px] border-primary/20 h-16 md:h-20 p-1.5 rounded-full shadow-inner px-6 flex-wrap">
-                          <TabsTrigger value="modern" className="text-[10px] md:text-[14px] font-black px-8 md:px-12 rounded-full data-[state=active]:bg-primary data-[state=active]:text-black transition-all duration-700 uppercase italic">v78.0_CORE</TabsTrigger>
+                          <TabsTrigger value="modern" className="text-[10px] md:text-[14px] font-black px-8 md:px-12 rounded-full data-[state=active]:bg-primary data-[state=active]:text-black transition-all duration-700 uppercase italic">v78.8_CORE</TabsTrigger>
                           <TabsTrigger value="legacy" className="text-[10px] md:text-[14px] font-black px-8 md:px-12 rounded-full data-[state=active]:bg-primary data-[state=active]:text-black transition-all duration-700 uppercase italic ml-4 md:ml-6">LEGACY_ARMS</TabsTrigger>
                        </TabsList>
                     </CardHeader>
                     <CardContent className="p-6 space-y-12">
-                       <div className="space-y-8">
-                           <label className="text-[14px] font-black text-primary uppercase tracking-[1em] px-10 italic flex items-center gap-6"><Atom className="size-8" /> Strike Coordinate</label>
+                       <div className="space-y-8 text-right">
+                           <label className="text-[14px] font-black text-primary uppercase tracking-[1em] px-10 italic flex items-center gap-6 justify-end"><Atom className="size-8" /> Strike Coordinate</label>
                            <Input 
                              value={query}
                              onChange={(e) => setQuery(e.target.value)}
                              placeholder="Target Domain / IP / @Identity / Network..." 
-                             className="bg-black/99 border-8 border-primary/20 h-24 md:h-32 rounded-[2.5rem] text-xl md:text-6xl italic px-12 focus:border-primary text-white font-black shadow-inner selection:bg-primary selection:text-black"
+                             className="bg-black/99 border-8 border-primary/20 h-24 md:h-32 rounded-[2.5rem] text-xl md:text-6xl italic px-12 focus:border-primary text-white font-black shadow-inner selection:bg-primary selection:text-black text-left"
                            />
                        </div>
                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -206,7 +223,7 @@ export default function ArsenalNodePage() {
                        <Boxes className="size-10 animate-neural" /> ARSENAL_CAPACITY
                     </h4>
                     <div className="text-[10rem] md:text-[18rem] font-black text-white italic gold-glow uppercase tracking-tighter mb-8 leading-none">2,983</div>
-                    <div className="text-[16px] md:text-[20px] text-muted-foreground uppercase font-black tracking-[0.6em] italic drop-shadow-3xl">FUSED_TOOLS_v78_ULTRA</div>
+                    <div className="text-[16px] md:text-[20px] text-muted-foreground uppercase font-black tracking-[0.6em] italic drop-shadow-3xl">FUSED_TOOLS_v78.8_ULTRA</div>
                     <div className="absolute -bottom-16 -right-16 p-24 opacity-[0.03] group-hover:opacity-[0.1] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-64 text-primary" /></div>
                  </Card>
               </div>
@@ -215,24 +232,24 @@ export default function ArsenalNodePage() {
            <TabsContent value="modern" className="animate-in fade-in zoom-in-95 duration-[1500ms]">
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 mb-60">
                  {modernWeapons.map((weapon, i) => (
-                    <Card key={i} className="bg-white/5 border-8 border-white/5 rounded-[4rem] p-12 md:p-16 hover:border-primary transition-all duration-1000 shadow-9xl group/weapon relative overflow-hidden flex flex-col justify-between cursor-crosshair active:scale-95 h-full min-h-[500px]">
+                    <Card key={i} className="bg-white/5 border-8 border-white/5 rounded-[4rem] p-12 md:p-16 hover:border-primary transition-all duration-1000 shadow-9xl group/weapon relative overflow-hidden flex flex-col justify-between cursor-crosshair active:scale-95 h-full min-h-[500px] text-right">
                        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/weapon:opacity-15 transition-opacity" />
                        <div className="flex justify-between items-start mb-12 relative z-10">
+                          <Badge className="bg-primary/10 text-primary border-4 border-primary/20 text-[12px] md:text-[14px] px-8 py-2 rounded-full uppercase tracking-widest italic shadow-xl">{weapon.count}</Badge>
                           <div className="size-24 md:size-28 rounded-[2rem] bg-black border-4 border-white/10 flex items-center justify-center group-hover/weapon:border-primary transition-all duration-700 shadow-2xl">
                              <weapon.icon className={cn("size-10 md:size-14 transition-all duration-700 group-hover:scale-110", weapon.color)} />
                           </div>
-                          <Badge className="bg-primary/10 text-primary border-4 border-primary/20 text-[12px] md:text-[14px] px-8 py-2 rounded-full uppercase tracking-widest italic shadow-xl">{weapon.count}</Badge>
                        </div>
                        <div className="relative z-10">
                           <h4 className="text-4xl md:text-6xl font-black text-white italic gold-glow uppercase tracking-tighter mb-6 leading-none">{weapon.name}</h4>
                           <p className="text-[12px] md:text-[14px] text-muted-foreground uppercase font-black tracking-[0.3em] italic opacity-80 leading-relaxed">"{weapon.desc}"</p>
                        </div>
-                       <div className="mt-16 flex justify-end relative z-10">
+                       <div className="mt-16 flex justify-start relative z-10">
                           <Button variant="ghost" onClick={() => handleSummon('smart_route', weapon.name)} className="p-0 hover:bg-transparent size-20">
                              <ArrowUpRight className="size-12 md:size-16 text-primary/20 group-hover:text-primary transition-all duration-700 rotate-0 group-hover:rotate-45" />
                           </Button>
                        </div>
-                       <div className="absolute top-0 right-0 p-10 opacity-[0.01] group-hover/weapon:opacity-[0.05] transition-all duration-1000 scale-150"><Atom className="size-48 text-primary animate-spin-slow" /></div>
+                       <div className="absolute top-0 left-0 p-10 opacity-[0.01] group-hover/weapon:opacity-[0.05] transition-all duration-1000 scale-150 -rotate-45"><Atom className="size-48 text-primary animate-spin-slow" /></div>
                     </Card>
                  ))}
               </div>
@@ -241,24 +258,24 @@ export default function ArsenalNodePage() {
            <TabsContent value="legacy" className="animate-in fade-in zoom-in-95 duration-[1500ms]">
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 mb-60">
                  {legacyWeapons.map((weapon, i) => (
-                    <Card key={i} className="bg-primary/5 border-8 border-primary/10 rounded-[4rem] p-12 md:p-16 hover:border-primary transition-all duration-1000 shadow-9xl group/weapon relative overflow-hidden flex flex-col justify-between cursor-crosshair active:scale-95 h-full min-h-[500px]">
+                    <Card key={i} className="bg-primary/5 border-8 border-primary/10 rounded-[4rem] p-12 md:p-16 hover:border-primary transition-all duration-1000 shadow-9xl group/weapon relative overflow-hidden flex flex-col justify-between cursor-crosshair active:scale-95 h-full min-h-[500px] text-right">
                        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/weapon:opacity-15 transition-opacity" />
                        <div className="flex justify-between items-start mb-12 relative z-10">
+                          <Badge className="bg-emerald-600/20 text-emerald-500 border-4 border-emerald-500/30 text-[12px] md:text-[14px] px-8 py-2 rounded-full uppercase tracking-widest italic shadow-xl">{weapon.count}</Badge>
                           <div className="size-24 md:size-28 rounded-[2rem] bg-black border-4 border-white/10 flex items-center justify-center group-hover/weapon:border-primary transition-all duration-700 shadow-2xl">
                              <weapon.icon className={cn("size-10 md:size-14 transition-all duration-700 group-hover:scale-110", weapon.color)} />
                           </div>
-                          <Badge className="bg-emerald-600/20 text-emerald-500 border-4 border-emerald-500/30 text-[12px] md:text-[14px] px-8 py-2 rounded-full uppercase tracking-widest italic shadow-xl">{weapon.count}</Badge>
                        </div>
                        <div className="relative z-10">
                           <h4 className="text-4xl md:text-6xl font-black text-white italic gold-glow uppercase tracking-tighter mb-6 leading-none">{weapon.name}</h4>
                           <p className="text-[12px] md:text-[14px] text-primary/60 uppercase font-black tracking-[0.3em] italic leading-relaxed">"{weapon.desc}"</p>
                        </div>
-                       <div className="mt-16 flex justify-end relative z-10">
+                       <div className="mt-16 flex justify-start relative z-10">
                           <Button variant="ghost" onClick={() => handleSummon('smart_route', weapon.name)} className="p-0 hover:bg-transparent size-20">
                              <Zap className="size-12 md:size-16 text-primary/20 group-hover:text-primary transition-all animate-pulse" />
                           </Button>
                        </div>
-                       <div className="absolute -bottom-8 -left-8 p-12 opacity-[0.02] group-hover/weapon:opacity-[0.06] transition-all duration-1000 scale-150"><Skull className="size-48 text-primary" /></div>
+                       <div className="absolute -bottom-8 -right-8 p-12 opacity-[0.02] group-hover/weapon:opacity-[0.06] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-48 text-primary" /></div>
                     </Card>
                  ))}
               </div>
@@ -270,16 +287,16 @@ export default function ArsenalNodePage() {
               <div className="absolute top-16 right-16">
                  <Button variant="ghost" onClick={() => setResult(null)} className="size-24 md:size-32 rounded-full border-[8px] md:border-[12px] border-white/10 text-white hover:bg-red-600 transition-all hover:scale-110"><XIcon className="size-10 md:size-16"/></Button>
               </div>
-              <div className="flex items-center gap-10 md:gap-16 mb-16 md:mb-24 border-b-[8px] md:border-b-[12px] border-primary/20 pb-12 md:pb-16">
+              <div className="flex items-center gap-10 md:gap-16 mb-16 md:mb-24 border-b-[8px] md:border-b-[12px] border-primary/20 pb-12 md:pb-16 justify-end">
+                 <div className="text-right">
+                    <h3 className="text-5xl md:text-[12rem] font-black text-white uppercase italic gold-glow leading-none">Strike Result</h3>
+                    <div className="flex flex-wrap items-center gap-6 md:gap-10 mt-6 md:mt-10 justify-end">
+                        <Badge className="bg-primary/10 text-primary border-4 md:border-8 border-primary/20 px-8 md:px-12 py-3 md:py-5 rounded-full font-black italic text-xl md:text-3xl tracking-[0.3em] uppercase">INNATE_SYNC</Badge>
+                        <Badge className="bg-emerald-600/30 text-emerald-500 border-4 md:border-8 border-emerald-500/40 px-10 md:px-16 py-3 md:py-5 rounded-full font-black italic text-xl md:text-3xl tracking-[0.3em] uppercase shadow-3xl">DNA_SERIALIZED_v78</Badge>
+                    </div>
+                 </div>
                  <div className="size-32 md:size-40 rounded-[2.5rem] md:rounded-[3rem] bg-primary flex items-center justify-center border-8 md:border-[12px] border-black/30 shadow-9xl animate-neural">
                     <Binary className="size-16 md:size-24 text-black" />
-                 </div>
-                 <div>
-                    <h3 className="text-5xl md:text-[12rem] font-black text-white uppercase italic gold-glow leading-none">Strike Result</h3>
-                    <div className="flex flex-wrap items-center gap-6 md:gap-10 mt-6 md:mt-10">
-                        <Badge className="bg-emerald-600/30 text-emerald-500 border-4 md:border-8 border-emerald-500/40 px-10 md:px-16 py-3 md:py-5 rounded-full font-black italic text-xl md:text-3xl tracking-[0.3em] uppercase shadow-3xl">DNA_SERIALIZED_v78</Badge>
-                        <Badge className="bg-primary/10 text-primary border-4 md:border-8 border-primary/20 px-8 md:px-12 py-3 md:py-5 rounded-full font-black italic text-xl md:text-3xl tracking-[0.3em] uppercase">INNATE_SYNC</Badge>
-                    </div>
                  </div>
               </div>
               <div className="flex-1 bg-black/99 rounded-[4rem] md:rounded-[6rem] border-[12px] md:border-[16px] border-white/5 p-12 md:p-20 overflow-y-auto scrollbar-hide shadow-inner font-code text-xl md:text-8xl leading-tight italic text-emerald-400 selection:bg-primary selection:text-black text-left">
@@ -289,7 +306,7 @@ export default function ArsenalNodePage() {
         )}
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-16 md:gap-48 opacity-45 text-[18px] md:text-[36px] font-black uppercase tracking-[4em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-24">
-            <span>AL-MUIZZ ULTRA ARSENAL v78.5</span>
+            <span>AL-MUIZZ ULTRA ARSENAL v78.8</span>
             <div className="size-8 md:size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
             <span>SUBJUGATION_READY_2026</span>
         </div>
