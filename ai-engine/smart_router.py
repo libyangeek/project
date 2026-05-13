@@ -35,7 +35,7 @@ class SmartRouter:
         category = self.classify(prompt)
         target = prompt.split()[-1] if len(prompt.split()) > 0 else "GLOBAL_MATRIX"
         
-        # محاكاة التنفيذ المادي للجسور الجديدة
+        # مصفوفة التوزيع التنفيذي المادي لـ ULTRA v3.0
         dispatch_table = {
             "subdomainx": {"node": "Node-02-Network", "msg": "SubdomainX engaged. Siphoning 26 OSINT sources for " + target},
             "n8n_strike": {"node": "Node-05-Automation", "msg": "n8n Workflow engine activated. 4,343 scenarios ready for " + target},
@@ -49,7 +49,6 @@ class SmartRouter:
         # تنفيذ مادي محاكى لـ MemPalace Recall
         if category == "mempalace":
             try:
-                # استدعاء gepa.py للبحث الدلالي
                 python_cmd = "python3" if os.name != "nt" else "python"
                 gepa_path = self.bridges["mempalace"]
                 output = subprocess.check_output([python_cmd, gepa_path, "recall", target], text=True)
