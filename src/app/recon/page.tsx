@@ -46,7 +46,7 @@ import { cn } from "@/lib/utils"
 import Link from "next/link"
 
 /**
- * @fileOverview أعين الاستطلاع v78.8 - THE SUPREME RECON: ROBON FUSION
+ * @fileOverview أعين الاستطلاع v78.8 - THE SUPREME RECON: ROBIN FUSION
  * تم دمج مصفوفة Robin للأتمتة الكلية مع Claude-OSINT و MemPalace.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */

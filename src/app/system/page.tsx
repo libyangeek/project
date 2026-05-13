@@ -40,8 +40,6 @@ import {
   Monitor,
   Sparkles,
   Cloud,
-  Github,
-  Server,
   ArrowLeft,
   RotateCw,
   Dna

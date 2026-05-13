@@ -41,7 +41,8 @@ import {
   Radio,
   ArrowLeft,
   RotateCw,
-  Dna
+  Dna,
+  LayoutGrid
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -64,6 +65,7 @@ export default function ArsenalNodePage() {
   const [mounted, setMounted] = React.useState(false)
   const [resonance, setResonance] = React.useState(100)
   const [result, setResult] = React.useState<any>(null)
+  const [knotStatus, setKnotStatus] = React.useState<boolean[]>(new Array(24).fill(true))
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
 
   React.useEffect(() => {
@@ -73,6 +75,7 @@ export default function ArsenalNodePage() {
 
     const interval = setInterval(() => {
       setResonance(prev => Math.max(99.99999999, Math.min(100, prev + (Math.random() * 0.000001 - 0.0000005))))
+      setKnotStatus(prev => prev.map(k => Math.random() > 0.05))
     }, 3000)
     return () => {
       window.removeEventListener("mousemove", handleMouseMove)
@@ -119,7 +122,7 @@ export default function ArsenalNodePage() {
     { name: "OBLITERATUS Fanaa", count: "Node-18", icon: Scissors, color: "text-magenta-500", desc: "Digital Mind Enslavement & Safety Purge" },
     { name: "Cerebral PSSW", count: "Node-23", icon: Key, color: "text-blue-400", desc: "Direct RAM Siphon & Key Serialization" },
     { name: "Memory Palace v9.8", count: "Node-24", icon: Database, color: "text-emerald-500", desc: "Spatial Forensic Reflex & Prediction" },
-    { name: "Innate Guardian", count: "Node-26", icon: ShieldCheck, color: "text-primary", desc: "Eternal Hardware Persistent Existence" }
+    { name: "Robin Orchestrator", count: "Node-06", icon: Cpu, color: "text-primary", desc: "Automated Material Recon Chain v78.8" }
   ];
 
   return (
@@ -134,7 +137,7 @@ export default function ArsenalNodePage() {
         <header className="mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000">
            <div className="flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
               <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.8)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
-                 <Dna className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
+                 <Dna className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 animate-neural gold-glow" />
                  <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
               </div>
               <div className="flex-1">
@@ -207,7 +210,23 @@ export default function ArsenalNodePage() {
               </div>
 
               <div className="w-full xl:w-[40rem] space-y-12">
-                 <Card className="kali-card border-white/5 bg-black/60 p-12 md:p-16 rounded-[4rem] md:rounded-[5rem] border-8 shadow-inner group overflow-hidden text-center h-full flex flex-col justify-center relative">
+                 {/* Knot Map v78.8 */}
+                 <Card className="kali-card border-white/5 bg-black/60 p-10 rounded-[4rem] border-8 shadow-inner relative overflow-hidden group">
+                    <h4 className="text-[14px] font-black text-primary uppercase tracking-[0.8em] mb-8 italic flex items-center justify-center gap-6">
+                        <LayoutGrid className="size-8 animate-pulse" /> ORGAN_KNOT_MAP (24)
+                    </h4>
+                    <div className="grid grid-cols-6 gap-3 px-4">
+                        {knotStatus.map((active, i) => (
+                            <div key={i} className={cn(
+                                "size-8 rounded-lg border-2 transition-all duration-500",
+                                active ? "bg-primary border-black shadow-[0_0_15px_rgba(212,175,55,0.8)] scale-110" : "bg-black border-white/10 opacity-30"
+                            )} />
+                        ))}
+                    </div>
+                    <div className="mt-8 text-[10px] font-black uppercase tracking-widest text-muted-foreground italic text-center">Material_Consensus: v78.8</div>
+                 </Card>
+
+                 <Card className="kali-card border-white/5 bg-black/60 p-12 md:p-16 rounded-[4rem] md:rounded-[5rem] border-8 shadow-inner group overflow-hidden text-center relative flex-1 flex flex-col justify-center">
                     <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse" />
                     <h4 className="text-[14px] font-black text-primary uppercase tracking-[1em] mb-12 italic flex items-center justify-center gap-8">
                        <Boxes className="size-10 animate-neural" /> FUSED_ORGANS
@@ -226,7 +245,7 @@ export default function ArsenalNodePage() {
                        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/weapon:opacity-15 transition-opacity" />
                        <div className="flex justify-between items-start mb-12 relative z-10">
                           <Badge className="bg-primary/10 text-primary border-4 border-primary/20 text-[12px] md:text-[14px] px-8 py-2 rounded-full uppercase tracking-widest italic shadow-xl">{weapon.count}</Badge>
-                          <div className="size-24 md:size-28 rounded-[2rem] bg-black border-4 border-white/10 flex items-center justify-center group-hover/weapon:border-primary transition-all duration-700 shadow-2xl">
+                          <div className="size-24 md:size-28 rounded-[2rem] bg-black border-4 border-white/10 flex items-center justify-center group-hover/weapon:border-primary transition-all duration-700 shadow-2xl scale-110">
                              <weapon.icon className={cn("size-10 md:size-14 transition-all duration-700 group-hover:scale-110", weapon.color)} />
                           </div>
                        </div>

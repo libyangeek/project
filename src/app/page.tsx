@@ -33,7 +33,8 @@ import {
   Terminal,
   Dna,
   RotateCw,
-  ArrowLeft
+  ArrowLeft,
+  LayoutGrid
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -63,6 +64,7 @@ export default function DashboardPage() {
   const [events, setEvents] = React.useState<any[]>([])
   const [neuralData, setNeuralData] = React.useState<any[]>([])
   const [metrics, setMetrics] = React.useState<any>(null)
+  const [knotStatus, setKnotStatus] = React.useState<boolean[]>(new Array(24).fill(true))
   
   const uptime = useUptime()
 
@@ -92,7 +94,7 @@ export default function DashboardPage() {
         const types = ["INNATE_REFLEX", "SOUL_BOND", "ORACLE_VISION", "MATERIAL_HEIR"];
         const msgs = [
             "Innate Reflex: Automated response triggered for target Alpha.",
-            "Soul Bond: material consensus reached with Commander's will.",
+            "Soul Bond: Material consensus reached with Commander's will.",
             "Heir Strategy: Global grid siphoned as an instinctive habit.",
             "Organ Status: 2,983 tools reporting zero latency as soul extensions."
         ];
@@ -102,6 +104,7 @@ export default function DashboardPage() {
             time: new Date().toLocaleTimeString()
         };
         setEvents(prev => [newEvent, ...prev].slice(0, 8));
+        setKnotStatus(prev => prev.map(k => Math.random() > 0.05));
     }, 4000);
 
     return () => {
@@ -231,6 +234,23 @@ export default function DashboardPage() {
               <div className="absolute -bottom-20 -left-20 p-24 opacity-[0.01] pointer-events-none group-hover:opacity-[0.05] transition-all duration-1000 scale-150"><InfinityIcon className="size-[40rem] text-primary" /></div>
            </Card>
         </section>
+
+        {/* Neural Map v78.8 */}
+        <Card className="mb-24 kali-card border-white/5 bg-black/60 p-12 rounded-[5rem] border-8 shadow-inner relative overflow-hidden group text-right">
+             <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse" />
+             <h4 className="text-2xl font-black text-primary uppercase tracking-[1em] mb-12 italic flex items-center justify-center gap-8">
+                <LayoutGrid className="size-10 animate-neural" /> NEURAL_KNOT_MAP (24)
+             </h4>
+             <div className="grid grid-cols-12 gap-6 px-12">
+                {knotStatus.map((active, i) => (
+                    <div key={i} className={cn(
+                        "h-12 rounded-xl border-4 transition-all duration-1000",
+                        active ? "bg-primary border-black shadow-[0_0_30px_rgba(212,175,55,1)] scale-110" : "bg-black border-white/10 opacity-30"
+                    )} />
+                ))}
+             </div>
+             <div className="mt-12 text-[14px] font-black uppercase tracking-[0.8em] text-muted-foreground italic text-center">Consensus_Stability: v78.8_ULTRA_LOCKED</div>
+        </Card>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[22px] md:text-[36px] font-black uppercase tracking-[5em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
             <span>AL-MUIZZ OMNIPOTENT ULTRA v78.8</span>
