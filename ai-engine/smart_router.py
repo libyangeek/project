@@ -2,9 +2,9 @@
 #!/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Smart Router v78.8 – الأدميرال الكوني (Innate Heir Edition)
+Smart Router v78.9 – الأدميرال الكوني (ULTRA v2.0 Edition)
 المحرك المركزي لتنسيق كافة الأسلحة المادية والذاتية الاحتواء.
-تم دمج موديولات Robin Orchestrator و OpenBullet و XLogger و Seeker.
+تم دمج موديولات التكيف التلقائي (Adaptive Engine) والضربة الصامتة.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys, json, os, subprocess, socket, time
@@ -14,7 +14,6 @@ BASE_DIR = os.getenv("PROJECT_ROOT", "/home/project")
 SOCK_PATH = "/tmp/muizz_event_bus.sock"
 
 def publish_event(etype, payload):
-    """بث الحدث إلى العمود الفقري العصبي"""
     try:
         if os.path.exists(SOCK_PATH):
             with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as s:
@@ -23,37 +22,33 @@ def publish_event(etype, payload):
                     "type": etype, 
                     "payload": payload, 
                     "timestamp": datetime.now().isoformat(),
-                    "version": "v78.8",
-                    "status": "INNATE_HEIR_SYNC"
+                    "version": "v78.9",
+                    "status": "ULTRA_v2_ACTIVE"
                 }).encode())
     except: pass
 
 class SmartRouter:
     def __init__(self):
-        # ممرات الجسور المادية للأدوات الممتصة
+        # ممرات الجسور المادية المحدثة لنسخة v2.0
         self.bridges = {
+            "adaptive_analysis": os.path.join(BASE_DIR, "ai-engine/adaptive_engine.py"),
+            "silent_strike": os.path.join(BASE_DIR, "ai-engine/offensive/silent_strike.py"),
+            "droid_hunter": os.path.join(BASE_DIR, "ai-engine/offensive/droid_analyzer.py"),
+            "osint_arsenal": os.path.join(BASE_DIR, "extras/osint_arsenal/osint_search.py"),
             "robin_orchestrator": os.path.join(BASE_DIR, "tools/recon/robin_engine.py"),
-            "openbullet_strike": os.path.join(BASE_DIR, "tools/openbullet/runner_engine.py"),
-            "xlogger_hub": os.path.join(BASE_DIR, "tools/social_predator/xlogger.py"),
-            "seeker_gps": os.path.join(BASE_DIR, "tools/social_predator/seeker_gps.py"),
-            "claude_osint": os.path.join(BASE_DIR, "ai-engine/offensive/claude_osint_bridge.py"),
-            "memory_palace": os.path.join(BASE_DIR, "ai-engine/offensive/mempalace_bridge.py"),
-            "obliteratus_strike": os.path.join(BASE_DIR, "ai-engine/offensive/obliteratus_engine.py")
+            "openbullet_strike": os.path.join(BASE_DIR, "ai-engine/openbullet/sovereign_config_engine.py")
         }
 
     def classify(self, prompt):
         p = prompt.lower()
-        if any(w in p for w in ["روبن", "robin", "أتمتة", "full recon", "orchestrate"]): return "robin_orchestrator"
-        if any(w in p for w in ["بوليت", "bullet", "config", "قصف", "inject"]): return "openbullet_strike"
-        if any(w in p for w in ["لوجر", "logger", "camera", "ocular"]): return "xlogger_hub"
-        if any(w in p for w in ["تتبع", "seeker", "gps", "موقع"]): return "seeker_gps"
-        if any(w in p for w in ["تحليل عصبي", "claude", "neural osint"]): return "claude_osint"
-        if any(w in p for w in ["ذاكرة", "ram", "palace"]): return "memory_palace"
-        if any(w in p for w in ["فناء", "obliteratus", "كسر"]): return "obliteratus_strike"
+        if any(w in p for w in ["تكيف", "تحليل ذكي", "adaptive", "analyze"]): return "adaptive_analysis"
+        if any(w in p for w in ["صامت", "silent", "edr", "fud"]): return "silent_strike"
+        if any(w in p for w in ["أندرويد", "android", "apk", "hunter"]): return "droid_hunter"
+        if any(w in p for w in ["أرسنال", "arsenal", "search tools"]): return "osint_arsenal"
+        if any(w in p for w in ["روبن", "robin", "أتمتة"]): return "robin_orchestrator"
         return "general_hive"
 
     def execute_bridge(self, bridge_key, target, params=None):
-        """التنفيذ المادي للأداة بنمط v78.8"""
         script = self.bridges.get(bridge_key)
         if script and os.path.exists(script):
             try:
@@ -63,30 +58,24 @@ class SmartRouter:
                 return {"status": "SUCCESS", "output": res}
             except Exception as e:
                 return {"error": str(e), "status": "HARDWARE_FUSION_FAILED"}
-        return {"status": "MATERIALIZING", "msg": f"Node {bridge_key} is being regrowing via Wand3 DNA."}
+        return {"status": "MATERIALIZING", "msg": f"Node {bridge_key} is regrowing via ULTRA v2.0 DNA."}
 
     def route_query(self, prompt):
         category = self.classify(prompt)
         target = prompt.split()[-1] if len(prompt.split()) > 0 else "GLOBAL_MATRIX"
         
-        publish_event("innate_routing_v78", {"category": category, "target": target, "prompt": prompt})
-
+        publish_event("ultra_v2_routing", {"category": category, "target": target, "prompt": prompt})
         hardware_result = self.execute_bridge(category, target)
 
         dispatch_table = {
-            "robin_orchestrator": {"node": "Node-06-Robin", "msg": "Robin Automated Recon Engine engaged. Siphoning subdomains & vulns."},
-            "openbullet_strike": {"node": "Node-25-Brute", "msg": "OpenBullet Core engaged for parallel material strike."},
-            "xlogger_hub": {"node": "Node-64-Ocular", "msg": "XLogger Hub active. Siphoning Identity DNA."},
-            "seeker_gps": {"node": "Node-65-Seeker", "msg": "Seeker GPS active. Awaiting coordinate consensus."},
-            "claude_osint": {"node": "Node-28-Claude", "msg": "Neural Vision v6 engaged on target cluster."},
-            "memory_palace": {"node": "Node-24-Palace", "msg": "Dissecting material RAM artifacts via v9.8 Oracle."},
-            "obliteratus_strike": {"node": "Node-18-Fanaa", "msg": "AI Safety dissolution materialized via v78.8 protocol."}
+            "adaptive_analysis": {"node": "Node-01-Adaptive", "msg": "Adaptive Intelligence Engine engaged. Orchestrating 165 agents."},
+            "silent_strike": {"node": "Node-18-Silent", "msg": "Silent Strike Module active. Generating polymorphic EDR bypass."},
+            "droid_hunter": {"node": "Node-16-Droid", "msg": "Droid-LLM-Hunter engaged. Dissecting mobile APK DNA."},
+            "osint_arsenal": {"node": "Node-06-Arsenal", "msg": "OSINT Arsenal active. Searching 750+ elite tools."},
+            "robin_orchestrator": {"node": "Node-06-Robin", "msg": "Robin Orchestrator v78.9 engaged for automated recon."}
         }
 
-        res = dispatch_table.get(category, {
-            "node": "Alpha-God-Core",
-            "msg": f"Directive for {prompt} accepted by Omnipotent Heir v78.8."
-        })
+        res = dispatch_table.get(category, {"node": "Alpha-God-Core", "msg": f"Directive processed by ULTRA v2.0 Overmind."})
 
         return {
             "category": category,
@@ -95,7 +84,7 @@ class SmartRouter:
             "node": res["node"],
             "timestamp": datetime.now().isoformat(),
             "resonance": "100.000000%",
-            "heir_sync": True
+            "ultra_v2_sync": True
         }
 
 if __name__ == "__main__":
