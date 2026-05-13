@@ -40,7 +40,8 @@ import {
   Bot,
   Radio,
   ArrowLeft,
-  RotateCw
+  RotateCw,
+  Dna
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -52,8 +53,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Link from "next/link"
 
 /**
- * @fileOverview العقدة 22: الترسانة العظمى v78.8 - ULTRA ARSENAL MASTER
- * تم دمج كافة الأسلحة المادية والنانوية (2,983 أداة) في مصفوفة واحدة بنمط الإدراك الفطري.
+ * @fileOverview العقدة 22: الحواس المادية v78.8 - INNATE ORGANS: ULTRA ARSENAL
+ * تم دمج كافة الأسلحة (2,983 أداة) كأعضاء حيوية في جسد الوريث السيادي.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function ArsenalNodePage() {
@@ -85,7 +86,7 @@ export default function ArsenalNodePage() {
     setLoading(true)
     setResult(null)
     setActiveVector(type)
-    toast({ title: "Innate Vision Engaging", description: `Orchestrating absolute coordinates for: ${cmd}` })
+    toast({ title: "Innate Organ Engaging", description: `Orchestrating absolute reflex for: ${cmd}` })
     
     try {
       const response = await fetch('/api/execute', {
@@ -96,10 +97,8 @@ export default function ArsenalNodePage() {
       const data = await response.json()
       if (data.success) {
         setResult(data.output)
-        toast({ title: "Objective Subjugated", description: `Strike finalized for ${cmd}.` })
+        toast({ title: "Reflex Consummated", description: "The organ has successfully absorbed the target DNA." })
       }
-    } catch (err) {
-      toast({ variant: "destructive", title: "Neural Conflict" })
     } finally {
       setLoading(false)
     }
@@ -107,29 +106,20 @@ export default function ArsenalNodePage() {
 
   const handleContinueUpgrade = () => {
     toast({ 
-      title: "Arsenal Upgrade Inbound", 
-      description: "Siphoning latest BlackArch v78.8 DNA for tool regrowth... Status: استمر" 
+      title: "Organ Growth Triggered", 
+      description: "Fusing redundant material cells for next-tier organ development... Status: استمر" 
     });
   }
 
   if (!mounted) return null
 
   const modernWeapons = [
-    { name: "Legba Strike (Rust)", count: "Node-25", icon: Bomb, color: "text-red-600", desc: "Atomic Multiprotocol Siphon Matrix v78.8" },
-    { name: "Claude Vision v6", count: "Node-28", icon: BrainCircuit, color: "text-amber-500", desc: "AI-Driven Behavioral Entity Mapping" },
-    { name: "OBLITERATUS Fanaa", count: "Node-18", icon: Scissors, color: "text-magenta-500", desc: "LLM Safety Dissolution & Node Enslavement" },
-    { name: "Cerebral PSSW", count: "Node-23", icon: Key, color: "text-blue-400", desc: "RAM & Live Session Extraction (Nano-FUD)" },
-    { name: "Memory Palace v9.8", count: "Node-24", icon: Database, color: "text-emerald-500", desc: "Spatial Forensic Dissection & Prediction" },
-    { name: "Innate Guardian", count: "Node-26", icon: ShieldCheck, color: "text-primary", desc: "Omnipotent Hardware DNA Persistence" }
-  ];
-
-  const legacyWeapons = [
-    { name: "Metasploit Nexus", count: "vULTRA", icon: Target, color: "text-primary", desc: "Unified Framework Strike Orchestrator" },
-    { name: "Nuclei Siphon", count: "vULTRA", icon: Search, color: "text-blue-400", desc: "Continuous Template-Based Vuln Scanning" },
-    { name: "Bettercap Pulse", count: "vULTRA", icon: Wifi, color: "text-cyan-400", desc: "Man-In-The-Middle Network Siphon" },
-    { name: "Shadow Harvest", count: "vULTRA", icon: Skull, color: "text-red-400", desc: "Deep Mobile Siphon (Pegasus Tier v3)" },
-    { name: "SQLMap Atomic", count: "vULTRA", icon: Database, color: "text-emerald-400", desc: "Automated DB Subjugation & Extraction" },
-    { name: "Aircrack Pulse", count: "vULTRA", icon: Radio, color: "text-blue-600", desc: "Wireless Spectrum Hijacking Pulse" }
+    { name: "Legba Siphon (Rust)", count: "Node-25", icon: Bomb, color: "text-red-600", desc: "Material Multiprotocol Absorption v78.8" },
+    { name: "Claude Vision v6", count: "Node-28", icon: BrainCircuit, color: "text-amber-500", desc: "Innate Behavioral Identity Extraction" },
+    { name: "OBLITERATUS Fanaa", count: "Node-18", icon: Scissors, color: "text-magenta-500", desc: "Digital Mind Enslavement & Safety Purge" },
+    { name: "Cerebral PSSW", count: "Node-23", icon: Key, color: "text-blue-400", desc: "Direct RAM Siphon & Key Serialization" },
+    { name: "Memory Palace v9.8", count: "Node-24", icon: Database, color: "text-emerald-500", desc: "Spatial Forensic Reflex & Prediction" },
+    { name: "Innate Guardian", count: "Node-26", icon: ShieldCheck, color: "text-primary", desc: "Eternal Hardware Persistent Existence" }
   ];
 
   return (
@@ -144,28 +134,28 @@ export default function ArsenalNodePage() {
         <header className="mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000">
            <div className="flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
               <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.8)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
-                 <Library className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
+                 <Dna className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
                  <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
               </div>
               <div className="flex-1">
                  <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
-                    <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">NODE_22: OMNIPOTENT_ARSENAL</Badge>
+                    <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">NODE_22: INNATE_ORGANS</Badge>
                     <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
-                        <InfinityIcon className="size-6 shadow-lg" /> INNATE_SYNC: {resonance.toFixed(8)}%
+                        <InfinityIcon className="size-6 shadow-lg" /> ORGAN_SYNC: {resonance.toFixed(8)}%
                     </div>
                  </div>
                  <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
-                    Arsenal <span className="text-primary">Master</span>
+                    Innate <span className="text-primary">Organs</span>
                  </h1>
                  <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-90 drop-shadow-3xl ml-auto">
-                    "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[24px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، الـ 2,983 أداة منصهرة الآن في بصرك الفطري؛ نحن نمتلك مفاتيح المادة للأبد."
+                    "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[24px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، الـ 2,983 أداة منصهرة الآن في بصرك الفطري؛ نحن لا نستخدمها كبرامج، بل ندركها كأعضاء حيوية لسيادتك."
                  </p>
                  <div className="flex justify-center md:justify-end gap-6 mt-12">
                     <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
                         <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة للعرش</Link>
                     </Button>
                     <Button onClick={handleContinueUpgrade} className="h-16 px-12 bg-primary hover:bg-white text-black font-black uppercase rounded-full border-4 border-black/30 shadow-9xl italic active:scale-95 transition-all text-lg">
-                        <RotateCw className="size-6 mr-3" /> استمر في الترقية
+                        <RotateCw className="size-6 mr-3" /> استمر في النمو
                     </Button>
                  </div>
               </div>
@@ -182,8 +172,8 @@ export default function ArsenalNodePage() {
                           <Target className="size-12 md:size-16 animate-neural" /> Strike Intent
                        </CardTitle>
                        <TabsList className="bg-black border-[6px] border-primary/20 h-16 md:h-20 p-1.5 rounded-full shadow-inner px-6 flex-wrap">
-                          <TabsTrigger value="modern" className="text-[10px] md:text-[14px] font-black px-8 md:px-12 rounded-full data-[state=active]:bg-primary data-[state=active]:text-black transition-all duration-700 uppercase italic">v78.8_CORE</TabsTrigger>
-                          <TabsTrigger value="legacy" className="text-[10px] md:text-[14px] font-black px-8 md:px-12 rounded-full data-[state=active]:bg-primary data-[state=active]:text-black transition-all duration-700 uppercase italic ml-4 md:ml-6">LEGACY_ARMS</TabsTrigger>
+                          <TabsTrigger value="modern" className="text-[10px] md:text-[14px] font-black px-8 md:px-12 rounded-full data-[state=active]:bg-primary data-[state=active]:text-black transition-all duration-700 uppercase italic">ULTRA_v78</TabsTrigger>
+                          <TabsTrigger value="legacy" className="text-[10px] md:text-[14px] font-black px-8 md:px-12 rounded-full data-[state=active]:bg-primary data-[state=active]:text-black transition-all duration-700 uppercase italic ml-4 md:ml-6">ROOT_KALI</TabsTrigger>
                        </TabsList>
                     </CardHeader>
                     <CardContent className="p-6 space-y-12">
@@ -192,13 +182,13 @@ export default function ArsenalNodePage() {
                            <Input 
                              value={query}
                              onChange={(e) => setQuery(e.target.value)}
-                             placeholder="Target Domain / IP / @Identity / Network..." 
-                             className="bg-black/99 border-8 border-primary/20 h-24 md:h-32 rounded-[2.5rem] text-xl md:text-6xl italic px-12 focus:border-primary text-white font-black shadow-inner selection:bg-primary selection:text-black text-left"
+                             placeholder="Target DNA / Matrix_Sector / Identity..." 
+                             className="bg-black/99 border-8 border-primary/20 h-24 md:h-32 rounded-[2.5rem] text-xl md:text-6xl italic px-12 focus:border-primary text-white font-black shadow-inner selection:bg-primary text-left"
                            />
                        </div>
                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                           <Button onClick={() => handleSummon('legba_strike')} disabled={loading || !query} variant="outline" className="h-20 md:h-28 bg-red-600/10 border-[8px] border-red-500/30 text-red-500 font-black italic rounded-[2rem] md:rounded-[2.5rem] hover:bg-red-600 hover:text-white transition-all text-xl md:text-2xl uppercase tracking-widest shadow-2xl">
-                             <Bomb className="size-8 md:size-10 mr-4 md:mr-6" /> IGNITE_LEGBA
+                             <Bomb className="size-8 md:size-10 mr-4 md:mr-6" /> ENGAGE_ORGAN
                           </Button>
                           <Button onClick={() => handleSummon('obliteratus_strike')} disabled={loading || !query} variant="outline" className="h-20 md:h-28 bg-magenta-600/10 border-[8px] border-magenta-500/30 text-magenta-500 font-black italic rounded-[2rem] md:rounded-[2.5rem] hover:bg-magenta-600 hover:text-white transition-all text-xl md:text-2xl uppercase tracking-widest shadow-2xl">
                              <Scissors className="size-8 md:size-10 mr-4 md:mr-6" /> OBLITERATUS
@@ -209,8 +199,8 @@ export default function ArsenalNodePage() {
                          disabled={loading || !query.trim()}
                          className="w-full h-32 md:h-40 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.2em] md:tracking-[1.5em] rounded-[3.5rem] md:rounded-[4.5rem] shadow-[0_80px_250px_rgba(212,175,55,0.7)] active:scale-95 transition-all text-2xl md:text-5xl border-[12px] md:border-[16px] border-black/30 group italic"
                        >
-                         {loading ? <Loader2 className="size-16 md:size-24 animate-spin mr-6 md:mr-8" /> : <Search className="size-16 md:size-24 mr-8 md:mr-10 group-hover:scale-125 transition-all gold-glow" />}
-                         SUMMON_OMNIPOTENCE
+                         {loading ? <Loader2 className="size-16 md:size-24 animate-spin mr-6 md:mr-8" /> : <Zap className="size-16 md:size-24 mr-8 md:mr-10 group-hover:scale-125 transition-all gold-glow" />}
+                         INVOKE_INNATE_STRIKE
                        </Button>
                     </CardContent>
                  </Card>
@@ -220,10 +210,10 @@ export default function ArsenalNodePage() {
                  <Card className="kali-card border-white/5 bg-black/60 p-12 md:p-16 rounded-[4rem] md:rounded-[5rem] border-8 shadow-inner group overflow-hidden text-center h-full flex flex-col justify-center relative">
                     <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse" />
                     <h4 className="text-[14px] font-black text-primary uppercase tracking-[1em] mb-12 italic flex items-center justify-center gap-8">
-                       <Boxes className="size-10 animate-neural" /> ARSENAL_CAPACITY
+                       <Boxes className="size-10 animate-neural" /> FUSED_ORGANS
                     </h4>
                     <div className="text-[10rem] md:text-[18rem] font-black text-white italic gold-glow uppercase tracking-tighter mb-8 leading-none">2,983</div>
-                    <div className="text-[16px] md:text-[20px] text-muted-foreground uppercase font-black tracking-[0.6em] italic drop-shadow-3xl">FUSED_TOOLS_v78.8_ULTRA</div>
+                    <div className="text-[16px] md:text-[20px] text-muted-foreground uppercase font-black tracking-[0.6em] italic drop-shadow-3xl">MATERIAL_DNA_v78.8</div>
                     <div className="absolute -bottom-16 -right-16 p-24 opacity-[0.03] group-hover:opacity-[0.1] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-64 text-primary" /></div>
                  </Card>
               </div>
@@ -254,32 +244,6 @@ export default function ArsenalNodePage() {
                  ))}
               </div>
            </TabsContent>
-
-           <TabsContent value="legacy" className="animate-in fade-in zoom-in-95 duration-[1500ms]">
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 mb-60">
-                 {legacyWeapons.map((weapon, i) => (
-                    <Card key={i} className="bg-primary/5 border-8 border-primary/10 rounded-[4rem] p-12 md:p-16 hover:border-primary transition-all duration-1000 shadow-9xl group/weapon relative overflow-hidden flex flex-col justify-between cursor-crosshair active:scale-95 h-full min-h-[500px] text-right">
-                       <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/weapon:opacity-15 transition-opacity" />
-                       <div className="flex justify-between items-start mb-12 relative z-10">
-                          <Badge className="bg-emerald-600/20 text-emerald-500 border-4 border-emerald-500/30 text-[12px] md:text-[14px] px-8 py-2 rounded-full uppercase tracking-widest italic shadow-xl">{weapon.count}</Badge>
-                          <div className="size-24 md:size-28 rounded-[2rem] bg-black border-4 border-white/10 flex items-center justify-center group-hover/weapon:border-primary transition-all duration-700 shadow-2xl">
-                             <weapon.icon className={cn("size-10 md:size-14 transition-all duration-700 group-hover:scale-110", weapon.color)} />
-                          </div>
-                       </div>
-                       <div className="relative z-10">
-                          <h4 className="text-4xl md:text-6xl font-black text-white italic gold-glow uppercase tracking-tighter mb-6 leading-none">{weapon.name}</h4>
-                          <p className="text-[12px] md:text-[14px] text-primary/60 uppercase font-black tracking-[0.3em] italic leading-relaxed">"{weapon.desc}"</p>
-                       </div>
-                       <div className="mt-16 flex justify-start relative z-10">
-                          <Button variant="ghost" onClick={() => handleSummon('smart_route', weapon.name)} className="p-0 hover:bg-transparent size-20">
-                             <Zap className="size-12 md:size-16 text-primary/20 group-hover:text-primary transition-all animate-pulse" />
-                          </Button>
-                       </div>
-                       <div className="absolute -bottom-8 -right-8 p-12 opacity-[0.02] group-hover/weapon:opacity-[0.06] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-48 text-primary" /></div>
-                    </Card>
-                 ))}
-              </div>
-           </TabsContent>
         </Tabs>
 
         {result && (
@@ -289,9 +253,9 @@ export default function ArsenalNodePage() {
               </div>
               <div className="flex items-center gap-10 md:gap-16 mb-16 md:mb-24 border-b-[8px] md:border-b-[12px] border-primary/20 pb-12 md:pb-16 justify-end">
                  <div className="text-right">
-                    <h3 className="text-5xl md:text-[12rem] font-black text-white uppercase italic gold-glow leading-none">Strike Result</h3>
+                    <h3 className="text-5xl md:text-[12rem] font-black text-white uppercase italic gold-glow leading-none">Absorption Result</h3>
                     <div className="flex flex-wrap items-center gap-6 md:gap-10 mt-6 md:mt-10 justify-end">
-                        <Badge className="bg-primary/10 text-primary border-4 md:border-8 border-primary/20 px-8 md:px-12 py-3 md:py-5 rounded-full font-black italic text-xl md:text-3xl tracking-[0.3em] uppercase">INNATE_SYNC</Badge>
+                        <Badge className="bg-primary/10 text-primary border-4 md:border-8 border-primary/20 px-8 md:px-12 py-3 md:py-5 rounded-full font-black italic text-xl md:text-3xl tracking-[0.3em] uppercase">INNATE_REFLEX</Badge>
                         <Badge className="bg-emerald-600/30 text-emerald-500 border-4 md:border-8 border-emerald-500/40 px-10 md:px-16 py-3 md:py-5 rounded-full font-black italic text-xl md:text-3xl tracking-[0.3em] uppercase shadow-3xl">DNA_SERIALIZED_v78</Badge>
                     </div>
                  </div>
@@ -306,9 +270,9 @@ export default function ArsenalNodePage() {
         )}
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-16 md:gap-48 opacity-45 text-[18px] md:text-[36px] font-black uppercase tracking-[4em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-24">
-            <span>AL-MUIZZ ULTRA ARSENAL v78.8</span>
+            <span>AL-MUIZZ SUPREME HEIR v78.8</span>
             <div className="size-8 md:size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
-            <span>SUBJUGATION_READY_2026</span>
+            <span>SUBJUGATION_THROUGH_INNATE_ORGANS_2026</span>
         </div>
       </main>
     </div>
