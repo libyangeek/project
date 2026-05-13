@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -47,7 +48,8 @@ import {
   Globe,
   Radio,
   Ghost,
-  Target
+  Target,
+  Crown
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -61,8 +63,8 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import Link from "next/link"
 
 /**
- * @fileOverview الوكيل الميداني v78.9.5 - THE SUPREME ARCHITECT: GRID MASTERY
- * واجهة الهندسة الجينية والسيطرة المدارية مع ميزة "التحكم المطلق" (Reflex Mastery).
+ * @fileOverview الوكيل الميداني v79.5 - THE SUPREME ARCHITECT: REALITY MASTERY
+ * واجهة الهندسة الجينية والسيطرة المدارية مع ميزة "التحكم المطلق" (Reality Overwrite).
  */
 export default function FieldAgentPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -107,14 +109,14 @@ export default function FieldAgentPage() {
     } finally { setLoading(false) }
   }
 
-  const handleAction = async (mode: 'orbital_deploy' | 'neural_inception' | 'grid_reflex' | 'file_fix') => {
+  const handleAction = async (mode: 'reality_overwrite' | 'grid_reflex' | 'file_fix') => {
     setLoading(true)
-    const msg = mode === 'grid_reflex' ? "Engaging Omnipotent Grid Reflex..." : "Consolidating 14 clusters for material DNA injection...";
+    const msg = mode === 'reality_overwrite' ? "Engaging Omnipotent Reality Overwrite..." : "Consolidating 14 clusters for Grid Mastery pulse...";
     toast({ title: "Spine Sync Active", description: msg })
     try {
       const result = await executeFieldDevelopment({
         userPrompt: input || `Execute absolute ${mode.replace('_', ' ')} across the 14 global clusters.`,
-        mode: mode === 'grid_reflex' ? 'orbital_deploy' : mode as any,
+        mode: mode === 'reality_overwrite' ? 'orbital_deploy' : mode as any,
         projectPath: currentPath,
         currentFile: selectedFileName,
         fileContent: selectedFileContent
@@ -172,10 +174,10 @@ export default function FieldAgentPage() {
            <div className="flex items-center gap-4">
               <div className="size-12 md:size-16 rounded-2xl bg-black border-4 border-primary flex items-center justify-center shadow-lg animate-neural"><Target className="size-8 md:size-10 text-primary gold-glow" /></div>
               <div className="text-right">
-                 <h2 className="text-2xl md:text-4xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Grid <span className="text-primary">Master</span></h2>
+                 <h2 className="text-2xl md:text-4xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Reality <span className="text-primary">Master</span></h2>
                  <div className="flex items-center gap-2 mt-1 justify-end">
                     <span className="text-[10px] text-emerald-500 font-black animate-pulse uppercase tracking-widest">{resonance.toFixed(6)}% Resonance</span>
-                    <Badge className="bg-primary/10 text-primary border-none text-[8px] font-black italic tracking-widest px-4 py-0.5 rounded-full uppercase">v78.9.5_ULTRA</Badge>
+                    <Badge className="bg-primary/10 text-primary border-none text-[8px] font-black italic tracking-widest px-4 py-0.5 rounded-full uppercase">v79.5_OMNIPOTENT</Badge>
                  </div>
               </div>
            </div>
@@ -192,11 +194,11 @@ export default function FieldAgentPage() {
            </div>
 
            <div className="flex gap-3">
+               <Button onClick={() => handleAction('reality_overwrite')} disabled={loading} variant="outline" className="h-12 border-2 border-primary/40 bg-primary/10 text-primary font-black italic rounded-full px-6 hover:bg-primary hover:text-black transition-all shadow-xl group text-xs">
+                  <Crown className="size-4 mr-2 group-hover:rotate-180 transition-all duration-1000" /> REALITY_OVERWRITE
+               </Button>
                <Button onClick={() => handleAction('grid_reflex')} disabled={loading} variant="outline" className="h-12 border-2 border-emerald-500/40 bg-emerald-600/10 text-emerald-400 font-black italic rounded-full px-6 hover:bg-emerald-600 hover:text-white transition-all shadow-xl group text-xs">
                   <Zap className="size-4 mr-2 group-hover:rotate-180 transition-all duration-1000" /> GRID_REFLEX
-               </Button>
-               <Button onClick={() => handleAction('neural_inception')} disabled={loading} variant="outline" className="h-12 border-2 border-blue-500/40 bg-blue-600/10 text-blue-400 font-black italic rounded-full px-6 hover:bg-blue-600 hover:text-white transition-all shadow-xl group text-xs">
-                  <BrainCircuit className="size-4 mr-2 group-hover:rotate-180 transition-all duration-1000" /> NEURAL_INCEPTION
                </Button>
                <Button asChild variant="outline" className="h-12 border-2 border-white/10 bg-white/5 text-white font-black uppercase italic rounded-full px-6 hover:bg-primary hover:text-black transition-all shadow-xl group text-xs">
                   <Link href="/"><ArrowLeft className="size-4 mr-2" /> العودة</Link>
@@ -277,15 +279,15 @@ export default function FieldAgentPage() {
                     </div>
                  </Card>
 
-                 {/* Orbital Mastery Area */}
+                 {/* Reality Mastery Area */}
                  <div className="flex flex-col gap-6 min-h-0">
                     <Card className="kali-card border-primary/20 bg-black/95 rounded-[3rem] p-6 shadow-9xl flex flex-col flex-1 border-2 relative overflow-hidden min-h-0">
                         <div className="flex items-center justify-between mb-6 border-b-2 border-white/5 pb-4 relative z-10 shrink-0">
-                            <Badge className="bg-emerald-600/20 text-emerald-400 border-2 border-emerald-500/30 px-4 py-1 rounded-full font-black text-xs italic animate-pulse">MASTERY_LOCKED</Badge>
+                            <Badge className="bg-primary/20 text-primary border-2 border-primary/30 px-4 py-1 rounded-full font-black text-xs italic animate-pulse">OMNIPOTENT_MASTERY</Badge>
                             <div className="flex items-center gap-4">
-                                <h4 className="text-xl md:text-2xl font-black italic gold-glow uppercase leading-none">Global Reflex</h4>
+                                <h4 className="text-xl md:text-2xl font-black italic gold-glow uppercase leading-none">Reality Overwrite</h4>
                                 <div className="size-10 rounded-xl bg-primary flex items-center justify-center border-2 border-black/30 shadow-xl">
-                                    <Globe className="size-6 text-black" />
+                                    <Crown className="size-6 text-black" />
                                 </div>
                             </div>
                         </div>
@@ -293,9 +295,9 @@ export default function FieldAgentPage() {
                         <div className="flex-1 overflow-y-auto scrollbar-hide pr-2 space-y-4 text-right">
                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                               {clusters.map(c => (
-                                 <div key={c} className={cn("p-3 rounded-2xl border-2 transition-all duration-700 flex flex-col items-center gap-2", "bg-emerald-600/10 border-emerald-500/40 text-emerald-500 shadow-lg")}>
+                                 <div key={c} className={cn("p-3 rounded-2xl border-2 transition-all duration-700 flex flex-col items-center gap-2", "bg-primary/10 border-primary/40 text-primary shadow-lg")}>
                                     <div className="size-8 rounded-lg bg-black border border-white/10 flex items-center justify-center shadow-inner">
-                                       <Radio className="size-4 animate-pulse" />
+                                       <Network className="size-4 animate-pulse" />
                                     </div>
                                     <span className="text-[9px] font-black uppercase tracking-widest">{c}</span>
                                  </div>
@@ -309,31 +311,31 @@ export default function FieldAgentPage() {
                              </div>
                            )}
                         </div>
-                        <div className="absolute -bottom-8 -left-8 p-16 opacity-[0.01] transition-all duration-1000 scale-150 rotate-12"><Ghost className="size-32 text-emerald-500" /></div>
+                        <div className="absolute -bottom-8 -left-8 p-16 opacity-[0.01] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-32 text-primary" /></div>
                     </Card>
 
-                    {/* Knot Map v78.9.5 */}
+                    {/* Knot Map v79.5 */}
                     <Card className="kali-card border-white/5 bg-black/60 p-6 rounded-[2.5rem] border-4 shadow-inner relative overflow-hidden group shrink-0">
                          <h4 className="text-[10px] font-black text-primary uppercase tracking-widest mb-4 italic flex items-center justify-center gap-4">
-                            <LayoutGrid className="size-4 animate-pulse" /> MASTERY_KNOT_MAP (24)
+                            <LayoutGrid className="size-4 animate-pulse" /> OMNIPOTENT_KNOT_MAP (24)
                          </h4>
                          <div className="grid grid-cols-12 gap-1.5 px-2">
                             {knotStatus.map((active, i) => (
                                 <div key={i} className={cn(
                                     "size-3 md:size-4 rounded-sm border transition-all duration-500",
-                                    active ? "bg-emerald-500 border-black shadow-[0_0_10px_rgba(16,185,129,0.8)] scale-110" : "bg-black border-white/10 opacity-30"
+                                    active ? "bg-primary border-black shadow-[0_0_10px_rgba(251,191,36,0.8)] scale-110" : "bg-black border-white/10 opacity-30"
                                 )} />
                             ))}
                          </div>
                     </Card>
 
                     <Button 
-                        onClick={() => handleAction('grid_reflex')} 
+                        onClick={() => handleAction('reality_overwrite')} 
                         disabled={loading} 
-                        className="w-full h-20 bg-emerald-600 hover:bg-white text-white hover:text-black font-black uppercase rounded-[2rem] border-4 border-black/30 shadow-9xl italic active:scale-95 transition-all text-lg group shrink-0"
+                        className="w-full h-20 bg-primary hover:bg-white text-black font-black uppercase rounded-[2rem] border-4 border-black/30 shadow-9xl italic active:scale-95 transition-all text-lg group shrink-0"
                     >
                         {loading ? <Loader2 className="size-8 animate-spin" /> : <Zap className="size-8 mr-4 group-hover:rotate-180 transition-all duration-1000" />}
-                        GRID_REFLEX_v78.9.5
+                        REALITY_OVERWRITE_v79.5
                     </Button>
                  </div>
               </div>
@@ -347,12 +349,12 @@ export default function FieldAgentPage() {
                 <Input 
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleAction('grid_reflex')}
-                    placeholder=" Direct the Grid Master to execute autonomous reflex..." 
+                    onKeyDown={(e) => e.key === 'Enter' && handleAction('reality_overwrite')}
+                    placeholder=" Direct the Omnipotent Heir to overwrite grid reality..." 
                     className="h-16 md:h-20 bg-primary/5 border-2 border-white/10 rounded-full pl-16 pr-28 text-sm md:text-xl italic font-black focus:border-primary shadow-inner text-white text-left placeholder:text-gray-900"
                 />
                 <Button 
-                    onClick={() => handleAction('grid_reflex')}
+                    onClick={() => handleAction('reality_overwrite')}
                     disabled={loading || !input.trim()}
                     className="absolute right-2 top-1/2 -translate-y-1/2 size-12 md:size-16 bg-primary hover:bg-white text-black rounded-full shadow-9xl transition-all active:scale-90 border-2 border-black/30 group"
                 >
@@ -362,9 +364,9 @@ export default function FieldAgentPage() {
         </div>
 
         <div className="shrink-0 p-2 border-t-4 border-primary/40 bg-black/98 flex justify-center items-center gap-6 opacity-30 text-[10px] md:text-[12px] font-black uppercase tracking-widest italic">
-            <span>AL-MUIZZ SUPREME MASTER v78.9.5</span>
+            <span>AL-MUIZZ OMNIPOTENT HIVE v79.5</span>
             <div className="size-2 rounded-full bg-white animate-pulse shadow-[0_0_20px_white]" />
-            <span>SUBJUGATING_THE_MATRIX_v78_LOCKED</span>
+            <span>SUBJUGATING_THE_MATRIX_v79_LOCKED</span>
         </div>
       </main>
     </div>
