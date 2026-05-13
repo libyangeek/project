@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -57,7 +58,11 @@
   }
 
   .gold-glow {
-    text-shadow: 0 0 15px rgba(212,175,55,0.9);
+    text-shadow: 0 0 15px rgba(212,175,55,0.9), 0 0 30px rgba(212,175,55,0.4);
+  }
+
+  .hierarchical-shadow {
+    box-shadow: 0 40px 150px rgba(0, 0, 0, 0.9), 0 0 80px rgba(212, 175, 55, 0.1);
   }
 
   .scanline-effect::after {
@@ -68,9 +73,8 @@
     background-size: 100% 2px, 3px 100%;
   }
 
-  /* Responsive Utilities */
-  .mobile-hide {
-    @apply hidden md:flex;
+  .kali-card {
+    @apply transition-all duration-700 hover:scale-[1.01] hover:hierarchical-shadow;
   }
 }
 
@@ -85,10 +89,28 @@
 }
 
 @keyframes neural-pulse {
-  0%, 100% { transform: scale(1); filter: brightness(1); }
-  50% { transform: scale(1.05); filter: brightness(1.3); }
+  0%, 100% { transform: scale(1); filter: brightness(1) drop-shadow(0 0 10px rgba(212,175,55,0)); }
+  50% { transform: scale(1.05); filter: brightness(1.3) drop-shadow(0 0 30px rgba(212,175,55,0.6)); }
 }
 
 .animate-neural {
-  animation: neural-pulse 3s infinite ease-in-out;
+  animation: neural-pulse 4s infinite ease-in-out;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+
+@keyframes reverse-spin {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+.animate-reverse-spin {
+  animation: reverse-spin 15s linear infinite;
 }
