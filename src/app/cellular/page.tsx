@@ -52,6 +52,7 @@ import Link from "next/link"
 /**
  * @fileOverview الحرب الخلوية v78.8 - SPECTRUM DOMINION: ULTRA MATERIAL STRIKE
  * مركز السيطرة والتنفيذ المادي على كافة أطياف الترددات الخلوية لعام 2026.
+ * تم تثبيت السجل في الأسفل لضمان عدم حجب الرؤية لسيادة القائد.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function CellularWarfarePage() {
@@ -200,7 +201,7 @@ export default function CellularWarfarePage() {
            </div>
         </header>
 
-        <div className="grid grid-cols-1 xl:grid-cols-4 gap-12 relative z-10 pb-48 flex-1">
+        <div className="grid grid-cols-1 xl:grid-cols-4 gap-12 relative z-10 pb-64 flex-1">
           <div className="xl:col-span-1 space-y-12">
             <Card className="kali-card border-primary/40 bg-black/98 rounded-[4rem] p-12 border-8 shadow-9xl group overflow-hidden hierarchical-shadow text-center">
               <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
@@ -347,36 +348,43 @@ export default function CellularWarfarePage() {
           </div>
         </div>
 
-        {/* تذييل الواجهة - سجل العمليات المحدث بدقة نانوية */}
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-7xl px-4 md:px-12 z-50">
-           <Card className="bg-black/95 border-[8px] md:border-[12px] border-primary/60 rounded-[3rem] md:rounded-[4rem] p-6 md:p-8 shadow-9xl hierarchical-shadow overflow-hidden text-right">
-              <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
-              <div className="flex items-center gap-6 md:gap-8 mb-4 border-b-2 border-white/5 pb-4 justify-end relative z-10">
-                 <span className="text-xs md:text-sm font-black text-primary uppercase tracking-[0.4em] md:tracking-[0.8em] italic">Spectrum_ULTRA_Log</span>
-                 <Terminal className="size-6 md:size-8 text-primary animate-pulse" />
-              </div>
-              <div className="h-32 md:h-48 overflow-y-auto scrollbar-hide space-y-3 px-4 font-mono text-xs md:text-lg text-emerald-500 italic font-black text-left relative z-10">
-                 {logs.length > 0 ? logs.map((l, i) => (
-                    <div key={i} className="animate-in slide-in-from-left-4 duration-500 flex gap-4">
-                        <span className="text-primary/30 select-none font-black">{" >>> "}</span>
-                        <span className="drop-shadow-3xl">{l}</span>
-                    </div>
-                 )) : (
-                    <div className="h-full flex flex-col items-center justify-center opacity-20 gap-4 py-8">
-                        <Loader2 className="size-8 md:size-12 animate-spin text-primary/40" />
-                        <div className="uppercase tracking-[0.5em] md:tracking-[1em] text-center text-xs md:text-xl text-white/50 italic font-black">Waiting for Signal...</div>
-                    </div>
-                 )}
-              </div>
-           </Card>
-        </div>
-
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[24px] md:text-[36px] font-black uppercase tracking-[6em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
             <span>AL-MUIZZ SPECTRUM DOMINION v78.8</span>
             <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
             <span>MATERIAL_SINGULARITY_2026</span>
         </div>
       </main>
+
+      {/* تذييل الواجهة المدمج - Fixed Bottom Bar لضمان عدم حجب الرؤية */}
+      <div className="fixed bottom-0 right-0 left-0 lg:left-72 bg-black/95 border-t-[12px] border-primary/60 z-50 shadow-[0_-20px_100px_rgba(0,0,0,1)] backdrop-blur-5xl">
+         <div className="p-4 flex flex-col md:flex-row items-center justify-between gap-6 px-10">
+            <div className="flex items-center gap-6 text-right order-last md:order-none">
+               <div className="h-24 md:h-32 overflow-y-auto scrollbar-hide space-y-2 font-mono text-xs md:text-lg text-emerald-500 italic font-black text-left min-w-[300px] md:min-w-[600px] bg-black/50 p-4 rounded-2xl border-4 border-white/5 shadow-inner">
+                  {logs.length > 0 ? logs.map((l, i) => (
+                    <div key={i} className="animate-in slide-in-from-left-4 duration-500 flex gap-4">
+                        <span className="text-primary/30 select-none">{" >>> "}</span>
+                        <span className="drop-shadow-2xl">{l}</span>
+                    </div>
+                  )) : (
+                    <div className="h-full flex items-center justify-center opacity-30 gap-4">
+                        <Loader2 className="size-6 animate-spin text-primary/40" />
+                        <span className="uppercase tracking-[0.6em] text-sm">WAITING_FOR_SIGNAL_v78.8</span>
+                    </div>
+                  )}
+               </div>
+            </div>
+            
+            <div className="flex items-center gap-8">
+               <div className="text-right hidden md:block">
+                  <div className="text-xl font-black text-primary uppercase tracking-[0.4em] italic gold-glow">Spectrum_ULTRA_Log</div>
+                  <div className="text-[9px] text-muted-foreground uppercase font-black tracking-[0.2em] mt-1">Authorized: GHAZALI_ROOT</div>
+               </div>
+               <div className="size-16 md:size-20 rounded-2xl bg-primary flex items-center justify-center border-4 border-black/30 shadow-9xl animate-neural">
+                  <Terminal className="size-8 md:size-10 text-black" />
+               </div>
+            </div>
+         </div>
+      </div>
     </div>
   )
 }
