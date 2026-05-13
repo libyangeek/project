@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -59,7 +58,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
 /**
- * الملاحة الجانبية v78.9 – THE SUPREME NEURAL SPINE: ULTRA v2.0
+ * الملاحة الجانبية v79.6 – THE SUPREME NEURAL SPINE: ULTRA v2.0
  */
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
@@ -113,7 +112,7 @@ export function SidebarNav() {
           </div>
           <div className="text-center relative z-10">
             <h1 className="text-xl font-headline font-bold text-white tracking-[0.4em] uppercase italic leading-none gold-glow">AL-MUIZZ</h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic animate-pulse shadow-9xl">v78.9 ULTRA v2.0</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic animate-pulse shadow-9xl">v79.6 ULTRA v2.0</Badge>
           </div>
         </div>
         
@@ -133,10 +132,10 @@ export function SidebarNav() {
 
         <div className="p-6 border-t-2 border-primary/20 bg-black/99 relative z-10">
           <div className="p-4 border-2 border-primary/40 bg-primary/5 mb-4 relative overflow-hidden rounded-2xl shadow-xl border-dashed">
-            <div className="flex justify-between items-center mb-2"><span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] italic">Adaptive Resonance</span><Activity className="size-3 text-emerald-500 animate-pulse" /></div>
+            <div className="flex justify-between items-center mb-2"><span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] italic">Swarm Resonance</span><Activity className="size-3 text-emerald-500 animate-pulse" /></div>
             <div className="text-2xl font-black text-white italic gold-glow">{resonance.toFixed(7)}%</div>
           </div>
-          <Button asChild className="w-full h-12 bg-primary hover:bg-white text-black font-black uppercase text-[10px] rounded-xl shadow-2xl transition-all border-4 border-black/20 italic"><Link href="/autonomous"><Rocket className="size-4 mr-2" /> أطلق الاستحواذ المستقل</Link></Button>
+          <Button asChild className="w-full h-12 bg-primary hover:bg-white text-black font-black uppercase text-[10px] rounded-xl shadow-2xl transition-all border-4 border-black/20 italic"><Link href="/autonomous"><Rocket className="size-4 mr-2" /> أطلق السرب العليم</Link></Button>
         </div>
       </div>
     </>

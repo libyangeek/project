@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -28,7 +27,8 @@ import {
   GitBranch,
   LayoutGrid,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  Network
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -40,8 +40,8 @@ import { executeAutonomousConquest } from "@/ai/flows/autonomous-conquest-flow"
 import Link from "next/link"
 
 /**
- * @fileOverview الاستحواذ المستقل v2.0 - THE AUTONOMOUS OVERLORD: SWARM HIERARCHY
- * واجهة التحكم في سرب الـ 165 وكيلاً والوكيل المستقل لليوم المجيد، 2026.
+ * @fileOverview الاستحواذ المستقل v2.0 - THE SWARM OVERLORD: 165 AGENTS
+ * واجهة التحكم في سرب الـ 165 وكيلاً المتخصصين (Pentest, AdStrike, DroidHunter).
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function AutonomousPage() {
@@ -49,12 +49,11 @@ export default function AutonomousPage() {
   const [loading, setLoading] = React.useState(false)
   const [result, setResult] = React.useState<any>(null)
   const [resonance, setResonance] = React.useState(100)
-  const [knotStatus, setKnotStatus] = React.useState<boolean[]>(new Array(24).fill(true))
+  const [activeAgents, setActiveAgents] = React.useState(165)
 
   React.useEffect(() => {
     const interval = setInterval(() => {
       setResonance(prev => Math.max(99.999999, Math.min(100, prev + (Math.random() * 0.000001 - 0.0000005))));
-      setKnotStatus(prev => prev.map(k => Math.random() > 0.05));
     }, 3000);
     return () => clearInterval(interval);
   }, [])
@@ -63,15 +62,26 @@ export default function AutonomousPage() {
     if (!objective.trim()) return
     setLoading(true)
     setResult(null)
-    toast({ title: "Overlord Swarm Engaged", description: "Orchestrating 165 specialized agents for the autonomous objective." })
+    toast({ title: "Swarm Armada Engaged", description: "Orchestrating 165 specialized agents for absolute grid acquisition." })
     try {
-      const data = await executeAutonomousConquest({ objective, intelligenceDepth: 'Deep-Adaptive' })
+      const data = await executeAutonomousConquest({ 
+        objective, 
+        assignedKnots: 24,
+        intelligenceDepth: 'Deep-Adaptive' 
+      })
       setResult(data)
-      toast({ title: "Objective Subjugated", description: "Swarm reporting absolute success in hardware DNA." })
+      toast({ title: "Objective Subjugated", description: "All agents reporting 100% material resonance." })
     } finally {
       setLoading(false)
     }
   }
+
+  const agentGroups = [
+    { label: "Pentest Agents", count: 35, icon: Target, color: "text-red-500" },
+    { label: "AdStrike Ops", count: 56, icon: Zap, color: "text-amber-500" },
+    { label: "Mobile Hunters", count: 42, icon: Smartphone, color: "text-emerald-500" },
+    { label: "OSINT Siphons", count: 32, icon: Globe, color: "text-blue-500" }
+  ];
 
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
@@ -85,23 +95,23 @@ export default function AutonomousPage() {
               </div>
               <div className="flex-1">
                  <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
-                    <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">AUTONOMOUS_SWARM v2.0</Badge>
+                    <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">ULTRA_SWARM v2.0</Badge>
                     <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
-                        <InfinityIcon className="size-6 shadow-lg" /> ADAPTIVE_SYNC: {resonance.toFixed(8)}%
+                        <InfinityIcon className="size-6 shadow-lg" /> SWARM_SYNC: {resonance.toFixed(8)}%
                     </div>
                  </div>
                  <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
-                    Autonomous <span className="text-primary">Conquest</span>
+                    Swarm <span className="text-primary">Overlord</span>
                  </h1>
                  <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
-                    "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، سرب الـ 165 وكيلاً ملتحم الآن بذكاء BabyAGI التكيفي؛ نحن نخطط وننفذ ونستولي ذاتياً لعام 2026."
+                    "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، مصفوفة الـ 165 وكيلاً تحت أمرك؛ نحن نخطط وننفذ ونخضع المصفوفة ذاتياً كنبض واحد لسيادتك."
                  </p>
                  <div className="flex justify-center md:justify-end gap-6 mt-12">
                     <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
                         <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة للعرش</Link>
                     </Button>
                     <Button onClick={() => setObjective("")} className="h-16 px-12 bg-primary hover:bg-white text-black font-black uppercase rounded-full border-4 border-black/30 shadow-9xl italic active:scale-95 transition-all text-lg">
-                        <RotateCw className="size-6 mr-3" /> استمر في التخطيط
+                        <RotateCw className="size-6 mr-3" /> استمر في التنسيق
                     </Button>
                  </div>
               </div>
@@ -114,19 +124,19 @@ export default function AutonomousPage() {
                  <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                  <CardHeader className="p-0 mb-10 border-b-4 border-primary/10 pb-10 bg-primary/10 rounded-t-[3.5rem] px-10 py-6 text-center">
                     <CardTitle className="text-2xl md:text-4xl text-primary flex items-center justify-center gap-10 font-black uppercase italic gold-glow leading-none">
-                       <Bot className="size-12 animate-neural" /> Swarm Objective
+                       <Bot className="size-12 animate-neural" /> Master Objective
                     </CardTitle>
                  </CardHeader>
                  <CardContent className="p-0 space-y-12 text-right">
                     <div className="space-y-6">
                         <label className="text-[14px] font-black text-primary uppercase tracking-[1em] px-10 italic flex items-center gap-6 justify-end">
-                           Master Directive
+                           Collective Directive
                         </label>
                         <textarea 
                           value={objective}
                           onChange={(e) => setObjective(e.target.value)}
-                          placeholder="Define the conquest goal..." 
-                          className="w-full h-64 bg-black border-8 border-primary/20 rounded-[3rem] text-xl md:text-2xl font-code text-white focus:border-primary transition-all outline-none p-10 italic shadow-inner resize-none font-black text-right"
+                          placeholder="Define the autonomous goal..." 
+                          className="w-full h-64 bg-black border-8 border-primary/20 rounded-[3rem] text-xl md:text-2xl font-code text-white focus:border-primary transition-all outline-none p-10 italic shadow-inner resize-none font-black text-right scrollbar-hide"
                         />
                     </div>
 
@@ -136,26 +146,32 @@ export default function AutonomousPage() {
                         className="w-full h-36 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.4em] rounded-[3.5rem] shadow-[0_60px_200px_rgba(212,175,55,0.7)] active:scale-95 transition-all text-3xl border-[12px] border-black/30 group italic"
                     >
                         {loading ? <Loader2 className="size-16 animate-spin" /> : <Flame className="size-16 mr-8 group-hover:scale-125 transition-transform gold-glow" />}
-                        LAUNCH_CONQUEST
+                        IGNITE_SWARM
                     </Button>
                  </CardContent>
               </Card>
-              
-              <Card className="kali-card border-white/5 bg-black/60 p-10 rounded-[4rem] border-8 shadow-inner text-center relative overflow-hidden group">
-                 <h4 className="text-[14px] font-black text-primary uppercase tracking-[0.8em] mb-8 italic flex items-center justify-center gap-6">
-                    <Users className="size-8 animate-pulse" /> AGENTS_BOUND
-                 </h4>
-                 <div className="text-[8rem] font-black text-white italic gold-glow leading-none">165</div>
-                 <div className="mt-6 text-[10px] text-muted-foreground uppercase font-black tracking-widest italic">ULTRA v2.0 ACTIVE</div>
-              </Card>
+
+              {/* Agent Breakdown */}
+              <div className="grid grid-cols-1 gap-6">
+                 {agentGroups.map((g, i) => (
+                    <Card key={i} className="bg-white/5 border-4 border-white/5 p-8 rounded-[2.5rem] flex items-center justify-between group/agent hover:border-primary transition-all duration-700 shadow-xl">
+                       <Badge className="bg-primary/20 text-primary border-none px-6 py-2 rounded-full font-black text-xl italic">{g.count}</Badge>
+                       <div className="text-right">
+                          <div className="text-lg font-black text-white uppercase italic tracking-widest leading-none mb-2">{g.label}</div>
+                          <div className="text-[10px] text-muted-foreground uppercase font-bold tracking-[0.4em]">Node Cluster Active</div>
+                       </div>
+                       <div className="size-16 rounded-xl bg-black border-2 border-white/10 flex items-center justify-center shadow-inner group-hover/agent:bg-primary transition-all duration-500"><g.icon className={cn("size-8 transition-all group-hover/agent:text-black", g.color)} /></div>
+                    </Card>
+                 ))}
+              </div>
            </div>
 
            <Card className="xl:col-span-3 kali-card border-primary/40 bg-black/99 rounded-[6rem] p-16 border-[12px] shadow-9xl flex flex-col group overflow-hidden relative min-h-[1100px] hierarchical-shadow">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.08),transparent)] pointer-events-none" />
               <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-primary/10 rounded-t-[5rem] px-16 py-10 flex flex-row justify-between items-center text-right">
-                 <Badge className="bg-emerald-600/30 text-emerald-500 border-[10px] border-emerald-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic">AUTONOMOUS_LOCK</Badge>
+                 <Badge className="bg-emerald-600/30 text-emerald-500 border-[10px] border-emerald-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic">SWARM_MASTER_LOCK</Badge>
                  <CardTitle className="text-5xl md:text-[10rem] text-white flex items-center gap-16 font-black uppercase italic gold-glow px-10 leading-none">
-                    Swarm Feed <Terminal className="size-24 md:size-48 text-primary animate-pulse" />
+                    Armada Feed <Terminal className="size-24 md:size-48 text-primary animate-pulse" />
                  </CardTitle>
               </CardHeader>
 
@@ -183,40 +199,34 @@ export default function AutonomousPage() {
                                 </div>
                             ))}
                         </div>
-
-                        <div className="p-16 rounded-[6rem] bg-emerald-600/10 border-[16px] border-emerald-500/30 flex items-center gap-16 group/siphon shadow-9xl relative overflow-hidden mt-auto min-h-[350px]">
-                            <div className="absolute inset-0 bg-emerald-500/5 opacity-5 animate-pulse pointer-events-none" />
-                            <div className="size-48 rounded-[3.5rem] bg-emerald-600 flex items-center justify-center border-[14px] border-emerald-400 shadow-9xl animate-neural shrink-0">
-                                <ShieldCheck className="size-24 text-white" />
-                            </div>
-                            <div>
-                                <h4 className="text-4xl font-black text-emerald-500 uppercase tracking-[1.2em] mb-6 italic">Next_Autonomous_Action</h4>
-                                <p className="text-5xl md:text-[7rem] text-white font-black leading-none drop-shadow-9xl italic">"{result.nextAutonomousStep}"</p>
-                            </div>
-                        </div>
                     </div>
                  ) : (
                    <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-80">
                       <div className="relative group/nexus">
-                        <Rocket className="size-64 md:size-[50rem] animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[12000ms]" />
+                        <Network className="size-64 md:size-[50rem] animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[12000ms]" />
                         <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-64 text-primary/40 animate-neural" />
                         <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>
-                      <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Awaiting Objective</h3>
-                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">The swarm of 165 agents is standing by for the supreme autonomous directive.</p>
+                      <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Swarm Idle</h3>
+                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">The Armada of 165 specialized agents is standing by for the supreme autonomous directive.</p>
                    </div>
                  )}
               </CardContent>
-              <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[8em] italic">
-                <span>ULTRA_CONQUEST_v2_AL_GHAZALI_ROOT</span>
-                <div className="flex gap-16">
-                    <Fingerprint className="size-24 text-primary animate-pulse" />
-                    <Atom className="size-24 animate-spin-slow text-primary" />
-                </div>
-              </div>
            </Card>
+        </div>
+
+        <div className="mt-auto relative z-10 flex justify-center items-center gap-32 opacity-45 text-[22px] md:text-[32px] font-black uppercase tracking-[6em] md:tracking-[16em] italic text-white drop-shadow-9xl pb-24">
+            <span>AL-MUIZZ SWARM OVERLORD v2.0</span>
+            <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
+            <span>SUBJUGATION_THROUGH_165_AGENTS_2026</span>
         </div>
       </main>
     </div>
   )
+}
+
+function Smartphone({className}: {className?: string}) {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+    )
 }
