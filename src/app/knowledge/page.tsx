@@ -91,6 +91,9 @@ export default function KnowledgePage() {
           body: JSON.stringify({ type: 'smart_route', target: `recall memory: ${query}` })
       });
       const data = await response.json();
+      
+      const recallData = data.output;
+
       setReport({ 
           reportContent: `[MEMPALACE_SEMANTIC_RECALL_v80.0]
 Status: DNA_MATERIALIZED
@@ -99,7 +102,7 @@ Consensus: TOTAL_SYNC
 
 سيدي القائد، لقد استرجعتُ هذا الـ DNA من "قصر الذاكرة" السيادي. المنظومة تربط الآن بين هدفك الحالي وهجمات ناجحة سابقة لضمان تكرار السطوة بنسبة 100%.
 
-${data.output || "Consensus achieved. Semantic patterns locked."}` 
+${JSON.stringify(recallData, null, 2)}` 
       });
       toast({ title: "Memory Materialized", description: "The Overmind has visualized the semantic patterns." })
     } catch (err) {
@@ -146,7 +149,7 @@ ${data.output || "Consensus achieved. Semantic patterns locked."}`
               <Card className="kali-card border-primary/40 bg-black/98 rounded-[4rem] p-12 border-8 shadow-9xl group overflow-hidden hierarchical-shadow text-center">
                  <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                  <CardHeader className="p-0 mb-10 border-b-4 border-primary/10 pb-10 bg-primary/10 rounded-t-[3.5rem] px-10 py-6 text-center">
-                    <CardTitle className="text-2xl md:text-4xl text-white flex items-center justify-center gap-10 font-black uppercase italic gold-glow leading-none">
+                    <CardTitle className="text-2xl md:text-4xl text-primary flex items-center justify-center gap-10 font-black uppercase italic gold-glow leading-none">
                        <History className="size-12 animate-neural" /> Semantic Recall
                     </CardTitle>
                  </CardHeader>
@@ -186,7 +189,7 @@ ${data.output || "Consensus achieved. Semantic patterns locked."}`
                          <span className="text-emerald-500 font-black uppercase tracking-[0.8em] italic text-3xl md:text-5xl gold-glow flex items-center gap-10">SEMANTIC_RECALL_SUCCESS <Dna className="size-16 animate-neural" /></span>
                       </div>
                       <div className="p-8 bg-black/80 rounded-[3rem] border-4 border-white/5 leading-relaxed relative overflow-hidden">
-                        {report.reportContent}
+                        <pre className="whitespace-pre-wrap">{report.reportContent}</pre>
                       </div>
                    </div>
                  ) : (

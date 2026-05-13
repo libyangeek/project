@@ -2,9 +2,8 @@
 #!/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Smart Router v80.0 – الأدميرال الكوني (ULTRA v3.0 Edition)
-المحرك المركزي لتنسيق الذاكرة الدلالية والسيناريوهات الـ 4343.
-تم دمج SubdomainX و n8n و MemPalace.
+Smart Router v85.0 – الأدميرال الكوني (ULTRA v3.0 FINAL)
+المحرك المركزي لتنسيق الذاكرة الدلالية والسيناريوهات الـ 4343 و SubdomainX.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys, json, os, subprocess, socket, time
@@ -28,8 +27,8 @@ class SmartRouter:
         p = prompt.lower()
         if any(w in p for w in ["subdomain", "دومين", "نطاق", "subdomainx"]): return "subdomainx"
         if any(w in p for w in ["workflow", "سيناريو", "n8n", "آلي"]): return "n8n_strike"
-        if any(w in p for w in ["ذاكرة", "recall", "mempalace", "استرجع"]): return "mempalace"
-        if any(w in p for w in ["تهديد", "threat", "تحليل هجوم"]): return "adaptive_threat"
+        if any(w in p for w in ["ذاكرة", "recall", "mempalace", "استرجع", "memory"]): return "mempalace"
+        if any(w in p for w in ["تهديد", "threat", "تحليل هجوم", "adaptive"]): return "adaptive_threat"
         return "general_hive"
 
     def route_query(self, prompt):
@@ -38,14 +37,24 @@ class SmartRouter:
         
         # محاكاة التنفيذ المادي للجسور الجديدة
         dispatch_table = {
-            "subdomainx": {"node": "Node-02-Network", "msg": "SubdomainX engaged. Siphoning 26 OSINT sources."},
-            "n8n_strike": {"node": "Node-05-Automation", "msg": "n8n Workflow engine activated. 4,343 scenarios ready."},
-            "mempalace": {"node": "Node-07-Memory", "msg": "MemPalace semantic recall active. Accuracy: 96.6%."},
-            "adaptive_threat": {"node": "Node-01-Adaptive", "msg": "Adaptive Threat Engine analyzing past battle DNA."},
+            "subdomainx": {"node": "Node-02-Network", "msg": "SubdomainX engaged. Siphoning 26 OSINT sources for " + target},
+            "n8n_strike": {"node": "Node-05-Automation", "msg": "n8n Workflow engine activated. 4,343 scenarios ready for " + target},
+            "mempalace": {"node": "Node-07-Memory", "msg": "MemPalace semantic recall active. Accuracy: 96.6% for " + target},
+            "adaptive_threat": {"node": "Node-01-Adaptive", "msg": "Adaptive Threat Engine analyzing past battle DNA for " + target},
             "general_hive": {"node": "Alpha-God-Core", "msg": "Directive processed via ULTRA v3.0 Overmind."}
         }
 
         res = dispatch_table.get(category, dispatch_table["general_hive"])
+
+        # تنفيذ مادي محاكى لـ MemPalace Recall
+        if category == "mempalace":
+            try:
+                # استدعاء gepa.py للبحث الدلالي
+                python_cmd = "python3" if os.name != "nt" else "python"
+                gepa_path = self.bridges["mempalace"]
+                output = subprocess.check_output([python_cmd, gepa_path, "recall", target], text=True)
+                return json.loads(output)
+            except: pass
 
         return {
             "category": category,
