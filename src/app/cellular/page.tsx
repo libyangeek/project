@@ -347,18 +347,26 @@ export default function CellularWarfarePage() {
           </div>
         </div>
 
-        {/* تذييل الواجهة - سجل العمليات */}
-        <div className="fixed bottom-10 left-1/2 -translate-x-1/2 w-full max-w-7xl px-12 z-50">
-           <Card className="bg-black/98 border-[12px] border-primary/60 rounded-[4rem] p-12 shadow-[0_-80px_250px_rgba(0,0,0,1)] hierarchical-shadow text-right">
-              <div className="flex items-center gap-10 mb-8 border-b-8 border-white/5 pb-6 justify-end">
-                 <span className="text-[18px] font-black text-primary uppercase tracking-[1.2em] italic">Spectrum_ULTRA_Log</span>
-                 <Terminal className="size-12 text-primary animate-pulse" />
+        {/* تذييل الواجهة - سجل العمليات المحدث */}
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-7xl px-4 md:px-12 z-50">
+           <Card className="bg-black/95 border-[8px] md:border-[12px] border-primary/60 rounded-[3rem] md:rounded-[4rem] p-6 md:p-12 shadow-9xl hierarchical-shadow overflow-hidden text-right">
+              <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
+              <div className="flex items-center gap-6 md:gap-10 mb-6 md:mb-8 border-b-4 md:border-b-8 border-white/5 pb-4 md:pb-6 justify-end relative z-10">
+                 <span className="text-sm md:text-[18px] font-black text-primary uppercase tracking-[0.6em] md:tracking-[1.2em] italic">Spectrum_ULTRA_Log</span>
+                 <Terminal className="size-8 md:size-12 text-primary animate-pulse" />
               </div>
-              <div className="h-64 overflow-y-auto scrollbar-hide space-y-6 px-8 font-mono text-2xl md:text-5xl text-emerald-500 italic font-black text-left">
-                 {logs.map((l, i) => (
-                    <div key={i} className="animate-in slide-in-from-left-8 duration-700">{" >>> "} {l}</div>
-                 ))}
-                 {logs.length === 0 && <div className="opacity-10 uppercase tracking-[2em] text-center pt-16">Waiting for Signal...</div>}
+              <div className="h-40 md:h-64 overflow-y-auto scrollbar-hide space-y-4 md:space-y-6 px-4 md:px-8 font-mono text-xl md:text-5xl text-emerald-500 italic font-black text-left relative z-10">
+                 {logs.length > 0 ? logs.map((l, i) => (
+                    <div key={i} className="animate-in slide-in-from-left-8 duration-700 flex gap-4 md:gap-8">
+                        <span className="text-primary/30 select-none">{" >>> "}</span>
+                        <span className="drop-shadow-3xl">{l}</span>
+                    </div>
+                 )) : (
+                    <div className="h-full flex flex-col items-center justify-center opacity-20 py-8 md:py-16 gap-6">
+                        <Loader2 className="size-12 md:size-24 animate-spin text-primary/40" />
+                        <div className="uppercase tracking-[1em] md:tracking-[2em] text-center text-lg md:text-3xl text-white/50">Waiting for Signal...</div>
+                    </div>
+                 )}
               </div>
            </Card>
         </div>
