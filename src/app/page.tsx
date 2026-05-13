@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -35,7 +34,8 @@ import {
   Shield,
   Workflow,
   Cloud,
-  Eye
+  Eye,
+  Target
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -57,7 +57,7 @@ import {
 /**
  * @fileOverview العرش الأبدي v1.0 ULTRA - THE OMNIPOTENT OVERMIND
  * الواجهة المركزية لنسخة ULTRA التي تصهر كافة العقد والسيناريوهات والخدمات العالمية.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي // 12 مايو 2026
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي // 2026
  */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -89,7 +89,7 @@ export default function DashboardPage() {
         } catch (e) {}
     }
     fetchMetrics();
-    const metricsInterval = setInterval(fetchMetrics, 12000);
+    const metricsInterval = setInterval(fetchMetrics, 15000);
 
     const eventInterval = setInterval(() => {
         const types = ["ULTRA_CORE", "SCENARIO_READY", "CLOUD_UPLINK", "MONITOR_ACTIVE"];
@@ -104,7 +104,7 @@ export default function DashboardPage() {
             msg: msgs[Math.floor(Math.random()*msgs.length)],
             time: new Date().toLocaleTimeString()
         };
-        setEvents(prev => [newEvent, ...prev].slice(0, 6));
+        setEvents(prev => [newEvent, ...prev].slice(0, 8));
         setResonance(prev => Math.max(99.9999, Math.min(100, prev + (Math.random() * 0.0001 - 0.00005))));
     }, 4000);
 
@@ -125,7 +125,7 @@ export default function DashboardPage() {
   ];
 
   return (
-    <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 scanline-effect font-code">
+    <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 scanline-effect font-code overflow-x-hidden">
       <SidebarNav />
       <main className="flex-1 lg:mr-72 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10">
         <div 
@@ -154,34 +154,34 @@ export default function DashboardPage() {
           </div>
         </header>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-24 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-24 relative z-10">
            {stats.map((s, i) => (
              <Link key={i} href={s.href} className="contents">
-               <Card className="kali-card border-white/5 bg-black/95 hover:border-primary/70 transition-all duration-1000 p-12 rounded-[3rem] shadow-9xl group overflow-hidden border-4 hierarchical-shadow cursor-pointer active:scale-95 h-full">
-                  <div className="flex justify-between items-start mb-12 relative z-10">
-                     <div className={cn("size-24 rounded-3xl bg-white/5 flex items-center justify-center border-2 border-white/5 group-hover:bg-primary/10 transition-all shadow-inner", s.color)}>
-                        <s.icon className="size-12 transition-all group-hover:scale-110" />
+               <Card className="kali-card border-white/5 bg-black/95 hover:border-primary/70 transition-all duration-1000 p-8 rounded-[2.5rem] shadow-9xl group overflow-hidden border-4 hierarchical-shadow cursor-pointer active:scale-95 h-full">
+                  <div className="flex justify-between items-start mb-10 relative z-10">
+                     <div className={cn("size-20 rounded-2xl bg-white/5 flex items-center justify-center border-2 border-white/5 group-hover:bg-primary/10 transition-all shadow-inner", s.color)}>
+                        <s.icon className="size-10 transition-all group-hover:scale-110" />
                      </div>
-                     <Badge className="bg-primary/5 text-primary border-4 border-primary/20 text-[14px] uppercase font-black italic tracking-widest px-10 py-2.5 rounded-full">{s.status}</Badge>
+                     <Badge className="bg-primary/5 text-primary border-4 border-primary/20 text-[12px] uppercase font-black italic tracking-widest px-6 py-1.5 rounded-full">{s.status}</Badge>
                   </div>
-                  <div className="text-6xl md:text-9xl font-black italic gold-glow uppercase tracking-tighter relative z-10 leading-none">{s.value}</div>
-                  <div className="text-[18px] text-muted-foreground font-bold uppercase tracking-[0.6em] mt-8 italic relative z-10">{s.label}</div>
-                  <div className="absolute -bottom-10 -right-10 p-12 opacity-[0.03] group-hover:opacity-[0.06] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-48 text-primary" /></div>
+                  <div className="text-5xl md:text-8xl font-black italic gold-glow uppercase tracking-tighter relative z-10 leading-none">{s.value}</div>
+                  <div className="text-[16px] text-muted-foreground font-bold uppercase tracking-[0.5em] mt-6 italic relative z-10">{s.label}</div>
+                  <div className="absolute -bottom-8 -right-8 p-12 opacity-[0.03] group-hover:opacity-[0.06] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-40 text-primary" /></div>
                </Card>
              </Link>
            ))}
         </div>
 
-        <section className="mb-24 grid grid-cols-1 xl:grid-cols-3 gap-16 relative z-10">
-           <Card className="xl:col-span-2 kali-card border-primary/30 bg-black/99 rounded-[5rem] p-16 border-4 shadow-9xl group overflow-hidden relative hierarchical-shadow">
-              <CardHeader className="p-0 mb-16 border-b-4 border-white/5 pb-12 bg-primary/10 rounded-t-[4.5rem] px-16 py-10 flex flex-row justify-between items-center">
-                 <CardTitle className="text-4xl md:text-6xl text-white font-black uppercase italic tracking-[0.2em] gold-glow flex items-center gap-10">
-                    <TrendingUp className="size-16 text-primary animate-pulse" /> ULTRA Resonance Index
+        <section className="mb-24 grid grid-cols-1 xl:grid-cols-3 gap-12 relative z-10">
+           <Card className="xl:col-span-2 kali-card border-primary/30 bg-black/99 rounded-[4rem] p-10 border-4 shadow-9xl group overflow-hidden relative hierarchical-shadow h-[600px] md:h-[800px]">
+              <CardHeader className="p-0 mb-12 border-b-4 border-white/5 pb-8 bg-primary/10 rounded-t-[4rem] px-12 py-8">
+                 <CardTitle className="text-3xl md:text-5xl text-white font-black uppercase italic tracking-[0.2em] gold-glow flex items-center gap-10">
+                    <TrendingUp className="size-12 text-primary animate-pulse" /> ULTRA Resonance Index
                  </CardTitle>
-                 <Badge className="bg-blue-600/10 text-blue-400 border-4 border-blue-500/20 px-10 py-4 rounded-full font-black italic text-2xl shadow-xl">OMNIPOTENT_v1.0</Badge>
+                 <Badge className="bg-blue-600/10 text-blue-400 border-4 border-blue-500/20 px-8 py-2 rounded-full font-black italic text-xl shadow-xl">OMNIPOTENT_v1.0</Badge>
               </CardHeader>
-              <CardContent className="p-0 h-[600px] md:h-[750px]">
-                 <ResponsiveContainer width="100%" height="100%">
+              <CardContent className="p-0 h-full w-full">
+                 <ResponsiveContainer width="100%" height="80%">
                     <AreaChart data={neuralData}>
                        <defs>
                           <linearGradient id="colorGain" x1="0" y1="0" x2="0" y2="1">
@@ -193,30 +193,30 @@ export default function DashboardPage() {
                        <XAxis dataKey="time" hide />
                        <YAxis hide domain={[99.9, 100.1]} />
                        <Tooltip 
-                         contentStyle={{ backgroundColor: '#000', border: '8px solid #FBBF24', borderRadius: '4rem', fontFamily: 'monospace', padding: '40px' }}
-                         itemStyle={{ color: '#FBBF24', fontWeight: 'bold', fontSize: '28px' }}
+                         contentStyle={{ backgroundColor: '#000', border: '8px solid #FBBF24', borderRadius: '3rem', fontFamily: 'monospace', padding: '30px' }}
+                         itemStyle={{ color: '#FBBF24', fontWeight: 'bold', fontSize: '24px' }}
                        />
-                       <Area type="monotone" dataKey="gain" stroke="#FBBF24" strokeWidth={10} fillOpacity={1} fill="url(#colorGain)" />
+                       <Area type="monotone" dataKey="gain" stroke="#FBBF24" strokeWidth={8} fillOpacity={1} fill="url(#colorGain)" />
                     </AreaChart>
                  </ResponsiveContainer>
               </CardContent>
            </Card>
 
-           <Card className="xl:col-span-1 kali-card border-primary/30 bg-black/99 rounded-[5rem] p-12 border-4 shadow-9xl h-full flex flex-col group overflow-hidden relative">
-              <CardHeader className="p-0 mb-12 border-b-4 border-white/5 pb-10 bg-primary/5 rounded-t-[4rem] px-12 py-8">
-                 <CardTitle className="text-4xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-10">
-                    <History className="size-12 text-primary" /> ULTRA Spine Logs
+           <Card className="xl:col-span-1 kali-card border-primary/30 bg-black/99 rounded-[4rem] p-10 border-4 shadow-9xl h-full flex flex-col group overflow-hidden relative">
+              <CardHeader className="p-0 mb-10 border-b-4 border-white/5 pb-8 bg-primary/5 rounded-t-[3rem] px-10 py-6">
+                 <CardTitle className="text-3xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-8">
+                    <History className="size-10 text-primary" /> ULTRA Spine Logs
                  </CardTitle>
               </CardHeader>
-              <CardContent className="p-0 flex-1 overflow-y-auto scrollbar-hide space-y-12 relative z-10 px-10">
+              <CardContent className="p-0 flex-1 overflow-y-auto scrollbar-hide space-y-8 relative z-10 px-6">
                  {events.map((ev, i) => (
-                    <div key={i} className="p-10 rounded-[2.5rem] bg-white/5 border-4 border-white/5 flex flex-col gap-8 animate-in slide-in-from-right-12 duration-1000 hover:border-primary/60 transition-all cursor-crosshair group/ev shadow-inner relative overflow-hidden">
+                    <div key={i} className="p-8 rounded-[2rem] bg-white/5 border-4 border-white/5 flex flex-col gap-6 animate-in slide-in-from-right-8 duration-1000 hover:border-primary/60 transition-all cursor-crosshair group/ev shadow-inner relative overflow-hidden">
                        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/ev:opacity-15 transition-opacity" />
                        <div className="flex justify-between items-center relative z-10">
-                          <Badge className="bg-primary/10 text-primary border-none font-black italic tracking-widest px-8 py-2.5 rounded-full text-sm shadow-2xl">{ev.type}</Badge>
-                          <span className="text-sm font-black text-white/40 italic">{ev.time}</span>
+                          <Badge className="bg-primary/10 text-primary border-none font-black italic tracking-widest px-6 py-2 rounded-full text-xs shadow-2xl">{ev.type}</Badge>
+                          <span className="text-xs font-black text-white/40 italic">{ev.time}</span>
                        </div>
-                       <p className="text-2xl font-black text-gray-200 italic group-hover/ev:text-white transition-colors leading-relaxed relative z-10">"{ev.msg}"</p>
+                       <p className="text-xl font-black text-gray-200 italic group-hover/ev:text-white transition-colors leading-relaxed relative z-10">"{ev.msg}"</p>
                     </div>
                  ))}
               </CardContent>
@@ -224,8 +224,8 @@ export default function DashboardPage() {
            </Card>
         </section>
 
-        <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[24px] md:text-[36px] font-black uppercase tracking-[6em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
-            <span>AL-MUIZZ ULTRA OMNIPOTENT HIVE v1.0</span>
+        <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[22px] md:text-[36px] font-black uppercase tracking-[5em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
+            <span>AL-MUIZZ OMNIPOTENT ULTRA v1.0</span>
             <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
             <span>SUBJUGATION_THROUGH_TOTAL_OMNIPOTENCE_2026</span>
         </div>

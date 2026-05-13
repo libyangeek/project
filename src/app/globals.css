@@ -23,25 +23,25 @@
     --border: 47 50% 12%;
     --input: 47 50% 8%;
     --ring: 47 95% 57%;
-    --radius: 0.25rem;
+    --radius: 0.5rem;
   }
 }
 
 @layer components {
-  /* Retro OS Styling */
+  /* Retro OS Styling for ULTRA v1.0 */
   .retro-desktop {
     @apply relative w-full h-screen overflow-hidden bg-[#008080];
     background-image: radial-gradient(circle at center, #004d4d 0%, #002626 100%);
   }
 
   .retro-window {
-    @apply absolute bg-[#c0c0c0] border-2 shadow-2xl flex flex-col;
+    @apply absolute bg-[#c0c0c0] border-2 shadow-2xl flex flex-col overflow-hidden;
     border-color: #ffffff #808080 #808080 #ffffff;
   }
 
   .retro-title-bar {
     background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
-    @apply flex items-center justify-between px-2 py-1 text-white font-bold text-xs select-none cursor-move;
+    @apply flex items-center justify-between px-2 py-1 text-white font-bold text-xs select-none cursor-move shrink-0;
   }
 
   .retro-outset {
@@ -56,37 +56,39 @@
     background-color: #ffffff;
   }
 
-  .retro-button {
-    @apply retro-outset px-4 py-1 text-xs font-bold active:retro-inset active:pt-1.5 active:pb-0.5;
-  }
-
-  .retro-taskbar {
-    @apply fixed bottom-0 left-0 right-0 h-10 bg-[#c0c0c0] border-t-2 flex items-center px-1 z-[1000];
-    border-color: #ffffff;
-  }
-
   .gold-glow {
-    text-shadow: 0 0 10px rgba(212,175,55,0.8);
+    text-shadow: 0 0 15px rgba(212,175,55,0.9);
   }
 
   .scanline-effect::after {
     content: "";
-    @apply absolute inset-0 pointer-events-none opacity-[0.03] z-[9999];
+    @apply absolute inset-0 pointer-events-none opacity-[0.04] z-[9999];
     background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
                 linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
     background-size: 100% 2px, 3px 100%;
   }
+
+  /* Responsive Utilities */
+  .mobile-hide {
+    @apply hidden md:flex;
+  }
 }
 
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #dfdfdf;
-  border-left: 1px solid #808080;
+  @apply bg-black/20;
 }
 ::-webkit-scrollbar-thumb {
-  background: #c0c0c0;
-  border: 1px solid #ffffff;
-  box-shadow: inset -1px -1px #808080;
+  @apply bg-primary/40 rounded-full border-2 border-transparent bg-clip-content;
+}
+
+@keyframes neural-pulse {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.05); filter: brightness(1.3); }
+}
+
+.animate-neural {
+  animation: neural-pulse 3s infinite ease-in-out;
 }

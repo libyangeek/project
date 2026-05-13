@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -42,7 +41,8 @@ import {
   Wrench,
   ShieldAlert,
   Flame,
-  Monitor
+  Monitor,
+  Sparkles
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -79,12 +79,14 @@ export function SidebarNav() {
 
   return (
     <>
-      <button
-        className="lg:hidden fixed top-6 right-6 z-[500] bg-black/95 border-[2px] border-primary/80 text-primary p-3 rounded-xl shadow-2xl active:scale-90 transition-all"
+      <Button
+        variant="ghost"
+        size="icon"
+        className="lg:hidden fixed top-4 right-4 z-[500] bg-black/95 border-2 border-primary/80 text-primary size-12 rounded-xl shadow-2xl active:scale-90 transition-all"
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? <X className="size-6" /> : <Menu className="size-6" />}
-      </button>
+      </Button>
 
       <div className={cn(
         "flex flex-col h-full bg-black border-l-[4px] border-primary/60 w-64 lg:w-72 fixed right-0 top-0 z-[400] overflow-hidden shadow-2xl transition-transform duration-500 ease-in-out font-code backdrop-blur-xl",
@@ -98,7 +100,7 @@ export function SidebarNav() {
             <h1 className="text-xl font-headline font-bold text-white tracking-[0.4em] uppercase italic leading-none gold-glow">
               AL-MUIZZ
             </h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-lg">v78.0 OMNIPOTENT</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic shadow-lg">v1.0 ULTRA</Badge>
           </div>
         </div>
         
@@ -140,7 +142,7 @@ export function SidebarNav() {
           >
             <Link href="/classic-hub">
               <Power className="size-4 mr-2 group-hover:rotate-180 transition-all duration-700" />
-              أطلق سطح مكتب السيادة v78
+              أطلق سطح مكتب السيادة
             </Link>
           </Button>
         </div>
