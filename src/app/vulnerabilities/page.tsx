@@ -204,8 +204,8 @@ export default function VulnerabilitiesPage() {
 
            <Card className="xl:col-span-3 kali-card border-primary/40 bg-black/99 rounded-[6rem] p-8 md:p-16 border-[12px] shadow-[0_0_250px_rgba(0,0,0,1)] flex flex-col group overflow-hidden relative min-h-[1100px] hierarchical-shadow">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.06),transparent)] pointer-events-none" />
-              <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-primary/10 rounded-t-[5rem] px-8 md:px-16 py-10 flex flex-col md:flex-row justify-between items-center gap-8 text-right">
-                 <CardTitle className="text-4xl md:text-[10rem] text-white flex items-center gap-8 md:gap-16 font-black uppercase italic gold-glow px-4 md:px-10 leading-none">
+              <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-primary/10 rounded-t-[5rem] px-4 md:px-16 py-10 flex flex-col md:flex-row justify-between items-center gap-8 text-right">
+                 <CardTitle className="text-5xl md:text-[10rem] text-white flex items-center gap-8 md:gap-16 font-black uppercase italic gold-glow px-4 md:px-10 leading-none">
                     <Binary className="size-24 md:size-48 text-primary animate-pulse" /> Oracle Vision
                  </CardTitle>
                  {oracleResult && (
@@ -294,7 +294,7 @@ export default function VulnerabilitiesPage() {
            </Card>
         </div>
 
-        <div className="mt-auto relative z-10 flex justify-center items-center gap-24 md:gap-48 opacity-45 text-[18px] md:text-[36px] font-black uppercase tracking-[4em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
+        <div className="mt-auto relative z-10 flex justify-center items-center gap-24 md:gap-48 opacity-45 text-[24px] md:text-[36px] font-black uppercase tracking-[6em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
             <span>AL-MUIZZ ABSOLUTE ORACLE v78.8</span>
             <div className="size-10 md:size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
             <span>SUBJUGATION_THROUGH_GLOBAL_ARCHIVE_2026</span>

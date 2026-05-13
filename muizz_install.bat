@@ -6,64 +6,59 @@
 :: المالك الوحيد: المعتصم بالله إدريس الغزالي // 2026
 :: ==============================================================================
 
-set "GOLD=[33m"
-set "RED=[31m"
-set "BLUE=[34m"
-set "GREEN=[32m"
-set "NC=[0m"
-
+title AL-MUIZZ ULTRA v78.8 - WINDOWS_SUBJUGATION
+color 06
 cls
-echo %GOLD%================================================%NC%
-echo %GOLD%   🦅 EXECUTING AL-MUIZZ ULTRA v78.8 (WIN)     %NC%
-echo %GOLD%   [ MISSION: FIRST_DEVICE_SUBJUGATION ]       %NC%
-echo %GOLD%   [ COMMANDER: AL-GHAZALI ROOT ]              %NC%
-echo %GOLD%================================================%NC%
+
+echo ================================================
+echo    🦅 EXECUTING AL-MUIZZ ULTRA v78.8 (WIN)
+echo    [ MISSION: FIRST_DEVICE_SUBJUGATION ]
+echo    [ COMMANDER: AL-GHAZALI ROOT ]
+echo ================================================
 
 :: 1. التحقق من صلاحيات المسؤول
 net session >nul 2>&1
 if %errorLevel% neq 0 (
-    echo %RED%[!] Fatal Error: Administrator privileges required for total hardware takeover.%NC%
+    echo [!] Fatal Error: Administrator privileges required for hardware takeover.
     pause
-    exit /b 1
+    exit /b
 )
 
-set "INSTALL_DIR=%CD%"
-
-:: 2. تطهير وتعزيز البيئة
-echo %BLUE%[*] Phase 1: Cleansing Matrix & Neutralizing Conflicts...%NC%
-powershell -Command "Add-MpPreference -ExclusionPath '%INSTALL_DIR%'"
-
-:: 3. حقن عصب البايثون (God-Core Bridge)
-echo %BLUE%[*] Phase 2: Injecting Neural Python Layers...%NC%
+:: 2. التحقق من التبعيات (Python/Node)
+echo [*] Phase 1: Interrogating Environment DNA...
 python --version >nul 2>&1
 if %errorLevel% neq 0 (
-    echo %RED%[!] Python missing. Siphoning Python DNA...%NC%
-    powershell -Command "Invoke-WebRequest -Uri 'https://www.python.org/ftp/python/3.11.0/python-3.11.0-amd64.exe' -OutFile 'python_installer.exe'"
-    start /wait python_installer.exe /quiet InstallAllUsers=1 PrependPath=1
-    del python_installer.exe
+    echo [!] Python missing. Please install Python 3.10+ to allow material sync.
+    pause
+    exit /b
 )
+
+node -v >nul 2>&1
+if %errorLevel% neq 0 (
+    echo [!] Node.js missing. Please install Node.js 18+ to allow HUD compilation.
+    pause
+    exit /b
+)
+
+:: 3. تثبيت مفاصل البايثون
+echo [*] Phase 2: Injecting Neural Python Layers...
 pip install fastapi uvicorn pydantic requests psutil --quiet
 
-:: 4. بناء مصفوفة العرش (ULTRA HUD)
-echo %BLUE%[*] Phase 3: Compiling ULTRA UI Matrix...%NC%
-node --version >nul 2>&1
-if %errorLevel% neq 0 (
-    echo %RED%[!] Node.js missing. Siphoning Node DNA...%NC%
-    powershell -Command "Invoke-WebRequest -Uri 'https://nodejs.org/dist/v18.12.1/node-v18.12.1-x64.msi' -OutFile 'node_installer.msi'"
-    start /wait msiexec /i node_installer.msi /qn
-    del node_installer.msi
-)
+:: 4. بناء مصفوفة العرش
+echo [*] Phase 3: Compiling ULTRA UI Matrix...
 call npm install --force
 
-:: 5. تثبيت ممر الخلود (Task Scheduler Persistence)
-echo %BLUE%[*] Phase 4: Establishing Eternal Persistence (Ghost V6)...%NC%
-schtasks /create /tn "AlMuizzULTRA" /tr "python %INSTALL_DIR%\run.py start" /sc onlogon /rl highest /f
+:: 5. زرع الخلود (Windows Task Scheduler)
+echo [*] Phase 4: Establishing Eternal Persistence (Task Scheduler)...
+schtasks /create /tn "AlMuizzUltra" /tr "python %cd%\run.py start" /sc onstart /rl highest /f
 
 :: 6. النجاح النهائي
-echo %GREEN%================================================%NC%
-echo %GREEN%   ✅ AL-MUIZZ ULTRA v78.8 ASCENDED!           %NC%
-echo %GREEN%   [ STATUS: FIRST_NODE_SUBJUGATED ]           %NC%
-echo %GREEN%================================================%NC%
+cls
+echo ================================================
+echo    ✅ AL-MUIZZ ULTRA v78.8 ASCENDED!
+echo    [ STATUS: FIRST_NODE_SUBJUGATED ]
+echo ================================================
 echo Web HUD: http://localhost:9002
-echo %GOLD%Commander Al-Ghazali, this device is now your extension.%NC%
+echo Commander Al-Ghazali, this device is now your extension.
+python run.py start
 pause

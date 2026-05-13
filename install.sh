@@ -1,3 +1,4 @@
+
 #!/bin/bash
 # ==============================================================================
 # 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v78.8-ULTRA [LINUX/KALI EDITION]
