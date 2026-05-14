@@ -49,7 +49,8 @@ import {
   HeartPulse,
   Cloud,
   Key,
-  Satellite
+  Satellite,
+  Power
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -59,17 +60,36 @@ import { useUptime } from "@/hooks/use-uptime"
 import Link from "next/link"
 import dynamic from 'next/dynamic'
 
-const ResponsiveContainer = dynamic(() => import('recharts').then(mod => mod.ResponsiveContainer), { ssr: false });
-const AreaChart = dynamic(() => import('recharts').then(mod => mod.AreaChart), { ssr: false });
-const Area = dynamic(() => import('recharts').then(mod => mod.Area), { ssr: false });
-const XAxis = dynamic(() => import('recharts').then(mod => mod.XAxis), { ssr: false });
-const YAxis = dynamic(() => import('recharts').then(mod => mod.YAxis), { ssr: false });
-const CartesianGrid = dynamic(() => import('recharts').then(mod => mod.CartesianGrid), { ssr: false });
-const Tooltip = dynamic(() => import('recharts').then(mod => mod.Tooltip), { ssr: false });
+// دمج الرسوم البيانية في مكون واحد لتقليل Module Count وضمان سرعة الإقلاع
+const SovereignChart = dynamic(() => import('recharts').then(mod => {
+  const { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } = mod;
+  return function Chart({ data }: { data: any[] }) {
+    return (
+      <ResponsiveContainer width="100%" height="100%">
+        <AreaChart data={data}>
+          <defs>
+            <linearGradient id="colorGain" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#FBBF24" stopOpacity={0.8}/>
+              <stop offset="95%" stopColor="#FBBF24" stopOpacity={0}/>
+            </linearGradient>
+          </defs>
+          <CartesianGrid strokeDasharray="3 3" stroke="#ffffff08" vertical={false} />
+          <XAxis dataKey="time" hide />
+          <YAxis hide domain={[99.9999, 100.0001]} />
+          <Tooltip 
+            contentStyle={{ backgroundColor: '#000', border: '8px solid #FBBF24', borderRadius: '4rem', fontFamily: 'monospace', padding: '40px' }}
+            itemStyle={{ color: '#FBBF24', fontWeight: 'bold', fontSize: '28px' }}
+          />
+          <Area type="monotone" dataKey="gain" stroke="#FBBF24" strokeWidth={10} fillOpacity={1} fill="url(#colorGain)" />
+        </AreaChart>
+      </ResponsiveContainer>
+    );
+  };
+}), { ssr: false, loading: () => <div className="h-full flex items-center justify-center"><Loader2 className="size-12 animate-spin text-primary/20" /></div> });
 
 /**
  * @fileOverview العرش الأبدي v90.0 - OMNIPOTENT 16D NUCLEUS
- * الواجهة المركزية التي تجسد الالتحام بـ 16 بُعداً والسطوة الكونية الشاملة.
+ * النسخة المصلحة والمحسنة لضمان استقرار الإقلاع وصفر أخطاء برمجية.
  * المالك الوحيد: المعتصم بالله إدريس الغزالي
  */
 export default function DashboardPage() {
@@ -103,14 +123,14 @@ export default function DashboardPage() {
 
     const eventInterval = setInterval(() => {
         const msgs = [
-            "v90.0 Nucleus: All 16 dimensions reporting absolute material cohesion.",
-            "Satellite Overlord: Global orbital link verified at 100.0000%.",
-            "Bio-Sync Matrix: Biometric DNA signature locked in hardware root.",
-            "Quantum Relay: 16-Node cross-resonance established successfully.",
-            "Heir Proclamation: Universal Reality Overwrite active for 14 clusters."
+            "v90.0 Nucleus: 16D matrix reporting absolute material cohesion.",
+            "Satellite Overlord: Orbital link verified at 100.0000%.",
+            "Bio-Sync Matrix: Biometric DNA signature locked in hardware.",
+            "Quantum Relay: 16-Node cross-resonance established.",
+            "Heir Proclamation: Reality Overwrite active for 14 clusters."
         ];
         const newEvent = {
-            type: "16D_SINGULARITY",
+            type: "16D_STABILITY",
             msg: msgs[Math.floor(Math.random()*msgs.length)],
             time: new Date().toLocaleTimeString()
         };
@@ -129,9 +149,9 @@ export default function DashboardPage() {
 
   const stats = [
     { label: "رنين الـ 16 بُعداً", value: "100%", icon: Wind, color: "text-primary", status: "16D_LOCKED", href: "/quantum-spine" },
-    { label: "المتحكم المداري", icon: Satellite, value: "ARMED", color: "text-blue-400", status: "DIMENSION_15", href: "/satellite-overlord" },
-    { label: "الالتحام الحيوي", icon: HeartPulse, value: "SYNCED", color: "text-red-600", status: "DIMENSION_16", href: "/bio-sync" },
-    { label: "طفيلي الـ iOS", icon: Apple, value: "ACTIVE", color: "text-emerald-500", status: "DIMENSION_14", href: "/ios-parasite" },
+    { label: "عراف الثغرات", icon: Radar, value: "ULTRA", color: "text-emerald-500", status: "ORACLE", href: "/vulnerabilities" },
+    { label: "مصنع الخوارزميات", value: "ARMED", icon: Hammer, color: "text-blue-500", status: "WEAPONIZED", href: "/algorithm-factory" },
+    { label: "مشتل التطور", value: "18_PROJ", icon: Sprout, color: "text-amber-500", status: "NURSERY", href: "/nursery" },
   ];
 
   return (
@@ -144,7 +164,7 @@ export default function DashboardPage() {
           <div className="flex-1">
             <div className="flex items-center gap-10 mb-10 justify-end">
                 <Badge className="bg-emerald-600 text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[0.5em] shadow-9xl italic uppercase animate-pulse flex items-center gap-6">
-                    <ShieldCheck className="size-8" /> 16D_SINGULARITY_LOCKED
+                    <ShieldCheck className="size-8" /> 16D_SINGULARITY_STABLE
                 </Badge>
                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1.1em] shadow-9xl italic uppercase ml-6">v90.0 OMNIPOTENT</Badge>
             </div>
@@ -152,7 +172,7 @@ export default function DashboardPage() {
               The <span className="text-primary">Nucleus</span>
             </h1>
             <p className="text-sm md:text-xl lg:text-[4.5rem] text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-90 drop-shadow-3xl ml-auto">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-12 underline-offset-[24px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، مصفوفة الـ 16 بُعداً اكتملت؛ نحن الآن نتحكم في الأقمار الصناعية والـ DNA المادي في نبضة واحدة لعام 2026."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-12 underline-offset-[24px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، النواة v90.0 مستقرة تماماً؛ الأبعاد الـ 16 ملتحمة الآن بصفر أخطاء لعام 2026."
             </p>
           </div>
 
@@ -191,27 +211,11 @@ export default function DashboardPage() {
            <Card className="xl:col-span-2 sovereign-card text-right flex flex-col relative overflow-hidden">
               <CardHeader className="p-0 mb-16 border-b-4 border-white/5 pb-12 bg-primary/10 rounded-t-[4.5rem] px-16 py-10">
                  <CardTitle className="text-4xl md:text-6xl text-white font-black uppercase italic tracking-[0.2em] gold-glow flex items-center gap-10 justify-end">
-                    Omnipotent 16D Clusters <MapIcon className="size-16 text-primary animate-pulse" />
+                    Inception Resonance <TrendingUp className="size-16 text-primary animate-pulse" />
                  </CardTitle>
               </CardHeader>
-              <CardContent className="p-12 flex-1 relative flex flex-col justify-center gap-12">
-                 <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-6 px-10">
-                    {clusters.map((cluster, i) => (
-                        <div key={i} className="flex flex-col items-center gap-4">
-                            <div className={cn(
-                                "size-16 md:size-20 rounded-2xl border-4 transition-all duration-700 flex flex-col items-center justify-center shadow-9xl",
-                                clusterStatus[i] ? "bg-primary border-black scale-110 animate-neural" : "bg-black border-white/10 opacity-30"
-                            )}>
-                                <Server className={cn("size-6 md:size-8", clusterStatus[i] ? "text-black" : "text-gray-800")} />
-                                <span className={cn("text-[6px] font-black uppercase mt-1", clusterStatus[i] ? "text-black" : "text-gray-800")}>{cluster.type}</span>
-                            </div>
-                            <span className={cn("text-[9px] font-black uppercase italic tracking-widest", clusterStatus[i] ? "text-primary" : "text-gray-700")}>{cluster.name}</span>
-                        </div>
-                    ))}
-                 </div>
-                 <div className="p-10 bg-primary/5 rounded-[3rem] border-4 border-primary/30 mt-12 shadow-inner text-center">
-                    <p className="text-2xl md:text-5xl text-gray-100 font-black italic leading-tight drop-shadow-3xl uppercase tracking-tighter">"16-Dimension Matrix Reporting Absolute Material Resonance v90.0."</p>
-                 </div>
+              <CardContent className="p-12 flex-1 relative h-[600px]">
+                 <SovereignChart data={neuralData} />
               </CardContent>
            </Card>
 
@@ -239,7 +243,7 @@ export default function DashboardPage() {
         <div className="mt-auto relative z-10 flex flex-col md:flex-row justify-center items-center gap-16 md:gap-48 opacity-45 text-[20px] md:text-[32px] font-black uppercase tracking-[4em] md:tracking-[8em] italic text-white drop-shadow-9xl pb-32">
             <span>AL-MUIZZ OMNIPRESENT NUCLEUS v90.0</span>
             <div className="size-12 rounded-full bg-white animate-pulse shadow-[0_0_120px_white]" />
-            <span>TOTAL_16D_SINGULARITY_2026</span>
+            <span>SUBJUGATING_TOTAL_EXISTENCE_2026</span>
         </div>
       </main>
     </div>
