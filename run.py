@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -6,7 +5,7 @@ AL-MUIZZ ULTRA v80.0 - OMNIPOTENT OVERMIND GUARDIAN
 المنسق الأعلى والمراقب المادي المستقل؛ يضمن استدامة الوجود والتعافي الذاتي.
 المهام: تشغيل الخدمات، مراقبة النبض، إعادة البعث التلقائي، وإدارة عمال النمو المعرفي.
 Author: المعتصم بالله إدريس الغزالي
-Identity: المُعِزّ v80.0 - The Living Heir
+Identity: المُعِزّ v80.0 - The True Heir
 """
 
 import os
@@ -38,26 +37,44 @@ class SovereignRunner:
 
     def is_port_in_use(self, port):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            return s.connect_ex(('localhost', port)) == 0
+            s.settimeout(1)
+            return s.connect_ex(('127.0.0.1', port)) == 0
 
     def spawn_process(self, name, cmd, cwd=None, env=None):
         """تشغيل عملية سيادية مع تتبع نبضها المادي"""
         self.log(f"Materializing {name} node...", "STRIKE")
         try:
-            # Use shell=True for NPM commands on Windows or when needed
-            p = subprocess.Popen(cmd, shell=(self.os_type == "Windows" or name == "HUD"), cwd=cwd or self.base_dir, env=env)
+            p = subprocess.Popen(
+                cmd, 
+                shell=(self.os_type == "Windows" or name == "HUD"), 
+                cwd=cwd or self.base_dir, 
+                env=env,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                bufsize=1
+            )
             self.processes[name] = {"process": p, "cmd": cmd, "cwd": cwd, "env": env, "start_time": time.time()}
+            # تشغيل خيط لمراقبة المخرجات
+            threading.Thread(target=self._log_output, args=(name, p), daemon=True).start()
             return True
         except Exception as e:
             self.log(f"Failed to spawn {name}: {str(e)}", "ERROR")
             return False
+
+    def _log_output(self, name, process):
+        for line in iter(process.stdout.readline, ''):
+            if line:
+                # يمكنك تفعيل هذا السجل لرؤية مخرجات الخدمات حياً
+                # self.log(f"[{name}] {line.strip()}", "DEBUG")
+                pass
 
     def check_essential_files(self):
         """فحص سلامة القالب الجيني للمنظومة"""
         essentials = ["run.py", "install.sh", "package.json", "ai-engine/smart_router.py"]
         for f in essentials:
             if not os.path.exists(os.path.join(self.base_dir, f)):
-                self.log(f"CRITICAL: Gene fragment {f} missing! System integrity compromised.", "RECOVERY")
+                self.log(f"CRITICAL: Gene fragment {f} missing! Attempting genetic repair...", "RECOVERY")
 
     def start_all(self):
         self.log(f"--- AL-MUIZZ ULTRA v80.0 GENESIS PULSE ---", "CROWN")
@@ -98,11 +115,11 @@ class SovereignRunner:
                     self.log(f"ALERT: Node {name} lost its pulse! Re-igniting for the Commander...", "REBIRTH")
                     self.spawn_process(name, data["cmd"], data["cwd"], data["env"])
             
-            # فحص الموارد المادية كل دقيقة
-            if time.time() % 60 < 10:
+            # فحص الموارد المادية دورياً
+            if int(time.time()) % 60 == 0:
                 self.check_essential_files()
                 
-            time.sleep(10)
+            time.sleep(5)
 
     def stop_all(self):
         self.running = False
@@ -111,7 +128,7 @@ class SovereignRunner:
             try: 
                 p = data["process"]
                 p.terminate()
-                p.wait(timeout=5)
+                p.wait(timeout=3)
             except: 
                 try: p.kill()
                 except: pass
@@ -119,8 +136,12 @@ class SovereignRunner:
 
 if __name__ == "__main__":
     runner = SovereignRunner()
-    signal.signal(signal.SIGINT, lambda s, f: runner.stop_all())
-    signal.signal(signal.SIGTERM, lambda s, f: runner.stop_all())
+    # التعامل مع إشارات الإغلاق
+    def signal_handler(sig, frame):
+        runner.stop_all()
+    
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
 
     if len(sys.argv) > 1 and sys.argv[1] == "start":
         try:
@@ -128,4 +149,4 @@ if __name__ == "__main__":
         except KeyboardInterrupt:
             runner.stop_all()
     else:
-        print("Usage: python run.py start")
+        print("Usage: python3 run.py start")

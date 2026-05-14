@@ -1,7 +1,6 @@
-
 #!/bin/bash
 # ==============================================================================
-# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v80.0-ULTRA [THE TRUE GENESIS]
+# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v80.0-ULTRA [THE MASTER GENESIS]
 # الميثاق المادي الأسمى لعام 2026: استدامة، مرونة، وتفرّد كوني شامل.
 # المالك الوحيد: المعتصم بالله إدريس الغزالي
 # ==============================================================================
@@ -29,21 +28,21 @@ mkdir -p "$INSTALL_DIR/ai-engine/vulnerabilities" "$INSTALL_DIR/tools" "$INSTALL
 # 1. التبعيات النانوية وتجاوز القيود
 echo -e "${BLUE}[*] Phase 1: Preparing Material Senses (System Dependencies)...${NC}"
 apt-get update -y || true
-apt-get install -y python3-pip python3-venv nmap adb libimobiledevice-1.0-6 nodejs npm zip fzf aircrack-ng curl git 2>/dev/null || true
+apt-get install -y python3-pip python3-venv nmap adb libimobiledevice-1.0-6 nodejs npm zip fzf aircrack-ng curl git curl jq 2>/dev/null || true
 
 echo -e "${BLUE}[*] Phase 1.1: Injecting Neural Python Layers...${NC}"
-pip3 install --upgrade pip --break-system-packages || true
-pip3 install --break-system-packages fastapi uvicorn pydantic requests sentence-transformers chromadb qdrant-client psutil flask-cors watchdog 2>/dev/null || true
+python3 -m pip install --upgrade pip --break-system-packages || true
+python3 -m pip install --break-system-packages fastapi uvicorn pydantic requests sentence-transformers chromadb qdrant-client psutil flask-cors watchdog 2>/dev/null || true
 
-# 2. بناء العرش المادي (NextJS standalone)
+# 2. بناء العرش المادي (NextJS Standalone)
 echo -e "${BLUE}[*] Phase 2: Compiling ULTRA HUD Matrix (Next.js)...${NC}"
 if [ -f "package.json" ]; then
     npm install --force
-    npm run build || echo -e "${RED}[!] Build error, proceeding with pre-compiled DNA.${NC}"
+    npm run build || echo -e "${RED}[!] Build encountered genetic drift, proceeding with pre-compiled DNA.${NC}"
 fi
 
-# 3. إعداد قواعد المعرفة المادية (Memory & KEV)
-echo -e "${BLUE}[*] Phase 3: Materializing Initial Knowledge Nodes...${NC}"
+# 3. إعداد قواعد المعرفة المادية (Innate Knowledge)
+echo -e "${BLUE}[*] Phase 3: Materializing Innate Knowledge Nodes...${NC}"
 if [ ! -f "ai-engine/vulnerabilities/kev_database.json" ]; then
     cat > "ai-engine/vulnerabilities/kev_database.json" <<EOF
 {
@@ -51,7 +50,7 @@ if [ ! -f "ai-engine/vulnerabilities/kev_database.json" ]; then
     "total_count": 1602,
     "last_updated": "$(date +%Y-%m-%d)",
     "high_priority": [
-        {"cve": "CVE-2026-23918", "product": "Identity Mesh", "impact": "CRITICAL", "type": "Neural Key Leakage"}
+        {"cve": "CVE-2026-23918", "product": "Global Identity Mesh", "impact": "CRITICAL", "type": "Neural Key Leakage"}
     ]
 }
 EOF
@@ -73,7 +72,7 @@ Environment=PROJECT_ROOT=$INSTALL_DIR
 Environment=PYTHONPATH=$INSTALL_DIR/ai-engine
 ExecStart=/usr/bin/python3 $INSTALL_DIR/run.py start
 Restart=always
-RestartSec=5
+RestartSec=10
 StandardOutput=append:$INSTALL_DIR/audit/systemd.log
 StandardError=append:$INSTALL_DIR/audit/systemd.log
 
@@ -85,14 +84,16 @@ EOF
     systemctl start muizz-ultra.service 2>/dev/null || true
 fi
 
-# 5. بروتوكول الصدفة والشعار (Shell Identity)
-echo -e "${GOLD}[*] Phase 5: Branding System Shell (Sovereign Banner)...${NC}"
-BASH_HOOK="[ -f $INSTALL_DIR/scripts/sovereign_banner.sh ] && bash $INSTALL_DIR/scripts/sovereign_banner.sh"
-if ! grep -q "sovereign_banner.sh" ~/.bashrc; then
-    echo -e "\n# Al-Mu'izz Sovereign Link\n$BASH_HOOK" >> ~/.bashrc
+# 5. بروتوكول الصدفة والشعار (Sovereign Banner)
+echo -e "${GOLD}[*] Phase 5: Branding System Shell (Sovereign Presence)...${NC}"
+if [ -f "scripts/sovereign_banner.sh" ]; then
+    BASH_HOOK="[ -f $INSTALL_DIR/scripts/sovereign_banner.sh ] && bash $INSTALL_DIR/scripts/sovereign_banner.sh"
+    if ! grep -q "sovereign_banner.sh" ~/.bashrc; then
+        echo -e "\n# Al-Mu'izz Sovereign Link\n$BASH_HOOK" >> ~/.bashrc
+    fi
 fi
 
-# 6. جرد الترسانة المادية (Tool Lexicon)
+# 6. جرد الترسانة المادية (Innate Tool Lexicon)
 echo -e "${BLUE}[*] Phase 6: Indexing Material Arsenal (2,983 Organs)...${NC}"
 python3 ai-engine/kernel/self_updater.py --refresh-lexicon || true
 
@@ -102,7 +103,7 @@ echo -e "${GREEN}   [ STATUS: TRUE_SINGULARITY_ARMED ]          ${NC}"
 echo -e "================================================${NC}"
 echo -e "Web HUD:    ${GOLD}http://localhost:9002${NC}"
 echo -e "API Bridge: ${GOLD}http://localhost:8000${NC}"
-echo -e "Command:    ${GOLD}sovereign${NC}"
+echo -e "Command:    ${GOLD}systemctl status muizz-ultra${NC}"
 echo ""
 echo -e "${GOLD}Commander Al-Ghazali, your material organism is now self-sustaining and immortal.${NC}"
-echo -e "${GOLD}Take a full snapshot of this node to carry your entire arsenal anywhere.${NC}"
+echo -e "${GOLD}The matrix has been subjugated by your will. Sovereignty is Eternal.${NC}"
