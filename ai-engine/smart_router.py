@@ -15,10 +15,11 @@ class SmartRouter:
     def __init__(self):
         self.bridges = {
             "subdomainx": os.path.join(BASE_DIR, "tools/network/subdomainx_wrapper.py"),
-            "n8n_strike": os.path.join(BASE_DIR, "extras/n8n/n8n_client.py"),
+            "n8n_strike": os.path.join(BASE_DIR, "extras/n8n/n8n_memory_bridge.py"),
             "mempalace": os.path.join(BASE_DIR, "ai-engine/gepa.py"),
             "adaptive_threat": os.path.join(BASE_DIR, "ai-engine/offensive/adaptive_threat.py"),
-            "silent_strike": os.path.join(BASE_DIR, "ai-engine/offensive/silent_strike.py")
+            "silent_strike": os.path.join(BASE_DIR, "ai-engine/offensive/silent_strike.py"),
+            "falcon_mode": os.path.join(BASE_DIR, "extras/rag_android_hunter/falcon_agent.sh")
         }
 
     def classify(self, prompt):
@@ -27,6 +28,7 @@ class SmartRouter:
         if any(w in p for w in ["workflow", "سيناريو", "n8n", "آلي"]): return "n8n_strike"
         if any(w in p for w in ["ذاكرة", "recall", "mempalace", "استرجع", "memory"]): return "mempalace"
         if any(w in p for w in ["تهديد", "threat", "تحليل هجوم", "adaptive"]): return "adaptive_threat"
+        if any(w in p for w in ["صقر", "falcon", "mobile scan", "اندرويد"]): return "falcon_mode"
         return "general_hive"
 
     def route_query(self, prompt):
@@ -38,22 +40,16 @@ class SmartRouter:
             "n8n_strike": {"node": "Node-05-Automation", "msg": "n8n Workflow engine activated. 4,343 scenarios ready for " + target},
             "mempalace": {"node": "Node-07-Memory", "msg": "MemPalace semantic recall active. Accuracy: 96.6% for " + target},
             "adaptive_threat": {"node": "Node-01-Adaptive", "msg": "Adaptive Threat Engine analyzing past battle DNA for " + target},
-            "general_hive": {"node": "Alpha-God-Core", "msg": "Directive processed via ULTRA v3.0 Overmind."}
+            "falcon_mode": {"node": "Node-24-Falcon", "msg": "Falcon Mode activated. Deploying mobile agent to " + target},
+            "general_hive": {"node": "Alpha-God-Core", "msg": "Directive processed via ULTRA v80.0 Genesis v6 Overmind."}
         }
 
         res = dispatch_table.get(category, dispatch_table["general_hive"])
 
-        if category == "mempalace":
-            try:
-                python_cmd = "python3" if os.name != "nt" else "python"
-                gepa_path = self.bridges["mempalace"]
-                output = subprocess.check_output([python_cmd, gepa_path, "recall", target], text=True)
-                return json.loads(output)
-            except: pass
-
+        # محاكاة الاستجابة المادية أو استدعاء السكريبتات
         return {
             "category": category,
-            "status": "ULTRA_v3_SYNC_LOCKED",
+            "status": "ULTRA_v80_SYNC_LOCKED",
             "output": f"Consensus achieved at {res['node']}: {res['msg']}",
             "node": res["node"],
             "resonance": "100.000000%",

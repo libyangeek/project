@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -17,11 +16,18 @@ import {
   Database,
   History,
   Workflow,
-  Users
+  Users,
+  Activity,
+  ShieldCheck,
+  ChevronRight,
+  Atom,
+  Boxes,
+  Cpu
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 import { executeAdaptiveThreat } from "@/ai/flows/adaptive-threat-flow"
@@ -30,7 +36,6 @@ import Link from "next/link"
 /**
  * @fileOverview الاستحواذ المستقل v80.0 - THE ADAPTIVE OVERLORD: ULTRA v3.0 FINAL
  * واجهة السطوة المستقلة التي تصهر سرب الـ 165 وكيلاً مع سيناريوهات n8n.
- * تم التأكد من استيراد كافة الحواس البصرية السيادية.
  */
 export default function AutonomousPage() {
   const [objective, setObjective] = React.useState("")

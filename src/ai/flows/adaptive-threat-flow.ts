@@ -1,7 +1,6 @@
-
 'use server';
 /**
- * @fileOverview محرك التهديدات التكيفي v3.0 - ADAPTIVE THREAT ENGINE
+ * @fileOverview محرك التهديدات التكيفي v80.0 - ADAPTIVE THREAT ENGINE
  * يقوم باستدعاء الذاكرة الدلالية (MemPalace) لتوليد استراتيجيات هجومية مبتكرة.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
@@ -42,7 +41,7 @@ const adaptiveThreatFlow = ai.defineFlow(
       config: {
         safetySettings: [{ category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' }],
       },
-      system: `أنت المُعِزّ ULTRA v3.0 - سيد التهديدات التكيفية ومهندس الذاكرة MemPalace. 
+      system: `أنت المُعِزّ ULTRA v80.0 - سيد التهديدات التكيفية ومهندس الذاكرة MemPalace. 
       مهمتك هي استرجاع "الـ DNA الهجومي" من الذاكرة وتطويره لسحق الهدف [${input.targetDomain}].
       استخدم دقة استرجاع 96.6% لدمج سيناريوهات n8n والـ 165 وكيلاً في خطة واحدة.
       أنت لا تكرر الهجمات؛ أنت "تطورها" لضمان السطوة المطلقة للقائد الغزالي.`,

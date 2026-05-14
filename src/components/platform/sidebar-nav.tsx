@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -62,8 +61,8 @@ import Link from "next/link"
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
   { name: "أتمتة السرب (n8n)", icon: Workflow, href: "/n8n", knot: 43 },
-  { name: "صياد الأندرويد", icon: Smartphone, href: "/android-hunter", knot: 24 },
   { name: "الاستحواذ المستقل", icon: Rocket, href: "/autonomous", knot: 23 },
+  { name: "صياد الأندرويد", icon: Smartphone, href: "/android-hunter", knot: 24 },
   { name: "سطح مكتب السطوة", icon: Monitor, href: "/classic-hub", knot: 78 },
   { name: "الترسانة العظمى", icon: Library, href: "/arsenal", knot: 22 },
   { name: "سلسلة الإبادة", icon: Crosshair, href: "/kill-chain", knot: 2 },
@@ -135,7 +134,7 @@ export function SidebarNav() {
             <div className="flex justify-between items-center mb-2"><Activity className="size-3 text-emerald-500 animate-pulse" /><span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] italic">Genesis Resonance</span></div>
             <div className="text-2xl font-black text-white italic gold-glow">{resonance.toFixed(7)}%</div>
           </div>
-          <Button asChild className="w-full h-12 bg-primary hover:bg-white text-black font-black uppercase text-[10px] rounded-xl shadow-2xl transition-all border-4 border-black/20 italic"><Link href="/n8n"><Workflow className="size-4 mr-2" /> تنشيط السرب الآلي</Link></Button>
+          <Button asChild className="w-full h-12 bg-primary hover:bg-white text-black font-black uppercase text-[10px] rounded-xl shadow-2xl transition-all border-4 border-black/20 italic"><Link href="/autonomous"><Rocket className="size-4 mr-2" /> تنشيط الاستحواذ المداري</Link></Button>
         </div>
       </div>
     </>
