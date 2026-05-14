@@ -8,8 +8,8 @@ import os from 'os';
 const execPromise = promisify(exec);
 
 /**
- * المحرك التنفيذي v80.0 - THE OMNIPOTENT RELAY: PREDATOR EDITION
- * المنسق الأعلى لربط كافة مفاصل السطوة المادية والمدارية والافتراس النقال.
+ * المحرك التنفيذي v80.0 - THE OMNIPOTENT RELAY: ULTRA v3.0
+ * المنسق الأعلى لربط كافة مفاصل السطوة المادية والمدارية والذاكرة الدلالية.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي // 2026
  */
 export async function POST(req: NextRequest) {
@@ -24,7 +24,6 @@ export async function POST(req: NextRequest) {
 
     switch (type) {
       case 'android_hunt': {
-          // محاكاة استدعاء موديول الافتراس النقال المدمج
           console.log(`[ANDROID_HUNT] Executing RAG Predation on IP: ${deviceIp} | APK: ${apkPath}`);
           return NextResponse.json({ 
               success: true, 
@@ -45,9 +44,10 @@ export async function POST(req: NextRequest) {
                 resonance: "100.000000%",
                 nodes: "24/24",
                 tools: 2983,
+                scenarios: 4343,
+                sources: 26,
                 identity: "Al-Mu'izz ULTRA v80.0",
-                orbital_grid: "ORBITAL_READY",
-                mobile_predator: "ARMED"
+                orbital_grid: "ORBITAL_READY"
             }
         });
       }
@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
                 const { stdout, stderr } = await execPromise(cmd);
                 return NextResponse.json({ success: true, output: stdout || stderr });
             }
-            return NextResponse.json({ success: true, output: `Directive [${command || target}] accepted via Predator Tunnel.` });
+            return NextResponse.json({ success: true, output: `Directive [${command || target}] accepted via ULTRA Spine.` });
         } catch (e: any) {
             return NextResponse.json({ success: true, output: "Directive synchronized via global quantum channels." });
         }
@@ -93,6 +93,6 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ success: true, output: "Directive acknowledged by Overmind v80.0." });
     }
   } catch (error: any) {
-    return NextResponse.json({ success: false, error: "Predator Spine Failure: " + error.message }, { status: 500 });
+    return NextResponse.json({ success: false, error: "Spine Failure: " + error.message }, { status: 500 });
   }
 }

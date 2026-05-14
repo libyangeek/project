@@ -168,7 +168,6 @@ export default function AutonomousPage() {
                  </CardContent>
               </Card>
 
-              {/* Memory Node Map */}
               <Card className="sovereign-card group text-right">
                  <h4 className="text-[14px] font-black text-emerald-500 uppercase tracking-[0.8em] mb-8 italic flex items-center justify-center gap-6">
                     <Database className="size-8 animate-pulse" /> MEMORY_NODES (4,343)
