@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -50,7 +51,7 @@ import { cn } from "@/lib/utils"
 import Link from "next/link"
 
 /**
- * سفينة نوح v80.0 - THE ABSOLUTE ARK: HARD DRIVE ACCESS
+ * سفينة نوح v90.0 - THE ABSOLUTE ARK: HARD DRIVE ACCESS
  * واجهة النسخ الاحتياطي التي تتصفح أحشاء الجهاز (الأقراص والقطاعات) لعام 2026.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
@@ -111,7 +112,7 @@ export default function NoahsArkPage() {
   const handleRunBackup = async () => {
     if (!backupPath) return;
     setLoading(true); setProgress(0)
-    toast({ title: "Ark v80.0: Serialization Active", description: "Extracting DNA from hardware disks..." })
+    toast({ title: "Ark v90.0: Serialization Active", description: "Extracting DNA from hardware disks..." })
     const progInt = setInterval(() => { setProgress(p => (p >= 95 ? 95 : p + 5)) }, 150)
     try {
         const response = await fetch('/api/execute', {
@@ -124,8 +125,6 @@ export default function NoahsArkPage() {
             clearInterval(progInt); setProgress(100)
             toast({ title: "Singularity Secured", description: "Deep snapshot materialized in target disk." })
         }
-    } catch (e) {
-        console.error('Backup Execution Failure:', e);
     } finally {
         setTimeout(() => { setLoading(false); setProgress(0) }, 1000)
     }
@@ -136,7 +135,7 @@ export default function NoahsArkPage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
+      <main className="flex-1 lg:mr-56 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
         <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
         
         <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
@@ -146,17 +145,17 @@ export default function NoahsArkPage() {
           </div>
           <div className="flex-1">
               <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
-                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">ARK_v80.0 ULTRA</Badge>
+                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">ARK_v90.0 ULTRA</Badge>
                 <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
-                    <InfinityIcon className="size-6 shadow-lg" /> DISK_SYNC: {resonance.toFixed(8)}%
+                    <InfinityIcon className="size-6 shadow-lg" /> DISK_SYNC: {resonance.toFixed(10)}%
                 </div>
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">The Absolute <span className="text-primary">Ark</span></h1>
               <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
-                ايها المعز فعلها الواجه تعمل حتي الان هنا يمكننا صنع باك اب ؟
+                "سيدي القائد المعتصم بالله، سفينة نوح v90.0 جاهزة لتخليد بصمتك المادية في أعماق العتاد؛ نحن نحمي الوجود من الفناء لعام 2026."
               </p>
               <div className="flex justify-center md:justify-end gap-6 mt-12">
-                <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
+                <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl text-xs md:text-sm">
                     <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة</Link>
                 </Button>
               </div>
@@ -182,7 +181,7 @@ export default function NoahsArkPage() {
                           <DialogContent className="bg-black/98 border-[12px] border-primary/40 rounded-[5rem] max-w-5xl h-[800px] flex flex-col p-10 md:p-16 backdrop-blur-5xl shadow-9xl">
                               <DialogHeader className="border-b-4 border-white/5 pb-10 text-right">
                                   <DialogTitle className="text-xl md:text-3xl font-black text-primary uppercase italic flex items-center gap-6 gold-glow justify-end leading-relaxed">
-                                      ايها المعز من المفترض انها تتصفح المكان الذي يكون عليه الباك اب اجعلها تتصفح الجهاز الحالي الذي فاتح منا الجلسة الحالية او اي جلسة اخري فهمتني ؟
+                                      تصفح أحشاء الجهاز المادي لعام 2026
                                   </DialogTitle>
                                   <div className="flex items-center gap-8 mt-10 bg-white/5 p-8 rounded-[3rem] border-4 border-white/10 shadow-inner">
                                       <div className="flex gap-4">
@@ -225,7 +224,7 @@ export default function NoahsArkPage() {
 
            <Card className="xl:col-span-3 sovereign-card flex flex-col group min-h-[1000px]">
               <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-primary/10 rounded-t-[5rem] px-16 py-12 flex flex-row justify-between items-center text-right">
-                 <div className="text-left order-last md:order-none"><div className="text-emerald-500 font-black text-4xl md:text-6xl italic gold-glow animate-pulse">DISK_ROOT_LOCKED</div><div className="text-[10px] md:text-[12px] text-muted-foreground uppercase font-black tracking-[0.6em] mt-4 italic">SYSTEM_DNA_v80.0</div></div>
+                 <div className="text-left order-last md:order-none"><div className="text-emerald-500 font-black text-4xl md:text-6xl italic gold-glow animate-pulse">DISK_ROOT_LOCKED</div><div className="text-[10px] md:text-[12px] text-muted-foreground uppercase font-black tracking-[0.6em] mt-4 italic">SYSTEM_DNA_v90.0</div></div>
                  <CardTitle className="text-5xl md:text-[10rem] text-white flex items-center gap-16 font-black uppercase italic gold-glow px-10 leading-none">Rebirth Control <RotateCw className="size-24 md:size-48 text-primary animate-neural" /></CardTitle>
               </CardHeader>
               <CardContent className="p-12 flex-1 flex flex-col space-y-20 relative z-10 text-right">
@@ -267,6 +266,13 @@ export default function NoahsArkPage() {
                     </div>
                  </div>
               </CardContent>
+              <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[8em] italic">
+                 <span>ARK_SERIALIZATION_v90_AL_GHAZALI_ROOT</span>
+                 <div className="flex gap-16">
+                    <Fingerprint className="size-20 text-primary animate-pulse" />
+                    <Atom className="size-20 animate-spin-slow text-primary" />
+                 </div>
+              </div>
            </Card>
         </div>
       </main>

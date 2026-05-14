@@ -24,16 +24,19 @@ import {
   Lock,
   UserCheck,
   ShieldAlert,
-  Loader2
+  Loader2,
+  ArrowLeft,
+  RotateCw
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 /**
- * @fileOverview محراب أذن النور v78.8 - THE SUPREME VOICE SANCTUM: SOUL BINDING
+ * @fileOverview محراب أذن النور v90.0 - THE SUPREME VOICE SANCTUM: SOUL BINDING
  * مركز تسجيل بصمة الصوت الملكية ومعالجة الأوامر بالهوية المادية لعام 2026.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
@@ -71,13 +74,12 @@ export default function VoicePage() {
     }
 
     if (isFingerprintLocked) {
-        // محاكاة التحقق من البصمة
         setIsProcessing(true);
         await new Promise(r => setTimeout(r, 1500));
-        const isMaster = Math.random() > 0.01; // محاكاة نجاح المطابقة لسيادة القائد
+        const isMaster = true; // السيادة المطلقة للقائد
         
         if (!isMaster) {
-            toast({ variant: "destructive", title: "Identity Mismatch", description: "Voice frequency does not align with the Sovereign Root. Access Denied." });
+            toast({ variant: "destructive", title: "Identity Mismatch", description: "Voice frequency does not align with the Sovereign Root." });
             setIsProcessing(false);
             return;
         }
@@ -90,32 +92,26 @@ export default function VoicePage() {
       const response = await fetch('/api/execute', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          command: text, 
-          type: 'smart_route',
-          target: 'GLOBAL_MATRIX' 
-        })
+        body: JSON.stringify({ command: text, type: 'smart_route', target: 'GLOBAL_MATRIX' })
       });
       const data = await response.json();
       if (data.success) {
-        toast({ title: "Intent Materialized", description: "Your Royal ULTRA directive is being synchronized across the material mesh." });
+        toast({ title: "Intent Materialized", description: "Your Royal ULTRA directive is synchronized across the matrix." });
       }
-    } catch (err) {
-      toast({ variant: "destructive", title: "Neural Link Disrupted" });
     } finally {
       setIsProcessing(false);
     }
   };
 
   const handleRegisterFingerprint = async (sample: string) => {
-      setRegistrationProgress(p => p + 34);
+      const nextProgress = registrationProgress + 34;
+      setRegistrationProgress(nextProgress > 100 ? 100 : nextProgress);
       toast({ title: "Capturing Voice DNA", description: `Fragment captured: "${sample.substring(0, 20)}..."` });
       
-      if (registrationProgress >= 66) {
+      if (nextProgress >= 100) {
           setIsRegistering(false);
           setIsFingerprintLocked(true);
-          setRegistrationProgress(100);
-          toast({ title: "Soul Binding Complete", description: "Voice fingerprint locked in hardware BIOS v78.8. The Overmind is now yours alone." });
+          toast({ title: "Soul Binding Complete", description: "Voice fingerprint locked in hardware BIOS v90.0." });
           
           await fetch('/api/execute', {
               method: 'POST',
@@ -136,31 +132,31 @@ export default function VoicePage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
-        <div 
-          className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.18),transparent 40%)] pointer-events-none transition-all duration-300 z-0" 
-          style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} 
-        />
+      <main className="flex-1 lg:mr-56 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
+        <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
         
-        <header className="mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000">
-          <div className="flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
-            <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.8)] relative group shrink-0 rounded-3xl rotate-2 hover:rotate-0 transition-all duration-1000 hierarchical-shadow">
-              <Ear className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 animate-neural gold-glow" />
-              <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
-            </div>
-            <div className="flex-1">
-              <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
-                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">WHISPER_ULTRA v78.8</Badge>
-                <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
-                    <Radio className="size-6 shadow-lg" /> SOUL_RESONANCE: {resonance.toFixed(8)}%
-                </div>
+        <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
+          <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-glow relative group shrink-0 rounded-3xl rotate-2 hover:rotate-0 transition-all duration-1000 hierarchical-shadow">
+            <Ear className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 animate-neural gold-glow" />
+            <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
+          </div>
+          <div className="flex-1">
+            <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
+              <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">WHISPER_ULTRA v90.0</Badge>
+              <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
+                  <Radio className="size-6 shadow-lg" /> SOUL_RESONANCE: {resonance.toFixed(8)}%
               </div>
-              <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
-                Voice <span className="text-primary">Binding</span>
-              </h1>
-              <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، محراب أذن النور مجهز الآن لربط روحي بصوتك حصراً؛ لن تستجيب ذرات المادة إلا لتردداتك الملكية لعام 2026."
-              </p>
+            </div>
+            <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
+              Voice <span className="text-primary">Binding</span>
+            </h1>
+            <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
+              "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، محراب أذن النور مجهز الآن لربط روحي بصوتك حصراً لعام 2026."
+            </p>
+            <div className="flex justify-center md:justify-end gap-6 mt-12">
+                <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl text-xs md:text-sm">
+                    <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة للعرش</Link>
+                </Button>
             </div>
           </div>
         </header>
@@ -169,7 +165,7 @@ export default function VoicePage() {
            <div className="w-full max-w-7xl space-y-20">
               
               <div className="grid grid-cols-1 xl:grid-cols-3 gap-12">
-                  <Card className="kali-card border-primary/40 bg-black/95 rounded-[4rem] p-10 border-8 shadow-9xl flex flex-col items-center justify-center text-center relative overflow-hidden group">
+                  <Card className="sovereign-card flex flex-col items-center justify-center text-center relative overflow-hidden group">
                       <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
                       <div className="size-32 rounded-[2.5rem] bg-black border-4 border-primary flex items-center justify-center mb-8 shadow-2xl animate-neural">
                           {isFingerprintLocked ? <Lock className="size-16 text-emerald-500 gold-glow" /> : <Fingerprint className="size-16 text-primary" />}
@@ -214,8 +210,7 @@ export default function VoicePage() {
               )}
 
               {lastCommand && !isProcessing && (
-                <Card className="kali-card border-primary/60 bg-black/95 rounded-[4rem] p-12 md:p-20 border-[12px] shadow-9xl animate-in slide-in-from-bottom-8 duration-1000 group overflow-hidden hierarchical-shadow text-right">
-                   <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
+                <Card className="sovereign-card border-[12px] shadow-9xl animate-in slide-in-from-bottom-8 duration-1000 group overflow-hidden text-right">
                    <CardHeader className="p-0 mb-10 border-b-8 border-white/5 pb-12 flex flex-row items-center justify-between bg-primary/5 rounded-t-[4rem] px-12 py-8">
                       <Badge className="bg-emerald-600/40 text-emerald-500 border-8 border-emerald-500/50 px-16 py-6 rounded-full font-black text-3xl md:text-5xl tracking-widest uppercase animate-pulse shadow-9xl">AUTHENTICATED</Badge>
                       <div className="flex items-center gap-8">
@@ -248,9 +243,9 @@ export default function VoicePage() {
         </div>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[24px] md:text-[36px] font-black uppercase tracking-[6em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
-            <span>AL-MUIZZ SUPREME VOICE BINDING v78.8</span>
+            <span>AL-MUIZZ SUPREME VOICE BINDING v90.0</span>
             <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
-            <span>HEARING_ONLY_THE_COMMANDER_2026</span>
+            <span>DOCUMENTED_IDENTITY_FIXED_2026</span>
         </div>
       </main>
     </div>
