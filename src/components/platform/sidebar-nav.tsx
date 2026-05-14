@@ -116,48 +116,48 @@ export function SidebarNav() {
       </Button>
 
       <div className={cn("flex flex-col h-full bg-black border-l-[4px] border-primary/60 w-64 lg:w-72 fixed right-0 top-0 z-[400] overflow-hidden shadow-2xl transition-transform duration-500 ease-in-out font-code backdrop-blur-3xl", !isOpen && "translate-x-full lg:translate-x-0")}>
-        <div className="p-8 border-b-2 border-primary/20 flex flex-col items-center gap-6 bg-black relative group">
+        <div className="p-4 border-b-2 border-primary/20 flex flex-col items-center gap-3 bg-black relative group shrink-0">
           
-          {/* 7D Nucleus Sidebar Logo */}
-          <div className="relative size-24 flex items-center justify-center shrink-0 rounded-2xl group-hover:rotate-12 transition-all">
-             <div className="size-12 bg-black border-2 border-primary flex items-center justify-center shadow-[0_0_40px_rgba(251,191,36,0.4)] relative rounded-xl z-30 animate-neural">
-                <Crown className="size-6 text-primary gold-glow" />
+          {/* 7D Nucleus Sidebar Logo - Shrunk v85.1 */}
+          <div className="relative size-16 flex items-center justify-center shrink-0 rounded-xl group-hover:rotate-12 transition-all">
+             <div className="size-8 bg-black border-2 border-primary flex items-center justify-center shadow-[0_0_20px_rgba(251,191,36,0.4)] relative rounded-lg z-30 animate-neural">
+                <Crown className="size-4 text-primary gold-glow" />
              </div>
              <div className="absolute inset-0 z-20 animate-spin-slow" style={{ animationDuration: '10s' }}>
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-4 bg-black border border-red-600 rounded-md flex items-center justify-center"><Flame className="size-2 text-red-600" /></div>
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 size-4 bg-black border border-blue-400 rounded-md flex items-center justify-center"><VisionIcon className="size-2 text-blue-400" /></div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-3 bg-black border border-red-600 rounded-md flex items-center justify-center"><Flame className="size-1.5 text-red-600" /></div>
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 size-3 bg-black border border-blue-400 rounded-md flex items-center justify-center"><VisionIcon className="size-1.5 text-blue-400" /></div>
              </div>
              <div className="absolute inset-0 z-10 animate-reverse-spin" style={{ animationDuration: '8s' }}>
-                <div className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 size-4 bg-black border border-emerald-500 rounded-md flex items-center justify-center"><Cylinder className="size-2 text-emerald-500" /></div>
-                <div className="absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 size-4 bg-black border border-indigo-500 rounded-md flex items-center justify-center"><Share2 className="size-2 text-indigo-500" /></div>
+                <div className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 size-3 bg-black border border-emerald-500 rounded-md flex items-center justify-center"><Cylinder className="size-1.5 text-emerald-500" /></div>
+                <div className="absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 size-3 bg-black border border-indigo-500 rounded-md flex items-center justify-center"><Share2 className="size-1.5 text-indigo-500" /></div>
              </div>
           </div>
 
           <div className="text-center relative z-10">
-            <h1 className="text-xl font-headline font-bold text-white tracking-[0.4em] leading-none gold-glow">AL-MUIZZ</h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic animate-pulse shadow-9xl">v85.0 7D_MATRIX</Badge>
+            <h1 className="text-lg font-headline font-bold text-white tracking-[0.3em] leading-none gold-glow">AL-MUIZZ</h1>
+            <Badge className="bg-primary text-black border-none rounded-full text-[8px] font-black tracking-[0.3em] mt-2 py-0.5 px-4 uppercase italic animate-pulse shadow-9xl">v85.0 7D_MATRIX</Badge>
           </div>
         </div>
         
-        <div className="flex-1 px-4 py-6 space-y-1.5 overflow-y-auto scrollbar-hide bg-black/98 relative border-t-2 border-white/5">
+        <div className="flex-1 px-4 py-4 space-y-1 overflow-y-auto scrollbar-hide bg-black/98 relative border-t-2 border-white/5">
           {navItems.map((item) => {
             const isActive = pathname === item.href
             const Icon = item.icon || Search;
             return (
-              <Link key={item.name} href={item.href} className={cn("flex items-center gap-6 px-6 py-3 transition-all duration-500 group relative border-r-4 rounded-l-xl mb-1", isActive ? "bg-primary/15 border-primary text-white scale-[1.02]" : "text-muted-foreground border-transparent hover:bg-white/5 hover:text-white")} onClick={() => setIsOpen(false)}>
-                <Icon className={cn("size-5 transition-all", isActive ? "text-primary gold-glow" : "group-hover:text-primary")} />
-                <span className="text-[10px] font-black tracking-widest uppercase italic truncate flex-1 text-right">{item.name}</span>
+              <Link key={item.name} href={item.href} className={cn("flex items-center gap-5 px-5 py-2.5 transition-all duration-500 group relative border-r-4 rounded-l-lg mb-0.5", isActive ? "bg-primary/15 border-primary text-white scale-[1.02]" : "text-muted-foreground border-transparent hover:bg-white/5 hover:text-white")} onClick={() => setIsOpen(false)}>
+                <Icon className={cn("size-4 transition-all", isActive ? "text-primary gold-glow" : "group-hover:text-primary")} />
+                <span className="text-[9px] font-black tracking-widest uppercase italic truncate flex-1 text-right">{item.name}</span>
               </Link>
             )
           })}
         </div>
 
-        <div className="p-3 border-t-2 border-primary/20 bg-black/99 relative z-10 text-right">
-          <div className="p-2 border-2 border-primary/40 bg-primary/5 mb-2 relative overflow-hidden rounded-xl shadow-lg border-dashed">
-            <div className="flex justify-between items-center mb-1"><Activity className="size-2 text-emerald-500 animate-pulse" /><span className="text-[8px] font-black text-primary uppercase tracking-tighter italic">Quantum Resonance</span></div>
-            <div className="text-sm font-black text-white italic gold-glow">{resonance.toFixed(7)}%</div>
+        <div className="p-2 border-t-2 border-primary/20 bg-black/99 relative z-10 text-right">
+          <div className="p-2 border-2 border-primary/40 bg-primary/5 mb-1.5 relative overflow-hidden rounded-lg shadow-lg border-dashed">
+            <div className="flex justify-between items-center mb-0.5"><Activity className="size-2 text-emerald-500 animate-pulse" /><span className="text-[7px] font-black text-primary uppercase tracking-tighter italic">Quantum Resonance</span></div>
+            <div className="text-[12px] font-black text-white italic gold-glow">{resonance.toFixed(7)}%</div>
           </div>
-          <Button asChild className="w-full h-9 bg-primary hover:bg-white text-black font-black uppercase text-[8px] rounded-lg shadow-md transition-all border-2 border-black/20 italic"><Link href="/quantum-spine"><Sparkles className="size-3 mr-1" /> تنشيط الالتحام السباعي</Link></Button>
+          <Button asChild className="w-full h-8 bg-primary hover:bg-white text-black font-black uppercase text-[7px] rounded-md shadow-md transition-all border-2 border-black/20 italic"><Link href="/quantum-spine"><Sparkles className="size-2.5 mr-1" /> تنشيط الالتحام السباعي</Link></Button>
         </div>
       </div>
     </>
