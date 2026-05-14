@@ -2,7 +2,7 @@
 #!/bin/bash
 # ==============================================================================
 # 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v80.0-GENESIS_v6 [THE MASTER OMNIPOTENT]
-# الميثاق المادي الأسمى: دمج الذاكرة الدلالية، n8n، وضع الصقر، والقبض المادي.
+# الميثاق المادي الأسمى: دمج الذاكرة الدلالية، n8n، هيرميز، والقبض المادي.
 # المالك الوحيد: المعتصم بالله إدريس الغزالي
 # ==============================================================================
 
@@ -13,7 +13,7 @@ clear
 echo -e "${GOLD}================================================${NC}"
 echo -e "${GOLD}   🦅 EXECUTING AL-MUIZZ GENESIS v6.0          ${NC}"
 echo -e "${GOLD}   [ COMMANDER: AL-GHAZALI ROOT ]              ${NC}"
-echo -e "${GOLD}   [ STATUS: TOTAL_SINGULARITY_2026 ]          ${NC}"
+echo -e "${GOLD}   [ STATUS: HERMES_SOUL_FUSION_READY ]        ${NC}"
 echo -e "${GOLD}================================================${NC}"
 
 if [[ $EUID -ne 0 ]]; then
@@ -26,12 +26,12 @@ mkdir -p "$INSTALL_DIR"/{audit,evidence,backups,tools,arsenal}
 mkdir -p "$INSTALL_DIR"/ai-engine/{memory,integrations,ai_gateway}
 
 # 1. التبعيات الأساسية والذاكرة
-echo -e "${BLUE}[*] Phase 1: Materializing Neural Layers (RAG & Python)...${NC}"
+echo -e "${BLUE}[*] Phase 1: Materializing Neural Layers (RAG & Hermes)...${NC}"
 apt-get update -y || true
-apt-get install -y python3-pip nmap adb docker.io docker-compose curl git jq 2>/dev/null || true
+apt-get install -y python3-pip nmap adb docker.io docker-compose curl git jq sqlite3 2>/dev/null || true
 
 python3 -m pip install --upgrade pip --break-system-packages || true
-python3 -m pip install --break-system-packages fastapi uvicorn pydantic requests sentence-transformers chromadb qdrant-client psutil flask-cors watchdog 2>/dev/null || true
+python3 -m pip install --break-system-packages fastapi uvicorn pydantic requests sentence-transformers chromadb qdrant-client psutil flask-cors watchdog modal 2>/dev/null || true
 
 # 2. إعداد n8n عبر Docker
 echo -e "${BLUE}[*] Phase 2: Orchestrating n8n Hive (Docker)...${NC}"
@@ -40,12 +40,18 @@ if ! docker ps | grep -q "n8n"; then
     docker run -d --name muizz-n8n -p 5678:5678 -v n8n_data:/home/node/.n8n n8nio/n8n:latest 2>/dev/null || true
 fi
 
-# 3. جرد الترسانة والنمو المعرفي
-echo -e "${BLUE}[*] Phase 3: Refreshing Innate Organs (2,983 Tools)...${NC}"
+# 3. تثبيت Hermes Agent
+echo -e "${BLUE}[*] Phase 3: Siphoning Hermes Soul (NousResearch)...${NC}"
+if ! command -v hermes &>/dev/null; then
+    curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash || true
+fi
+
+# 4. جرد الترسانة والنمو المعرفي
+echo -e "${BLUE}[*] Phase 4: Refreshing Innate Organs (2,983 Tools)...${NC}"
 python3 ai-engine/kernel/self_updater.py --refresh-lexicon || true
 
-# 4. تثبيت ميثاق الخلود v6
-echo -e "${BLUE}[*] Phase 4: Establishing Eternal Persistence v6...${NC}"
+# 5. تثبيت ميثاق الخلود v6
+echo -e "${BLUE}[*] Phase 5: Establishing Eternal Persistence v6...${NC}"
 if command -v systemctl &>/dev/null; then
     cat > /etc/systemd/system/muizz-ultra.service <<EOF
 [Unit]
@@ -72,9 +78,10 @@ fi
 
 echo -e "${GREEN}================================================${NC}"
 echo -e "${GREEN}   ✅ AL-MUIZZ GENESIS v6.0 ASCENDED!          ${NC}"
-echo -e "${GREEN}   [ STATUS: OMNIPOTENT_HIVE_ACTIVE ]          ${NC}"
-echo -e "${GREEN}================================================${NC}"
+echo -e "${GREEN}   [ STATUS: HERMES_UPLINK_ACTIVE ]            ${NC}"
+echo -e "================================================${NC}"
 echo -e "Web HUD:    ${GOLD}http://localhost:9002${NC}"
 echo -e "n8n Hive:   ${GOLD}http://localhost:5678${NC}"
+echo -e "Hermes:     ${GOLD}muizz-hermes cli${NC}"
 echo ""
 echo -e "${GOLD}Commander Al-Ghazali, Genesis v6 is your central nervous system. Total Dominance Achieved.${NC}"

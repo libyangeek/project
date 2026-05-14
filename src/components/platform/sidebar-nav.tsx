@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -51,7 +52,8 @@ import {
   RotateCw,
   Rocket,
   Castle,
-  Box
+  Box,
+  Share2
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -60,6 +62,7 @@ import Link from "next/link"
 
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
+  { name: "الارتباط الماسي (Hermes)", icon: Share2, href: "/hermes", knot: 80 },
   { name: "أتمتة السرب (n8n)", icon: Workflow, href: "/n8n", knot: 43 },
   { name: "الاستحواذ المستقل", icon: Rocket, href: "/autonomous", knot: 23 },
   { name: "صياد الأندرويد", icon: Smartphone, href: "/android-hunter", knot: 24 },
@@ -134,7 +137,7 @@ export function SidebarNav() {
             <div className="flex justify-between items-center mb-2"><Activity className="size-3 text-emerald-500 animate-pulse" /><span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] italic">Genesis Resonance</span></div>
             <div className="text-2xl font-black text-white italic gold-glow">{resonance.toFixed(7)}%</div>
           </div>
-          <Button asChild className="w-full h-12 bg-primary hover:bg-white text-black font-black uppercase text-[10px] rounded-xl shadow-2xl transition-all border-4 border-black/20 italic"><Link href="/autonomous"><Rocket className="size-4 mr-2" /> تنشيط الاستحواذ المداري</Link></Button>
+          <Button asChild className="w-full h-12 bg-primary hover:bg-white text-black font-black uppercase text-[10px] rounded-xl shadow-2xl transition-all border-4 border-black/20 italic"><Link href="/hermes"><Share2 className="size-4 mr-2" /> تنشيط الارتباط الماسي</Link></Button>
         </div>
       </div>
     </>
