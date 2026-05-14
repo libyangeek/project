@@ -1,9 +1,10 @@
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Smart Router v85.1 – الأدميرال الكوني (7D MATRIX NUCLEUS)
+Smart Router v85.5 – الأدميرال الكوني (SHADOW INVESTIGATION UPDATE)
 المحرك المركزي لتنسيق كافة الأبعاد السبعة: المشتل، الذاكرة، الأتمتة، هيرميز، وميدوسا.
-تم إضافة "مشتل التطور" كغذاء جيني للمصفوفة.
+تم إضافة "محقق الظلال Cairn" كعقل استراتيجي للمصفوفة.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys, json, os, subprocess, socket, time
@@ -22,11 +23,13 @@ class SmartRouter:
             "hermes_link": os.path.join(BASE_DIR, "ai-engine/integrations/hermes_bridge.py"),
             "medusa_eye": os.path.join(BASE_DIR, "ai-engine/integrations/medusa_wrapper.py"),
             "serpent_farm": os.path.join(BASE_DIR, "ai-engine/integrations/serpent_controller.py"),
+            "cairn_shadow": os.path.join(BASE_DIR, "ai-engine/integrations/cairn_bridge.py"),
             "quantum_spine": os.path.join(BASE_DIR, "src/ai/flows/quantum-fusion-flow.ts")
         }
 
     def classify(self, prompt):
         p = prompt.lower()
+        if any(w in p for w in ["cairn", "investigate", "تحقيق", "ظل", "shadow", "fact", "intent"]): return "cairn_shadow"
         if any(w in p for w in ["تدريب", "مشتل", "nursery", "علم بيانات", "data science", "train"]): return "nursery_seed"
         if any(w in p for w in ["subdomain", "دومين", "نطاق", "subdomainx"]): return "subdomainx"
         if any(w in p for w in ["workflow", "سيناريو", "n8n", "آلي"]): return "n8n_strike"
@@ -41,8 +44,9 @@ class SmartRouter:
         category = self.classify(prompt)
         target = prompt.split()[-1] if len(prompt.split()) > 0 else "GLOBAL_MATRIX"
         
-        # مصفوفة التوزيع التنفيذي v85.1
+        # مصفوفة التوزيع التنفيذي v85.5
         dispatch_table = {
+            "cairn_shadow": {"node": "Node-09-Shadow", "msg": f"Shadow Investigator engaged for {target}. Mapping facts and intents."},
             "nursery_seed": {"node": "Node-25-Evolution", "msg": f"Evolutionary Nursery engaged for project {target}. Fusing data DNA."},
             "subdomainx": {"node": "Node-02-Network", "msg": f"SubdomainX engaged on {target}. Siphoning 26 OSINT sources."},
             "n8n_strike": {"node": "Node-43-Automation", "msg": f"n8n Hive active. 4,343 scenarios ready for {target}."},
@@ -51,7 +55,7 @@ class SmartRouter:
             "medusa_eye": {"node": "Node-66-Medusa", "msg": f"Medusa Ocular scan initiated for {target}. Detecting AI poison."},
             "serpent_farm": {"node": "Node-81-Serpent", "msg": f"Serpent Farm active. Subjugating mobile fleet for {target}."},
             "quantum_spine": {"node": "Quantum-God-Core", "msg": f"Quantum Spine consolidating 7 dimensions for {target}."},
-            "general_hive": {"node": "Alpha-God-Core", "msg": "Directive processed via ULTRA v85.1 Matrix Nucleus."}
+            "general_hive": {"node": "Alpha-God-Core", "msg": "Directive processed via ULTRA v85.5 Matrix Nucleus."}
         }
 
         res = dispatch_table.get(category, dispatch_table["general_hive"])

@@ -66,6 +66,7 @@ import Link from "next/link"
 
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
+  { name: "محقق الظلال (Cairn)", icon: Search, href: "/cairn", knot: 9 },
   { name: "العمود الفقري الكمي", icon: Wind, href: "/quantum-spine", knot: 85 },
   { name: "مشتل التطور", icon: Sprout, href: "/nursery", knot: 25 },
   { name: "الرؤية المطلقة", icon: VisionIcon, href: "/perception", knot: 80 },
@@ -136,7 +137,7 @@ export function SidebarNav() {
 
           <div className="text-center relative z-10">
             <h1 className="text-sm font-headline font-bold text-white tracking-[0.2em] leading-none gold-glow">AL-MUIZZ</h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[7px] font-black tracking-[0.2em] mt-1 py-0 px-3 uppercase italic animate-pulse">v85.2 7D_MATRIX</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[7px] font-black tracking-[0.2em] mt-1 py-0 px-3 uppercase italic animate-pulse">v85.5 7D_MATRIX</Badge>
           </div>
         </div>
         

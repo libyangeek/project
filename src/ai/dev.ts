@@ -1,9 +1,10 @@
+
 import { config } from 'dotenv';
 config();
 
 /**
- * @fileOverview السجل العصبي لأسطول المُعِزّ v85.1 - 7D MATRIX NUCLEUS
- * تم دمج ممرات "مشتل التطور" لتدريب وتخليق الأسلحة الذكية لعام 2026.
+ * @fileOverview السجل العصبي لأسطول المُعِزّ v85.5 - 7D MATRIX NUCLEUS
+ * تم دمج ممرات "محقق الظلال Cairn" للتحليل الاستراتيجي لعام 2026.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 
@@ -41,9 +42,10 @@ import '@/ai/flows/hermes-gateway-flow.ts';
 import '@/ai/flows/medusa-scan-flow.ts';
 import '@/ai/flows/quantum-fusion-flow.ts';
 import '@/ai/flows/nursery-evolution-flow.ts';
+import '@/ai/flows/cairn-strategy-flow.ts';
 
 console.log("================================================================");
-console.log("🦅 AL-MUI'ZZ v85.1-7D_MATRIX: NUCLEUS STABILIZED.");
-console.log("   [ DIM_01-07 FUSED | NURSERY NODE ACTIVE ]");
-|   [ COMMANDER: AL-GHAZALI ROOT | MAY 2026 ]
+console.log("🦅 AL-MUI'ZZ v85.5-7D_MATRIX: NUCLEUS STABILIZED.");
+console.log("   [ CAIRN SHADOW INVESTIGATOR LINKED ]");
+console.log("   [ COMMANDER: AL-GHAZALI ROOT | MAY 2026 ]");
 console.log("================================================================");

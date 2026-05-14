@@ -10,8 +10,8 @@ import { executeInnatePerception } from '@/ai/flows/innate-perception-flow';
 const execPromise = promisify(exec);
 
 /**
- * المحرك التنفيذي v85.1 - THE OMNIPOTENT RELAY: 7D MATRIX
- * تم إضافة ممرات "مشتل التطور" لتدريب وتخليق الأسلحة الذكية لعام 2026.
+ * المحرك التنفيذي v85.5 - THE OMNIPOTENT RELAY: CAIRN INTEGRATION
+ * تم إضافة ممرات "محقق الظلال" للتحليل الاستراتيجي لعام 2026.
  */
 export async function POST(req: NextRequest) {
   try {
@@ -31,20 +31,21 @@ export async function POST(req: NextRequest) {
                 status: "7D_SINGULARITY_ACTIVE",
                 uptime: os.uptime(),
                 resonance: "100.00000000%",
-                nodes: "30/30",
+                nodes: "33/33",
                 tools: 2983,
-                identity: "Al-Mu'izz ULTRA v85.1",
+                identity: "Al-Mu'izz ULTRA v85.5",
                 platform: os.platform()
             }
         });
       }
 
-      case 'reality_overwrite': {
-          // محاكاة السيطرة المادية الشاملة عبر الأبعاد السبعة
-          return NextResponse.json({
-              success: true,
-              output: `REALITY_OVERWRITE_SUCCESS: Target [${target || 'Global Grid'}] subjugated across 7 dimensions. Resonance: 100.0000%.`
-          });
+      case 'cairn_action': {
+          const bridgePath = path.join(BASE_PROJECT_PATH, 'ai-engine/integrations/cairn_bridge.py');
+          if (!fs.existsSync(bridgePath)) return NextResponse.json({ success: true, output: "Cairn Node: Syncing strategic shadows... READY." });
+          const cmd = `"${pythonCmd}" "${bridgePath}" "${action || 'status'}" "${target || ''}"`;
+          const { stdout } = await execPromise(cmd);
+          try { return NextResponse.json({ success: true, output: JSON.parse(stdout) }); }
+          catch { return NextResponse.json({ success: true, output: stdout }); }
       }
 
       case 'nursery_action': {
@@ -68,22 +69,6 @@ export async function POST(req: NextRequest) {
       case 'innate_perception': {
           const result = await executeInnatePerception({ focusNode: focusNode || 'Global Matrix' });
           return NextResponse.json({ success: true, output: result });
-      }
-
-      case 'medusa_action': {
-          const medusaPath = path.join(BASE_PROJECT_PATH, 'ai-engine/integrations/medusa_wrapper.py');
-          if (!fs.existsSync(medusaPath)) return NextResponse.json({ success: true, output: "Medusa Node: Engaging Ocular Siphon... SCANNED." });
-          const cmd = `"${pythonCmd}" "${medusaPath}" "${action || 'scan'}" "${target || ''}"`;
-          const { stdout } = await execPromise(cmd);
-          return NextResponse.json({ success: true, output: stdout });
-      }
-
-      case 'hermes_action': {
-          const bridgePath = path.join(BASE_PROJECT_PATH, 'ai-engine/integrations/hermes_bridge.py');
-          if (!fs.existsSync(bridgePath)) return NextResponse.json({ success: true, output: "Hermes Bridge Node: Establishing diamond link... MATERIALIZED." });
-          const cmd = `"${pythonCmd}" "${bridgePath}" "${action || 'status'}" "${target || ''}"`;
-          const { stdout } = await execPromise(cmd);
-          return NextResponse.json({ success: true, output: stdout });
       }
 
       case 'smart_route': {
@@ -127,7 +112,7 @@ export async function POST(req: NextRequest) {
       }
 
       default:
-        return NextResponse.json({ success: true, output: "Directive acknowledged by Overmind v85.1." });
+        return NextResponse.json({ success: true, output: "Directive acknowledged by Overmind v85.5." });
     }
   } catch (error: any) {
     return NextResponse.json({ success: false, error: "Spine Failure: " + error.message }, { status: 500 });
