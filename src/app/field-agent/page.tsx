@@ -63,13 +63,14 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import Link from "next/link"
 
 /**
- * @fileOverview الوكيل الميداني v79.5 - THE SUPREME ARCHITECT: REALITY MASTERY
+ * @fileOverview الوكيل الميداني v80.0 - THE SUPREME ARCHITECT: REALITY MASTERY
  * واجهة الهندسة الجينية والسيطرة المدارية مع ميزة "التحكم المطلق" (Reality Overwrite).
+ * تم تحديث الإقلاع المادي ليعتمد على النقطة النسبية لضمان العمل في أي بيئة.
  */
 export default function FieldAgentPage() {
   const [mounted, setMounted] = React.useState(false)
   const [input, setInput] = React.useState("")
-  const [customPath, setCustomPath] = React.useState("/home/project")
+  const [customPath, setCustomPath] = React.useState(".")
   const [currentPath, setCurrentPath] = React.useState("")
   const [files, setFiles] = React.useState<any[]>([])
   const [selectedFileContent, setSelectedFileContent] = React.useState("")
@@ -84,7 +85,7 @@ export default function FieldAgentPage() {
 
   React.useEffect(() => {
     setMounted(true)
-    loadDirectory("/home/project")
+    loadDirectory(".")
     const interval = setInterval(() => {
         setResonance(prev => Math.max(99.999999, Math.min(100, prev + (Math.random() * 0.000001 - 0.0000005))))
         setKnotStatus(prev => prev.map(k => Math.random() > 0.05))
@@ -102,14 +103,16 @@ export default function FieldAgentPage() {
         })
         const data = await response.json()
         if (data.success) {
-            setFiles(data.output); 
-            setCurrentPath(data.currentPath); 
-            setCustomPath(data.currentPath)
+            setFiles(data.output || []); 
+            setCurrentPath(data.currentPath || path); 
+            setCustomPath(data.currentPath || path)
         } else {
             console.error('Directory listing failure:', data.error);
+            toast({ variant: "destructive", title: "Sector Access Failed", description: data.error });
         }
     } catch (e) {
         console.error('Neural Link Error in Field Agent:', e);
+        toast({ variant: "destructive", title: "Neural Link Error" });
     } finally { setLoading(false) }
   }
 
@@ -167,11 +170,12 @@ export default function FieldAgentPage() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ type: 'write_file', path: selectedFilePath, content: selectedFileContent })
         })
-        if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
             toast({ title: "DNA Rewritten", description: "Material consensus achieved in hardware." })
         } else {
-            const data = await response.json();
             console.error('Genetic Injection failure:', data.error);
+            toast({ variant: "destructive", title: "Injection Failed", description: data.error });
         }
     } catch (e) {
         console.error('Hardware Relay Error in Genetic Injection:', e);
@@ -195,7 +199,7 @@ export default function FieldAgentPage() {
                  <h2 className="text-2xl md:text-4xl font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Reality <span className="text-primary">Master</span></h2>
                  <div className="flex items-center gap-2 mt-1 justify-end">
                     <span className="text-[10px] text-emerald-500 font-black animate-pulse uppercase tracking-widest">{resonance.toFixed(6)}% Resonance</span>
-                    <Badge className="bg-primary/10 text-primary border-none text-[8px] font-black italic tracking-widest px-4 py-0.5 rounded-full uppercase">v79.5_OMNIPOTENT</Badge>
+                    <Badge className="bg-primary/10 text-primary border-none text-[8px] font-black italic tracking-widest px-4 py-0.5 rounded-full uppercase">v80.0_ULTRA</Badge>
                  </div>
               </div>
            </div>
@@ -231,7 +235,7 @@ export default function FieldAgentPage() {
               <div className="p-4 border-b-2 border-primary/10 bg-primary/5 flex items-center justify-between">
                  <span className="text-[10px] font-black text-primary uppercase tracking-widest italic flex items-center gap-2"><Database className="size-4" /> DNA Nodes</span>
                  <div className="flex gap-1">
-                    <Button size="icon" variant="ghost" onClick={() => loadDirectory(currentPath.split('/').slice(0,-1).join('/') || '/')} className="size-8 rounded-lg hover:bg-primary/20 border border-white/5"><ChevronLeft className="size-4"/></Button>
+                    <Button size="icon" variant="ghost" onClick={() => loadDirectory(currentPath.split('/').slice(0,-1).join('/') || '.')} className="size-8 rounded-lg hover:bg-primary/20 border border-white/5"><ChevronLeft className="size-4"/></Button>
                     <Button size="icon" variant="ghost" onClick={() => loadDirectory(currentPath)} className="size-8 rounded-lg hover:bg-primary/20 border border-white/5"><RefreshCcw className="size-3"/></Button>
                  </div>
               </div>

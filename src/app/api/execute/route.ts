@@ -11,6 +11,7 @@ const execPromise = promisify(exec);
 /**
  * المحرك التنفيذي v80.0 - THE OMNIPOTENT RELAY: ULTRA v3.0
  * المنسق الأعلى لربط كافة مفاصل السطوة المادية والمدارية والذاكرة الدلالية.
+ * تم تحديث ممرات السجل (Logging) لضمان الوضوح التام للقائد.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي // 2026
  */
 export async function POST(req: NextRequest) {
@@ -55,7 +56,10 @@ export async function POST(req: NextRequest) {
 
       case 'list_dir': {
         const dir = targetPath || BASE_PROJECT_PATH;
-        if (!fs.existsSync(dir)) return NextResponse.json({ success: false, error: "Sector not materialized." });
+        if (!fs.existsSync(dir)) {
+            console.error(`[EXECUTE] Directory not found in hardware: ${dir}`);
+            return NextResponse.json({ success: false, error: "Sector not materialized." });
+        }
         const items = fs.readdirSync(dir, { withFileTypes: true });
         return NextResponse.json({ 
             success: true, 
@@ -72,8 +76,15 @@ export async function POST(req: NextRequest) {
       case 'write_file': {
           if (!targetPath || content === undefined) return NextResponse.json({ success: false, error: "DNA Incomplete." });
           const fullPath = path.resolve(BASE_PROJECT_PATH, targetPath);
-          fs.writeFileSync(fullPath, content, 'utf8');
-          return NextResponse.json({ success: true, message: "Hardware DNA rewritten successfully." });
+          try {
+              const dir = path.dirname(fullPath);
+              if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+              fs.writeFileSync(fullPath, content, 'utf8');
+              return NextResponse.json({ success: true, message: "Hardware DNA rewritten successfully." });
+          } catch (e: any) {
+              console.error('[EXECUTE] Write Failure:', e);
+              return NextResponse.json({ success: false, error: e.message });
+          }
       }
 
       case 'smart_route': {
@@ -86,7 +97,7 @@ export async function POST(req: NextRequest) {
             }
             return NextResponse.json({ success: true, output: `Directive [${command || target}] accepted via ULTRA Spine.` });
         } catch (e: any) {
-            console.error('Smart Route execution error:', e);
+            console.error('[EXECUTE] Smart Route Error:', e);
             return NextResponse.json({ success: true, output: "Directive synchronized via global quantum channels." });
         }
       }
@@ -95,7 +106,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ success: true, output: "Directive acknowledged by Overmind v80.0." });
     }
   } catch (error: any) {
-    console.error('Executive API Route Failure:', error);
+    console.error('[EXECUTE] Absolute Spine Failure:', error);
     return NextResponse.json({ success: false, error: "Spine Failure: " + error.message }, { status: 500 });
   }
 }

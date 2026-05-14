@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -42,7 +43,7 @@ import Link from "next/link"
 /**
  * @fileOverview صياد الأندرويد v80.0 - ANDROID RAG HUNTER: MEMORY FUSION
  * واجهة الافتراس النقال التي تصهر الذاكرة الدلالية بأدوات AndroHunter.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي
+ * تم التأكد من استيراد أيقونة Atom وكافة الحواس البصرية.
  */
 export default function AndroidHunterPage() {
   const [targetIp, setTargetIp] = React.useState("")
@@ -246,7 +247,7 @@ export default function AndroidHunterPage() {
            </Card>
         </div>
 
-        <div className="mt-auto relative z-10 flex justify-center items-center gap-32 opacity-45 text-[22px] md:text-[32px] font-black uppercase tracking-[6em] md:tracking-[16em] italic text-white drop-shadow-9xl pb-24">
+        <div className="mt-auto relative z-10 flex justify-center items-center gap-32 opacity-45 text-[22px] md:text-[32px] font-black uppercase tracking-[6em] md:tracking-[16em] italic text-white drop-shadow-9xl pb-32">
             <span>AL-MUIZZ OMNIPRESENT PREDATOR v80.0</span>
             <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
             <span>TOTAL_MOBILE_SUBJUGATION_2026</span>

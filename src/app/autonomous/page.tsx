@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -29,6 +30,7 @@ import Link from "next/link"
 /**
  * @fileOverview الاستحواذ المستقل v80.0 - THE ADAPTIVE OVERLORD: ULTRA v3.0 FINAL
  * واجهة السطوة المستقلة التي تصهر سرب الـ 165 وكيلاً مع سيناريوهات n8n.
+ * تم التأكد من استيراد كافة الحواس البصرية السيادية.
  */
 export default function AutonomousPage() {
   const [objective, setObjective] = React.useState("")
@@ -77,6 +79,9 @@ export default function AutonomousPage() {
         })
       }
       toast({ title: "Consensus Achieved", description: "The grid reality has been overwritten by the Overmind." })
+    } catch (e) {
+        console.error('Autonomous Action Failure:', e);
+        toast({ variant: "destructive", title: "Execution Failed" });
     } finally {
       setLoading(false)
     }
