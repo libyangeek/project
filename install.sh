@@ -1,3 +1,4 @@
+
 #!/bin/bash
 # ==============================================================================
 # 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v80.0-PROCLAMATION [THE TRUE OMNIPOTENT]

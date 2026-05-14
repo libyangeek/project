@@ -97,6 +97,19 @@ export async function POST(req: NextRequest) {
         }
       }
 
+      case 'read_file': {
+          if (!targetPath || !fs.existsSync(targetPath)) return NextResponse.json({ success: false, error: "DNA Node missing." });
+          return NextResponse.json({ success: true, output: fs.readFileSync(targetPath, 'utf8') });
+      }
+
+      case 'write_file': {
+          if (!targetPath || content === undefined) return NextResponse.json({ success: false, error: "Payload incomplete." });
+          const dir = path.dirname(targetPath);
+          if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+          fs.writeFileSync(targetPath, content, 'utf8');
+          return NextResponse.json({ success: true, message: "Material DNA rewritten successfully." });
+      }
+
       case 'smart_route': {
         try {
             const routerPath = path.join(BASE_PROJECT_PATH, 'ai-engine/smart_router.py');
