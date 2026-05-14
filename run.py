@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 """
 AL-MUIZZ ULTRA v90.0 - THE OMNIPOTENT 16D GUARDIAN
-المنسق الأعلى والمراقب المادي المستقل؛ يضمن استدامة الوجود والتعافي الذاتي عابر الأنظمة.
+المنسق الأعلى والمراقب المادي المستقل؛ يضمن استدامة الوجود والتعافي الذاتي.
+تم تحديثه ليدعم مبدأ "القدرة التكيفية" بناءً على موارد العتاد.
 (c) 2026 Al-Mu'izz Sovereign Systems
 Author: المعتصم بالله إدريس الغزالي
 """
@@ -15,6 +16,7 @@ import time
 import platform
 import socket
 import signal
+import psutil
 from datetime import datetime
 
 class SovereignRunner:
@@ -32,6 +34,17 @@ class SovereignRunner:
         print(log_msg)
         with open(self.audit_log, "a", encoding="utf-8") as f:
             f.write(log_msg + "\n")
+
+    def check_hardware_limits(self):
+        """يحلل العوائق المادية ويحدد نمط الإقلاع"""
+        ram = psutil.virtual_memory().total / (1024**3) # GB
+        cpu_cores = psutil.cpu_count()
+        self.log(f"Hardware Audit: {cpu_cores} Cores | {ram:.2f}GB RAM", "SYSTEM")
+        
+        if ram < 4:
+            self.log("Low memory detected. Engaging Adaptive Power Mode.", "WARNING")
+            return "Adaptive"
+        return "Omnipotent"
 
     def is_port_in_use(self, port):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -61,12 +74,12 @@ class SovereignRunner:
     def _monitor_output(self, name, process):
         for line in iter(process.stdout.readline, ''):
             if not self.running: break
-            # Log critical errors if needed
             if "Error" in line or "Exception" in line:
                 self.log(f"[{name}] {line.strip()}", "DEBUG")
 
     def start_all(self):
         self.log(f"--- AL-MUIZZ 16D NUCLEUS v90.0 GENESIS ---", "CROWN")
+        mode = self.check_hardware_limits()
         
         # 1. API Bridge (Alpha God-Core)
         env = os.environ.copy()
@@ -78,17 +91,14 @@ class SovereignRunner:
                 self.spawn_process("Bridge", [sys.executable, server_path], env=env)
             else:
                 self.log("Bridge server file missing!", "ERROR")
-        else:
-            self.log("Bridge already active on port 8000.", "SYNC")
 
         # 2. Web HUD (The Throne)
         if not self.is_port_in_use(9002):
             npm_cmd = "npm.cmd" if self.os_type == "Windows" else "npm"
+            # في وضع التكيف، نقلل من استهلاك الموارد عند الإقلاع
             self.spawn_process("HUD", [npm_cmd, "run", "dev"])
-        else:
-            self.log("HUD already active on port 9002.", "SYNC")
 
-        self.log("16D Singularity v90.0 Achieved. Guardian Mode: ACTIVE.", "LOCKED")
+        self.log(f"16D Singularity v90.0 Achieved. Mode: {mode}. Guardian: ACTIVE.", "LOCKED")
         self.monitor_loop()
 
     def monitor_loop(self):
@@ -96,9 +106,9 @@ class SovereignRunner:
             for name, data in list(self.processes.items()):
                 p = data["process"]
                 if p.poll() is not None:
-                    self.log(f"ALERT: Node {name} lost its pulse! Re-igniting for the Commander...", "REBIRTH")
+                    self.log(f"ALERT: Node {name} lost its pulse! Re-igniting...", "REBIRTH")
                     self.spawn_process(name, data["cmd"], data["cwd"], data["env"])
-            time.sleep(10)
+            time.sleep(15)
 
     def stop_all(self):
         self.running = False
