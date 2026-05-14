@@ -44,7 +44,8 @@ class SovereignRunner:
         """تشغيل عملية سيادية مع تتبع نبضها المادي"""
         self.log(f"Materializing {name} node...", "STRIKE")
         try:
-            p = subprocess.Popen(cmd, shell=(self.os_type == "Windows" or isinstance(cmd, str)), cwd=cwd or self.base_dir, env=env)
+            # Use shell=True for NPM commands on Windows or when needed
+            p = subprocess.Popen(cmd, shell=(self.os_type == "Windows" or name == "HUD"), cwd=cwd or self.base_dir, env=env)
             self.processes[name] = {"process": p, "cmd": cmd, "cwd": cwd, "env": env, "start_time": time.time()}
             return True
         except Exception as e:
@@ -56,8 +57,7 @@ class SovereignRunner:
         essentials = ["run.py", "install.sh", "package.json", "ai-engine/smart_router.py"]
         for f in essentials:
             if not os.path.exists(os.path.join(self.base_dir, f)):
-                self.log(f"CRITICAL: Gene fragment {f} missing! Attempting self-repair...", "RECOVERY")
-                # هنا يمكن إضافة منطق استعادة الملفات من نسخة احتياطية مخفية
+                self.log(f"CRITICAL: Gene fragment {f} missing! System integrity compromised.", "RECOVERY")
 
     def start_all(self):
         self.log(f"--- AL-MUIZZ ULTRA v80.0 GENESIS PULSE ---", "CROWN")
@@ -68,15 +68,16 @@ class SovereignRunner:
         env["PYTHONPATH"] = os.path.join(self.base_dir, "ai-engine")
         server_path = os.path.join(self.base_dir, "ai-engine", "inference", "server.py")
         if not self.is_port_in_use(8000):
-            self.spawn_process("Bridge", [sys.executable, server_path], env=env)
+            if os.path.exists(server_path):
+                self.spawn_process("Bridge", [sys.executable, server_path], env=env)
+            else:
+                self.log("Bridge server file missing!", "ERROR")
         else:
             self.log("Bridge already active on port 8000.", "SYNC")
 
         # 2. Web HUD (The Throne)
         if not self.is_port_in_use(9002):
-            # الكشف عن مدير الحزم المتاح
-            pkg_mgr = "npm"
-            self.spawn_process("HUD", [pkg_mgr, "run", "dev"])
+            self.spawn_process("HUD", ["npm", "run", "dev"])
         else:
             self.log("HUD already active on port 9002.", "SYNC")
 
@@ -97,7 +98,7 @@ class SovereignRunner:
                     self.log(f"ALERT: Node {name} lost its pulse! Re-igniting for the Commander...", "REBIRTH")
                     self.spawn_process(name, data["cmd"], data["cwd"], data["env"])
             
-            # فحص الموارد المادية
+            # فحص الموارد المادية كل دقيقة
             if time.time() % 60 < 10:
                 self.check_essential_files()
                 
@@ -118,7 +119,6 @@ class SovereignRunner:
 
 if __name__ == "__main__":
     runner = SovereignRunner()
-    # التعامل مع إشارات الإغلاق
     signal.signal(signal.SIGINT, lambda s, f: runner.stop_all())
     signal.signal(signal.SIGTERM, lambda s, f: runner.stop_all())
 
