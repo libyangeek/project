@@ -55,7 +55,8 @@ import {
   Sprout,
   UserCheck,
   Signal,
-  TowerControl
+  TowerControl,
+  Atom
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { toast } from "@/hooks/use-toast"
@@ -294,7 +295,7 @@ export default function SovereignOS() {
 
          {/* System Tray */}
          <div className="hidden xl:flex items-center gap-8 pr-6 border-r-4 border-white/10 mr-6 h-full">
-            <div className="text-left">
+            <div className="text-left text-right">
                 <div className="text-2xl font-black text-white italic leading-none">{time}</div>
                 <div className="text-[9px] font-black text-primary uppercase mt-2 tracking-widest">{resonance.toFixed(4)}% RESONANCE</div>
             </div>

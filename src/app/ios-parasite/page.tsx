@@ -4,8 +4,7 @@
 import * as React from "react"
 import { SidebarNav } from "@/components/platform/sidebar-nav"
 import { 
-  Bug, 
-  Smartphone, 
+  Apple, 
   Zap, 
   Loader2, 
   Skull, 
@@ -33,7 +32,7 @@ import {
   Bot,
   Sparkles,
   Lock,
-  Apple
+  UserCheck
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -45,8 +44,9 @@ import { executeIosParasite } from "@/ai/flows/ios-parasite-flow"
 import Link from "next/link"
 
 /**
- * @fileOverview محراب الطفيلي v88.0 - IOS PARASITE: APPLICATION HIJACK
+ * @fileOverview محراب الطفيلي v90.0 - IOS PARASITE: APPLICATION HIJACK
  * واجهة اختراق تطبيقات iOS وحقن الـ DNA السيادي لعام 2026.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function IosParasitePage() {
   const [ipaName, setIpaName] = React.useState("")
@@ -76,19 +76,15 @@ export default function IosParasitePage() {
         return
     }
     setLoading(true); setResult(null)
-    toast({ title: "Engaging iOS Parasite v88", description: "Injecting Frida Gadget into target IPA Sandbox..." })
+    toast({ title: "Engaging iOS Parasite v90", description: "Injecting Frida Gadget into target IPA Sandbox..." })
     try {
-      // 1. استدعاء التدفق الذكي
       const data = await executeIosParasite({ ipaName, attackGoal: goal })
-      
-      // 2. التنفيذ المادي عبر المحرك
       const response = await fetch('/api/execute', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ type: 'ios_action', action: 'inject', target: ipaName })
       });
       const hardwareData = await response.json();
-      
       setResult({ ...data, hardwareOutput: hardwareData.output });
       toast({ title: "Injection Materialized", description: "Target IPA DNA rewritten successfully." })
     } catch (err) {
@@ -103,7 +99,7 @@ export default function IosParasitePage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-64 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
+      <main className="flex-1 lg:mr-56 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
         <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
         
         <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
@@ -113,7 +109,7 @@ export default function IosParasitePage() {
            </div>
            <div className="flex-1">
               <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
-                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">IOS_PARASITE v88.0</Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">IOS_PARASITE v90.0</Badge>
                  <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                      <InfinityIcon className="size-6 shadow-lg" /> PARASITIC_SYNC: {resonance.toFixed(8)}%
                  </div>
@@ -125,7 +121,7 @@ export default function IosParasitePage() {
                  "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، موديول الطفيلي يلسع تطبيقات iOS من الداخل؛ نحن نحقن ذكاء المُعِزّ في الـ Sandbox لتمتلك أسرار الأهداف لعام 2026."
               </p>
               <div className="flex justify-center md:justify-end gap-6 mt-12">
-                 <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
+                 <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl text-xs md:text-sm">
                      <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة</Link>
                  </Button>
               </div>
@@ -163,10 +159,14 @@ export default function IosParasitePage() {
 
               <Card className="sovereign-card group text-right">
                  <h4 className="text-[14px] font-black text-emerald-500 uppercase tracking-[0.8em] mb-8 italic flex items-center justify-center gap-6">
-                    <History className="size-8 animate-pulse" /> IOS_ARCHIVE_v1
+                    <History className="size-8 animate-pulse" /> IOS_ARCHIVE_v90
                  </h4>
                  <div className="text-3xl font-black text-white italic gold-glow uppercase tracking-widest text-center">NO-JAILBREAK FUSION</div>
                  <p className="mt-8 text-[9px] font-black uppercase tracking-widest text-muted-foreground italic text-center">IPAPatch + Frida + Objection Linked</p>
+                 <div className="flex gap-6 mt-8 justify-center">
+                    <Fingerprint className="size-12 text-primary animate-pulse" />
+                    <Atom className="size-12 animate-spin-slow text-primary" />
+                </div>
               </Card>
            </div>
 
@@ -180,7 +180,7 @@ export default function IosParasitePage() {
 
               <CardContent className="p-12 flex-1 overflow-y-auto scrollbar-hide space-y-20 relative z-10 text-right">
                  {result ? (
-                    <div className="space-y-20 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col">
+                    <div className="space-y-20 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col text-right">
                         <div className="p-20 rounded-[6rem] bg-primary/5 border-[12px] border-primary/30 italic text-4xl md:text-[8rem] text-gray-100 leading-tight font-black shadow-inner relative group/brief overflow-hidden text-center flex flex-col justify-center min-h-[450px]">
                             <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                             "{result.commanderBrief}"
@@ -212,7 +212,7 @@ export default function IosParasitePage() {
                                 <ShieldCheck className="size-24 text-white" />
                             </div>
                             <div className="flex-1">
-                                <h4 className="text-4xl font-black text-emerald-500 uppercase tracking-[1.2em] mb-6 italic">Material_Relay_v88.0</h4>
+                                <h4 className="text-4xl font-black text-emerald-500 uppercase tracking-[1.2em] mb-6 italic">Material_Relay_v90.0</h4>
                                 <div className="bg-black/80 p-8 rounded-3xl border-4 border-white/5 font-code text-xl md:text-4xl text-emerald-400 overflow-x-auto whitespace-pre rounded-[4rem] shadow-inner text-left">
                                     <pre className="whitespace-pre-wrap">
                                         {typeof result.hardwareOutput === 'string' ? result.hardwareOutput : JSON.stringify(result.hardwareOutput, null, 2)}
@@ -223,18 +223,22 @@ export default function IosParasitePage() {
                     </div>
                  ) : (
                    <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-80">
-                      <div className="relative group/lock">
+                      <div className="relative group/lock mx-auto">
                         <Apple className="size-64 md:size-[50rem] animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[12000ms]" />
                         <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-64 text-primary/40 animate-neural" />
                         <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>
-                      <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Parasite Standby</h3>
-                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">The iOS Parasite v88.0 is ready to inject Sovereign DNA into target IPA binaries.</p>
+                      <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Parasite Idle</h3>
+                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem] mx-auto text-center">Establishing universal iOS Parasite link v90.0: Injecting Sovereign DNA into target IPA binaries.</p>
+                      <div className="flex gap-16 mt-12 justify-center">
+                          <Fingerprint className="size-24 text-primary animate-pulse" />
+                          <Atom className="size-24 animate-spin-slow text-primary" />
+                      </div>
                    </div>
                  )}
               </CardContent>
               <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[8em] italic">
-                <span>IOS_PARASITIC_HIJACK_v88_AL_GHAZALI_ROOT</span>
+                <span>IOS_PARASITIC_HIJACK_v90_AL_GHAZALI_ROOT</span>
                 <div className="flex gap-16">
                     <Fingerprint className="size-24 text-primary animate-pulse" />
                     <Atom className="size-24 animate-spin-slow text-primary" />

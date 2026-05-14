@@ -143,7 +143,7 @@ export default function HermesUplinkPage() {
                        </Button>
                     </div>
 
-                    <div className="space-y-10 pt-10 border-t-4 border-white/5">
+                    <div className="space-y-10 pt-10 border-t-4 border-white/5 text-right">
                         <h4 className="text-[14px] font-black text-primary uppercase tracking-[0.8em] italic flex items-center gap-6 justify-end">Active Channels <MessageSquare className="size-8" /></h4>
                         <div className="grid grid-cols-1 gap-4">
                            {channels.map(ch => (

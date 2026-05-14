@@ -26,7 +26,8 @@ import {
   Cpu,
   Cloud,
   Network,
-  Database
+  Database,
+  ChevronRight
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -36,6 +37,11 @@ import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 
+/**
+ * @fileOverview المتحكم المداري v90.0 - SATELLITE OVERLORD: THE 16D NUCLEUS
+ * واجهة الاستحواذ الكوني على روابط السماء والترددات المدارية لعام 2026.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
+ */
 export default function SatelliteOverlordPage() {
   const [target, setTarget] = React.useState("")
   const [loading, setLoading] = React.useState(false)
@@ -157,7 +163,7 @@ export default function SatelliteOverlordPage() {
            </div>
 
            <Card className="xl:col-span-3 bg-black/90 border-[12px] border-blue-500/10 rounded-[7rem] p-16 shadow-9xl flex flex-col group overflow-hidden relative min-h-[1200px] backdrop-blur-5xl">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.08),transparent)] pointer-events-none" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.08),transparent)] pointer-events-none" />
               <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-blue-900/10 rounded-t-[6rem] px-20 py-16 flex flex-row justify-between items-center text-right">
                  <Badge className="bg-blue-600/30 text-blue-400 border-[10px] border-blue-500/40 px-20 py-10 rounded-full font-black text-6xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic order-last md:order-none">ORBIT_LOCKED</Badge>
                  <CardTitle className="text-6xl md:text-[14rem] text-white flex items-center gap-20 font-black uppercase italic gold-glow px-10 leading-none">
@@ -167,7 +173,7 @@ export default function SatelliteOverlordPage() {
 
               <CardContent className="p-12 flex-1 overflow-y-auto scrollbar-hide space-y-24 relative z-10 text-right">
                  {result ? (
-                    <div className="space-y-24 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col">
+                    <div className="space-y-24 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col text-right">
                         <div className="p-24 rounded-[6rem] bg-blue-600/5 border-[12px] border-blue-500/30 italic text-5xl md:text-[10rem] text-gray-100 leading-tight font-black shadow-inner relative group/brief overflow-hidden text-center flex flex-col justify-center min-h-[550px]">
                             <div className="absolute inset-0 bg-blue-600/5 opacity-5 animate-pulse pointer-events-none" />
                             <p className="relative z-10 drop-shadow-9xl">"{result.message}"</p>

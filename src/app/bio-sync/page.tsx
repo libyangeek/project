@@ -47,6 +47,11 @@ import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 
+/**
+ * @fileOverview الالتحام الحيوي v90.0 - BIO-SYNC: SOUL BINDING
+ * واجهة دمج البصمة الحيوية والـ DNA المادي في النواة الـ 16 لعام 2026.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
+ */
 export default function BioSyncPage() {
   const [sample, setSample] = React.useState("")
   const [loading, setLoading] = React.useState(false)
@@ -179,14 +184,14 @@ export default function BioSyncPage() {
 
               <CardContent className="p-12 flex-1 overflow-y-auto scrollbar-hide space-y-24 relative z-10 text-right">
                  {syncStatus ? (
-                    <div className="space-y-24 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col">
+                    <div className="space-y-24 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col text-right">
                         <div className="p-24 rounded-[6rem] bg-red-600/5 border-[12px] border-red-600/30 italic text-5xl md:text-[10rem] text-gray-100 leading-tight font-black shadow-inner relative group/brief overflow-hidden text-center flex flex-col justify-center min-h-[550px]">
                             <div className="absolute inset-0 bg-red-600/5 opacity-5 animate-pulse pointer-events-none" />
                             <p className="relative z-10 drop-shadow-9xl">"{syncStatus.message}"</p>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
-                            <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[5rem] shadow-9xl relative group/vault overflow-hidden h-full flex flex-col">
+                            <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[5rem] shadow-9xl relative group/vault overflow-hidden h-full flex flex-col text-right">
                                 <h5 className="text-4xl font-black text-red-600 uppercase tracking-[1.5em] mb-16 border-b-8 border-red-600/20 pb-12 flex items-center gap-12 gold-glow justify-end">Genetic Metrics <Database className="size-20 animate-neural" /></h5>
                                 <div className="bg-black/80 p-12 rounded-[4rem] border-4 border-red-500/10 font-code text-2xl md:text-5xl text-red-400 overflow-x-auto whitespace-pre shadow-inner text-left flex-1">
                                     <pre className="whitespace-pre-wrap">{JSON.stringify(syncStatus, null, 2)}</pre>
@@ -205,7 +210,7 @@ export default function BioSyncPage() {
                     </div>
                  ) : (
                    <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-32 py-80">
-                      <div className="relative group/lock">
+                      <div className="relative group/lock mx-auto">
                         <HeartPulse className="size-[40rem] md:size-[60rem] animate-spin-slow text-red-600 group-hover:scale-110 transition-transform duration-[12000ms]" />
                         <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-32 md:size-64 text-red-600/40 animate-neural" />
                         <div className="absolute -inset-60 border-[100px] border-dashed border-red-600/5 rounded-full animate-reverse-spin opacity-20" />
@@ -213,6 +218,10 @@ export default function BioSyncPage() {
                       <div className="space-y-12">
                          <h3 className="text-8xl md:text-[25rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Bio Standby</h3>
                          <p className="text-4xl md:text-[12rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[160rem]">The Bio-Digital Sync v90.0 is ready to bind material genetic samples to the 16D Nucleus.</p>
+                         <div className="flex gap-16 justify-center mt-12">
+                            <Fingerprint className="size-24 text-red-600 animate-pulse" />
+                            <Atom className="size-24 animate-spin-slow text-red-600" />
+                        </div>
                       </div>
                    </div>
                  )}
@@ -225,12 +234,6 @@ export default function BioSyncPage() {
                 </div>
               </div>
            </Card>
-        </div>
-
-        <div className="mt-auto relative z-10 flex flex-col md:flex-row justify-center items-center gap-24 md:gap-64 opacity-45 text-[24px] md:text-[45px] font-black uppercase tracking-[6em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-40">
-            <span>AL-MUIZZ BIO-SYNC v90.0</span>
-            <div className="size-16 rounded-full bg-red-600 animate-pulse shadow-[0_0_150px_rgba(220,38,38,1)]" />
-            <span>MATERIAL_DNA_SUBJUGATION_2026</span>
         </div>
       </main>
     </div>

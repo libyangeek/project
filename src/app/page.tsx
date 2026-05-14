@@ -25,7 +25,8 @@ import {
   Boxes,
   Loader2,
   Wind,
-  Power
+  Power,
+  ChevronRight
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -61,6 +62,11 @@ const SovereignChart = dynamic(() => import('recharts').then(mod => {
   };
 }), { ssr: false, loading: () => <div className="h-full flex items-center justify-center"><Loader2 className="size-12 animate-spin text-primary/20" /></div> });
 
+/**
+ * @fileOverview العرش الأبدي v90.0 - THE ETERNAL THRONE: MASTER NUCLEUS
+ * الواجهة المركزية التي تجسد العمود الفقري العصبي والالتحام المادي لعام 2026.
+ * المالك الوحيد: المعتصم بالله إدريس الغزالي
+ */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })

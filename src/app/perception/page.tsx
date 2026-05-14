@@ -29,7 +29,8 @@ import {
   BrainCircuit,
   Lock,
   Boxes,
-  UserCheck
+  UserCheck,
+  ChevronRight
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -173,8 +174,9 @@ export default function PerceptionPage() {
                                 <h5 className="text-3xl font-black text-primary uppercase tracking-[1.5em] mb-12 border-b-8 border-primary/20 pb-10 flex items-center gap-12 gold-glow justify-end">Global Threats Absorbed <Globe className="size-14 animate-neural" /></h5>
                                 <div className="space-y-8 flex-1">
                                     {perception.globalThreatsAbsorbed?.map((threat: string, idx: number) => (
-                                        <div key={idx} className="p-8 rounded-[2rem] bg-white/5 border-4 border-primary/30 hover:border-primary transition-all text-right shadow-inner group/threat">
-                                            <span className="text-2xl md:text-4xl font-black text-white italic group-hover/threat:text-primary transition-colors">"{" >>> "}{threat}"</span>
+                                        <div key={idx} className="flex items-center gap-6 justify-end group/item">
+                                            <span className="text-2xl md:text-4xl font-black text-white italic group-hover/item:text-primary transition-all">"{threat}"</span>
+                                            <ChevronRight className="size-6 text-primary opacity-30" />
                                         </div>
                                     ))}
                                 </div>
@@ -188,17 +190,6 @@ export default function PerceptionPage() {
                                     <Fingerprint className="size-24 text-primary animate-pulse" />
                                 </div>
                             </Card>
-                        </div>
-
-                        <div className="p-16 rounded-[6rem] bg-emerald-600/10 border-[16px] border-emerald-500/30 flex items-center gap-16 group/siphon shadow-9xl relative overflow-hidden mt-auto min-h-[350px]">
-                            <div className="absolute inset-0 bg-emerald-500/5 opacity-5 animate-pulse pointer-events-none" />
-                            <div className="size-48 rounded-[3.5rem] bg-emerald-600 flex items-center justify-center border-[14px] border-emerald-400 shadow-9xl animate-neural shrink-0">
-                                <BrainCircuit className="size-24 text-white" />
-                            </div>
-                            <div className="flex-1 text-right">
-                                <h4 className="text-4xl font-black text-emerald-500 uppercase tracking-[1.2em] mb-6 italic">Strategic_Intuition_v90.0</h4>
-                                <p className="text-2xl md:text-[6rem] text-white font-black leading-none drop-shadow-9xl italic">"{perception.strategicIntuition}"</p>
-                            </div>
                         </div>
                     </div>
                  ) : (
