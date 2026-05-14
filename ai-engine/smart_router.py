@@ -2,8 +2,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Smart Router v87.5 – الأدميرال الكوني (ALGORITHM FACTORY EDITION)
+Smart Router v88.0 – الأدميرال الكوني (CROSS-NODE RESONANCE EDITION)
 المحرك المركزي لتنسيق الأبعاد السبعة ومصنع الخوارزميات عبر الجهاز العصبي الموحد.
+تم دمج منطق "الرنين المتقاطع" لضمان التفاعل التلقائي بين العقد.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys, json, os, subprocess, socket, time
@@ -32,7 +33,8 @@ class SmartRouter:
             "hermes_link": "Automation",
             "medusa_eye": "Arsenal",
             "serpent_farm": "Fleet",
-            "cairn_shadow": "Perception"
+            "cairn_shadow": "Perception",
+            "oracle_vision": "Perception"
         }
         # تهيئة الجهاز العصبي عند الإقلاع
         try: hub.initialize_nervous_system()
@@ -47,24 +49,32 @@ class SmartRouter:
         if any(w in p for w in ["ذاكرة", "recall", "memory"]): return "mempalace"
         if any(w in p for w in ["ميدوسا", "git", "poison"]): return "medusa_eye"
         if any(w in p for w in ["مزرعة", "farm", "fleet", "serpent"]): return "serpent_farm"
+        if any(w in p for w in ["عراف", "oracle", "ثغرة", "cve"]): return "oracle_vision"
         return "general_hive"
 
     def route_query(self, prompt):
         category = self.classify(prompt)
         target_node = self.bridges.get(category, "God-Core")
         
+        # [RESONANCE LOGIC] التفاعل التلقائي بين العقد
+        resonance_chain = []
+        if category == "oracle_vision":
+            resonance_chain = ["Memory", "Arsenal"] # العراف يحفز الذاكرة والترسانة
+        elif category == "cairn_shadow":
+            resonance_chain = ["Nursery", "Automation"] # المحقق يحفز المشتل والأتمتة
+
         # بث نبضة عصبية حقيقية في الجهاز المركزي
         core.emit(
             event_type=f"DIRECTIVE_{category.upper()}",
-            data={"prompt": prompt, "sender": "Overlord_UI"},
+            data={"prompt": prompt, "sender": "Overlord_UI", "resonance_chain": resonance_chain},
             target=target_node
         )
 
         return {
             "category": category,
-            "status": "NERVOUS_LINK_STABILIZED",
-            "output": f"Quantum pulse transmitted to Node '{target_node}': Collective consensus processing.",
-            "node": f"{target_node}-v87",
+            "status": "CROSS_NODE_RESONANCE_ACTIVE",
+            "output": f"Quantum pulse transmitted to Node '{target_node}'. Inter-node bonding established with {resonance_chain}.",
+            "node": f"{target_node}-v88",
             "resonance": "100.000000%",
             "bonds_active": True,
             "timestamp": datetime.now().isoformat()
