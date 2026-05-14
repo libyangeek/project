@@ -27,7 +27,9 @@ import {
   ArrowLeft,
   Settings,
   Terminal,
-  Bot
+  Bot,
+  BrainCircuit,
+  Dna
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -35,12 +37,13 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
-import { executeHermesAction } from "@/ai/flows/hermes-gateway-flow"
 import Link from "next/link"
+import { executeHermesAction } from "@/ai/flows/hermes-gateway-flow"
 
 /**
- * @fileOverview الالتحام الماسي v80.0 - HERMES UPLINK: SOUL FUSION
+ * @fileOverview الالتحام الماسي v80.0 - HERMES UPLINK: DIAMOND CORE
  * واجهة التحكم في وكيل هيرميز وبوابات المراسلة الموحدة لعام 2026.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function HermesUplinkPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -59,12 +62,22 @@ export default function HermesUplinkPage() {
     return () => { window.removeEventListener("mousemove", handleMouseMove); clearInterval(interval); }
   }, [])
 
-  const handleAction = async (action: any) => {
+  const handleAction = async (actionType: any) => {
     setLoading(true); setResult(null);
-    toast({ title: "Hermes Link Engaging", description: `Orchestrating ${action} across the diamond bridge...` })
+    toast({ title: "Hermes Link Engaging", description: `Orchestrating ${actionType} across the diamond bridge...` })
     try {
-      const data = await executeHermesAction({ action })
-      setResult(data)
+      // 1. استدعاء التدفق العصبي
+      const data = await executeHermesAction({ action: actionType })
+      
+      // 2. التنفيذ المادي عبر المحرك
+      const response = await fetch('/api/execute', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'hermes_action', action: actionType, target: 'DIAMOND_LINK' })
+      });
+      const hardwareData = await response.json();
+      
+      setResult({ ...data, bridgeMetrics: hardwareData.output });
       toast({ title: "Consensus Achieved", description: "The diamond bridge is now 100% synchronized." })
     } catch (e) {
       toast({ variant: "destructive", title: "Neural Link Drift" })
@@ -131,6 +144,10 @@ export default function HermesUplinkPage() {
                        <Button onClick={() => handleAction('deploy_cloud')} disabled={loading} className="h-32 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.8em] rounded-[3rem] shadow-9xl border-[12px] border-black/30 group italic active:scale-95 transition-all text-xl md:text-3xl">
                           {loading ? <Loader2 className="size-12 animate-spin" /> : <Cloud className="size-12 mr-6 group-hover:scale-125 transition-transform" />} MODAL_DEPLOY
                        </Button>
+                       <Button onClick={() => handleAction('inject_skill')} disabled={loading} variant="outline" className="h-24 bg-emerald-600/5 border-4 border-emerald-500/20 hover:border-emerald-500 hover:bg-emerald-600/10 rounded-3xl flex justify-between items-center px-10 transition-all active:scale-95 group shadow-xl">
+                          <ChevronRight className="size-8 opacity-30 group-hover:translate-x-4 transition-all" />
+                          <span className="text-sm md:text-xl font-black uppercase italic text-emerald-400">Inject_Material_Skills</span>
+                       </Button>
                     </div>
 
                     <div className="space-y-10 pt-10 border-t-4 border-white/5">
@@ -169,14 +186,21 @@ export default function HermesUplinkPage() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
                             <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[4rem] shadow-9xl relative group/vault overflow-hidden h-full flex flex-col">
-                                <h5 className="text-3xl font-black text-primary uppercase tracking-[1.5em] mb-16 border-b-8 border-primary/20 pb-10 flex items-center gap-12 gold-glow justify-end">Hermes DNA <Database className="size-14 animate-neural" /></h5>
-                                <div className="text-2xl md:text-5xl text-gray-300 italic font-black leading-snug drop-shadow-3xl flex-1">
-                                    {JSON.stringify(result.bridgeMetrics, null, 2)}
+                                <h5 className="text-3xl font-black text-primary uppercase tracking-[1.5em] mb-16 border-b-8 border-primary/20 pb-10 flex items-center gap-12 gold-glow justify-end">Material Link Metrics <Database className="size-14 animate-neural" /></h5>
+                                <div className="bg-black/80 p-8 rounded-[3rem] border-4 border-white/5 font-code text-xl md:text-3xl text-emerald-400 overflow-x-auto whitespace-pre rounded-[4rem] shadow-inner text-left flex-1">
+                                    <pre className="whitespace-pre-wrap">
+                                        {typeof result.bridgeMetrics === 'string' ? result.bridgeMetrics : JSON.stringify(result.bridgeMetrics, null, 2)}
+                                    </pre>
                                 </div>
                             </Card>
-                            <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[4rem] shadow-9xl h-full flex flex-col text-center justify-center">
+                            <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[4rem] shadow-9xl h-full flex flex-col text-center justify-center relative overflow-hidden">
+                                <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                                 <h5 className="text-3xl font-black text-emerald-500 uppercase tracking-[1.5em] mb-10 border-b-8 border-emerald-500/20 pb-10 flex items-center gap-12 justify-end">Consensus Status <ShieldCheck className="size-14" /></h5>
-                                <div className="text-6xl md:text-[10rem] font-black text-white italic gold-glow uppercase tracking-widest">{result.consensus}</div>
+                                <div className="text-6xl md:text-[10rem] font-black text-white italic gold-glow uppercase tracking-widest">{result.consensus || "LOCKED"}</div>
+                                <div className="mt-12 flex flex-col items-center gap-8">
+                                    <Fingerprint className="size-24 text-primary animate-pulse" />
+                                    <span className="text-[12px] font-black text-primary/60 uppercase tracking-[1em] italic">GHAZALI_ROOT_VERIFIED</span>
+                                </div>
                             </Card>
                         </div>
                     </div>

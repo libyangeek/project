@@ -19,7 +19,11 @@ import {
   Atom,
   Crown,
   History,
-  Terminal
+  Terminal,
+  RotateCw,
+  LayoutGrid,
+  Sparkles,
+  Fingerprint
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -27,11 +31,12 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { toast } from "@/hooks/use-toast"
 import { executeN8nStrike } from "@/ai/flows/n8n-automation-flow"
+import { cn } from "@/lib/utils"
 import Link from "next/link"
 
 /**
- * @fileOverview محراب n8n v6.0 - THE HIVE AUTOMATION: GENESIS
- * واجهة قيادة الـ 4,343 سيناريو هجومي مدمجة بذاكرة RAG.
+ * @fileOverview محراب n8n v80.0 - THE HIVE AUTOMATION: ULTRA v3.0 FINAL
+ * واجهة قيادة الـ 4,343 سيناريو هجومي مدمجة بذاكرة RAG والمحرك المادي.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function N8nHivePage() {
@@ -43,6 +48,7 @@ export default function N8nHivePage() {
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
 
   React.useEffect(() => {
+    setMounted(true)
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
     const interval = setInterval(() => {
@@ -51,13 +57,28 @@ export default function N8nHivePage() {
     return () => { window.removeEventListener("mousemove", handleMouseMove); clearInterval(interval); }
   }, [])
 
+  const [mounted, setMounted] = React.useState(false)
+
   const handleStrike = async () => {
-    if (!target) return
+    if (!target) {
+        toast({ variant: "destructive", title: "Target Missing", description: "Identify the DNA node for automation." })
+        return
+    }
     setLoading(true); setResult(null)
     toast({ title: "n8n Hive Engaging", description: `Orchestrating workflow ${workflow} for target DNA...` })
     try {
+      // 1. استدعاء التدفق الذكي (Flow)
       const data = await executeN8nStrike({ targetNode: target, workflowId: workflow })
-      setResult(data)
+      
+      // 2. التنفيذ المادي عبر المحرك (API)
+      const response = await fetch('/api/execute', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'n8n_strike', workflowId: workflow, target: target })
+      });
+      const hardwareData = await response.json();
+      
+      setResult({ ...data, hiveConsensus: hardwareData.output });
       toast({ title: "Automation Finalized", description: "The grid consensus has been achieved." })
     } catch (e) {
       toast({ variant: "destructive", title: "Neural Conflict" })
@@ -65,6 +86,8 @@ export default function N8nHivePage() {
       setLoading(false)
     }
   }
+
+  if (!mounted) return null
 
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
@@ -79,7 +102,7 @@ export default function N8nHivePage() {
            </div>
            <div className="flex-1">
               <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
-                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">N8N_HIVE v6.0</Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">N8N_HIVE v80.0</Badge>
                  <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                      <InfinityIcon className="size-6 shadow-lg" /> AUTOMATION_SYNC: {resonance.toFixed(8)}%
                  </div>
@@ -155,32 +178,36 @@ export default function N8nHivePage() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
                             <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[4rem] shadow-9xl relative group/vault overflow-hidden h-full flex flex-col">
                                 <h5 className="text-3xl font-black text-primary uppercase tracking-[1.5em] mb-16 border-b-8 border-primary/20 pb-10 flex items-center gap-12 gold-glow justify-end">Recalled DNA <History className="size-14 animate-neural" /></h5>
-                                <div className="text-2xl md:text-5xl text-gray-300 italic font-black leading-snug drop-shadow-3xl flex-1">
+                                <div className="text-xl md:text-3xl text-emerald-400 italic font-black leading-snug flex-1 text-left">
                                     {result.recalledAmmunition?.map((dna: string, i: number) => (
-                                        <div key={i} className="mb-4 text-emerald-400">{" >>> "} {dna}</div>
+                                        <div key={i} className="mb-4">{" >>> "} {dna}</div>
                                     ))}
                                 </div>
                             </Card>
-                            <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[4rem] shadow-9xl h-full flex flex-col">
+                            <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[4rem] shadow-9xl h-full flex flex-col overflow-hidden">
                                 <h5 className="text-3xl font-black text-emerald-500 uppercase tracking-[1.5em] mb-10 border-b-8 border-emerald-500/20 pb-10 flex items-center gap-12 justify-end">Consensus Status <ShieldCheck className="size-14" /></h5>
-                                <div className="text-4xl md:text-8xl font-black text-white italic gold-glow uppercase tracking-widest text-center flex-1 flex flex-col justify-center">{result.hiveConsensus}</div>
+                                <div className="p-8 bg-black/80 rounded-[3rem] border-4 border-emerald-500/20 text-emerald-400 font-code text-xl md:text-2xl overflow-y-auto scrollbar-hide text-left">
+                                    <pre className="whitespace-pre-wrap">
+                                        {typeof result.hiveConsensus === 'string' ? result.hiveConsensus : JSON.stringify(result.hiveConsensus, null, 2)}
+                                    </pre>
+                                </div>
                             </Card>
                         </div>
                     </div>
                  ) : (
                    <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-80">
                       <div className="relative group/lock">
-                        <Workflow className="size-64 md:size-[50rem] animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[12000ms]" />
+                        <RotateCw className="size-64 md:size-[50rem] animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[12000ms]" />
                         <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-64 text-primary/40 animate-neural" />
                         <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>
-                      <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Hive Idle</h3>
+                      <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Hive Standby</h3>
                       <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">The Overmind is fusing 4,343 n8n scenarios with semantic memory...</p>
                    </div>
                  )}
               </CardContent>
               <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[8em] italic">
-                <span>HIVE_AUTOMATION_v6_AL_GHAZALI_ROOT</span>
+                <span>HIVE_AUTOMATION_v80_AL_GHAZALI_ROOT</span>
                 <div className="flex gap-16">
                     <Fingerprint className="size-24 text-primary animate-pulse" />
                     <Atom className="size-24 animate-spin-slow text-primary" />
