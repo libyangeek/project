@@ -30,7 +30,8 @@ import {
   AlertCircle,
   Network,
   History,
-  Workflow
+  Workflow,
+  Database
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -52,8 +53,10 @@ export default function AutonomousPage() {
   const [result, setResult] = React.useState<any>(null)
   const [resonance, setResonance] = React.useState(100)
   const [activeTab, setActiveTab] = React.useState<"swarm" | "retro">("swarm")
+  const [mounted, setMounted] = React.useState(false)
 
   React.useEffect(() => {
+    setMounted(true)
     const interval = setInterval(() => {
       setResonance(prev => Math.max(99.999999, Math.min(100, prev + (Math.random() * 0.000001 - 0.0000005))));
     }, 3000);
@@ -71,7 +74,6 @@ export default function AutonomousPage() {
         const data = await executeAdaptiveThreat({ targetDomain: objective })
         setResult(data)
       } else {
-        // نستخدم الموجه الذكي لتوزيع المهام على السرب
         const response = await fetch('/api/execute', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -93,6 +95,8 @@ export default function AutonomousPage() {
       setLoading(false)
     }
   }
+
+  if (!mounted) return null
 
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
@@ -117,6 +121,11 @@ export default function AutonomousPage() {
                  <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
                     "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، محرك ULTRA v3.0 يصهر سرب الـ 165 وكيلاً مع ذاكرة MemPalace؛ نحن لا نكرر الهجوم، نحن نطوره."
                  </p>
+                 <div className="flex justify-center md:justify-end gap-6 mt-12">
+                    <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
+                        <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة للعرش</Link>
+                    </Button>
+                 </div>
               </div>
            </div>
         </header>
