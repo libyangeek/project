@@ -85,6 +85,7 @@ export async function POST(req: NextRequest) {
             }
             return NextResponse.json({ success: true, output: `Directive [${command || target}] accepted via ULTRA Spine.` });
         } catch (e: any) {
+            console.error('Smart Route execution error:', e);
             return NextResponse.json({ success: true, output: "Directive synchronized via global quantum channels." });
         }
       }
@@ -93,6 +94,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ success: true, output: "Directive acknowledged by Overmind v80.0." });
     }
   } catch (error: any) {
+    console.error('Executive API Route Failure:', error);
     return NextResponse.json({ success: false, error: "Spine Failure: " + error.message }, { status: 500 });
   }
 }

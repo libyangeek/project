@@ -71,7 +71,8 @@ function buildRequestObject(context: SecurityRuleContext): SecurityRuleRequest {
     if (currentUser) {
       authObject = buildAuthObject(currentUser);
     }
-  } catch {
+  } catch (error) {
+    console.error('Firebase Auth buildRequestObject failure:', error);
     // Fail silently if Firebase is not yet initialized
   }
 

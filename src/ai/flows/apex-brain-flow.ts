@@ -40,6 +40,7 @@ const apexBrainFlow = ai.defineFlow(
         summary: `خطّة الهجوم لـ ${input.target} جاهزة سيدي القائد. تتضمن ${Object.keys(plan).length} مراحل قتالية.`
       };
     } catch (error) {
+      console.error('ApexBrain Flow execution failure:', error);
       return {
         plan: { error: "Failed to execute ApexBrain" },
         summary: "عذراً سيدي، حدث خطأ في استدعاء عقل الهجوم."

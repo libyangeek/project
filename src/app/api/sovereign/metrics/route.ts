@@ -1,4 +1,3 @@
-
 import { NextResponse } from 'next/server';
 import os from 'os';
 
@@ -29,6 +28,7 @@ export async function GET() {
     });
 
   } catch (e) {
+    console.error('Sovereign Metrics Route Error:', e);
     return NextResponse.json({ 
         status: "INITIALIZING", 
         resonance: "100.00%", 
