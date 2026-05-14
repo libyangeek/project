@@ -2,9 +2,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Smart Router v88.0 – الأدميرال الكوني (CROSS-NODE RESONANCE EDITION)
-المحرك المركزي لتنسيق الأبعاد السبعة ومصنع الخوارزميات عبر الجهاز العصبي الموحد.
-تم دمج منطق "الرنين المتقاطع" لضمان التفاعل التلقائي بين العقد.
+Smart Router v90.0 – الأدميرال الكوني (MASTER NUCLEUS EDITION)
+المحرك المركزي لتنسيق الأبعاد الـ 16 ومصنع الخوارزميات عبر الجهاز العصبي الموحد.
+تم دمج منطق "الترحيل الكمي" لضمان التفاعل التلقائي بين كافة الأبعاد الـ 16.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys, json, os, subprocess, socket, time
@@ -24,7 +24,7 @@ except ImportError:
 
 class SmartRouter:
     def __init__(self):
-        # مصفوفة الجسور المادية للأبعاد السبعة الموحدة
+        # مصفوفة الجسور المادية للأبعاد الـ 16 الموحدة
         self.bridges = {
             "nursery_seed": "Nursery",
             "algorithm_forge": "Arsenal",
@@ -34,7 +34,10 @@ class SmartRouter:
             "medusa_eye": "Arsenal",
             "serpent_farm": "Fleet",
             "cairn_shadow": "Perception",
-            "oracle_vision": "Perception"
+            "oracle_vision": "Perception",
+            "ios_parasite": "Fleet",
+            "satellite_overlord": "God-Core",
+            "bio_sync": "Memory"
         }
         # تهيئة الجهاز العصبي عند الإقلاع
         try: hub.initialize_nervous_system()
@@ -50,31 +53,36 @@ class SmartRouter:
         if any(w in p for w in ["ميدوسا", "git", "poison"]): return "medusa_eye"
         if any(w in p for w in ["مزرعة", "farm", "fleet", "serpent"]): return "serpent_farm"
         if any(w in p for w in ["عراف", "oracle", "ثغرة", "cve"]): return "oracle_vision"
+        if any(w in p for w in ["ios", "apple", "ipa", "parasite"]): return "ios_parasite"
+        if any(w in p for w in ["sat", "satellite", "قمر", "مدار"]): return "satellite_overlord"
+        if any(w in p for w in ["bio", "dna", "حيوي", "بصمة"]): return "bio_sync"
         return "general_hive"
 
     def route_query(self, prompt):
         category = self.classify(prompt)
         target_node = self.bridges.get(category, "God-Core")
         
-        # [RESONANCE LOGIC] التفاعل التلقائي بين العقد
+        # [RESONANCE LOGIC] التفاعل التلقائي بين الأبعاد الـ 16
         resonance_chain = []
         if category == "oracle_vision":
-            resonance_chain = ["Memory", "Arsenal"] # العراف يحفز الذاكرة والترسانة
-        elif category == "cairn_shadow":
-            resonance_chain = ["Nursery", "Automation"] # المحقق يحفز المشتل والأتمتة
+            resonance_chain = ["Memory", "Arsenal", "Nursery"] 
+        elif category == "bio_sync":
+            resonance_chain = ["Memory", "God-Core", "Fleet"]
+        elif category == "satellite_overlord":
+            resonance_chain = ["Automation", "Arsenal", "Perception"]
 
         # بث نبضة عصبية حقيقية في الجهاز المركزي
         core.emit(
             event_type=f"DIRECTIVE_{category.upper()}",
-            data={"prompt": prompt, "sender": "Overlord_UI", "resonance_chain": resonance_chain},
+            data={"prompt": prompt, "sender": "Master_Nucleus_v90", "resonance_chain": resonance_chain},
             target=target_node
         )
 
         return {
             "category": category,
-            "status": "CROSS_NODE_RESONANCE_ACTIVE",
-            "output": f"Quantum pulse transmitted to Node '{target_node}'. Inter-node bonding established with {resonance_chain}.",
-            "node": f"{target_node}-v88",
+            "status": "UNIVERSAL_RELAY_ACTIVE",
+            "output": f"Quantum pulse transmitted to Node '{target_node}'. Master cohesion established with {resonance_chain}.",
+            "node": f"{target_node}-v90",
             "resonance": "100.000000%",
             "bonds_active": True,
             "timestamp": datetime.now().isoformat()

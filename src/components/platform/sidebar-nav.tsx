@@ -71,7 +71,7 @@ const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
   { name: "المتحكم المداري", icon: Satellite, href: "/satellite-overlord", knot: 15 },
   { name: "الالتحام الحيوي", icon: HeartPulse, href: "/bio-sync", knot: 16 },
-  { name: "طفيلي الـ iOS", icon: Apple, href: "/ios-parasite", knot: 24 },
+  { name: "طفيلي الـ iOS", icon: Apple, href: "/ios-parasite", knot: 14 },
   { name: "مصنع الخوارزميات", icon: Hammer, href: "/algorithm-factory", knot: 87 },
   { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", knot: 3 },
   { name: "محقق الظلال (Cairn)", icon: Search, href: "/cairn", knot: 9 },
@@ -92,7 +92,6 @@ const navItems = [
   { name: "أعين الاستطلاع", icon: Eye, href: "/recon", knot: 6 },
   { name: "جسر السحاب", icon: Cloud, href: "/mcp-bridge", knot: 7 },
   { name: "قلب DeepSeek", icon: BrainCircuit, href: "/deep-reasoning", knot: 8 },
-  { name: "محاكي السطوة", icon: Workflow, href: "/digital-twin", knot: 9 },
   { name: "أذن النور", icon: Mic, href: "/voice", knot: 10 },
   { name: "الحرب الخلوية", icon: Radio, href: "/cellular", knot: 11 },
   { name: "محراب الـ Claw", icon: Gamepad2, href: "/clawcode", knot: 12 },
@@ -138,7 +137,7 @@ export function SidebarNav() {
 
           <div className="text-center relative z-10">
             <h1 className="text-[10px] font-headline font-bold text-white tracking-[0.2em] leading-none gold-glow">AL-MUIZZ</h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[6px] font-black tracking-[0.1em] mt-0.5 py-0 px-2 uppercase italic animate-pulse">v89.0 16D_MATRIX</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[6px] font-black tracking-[0.1em] mt-0.5 py-0 px-2 uppercase italic animate-pulse">v90.0 16D_MATRIX</Badge>
           </div>
         </div>
         

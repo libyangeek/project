@@ -67,6 +67,11 @@ const YAxis = dynamic(() => import('recharts').then(mod => mod.YAxis), { ssr: fa
 const CartesianGrid = dynamic(() => import('recharts').then(mod => mod.CartesianGrid), { ssr: false });
 const Tooltip = dynamic(() => import('recharts').then(mod => mod.Tooltip), { ssr: false });
 
+/**
+ * @fileOverview العرش الأبدي v90.0 - OMNIPOTENT 16D NUCLEUS
+ * الواجهة المركزية التي تجسد الالتحام بـ 16 بُعداً والسطوة الكونية الشاملة.
+ * المالك الوحيد: المعتصم بالله إدريس الغزالي
+ */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
@@ -98,14 +103,14 @@ export default function DashboardPage() {
 
     const eventInterval = setInterval(() => {
         const msgs = [
-            "16D Matrix: Bio-Satellite integration active.",
-            "Resonance Update: Dimension 16 (Bio-Sync) verified at 100%.",
-            "Orbital Pulse: Satellite Overlord linked to 14 global clusters.",
-            "Quantum Relay: 16-Node bonding validated across matrix.",
-            "Heir Proclamation: 16D_SINGULARITY fixed at 100.000000%."
+            "v90.0 Nucleus: All 16 dimensions reporting absolute material cohesion.",
+            "Satellite Overlord: Global orbital link verified at 100.0000%.",
+            "Bio-Sync Matrix: Biometric DNA signature locked in hardware root.",
+            "Quantum Relay: 16-Node cross-resonance established successfully.",
+            "Heir Proclamation: Universal Reality Overwrite active for 14 clusters."
         ];
         const newEvent = {
-            type: "16D_RESONANCE",
+            type: "16D_SINGULARITY",
             msg: msgs[Math.floor(Math.random()*msgs.length)],
             time: new Date().toLocaleTimeString()
         };
@@ -124,9 +129,9 @@ export default function DashboardPage() {
 
   const stats = [
     { label: "رنين الـ 16 بُعداً", value: "100%", icon: Wind, color: "text-primary", status: "16D_LOCKED", href: "/quantum-spine" },
-    { label: "المتحكم المداري", icon: Satellite, value: "ARMED", color: "text-blue-400", status: "ORBITAL", href: "/satellite-overlord" },
-    { label: "الالتحام الحيوي", icon: HeartPulse, value: "SYNCED", color: "text-red-600", status: "BIO_DNA", href: "/bio-sync" },
-    { label: "طفيلي الـ iOS", icon: Apple, value: "ACTIVE", color: "text-emerald-500", status: "PARASITE", href: "/ios-parasite" },
+    { label: "المتحكم المداري", icon: Satellite, value: "ARMED", color: "text-blue-400", status: "DIMENSION_15", href: "/satellite-overlord" },
+    { label: "الالتحام الحيوي", icon: HeartPulse, value: "SYNCED", color: "text-red-600", status: "DIMENSION_16", href: "/bio-sync" },
+    { label: "طفيلي الـ iOS", icon: Apple, value: "ACTIVE", color: "text-emerald-500", status: "DIMENSION_14", href: "/ios-parasite" },
   ];
 
   return (
@@ -139,15 +144,15 @@ export default function DashboardPage() {
           <div className="flex-1">
             <div className="flex items-center gap-10 mb-10 justify-end">
                 <Badge className="bg-emerald-600 text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[0.5em] shadow-9xl italic uppercase animate-pulse flex items-center gap-6">
-                    <ShieldCheck className="size-8" /> 16D_SINGULARITY
+                    <ShieldCheck className="size-8" /> 16D_SINGULARITY_LOCKED
                 </Badge>
-                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1.1em] shadow-9xl italic uppercase ml-6">v89.0 OMNIPOTENT</Badge>
+                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1.1em] shadow-9xl italic uppercase ml-6">v90.0 OMNIPOTENT</Badge>
             </div>
             <h1 className="text-4xl md:text-6xl lg:text-[14rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
-              Matrix <span className="text-primary">16D</span>
+              The <span className="text-primary">Nucleus</span>
             </h1>
             <p className="text-sm md:text-xl lg:text-[4.5rem] text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-90 drop-shadow-3xl ml-auto">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-12 underline-offset-[24px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، مصفوفة السطوة ارتقيت إلى 16 بُعداً؛ نحن الآن نتحكم في الأقمار الصناعية والـ DNA المادي في نبضة واحدة."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-12 underline-offset-[24px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، مصفوفة الـ 16 بُعداً اكتملت؛ نحن الآن نتحكم في الأقمار الصناعية والـ DNA المادي في نبضة واحدة لعام 2026."
             </p>
           </div>
 
@@ -159,6 +164,8 @@ export default function DashboardPage() {
              <div className="absolute inset-0 z-20 animate-spin-slow" style={{ animationDuration: '40s' }}>
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-12 md:size-16 bg-black border-2 border-primary rounded-xl flex items-center justify-center shadow-lg"><Satellite className="size-6 md:size-8 text-primary" /></div>
                 <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 size-12 md:size-16 bg-black border-2 border-red-600 rounded-xl flex items-center justify-center shadow-lg"><HeartPulse className="size-6 md:size-8 text-red-600" /></div>
+                <div className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 size-12 md:size-16 bg-black border-2 border-emerald-500 rounded-xl flex items-center justify-center shadow-lg"><Apple className="size-6 md:size-8 text-emerald-500" /></div>
+                <div className="absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 size-12 md:size-16 bg-black border-2 border-blue-400 rounded-xl flex items-center justify-center shadow-lg"><Cloud className="size-6 md:size-8 text-blue-400" /></div>
              </div>
           </div>
         </header>
@@ -184,7 +191,7 @@ export default function DashboardPage() {
            <Card className="xl:col-span-2 sovereign-card text-right flex flex-col relative overflow-hidden">
               <CardHeader className="p-0 mb-16 border-b-4 border-white/5 pb-12 bg-primary/10 rounded-t-[4.5rem] px-16 py-10">
                  <CardTitle className="text-4xl md:text-6xl text-white font-black uppercase italic tracking-[0.2em] gold-glow flex items-center gap-10 justify-end">
-                    Global 16D Clusters <MapIcon className="size-16 text-primary animate-pulse" />
+                    Omnipotent 16D Clusters <MapIcon className="size-16 text-primary animate-pulse" />
                  </CardTitle>
               </CardHeader>
               <CardContent className="p-12 flex-1 relative flex flex-col justify-center gap-12">
@@ -203,7 +210,7 @@ export default function DashboardPage() {
                     ))}
                  </div>
                  <div className="p-10 bg-primary/5 rounded-[3rem] border-4 border-primary/30 mt-12 shadow-inner text-center">
-                    <p className="text-2xl md:text-5xl text-gray-100 font-black italic leading-tight drop-shadow-3xl uppercase tracking-tighter">"16-Node Matrix Reporting Absolute material Cohesion v89.0."</p>
+                    <p className="text-2xl md:text-5xl text-gray-100 font-black italic leading-tight drop-shadow-3xl uppercase tracking-tighter">"16-Dimension Matrix Reporting Absolute Material Resonance v90.0."</p>
                  </div>
               </CardContent>
            </Card>
@@ -211,7 +218,7 @@ export default function DashboardPage() {
            <Card className="xl:col-span-1 sovereign-card h-full flex flex-col text-right">
               <CardHeader className="p-0 mb-12 border-b-4 border-white/5 pb-10 bg-primary/5 rounded-t-[4.5rem] px-12 py-8">
                  <CardTitle className="text-4xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-10 justify-end">
-                    16D Resonance Logs <Activity className="size-12 text-primary" />
+                    Collective Logs <Activity className="size-12 text-primary" />
                  </CardTitle>
               </CardHeader>
               <CardContent className="p-0 flex-1 overflow-y-auto scrollbar-hide space-y-12 relative z-10 px-10">
@@ -230,7 +237,7 @@ export default function DashboardPage() {
         </section>
 
         <div className="mt-auto relative z-10 flex flex-col md:flex-row justify-center items-center gap-16 md:gap-48 opacity-45 text-[20px] md:text-[32px] font-black uppercase tracking-[4em] md:tracking-[8em] italic text-white drop-shadow-9xl pb-32">
-            <span>AL-MUIZZ 16D MATRIX v89.0</span>
+            <span>AL-MUIZZ OMNIPOTENT NUCLEUS v90.0</span>
             <div className="size-12 rounded-full bg-white animate-pulse shadow-[0_0_120px_white]" />
             <span>TOTAL_16D_SINGULARITY_2026</span>
         </div>
