@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -91,6 +90,8 @@ export default function NoahsArkPage() {
         setDirItems(data.output)
         setCurrentPath(data.currentPath)
       }
+    } catch (e) {
+        console.error('File browsing failure:', e);
     } finally {
       setBrowsingLoading(false)
     }
@@ -118,6 +119,8 @@ export default function NoahsArkPage() {
             setProgress(100)
             toast({ title: "Singularity Secured", description: "Deep snapshot materialized successfully." })
         }
+    } catch (e) {
+        console.error('Backup failure:', e);
     } finally {
         setTimeout(() => { setLoading(false); setProgress(0) }, 1000)
     }
@@ -150,7 +153,7 @@ export default function NoahsArkPage() {
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">The Absolute <span className="text-primary">Ark</span></h1>
               <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، سفينة نوح v78.8 تضمن خلود ذراتك المادية؛ نحن نؤرشف الوجود لضمان الانبعاث."
+                "ايها المعز فعلها الواجه تعمل حتي الان هنا يمكننا صنع باك اب ؟"
               </p>
               <div className="flex justify-center md:justify-end gap-6 mt-12">
                 <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
@@ -166,8 +169,8 @@ export default function NoahsArkPage() {
 
         <div className="grid grid-cols-1 xl:grid-cols-4 gap-12 relative z-10 pb-48 flex-1">
            <div className="xl:col-span-1 space-y-12">
-              <Card className="kali-card border-primary/40 bg-black/98 rounded-[4rem] p-12 border-8 shadow-9xl group overflow-hidden hierarchical-shadow">
-                <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse" />
+              <Card className="kali-card border-primary/40 bg-black/98 rounded-[4rem] p-12 border-8 shadow-9xl group overflow-hidden hierarchical-shadow text-center">
+                <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                 <CardHeader className="p-0 mb-10 border-b-4 border-primary/10 pb-10 bg-primary/10 rounded-t-[3.5rem] px-10 py-6 text-center">
                   <CardTitle className="text-2xl md:text-4xl text-white flex items-center justify-center gap-10 font-black uppercase italic gold-glow leading-none">
                     <Database className="size-12 text-primary animate-pulse" /> Soul Archive
@@ -238,7 +241,7 @@ export default function NoahsArkPage() {
                             <div className="relative z-10 space-y-12 text-center">
                                <div className="space-y-6"><h4 className="text-2xl md:text-3xl font-black text-primary uppercase tracking-[1em] italic gold-glow">Materializing Ark Snapshots</h4><div className="text-[10rem] md:text-[12rem] font-black text-white italic leading-none gold-glow animate-in zoom-in-95 duration-1000">{progress}%</div></div>
                                <Progress value={progress} className="h-8 md:h-10 bg-white/5 border-4 border-white/10 rounded-full" />
-                               <p className="text-2xl md:text-3xl text-gray-300 italic font-black leading-relaxed px-6 drop-shadow-3xl">"سفيينة نوح v78.8 تصهر كافة مفاصل روحك المادية في كبسولة نانوية مشفرة."</p>
+                               <p className="text-2xl md:text-3xl text-gray-300 font-black italic leading-relaxed px-6 drop-shadow-3xl">"نعم يا سيدي القائد، هذا المحراب مجهز لصهر كافة ذرات الوجود في نسخة خالدة."</p>
                             </div>
                          </div>
                          <Button onClick={handleRunBackup} disabled={loading} className="w-full h-32 md:h-40 bg-primary hover:bg-white text-black font-black uppercase tracking-[1em] rounded-[4rem] shadow-9xl text-3xl italic border-[16px] border-black/30 group active:scale-95 transition-all">
