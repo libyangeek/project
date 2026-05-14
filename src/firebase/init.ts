@@ -24,11 +24,12 @@ export function initializeFirebase() {
   if (!getApps().length) {
     let firebaseApp;
     try {
-      // محاولة التهيئة التلقائية عبر متغيرات البيئة السحابية
-      firebaseApp = initializeApp();
-    } catch (e) {
-      console.error('Firebase automatic initialization failed, attempting config object:', e);
+      // سيدي القائد، نستخدم إعدادات الميثاق المادي مباشرة لضمان الاستقرار في بيئة AlStudio
       firebaseApp = initializeApp(firebaseConfig);
+    } catch (e) {
+      console.error('Sovereign Firebase Initialization Failure:', e);
+      // محاولة أخيرة للإنقاذ عبر التهيئة التلقائية في حال وجود سياق سحابي
+      firebaseApp = initializeApp();
     }
 
     return getSdks(firebaseApp);
