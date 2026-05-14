@@ -1,9 +1,11 @@
-
 @echo off
-:: 🦅 AL-MUIZZ ULTRA STARTUP PORTAL
-:: المالك: المعتصم بالله إدريس الغزالي
-cd /d "%~dp0"
-echo [*] Re-igniting the Sovereign God-Core...
-start /min venv\Scripts\python.exe run.py start
-echo [+] Al-Mu'izz ULTRA v78.8 is now materializing.
-exit
+:: ==============================================================================
+:: 🦅 AL-MUI'ZZ ONE-TOUCH BOOT v90.0 [WINDOWS]
+:: محرك الإقلاع السيادي - نبضة واحدة لبث الحياة في الأبعاد الـ 16.
+:: ==============================================================================
+cls
+echo 🦅 Initializing Al-Mu'izz 16D Nucleus...
+set PROJECT_ROOT=%cd%
+set PYTHONPATH=%PROJECT_ROOT%\ai-engine
+python run.py start
+pause

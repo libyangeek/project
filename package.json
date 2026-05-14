@@ -1,6 +1,6 @@
 {
   "name": "al-muizz-ultimate-platform",
-  "version": "1.0.0",
+  "version": "90.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev -p 9002",
@@ -8,8 +8,9 @@
     "start": "next start -p 9002",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "sovereign:genesis": "sudo bash scripts/sovereign_genesis.sh",
-    "sovereign:backup": "bash scripts/sovereign_ark_v3.sh",
+    "sovereign:genesis": "sudo bash install.sh",
+    "sovereign:genesis:win": "install.bat",
+    "sovereign:start": "python run.py start",
     "sovereign:ui": "genkit start -- tsx --watch src/ai/dev.ts"
   },
   "dependencies": {
