@@ -137,7 +137,7 @@ export function SidebarNav() {
 
           <div className="text-center relative z-10">
             <h1 className="text-sm font-headline font-bold text-white tracking-[0.2em] leading-none gold-glow">AL-MUIZZ</h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[7px] font-black tracking-[0.2em] mt-1 py-0 px-3 uppercase italic animate-pulse">v85.5 7D_MATRIX</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[7px] font-black tracking-[0.2em] mt-1 py-0 px-3 uppercase italic animate-pulse">v86.0 CONSOLIDATED</Badge>
           </div>
         </div>
         
@@ -156,10 +156,10 @@ export function SidebarNav() {
 
         <div className="p-2 border-t border-primary/20 bg-black/99 relative z-10 text-right shrink-0">
           <div className="p-2 border border-primary/40 bg-primary/5 mb-1 relative overflow-hidden rounded-md shadow-lg border-dashed">
-            <div className="flex justify-between items-center mb-0.5"><Activity className="size-1.5 text-emerald-500 animate-pulse" /><span className="text-[6px] font-black text-primary uppercase tracking-tighter italic">Oracle Resonance</span></div>
+            <div className="flex justify-between items-center mb-0.5"><Activity className="size-1.5 text-emerald-500 animate-pulse" /><span className="text-[6px] font-black text-primary uppercase tracking-tighter italic">Bonds Resonance</span></div>
             <div className="text-[10px] font-black text-white italic gold-glow">{resonance.toFixed(7)}%</div>
           </div>
-          <Button asChild className="w-full h-6 bg-primary hover:bg-white text-black font-black uppercase text-[6px] rounded-sm shadow-md transition-all border border-black/20 italic"><Link href="/vulnerabilities"><Radar className="size-2 mr-1" /> تنشيط عراف الثغرات</Link></Button>
+          <Button asChild className="w-full h-6 bg-primary hover:bg-white text-black font-black uppercase text-[6px] rounded-sm shadow-md transition-all border border-black/20 italic"><Link href="/quantum-spine"><Wind className="size-2 mr-1" /> تنشيط الروابط الكمية</Link></Button>
         </div>
       </div>
     </>
