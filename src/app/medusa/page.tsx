@@ -84,8 +84,8 @@ export default function MedusaPage() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ 
-              type: 'smart_route', 
-              command: `medusa ${mode === 'Full-DNA' ? 'scan' : 'poison'} ${repoUrl}`,
+              type: 'medusa_action', 
+              action: mode === 'Full-DNA' ? 'scan' : 'poison',
               target: repoUrl 
           })
       });
@@ -110,7 +110,7 @@ export default function MedusaPage() {
         
         <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
            <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-glow relative group shrink-0 rounded-[3rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
-              <Eye className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 animate-neural gold-glow" />
+              <Bug className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 animate-neural gold-glow" />
               <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
            </div>
            <div className="flex-1">
@@ -265,10 +265,4 @@ export default function MedusaPage() {
       </main>
     </div>
   )
-}
-
-function XIcon({className}: {className?: string}) {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-    )
 }
