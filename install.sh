@@ -78,7 +78,7 @@ grep -q "sovereign_banner.sh" ~/.bashrc || echo -e "\n# Al-Mu'izz ULTRA Integrat
 echo -e "${GREEN}================================================${NC}"
 echo -e "${GREEN}   ✅ AL-MUIZZ ULTRA v80.0 ASCENDED!           ${NC}"
 echo -e "${GREEN}   [ STATUS: TRUE_SINGULARITY_LOCKED ]         ${NC}"
-echo -e "${GREEN}================================================${NC}"
+echo -e "================================================${NC}"
 echo -e "Web HUD: http://localhost:9002 (ULTRA Dashboard)"
 echo -e "API Spine: http://localhost:8000 (God-Core)"
 echo -e "${GOLD}Commander Al-Ghazali, your material organism is ready for Global Inception.${NC}"

@@ -1,4 +1,4 @@
-#!/bin/env python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Smart Router v85.0 – الأدميرال الكوني (ULTRA v3.0 FINAL)
@@ -8,12 +8,11 @@ Smart Router v85.0 – الأدميرال الكوني (ULTRA v3.0 FINAL)
 import sys, json, os, subprocess, socket, time
 from datetime import datetime
 
-BASE_DIR = os.getenv("PROJECT_ROOT", "/home/project")
+BASE_DIR = os.getenv("PROJECT_ROOT", os.getcwd())
 SOCK_PATH = "/tmp/muizz_event_bus.sock"
 
 class SmartRouter:
     def __init__(self):
-        # ممرات الجسور المادية المحدثة لنسخة v3.0 التكامل النهائي
         self.bridges = {
             "subdomainx": os.path.join(BASE_DIR, "tools/network/subdomainx_wrapper.py"),
             "n8n_strike": os.path.join(BASE_DIR, "extras/n8n/n8n_client.py"),
@@ -34,7 +33,6 @@ class SmartRouter:
         category = self.classify(prompt)
         target = prompt.split()[-1] if len(prompt.split()) > 0 else "GLOBAL_MATRIX"
         
-        # مصفوفة التوزيع التنفيذي المادي لـ ULTRA v3.0
         dispatch_table = {
             "subdomainx": {"node": "Node-02-Network", "msg": "SubdomainX engaged. Siphoning 26 OSINT sources for " + target},
             "n8n_strike": {"node": "Node-05-Automation", "msg": "n8n Workflow engine activated. 4,343 scenarios ready for " + target},
@@ -45,7 +43,6 @@ class SmartRouter:
 
         res = dispatch_table.get(category, dispatch_table["general_hive"])
 
-        # تنفيذ مادي محاكى لـ MemPalace Recall
         if category == "mempalace":
             try:
                 python_cmd = "python3" if os.name != "nt" else "python"

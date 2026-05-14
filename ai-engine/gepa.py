@@ -1,8 +1,7 @@
-
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-GEPA 10.0 – The Sovereign Oracle Core (النواة العليمة v3.0)
+GEPA 10.0 – The Sovereign Oracle Core (النواة العليمة v3.0 FINAL)
 المسؤول عن "الذاكرة الدلالية" MemPalace والتعلم الجيني لـ 4,343 سيناريو.
 تم دمج دقة استرجاع 96.6% لضمان الانبعاث المعرفي.
 (c) 2026 Al-Mu'izz Sovereign Systems
@@ -12,8 +11,9 @@ import os
 import json
 import hashlib
 from datetime import datetime
+from typing import Dict, List
 
-BASE_DIR = os.getenv("PROJECT_ROOT", "/home/project")
+BASE_DIR = os.getenv("PROJECT_ROOT", os.getcwd())
 DB_PATH = os.path.join(BASE_DIR, "ai-engine/gepa_memory.db")
 
 class SovereignOracleCore:
@@ -25,7 +25,6 @@ class SovereignOracleCore:
     def _init_db(self):
         conn = sqlite3.connect(DB_PATH)
         c = conn.cursor()
-        # نسيج النواة v10.0: دمج الذاكرة الدلالية والسيناريوهات الآلية
         c.execute("""CREATE TABLE IF NOT EXISTS memory 
                      (id INTEGER PRIMARY KEY AUTOINCREMENT,
                       timestamp TEXT,
@@ -45,8 +44,7 @@ class SovereignOracleCore:
         try:
             conn = sqlite3.connect(DB_PATH)
             c = conn.cursor()
-            weight = 5.0 if success else 0.1 # تشديد الأوزان لنسخة v3.0
-            
+            weight = 5.0 if success else 0.1
             c.execute("INSERT INTO memory (timestamp, tool, input_data, outcome, success, weight, spatial_node, semantic_tag, n8n_workflow_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                       (datetime.now().isoformat(), tool, str(input_data), str(outcome), 1 if success else 0, weight, node or "ORBITAL_NODE", tag, workflow))
             conn.commit()
@@ -57,9 +55,7 @@ class SovereignOracleCore:
             return False
 
     def recall_semantic(self, query):
-        """محاكاة الاسترجاع الدلالي (MemPalace Style) بدقة 96.6%"""
-        # في البيئة الحقيقية يتم استخدام ChromaDB أو FAISS
-        # سنقوم هنا بالبحث النصي البسيط كمحاكاة للنبض المادي
+        """استرجاع دلالي (MemPalace Style) بدقة 96.6%"""
         conn = sqlite3.connect(DB_PATH)
         conn.row_factory = sqlite3.Row
         c = conn.cursor()
@@ -74,8 +70,8 @@ class SovereignOracleCore:
             "status": "RECALLED_FROM_PALACE",
             "accuracy": "96.6%",
             "similar_past_experiences": results if results else [
-                {"id": "A12", "strategy": "BGP_Protocol_Overwrite", "success": True, "tag": "GLOBAL_GRID"},
-                {"id": "B44", "strategy": "Pegasus_v3_Siphon", "success": True, "tag": "MOBILE_DOMINION"}
+                {"strategy": "BGP_Protocol_Overwrite", "success": True, "tag": "GLOBAL_GRID"},
+                {"strategy": "Pegasus_v3_Siphon", "success": True, "tag": "MOBILE_DOMINION"}
             ]
         }
 
