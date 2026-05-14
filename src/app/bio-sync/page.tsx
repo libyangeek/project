@@ -235,6 +235,12 @@ export default function BioSyncPage() {
               </div>
            </Card>
         </div>
+        
+        <div className="mt-auto relative z-10 flex flex-col md:flex-row justify-center items-center gap-24 md:gap-64 opacity-45 text-[24px] md:text-[45px] font-black uppercase tracking-[6em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-40">
+            <span>AL-MUIZZ SATELLITE MASTER v90.0</span>
+            <div className="size-16 rounded-full bg-blue-500 animate-pulse shadow-[0_0_150px_rgba(37,99,235,1)]" />
+            <span>ORBITAL_REALITY_OVERWRITE_2026</span>
+        </div>
       </main>
     </div>
   )

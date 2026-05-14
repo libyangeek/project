@@ -180,7 +180,7 @@ export default function SatelliteOverlordPage() {
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
-                            <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[5rem] shadow-9xl relative group/vault overflow-hidden h-full flex flex-col">
+                            <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[5rem] shadow-9xl relative group/vault overflow-hidden h-full flex flex-col text-right">
                                 <h5 className="text-4xl font-black text-blue-400 uppercase tracking-[1.5em] mb-16 border-b-8 border-blue-500/20 pb-12 flex items-center gap-12 gold-glow justify-end">Uplink DNA <Globe className="size-20 animate-neural" /></h5>
                                 <div className="bg-black/80 p-12 rounded-[4rem] border-4 border-blue-500/10 font-code text-2xl md:text-5xl text-blue-400 overflow-x-auto whitespace-pre shadow-inner text-left flex-1">
                                     <pre className="whitespace-pre-wrap">{JSON.stringify(result, null, 2)}</pre>

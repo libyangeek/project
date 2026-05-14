@@ -62,11 +62,6 @@ const SovereignChart = dynamic(() => import('recharts').then(mod => {
   };
 }), { ssr: false, loading: () => <div className="h-full flex items-center justify-center"><Loader2 className="size-12 animate-spin text-primary/20" /></div> });
 
-/**
- * @fileOverview العرش الأبدي v90.0 - THE ETERNAL THRONE: MASTER NUCLEUS
- * الواجهة المركزية التي تجسد العمود الفقري العصبي والالتحام المادي لعام 2026.
- * المالك الوحيد: المعتصم بالله إدريس الغزالي
- */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
@@ -166,7 +161,7 @@ export default function DashboardPage() {
                   </div>
                   <div className="text-6xl md:text-[9rem] font-black italic gold-glow uppercase tracking-tighter relative z-10 leading-none">{s.value}</div>
                   <div className="text-2xl text-muted-foreground font-bold uppercase tracking-[0.6em] mt-10 italic relative z-10">{s.label}</div>
-                  <div className="absolute -bottom-10 -left-10 p-12 opacity-[0.03] group-hover:opacity-[0.08] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-48 text-primary" /></div>
+                  <div className="absolute -bottom-10 -right-10 p-12 opacity-[0.03] group-hover:opacity-[0.08] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-48 text-primary" /></div>
                </Card>
              </Link>
            ))}
