@@ -11,7 +11,6 @@ import {
   Baby, 
   Smartphone, 
   Database, 
-  ShieldX, 
   Activity,
   Menu,
   X,
@@ -43,24 +42,21 @@ import {
   ShieldAlert,
   Flame,
   Monitor,
-  Sparkles,
   Cloud,
   Crown,
   Fingerprint,
   Dna,
-  Shield,
   RotateCw,
   Rocket,
-  Castle,
-  Box,
-  Share2,
-  Bug,
   Cylinder,
   Sprout,
   Hammer,
   Apple,
   Satellite,
-  HeartPulse
+  HeartPulse,
+  Signal,
+  TowerControl,
+  Share2
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"

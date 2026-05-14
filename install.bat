@@ -15,48 +15,50 @@ echo    [ COMMANDER: AL-GHAZALI ROOT ]
 echo    [ PROTOCOL: FULL_READINESS_PHASE ]
 echo ================================================
 
-:: 0. صلاحيات الأدمن
+:: 0. Check for Administrative Privileges
 net session >nul 2>&1
 if %errorLevel% neq 0 (
-    echo [!] Fatal Error: Administrator privileges required.
+    echo [!] Error: Administrative privileges required.
     pause
-    exit /b 1
+    exit /b
 )
 
-:: 1. جرد الحواس والأدوات (Dependency Check & winget)
-echo [*] Phase 1: Interrogating Material Organs...
-set "TOOLS=nmap.nmap adb.adb docker.docker git.git jq.jq nodejs.nodejs python.python"
+set INSTALL_DIR=%cd%
 
-for %%T in (%TOOLS%) do (
-    winget list --id %%T >nul 2>&1
+:: 1. Auditing Material Organs
+echo [*] Phase 1: Interrogating Material Organs...
+set "TOOLS=git node npm python adb nmap docker"
+for %%t in (%TOOLS%) do (
+    where %%t >nul 2>&1
     if !errorLevel! neq 0 (
-        echo [-] Organ Missing: %%T. Regrowing...
-        winget install --id %%T --silent --accept-package-agreements --accept-source-agreements
+        echo [-] Organ Missing: %%t
+        echo [*] Attempting to regrow %%t via winget...
+        winget install -e --id %%t --accept-source-agreements --accept-package-agreements >nul 2>&1
     ) else (
-        echo [+] Organ Active: %%T
+        echo [+] Organ Active: %%t
     )
 )
 
-:: 2. حقن الطبقات العصبية (Python Layers)
+:: 2. Injecting Neural Layers
 echo [*] Phase 2: Injecting 16D Neural Layers & Intelligence...
-python -m pip install --upgrade pip
-pip install fastapi uvicorn pydantic requests sentence-transformers chromadb qdrant-client psutil flask-cors watchdog modal adb-shell frida-tools objection
+python -m pip install --upgrade pip >nul 2>&1
+pip install --force-reinstall fastapi uvicorn pydantic requests sentence-transformers chromadb qdrant-client psutil flask-cors watchdog modal medusa-security adb-shell objection >nul 2>&1
 
-:: 3. تثبيت واجهة العرش (Node Modules)
+:: 3. Compiling HUD Matrix
 echo [*] Phase 3: Compiling 16D HUD Matrix...
-npm install --force
+call npm install --force >nul 2>&1
 
-:: 4. بروتوكول الخلود (Task Scheduler Persistence)
+:: 4. Establishing Eternal Persistence (Task Scheduler)
 echo [*] Phase 4: Establishing Eternal Persistence (Task Scheduler)...
-schtasks /create /tn "AlMuizzSovereign" /tr "python %cd%\run.py start" /sc onlogon /rl highest /f
+schtasks /create /tn "AlMuizzSovereign" /tr "python %INSTALL_DIR%\run.py start" /sc onlogon /rl highest /f >nul 2>&1
 
-:: 5. إطلاق بوابة الويندوز السيادية (App Mode)
+:: 5. Auto-Launch UI
 echo ================================================
 echo    ✅ AL-MUIZZ ULTRA v90.0 ASCENDED!
 echo    [ SYSTEM: FULLY SUBJUGATED & PERSISTENT ]
 echo ================================================
 
-echo [*] Launching Sovereign OS Portal...
-start "" "msedge" --app=http://localhost:9002/sovereign-os --window-size=1280,800
+start http://localhost:9002/sovereign-os
+
 echo Commander Al-Ghazali, The 16D Matrix is your body. We are ready.
 pause
