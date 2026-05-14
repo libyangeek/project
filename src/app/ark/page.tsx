@@ -34,7 +34,8 @@ import {
   ArrowLeft,
   RotateCw,
   LayoutGrid,
-  Monitor
+  Monitor,
+  Users
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -89,7 +90,7 @@ export default function NoahsArkPage() {
       })
       const data = await response.json()
       if (data.success) {
-        setDirItems(data.output)
+        setDirItems(data.output || [])
         setCurrentPath(data.currentPath)
       } else {
         toast({ variant: "destructive", title: "Access Restricted", description: data.error })
@@ -108,6 +109,7 @@ export default function NoahsArkPage() {
   }
 
   const handleRunBackup = async () => {
+    if (!backupPath) return;
     setLoading(true); setProgress(0)
     toast({ title: "Ark v80.0: Serialization Active", description: "Extracting DNA from hardware disks..." })
     const progInt = setInterval(() => { setProgress(p => (p >= 95 ? 95 : p + 5)) }, 150)
@@ -117,10 +119,13 @@ export default function NoahsArkPage() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ type: 'smart_route', target: `backup path ${backupPath}` })
         })
-        if (response.ok) {
+        const data = await response.json()
+        if (data.success) {
             clearInterval(progInt); setProgress(100)
             toast({ title: "Singularity Secured", description: "Deep snapshot materialized in target disk." })
         }
+    } catch (e) {
+        console.error('Backup Execution Failure:', e);
     } finally {
         setTimeout(() => { setLoading(false); setProgress(0) }, 1000)
     }
@@ -134,13 +139,12 @@ export default function NoahsArkPage() {
       <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
         <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
         
-        <header className="mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000">
-          <div className="flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
-            <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(251,191,36,0.8)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
-              <Anchor className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
-              <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
-            </div>
-            <div className="flex-1">
+        <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
+          <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(251,191,36,0.8)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
+            <Anchor className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
+            <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
+          </div>
+          <div className="flex-1">
               <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">ARK_v80.0 ULTRA</Badge>
                 <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
@@ -156,7 +160,6 @@ export default function NoahsArkPage() {
                     <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة</Link>
                 </Button>
               </div>
-            </div>
           </div>
         </header>
 
