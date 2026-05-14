@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -56,7 +55,8 @@ import {
   Share2,
   Bug,
   Eye as VisionIcon,
-  Cylinder
+  Cylinder,
+  Sprout
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -66,6 +66,7 @@ import Link from "next/link"
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
   { name: "العمود الفقري الكمي", icon: Wind, href: "/quantum-spine", knot: 85 },
+  { name: "مشتل التطور", icon: Sprout, href: "/nursery", knot: 25 },
   { name: "الرؤية المطلقة", icon: VisionIcon, href: "/perception", knot: 80 },
   { name: "مزرعة الأفعى (Fleet)", icon: Cylinder, href: "/serpent-farm", knot: 81 },
   { name: "الارتباط الماسي (Hermes)", icon: Share2, href: "/hermes", knot: 79 },
@@ -118,7 +119,6 @@ export function SidebarNav() {
       <div className={cn("flex flex-col h-full bg-black border-l-[4px] border-primary/60 w-64 lg:w-72 fixed right-0 top-0 z-[400] overflow-hidden shadow-2xl transition-transform duration-500 ease-in-out font-code backdrop-blur-3xl", !isOpen && "translate-x-full lg:translate-x-0")}>
         <div className="p-4 border-b-2 border-primary/20 flex flex-col items-center gap-3 bg-black relative group shrink-0">
           
-          {/* 7D Nucleus Sidebar Logo - Shrunk v85.1 */}
           <div className="relative size-16 flex items-center justify-center shrink-0 rounded-xl group-hover:rotate-12 transition-all">
              <div className="size-8 bg-black border-2 border-primary flex items-center justify-center shadow-[0_0_20px_rgba(251,191,36,0.4)] relative rounded-lg z-30 animate-neural">
                 <Crown className="size-4 text-primary gold-glow" />
@@ -135,18 +135,18 @@ export function SidebarNav() {
 
           <div className="text-center relative z-10">
             <h1 className="text-lg font-headline font-bold text-white tracking-[0.3em] leading-none gold-glow">AL-MUIZZ</h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[8px] font-black tracking-[0.3em] mt-2 py-0.5 px-4 uppercase italic animate-pulse shadow-9xl">v85.0 7D_MATRIX</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[8px] font-black tracking-[0.3em] mt-2 py-0.5 px-4 uppercase italic animate-pulse shadow-9xl">v85.1 7D_MATRIX</Badge>
           </div>
         </div>
         
-        <div className="flex-1 px-4 py-4 space-y-1 overflow-y-auto scrollbar-hide bg-black/98 relative border-t-2 border-white/5">
+        <div className="flex-1 px-4 py-4 space-y-1 overflow-y-auto scrollbar-hide bg-black/98 relative border-t-2 border-white/5 text-right">
           {navItems.map((item) => {
             const isActive = pathname === item.href
             const Icon = item.icon || Search;
             return (
               <Link key={item.name} href={item.href} className={cn("flex items-center gap-5 px-5 py-2.5 transition-all duration-500 group relative border-r-4 rounded-l-lg mb-0.5", isActive ? "bg-primary/15 border-primary text-white scale-[1.02]" : "text-muted-foreground border-transparent hover:bg-white/5 hover:text-white")} onClick={() => setIsOpen(false)}>
                 <Icon className={cn("size-4 transition-all", isActive ? "text-primary gold-glow" : "group-hover:text-primary")} />
-                <span className="text-[9px] font-black tracking-widest uppercase italic truncate flex-1 text-right">{item.name}</span>
+                <span className="text-[9px] font-black tracking-widest uppercase italic truncate flex-1">{item.name}</span>
               </Link>
             )
           })}
