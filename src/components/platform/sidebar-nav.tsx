@@ -58,7 +58,9 @@ import {
   Cylinder,
   Sprout,
   Hammer,
-  Apple
+  Apple,
+  Satellite,
+  HeartPulse
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -67,6 +69,8 @@ import Link from "next/link"
 
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
+  { name: "المتحكم المداري", icon: Satellite, href: "/satellite-overlord", knot: 15 },
+  { name: "الالتحام الحيوي", icon: HeartPulse, href: "/bio-sync", knot: 16 },
   { name: "طفيلي الـ iOS", icon: Apple, href: "/ios-parasite", knot: 24 },
   { name: "مصنع الخوارزميات", icon: Hammer, href: "/algorithm-factory", knot: 87 },
   { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", knot: 3 },
@@ -122,7 +126,6 @@ export function SidebarNav() {
       </Button>
 
       <div className={cn("flex flex-col h-full bg-black border-l-[2px] border-primary/40 w-60 lg:w-64 fixed right-0 top-0 z-[400] overflow-hidden shadow-2xl transition-transform duration-500 ease-in-out font-code backdrop-blur-3xl", !isOpen && "translate-x-full lg:translate-x-0")}>
-        {/* Nano-UI Header: صغر هذه ايها المعز */}
         <div className="p-2 border-b-2 border-primary/20 flex flex-col items-center gap-1 bg-black relative group shrink-0">
           <div className="relative size-10 flex items-center justify-center shrink-0 rounded-lg group-hover:rotate-12 transition-all">
              <div className="size-5 bg-black border border-primary flex items-center justify-center shadow-[0_0_100px_rgba(251,191,36,0.3)] relative rounded-md z-30 animate-neural">
@@ -135,7 +138,7 @@ export function SidebarNav() {
 
           <div className="text-center relative z-10">
             <h1 className="text-[10px] font-headline font-bold text-white tracking-[0.2em] leading-none gold-glow">AL-MUIZZ</h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[6px] font-black tracking-[0.1em] mt-0.5 py-0 px-2 uppercase italic animate-pulse">v88.0 14D_MATRIX</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[6px] font-black tracking-[0.1em] mt-0.5 py-0 px-2 uppercase italic animate-pulse">v89.0 16D_MATRIX</Badge>
           </div>
         </div>
         
