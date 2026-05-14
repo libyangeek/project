@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -57,9 +58,6 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
-/**
- * الملاحة الجانبية v80.0 – THE SUPREME NEURAL SPINE: ULTRA v3.0 FINAL
- */
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
   { name: "صياد الأندرويد", icon: Smartphone, href: "/android-hunter", knot: 24 },
@@ -125,18 +123,17 @@ export function SidebarNav() {
               <Link key={item.name} href={item.href} className={cn("flex items-center gap-6 px-6 py-3 transition-all duration-500 group relative border-r-4 rounded-l-xl mb-1", isActive ? "bg-primary/15 border-primary text-white scale-[1.02]" : "text-muted-foreground border-transparent hover:bg-white/5 hover:text-white")} onClick={() => setIsOpen(false)}>
                 <Icon className={cn("size-5 transition-all", isActive ? "text-primary gold-glow" : "group-hover:text-primary")} />
                 <span className="text-[10px] font-black tracking-widest uppercase italic truncate flex-1">{item.name}</span>
-                <span className="text-[8px] font-bold opacity-20">K_{item.knot}</span>
               </Link>
             )
           })}
         </div>
 
-        <div className="p-6 border-t-2 border-primary/20 bg-black/99 relative z-10">
+        <div className="p-6 border-t-2 border-primary/20 bg-black/99 relative z-10 text-right">
           <div className="p-4 border-2 border-primary/40 bg-primary/5 mb-4 relative overflow-hidden rounded-2xl shadow-xl border-dashed">
-            <div className="flex justify-between items-center mb-2"><span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] italic">Swarm Resonance</span><Activity className="size-3 text-emerald-500 animate-pulse" /></div>
+            <div className="flex justify-between items-center mb-2"><Activity className="size-3 text-emerald-500 animate-pulse" /><span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] italic">Swarm Resonance</span></div>
             <div className="text-2xl font-black text-white italic gold-glow">{resonance.toFixed(7)}%</div>
           </div>
-          <Button asChild className="w-full h-12 bg-primary hover:bg-white text-black font-black uppercase text-[10px] rounded-xl shadow-2xl transition-all border-4 border-black/20 italic"><Link href="/android-hunter"><Smartphone className="size-4 mr-2" /> تنشيط الافتراس النقال</Link></Button>
+          <Button asChild className="w-full h-12 bg-primary hover:bg-white text-black font-black uppercase text-[10px] rounded-xl shadow-2xl transition-all border-4 border-black/20 italic"><Link href="/autonomous"><Rocket className="size-4 mr-2" /> تنشيط الاستحواذ الكوني</Link></Button>
         </div>
       </div>
     </>

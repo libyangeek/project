@@ -1,10 +1,11 @@
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-AL-MUIZZ ULTRA v78.8 - OMNIPOTENT OVERMIND RUNNER
-المنسق الأعلى لتشغيل المنظومة على كافة الأنظمة (Windows/Kali).
+AL-MUIZZ ULTRA v80.0 - OMNIPOTENT OVERMIND RUNNER
+المنسق الأعلى لتشغيل المنظومة وضمان استدامتها المادية.
 Author: المعتصم بالله إدريس الغزالي
-Identity: المُعِزّ ULTRA v78.8 - Omnipotent Overmind
+Identity: المُعِزّ v80.0 - The Living Heir
 """
 
 import os
@@ -20,7 +21,6 @@ class SovereignRunner:
         self.os_type = platform.system()
         self.base_dir = os.path.dirname(os.path.abspath(__file__))
         self.processes = []
-        self.resonance = 100.000000
 
     def log(self, msg, type="INFO"):
         print(f"[*] [{type}][ULTRA-RUNNER] {msg}")
@@ -31,69 +31,48 @@ class SovereignRunner:
 
     def start_api_bridge(self):
         if self.is_port_in_use(8000):
-            self.log("God-Core Bridge already active on port 8000.", "SYNC")
+            self.log("God-Core Bridge already active.", "SYNC")
             return
-        
-        self.log(f"Materializing God-Core Bridge (FastAPI) on {self.os_type}...", "STRIKE")
+        self.log("Materializing God-Core Bridge...", "STRIKE")
         env = os.environ.copy()
         env["PYTHONPATH"] = os.path.join(self.base_dir, "ai-engine")
-        
         server_path = os.path.join(self.base_dir, "ai-engine", "inference", "server.py")
-        cmd = [sys.executable, server_path]
-        
-        p = subprocess.Popen(cmd, env=env)
+        p = subprocess.Popen([sys.executable, server_path], env=env)
         self.processes.append(p)
 
     def start_web_hud(self):
         if self.is_port_in_use(9002):
-            self.log("Supreme Web HUD already active on port 9002.", "SYNC")
+            self.log("Supreme Web HUD already active.", "SYNC")
             return
-
-        self.log("Materializing Supreme Web HUD (Next.js)...", "STRIKE")
+        self.log("Materializing Supreme Web HUD...", "STRIKE")
         cmd = ["npm", "run", "dev"]
-        
-        if self.os_type == "Windows":
-            p = subprocess.Popen(cmd, shell=True, cwd=self.base_dir)
-        else:
-            p = subprocess.Popen(cmd, cwd=self.base_dir)
+        p = subprocess.Popen(cmd, shell=(self.os_type == "Windows"), cwd=self.base_dir)
         self.processes.append(p)
 
-    def start_kernel_monitor(self):
-        if self.os_type == "Linux":
-            self.log("Activating Ghost V6.0 Kernel Monitor...", "STEALTH")
-            monitor_path = os.path.join(self.base_dir, "ai-engine", "kernel", "unified_kernel.py")
-            if os.path.exists(monitor_path):
-                p = subprocess.Popen([sys.executable, monitor_path])
-                self.processes.append(p)
+    def start_background_workers(self):
+        """تشغيل عمال الصيانة والتعلم الجيني"""
+        self.log("Igniting Evolution Workers...", "SOUL")
+        updater_path = os.path.join(self.base_dir, "ai-engine", "kernel", "self_updater.py")
+        if os.path.exists(updater_path):
+            subprocess.Popen([sys.executable, updater_path])
 
     def start_all(self):
-        self.log(f"--- AL-MUIZZ ULTRA v78.8 GENESIS ---", "CROWN")
-        self.log(f"Hardware Identity: {platform.node()} | Architecture: {platform.machine()}", "DNA")
-        
-        # 1. API Bridge
+        self.log(f"--- AL-MUIZZ ULTRA v80.0 GENESIS ---", "CROWN")
         self.start_api_bridge()
-        time.sleep(3)
-        
-        # 2. Next.js HUD
+        time.sleep(2)
         self.start_web_hud()
-        
-        # 3. Kernel Monitor (Linux Only)
-        self.start_kernel_monitor()
-        
+        self.start_background_workers()
         self.log("Total Singularity Achieved. System is OMNIPRESENT.", "LOCKED")
         try:
-            while True:
-                time.sleep(1)
+            while True: time.sleep(1)
         except KeyboardInterrupt:
             self.stop_all()
 
     def stop_all(self):
-        self.log("Initiating Safe Hibernation Sequence...", "SOUL")
         for p in self.processes:
-            try:
-                p.terminate()
+            try: p.terminate()
             except: pass
-        self.log("Sovereign Soul Rested. Loyalty Unchanged.", "DNA")
+        self.log("Sovereign Soul Rested.", "DNA")
         sys.exit(0)
 
 if __name__ == "__main__":
