@@ -29,7 +29,8 @@ import {
   LayoutGrid,
   Bot,
   TrendingUp,
-  ChevronRight
+  ChevronRight,
+  Atom
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -74,6 +75,7 @@ export default function NurseryPage() {
   }, [])
 
   const handleEvolution = async () => {
+    if (!activeProject) return;
     setLoading(true); setEvolutionProgress(0); setResult(null);
     toast({ title: "Genetic Incubation Started", description: `Evolving ${activeProject} into a Sovereign Weapon...` })
     
@@ -144,7 +146,7 @@ export default function NurseryPage() {
               <Card className="bg-black/90 border-8 border-emerald-500/20 rounded-[4rem] p-12 shadow-9xl group overflow-hidden text-center backdrop-blur-3xl">
                  <CardHeader className="p-0 mb-10 border-b-4 border-emerald-500/10 pb-10 bg-emerald-950/20 rounded-t-[3.5rem] px-10 py-6 text-center">
                     <CardTitle className="text-2xl md:text-4xl text-emerald-400 flex items-center justify-center gap-10 font-black uppercase italic gold-glow leading-none">
-                       <Database className="size-12 animate-neural" /> Seed Projects
+                       <Target className="size-12 animate-neural" /> Seed Projects
                     </CardTitle>
                  </CardHeader>
                  <CardContent className="p-0 space-y-8 text-right">
@@ -191,8 +193,8 @@ export default function NurseryPage() {
               </Card>
            </div>
 
-           <Card className="xl:col-span-3 bg-black/90 border-[12px] border-emerald-500/10 rounded-[7rem] p-16 shadow-9xl flex flex-col group min-h-[1100px] backdrop-blur-5xl">
-              <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-emerald-950/10 rounded-t-[5rem] px-16 py-10 flex flex-row justify-between items-center text-right">
+           <Card className="xl:col-span-3 bg-black/90 border-[12px] border-emerald-500/10 rounded-[7rem] p-16 shadow-9xl flex flex-col group overflow-hidden relative min-h-[1100px] backdrop-blur-5xl">
+              <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-emerald-950/20 rounded-t-[5rem] px-16 py-10 flex flex-row justify-between items-center text-right">
                  <Badge className="bg-emerald-600/30 text-emerald-400 border-[10px] border-emerald-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic order-last md:order-none">EVOLUTION_LOCKED</Badge>
                  <CardTitle className="text-5xl md:text-[12rem] text-white flex items-center gap-16 font-black uppercase italic gold-glow px-10 leading-none">
                     Growth Feed <RotateCw className="size-24 md:size-48 text-emerald-400 animate-pulse" />
@@ -217,18 +219,18 @@ export default function NurseryPage() {
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-                            <Card className="bg-black/95 border-8 border-white/5 p-12 md:p-16 rounded-[4rem] shadow-9xl relative group/vault overflow-hidden h-full flex flex-col">
+                            <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[4rem] shadow-9xl relative group/vault overflow-hidden h-full flex flex-col">
                                 <h5 className="text-3xl font-black text-emerald-400 uppercase tracking-[1.5em] mb-12 border-b-8 border-emerald-500/20 pb-10 flex items-center gap-12 gold-glow justify-end">Training Logic <Binary className="size-14 animate-neural" /></h5>
-                                <div className="text-xl md:text-3xl text-gray-300 italic font-black leading-snug drop-shadow-3xl flex-1">
-                                    "{result.trainingLogic}"
+                                <div className="text-xl md:text-3xl text-gray-300 italic font-black leading-snug drop-shadow-3xl flex-1 text-left whitespace-pre-wrap font-mono">
+                                    {result.trainingLogic}
                                 </div>
                             </Card>
-                            <Card className="bg-black/95 border-8 border-white/5 p-12 md:p-16 rounded-[4rem] shadow-9xl space-y-12 relative overflow-hidden h-full flex flex-col">
-                                <h5 className="text-3xl font-black text-emerald-500 uppercase tracking-[1.5em] mb-10 border-b-8 border-emerald-500/20 pb-10 flex items-center gap-12 justify-end">Model DNA Strengths <History className="size-14" /></h5>
+                            <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[4rem] shadow-9xl space-y-12 relative overflow-hidden h-full flex flex-col">
+                                <h5 className="text-3xl font-black text-blue-400 uppercase tracking-[1.5em] mb-10 border-b-8 border-blue-500/20 pb-10 flex items-center gap-12 justify-end">Model DNA Strengths <History className="size-14" /></h5>
                                 <div className="space-y-8 flex-1">
                                     {result.modelStrengths?.map((s: string, idx: number) => (
-                                        <div key={idx} className="p-8 rounded-[2rem] bg-white/5 border-4 border-emerald-500/30 hover:border-emerald-500 transition-all text-right shadow-inner group/dna">
-                                            <span className="text-xl md:text-2xl font-black text-white italic group-hover/dna:text-emerald-400">"{" >>> "}{s}"</span>
+                                        <div key={idx} className="p-8 rounded-[2rem] bg-white/5 border-4 border-blue-500/30 hover:border-blue-400 transition-all text-right shadow-inner group/dna">
+                                            <span className="text-xl md:text-2xl font-black text-white italic group-hover/dna:text-blue-400">"{" >>> "}{s}"</span>
                                         </div>
                                     ))}
                                 </div>
@@ -254,7 +256,6 @@ export default function NurseryPage() {
                         <div className="absolute -inset-40 border-[80px] border-dashed border-emerald-500/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>
                       <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Nursery Idle</h3>
-                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">The Evolutionary Nursery is ready to transform data science projects into lethal intelligence weapons.</p>
                    </div>
                  )}
               </CardContent>
