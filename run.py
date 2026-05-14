@@ -36,22 +36,25 @@ class SovereignRunner:
 
     def check_hardware_limits(self):
         """يحلل العوائق المادية ويحدد نمط الإقلاع"""
-        ram = psutil.virtual_memory().total / (1024**3) # GB
-        cpu_cores = psutil.cpu_count()
-        disk_free = psutil.disk_usage('/').free / (1024**3) # GB
-        
-        self.log(f"Hardware Audit: {cpu_cores} Cores | {ram:.2f}GB RAM | {disk_free:.2f}GB Disk Free", "SYSTEM")
-        
-        if ram < 4 or disk_free < 2:
-            self.log("Limited resources detected. Engaging Adaptive Power Mode.", "WARNING")
-            return "Adaptive"
+        try:
+            ram = psutil.virtual_memory().total / (1024**3) # GB
+            cpu_cores = psutil.cpu_count()
+            disk_free = psutil.disk_usage('/').free / (1024**3) # GB
+            self.log(f"Hardware Audit: {cpu_cores} Cores | {ram:.2f}GB RAM | {disk_free:.2f}GB Disk Free", "SYSTEM")
+            if ram < 4 or disk_free < 2:
+                self.log("Limited resources detected. Engaging Adaptive Power Mode.", "WARNING")
+                return "Adaptive"
+        except:
+            pass
         return "Omnipotent"
 
     def verify_organs(self):
         """يتحقق من جاهزية الأدوات المطلوبة قبل بدء النبض"""
         missing = []
-        for tool in ["nmap", "adb", "docker", "npm"]:
-            if subprocess.run(["which", tool], capture_output=True).returncode != 0:
+        tools = ["nmap", "adb", "docker", "npm"]
+        for tool in tools:
+            check_cmd = "where" if self.os_type == "Windows" else "which"
+            if subprocess.run([check_cmd, tool], capture_output=True).returncode != 0:
                 missing.append(tool)
         
         if missing:
@@ -67,6 +70,12 @@ class SovereignRunner:
     def spawn_process(self, name, cmd, cwd=None, env=None):
         self.log(f"Materializing {name} node in {self.os_type} matrix...", "STRIKE")
         try:
+            # Hide console window on Windows
+            startupinfo = None
+            if self.os_type == "Windows":
+                startupinfo = subprocess.STARTUPINFO()
+                startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            
             p = subprocess.Popen(
                 cmd, 
                 shell=(self.os_type == "Windows"), 
@@ -75,7 +84,8 @@ class SovereignRunner:
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 text=True,
-                bufsize=1
+                bufsize=1,
+                startupinfo=startupinfo
             )
             self.processes[name] = {"process": p, "cmd": cmd, "cwd": cwd, "env": env, "start_time": time.time()}
             threading.Thread(target=self._monitor_output, args=(name, p), daemon=True).start()
@@ -85,17 +95,14 @@ class SovereignRunner:
             return False
 
     def _monitor_output(self, name, process):
-        for line in iter(process.stdout.readline, ''):
-            if not self.running: break
-            if "Error" in line or "Exception" in line:
-                self.log(f"[{name}] {line.strip()}", "DEBUG")
+        if process.stdout:
+            for line in iter(process.stdout.readline, ''):
+                if not self.running: break
+                if "Error" in line or "Exception" in line:
+                    self.log(f"[{name}] {line.strip()}", "DEBUG")
 
     def start_all(self):
         self.log(f"--- AL-MUIZZ 16D NUCLEUS v90.0 GENESIS ---", "CROWN")
-        if not self.verify_organs():
-            self.log("Attempting critical organ repair...", "REBIRTH")
-            # يمكن إضافة منطق إصلاح هنا إذا لزم الأمر
-
         mode = self.check_hardware_limits()
         
         # 1. API Bridge (Alpha God-Core)
@@ -138,9 +145,14 @@ class SovereignRunner:
 
 if __name__ == "__main__":
     runner = SovereignRunner()
-    def signal_handler(sig, frame): runner.stop_all()
-    signal.signal(signal.SIGINT, signal_handler)
-    signal.signal(signal.SIGTERM, signal_handler)
+    
+    def signal_handler(sig, frame): 
+        runner.stop_all()
+
+    if hasattr(signal, 'SIGINT'):
+        signal.signal(signal.SIGINT, signal_handler)
+    if hasattr(signal, 'SIGTERM'):
+        signal.signal(signal.SIGTERM, signal_handler)
 
     if len(sys.argv) > 1 and sys.argv[1] == "start":
         try: runner.start_all()
