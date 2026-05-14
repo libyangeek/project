@@ -66,12 +66,13 @@ import Link from "next/link"
 
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
+  { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", knot: 3 },
   { name: "محقق الظلال (Cairn)", icon: Search, href: "/cairn", knot: 9 },
   { name: "العمود الفقري الكمي", icon: Wind, href: "/quantum-spine", knot: 85 },
   { name: "مشتل التطور", icon: Sprout, href: "/nursery", knot: 25 },
   { name: "الرؤية المطلقة", icon: VisionIcon, href: "/perception", knot: 80 },
-  { name: "مزرعة الأفعى (Fleet)", icon: Cylinder, href: "/serpent-farm", knot: 81 },
-  { name: "الارتباط الماسي (Hermes)", icon: Share2, href: "/hermes", knot: 79 },
+  { name: "مزرعة الأساطيل", icon: Cylinder, href: "/serpent-farm", knot: 81 },
+  { name: "الارتباط الماسي", icon: Share2, href: "/hermes", knot: 79 },
   { name: "أتمتة السرب (n8n)", icon: Workflow, href: "/n8n", knot: 43 },
   { name: "الاستحواذ المستقل", icon: Rocket, href: "/autonomous", knot: 23 },
   { name: "عين ميدوسا (Git Scan)", icon: Bug, href: "/medusa", knot: 66 },
@@ -79,7 +80,6 @@ const navItems = [
   { name: "سطح مكتب السطوة", icon: Monitor, href: "/classic-hub", knot: 78 },
   { name: "الترسانة العظمى", icon: Library, href: "/arsenal", knot: 22 },
   { name: "سلسلة الإبادة", icon: Crosshair, href: "/kill-chain", knot: 2 },
-  { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", knot: 3 },
   { name: "إمبراطورية السرب", icon: Network, href: "/sessions", knot: 4 },
   { name: "المحقن الآلي", icon: Cpu, href: "/automation", knot: 5 },
   { name: "أعين الاستطلاع", icon: Eye, href: "/recon", knot: 6 },
@@ -123,10 +123,10 @@ export function SidebarNav() {
           
           <div className="relative size-12 flex items-center justify-center shrink-0 rounded-lg group-hover:rotate-12 transition-all">
              <div className="size-6 bg-black border border-primary flex items-center justify-center shadow-[0_0_100px_rgba(251,191,36,0.3)] relative rounded-md z-30 animate-neural">
-                <Crown className="size-3 text-primary gold-glow" />
+                <Radar className="size-3 text-primary gold-glow" />
              </div>
              <div className="absolute inset-0 z-20 animate-spin-slow" style={{ animationDuration: '10s' }}>
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-2 bg-black border border-red-600 rounded-sm flex items-center justify-center"><Flame className="size-1 text-red-600" /></div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-2 bg-black border border-primary rounded-sm flex items-center justify-center"><Crown className="size-1 text-primary" /></div>
                 <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 size-2 bg-black border border-blue-400 rounded-sm flex items-center justify-center"><VisionIcon className="size-1 text-blue-400" /></div>
              </div>
              <div className="absolute inset-0 z-10 animate-reverse-spin" style={{ animationDuration: '8s' }}>
@@ -156,10 +156,10 @@ export function SidebarNav() {
 
         <div className="p-2 border-t border-primary/20 bg-black/99 relative z-10 text-right shrink-0">
           <div className="p-2 border border-primary/40 bg-primary/5 mb-1 relative overflow-hidden rounded-md shadow-lg border-dashed">
-            <div className="flex justify-between items-center mb-0.5"><Activity className="size-1.5 text-emerald-500 animate-pulse" /><span className="text-[6px] font-black text-primary uppercase tracking-tighter italic">Quantum Resonance</span></div>
+            <div className="flex justify-between items-center mb-0.5"><Activity className="size-1.5 text-emerald-500 animate-pulse" /><span className="text-[6px] font-black text-primary uppercase tracking-tighter italic">Oracle Resonance</span></div>
             <div className="text-[10px] font-black text-white italic gold-glow">{resonance.toFixed(7)}%</div>
           </div>
-          <Button asChild className="w-full h-6 bg-primary hover:bg-white text-black font-black uppercase text-[6px] rounded-sm shadow-md transition-all border border-black/20 italic"><Link href="/quantum-spine"><Sparkles className="size-2 mr-1" /> تنشيط الالتحام السباعي</Link></Button>
+          <Button asChild className="w-full h-6 bg-primary hover:bg-white text-black font-black uppercase text-[6px] rounded-sm shadow-md transition-all border border-black/20 italic"><Link href="/vulnerabilities"><Radar className="size-2 mr-1" /> تنشيط عراف الثغرات</Link></Button>
         </div>
       </div>
     </>
