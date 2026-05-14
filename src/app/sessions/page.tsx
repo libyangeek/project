@@ -55,7 +55,8 @@ import Link from "next/link"
 /**
  * @fileOverview إمبراطورية السرب v90.0 - THE OMNIPOTENT HIVE: MATERIAL MESH
  * واجهة الاستنزاف الكلي والسيطرة المطلقة لليوم المجيد، 2026.
- * تم التحديث للنمط البرتقالي التكتيكي لعام 2026.
+ * النمط: برتقالي تكتيكي (Tactical Orange).
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function ShadowGridPage() {
   const [harvesting, setHarvesting] = React.useState(false)
@@ -149,7 +150,7 @@ export default function ShadowGridPage() {
                     </CardTitle>
                  </CardHeader>
                  <CardContent className="p-0 space-y-6 text-right">
-                    <div className="grid grid-cols-1 gap-6 mb-8 px-4">
+                    <div className="grid grid-cols-1 gap-6 mb-8 px-4 text-center">
                        <Button onClick={handleHarvestAll} disabled={harvesting} className="h-28 bg-orange-600 hover:bg-white text-white hover:text-black font-black uppercase tracking-[0.8em] rounded-[2rem] shadow-9xl border-4 border-black/30 active:scale-95 transition-all italic text-xl">
                           {harvesting ? <Loader2 className="size-8 animate-spin" /> : <Flame className="size-8 mr-4 animate-pulse" />} MASS_HARVEST_v90
                        </Button>
@@ -157,7 +158,7 @@ export default function ShadowGridPage() {
                     {isLoading ? (
                       <div className="py-40 flex flex-col items-center gap-12 opacity-30">
                         <Loader2 className="size-24 animate-spin text-orange-500" />
-                        <span className="text-xl font-black uppercase italic">Interrogating Mesh...</span>
+                        <span className="text-xl font-black uppercase italic text-center">Interrogating Mesh...</span>
                       </div>
                     ) : (
                       <div className="divide-y-4 divide-white/5 h-[600px] overflow-y-auto scrollbar-hide text-right">
@@ -208,7 +209,7 @@ export default function ShadowGridPage() {
                         <div className="absolute -inset-40 border-[80px] border-dashed border-orange-500/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>
                       <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Mesh Standby</h3>
-                      <p className="text-4xl md:text-8xl font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">Establishing universal Overlord link v90.0: PEGASUS + MATERIAL_GRID_SIPHON...</p>
+                      <p className="text-4xl md:text-8xl font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem] text-center">Establishing universal Overlord link v90.0: PEGASUS + MATERIAL_GRID_SIPHON...</p>
                    </div>
                  )}
               </CardContent>

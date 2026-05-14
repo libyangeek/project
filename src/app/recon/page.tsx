@@ -47,7 +47,8 @@ import Link from "next/link"
 /**
  * @fileOverview أعين الاستطلاع v90.0 - THE SUPREME RECON: NEURAL VISION
  * واجهة الاستخبارات الفطرية التي تصهر Claude-OSINT و Robin-Recon و MemPalace.
- * تم التحديث للنمط السيان الرقمي (Cyber Cyan) لعام 2026.
+ * النمط: سيان سيبراني (Cyber Cyan).
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function ReconPage() {
   const [target, setTarget] = React.useState("")
@@ -126,11 +127,11 @@ export default function ReconPage() {
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 relative z-10 pb-40 flex-1 text-right">
-          <div className="lg:col-span-1 space-y-10">
+          <div className="lg:col-span-1 space-y-10 text-center">
             <Card className="bg-black/90 border-8 border-cyan-500/20 rounded-[4rem] p-12 shadow-9xl group overflow-hidden text-center backdrop-blur-3xl">
               <CardHeader className="p-0 mb-10 border-b-4 border-cyan-500/10 pb-6 bg-cyan-900/20 rounded-t-[2.5rem] px-4 py-4 text-center">
-                <CardTitle className="text-2xl text-cyan-400 flex items-center justify-center gap-6 font-black uppercase italic gold-glow">
-                  <Target className="size-10 text-cyan-500 animate-pulse" /> Target Lock
+                <CardTitle className="text-2xl text-cyan-400 flex items-center justify-center gap-6 font-black uppercase italic gold-glow leading-none">
+                   Target Lock <Target className="size-10 text-cyan-500 animate-pulse" />
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-0 space-y-10 text-right">
@@ -170,7 +171,7 @@ export default function ReconPage() {
           <Card className="lg:col-span-3 bg-black/90 border-[12px] border-cyan-500/10 rounded-[7rem] p-16 shadow-9xl flex flex-col group overflow-hidden relative min-h-[900px] backdrop-blur-5xl text-right">
               <CardHeader className="p-0 mb-10 border-b-8 border-white/5 pb-10 bg-cyan-900/10 rounded-t-[4rem] flex flex-row justify-between items-center text-right px-12 py-6">
                  <Badge className="bg-emerald-600/30 text-emerald-500 border-4 border-emerald-500/40 px-12 py-4 rounded-full font-black text-3xl animate-pulse shadow-9xl uppercase tracking-widest">VISION_SYNC_OK</Badge>
-                 <CardTitle className="text-4xl md:text-[8rem] text-white italic tracking-tighter uppercase font-black gold-glow leading-none">
+                 <CardTitle className="text-4xl md:text-[8rem] text-white flex items-center gap-16 font-black uppercase italic gold-glow px-10 leading-none">
                     Intelligence Feed <Scan className="size-16 text-cyan-400 animate-pulse" />
                  </CardTitle>
               </CardHeader>
@@ -183,13 +184,13 @@ export default function ReconPage() {
                     </div>
                  ) : (
                    <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-80">
-                      <div className="relative group/nexus">
+                      <div className="relative group/lock">
                         <Cpu className="size-64 md:size-[50rem] animate-spin-slow text-cyan-500 group-hover:scale-110 transition-transform duration-[12000ms]" />
                         <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-64 text-cyan-400/40 animate-neural" />
                         <div className="absolute -inset-40 border-[80px] border-dashed border-cyan-500/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>
                       <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">ULTRA Recon</h3>
-                      <p className="text-4xl md:text-8xl font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">Establishing universal Overlord vision v90.0: Siphoning Global Identity DNA...</p>
+                      <p className="text-4xl md:text-[8rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem] text-center">Establishing universal Overlord vision v90.0: Siphoning Global Identity DNA...</p>
                    </div>
                  )}
               </CardContent>

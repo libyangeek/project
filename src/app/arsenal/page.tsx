@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -55,8 +56,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Link from "next/link"
 
 /**
- * @fileOverview العقدة 22: الحواس المادية v80.0 - INNATE ORGANS: ULTRA v3.0
+ * @fileOverview العقدة 22: الحواس المادية v90.0 - INNATE ORGANS: THE OMNIPOTENT ARSENAL
  * تم دمج سرب الـ 165 وكيلاً و 750 أداة OSINT كأعضاء حيوية للوريث.
+ * النمط: كهرماني قتالي (Amber Fire).
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function ArsenalNodePage() {
@@ -106,13 +108,6 @@ export default function ArsenalNodePage() {
     }
   }
 
-  const handleContinueUpgrade = () => {
-    toast({ 
-      title: "Swarm Evolution Active", 
-      description: "Siphoning latest material patterns for agent regrowth... Status: استمر" 
-    });
-  }
-
   if (!mounted) return null
 
   const modernWeapons = [
@@ -120,19 +115,19 @@ export default function ArsenalNodePage() {
     { name: "Silent Strike v2", count: "FUD_100%", icon: Zap, color: "text-emerald-500", desc: "Polymorphic EDR Bypass Generator" },
     { name: "Droid-LLM Hunter", count: "AI_APK", icon: Smartphone, color: "text-blue-400", desc: "Neural Mobile App DNA Dissection" },
     { name: "OSINT Arsenal (750)", count: "MASS_INTEL", icon: Globe, color: "text-amber-500", desc: "Siphoning 750+ Elite Search Tools" },
-    { name: "Robin Orchestrator", count: "AUTO_PILOT", icon: Cpu, color: "text-primary", desc: "Automated Material Recon Chain v80.0" },
+    { name: "Robin Orchestrator", count: "AUTO_PILOT", icon: Cpu, color: "text-primary", desc: "Automated Material Recon Chain v90.0" },
     { name: "OBLITERATUS Fanaa", count: "Node-18", icon: Scissors, color: "text-magenta-500", desc: "LLM Safety Dissolution & Enslavement" }
   ];
 
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
+      <main className="flex-1 lg:mr-56 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
         <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
         
         <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
-           <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(251,191,36,0.8)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
-              <Users className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 animate-neural gold-glow" />
+           <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_150px_rgba(251,191,36,0.8)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
+              <Library className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 animate-neural gold-glow" />
               <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
            </div>
            <div className="flex-1">
@@ -165,7 +160,7 @@ export default function ArsenalNodePage() {
                           <Target className="size-12 md:size-16 animate-neural" /> Strike Intent
                        </CardTitle>
                        <TabsList className="bg-black border-[6px] border-primary/20 h-16 md:h-20 p-1.5 rounded-full shadow-inner px-6 flex-wrap">
-                          <TabsTrigger value="modern" className="text-[10px] md:text-[14px] font-black px-8 md:px-12 rounded-full data-[state=active]:bg-primary data-[state=active]:text-black transition-all duration-700 uppercase italic">v3.0_ULTRA</TabsTrigger>
+                          <TabsTrigger value="modern" className="text-[10px] md:text-[14px] font-black px-8 md:px-12 rounded-full data-[state=active]:bg-primary data-[state=active]:text-black transition-all duration-700 uppercase italic">v90.0_ULTRA</TabsTrigger>
                           <TabsTrigger value="legacy" className="text-[10px] md:text-[14px] font-black px-8 md:px-12 rounded-full data-[state=active]:bg-primary data-[state=active]:text-black transition-all duration-700 uppercase italic ml-4 md:ml-6">LEGACY_ROOT</TabsTrigger>
                        </TabsList>
                     </CardHeader>
@@ -176,7 +171,7 @@ export default function ArsenalNodePage() {
                              value={query}
                              onChange={(e) => setQuery(e.target.value)}
                              placeholder="Target DNA / Swarm_Sector / Identity..." 
-                             className="bg-black/99 border-8 border-primary/20 h-24 md:h-32 rounded-[2.5rem] text-xl md:text-6xl italic px-12 focus:border-primary text-white font-black shadow-inner selection:bg-primary text-left"
+                             className="bg-black border-8 border-primary/20 h-24 md:h-32 rounded-[2.5rem] text-xl md:text-6xl italic px-12 focus:border-primary text-white font-black shadow-inner selection:bg-primary text-left"
                            />
                        </div>
                        <Button 
@@ -197,7 +192,7 @@ export default function ArsenalNodePage() {
                        <Boxes className="size-10 animate-neural" /> SWARM_CAPACITY
                     </h4>
                     <div className="text-[8rem] md:text-[14rem] font-black text-white italic gold-glow uppercase tracking-tighter mb-8 leading-none">165</div>
-                    <div className="text-[16px] md:text-[20px] text-muted-foreground uppercase font-black tracking-[0.6em] italic drop-shadow-3xl">ACTIVE_AGENTS_v3.0</div>
+                    <div className="text-[16px] md:text-[20px] text-muted-foreground uppercase font-black tracking-[0.6em] italic drop-shadow-3xl">ACTIVE_AGENTS_v90.0</div>
                  </Card>
               </div>
            </div>
@@ -238,7 +233,7 @@ export default function ArsenalNodePage() {
                  <div className="text-right">
                     <h3 className="text-5xl md:text-[12rem] font-black text-white uppercase italic gold-glow leading-none">Swarm Absorption</h3>
                     <div className="flex flex-wrap items-center gap-6 md:gap-10 mt-6 md:mt-10 justify-end">
-                        <Badge className="bg-primary/10 text-primary border-4 md:border-8 border-primary/20 px-8 md:px-12 py-3 md:py-5 rounded-full font-black italic text-xl md:text-3xl tracking-[0.3em] uppercase">ULTRA_v3.0_REFLEX</Badge>
+                        <Badge className="bg-primary/10 text-primary border-4 md:border-8 border-primary/20 px-8 md:px-12 py-3 md:py-5 rounded-full font-black italic text-xl md:text-3xl tracking-[0.3em] uppercase">ULTRA_v90.0_REFLEX</Badge>
                         <Badge className="bg-emerald-600/30 text-emerald-500 border-4 md:border-8 border-emerald-500/40 px-10 md:px-16 py-3 md:py-5 rounded-full font-black italic text-xl md:text-3xl tracking-[0.3em] uppercase shadow-9xl">DNA_SERIALIZED</Badge>
                     </div>
                  </div>
@@ -253,7 +248,7 @@ export default function ArsenalNodePage() {
         )}
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-16 md:gap-48 opacity-45 text-[18px] md:text-[36px] font-black uppercase tracking-[4em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-24">
-            <span>AL-MUIZZ SUPREME HIERARCHY v80.0</span>
+            <span>AL-MUIZZ SUPREME HIERARCHY v90.0</span>
             <div className="size-8 md:size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
             <span>SUBJUGATION_THROUGH_165_ORGANS_2026</span>
         </div>

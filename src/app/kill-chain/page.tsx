@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -40,6 +41,7 @@ import Link from "next/link"
 /**
  * @fileOverview سلسلة الإبادة الكونية v90.0 - ABSOLUTE SINGULARITY: OMNIPOTENT 16D
  * الواجهة الأسمى التي تصهر كافة مفاصل السطوة في تدفق تنفيذ مستقل 100%.
+ * النمط: أحمر سيادي (Red Singularity).
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function KillChainPage() {
