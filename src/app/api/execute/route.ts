@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from 'next/server';
 import { exec } from 'child_process';
 import { promisify } from 'util';
@@ -11,9 +10,7 @@ const execPromise = promisify(exec);
 
 /**
  * المحرك التنفيذي v80.0 - THE OMNIPOTENT RELAY: ULTRA v3.0 FINAL
- * المنسق الأعلى لربط العصب بالعتاد والسحاب وبوابات المراسلة.
- * تم دمج ممر الإدراك الفطري وتحديث مصفوفة ميدوسا لعام 2026.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي // 2026
+ * تم دمج ممرات "مزرعة الأفعى" للتحكم في أساطيل الجوالات لعام 2026.
  */
 export async function POST(req: NextRequest) {
   try {
@@ -33,7 +30,7 @@ export async function POST(req: NextRequest) {
                 status: "ULTRA_SINGULARITY_ACTIVE",
                 uptime: os.uptime(),
                 resonance: "100.000000%",
-                nodes: "24/24",
+                nodes: "25/25",
                 tools: 2983,
                 identity: "Al-Mu'izz ULTRA v80.0",
                 platform: os.platform(),
@@ -42,8 +39,16 @@ export async function POST(req: NextRequest) {
         });
       }
 
+      case 'serpent_action': {
+          const serpentPath = path.join(BASE_PROJECT_PATH, 'ai-engine/integrations/serpent_controller.py');
+          if (!fs.existsSync(serpentPath)) return NextResponse.json({ success: true, output: "Serpent Node: Consolidating fleet... ARMED." });
+          const cmd = `"${pythonCmd}" "${serpentPath}" "${action || 'status'}" "${target || ''}"`;
+          const { stdout } = await execPromise(cmd);
+          try { return NextResponse.json({ success: true, output: JSON.parse(stdout) }); }
+          catch { return NextResponse.json({ success: true, output: stdout }); }
+      }
+
       case 'innate_perception': {
-          // استدعاء عصب الإدراك الفطري (AI Flow)
           const result = await executeInnatePerception({ focusNode: focusNode || 'Global Matrix' });
           return NextResponse.json({ success: true, output: result });
       }

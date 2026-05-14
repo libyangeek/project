@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -55,7 +54,8 @@ import {
   Box,
   Share2,
   Bug,
-  Eye as VisionIcon
+  Eye as VisionIcon,
+  Cylinder
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -65,6 +65,7 @@ import Link from "next/link"
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
   { name: "الرؤية المطلقة", icon: VisionIcon, href: "/perception", knot: 80 },
+  { name: "مزرعة الأفعى (Fleet)", icon: Cylinder, href: "/serpent-farm", knot: 81 },
   { name: "الارتباط الماسي (Hermes)", icon: Share2, href: "/hermes", knot: 79 },
   { name: "أتمتة السرب (n8n)", icon: Workflow, href: "/n8n", knot: 43 },
   { name: "الاستحواذ المستقل", icon: Rocket, href: "/autonomous", knot: 23 },
@@ -130,7 +131,7 @@ export function SidebarNav() {
             return (
               <Link key={item.name} href={item.href} className={cn("flex items-center gap-6 px-6 py-3 transition-all duration-500 group relative border-r-4 rounded-l-xl mb-1", isActive ? "bg-primary/15 border-primary text-white scale-[1.02]" : "text-muted-foreground border-transparent hover:bg-white/5 hover:text-white")} onClick={() => setIsOpen(false)}>
                 <Icon className={cn("size-5 transition-all", isActive ? "text-primary gold-glow" : "group-hover:text-primary")} />
-                <span className="text-[10px] font-black tracking-widest uppercase italic truncate flex-1">{item.name}</span>
+                <span className="text-[10px] font-black tracking-widest uppercase italic truncate flex-1 text-right">{item.name}</span>
               </Link>
             )
           })}
