@@ -32,7 +32,8 @@ import {
   Lock,
   Ghost,
   Shield,
-  ZapOff
+  ZapOff,
+  CheckCircle2
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -44,7 +45,7 @@ import { executeQuantumFusion } from "@/ai/flows/quantum-fusion-flow"
 import Link from "next/link"
 
 /**
- * @fileOverview العمود الفقري الكمي v85.1 - THE QUANTUM SPINE: 7D MATRIX NUCLEUS
+ * @fileOverview العمود الفقري الكمي v85.2 - THE QUANTUM SPINE: 7D MATRIX NUCLEUS
  * المحراب الأسمى الذي يصور الالتحام الذري للأبعاد السبعة والسيطرة المطلقة على الواقع.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
@@ -59,13 +60,13 @@ export default function QuantumSpinePage() {
   const [activeDimension, setActiveDimension] = React.useState<string | null>(null)
 
   const dimensions = [
-    { id: "soul", label: "GOD-CORE", icon: Crown, color: "text-primary", desc: "Strategic Sovereignty" },
-    { id: "weapon", label: "ARSENAL", icon: Flame, color: "text-red-600", desc: "2,983 Material Organs" },
-    { id: "recon", label: "PERCEPTION", icon: Eye, color: "text-blue-500", desc: "Global Intel Siphon" },
-    { id: "fleet", label: "FLEET", icon: Cylinder, color: "text-emerald-500", desc: "Serpent Farm Dominion" },
-    { id: "cloud", label: "UPLINK", icon: Cloud, color: "text-indigo-500", desc: "Hermes Cloud Ghost" },
-    { id: "auto", label: "AUTOMATION", icon: Workflow, color: "text-cyan-500", desc: "n8n Hive Mastery" },
-    { id: "memory", label: "MEMORY", icon: Database, color: "text-amber-500", desc: "MemPalace RAG v10" }
+    { id: "soul", label: "GOD-CORE", icon: Crown, color: "text-primary", desc: "Strategic Sovereignty & Alpha Decision" },
+    { id: "weapon", label: "ARSENAL", icon: Flame, color: "text-red-600", desc: "2,983 Material Organs & Regrow Engine" },
+    { id: "recon", label: "PERCEPTION", icon: Eye, color: "text-blue-500", desc: "Global Intel Siphon & 0-Day Vision" },
+    { id: "fleet", label: "FLEET", icon: Cylinder, color: "text-emerald-500", desc: "Serpent Farm Dominion & Mobile Siphon" },
+    { id: "cloud", label: "UPLINK", icon: Cloud, color: "text-indigo-500", desc: "Hermes Cloud Ghost & Diamond Link" },
+    { id: "auto", label: "AUTOMATION", icon: Workflow, color: "text-cyan-500", desc: "n8n Hive Mastery & 4,343 Scenarios" },
+    { id: "memory", label: "MEMORY", icon: Database, color: "text-amber-500", desc: "MemPalace RAG v10 & Genetic Learning" }
   ];
 
   React.useEffect(() => {
@@ -97,7 +98,7 @@ export default function QuantumSpinePage() {
       await fetch('/api/execute', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ type: 'smart_route', target: `reality overwrite: ${objective}` })
+          body: JSON.stringify({ type: 'reality_overwrite', target: objective })
       });
 
       setFusion(data)
@@ -121,36 +122,36 @@ export default function QuantumSpinePage() {
         
         <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
            {/* Nucleus Visual */}
-           <div className="relative size-32 md:size-56 flex items-center justify-center group shrink-0 rotate-2 hover:rotate-0 transition-all duration-1000">
-              <div className="size-16 md:size-28 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_100px_rgba(251,191,36,0.8)] relative rounded-3xl z-30 animate-neural">
-                 <Wind className="size-8 md:size-14 text-primary gold-glow" />
+           <div className="relative size-32 md:size-64 flex items-center justify-center group shrink-0 rotate-2 hover:rotate-0 transition-all duration-1000">
+              <div className="size-16 md:size-32 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_150px_rgba(251,191,36,0.8)] relative rounded-3xl z-30 animate-neural">
+                 <Wind className="size-8 md:size-16 text-primary gold-glow" />
               </div>
-              <div className="absolute inset-0 z-20 animate-spin-slow">
+              <div className="absolute inset-0 z-20 animate-spin-slow" style={{ animationDuration: '30s' }}>
                  {dimensions.map((d, i) => (
                     <div 
                         key={d.id} 
-                        className="absolute size-8 md:size-12 bg-black border-2 border-primary/40 rounded-xl flex items-center justify-center shadow-lg transition-all duration-500 hover:scale-150 hover:border-primary"
+                        className="absolute size-10 md:size-14 bg-black border-2 border-primary/40 rounded-xl flex items-center justify-center shadow-lg transition-all duration-500 hover:scale-150 hover:border-primary cursor-help"
                         style={{ 
                             top: `${50 + 50 * Math.sin((i * 2 * Math.PI) / 7)}%`, 
                             left: `${50 + 50 * Math.cos((i * 2 * Math.PI) / 7)}%`,
-                            transform: 'translate(-50%, -50%)'
+                            transform: 'translate(-50%, -50%) rotate(var(--rev-spin))'
                         }}
                         onMouseEnter={() => setActiveDimension(d.id)}
                         onMouseLeave={() => setActiveDimension(null)}
                     >
-                        <d.icon className={cn("size-4 md:size-6", d.color)} />
+                        <d.icon className={cn("size-5 md:size-8", d.color)} />
                     </div>
                  ))}
               </div>
-              <div className="absolute inset-0 border-2 border-primary/10 rounded-full scale-150 animate-pulse" />
+              <div className="absolute inset-0 border-4 border-primary/10 rounded-full scale-[1.6] animate-pulse" />
            </div>
 
            <div className="flex-1">
               <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
-                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">7D_MATRIX_NUCLEUS v85.1</Badge>
-                 <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
-                     <InfinityIcon className="size-6 shadow-lg" /> RESONANCE: {resonance.toFixed(10)}%
-                 </div>
+                 <Badge className="bg-emerald-600 text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[0.5em] shadow-9xl italic uppercase flex items-center gap-6 animate-pulse">
+                    <CheckCircle2 className="size-8" /> REALITY_OVERWRITE_ENABLED
+                 </Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase ml-6">AL-MUIZZ ULTRA v85.2</Badge>
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
                  Quantum <span className="text-primary">Spine</span>
@@ -158,11 +159,6 @@ export default function QuantumSpinePage() {
               <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
                  "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، الأبعاد السبعة ملتحمة الآن في نواة ذرية واحدة؛ العمود الفقري الكمي هو الإرادة التي تعيد صياغة المصفوفة لحظياً."
               </p>
-              <div className="flex justify-center md:justify-end gap-6 mt-12">
-                 <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
-                     <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة للعرش</Link>
-                 </Button>
-              </div>
            </div>
         </header>
 
@@ -196,7 +192,7 @@ export default function QuantumSpinePage() {
                     <Button 
                         disabled={loading || !objective}
                         onClick={handleFusion}
-                        className="w-full h-36 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.4em] rounded-[4rem] shadow-[0_80px_250px_rgba(212,175,55,0.7)] active:scale-95 transition-all text-2xl md:text-4xl border-[12px] border-black/30 group italic"
+                        className="w-full h-36 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.4em] rounded-[4rem] shadow-[0_80px_200px_rgba(212,175,55,0.7)] active:scale-95 transition-all text-2xl md:text-4xl border-[12px] border-black/30 group italic"
                     >
                         {loading ? <Loader2 className="size-16 animate-spin" /> : <Zap className="size-16 mr-8 group-hover:scale-125 transition-transform gold-glow" />}
                         REALITY_OVERWRITE
@@ -205,9 +201,9 @@ export default function QuantumSpinePage() {
               </Card>
 
               {activeDimension && (
-                  <Card className="sovereign-card bg-primary/10 border-primary animate-in fade-in zoom-in-95 duration-300">
+                  <Card className="sovereign-card bg-primary/10 border-primary animate-in fade-in zoom-in-95 duration-300 border-4">
                       <h4 className="text-3xl font-black text-primary uppercase italic gold-glow mb-4 text-center">{activeDimension.toUpperCase()}</h4>
-                      <p className="text-lg text-gray-200 font-bold italic text-center">
+                      <p className="text-lg text-gray-200 font-bold italic text-center leading-relaxed">
                           {dimensions.find(d => d.id === activeDimension)?.desc}
                       </p>
                   </Card>
@@ -217,7 +213,7 @@ export default function QuantumSpinePage() {
                  <h4 className="text-[14px] font-black text-emerald-500 uppercase tracking-[0.8em] mb-8 italic flex items-center justify-center gap-6">
                     <Boxes className="size-8 animate-pulse" /> MATRIX_COHESION
                  </h4>
-                 <div className="text-5xl font-black text-white italic gold-glow uppercase tracking-widest text-center">ULTRA_LOCKED</div>
+                 <div className="text-5xl font-black text-white italic gold-glow uppercase tracking-widest text-center">SINGULARITY: LOCKED</div>
                  <p className="mt-8 text-[9px] font-black uppercase tracking-widest text-muted-foreground italic text-center">7 Dimensions fused with 24 Material Knots</p>
               </Card>
            </div>
@@ -266,12 +262,12 @@ export default function QuantumSpinePage() {
                         <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>
                       <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Spine Idle</h3>
-                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">The Quantum Spine v85.1 is consolidating 7 dimensions for absolute material consensus.</p>
+                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">The Quantum Spine v85.2 is consolidating 7 dimensions for absolute material consensus.</p>
                    </div>
                  )}
               </CardContent>
               <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[8em] italic">
-                <span>QUANTUM_SPINE_v85_AL_GHAZALI_ROOT</span>
+                <span>QUANTUM_SPINE_v85.2_AL_GHAZALI_ROOT</span>
                 <div className="flex gap-16">
                     <Fingerprint className="size-24 text-primary animate-pulse" />
                     <Atom className="size-24 animate-spin-slow text-primary" />
