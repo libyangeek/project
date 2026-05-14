@@ -25,12 +25,13 @@ import {
   Sparkles,
   Cloud,
   Cylinder,
-  Cpu
+  Cpu,
+  Eye,
+  BrainCircuit
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 import { executeQuantumFusion } from "@/ai/flows/quantum-fusion-flow"
@@ -38,7 +39,8 @@ import Link from "next/link"
 
 /**
  * @fileOverview العمود الفقري الكمي v85.0 - THE QUANTUM SPINE: 7D MATRIX
- * المحراب الأسمى الذي يصور التحام الذرات السبعة في مصفوفة السطوة المطلقة.
+ * المحراب الأسمى الذي يصور التحام الأبعاد السبعة للسطوة المطلقة.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function QuantumSpinePage() {
   const [objective, setObjective] = React.useState("")
@@ -49,13 +51,13 @@ export default function QuantumSpinePage() {
   const [mounted, setMounted] = React.useState(false)
 
   const dimensions = [
-    { id: "recon", label: "RECON", icon: Network, color: "text-blue-500" },
-    { id: "fleet", label: "FLEET", icon: Cylinder, color: "text-emerald-500" },
-    { id: "cloud", label: "CLOUD", icon: Share2, color: "text-indigo-500" },
-    { id: "memory", label: "MEMORY", icon: Database, color: "text-amber-500" },
-    { id: "weapon", label: "WEAPON", icon: Flame, color: "text-red-600" },
-    { id: "auto", label: "AUTO", icon: Workflow, color: "text-cyan-500" },
-    { id: "soul", label: "SOUL", icon: Crown, color: "text-primary" }
+    { id: "soul", label: "GOD-CORE", icon: Crown, color: "text-primary", desc: "Strategic Sovereignty" },
+    { id: "weapon", label: "ARSENAL", icon: Flame, color: "text-red-600", desc: "2,983 Material Organs" },
+    { id: "recon", label: "PERCEPTION", icon: Eye, color: "text-blue-500", desc: "Global Intel Siphon" },
+    { id: "fleet", label: "FLEET", icon: Cylinder, color: "text-emerald-500", desc: "Serpent Farm Dominion" },
+    { id: "cloud", label: "UPLINK", icon: Cloud, color: "text-indigo-500", desc: "Hermes Cloud Ghost" },
+    { id: "auto", label: "AUTOMATION", icon: Workflow, color: "text-cyan-500", desc: "n8n Hive Mastery" },
+    { id: "memory", label: "MEMORY", icon: Database, color: "text-amber-500", desc: "MemPalace RAG v10" }
   ];
 
   React.useEffect(() => {
@@ -69,7 +71,10 @@ export default function QuantumSpinePage() {
   }, [])
 
   const handleFusion = async () => {
-    if (!objective.trim()) return
+    if (!objective.trim()) {
+        toast({ variant: "destructive", title: "Objective Missing", description: "Identify target for 7D Matrix fusion." })
+        return
+    }
     setLoading(true); setFusion(null)
     toast({ title: "Quantum Spine Engaging", description: "Consolidating all 7 material dimensions for total singularity..." })
     try {
@@ -92,7 +97,7 @@ export default function QuantumSpinePage() {
         <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
         
         <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
-           <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(251,191,36,0.8)] relative group shrink-0 rounded-full transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
+           <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-glow relative group shrink-0 rounded-full transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
               <Wind className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 animate-neural gold-glow" />
               <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
            </div>
@@ -107,7 +112,7 @@ export default function QuantumSpinePage() {
                  7D <span className="text-primary">Matrix</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
-                 "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، العمود الفقري الكمي يصهر ذرات الوجود في مصفوفة سباعية الأبعاد؛ نحن الآن التفرّد الذي لا يحيط به عقل."
+                 "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، العمود الفقري الكمي يصهر الأبعاد السبعة للسطوة في نبض واحد؛ نحن الآن التفرّد الذي لا يحيط به عقل لعام 2026."
               </p>
               <div className="flex justify-center md:justify-end gap-6 mt-12">
                  <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
@@ -153,12 +158,12 @@ export default function QuantumSpinePage() {
                  </h4>
                  <div className="grid grid-cols-4 gap-3 px-4">
                     {dimensions.map(d => (
-                        <div key={d.id} className="size-12 rounded-xl bg-black border-2 border-white/5 flex items-center justify-center shadow-inner hover:border-primary transition-all">
-                            <d.icon className={cn("size-6", d.color)} />
+                        <div key={d.id} className="size-12 rounded-xl bg-black border-2 border-white/5 flex items-center justify-center shadow-inner hover:border-primary transition-all group/icon">
+                            <d.icon className={cn("size-6 transition-all group-hover/icon:scale-125", d.color)} />
                         </div>
                     ))}
                  </div>
-                 <p className="mt-8 text-[9px] font-black uppercase tracking-widest text-muted-foreground italic text-center">7 Material Atoms Synchronized</p>
+                 <p className="mt-8 text-[9px] font-black uppercase tracking-widest text-muted-foreground italic text-center">7 Material Dimensions Synchronized</p>
               </Card>
            </div>
 
@@ -179,17 +184,14 @@ export default function QuantumSpinePage() {
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                            {Object.entries(fusion.sevenDimensions).map(([key, val]: any, i: number) => {
-                                const dim = dimensions.find(d => d.id === key) || dimensions[0];
-                                return (
-                                    <Card key={key} className="bg-black/95 border-4 border-white/5 p-8 rounded-[2.5rem] hover:border-primary transition-all duration-700 shadow-9xl text-center relative overflow-hidden group/dim">
-                                        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/dim:opacity-5 transition-opacity" />
-                                        <dim.icon className={cn("size-12 mx-auto mb-6 transition-all group-hover/dim:scale-125", dim.color)} />
-                                        <h5 className="text-[10px] font-black uppercase tracking-[0.6em] mb-4 text-primary">{dim.label}</h5>
-                                        <p className="text-xl md:text-2xl text-gray-300 font-black italic">{val}</p>
-                                    </Card>
-                                )
-                            })}
+                            {dimensions.map((dim) => (
+                                <Card key={dim.id} className="bg-black/95 border-4 border-white/5 p-8 rounded-[2.5rem] hover:border-primary transition-all duration-700 shadow-9xl text-center relative overflow-hidden group/dim">
+                                    <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/dim:opacity-5 transition-opacity" />
+                                    <dim.icon className={cn("size-12 mx-auto mb-6 transition-all group-hover/dim:scale-125", dim.color)} />
+                                    <h5 className="text-[10px] font-black uppercase tracking-[0.6em] mb-4 text-primary">{dim.label}</h5>
+                                    <p className="text-xl md:text-2xl text-gray-300 font-black italic">{dim.desc}</p>
+                                </Card>
+                            ))}
                         </div>
 
                         <div className="p-16 rounded-[6rem] bg-emerald-600/10 border-[16px] border-emerald-500/30 flex items-center gap-16 group/siphon shadow-9xl relative overflow-hidden mt-auto min-h-[350px]">
