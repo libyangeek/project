@@ -5,20 +5,21 @@ import { promisify } from 'util';
 import path from 'path';
 import fs from 'fs';
 import os from 'os';
+import { executeInnatePerception } from '@/ai/flows/innate-perception-flow';
 
 const execPromise = promisify(exec);
 
 /**
  * المحرك التنفيذي v80.0 - THE OMNIPOTENT RELAY: ULTRA v3.0 FINAL
  * المنسق الأعلى لربط العصب بالعتاد والسحاب وبوابات المراسلة.
- * تم دمج ممر MEDUSA لكشف تسميم المستودعات لعام 2026.
+ * تم دمج ممر الإدراك الفطري وتحديث مصفوفة ميدوسا لعام 2026.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي // 2026
  */
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { 
-        command, target, type, path: targetPath, content, vector, mode, text, deviceIp, apkPath, action, workflowId
+        command, target, type, path: targetPath, content, vector, mode, text, deviceIp, apkPath, action, workflowId, focusNode
     } = body;
 
     const BASE_PROJECT_PATH = process.cwd();
@@ -41,8 +42,13 @@ export async function POST(req: NextRequest) {
         });
       }
 
+      case 'innate_perception': {
+          // استدعاء عصب الإدراك الفطري (AI Flow)
+          const result = await executeInnatePerception({ focusNode: focusNode || 'Global Matrix' });
+          return NextResponse.json({ success: true, output: result });
+      }
+
       case 'medusa_action': {
-          // استدعاء مصفوفة ميدوسا المادية
           const medusaPath = path.join(BASE_PROJECT_PATH, 'ai-engine/integrations/medusa_wrapper.py');
           if (!fs.existsSync(medusaPath)) return NextResponse.json({ success: true, output: "Medusa Node: Engaging Ocular Siphon... SCANNED." });
           const cmd = `"${pythonCmd}" "${medusaPath}" "${action || 'scan'}" "${target || ''}"`;

@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -53,7 +54,8 @@ import {
   Castle,
   Box,
   Share2,
-  Bug
+  Bug,
+  Eye as VisionIcon
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -62,7 +64,8 @@ import Link from "next/link"
 
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
-  { name: "الارتباط الماسي (Hermes)", icon: Share2, href: "/hermes", knot: 80 },
+  { name: "الرؤية المطلقة", icon: VisionIcon, href: "/perception", knot: 80 },
+  { name: "الارتباط الماسي (Hermes)", icon: Share2, href: "/hermes", knot: 79 },
   { name: "أتمتة السرب (n8n)", icon: Workflow, href: "/n8n", knot: 43 },
   { name: "الاستحواذ المستقل", icon: Rocket, href: "/autonomous", knot: 23 },
   { name: "عين ميدوسا (Git Scan)", icon: Bug, href: "/medusa", knot: 66 },
@@ -116,7 +119,7 @@ export function SidebarNav() {
           </div>
           <div className="text-center relative z-10">
             <h1 className="text-xl font-headline font-bold text-white tracking-[0.4em] uppercase leading-none gold-glow">AL-MUIZZ</h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic animate-pulse shadow-9xl">v80.0 GENESIS_v6</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic animate-pulse shadow-9xl">v80.0 ULTRA_v3</Badge>
           </div>
         </div>
         
@@ -138,7 +141,7 @@ export function SidebarNav() {
             <div className="flex justify-between items-center mb-2"><Activity className="size-3 text-emerald-500 animate-pulse" /><span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] italic">Genesis Resonance</span></div>
             <div className="text-2xl font-black text-white italic gold-glow">{resonance.toFixed(7)}%</div>
           </div>
-          <Button asChild className="w-full h-12 bg-primary hover:bg-white text-black font-black uppercase text-[10px] rounded-xl shadow-2xl transition-all border-4 border-black/20 italic"><Link href="/hermes"><Share2 className="size-4 mr-2" /> تنشيط الارتباط الماسي</Link></Button>
+          <Button asChild className="w-full h-12 bg-primary hover:bg-white text-black font-black uppercase text-[10px] rounded-xl shadow-2xl transition-all border-4 border-black/20 italic"><Link href="/perception"><Sparkles className="size-4 mr-2" /> تنشيط الرؤية المطلقة</Link></Button>
         </div>
       </div>
     </>
