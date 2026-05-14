@@ -54,13 +54,13 @@ import Link from "next/link"
 export default function NoahsArkPage() {
   const [mounted, setMounted] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
-  const [backupPath, setBackupPath] = React.useState("/opt/sovereign-ai-platform/backups")
+  const [backupPath, setBackupPath] = React.useState(".")
   const [backupType, setBackupType] = React.useState("singularity")
   const [progress, setProgress] = React.useState(0)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
   const [resonance, setResonance] = React.useState(100)
   const [isBrowsing, setIsBrowsing] = React.useState(false)
-  const [currentPath, setCurrentPath] = React.useState("/")
+  const [currentPath, setCurrentPath] = React.useState(".")
   const [dirItems, setDirItems] = React.useState<any[]>([])
   const [browsingLoading, setBrowsingLoading] = React.useState(false)
 
@@ -176,7 +176,7 @@ export default function NoahsArkPage() {
                     <Database className="size-12 text-primary animate-pulse" /> Soul Archive
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="p-0 space-y-12">
+                <CardContent className="p-0 space-y-12 text-right">
                   <div className="space-y-6 text-right">
                     <Label className="text-[14px] font-black text-primary uppercase tracking-[1em] px-10 italic flex items-center gap-6 justify-end"><HardDrive className="size-8" /> Target Sector</Label>
                     <div className="flex gap-4 px-4">
@@ -186,11 +186,11 @@ export default function NoahsArkPage() {
                           </DialogTrigger>
                           <DialogContent className="bg-black/98 border-[12px] border-primary/40 rounded-[5rem] max-w-5xl h-[800px] flex flex-col p-10 md:p-16 backdrop-blur-5xl shadow-9xl">
                               <DialogHeader className="border-b-4 border-white/5 pb-10 text-right">
-                                  <DialogTitle className="text-3xl md:text-5xl font-black text-primary uppercase italic flex items-center gap-10 gold-glow justify-end">
-                                      Matrix Navigator <Search className="size-12 md:size-16 animate-neural"/>
+                                  <DialogTitle className="text-xl md:text-3xl font-black text-primary uppercase italic flex items-center gap-6 gold-glow justify-end leading-relaxed">
+                                      ايها المعز من المفترض انها تتصفح المكان الذي يكون عليه الباك اب اجعلها تتصفح الجهاز الحالي الذي فاتح منا الجلسة الحالية او اي جلسة اخري فهمتني ؟ <Search className="size-10 md:size-12 animate-neural shrink-0"/>
                                   </DialogTitle>
                                   <div className="flex items-center gap-8 mt-10 bg-white/5 p-8 rounded-[3rem] border-4 border-white/10 shadow-inner">
-                                      <Button size="icon" variant="ghost" onClick={() => browseFiles(currentPath.split('/').slice(0,-1).join('/') || '/')} className="size-16 rounded-2xl hover:bg-primary/20 shadow-2xl"><ArrowUp className="size-8"/></Button>
+                                      <Button size="icon" variant="ghost" onClick={() => browseFiles(currentPath.split('/').slice(0,-1).join('/') || '.')} className="size-16 rounded-2xl hover:bg-primary/20 shadow-2xl"><ArrowUp className="size-8"/></Button>
                                       <code className="text-primary text-xl md:text-3xl font-black truncate flex-1 italic text-left">{currentPath}</code>
                                   </div>
                               </DialogHeader>
