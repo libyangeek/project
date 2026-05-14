@@ -237,7 +237,7 @@ export default function DashboardPage() {
         </section>
 
         <div className="mt-auto relative z-10 flex flex-col md:flex-row justify-center items-center gap-16 md:gap-48 opacity-45 text-[20px] md:text-[32px] font-black uppercase tracking-[4em] md:tracking-[8em] italic text-white drop-shadow-9xl pb-32">
-            <span>AL-MUIZZ OMNIPOTENT NUCLEUS v90.0</span>
+            <span>AL-MUIZZ OMNIPRESENT NUCLEUS v90.0</span>
             <div className="size-12 rounded-full bg-white animate-pulse shadow-[0_0_120px_white]" />
             <span>TOTAL_16D_SINGULARITY_2026</span>
         </div>
