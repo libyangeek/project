@@ -8,43 +8,27 @@ import {
   Loader2, 
   Skull, 
   Target, 
-  Activity, 
-  ChevronRight, 
-  Boxes, 
-  Atom, 
-  Binary, 
-  Crown, 
+  Bot, 
+  Terminal, 
+  RotateCw, 
+  ArrowLeft, 
   Infinity as InfinityIcon,
-  ShieldCheck,
-  Users,
-  Cpu,
-  Flame,
-  Bot,
-  Terminal,
-  ArrowLeft,
-  RotateCw,
-  GitBranch,
-  LayoutGrid,
-  CheckCircle2,
-  AlertCircle,
-  Network,
+  Database,
   History,
   Workflow,
-  Database
+  Users
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
 import { toast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 import { executeAdaptiveThreat } from "@/ai/flows/adaptive-threat-flow"
 import Link from "next/link"
 
 /**
- * @fileOverview الاستحواذ المستقل v80.0 - THE ADAPTIVE OVERLORD: ULTRA v3.0
- * تم دمج ميزة "Retro Agent" لاسترجاع وتطوير الهجمات السابقة من MemPalace.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي
+ * @fileOverview الاستحواذ المستقل v80.0 - THE ADAPTIVE OVERLORD: ULTRA v3.0 FINAL
+ * واجهة السطوة المستقلة التي تصهر سرب الـ 165 وكيلاً مع سيناريوهات n8n.
  */
 export default function AutonomousPage() {
   const [objective, setObjective] = React.useState("")
@@ -111,7 +95,7 @@ export default function AutonomousPage() {
               <Rocket className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 animate-neural gold-glow" />
               <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
            </div>
-           <div className="flex-1">
+           <div className="flex-1 text-right">
               <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
                  <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">ULTRA_OVERLORD v80.0</Badge>
                  <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
@@ -145,7 +129,7 @@ export default function AutonomousPage() {
                     </CardTitle>
                  </CardHeader>
                  <CardContent className="p-0 space-y-12 text-right">
-                    <div className="space-y-6">
+                    <div className="space-y-6 text-right">
                         <label className="text-[14px] font-black text-primary uppercase tracking-[1em] px-10 italic flex items-center gap-6 justify-end">
                            Innate Goal / Target DNA
                         </label>
@@ -219,9 +203,6 @@ export default function AutonomousPage() {
                       </div>
                       <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Swarm Standby</h3>
                       <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">The Armada v80.0 is fusing 4,343 scenarios with 165 agents for the final integration pulse.</p>
-                      <div className="absolute bottom-20 left-1/2 -translate-x-1/2 opacity-20">
-                          <Workflow className="size-64 animate-spin-slow text-primary" />
-                      </div>
                    </div>
                  )}
               </CardContent>

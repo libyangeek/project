@@ -37,7 +37,9 @@ import {
   Workflow,
   Fingerprint,
   Zap,
-  ArrowLeft
+  ArrowLeft,
+  Library,
+  Database
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -106,10 +108,10 @@ export default function DashboardPage() {
   if (!mounted) return null;
 
   const stats = [
-    { label: "ذاكرة MemPalace", value: "96.6%", icon: Castle, color: "text-emerald-500", status: "SEMANTIC" },
-    { label: "سيناريوهات n8n", value: "4,343", icon: Workflow, color: "text-blue-500", status: "LETHAL" },
-    { label: "مصادر OSINT", value: "26", icon: Search, color: "text-amber-500", status: "ULTRA" },
-    { label: "سرب الوكلاء", value: "165", icon: Users, color: "text-primary", status: "ADAPTIVE" },
+    { label: "ذاكرة MemPalace", value: "96.6%", icon: Castle, color: "text-emerald-500", status: "SEMANTIC", href: "/knowledge" },
+    { label: "سيناريوهات n8n", value: "4,343", icon: Workflow, color: "text-blue-500", status: "LETHAL", href: "/autonomous" },
+    { label: "مصادر OSINT", value: "26", icon: Search, color: "text-amber-500", status: "ULTRA", href: "/recon" },
+    { label: "سرب الوكلاء", value: "165", icon: Users, color: "text-primary", status: "ADAPTIVE", href: "/autonomous" },
   ];
 
   return (
@@ -139,17 +141,19 @@ export default function DashboardPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-24 relative z-10">
            {stats.map((s, i) => (
-             <Card key={i} className="sovereign-card group h-full">
-                <div className="flex justify-between items-start mb-10 relative z-10">
-                   <div className={cn("size-20 rounded-2xl bg-white/5 flex items-center justify-center border-2 border-white/5 group-hover:bg-primary/10 transition-all shadow-inner", s.color)}>
-                      <s.icon className="size-10 transition-all group-hover:scale-110" />
-                   </div>
-                   <Badge className="bg-primary/5 text-primary border-4 border-primary/20 text-[12px] uppercase font-black italic tracking-widest px-6 py-1.5 rounded-full">{s.status}</Badge>
-                </div>
-                <div className="text-5xl md:text-8xl font-black italic gold-glow uppercase tracking-tighter relative z-10 leading-none">{s.value}</div>
-                <div className="text-[16px] text-muted-foreground font-bold uppercase tracking-[0.6em] mt-6 italic relative z-10">{s.label}</div>
-                <div className="absolute -bottom-10 -right-10 p-12 opacity-[0.03] group-hover:opacity-[0.08] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-48 text-primary" /></div>
-             </Card>
+             <Link key={i} href={s.href} className="contents">
+               <Card className="sovereign-card group h-full cursor-pointer active:scale-95">
+                  <div className="flex justify-between items-start mb-10 relative z-10">
+                     <div className={cn("size-20 rounded-2xl bg-white/5 flex items-center justify-center border-2 border-white/5 group-hover:bg-primary/10 transition-all shadow-inner", s.color)}>
+                        <s.icon className="size-10 transition-all group-hover:scale-110" />
+                     </div>
+                     <Badge className="bg-primary/5 text-primary border-4 border-primary/20 text-[12px] uppercase font-black italic tracking-widest px-6 py-1.5 rounded-full">{s.status}</Badge>
+                  </div>
+                  <div className="text-5xl md:text-8xl font-black italic gold-glow uppercase tracking-tighter relative z-10 leading-none">{s.value}</div>
+                  <div className="text-[16px] text-muted-foreground font-bold uppercase tracking-[0.6em] mt-6 italic relative z-10">{s.label}</div>
+                  <div className="absolute -bottom-10 -right-10 p-12 opacity-[0.03] group-hover:opacity-[0.08] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-48 text-primary" /></div>
+               </Card>
+             </Link>
            ))}
         </div>
 

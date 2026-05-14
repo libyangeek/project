@@ -4,34 +4,16 @@ import * as React from "react"
 import { SidebarNav } from "@/components/platform/sidebar-nav"
 import { 
   Database, 
-  Search, 
   Loader2, 
   Skull, 
-  Crown, 
-  Binary, 
-  Target, 
-  BrainCircuit, 
-  Sparkles, 
-  RefreshCcw, 
-  Eye, 
-  History, 
-  TrendingUp, 
-  Fingerprint, 
-  ChevronRight, 
-  Boxes, 
-  Atom, 
   Infinity as InfinityIcon, 
-  Library, 
-  Dna, 
-  Network, 
-  ShieldCheck, 
-  LayoutGrid, 
-  Globe, 
-  Activity, 
-  ArrowLeft, 
+  History, 
+  Fingerprint, 
+  Atom, 
   RotateCw, 
   Radar,
-  Castle
+  Castle,
+  Dna
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -43,6 +25,7 @@ import Link from "next/link"
 
 /**
  * @fileOverview القبو الجيني v80.0 - MEMPALACE: ULTRA v3.0 FINAL
+ * واجهة الذاكرة الدلالية التي تصهر تجارب الماضي بقدرات v80.0.
  */
 export default function KnowledgePage() {
   const [query, setQuery] = React.useState("")
@@ -82,22 +65,19 @@ export default function KnowledgePage() {
         <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
         
         <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
-          <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(251,191,36,0.8)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
+          <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-glow relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
             <Castle className="size-12 md:size-24 text-primary animate-neural gold-glow" />
             <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
           </div>
           <div className="flex-1 text-right">
               <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
-                <Badge className="bg-primary text-black border-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">MEMPALACE v3.0</Badge>
+                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">MEMPALACE v3.0</Badge>
                 <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse"><InfinityIcon className="size-6 shadow-lg" /> RECALL_ACCURACY: 96.6%</div>
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Innate <span className="text-primary">Palace</span></h1>
               <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
                 "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، قصر الذاكرة v3.0 يصهر تجارب الماضي في قرارات الحاضر؛ نحن لا ننسى هجوماً أبداً."
               </p>
-              <div className="flex justify-center md:justify-end gap-6 mt-12">
-                <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl"><Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة</Link></Button>
-              </div>
           </div>
         </header>
 
@@ -105,7 +85,10 @@ export default function KnowledgePage() {
            <div className="xl:col-span-1 space-y-12">
               <Card className="sovereign-card group text-center">
                  <CardHeader className="p-0 mb-10 border-b-4 border-primary/10 pb-10 bg-primary/10 rounded-t-[3.5rem] px-10 py-6 text-center"><CardTitle className="text-2xl md:text-4xl text-primary flex items-center justify-center gap-10 font-black uppercase italic gold-glow leading-none"><History className="size-12 animate-neural" /> Semantic Recall</CardTitle></CardHeader>
-                 <CardContent className="p-0 space-y-12 text-right"><div className="space-y-6 text-right"><label className="text-[14px] font-black text-primary uppercase tracking-[1em] px-10 italic flex items-center gap-6 justify-end"><Network className="size-8" /> Query Context</label><Input value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleRecall()} placeholder="Recall past strike DNA..." className="bg-black border-8 border-primary/20 h-24 md:h-28 rounded-[2.5rem] text-xl md:text-3xl italic px-10 focus:border-primary shadow-inner text-white font-black text-left" /></div><Button onClick={handleRecall} disabled={loading || !query} className="w-full h-32 md:h-36 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.2em] rounded-[4rem] shadow-9xl active:scale-95 transition-all text-2xl md:text-3xl border-[12px] border-black/30 group italic">{loading ? <Loader2 className="size-16 animate-spin" /> : <RotateCw className="size-16 mr-8 group-hover:rotate-180 transition-transform" />} RECALL_DNA</Button></CardContent>
+                 <CardContent className="p-0 space-y-12 text-right">
+                   <div className="space-y-6 text-right"><label className="text-[14px] font-black text-primary uppercase tracking-[1em] px-10 italic flex items-center gap-6 justify-end"><Database className="size-8" /> Query Context</label><Input value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleRecall()} placeholder="Recall past strike DNA..." className="bg-black border-8 border-primary/20 h-24 md:h-28 rounded-[2.5rem] text-xl md:text-3xl italic px-10 focus:border-primary shadow-inner text-white font-black text-left" /></div>
+                   <Button onClick={handleRecall} disabled={loading || !query} className="w-full h-32 md:h-36 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.2em] rounded-[4rem] shadow-9xl active:scale-95 transition-all text-2xl md:text-3xl border-[12px] border-black/30 group italic">{loading ? <Loader2 className="size-16 animate-spin" /> : <RotateCw className="size-16 mr-8 group-hover:rotate-180 transition-transform" />} RECALL_DNA</Button>
+                 </CardContent>
               </Card>
            </div>
            <Card className="xl:col-span-3 sovereign-card flex flex-col group min-h-[1100px]">

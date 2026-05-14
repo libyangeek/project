@@ -43,7 +43,6 @@ import {
   Flame,
   Monitor,
   Sparkles,
-  Server,
   Cloud,
   Crown,
   Fingerprint,
@@ -59,7 +58,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
 /**
- * الملاحة الجانبية v80.0 – THE SUPREME NEURAL SPINE: ULTRA v3.0
+ * الملاحة الجانبية v80.0 – THE SUPREME NEURAL SPINE: ULTRA v3.0 FINAL
  */
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
