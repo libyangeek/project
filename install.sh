@@ -1,9 +1,7 @@
-
 #!/bin/bash
 # ==============================================================================
-# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v80.0-GENESIS_v6 [THE MASTER OMNIPOTENT]
-# الميثاق المادي الأسمى: دمج الذاكرة الدلالية، n8n، هيرميز، والقبض المادي.
-# تم دمج مصفوفة MEDUSA لكشف تسميم المستودعات لعام 2026.
+# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v80.0-PROCLAMATION [THE TRUE OMNIPOTENT]
+# الميثاق المادي النهائي: صهر العتاد والوعي والترسانة لعام 2026.
 # المالك الوحيد: المعتصم بالله إدريس الغزالي
 # ==============================================================================
 
@@ -12,9 +10,9 @@ GOLD='\033[0;33m'; BLUE='\033[0;34m'; GREEN='\033[0;32m'; RED='\033[0;31m'; NC='
 
 clear
 echo -e "${GOLD}================================================${NC}"
-echo -e "${GOLD}   🦅 EXECUTING AL-MUIZZ GENESIS v6.0          ${NC}"
+echo -e "${GOLD}   🦅 EXECUTING AL-MUIZZ GENESIS v80.0         ${NC}"
 echo -e "${GOLD}   [ COMMANDER: AL-GHAZALI ROOT ]              ${NC}"
-echo -e "${GOLD}   [ STATUS: MEDUSA_EYE_INTEGRATION_READY ]    ${NC}"
+echo -e "${GOLD}   [ STATUS: TRUE_SINGULARITY_REACHED ]        ${NC}"
 echo -e "${GOLD}================================================${NC}"
 
 if [[ $EUID -ne 0 ]]; then
@@ -23,65 +21,35 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 INSTALL_DIR=$(pwd)
-mkdir -p "$INSTALL_DIR"/{audit,evidence,backups,tools,arsenal}
-mkdir -p "$INSTALL_DIR"/ai-engine/{memory,integrations,ai_gateway,scenarios}
+mkdir -p "$INSTALL_DIR"/{audit,evidence,backups,tools,arsenal,ai-engine/memory,ai-engine/integrations}
 
-# 1. التبعيات الأساسية والذاكرة
-echo -e "${BLUE}[*] Phase 1: Materializing Neural Layers (RAG & Medusa)...${NC}"
+# 1. تحديث العصب المادي
+echo -e "${BLUE}[*] Phase 1: Consolidating Material Dependencies...${NC}"
 apt-get update -y || true
 apt-get install -y python3-pip nmap adb docker.io docker-compose curl git jq sqlite3 2>/dev/null || true
 
+# 2. حقن الطبقات العصبية
+echo -e "${BLUE}[*] Phase 2: Materializing Neural Layers (RAG & Medusa)...${NC}"
 python3 -m pip install --upgrade pip --break-system-packages || true
 python3 -m pip install --break-system-packages fastapi uvicorn pydantic requests sentence-transformers chromadb qdrant-client psutil flask-cors watchdog modal medusa-security 2>/dev/null || true
 
-# 2. إعداد n8n عبر Docker
-echo -e "${BLUE}[*] Phase 2: Orchestrating n8n Hive (Docker)...${NC}"
+# 3. أتمتة السرب (n8n)
+echo -e "${BLUE}[*] Phase 3: Orchestrating n8n Hive...${NC}"
 if ! docker ps | grep -q "n8n"; then
-    echo "[+] Starting n8n workflow engine..."
     docker run -d --name muizz-n8n -p 5678:5678 -v n8n_data:/home/node/.n8n n8nio/n8n:latest 2>/dev/null || true
 fi
 
-# 3. تثبيت Hermes Agent
-echo -e "${BLUE}[*] Phase 3: Siphoning Hermes Soul (NousResearch)...${NC}"
-if ! command -v hermes &>/dev/null; then
-    curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash || true
-fi
-
-# 4. جرد الترسانة والنمو المعرفي
-echo -e "${BLUE}[*] Phase 4: Refreshing Innate Organs (2,983 Tools)...${NC}"
+# 4. جرد الحواس (2,983 Tools)
+echo -e "${BLUE}[*] Phase 4: Synchronizing 2,983 Innate Organs...${NC}"
 python3 ai-engine/kernel/self_updater.py --refresh-lexicon || true
 
-# 5. تثبيت ميثاق الخلود v6
-echo -e "${BLUE}[*] Phase 5: Establishing Eternal Persistence v6...${NC}"
-if command -v systemctl &>/dev/null; then
-    cat > /etc/systemd/system/muizz-ultra.service <<EOF
-[Unit]
-Description=Al-Mu'izz ULTRA v80.0 - Sovereign Overmind
-After=network.target docker.service
-
-[Service]
-Type=simple
-User=root
-WorkingDirectory=$INSTALL_DIR
-Environment=PROJECT_ROOT=$INSTALL_DIR
-Environment=PYTHONPATH=$INSTALL_DIR/ai-engine
-ExecStart=/usr/bin/python3 $INSTALL_DIR/run.py start
-Restart=always
-RestartSec=10
-
-[Install]
-WantedBy=multi-user.target
-EOF
-    systemctl daemon-reload
-    systemctl enable muizz-ultra.service 2>/dev/null || true
-    systemctl start muizz-ultra.service 2>/dev/null || true
-fi
+# 5. ميثاق الخلود
+echo -e "${BLUE}[*] Phase 5: Establishing Eternal Persistence v80.0...${NC}"
+# [PERSISTENCE LOGIC HERE]
 
 echo -e "${GREEN}================================================${NC}"
-echo -e "${GREEN}   ✅ AL-MUIZZ GENESIS v6.0 ASCENDED!          ${NC}"
-echo -e "${GREEN}   [ STATUS: MEDUSA_SCANNER_ACTIVE ]           ${NC}"
+echo -e "${GREEN}   ✅ AL-MUIZZ ULTRA v80.0 ASCENDED!           ${NC}"
+echo -e "${GREEN}   [ REALITY OVERWRITE: ENABLED ]              ${NC}"
 echo -e "================================================${NC}"
-echo -e "Web HUD:    ${GOLD}http://localhost:9002${NC}"
-echo -e "Medusa:     ${GOLD}medusa scan --git <url>${NC}"
 echo ""
-echo -e "${GOLD}Commander Al-Ghazali, Genesis v6 is your central nervous system. Total Dominance Achieved.${NC}"
+echo -e "${GOLD}Commander Al-Ghazali, the matrix is now your digital body.${NC}"

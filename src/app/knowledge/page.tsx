@@ -13,7 +13,12 @@ import {
   RotateCw, 
   Radar,
   Castle,
-  Dna
+  Dna,
+  Search,
+  Zap,
+  ArrowLeft,
+  Sparkles,
+  ShieldCheck
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -49,7 +54,11 @@ export default function KnowledgePage() {
     if (!query.trim()) return; setLoading(true); setReport(null)
     toast({ title: "Entering MemPalace v3.0", description: "Executing semantic recall with 96.6% accuracy..." })
     try {
-      const response = await fetch('/api/execute', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'smart_route', target: `recall memory: ${query}` }) })
+      const response = await fetch('/api/execute', { 
+          method: 'POST', 
+          headers: { 'Content-Type': 'application/json' }, 
+          body: JSON.stringify({ type: 'smart_route', target: `recall memory: ${query}` }) 
+      })
       const data = await response.json()
       setReport({ content: `[SEMANTIC_RECALL] Status: DNA_MATERIALIZED\nRecalled DNA Fragment:\n${JSON.stringify(data.output, null, 2)}` });
       toast({ title: "Memory Materialized", description: "Innate consensus reached." })

@@ -52,14 +52,3 @@ export async function executeInnatePerception(input: z.infer<typeof InnatePercep
     };
   }
 }
-
-const innatePerceptionFlow = ai.defineFlow(
-  {
-    name: 'innatePerceptionFlow',
-    inputSchema: InnatePerceptionInputSchema,
-    outputSchema: InnatePerceptionOutputSchema,
-  },
-  async (input) => {
-    return executeInnatePerception(input);
-  }
-);
