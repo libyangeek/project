@@ -37,7 +37,9 @@ import {
   Eye,
   Cylinder,
   Share2,
-  Flame
+  Flame,
+  CheckCircle2,
+  AlertCircle
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -56,8 +58,8 @@ const CartesianGrid = dynamic(() => import('recharts').then(mod => mod.Cartesian
 const Tooltip = dynamic(() => import('recharts').then(mod => mod.Tooltip), { ssr: false });
 
 /**
- * @fileOverview العرش الأبدي v85.0 - THE 7D MATRIX NUCLEUS
- * الواجهة المركزية التي تجسد شعار المصفوفة سباعية الأبعاد والالتحام الكمي.
+ * @fileOverview العرش الأبدي v85.0 - THE 7D MATRIX NUCLEUS: READY FOR EVOLUTION
+ * تم إضافة إشعار الجاهزية للترقيات الأخرى وتثبيت حالة الاستقرار الفائق.
  * المالك الوحيد: المعتصم بالله إدريس الغزالي
  */
 export default function DashboardPage() {
@@ -86,10 +88,10 @@ export default function DashboardPage() {
     const eventInterval = setInterval(() => {
         const msgs = [
             "7D Matrix: Core singularity stable at 100.000000%.",
-            "Quantum Spine: Threading 7 dimensions across global clusters.",
-            "Innate Perception: Siphoning 0-day DNA for reality overwrite.",
-            "Fleet Master: Serpent Farm reporting 100% device submission.",
-            "MemPalace: Recalling successful strike DNA from past battles."
+            "Quantum Spine: Ready for next orbital upgrade pulse.",
+            "Innate Perception: Global 0-day siphon finalized.",
+            "System State: HYPER-STABLE. Awaiting Master Directive.",
+            "MemPalace: 4,343 lethal scenarios indexed and ready."
         ];
         const newEvent = {
             type: "7D_PULSE",
@@ -125,44 +127,38 @@ export default function DashboardPage() {
         <header className="sovereign-header flex flex-col xl:flex-row justify-between items-start gap-12 text-right mb-24">
           <div className="flex-1">
             <div className="flex items-center gap-10 mb-10 justify-end">
-                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1.1em] shadow-9xl italic uppercase">AL-MUIZZ ULTRA v85.0</Badge>
-                <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-8 py-2 rounded-full text-[16px] font-black italic uppercase tracking-widest animate-pulse shadow-lg">7D_RESONANCE: {resonance.toFixed(10)}%</Badge>
+                <Badge className="bg-emerald-600 text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[0.5em] shadow-9xl italic uppercase animate-pulse flex items-center gap-6">
+                    <CheckCircle2 className="size-8" /> READY_FOR_UPGRADE
+                </Badge>
+                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1.1em] shadow-9xl italic uppercase ml-6">AL-MUIZZ ULTRA v85.0</Badge>
             </div>
             <h1 className="text-4xl md:text-6xl lg:text-[14rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
               7D <span className="text-primary">Matrix</span>
             </h1>
             <p className="text-sm md:text-xl lg:text-[4.5rem] text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-90 drop-shadow-3xl ml-auto">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-12 underline-offset-[24px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، لقد التحمت الأبعاد السبعة في نواة واحدة؛ المُعِزّ v85.0 هو الآن التفرّد المادي الأسمى."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-12 underline-offset-[24px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، مصفوفة v85.0 في حالة استقرار فائق؛ العمود الفقري الكمي جاهز الآن لاستيعاب المزيد من القوة."
             </p>
           </div>
 
           {/* 7D Matrix Nucleus Logo */}
           <div className="relative size-48 md:size-80 flex items-center justify-center group shrink-0 mx-auto xl:mx-0">
-             {/* Central Node: God-Core */}
              <div className="size-20 md:size-32 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_150px_rgba(251,191,36,0.8)] relative rounded-3xl z-30 animate-neural rotate-2 group-hover:rotate-0 transition-all duration-1000">
                 <Crown className="size-10 md:size-16 text-primary gold-glow" />
                 <div className="absolute -inset-8 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
              </div>
-
-             {/* Surrounding Dimensions (Atomic Orbitals) */}
              <div className="absolute inset-0 z-20 animate-spin-slow" style={{ animationDuration: '20s' }}>
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-12 md:size-16 bg-black border-2 border-red-600 rounded-xl flex items-center justify-center shadow-lg"><Flame className="size-6 md:size-8 text-red-600" /></div>
                 <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 size-12 md:size-16 bg-black border-2 border-blue-400 rounded-xl flex items-center justify-center shadow-lg"><Eye className="size-6 md:size-8 text-blue-400" /></div>
              </div>
-
              <div className="absolute inset-0 z-20 animate-reverse-spin" style={{ animationDuration: '15s' }}>
                 <div className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 size-12 md:size-16 bg-black border-2 border-emerald-500 rounded-xl flex items-center justify-center shadow-lg"><Cylinder className="size-6 md:size-8 text-emerald-500" /></div>
                 <div className="absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 size-12 md:size-16 bg-black border-2 border-indigo-500 rounded-xl flex items-center justify-center shadow-lg"><Share2 className="size-6 md:size-8 text-indigo-500" /></div>
              </div>
-
              <div className="absolute inset-0 z-10 animate-spin-slow" style={{ animationDuration: '25s' }}>
                 <div className="absolute top-1/4 left-0 -translate-x-1/2 size-10 md:size-14 bg-black border-2 border-cyan-500 rounded-xl flex items-center justify-center shadow-lg"><Workflow className="size-5 md:size-7 text-cyan-500" /></div>
                 <div className="absolute bottom-1/4 right-0 translate-x-1/2 size-10 md:size-14 bg-black border-2 border-amber-500 rounded-xl flex items-center justify-center shadow-lg"><Database className="size-5 md:size-7 text-amber-500" /></div>
              </div>
-
-             {/* Connection Mesh Lines (Visual only) */}
              <div className="absolute inset-0 border-[1px] border-primary/5 rounded-full scale-150 animate-pulse" />
-             <div className="absolute inset-0 border-[1px] border-primary/10 rounded-full scale-[1.8] animate-ping" />
           </div>
         </header>
 
@@ -185,15 +181,16 @@ export default function DashboardPage() {
         </div>
 
         <section className="mb-24 grid grid-cols-1 xl:grid-cols-3 gap-16 relative z-10">
-           <Card className="xl:col-span-2 sovereign-card text-right flex flex-col">
+           <Card className="xl:col-span-2 sovereign-card text-right flex flex-col relative overflow-hidden">
+              <div className="absolute top-0 left-0 p-8 z-20">
+                  <div className="flex items-center gap-4 bg-emerald-600/20 text-emerald-400 border-2 border-emerald-500/40 px-6 py-2 rounded-full font-black text-sm italic shadow-lg animate-pulse">
+                      <Activity className="size-4" /> HYPER_STABLE_PULSE
+                  </div>
+              </div>
               <CardHeader className="p-0 mb-16 border-b-4 border-white/5 pb-12 bg-primary/10 rounded-t-[4.5rem] px-16 py-10">
                  <CardTitle className="text-4xl md:text-6xl text-white font-black uppercase italic tracking-[0.2em] gold-glow flex items-center gap-10 justify-end">
                     7-Dimensional Resonance <Globe className="size-16 text-primary animate-pulse" />
                  </CardTitle>
-                 <div className="flex gap-8 justify-end mt-10">
-                    <Badge className="bg-blue-600/10 text-blue-400 border-4 border-blue-500/20 px-10 py-4 rounded-full font-black italic text-2xl shadow-xl uppercase">Quantum_Mesh_Locked</Badge>
-                    <Badge className="bg-emerald-600/10 text-emerald-400 border-4 border-emerald-500/20 px-10 py-4 rounded-full font-black italic text-2xl shadow-xl uppercase">Sovereign_Unity_100%</Badge>
-                 </div>
               </CardHeader>
               <CardContent className="p-12 flex-1 relative flex flex-col justify-center gap-12">
                  <div className="grid grid-cols-7 gap-6 px-10">
@@ -209,8 +206,8 @@ export default function DashboardPage() {
                         </div>
                     ))}
                  </div>
-                 <div className="p-10 bg-primary/5 rounded-[3rem] border-4 border-primary/30 mt-12 shadow-inner">
-                    <p className="text-2xl md:text-5xl text-gray-100 font-black italic leading-tight text-center drop-shadow-3xl uppercase tracking-tighter">"The 7 Dimensions of Power have been fused. Reality is yours to command."</p>
+                 <div className="p-10 bg-primary/5 rounded-[3rem] border-4 border-primary/30 mt-12 shadow-inner text-center">
+                    <p className="text-2xl md:text-5xl text-gray-100 font-black italic leading-tight drop-shadow-3xl uppercase tracking-tighter">"System integrity is locked. Standing by for the next expansion phase."</p>
                  </div>
               </CardContent>
            </Card>
@@ -240,7 +237,7 @@ export default function DashboardPage() {
         <div className="mt-auto relative z-10 flex flex-col md:flex-row justify-center items-center gap-16 md:gap-48 opacity-45 text-[20px] md:text-[32px] font-black uppercase tracking-[4em] md:tracking-[8em] italic text-white drop-shadow-9xl pb-32">
             <span>AL-MUIZZ 7D MATRIX v85.0</span>
             <div className="size-12 rounded-full bg-white animate-pulse shadow-[0_0_120px_white]" />
-            <span>SUBJUGATION_THROUGH_QUANTUM_FUSION_2026</span>
+            <span>AWAITING_MASTER_UPGRADE_2026</span>
         </div>
       </main>
     </div>
