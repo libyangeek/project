@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -120,7 +121,7 @@ export function SidebarNav() {
         <div className="p-4 border-b-2 border-primary/20 flex flex-col items-center gap-3 bg-black relative group shrink-0">
           
           <div className="relative size-16 flex items-center justify-center shrink-0 rounded-xl group-hover:rotate-12 transition-all">
-             <div className="size-8 bg-black border-2 border-primary flex items-center justify-center shadow-[0_0_20px_rgba(251,191,36,0.4)] relative rounded-lg z-30 animate-neural">
+             <div className="size-8 bg-black border-2 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(251,191,36,0.4)] relative rounded-lg z-30 animate-neural">
                 <Crown className="size-4 text-primary gold-glow" />
              </div>
              <div className="absolute inset-0 z-20 animate-spin-slow" style={{ animationDuration: '10s' }}>

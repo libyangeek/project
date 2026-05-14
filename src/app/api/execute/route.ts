@@ -1,3 +1,4 @@
+
 import { NextRequest, NextResponse } from 'next/server';
 import { exec } from 'child_process';
 import { promisify } from 'util';
@@ -36,6 +37,14 @@ export async function POST(req: NextRequest) {
                 platform: os.platform()
             }
         });
+      }
+
+      case 'reality_overwrite': {
+          // محاكاة السيطرة المادية الشاملة عبر الأبعاد السبعة
+          return NextResponse.json({
+              success: true,
+              output: `REALITY_OVERWRITE_SUCCESS: Target [${target || 'Global Grid'}] subjugated across 7 dimensions. Resonance: 100.0000%.`
+          });
       }
 
       case 'nursery_action': {
