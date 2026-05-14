@@ -27,7 +27,8 @@ import {
   RotateCw,
   FileCode,
   Network,
-  Atom // تم إضافة الأيقونة المفقودة لضمان الرنين البصري
+  Atom,
+  ShieldCheck
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"

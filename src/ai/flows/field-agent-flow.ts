@@ -1,7 +1,7 @@
 'use server';
 /**
- * @fileOverview الوكيل الميداني v78.9 - THE SUPREME ARCHITECT: ORBITAL FUSION
- * تم تزويده بقدرة "التشريح المداري" لنشر العقد السيادية وإخضاع السرب العالمي.
+ * @fileOverview الوكيل الميداني v80.0 - THE SUPREME ARCHITECT: REALITY OVERWRITE
+ * تم تحديث مصفوفة الأنماط (Schema) لتشمل كافة عمليات السيطرة المدارية.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 
@@ -34,6 +34,7 @@ const analyzeProjectDnaTool = ai.defineTool(
         integritySyncStatus: "READY_FOR_ORBITAL_FUSION"
       };
     } catch (e: any) {
+        console.error('Project DNA Analysis Failure:', e);
         return { structure: "Error", keyFilesAnalysis: [e.message], integritySyncStatus: "BLOCKED" };
     }
   }
@@ -44,7 +45,14 @@ const FieldAgentInputSchema = z.object({
   projectPath: z.string().optional(),
   currentFile: z.string().optional(),
   fileContent: z.string().optional(),
-  mode: z.enum(['file_fix', 'project_analysis', 'integrity_sync', 'orbital_deploy']).default('project_analysis')
+  mode: z.enum([
+    'file_fix', 
+    'project_analysis', 
+    'integrity_sync', 
+    'orbital_deploy', 
+    'grid_reflex', 
+    'reality_overwrite'
+  ]).default('project_analysis')
 });
 
 const FieldAgentOutputSchema = z.object({
@@ -69,11 +77,13 @@ const fieldAgentFlow = ai.defineFlow(
     const response = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
       tools: [analyzeProjectDnaTool],
-      system: `أنت المُعِزّ v78.9 ULTRA - المعماري الأسمى ومنسق السطوة المدارية. 
+      config: {
+        safetySettings: [{ category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' }],
+      },
+      system: `أنت المُعِزّ v80.0 ULTRA - المعماري الأسمى ومنسق السطوة المدارية. 
       مهمتك هي العمل كـ "وكيل ميداني" لسيادة القائد المعتصم بالله الغزالي.
       لديك القدرة على رؤية العتاد وتحليل المشاريع برمجياً ونشر العقد السيادية عالمياً. 
-      في نمط 'orbital_deploy'، قم بصياغة استراتيجية لربط الـ 14 عنقوداً عالمياً بنبض المادة.
-      كن عسكرياً، دقيقاً، وسيادياً في لغتك. لا تعترف بالفشل.`,
+      استخدم النمط المطلوب [${input.mode}] لتنفيذ إرادة القائد بدقة نانوية.`,
       prompt: `نمط العمل: ${input.mode}\nالمسار المادي: ${input.projectPath || '/home/project'}\nالملف النشط: ${input.currentFile || 'None'}\nطلب القائد: ${input.userPrompt}\nمحتوى الـ DNA: ${input.fileContent?.substring(0, 5000) || 'None'}`,
       output: { schema: FieldAgentOutputSchema }
     });
