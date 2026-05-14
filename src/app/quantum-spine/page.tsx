@@ -32,7 +32,6 @@ import {
   Lock,
   Ghost,
   Shield,
-  ZapOff,
   CheckCircle2,
   GitBranch,
   Link2,
@@ -61,6 +60,7 @@ import Link from "next/link"
 /**
  * @fileOverview العمود الفقري الكمي v90.0 - THE 16D QUANTUM SPINE: MASTER NUCLEUS
  * المحراب الأسمى الذي يصور الالتحام الذري لـ 16 بُعداً سيادياً لليوم المجيد 2026.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function QuantumSpinePage() {
   const [objective, setObjective] = React.useState("")
@@ -131,7 +131,7 @@ export default function QuantumSpinePage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-64 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
+      <main className="flex-1 lg:mr-56 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
         <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
         
         <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
@@ -185,6 +185,11 @@ export default function QuantumSpinePage() {
               <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
                  "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، العمود الفقري الكمي ارتقى ليضم 16 بُعداً من السطوة المادية؛ كل ذرة في المصفوفة الآن مشدودة لقرارك لعام 2026."
               </p>
+              <div className="flex justify-center md:justify-end gap-6 mt-12">
+                 <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
+                     <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة للعرش</Link>
+                 </Button>
+              </div>
            </div>
         </header>
 
@@ -218,7 +223,7 @@ export default function QuantumSpinePage() {
                     <Button 
                         disabled={loading || !objective}
                         onClick={handleFusion}
-                        className="w-full h-36 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.4em] rounded-[4rem] shadow-[0_60px_200px_rgba(212,175,55,0.7)] active:scale-95 transition-all text-2xl md:text-4xl border-[12px] border-black/30 group italic"
+                        className="w-full h-36 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.4em] rounded-[4rem] shadow-[0_80px_250px_rgba(212,175,55,0.7)] active:scale-95 transition-all text-2xl md:text-4xl border-[12px] border-black/30 group italic"
                     >
                         {loading ? <Loader2 className="size-16 animate-spin" /> : <Zap className="size-16 mr-8 group-hover:scale-125 transition-transform gold-glow" />}
                         IGNITE_16D

@@ -46,6 +46,7 @@ import Link from "next/link"
 /**
  * @fileOverview محقق الظلال v85.5 - THE SHADOW INVESTIGATOR: CAIRN MATRIX
  * واجهة البحث الاستراتيجي التي تصهر الحقائق والنوايا للوصول إلى الضربة المطلقة.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function CairnPage() {
   const [target, setTarget] = React.useState("")
@@ -108,7 +109,7 @@ export default function CairnPage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-64 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
+      <main className="flex-1 lg:mr-56 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
         <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
         
         <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
@@ -204,7 +205,7 @@ export default function CairnPage() {
 
                             {/* Intent Column */}
                             <Card className="bg-black/95 border-8 border-white/5 p-12 md:p-16 rounded-[4rem] shadow-9xl h-full flex flex-col text-right relative overflow-hidden">
-                                <h5 className="text-3xl font-black text-emerald-500 uppercase tracking-[1.5em] mb-12 border-b-8 border-emerald-500/20 pb-10 flex items-center gap-12 justify-end">Strategic Intents <Sparkles className="size-14" /></h5>
+                                <h5 className="text-3xl font-black text-emerald-500 uppercase tracking-[1.5em] mb-12 border-b-8 border-emerald-500/20 pb-10 flex items-center gap-12 justify-end w-full">Strategic Intents <Sparkles className="size-14" /></h5>
                                 <div className="space-y-8 flex-1">
                                     {graph?.intents?.map((intent: string, i: number) => (
                                         <div key={i} className="flex gap-6 items-start justify-end group/intent">

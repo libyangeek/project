@@ -19,17 +19,14 @@ import {
   Key, 
   Lock, 
   ShieldCheck, 
-  TrendingUp, 
   Cpu, 
   Database,
   ArrowLeft,
   RotateCw,
-  Search,
   FlaskConical,
   Flame,
-  Wand2,
-  Box,
-  Cylinder
+  Cylinder,
+  Network
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -54,7 +51,7 @@ export default function AlgorithmFactoryPage() {
   const categories = [
     { id: "cryptography", label: "التشفير والتعمية", icon: Lock, color: "text-blue-500" },
     { id: "graph_path", label: "المسارات والرسوم", icon: Network, color: "text-primary" },
-    { id: "machine_learning", label: "التعلم الآلي", icon: BrainCircuit, color: "text-emerald-500" },
+    { id: "machine_learning", label: "التعلم الآلي", icon: Cpu, color: "text-emerald-500" },
     { id: "compression", label: "الضغط والتحويل", icon: Cylinder, color: "text-magenta-500" }
   ];
 
@@ -99,7 +96,7 @@ export default function AlgorithmFactoryPage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-64 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
+      <main className="flex-1 lg:mr-56 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
         <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
         
         <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
@@ -122,7 +119,7 @@ export default function AlgorithmFactoryPage() {
               </p>
               <div className="flex justify-center md:justify-end gap-6 mt-12">
                  <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
-                     <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة للعرش</Link>
+                     <Link href="/"><ArrowLeft className="size-6 mr-4" /> العودة للعرش</Link>
                  </Button>
               </div>
            </div>
@@ -208,7 +205,7 @@ export default function AlgorithmFactoryPage() {
                  ) : (
                    <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-80">
                       <div className="relative group/lock">
-                        <Box className="size-64 md:size-[50rem] animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[12000ms]" />
+                        <Boxes className="size-64 md:size-[50rem] animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[12000ms]" />
                         <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-64 text-primary/40 animate-neural" />
                         <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>
@@ -229,10 +226,4 @@ export default function AlgorithmFactoryPage() {
       </main>
     </div>
   )
-}
-
-function XIcon({className}: {className?: string}) {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-    )
 }
