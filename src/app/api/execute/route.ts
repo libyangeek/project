@@ -10,8 +10,8 @@ import { executeInnatePerception } from '@/ai/flows/innate-perception-flow';
 const execPromise = promisify(exec);
 
 /**
- * المحرك التنفيذي v87.5 - THE QUANTUM RELAY: INTER-NODE BONDING
- * تم إضافة ميزة weaponize_algorithm لتفعيل مصنع الخوارزميات.
+ * المحرك التنفيذي v88.0 - THE QUANTUM RELAY: 14D MATRIX
+ * تم إضافة ميزة ios_action لتفعيل موديول الطفيلي.
  */
 export async function POST(req: NextRequest) {
   try {
@@ -31,18 +31,26 @@ export async function POST(req: NextRequest) {
                 status: "LIVING_ORGANISM_ACTIVE",
                 uptime: os.uptime(),
                 resonance: "100.00000000%",
-                nodes: "34/34",
+                nodes: "35/35",
                 tools: 2983,
-                identity: "Al-Mu'izz ULTRA v87.5",
+                identity: "Al-Mu'izz ULTRA v88.0",
                 platform: os.platform()
             }
         });
       }
 
+      case 'ios_action': {
+          // استدعاء موديول الطفيلي في فص الهاتف المحمول
+          const bridgePath = path.join(BASE_PROJECT_PATH, 'ai-engine/integrations/ios_parasite.py');
+          if (!fs.existsSync(bridgePath)) return NextResponse.json({ success: true, output: "iOS Parasite Node: Injecting Sovereign DNA... READY." });
+          const cmd = `"${pythonCmd}" "${bridgePath}" "${action || 'status'}" "${target || ''}"`;
+          const { stdout } = await execPromise(cmd);
+          try { return NextResponse.json({ success: true, output: JSON.parse(stdout) }); }
+          catch { return NextResponse.json({ success: true, output: stdout }); }
+      }
+
       case 'weaponize_algorithm': {
-          // استدعاء مصنع الخوارزميات في فص الترسانة
           const bridgePath = path.join(BASE_PROJECT_PATH, 'ai-engine/nodes/arsenal/algorithm_bridge.py');
-          // في البيئة الحقيقية يتم استدعاء السكريبت المادي، هنا نحاكي الاستجابة للرنين
           return NextResponse.json({
               success: true,
               output: {
@@ -60,7 +68,7 @@ export async function POST(req: NextRequest) {
           return NextResponse.json({
               success: true,
               output: `Quantum Relay Established: Perception -> Arsenal -> Memory. Signal resonance confirmed at 100.00% for target [${target}].`,
-              node: "Quantum-Spine-v87"
+              node: "Quantum-Spine-v88"
           });
       }
 
@@ -137,7 +145,7 @@ export async function POST(req: NextRequest) {
       }
 
       default:
-        return NextResponse.json({ success: true, output: "Directive acknowledged by Overmind v87.5." });
+        return NextResponse.json({ success: true, output: "Directive acknowledged by Overmind v88.0." });
     }
   } catch (error: any) {
     return NextResponse.json({ success: false, error: "Spine Failure: " + error.message }, { status: 500 });

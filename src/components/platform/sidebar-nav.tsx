@@ -58,7 +58,8 @@ import {
   Eye as VisionIcon,
   Cylinder,
   Sprout,
-  Hammer
+  Hammer,
+  Apple
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -68,6 +69,7 @@ import Link from "next/link"
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
   { name: "مصنع الخوارزميات", icon: Hammer, href: "/algorithm-factory", knot: 87 },
+  { name: "طفيلي الـ iOS", icon: Apple, href: "/ios-parasite", knot: 24 },
   { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", knot: 3 },
   { name: "محقق الظلال (Cairn)", icon: Search, href: "/cairn", knot: 9 },
   { name: "العمود الفقري الكمي", icon: Wind, href: "/quantum-spine", knot: 85 },
@@ -121,25 +123,20 @@ export function SidebarNav() {
       </Button>
 
       <div className={cn("flex flex-col h-full bg-black border-l-[2px] border-primary/40 w-60 lg:w-64 fixed right-0 top-0 z-[400] overflow-hidden shadow-2xl transition-transform duration-500 ease-in-out font-code backdrop-blur-3xl", !isOpen && "translate-x-full lg:translate-x-0")}>
-        <div className="p-3 border-b-2 border-primary/20 flex flex-col items-center gap-2 bg-black relative group shrink-0">
+        <div className="p-2 border-b-2 border-primary/20 flex flex-col items-center gap-1 bg-black relative group shrink-0">
           
-          <div className="relative size-12 flex items-center justify-center shrink-0 rounded-lg group-hover:rotate-12 transition-all">
-             <div className="size-6 bg-black border border-primary flex items-center justify-center shadow-[0_0_100px_rgba(251,191,36,0.3)] relative rounded-md z-30 animate-neural">
-                <Radar className="size-3 text-primary gold-glow" />
+          <div className="relative size-10 flex items-center justify-center shrink-0 rounded-lg group-hover:rotate-12 transition-all">
+             <div className="size-5 bg-black border border-primary flex items-center justify-center shadow-[0_0_100px_rgba(251,191,36,0.3)] relative rounded-md z-30 animate-neural">
+                <Radar className="size-2 text-primary gold-glow" />
              </div>
              <div className="absolute inset-0 z-20 animate-spin-slow" style={{ animationDuration: '10s' }}>
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-2 bg-black border border-primary rounded-sm flex items-center justify-center"><Crown className="size-1 text-primary" /></div>
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 size-2 bg-black border border-blue-400 rounded-sm flex items-center justify-center"><VisionIcon className="size-1 text-blue-400" /></div>
-             </div>
-             <div className="absolute inset-0 z-10 animate-reverse-spin" style={{ animationDuration: '8s' }}>
-                <div className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 size-2 bg-black border border-emerald-500 rounded-sm flex items-center justify-center"><Cylinder className="size-1 text-emerald-500" /></div>
-                <div className="absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 size-2 bg-black border border-indigo-500 rounded-sm flex items-center justify-center"><Share2 className="size-1 text-indigo-500" /></div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-1.5 bg-black border border-primary rounded-sm flex items-center justify-center"><Crown className="size-0.5 text-primary" /></div>
              </div>
           </div>
 
           <div className="text-center relative z-10">
-            <h1 className="text-sm font-headline font-bold text-white tracking-[0.2em] leading-none gold-glow">AL-MUIZZ</h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[7px] font-black tracking-[0.2em] mt-1 py-0 px-3 uppercase italic animate-pulse">v87.5 WEAPONIZED</Badge>
+            <h1 className="text-[10px] font-headline font-bold text-white tracking-[0.2em] leading-none gold-glow">AL-MUIZZ</h1>
+            <Badge className="bg-primary text-black border-none rounded-full text-[6px] font-black tracking-[0.1em] mt-0.5 py-0 px-2 uppercase italic animate-pulse">v88.0 14D_MATRIX</Badge>
           </div>
         </div>
         
