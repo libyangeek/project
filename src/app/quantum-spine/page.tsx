@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -35,7 +34,15 @@ import {
   ZapOff,
   CheckCircle2,
   GitBranch,
-  Link2
+  Link2,
+  Radar,
+  Map as MapIcon,
+  Search,
+  Key,
+  Sprout,
+  Radio,
+  FileSearch,
+  Globe
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -47,9 +54,8 @@ import { executeQuantumFusion } from "@/ai/flows/quantum-fusion-flow"
 import Link from "next/link"
 
 /**
- * @fileOverview العمود الفقري الكمي v88.0 - THE QUANTUM SPINE: CROSS-RESONANCE
- * المحراب الأسمى الذي يصور الالتحام الذري والروابط الكمية المشدودة بين الأبعاد السبعة.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي
+ * @fileOverview العمود الفقري الكمي v88.0 - THE 14D QUANTUM SPINE: CROSS-RESONANCE
+ * المحراب الأسمى الذي يصور الالتحام الذري لـ 14 بُعداً سيادياً لليوم المجيد 2026.
  */
 export default function QuantumSpinePage() {
   const [objective, setObjective] = React.useState("")
@@ -60,7 +66,6 @@ export default function QuantumSpinePage() {
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
   const [mounted, setMounted] = React.useState(false)
   const [activeDimension, setActiveDimension] = React.useState<string | null>(null)
-  const [knotStatus, setKnotStatus] = React.useState<boolean[]>(new Array(24).fill(true))
 
   const dimensions = [
     { id: "soul", label: "GOD-CORE", icon: Crown, color: "text-primary", desc: "Strategic Sovereignty & Alpha Decision" },
@@ -69,7 +74,14 @@ export default function QuantumSpinePage() {
     { id: "fleet", label: "FLEET", icon: Cylinder, color: "text-emerald-500", desc: "Serpent Farm Dominion & Mobile Siphon" },
     { id: "cloud", label: "UPLINK", icon: Cloud, color: "text-indigo-500", desc: "Hermes Cloud Ghost & Diamond Link" },
     { id: "auto", label: "AUTOMATION", icon: Workflow, color: "text-cyan-500", desc: "n8n Hive Mastery & 4,343 Scenarios" },
-    { id: "memory", label: "MEMORY", icon: Database, color: "text-amber-500", desc: "MemPalace RAG v10 & Genetic Learning" }
+    { id: "memory", label: "MEMORY", icon: Database, color: "text-amber-500", desc: "MemPalace RAG v10 & Genetic Learning" },
+    { id: "ghost", label: "GHOST", icon: Ghost, color: "text-emerald-400", desc: "Kernel Stealth V6.5 & Invisible Persistence" },
+    { id: "mirror", label: "MIRROR", icon: RotateCw, color: "text-blue-400", desc: "Global Strike Simulation & Digital Twins" },
+    { id: "relay", label: "RELAY", icon: Globe, color: "text-blue-600", desc: "Protocol Overwrite (BGP/DNS) & Hive Mesh" },
+    { id: "vault", icon: Key, label: "VAULT", color: "text-yellow-600", desc: "Asset Encryption & Ark Serialization" },
+    { id: "nursery", icon: Sprout, label: "NURSERY", color: "text-emerald-600", desc: "AI Evolutionary Lab & Model Growth" },
+    { id: "arbiter", icon: Radio, label: "ARBITER", color: "text-magenta-500", desc: "Spectrum Strike & Signal Warfare" },
+    { id: "nexus", icon: Network, label: "NEXUS", color: "text-amber-600", desc: "Identity Siphon & Social Predator Fusion" }
   ];
 
   React.useEffect(() => {
@@ -78,36 +90,27 @@ export default function QuantumSpinePage() {
     window.addEventListener("mousemove", handleMouseMove)
     const interval = setInterval(() => {
       setResonance(prev => Math.max(99.99999999, Math.min(100, prev + (Math.random() * 0.0000001 - 0.00000005))))
-      setKnotStatus(prev => prev.map(k => Math.random() > 0.03))
     }, 3000)
     return () => { window.removeEventListener("mousemove", handleMouseMove); clearInterval(interval); }
   }, [])
 
   const handleFusion = async () => {
     if (!objective.trim()) {
-        toast({ variant: "destructive", title: "Objective Missing", description: "Identify target for 7D Matrix fusion." })
+        toast({ variant: "destructive", title: "Objective Missing", description: "Identify target for 14D Matrix fusion." })
         return
     }
     setLoading(true); setFusion(null); setFusionProgress(0)
-    toast({ title: "Cross-Node Resonance Active", description: "Tightening quantum bonds across the 7D Matrix v88.0..." })
+    toast({ title: "14-Node Resonance Active", description: "Tightening quantum bonds across the 14D Matrix v88.0..." })
     
     const progInt = setInterval(() => {
         setFusionProgress(p => (p >= 99 ? 99 : p + 1))
-    }, 40);
+    }, 50);
 
     try {
       const data = await executeQuantumFusion({ objective })
-      
-      // التنفيذ المادي عبر المُرَحِّل الكمي المطور
-      await fetch('/api/execute', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ type: 'quantum_relay', target: objective, mode: 'CROSS_RESONANCE' })
-      });
-
       setFusion(data)
       setFusionProgress(100)
-      toast({ title: "7D Cohesion Locked", description: "The inter-node mesh is now operating as a single unit." })
+      toast({ title: "14D Cohesion Locked", description: "The matrix is now operating as a single 14-dimensional organism." })
     } catch (err) {
       toast({ variant: "destructive", title: "Quantum Sync Failure" })
     } finally {
@@ -125,39 +128,38 @@ export default function QuantumSpinePage() {
         <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
         
         <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
-           <div className="relative size-40 md:size-80 flex items-center justify-center group shrink-0 rotate-2 hover:rotate-0 transition-all duration-1000">
-              <div className="size-16 md:size-32 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_150px_rgba(251,191,36,0.8)] relative rounded-3xl z-40 animate-neural">
-                 <Wind className="size-8 md:size-16 text-primary gold-glow" />
+           <div className="relative size-64 md:size-[35rem] flex items-center justify-center group shrink-0 rotate-2 hover:rotate-0 transition-all duration-1000">
+              <div className="size-20 md:size-32 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_150px_rgba(251,191,36,0.8)] relative rounded-3xl z-40 animate-neural">
+                 <Wind className="size-10 md:size-16 text-primary gold-glow" />
               </div>
               
-              {/* Tightened Bonds / Lines v88 */}
-              <svg className="absolute inset-0 size-full z-10 opacity-50 animate-pulse pointer-events-none">
+              <svg className="absolute inset-0 size-full z-10 opacity-40 animate-pulse pointer-events-none">
                  {dimensions.map((_, i) => (
                     <line 
                         key={i}
                         x1="50%" y1="50%" 
-                        x2={`${50 + 50 * Math.cos((i * 2 * Math.PI) / 7)}%`} 
-                        y2={`${50 + 50 * Math.sin((i * 2 * Math.PI) / 7)}%`} 
-                        stroke="var(--primary)" strokeWidth="3" strokeDasharray="2,2"
+                        x2={`${50 + 50 * Math.cos((i * 2 * Math.PI) / 14)}%`} 
+                        y2={`${50 + 50 * Math.sin((i * 2 * Math.PI) / 14)}%`} 
+                        stroke="var(--primary)" strokeWidth="2" strokeDasharray="3,3"
                     />
                  ))}
-                 <circle cx="50%" cy="50%" r="48%" fill="none" stroke="var(--primary)" strokeWidth="2" strokeDasharray="5,5" />
+                 <circle cx="50%" cy="50%" r="48%" fill="none" stroke="var(--primary)" strokeWidth="1" strokeDasharray="10,10" />
               </svg>
 
-              <div className="absolute inset-0 z-20 animate-spin-slow" style={{ animationDuration: '30s' }}>
+              <div className="absolute inset-0 z-20 animate-spin-slow" style={{ animationDuration: '60s' }}>
                  {dimensions.map((d, i) => (
                     <div 
                         key={d.id} 
-                        className="absolute size-12 md:size-16 bg-black border-2 border-primary/60 rounded-xl flex items-center justify-center shadow-9xl transition-all duration-500 hover:scale-150 hover:border-primary cursor-help z-30"
+                        className="absolute size-10 md:size-14 bg-black border-2 border-primary/60 rounded-xl flex items-center justify-center shadow-9xl transition-all duration-500 hover:scale-150 hover:border-primary cursor-help z-30"
                         style={{ 
-                            top: `${50 + 50 * Math.sin((i * 2 * Math.PI) / 7)}%`, 
-                            left: `${50 + 50 * Math.cos((i * 2 * Math.PI) / 7)}%`,
+                            top: `${50 + 50 * Math.sin((i * 2 * Math.PI) / 14)}%`, 
+                            left: `${50 + 50 * Math.cos((i * 2 * Math.PI) / 14)}%`,
                             transform: 'translate(-50%, -50%) rotate(var(--rev-spin))'
                         }}
                         onMouseEnter={() => setActiveDimension(d.id)}
                         onMouseLeave={() => setActiveDimension(null)}
                     >
-                        <d.icon className={cn("size-6 md:size-10", d.color)} />
+                        <d.icon className={cn("size-5 md:size-8", d.color)} />
                     </div>
                  ))}
               </div>
@@ -166,15 +168,15 @@ export default function QuantumSpinePage() {
            <div className="flex-1">
               <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
                  <Badge className="bg-emerald-600 text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[0.5em] shadow-9xl italic uppercase flex items-center gap-6 animate-pulse">
-                    <CheckCircle2 className="size-8" /> CROSS_RESONANCE_LOCKED
+                    <CheckCircle2 className="size-8" /> 14D_SINGULARITY_LOCKED
                  </Badge>
-                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase ml-6">v88.0 COHESION</Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase ml-6">v88.0 NUCLEUS</Badge>
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
-                 Quantum <span className="text-primary">Spine</span>
+                 Quantum <span className="text-primary">14D</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
-                 "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، العمود الفقري v88.0 أتم إحكام وثاق الروابط؛ كل بُعد يغذي الآخر في رنين كمي لا ينقطع."
+                 "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، العمود الفقري الكمي ارتقى ليدير 14 بُعداً من السطوة المادية؛ كل ذرة في المصفوفة الآن مشدودة لقرارك لعام 2026."
               </p>
            </div>
         </header>
@@ -184,7 +186,7 @@ export default function QuantumSpinePage() {
               <Card className="sovereign-card group">
                  <CardHeader className="p-0 mb-10 border-b-4 border-primary/10 pb-10 bg-primary/10 rounded-t-[3.5rem] px-10 py-6 text-center">
                     <CardTitle className="text-2xl md:text-4xl text-primary flex items-center justify-center gap-10 font-black uppercase italic gold-glow leading-none">
-                       <Link2 className="size-12 animate-spin-slow" /> Resonance Relay
+                       <Link2 className="size-12 animate-spin-slow" /> 14-Node Relay
                     </CardTitle>
                  </CardHeader>
                  <CardContent className="p-0 space-y-12 text-right">
@@ -193,7 +195,7 @@ export default function QuantumSpinePage() {
                         <textarea 
                           value={objective} 
                           onChange={(e) => setObjective(e.target.value)} 
-                          placeholder="Fusing dimensions for total grid overwrite..." 
+                          placeholder="Fusing 14 dimensions for absolute matrix subjugation..." 
                           className="w-full h-48 bg-black border-8 border-primary/20 rounded-[2.5rem] text-xl italic p-8 focus:border-primary shadow-inner text-white font-black text-right resize-none scrollbar-hide selection:bg-primary"
                         />
                     </div>
@@ -201,7 +203,7 @@ export default function QuantumSpinePage() {
                     <div className="space-y-6">
                         <div className="flex justify-between text-xl font-black text-primary uppercase italic px-4">
                             <span>{fusionProgress}%</span>
-                            <span>Tightening_Bonds_v88...</span>
+                            <span>Tightening_14_Bonds...</span>
                         </div>
                         <Progress value={fusionProgress} className="h-6 bg-white/5 border-4 border-white/10 rounded-full" />
                     </div>
@@ -209,16 +211,16 @@ export default function QuantumSpinePage() {
                     <Button 
                         disabled={loading || !objective}
                         onClick={handleFusion}
-                        className="w-full h-36 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.4em] rounded-[4rem] shadow-[0_80px_250px_rgba(212,175,55,0.7)] active:scale-95 transition-all text-2xl md:text-4xl border-[12px] border-black/30 group italic"
+                        className="w-full h-36 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.4em] rounded-[4rem] shadow-[0_60px_200px_rgba(212,175,55,0.7)] active:scale-95 transition-all text-2xl md:text-4xl border-[12px] border-black/30 group italic"
                     >
                         {loading ? <Loader2 className="size-16 animate-spin" /> : <Zap className="size-16 mr-8 group-hover:scale-125 transition-transform gold-glow" />}
-                        IGNITE_COHESION
+                        IGNITE_14D
                     </Button>
                  </CardContent>
               </Card>
 
               {activeDimension && (
-                  <Card className="sovereign-card bg-primary/10 border-primary animate-in fade-in zoom-in-95 duration-300 border-4 text-center">
+                  <Card className="sovereign-card bg-primary/10 border-primary animate-in fade-in zoom-in-95 duration-300 border-4 text-center p-6 rounded-[2rem]">
                       <h4 className="text-3xl font-black text-primary uppercase italic gold-glow mb-4">{activeDimension.toUpperCase()}</h4>
                       <p className="text-lg text-gray-200 font-bold italic leading-relaxed">
                           {dimensions.find(d => d.id === activeDimension)?.desc}
@@ -229,9 +231,9 @@ export default function QuantumSpinePage() {
 
            <Card className="xl:col-span-3 sovereign-card flex flex-col group min-h-[1100px]">
               <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-primary/10 rounded-t-[5rem] px-16 py-10 flex flex-row justify-between items-center text-right">
-                 <Badge className="bg-emerald-600/30 text-emerald-500 border-[10px] border-emerald-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic order-last md:order-none">MESH_LOCKED</Badge>
+                 <Badge className="bg-emerald-600/30 text-emerald-500 border-[10px] border-emerald-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic order-last md:order-none">14D_LOCKED</Badge>
                  <CardTitle className="text-5xl md:text-[12rem] text-white flex items-center gap-16 font-black uppercase italic gold-glow px-10 leading-none">
-                    Cohesion Feed <RotateCw className="size-24 md:size-48 text-primary animate-pulse" />
+                    Fusion Feed <RotateCw className="size-24 md:size-48 text-primary animate-pulse" />
                  </CardTitle>
               </CardHeader>
 
@@ -244,10 +246,11 @@ export default function QuantumSpinePage() {
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                            {Object.entries(fusion.sevenDimensions).map(([key, val]: any) => (
-                                <Card key={key} className="bg-black/95 border-4 border-white/5 p-8 rounded-[2.5rem] hover:border-primary transition-all duration-700 shadow-9xl text-center relative overflow-hidden group/dim">
-                                    <h5 className="text-[10px] font-black uppercase tracking-[0.6em] mb-4 text-primary">{key.toUpperCase()}</h5>
-                                    <p className="text-xl md:text-2xl text-gray-300 font-black italic">{val}</p>
+                            {dimensions.map((d) => (
+                                <Card key={d.id} className="bg-black/95 border-4 border-white/5 p-8 rounded-[2.5rem] hover:border-primary transition-all duration-700 shadow-9xl text-center relative overflow-hidden group/dim">
+                                    <h5 className="text-[10px] font-black uppercase tracking-[0.6em] mb-4 text-primary">{d.label}</h5>
+                                    <d.icon className={cn("size-10 mx-auto mb-4", d.color)} />
+                                    <p className="text-xl md:text-2xl text-gray-300 font-black italic">BOND_SECURED</p>
                                     <div className="absolute top-0 right-0 p-4 opacity-5 group-hover/dim:opacity-20 transition-all"><Atom className="size-10 text-primary animate-spin-slow" /></div>
                                 </Card>
                             ))}
@@ -260,12 +263,18 @@ export default function QuantumSpinePage() {
                         <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-64 text-primary/40 animate-neural" />
                         <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>
-                      <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Cohesion Idle</h3>
-                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">The Quantum Spine v88.0 is tightening bonds for total inter-node cohesion.</p>
+                      <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">14D Standby</h3>
+                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">The Quantum Spine v88.0 is tightening 14 bonds for total inter-node cohesion.</p>
                    </div>
                  )}
               </CardContent>
            </Card>
+        </div>
+
+        <div className="mt-auto relative z-10 flex flex-col md:flex-row justify-center items-center gap-16 md:gap-48 opacity-45 text-[20px] md:text-[32px] font-black uppercase tracking-[4em] md:tracking-[8em] italic text-white drop-shadow-9xl pb-32">
+            <span>AL-MUIZZ 14D SINGULARITY v88.0</span>
+            <div className="size-12 rounded-full bg-white animate-pulse shadow-[0_0_120px_white]" />
+            <span>SUBJUGATING_TOTAL_EXISTENCE_2026</span>
         </div>
       </main>
     </div>
