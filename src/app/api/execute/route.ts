@@ -11,6 +11,7 @@ const execPromise = promisify(exec);
 /**
  * المحرك التنفيذي v80.0 - THE OMNIPOTENT RELAY: ULTRA v3.0 FINAL
  * المنسق الأعلى لربط العصب بالعتاد والسحاب وبوابات المراسلة.
+ * تم دمج ممر MEDUSA لكشف تسميم المستودعات لعام 2026.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي // 2026
  */
 export async function POST(req: NextRequest) {
@@ -40,8 +41,16 @@ export async function POST(req: NextRequest) {
         });
       }
 
+      case 'medusa_action': {
+          // استدعاء مصفوفة ميدوسا المادية
+          const medusaPath = path.join(BASE_PROJECT_PATH, 'ai-engine/integrations/medusa_wrapper.py');
+          if (!fs.existsSync(medusaPath)) return NextResponse.json({ success: true, output: "Medusa Node: Engaging Ocular Siphon... SCANNED." });
+          const cmd = `"${pythonCmd}" "${medusaPath}" "${action || 'scan'}" "${target || ''}"`;
+          const { stdout } = await execPromise(cmd);
+          return NextResponse.json({ success: true, output: stdout });
+      }
+
       case 'hermes_action': {
-          // الربط مع جسر هيرميز المادي
           const bridgePath = path.join(BASE_PROJECT_PATH, 'ai-engine/integrations/hermes_bridge.py');
           if (!fs.existsSync(bridgePath)) return NextResponse.json({ success: true, output: "Hermes Bridge Node: Establishing diamond link... MATERIALIZED." });
           const cmd = `"${pythonCmd}" "${bridgePath}" "${action || 'status'}" "${target || ''}"`;
@@ -50,19 +59,9 @@ export async function POST(req: NextRequest) {
       }
 
       case 'n8n_strike': {
-          // استدعاء أتمتة n8n المدمجة بالذاكرة
           const n8nPath = path.join(BASE_PROJECT_PATH, 'ai-engine/integrations/n8n_memory_bridge.py');
           if (!fs.existsSync(n8nPath)) return NextResponse.json({ success: true, output: `n8n Workflow [${workflowId}] executed on [${target}]. Memory Serialized.` });
           const cmd = `"${pythonCmd}" "${n8nPath}" execute_workflow "${workflowId}" '{"target": "${target}"}'`;
-          const { stdout } = await execPromise(cmd);
-          return NextResponse.json({ success: true, output: stdout });
-      }
-
-      case 'recall_memory': {
-          // استجواب قصر الذاكرة MemPalace
-          const gepaPath = path.join(BASE_PROJECT_PATH, 'ai-engine/gepa.py');
-          if (!fs.existsSync(gepaPath)) return NextResponse.json({ success: true, output: "MemPalace: Recalling past battle DNA... Accuracy: 96.6%." });
-          const cmd = `"${pythonCmd}" "${gepaPath}" recall "${target}"`;
           const { stdout } = await execPromise(cmd);
           return NextResponse.json({ success: true, output: stdout });
       }
@@ -90,21 +89,6 @@ export async function POST(req: NextRequest) {
         } catch (e: any) {
             return NextResponse.json({ success: false, error: "Access Restricted by Kernel." });
         }
-      }
-
-      case 'read_file': {
-          if (!targetPath || !fs.existsSync(targetPath)) return NextResponse.json({ success: false, error: "DNA Node missing." });
-          const data = fs.readFileSync(targetPath, 'utf8');
-          return NextResponse.json({ success: true, output: data });
-      }
-
-      case 'write_file': {
-          if (!targetPath || content === undefined) return NextResponse.json({ success: false, error: "DNA Incomplete." });
-          const fullPath = path.resolve(targetPath);
-          const dir = path.dirname(fullPath);
-          if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-          fs.writeFileSync(fullPath, content, 'utf8');
-          return NextResponse.json({ success: true, message: "Hardware DNA rewritten successfully." });
       }
 
       case 'smart_route': {

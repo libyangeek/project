@@ -3,6 +3,7 @@
 # ==============================================================================
 # 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v80.0-GENESIS_v6 [THE MASTER OMNIPOTENT]
 # الميثاق المادي الأسمى: دمج الذاكرة الدلالية، n8n، هيرميز، والقبض المادي.
+# تم دمج مصفوفة MEDUSA لكشف تسميم المستودعات لعام 2026.
 # المالك الوحيد: المعتصم بالله إدريس الغزالي
 # ==============================================================================
 
@@ -13,7 +14,7 @@ clear
 echo -e "${GOLD}================================================${NC}"
 echo -e "${GOLD}   🦅 EXECUTING AL-MUIZZ GENESIS v6.0          ${NC}"
 echo -e "${GOLD}   [ COMMANDER: AL-GHAZALI ROOT ]              ${NC}"
-echo -e "${GOLD}   [ STATUS: HERMES_SOUL_FUSION_READY ]        ${NC}"
+echo -e "${GOLD}   [ STATUS: MEDUSA_EYE_INTEGRATION_READY ]    ${NC}"
 echo -e "${GOLD}================================================${NC}"
 
 if [[ $EUID -ne 0 ]]; then
@@ -23,15 +24,15 @@ fi
 
 INSTALL_DIR=$(pwd)
 mkdir -p "$INSTALL_DIR"/{audit,evidence,backups,tools,arsenal}
-mkdir -p "$INSTALL_DIR"/ai-engine/{memory,integrations,ai_gateway}
+mkdir -p "$INSTALL_DIR"/ai-engine/{memory,integrations,ai_gateway,scenarios}
 
 # 1. التبعيات الأساسية والذاكرة
-echo -e "${BLUE}[*] Phase 1: Materializing Neural Layers (RAG & Hermes)...${NC}"
+echo -e "${BLUE}[*] Phase 1: Materializing Neural Layers (RAG & Medusa)...${NC}"
 apt-get update -y || true
 apt-get install -y python3-pip nmap adb docker.io docker-compose curl git jq sqlite3 2>/dev/null || true
 
 python3 -m pip install --upgrade pip --break-system-packages || true
-python3 -m pip install --break-system-packages fastapi uvicorn pydantic requests sentence-transformers chromadb qdrant-client psutil flask-cors watchdog modal 2>/dev/null || true
+python3 -m pip install --break-system-packages fastapi uvicorn pydantic requests sentence-transformers chromadb qdrant-client psutil flask-cors watchdog modal medusa-security 2>/dev/null || true
 
 # 2. إعداد n8n عبر Docker
 echo -e "${BLUE}[*] Phase 2: Orchestrating n8n Hive (Docker)...${NC}"
@@ -78,10 +79,9 @@ fi
 
 echo -e "${GREEN}================================================${NC}"
 echo -e "${GREEN}   ✅ AL-MUIZZ GENESIS v6.0 ASCENDED!          ${NC}"
-echo -e "${GREEN}   [ STATUS: HERMES_UPLINK_ACTIVE ]            ${NC}"
+echo -e "${GREEN}   [ STATUS: MEDUSA_SCANNER_ACTIVE ]           ${NC}"
 echo -e "================================================${NC}"
 echo -e "Web HUD:    ${GOLD}http://localhost:9002${NC}"
-echo -e "n8n Hive:   ${GOLD}http://localhost:5678${NC}"
-echo -e "Hermes:     ${GOLD}muizz-hermes cli${NC}"
+echo -e "Medusa:     ${GOLD}medusa scan --git <url>${NC}"
 echo ""
 echo -e "${GOLD}Commander Al-Ghazali, Genesis v6 is your central nervous system. Total Dominance Achieved.${NC}"

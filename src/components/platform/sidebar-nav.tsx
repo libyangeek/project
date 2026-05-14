@@ -53,7 +53,8 @@ import {
   Rocket,
   Castle,
   Box,
-  Share2
+  Share2,
+  Bug
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -65,6 +66,7 @@ const navItems = [
   { name: "الارتباط الماسي (Hermes)", icon: Share2, href: "/hermes", knot: 80 },
   { name: "أتمتة السرب (n8n)", icon: Workflow, href: "/n8n", knot: 43 },
   { name: "الاستحواذ المستقل", icon: Rocket, href: "/autonomous", knot: 23 },
+  { name: "عين ميدوسا (Git Scan)", icon: Bug, href: "/medusa", knot: 66 },
   { name: "صياد الأندرويد", icon: Smartphone, href: "/android-hunter", knot: 24 },
   { name: "سطح مكتب السطوة", icon: Monitor, href: "/classic-hub", knot: 78 },
   { name: "الترسانة العظمى", icon: Library, href: "/arsenal", knot: 22 },
