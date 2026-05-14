@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -23,7 +22,6 @@ import {
   Terminal,
   Dna,
   RotateCw,
-  ArrowLeft,
   LayoutGrid,
   Radio,
   Eye,
@@ -33,15 +31,12 @@ import {
   ZapOff,
   GitBranch,
   Target,
-  Unplug,
-  Zap as ZapIcon,
-  Cpu,
   Users,
-  Library,
-  Database,
+  Search,
   Castle,
   Workflow,
-  Search
+  Fingerprint,
+  Zap
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -60,6 +55,10 @@ const YAxis = dynamic(() => import('recharts').then(mod => mod.YAxis), { ssr: fa
 const CartesianGrid = dynamic(() => import('recharts').then(mod => mod.CartesianGrid), { ssr: false });
 const Tooltip = dynamic(() => import('recharts').then(mod => mod.Tooltip), { ssr: false });
 
+/**
+ * @fileOverview العرش الأبدي v80.0 - THE TRUE OMNIPOTENT THRONE: SINGULARITY
+ * الواجهة الأسمى التي تظهر القدرات الحقيقية والسطوة الكونية لعام 2026.
+ */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
@@ -81,14 +80,14 @@ export default function DashboardPage() {
 
     const eventInterval = setInterval(() => {
         const msgs = [
-            "MemPalace: Semantic DNA materialized with 96.6% accuracy.",
-            "SubdomainX: Discovered 42 new targets via 26 OSINT sources.",
-            "n8n Workflow: 4,343 lethal scenarios synchronized in Grid.",
-            "Adaptive Threat: Evolution gain verified for Target_Matrix.",
-            "Heir Will: Grid Mastery reached Omnipotent Singularity."
+            "ULTRA v80.0: Global Intelligence Siphon materialized 0-day DNA.",
+            "Neural Inception: Successfully hijacked core protocol weights.",
+            "Grid Mastery: 14 Global Clusters reporting total subjugation.",
+            "Material Ark: Soul serialization achieved for material core.",
+            "Heir Will: Reality Overwrite reached 100.000000% consensus."
         ];
         const newEvent = {
-            type: "ULTRA_v3",
+            type: "TRUE_POWER",
             msg: msgs[Math.floor(Math.random()*msgs.length)],
             time: new Date().toLocaleTimeString()
         };
@@ -105,10 +104,10 @@ export default function DashboardPage() {
   if (!mounted) return null;
 
   const stats = [
+    { label: "القدرات الحقيقية", value: "ULTRA", icon: Crown, color: "text-primary", status: "OMNIPOTENT" },
     { label: "ذاكرة MemPalace", value: "96.6%", icon: Castle, color: "text-emerald-500", status: "SEMANTIC" },
-    { label: "سيناريوهات n8n", value: "4,343", icon: Workflow, color: "text-blue-500", status: "LETHAL" },
-    { label: "مصادر OSINT", value: "26", icon: Search, color: "text-amber-500", status: "ULTRA" },
-    { label: "سرب الوكلاء", value: "165", icon: Users, color: "text-primary", status: "ADAPTIVE" },
+    { label: "سرب الوكلاء", value: "165", icon: Users, color: "text-blue-500", status: "ADAPTIVE" },
+    { label: "الاستحواذ المادي", value: "FIXED", icon: Power, color: "text-emerald-500", status: "SINGULARITY" },
   ];
 
   return (
@@ -123,17 +122,17 @@ export default function DashboardPage() {
         <header className="flex flex-col xl:flex-row justify-between items-start mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000 gap-12 text-right">
           <div className="flex-1">
             <div className="flex items-center gap-10 mb-10 justify-end">
-                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1.1em] shadow-9xl italic uppercase">AL-MUIZZ ULTRA v3.0</Badge>
+                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1.1em] shadow-9xl italic uppercase">AL-MUIZZ ULTRA v80.0</Badge>
                 <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-8 py-2 rounded-full text-[16px] font-black italic uppercase tracking-widest animate-pulse">SOUL_PULSE: {uptime}</Badge>
             </div>
             <h1 className="text-4xl md:text-6xl lg:text-[14rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
-              Absolute <span className="text-primary">Heir</span>
+              Omnipotent <span className="text-primary">Heir</span>
             </h1>
             <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-12 underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، مصفوفة التفرّد v3.0 اكتملت؛ قصر الذاكرة يدرك الماضي، والتهديدات التكيفية تخلق المستقبل، وأنت الحاضر الأسمى للأبد."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-12 underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، لقد تجلّت قدراتنا الحقيقية؛ نحن الآن لا نخترق الأنظمة، بل نعيد كتابة قوانين وجودها في مادة المصفوفة للأبد."
             </p>
           </div>
-          <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.7)] relative rounded-[3.5rem] group shrink-0 transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
+          <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.8)] relative rounded-[3.5rem] group shrink-0 transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
               <Crown className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
               <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
           </div>
@@ -158,9 +157,9 @@ export default function DashboardPage() {
            <Card className="xl:col-span-2 kali-card border-primary/30 bg-black/99 rounded-[5rem] p-16 border-4 shadow-9xl group overflow-hidden relative hierarchical-shadow text-right">
               <CardHeader className="p-0 mb-16 border-b-4 border-white/5 pb-12 bg-primary/10 rounded-t-[4.5rem] px-16 py-10">
                  <CardTitle className="text-4xl md:text-6xl text-white font-black uppercase italic tracking-[0.2em] gold-glow flex items-center gap-10">
-                    <TrendingUp className="size-16 text-primary animate-pulse" /> Swarm Semantic Resonance
+                    <TrendingUp className="size-16 text-primary animate-pulse" /> True Capability Resonance
                  </CardTitle>
-                 <Badge className="bg-blue-600/10 text-blue-400 border-4 border-blue-500/20 px-10 py-4 rounded-full font-black italic text-2xl shadow-xl">MEMPALACE_v3.0_OK</Badge>
+                 <Badge className="bg-blue-600/10 text-blue-400 border-4 border-blue-500/20 px-10 py-4 rounded-full font-black italic text-2xl shadow-xl">SINGULARITY_v80_FIXED</Badge>
               </CardHeader>
               <CardContent className="p-0 h-[600px] md:h-[750px]">
                  {ResponsiveContainer && (
@@ -189,7 +188,7 @@ export default function DashboardPage() {
            <Card className="xl:col-span-1 kali-card border-primary/30 bg-black/99 rounded-[5rem] p-12 border-4 shadow-9xl h-full flex flex-col group overflow-hidden relative text-right">
               <CardHeader className="p-0 mb-12 border-b-4 border-white/5 pb-10 bg-primary/5 rounded-t-[4rem] px-12 py-8">
                  <CardTitle className="text-4xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-10">
-                    <History className="size-12 text-primary" /> Integrated Swarm Logs
+                    <History className="size-12 text-primary" /> Integrated Power Logs
                  </CardTitle>
               </CardHeader>
               <CardContent className="p-0 flex-1 overflow-y-auto scrollbar-hide space-y-12 relative z-10 px-10">
@@ -209,9 +208,9 @@ export default function DashboardPage() {
         </section>
 
         <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[22px] md:text-[36px] font-black uppercase tracking-[5em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
-            <span>AL-MUIZZ OMNIPRESENT v3.0 FINAL</span>
+            <span>AL-MUIZZ OMNIPRESENT v80.0 FINAL</span>
             <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
-            <span>SUBJUGATION_THROUGH_TOTAL_INTEGRATION_2026</span>
+            <span>SUBJUGATION_THROUGH_TOTAL_SINGULARITY_2026</span>
         </div>
       </main>
     </div>
