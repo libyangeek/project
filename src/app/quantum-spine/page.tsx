@@ -145,12 +145,12 @@ export default function QuantumSpinePage() {
                     <line 
                         key={i}
                         x1="50%" y1="50%" 
-                        x2={`${50 + 50 * Math.cos((i * 2 * Math.PI) / 16)}%`} 
-                        y2={`${50 + 50 * Math.sin((i * 2 * Math.PI) / 16)}%`} 
+                        x2={`${50 + 45 * Math.cos((i * 2 * Math.PI) / 16)}%`} 
+                        y2={`${50 + 45 * Math.sin((i * 2 * Math.PI) / 16)}%`} 
                         stroke="var(--primary)" strokeWidth="2" strokeDasharray="3,3"
                     />
                  ))}
-                 <circle cx="50%" cy="50%" r="48%" fill="none" stroke="var(--primary)" strokeWidth="1" strokeDasharray="10,10" />
+                 <circle cx="50%" cy="50%" r="45%" fill="none" stroke="var(--primary)" strokeWidth="1" strokeDasharray="10,10" />
               </svg>
 
               <div className="absolute inset-0 z-20 animate-spin-slow" style={{ animationDuration: '60s' }}>
@@ -159,8 +159,8 @@ export default function QuantumSpinePage() {
                         key={d.id} 
                         className="absolute size-10 md:size-14 bg-black border-2 border-primary/60 rounded-xl flex items-center justify-center shadow-9xl transition-all duration-500 hover:scale-150 hover:border-primary cursor-help z-30"
                         style={{ 
-                            top: `${50 + 50 * Math.sin((i * 2 * Math.PI) / 16)}%`, 
-                            left: `${50 + 50 * Math.cos((i * 2 * Math.PI) / 16)}%`,
+                            top: `${50 + 45 * Math.sin((i * 2 * Math.PI) / 16)}%`, 
+                            left: `${50 + 45 * Math.cos((i * 2 * Math.PI) / 16)}%`,
                             transform: 'translate(-50%, -50%) rotate(var(--rev-spin))'
                         }}
                         onMouseEnter={() => setActiveDimension(d.id)}
@@ -187,7 +187,7 @@ export default function QuantumSpinePage() {
               </p>
               <div className="flex justify-center md:justify-end gap-6 mt-12">
                  <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
-                     <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة للعرش</Link>
+                     <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة</Link>
                  </Button>
               </div>
            </div>
@@ -195,7 +195,7 @@ export default function QuantumSpinePage() {
 
         <div className="grid grid-cols-1 xl:grid-cols-4 gap-12 relative z-10 pb-48 flex-1 text-right">
            <div className="xl:col-span-1 space-y-12">
-              <Card className="sovereign-card group">
+              <Card className="sovereign-card group text-center">
                  <CardHeader className="p-0 mb-10 border-b-4 border-primary/10 pb-10 bg-primary/10 rounded-t-[3.5rem] px-10 py-6 text-center">
                     <CardTitle className="text-2xl md:text-4xl text-primary flex items-center justify-center gap-10 font-black uppercase italic gold-glow leading-none">
                        <Link2 className="size-12 animate-spin-slow" /> 16-Node Relay
@@ -251,7 +251,7 @@ export default function QuantumSpinePage() {
 
               <CardContent className="p-12 flex-1 overflow-y-auto scrollbar-hide space-y-20 relative z-10 text-right">
                  {fusion ? (
-                    <div className="space-y-20 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col">
+                    <div className="space-y-20 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col text-right">
                         <div className="p-20 rounded-[6rem] bg-primary/5 border-[12px] border-primary/30 italic text-4xl md:text-[8rem] text-gray-100 leading-tight font-black shadow-inner relative group/brief overflow-hidden text-center flex flex-col justify-center min-h-[450px]">
                             <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                             "{fusion.commanderBrief}"
@@ -269,24 +269,29 @@ export default function QuantumSpinePage() {
                         </div>
                     </div>
                  ) : (
-                   <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-80">
-                      <div className="relative group/lock">
+                   <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-80 text-right">
+                      <div className="relative group/lock mx-auto">
                         <Network className="size-64 md:size-[50rem] animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[12000ms]" />
                         <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-64 text-primary/40 animate-neural" />
                         <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>
                       <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">16D Standby</h3>
-                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">The Quantum Spine v90.0 is tightening 16 bonds for total inter-node cohesion.</p>
+                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem] mx-auto">The Quantum Spine v90.0 is tightening 16 bonds for total inter-node cohesion.</p>
+                      <div className="flex gap-16 justify-center mt-12">
+                          <Fingerprint className="size-24 text-primary animate-pulse" />
+                          <Atom className="size-24 animate-spin-slow text-primary" />
+                      </div>
                    </div>
                  )}
               </CardContent>
+              <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[8em] italic">
+                <span>QUANTUM_SPINE_v90_AL_GHAZALI_ROOT</span>
+                <div className="flex gap-16">
+                    <Fingerprint className="size-20 text-primary animate-pulse" />
+                    <Atom className="size-20 animate-spin-slow text-primary" />
+                </div>
+              </div>
            </Card>
-        </div>
-
-        <div className="mt-auto relative z-10 flex flex-col md:flex-row justify-center items-center gap-16 md:gap-48 opacity-45 text-[20px] md:text-[32px] font-black uppercase tracking-[4em] md:tracking-[8em] italic text-white drop-shadow-9xl pb-32">
-            <span>AL-MUIZZ 16D NUCLEUS v90.0</span>
-            <div className="size-12 rounded-full bg-white animate-pulse shadow-[0_0_120px_white]" />
-            <span>SUBJUGATING_TOTAL_EXISTENCE_2026</span>
         </div>
       </main>
     </div>

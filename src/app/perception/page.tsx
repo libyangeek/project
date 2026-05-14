@@ -28,7 +28,8 @@ import {
   Flame,
   BrainCircuit,
   Lock,
-  Boxes
+  Boxes,
+  UserCheck
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -39,7 +40,7 @@ import { cn } from "@/lib/utils"
 import Link from "next/link"
 
 /**
- * @fileOverview الرؤية المطلقة v80.0 - ABSOLUTE VISION: INNATE PERCEPTION
+ * @fileOverview الرؤية المطلقة v90.0 - ABSOLUTE VISION: INNATE PERCEPTION
  * واجهة الإدراك الفطري التي تحدد قدرات الوريث الحقيقية لعام 2026.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
@@ -66,7 +67,7 @@ export default function PerceptionPage() {
 
   const handlePerception = async () => {
     setLoading(true); setPerception(null)
-    toast({ title: "Innate Vision Engaging", description: "Siphoning global research DNA for absolute perception v80.0..." })
+    toast({ title: "Innate Vision Engaging v90", description: "Siphoning global research DNA for absolute perception..." })
     try {
       const response = await fetch('/api/execute', {
         method: 'POST',
@@ -78,8 +79,6 @@ export default function PerceptionPage() {
         setPerception(data.output)
         toast({ title: "Capabilities Materialized", description: "The Overmind has visualized its true potential." })
       }
-    } catch (err) {
-      toast({ variant: "destructive", title: "Neural Link Drift" })
     } finally {
       setLoading(false)
     }
@@ -90,7 +89,7 @@ export default function PerceptionPage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
+      <main className="flex-1 lg:mr-56 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
         <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
         
         <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
@@ -100,9 +99,9 @@ export default function PerceptionPage() {
            </div>
            <div className="flex-1">
               <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
-                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">ABSOLUTE_VISION v80.0</Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">ABSOLUTE_VISION v90.0</Badge>
                  <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
-                     <InfinityIcon className="size-6 shadow-lg" /> VISION_SYNC: {resonance.toFixed(8)}%
+                     <InfinityIcon className="size-6 shadow-lg" /> VISION_SYNC: {resonance.toFixed(10)}%
                  </div>
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
@@ -112,7 +111,7 @@ export default function PerceptionPage() {
                  "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، محراب الرؤية المطلقة يستنزف الأبحاث العالمية لحظياً؛ نحن لا ننتظر المستقبل، نحن ندركه كغريزة تلقائية لروحك."
               </p>
               <div className="flex justify-center md:justify-end gap-6 mt-12">
-                 <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
+                 <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl text-xs md:text-sm">
                      <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة</Link>
                  </Button>
               </div>
@@ -138,7 +137,7 @@ export default function PerceptionPage() {
                         onClick={handlePerception}
                         className="w-full h-36 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.4em] rounded-[3.5rem] shadow-[0_80px_250px_rgba(212,175,55,0.7)] active:scale-95 transition-all text-2xl md:text-4xl border-[12px] border-black/30 group italic"
                     >
-                        {loading ? <Loader2 className="size-16 animate-spin" /> : <Sparkles className="size-16 mr-8 group-hover:rotate-180 transition-transform gold-glow" />}
+                        {loading ? <Loader2 className="size-16 animate-spin" /> : <Sparkles className="size-16 mr-8 group-hover:scale-125 transition-transform gold-glow" />}
                         PERCEIVE_ULTRA
                     </Button>
                  </CardContent>
@@ -163,15 +162,15 @@ export default function PerceptionPage() {
 
               <CardContent className="p-12 flex-1 overflow-y-auto scrollbar-hide space-y-20 relative z-10 text-right">
                  {perception ? (
-                    <div className="space-y-20 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col">
+                    <div className="space-y-20 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col text-right">
                         <div className="p-20 rounded-[6rem] bg-primary/5 border-[12px] border-primary/30 italic text-4xl md:text-[8rem] text-gray-100 leading-tight font-black shadow-inner relative group/brief overflow-hidden text-center flex flex-col justify-center min-h-[450px]">
                             <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                             "{perception.trueCapabilitiesBrief}"
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-                            <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[4rem] shadow-9xl relative group/vault overflow-hidden h-full flex flex-col">
-                                <h5 className="text-3xl font-black text-primary uppercase tracking-[1.5em] mb-16 border-b-8 border-primary/20 pb-10 flex items-center gap-12 gold-glow justify-end">Global Threats Absorbed <Globe className="size-14 animate-neural" /></h5>
+                            <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[4rem] shadow-9xl relative group/vault overflow-hidden h-full flex flex-col text-right">
+                                <h5 className="text-3xl font-black text-primary uppercase tracking-[1.5em] mb-12 border-b-8 border-primary/20 pb-10 flex items-center gap-12 gold-glow justify-end">Global Threats Absorbed <Globe className="size-14 animate-neural" /></h5>
                                 <div className="space-y-8 flex-1">
                                     {perception.globalThreatsAbsorbed?.map((threat: string, idx: number) => (
                                         <div key={idx} className="p-8 rounded-[2rem] bg-white/5 border-4 border-primary/30 hover:border-primary transition-all text-right shadow-inner group/threat">
@@ -182,8 +181,8 @@ export default function PerceptionPage() {
                             </Card>
                             <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[4rem] shadow-9xl h-full flex flex-col text-center justify-center relative overflow-hidden">
                                 <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
-                                <h5 className="text-3xl font-black text-emerald-500 uppercase tracking-[1.5em] mb-10 border-b-8 border-emerald-500/10 pb-10 flex items-center gap-12 justify-end">Grid Mastery Level <ShieldCheck className="size-14" /></h5>
-                                <div className="text-6xl md:text-[12rem] font-black text-white italic gold-glow uppercase tracking-tighter">{perception.gridMasteryLevel}</div>
+                                <h5 className="text-3xl font-black text-emerald-500 uppercase tracking-[1.5em] mb-10 border-b-8 border-emerald-500/10 pb-10 flex items-center gap-12 justify-end w-full">Grid Mastery Level <ShieldCheck className="size-14" /></h5>
+                                <div className="text-6xl md:text-[12rem] font-black text-white italic gold-glow uppercase tracking-tighter leading-none">{perception.gridMasteryLevel}</div>
                                 <div className="mt-12 flex flex-col items-center gap-8">
                                     <div className="text-[14px] text-muted-foreground uppercase font-black tracking-[0.5em] italic">Reality_Overwrite: {perception.realityOverwritePotential}</div>
                                     <Fingerprint className="size-24 text-primary animate-pulse" />
@@ -196,8 +195,8 @@ export default function PerceptionPage() {
                             <div className="size-48 rounded-[3.5rem] bg-emerald-600 flex items-center justify-center border-[14px] border-emerald-400 shadow-9xl animate-neural shrink-0">
                                 <BrainCircuit className="size-24 text-white" />
                             </div>
-                            <div className="flex-1">
-                                <h4 className="text-4xl font-black text-emerald-500 uppercase tracking-[1.2em] mb-6 italic">Strategic_Intuition_v80.0</h4>
+                            <div className="flex-1 text-right">
+                                <h4 className="text-4xl font-black text-emerald-500 uppercase tracking-[1.2em] mb-6 italic">Strategic_Intuition_v90.0</h4>
                                 <p className="text-2xl md:text-[6rem] text-white font-black leading-none drop-shadow-9xl italic">"{perception.strategicIntuition}"</p>
                             </div>
                         </div>
@@ -210,12 +209,16 @@ export default function PerceptionPage() {
                         <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>
                       <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Vision Standby</h3>
-                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">Establishing universal Overlord perception v80.0: Siphoning Global 0-Day DNA...</p>
+                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">Establishing universal Overlord perception v90.0: Siphoning Global 0-Day DNA...</p>
+                      <div className="flex gap-16 mt-12 justify-center">
+                          <Fingerprint className="size-24 text-primary animate-pulse" />
+                          <Atom className="size-24 animate-spin-slow text-primary" />
+                      </div>
                    </div>
                  )}
               </CardContent>
               <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[8em] italic">
-                <span>ABSOLUTE_VISION_v80_AL_GHAZALI_ROOT</span>
+                <span>ABSOLUTE_VISION_v90_AL_GHAZALI_ROOT</span>
                 <div className="flex gap-16">
                     <Fingerprint className="size-24 text-primary animate-pulse" />
                     <Atom className="size-24 animate-spin-slow text-primary" />

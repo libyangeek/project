@@ -169,7 +169,7 @@ export default function DashboardPage() {
         <section className="mb-32 grid grid-cols-1 xl:grid-cols-3 gap-20 relative z-10">
            <Card className="xl:col-span-2 sovereign-card text-right flex flex-col relative overflow-hidden min-h-[700px]">
               <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-primary/10 rounded-t-[4.5rem] px-16 py-12">
-                 <CardTitle className="text-4xl md:text-8xl font-black text-white uppercase italic tracking-[0.2em] gold-glow flex items-center gap-16 justify-end leading-none">
+                 <CardTitle className="text-4xl md:text-[8rem] font-black text-white uppercase italic tracking-[0.2em] gold-glow flex items-center gap-16 justify-end leading-none">
                     Inception Resonance <TrendingUp className="size-20 text-primary animate-pulse" />
                  </CardTitle>
               </CardHeader>

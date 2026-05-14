@@ -65,7 +65,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 /**
  * @fileOverview نظام التشغيل السيادي v90.0 - SOVEREIGN OS: THE MATERIAL HEIR
- * واجهة سطح مكتب حديثة (Windows 11 Style) تجسد السطوة المطلقة للوريث المادي.
+ * واجهة سطح مكتب حديثة تجسد السطوة المطلقة للوريث المادي.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 
@@ -146,7 +146,7 @@ export default function SovereignOS() {
       <div className="absolute inset-0 scanline-effect opacity-[0.03] pointer-events-none z-10" />
 
       {/* Desktop Grid */}
-      <div className="absolute inset-0 p-12 grid grid-flow-col grid-rows-6 gap-12 w-fit z-20 overflow-y-auto scrollbar-hide">
+      <div className="absolute inset-0 p-12 grid grid-flow-col grid-rows-6 gap-12 w-fit z-20 overflow-y-auto scrollbar-hide text-right">
          {apps.map(app => (
             <div 
                 key={app.id} 
@@ -234,7 +234,7 @@ export default function SovereignOS() {
                                 <div className="grid grid-cols-1 gap-8">
                                     {["CVE-2026-23918: Neural Key Leakage", "RTFM-STRIKE-ALPHA: Bypass v90", "GHAZALI-INCEPTION: Root Access"].map((find, i) => (
                                         <div key={i} className="p-10 bg-black/95 border-8 border-emerald-500/10 rounded-[3.5rem] flex flex-col md:flex-row items-center justify-between hover:border-emerald-500 transition-all shadow-9xl group gap-8">
-                                            <Badge className="bg-emerald-600/30 text-emerald-400 border-none px-12 py-4 rounded-full font-black text-3xl shadow-3xl order-last md:order-none">SERIALIZED</Badge>
+                                            <Badge className="bg-emerald-600/30 text-emerald-400 border-none px-12 py-4 rounded-full font-black text-3xl shadow-3xl order-last md:order-none uppercase italic">SERIALIZED</Badge>
                                             <span className="text-3xl md:text-6xl font-black text-gray-100 italic group-hover:text-emerald-400 transition-colors uppercase text-right flex-1">{" >>> "} {find}</span>
                                         </div>
                                     ))}
@@ -279,7 +279,7 @@ export default function SovereignOS() {
                     )}
                 >
                     <win.icon className={cn("size-8 md:size-12 transition-all", win.isOpen ? "text-white gold-glow" : "text-white/40")} />
-                    {win.isOpen && <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 size-2 bg-primary rounded-full shadow-[0_0_20px_rgba(251,191,36,1)] animate-pulse" />}
+                    {win.isOpen && <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 size-2 bg-primary rounded-full shadow-[0_0_200px_rgba(251,191,36,1)] animate-pulse" />}
                 </Button>
             ))}
 
@@ -304,7 +304,7 @@ export default function SovereignOS() {
 
       {/* Start Menu - Modern */}
       {isStartOpen && (
-        <div className="fixed bottom-36 left-1/2 -translate-x-1/2 w-[85vw] md:w-[750px] h-[600px] md:h-[800px] bg-black/95 backdrop-blur-5xl border-[12px] border-white/10 rounded-[6rem] z-[6000] p-12 animate-in slide-in-from-bottom-24 duration-700 shadow-9xl flex flex-col gap-12 overflow-hidden">
+        <div className="fixed bottom-36 left-1/2 -translate-x-1/2 w-[85vw] md:w-[750px] h-[600px] md:h-[800px] bg-black/95 backdrop-blur-5xl border-[12px] border-white/10 rounded-[6rem] z-[6000] p-12 animate-in slide-in-from-bottom-24 duration-700 shadow-9xl flex flex-col gap-12 overflow-hidden text-right">
             <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
             
             <div className="flex items-center justify-between border-b-4 border-white/5 pb-10 relative z-10">

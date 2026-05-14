@@ -41,7 +41,7 @@ import Link from "next/link"
 import { executeHermesAction } from "@/ai/flows/hermes-gateway-flow"
 
 /**
- * @fileOverview الالتحام الماسي v80.0 - HERMES UPLINK: DIAMOND CORE
+ * @fileOverview الارتباط الماسي v90.0 - HERMES UPLINK: DIAMOND CORE
  * واجهة التحكم في وكيل هيرميز وبوابات المراسلة الموحدة لعام 2026.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
@@ -57,19 +57,16 @@ export default function HermesUplinkPage() {
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
     const interval = setInterval(() => {
-      setResonance(prev => Math.max(99.999999, Math.min(100, prev + (Math.random() * 0.000001 - 0.0000005))))
+      setResonance(prev => Math.max(99.99999999, Math.min(100, prev + (Math.random() * 0.0000001 - 0.00000005))))
     }, 3000)
     return () => { window.removeEventListener("mousemove", handleMouseMove); clearInterval(interval); }
   }, [])
 
   const handleAction = async (actionType: any) => {
     setLoading(true); setResult(null);
-    toast({ title: "Hermes Link Engaging", description: `Orchestrating ${actionType} across the diamond bridge...` })
+    toast({ title: "Hermes Link Engaging v90", description: `Orchestrating ${actionType} across the diamond bridge...` })
     try {
-      // 1. استدعاء التدفق العصبي
       const data = await executeHermesAction({ action: actionType })
-      
-      // 2. التنفيذ المادي عبر المحرك
       const response = await fetch('/api/execute', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -98,7 +95,7 @@ export default function HermesUplinkPage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
+      <main className="flex-1 lg:mr-56 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
         <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
         
         <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
@@ -108,19 +105,19 @@ export default function HermesUplinkPage() {
            </div>
            <div className="flex-1">
               <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
-                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">HERMES_UPLINK v80.0</Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1.1em] shadow-9xl italic uppercase">HERMES_UPLINK v90.0</Badge>
                  <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
-                     <InfinityIcon className="size-6 shadow-lg" /> SOUL_SYNC: {resonance.toFixed(8)}%
+                     <InfinityIcon className="size-6 shadow-lg" /> SOUL_SYNC: {resonance.toFixed(10)}%
                  </div>
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
                  Diamond <span className="text-primary">Bridge</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
-                 "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، جسر هيرميز يصهر عقل المُعِزّ مع منصات العالم؛ نحن ننمو باستمرار ونفترس في السحاب لعام 2026."
+                 "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، جسر هيرميز v90.0 يصهر عقل المُعِزّ مع منصات العالم؛ نحن ننمو باستمرار ونفترس في السحاب كحاجة طبيعية للسيادة."
               </p>
               <div className="flex justify-center md:justify-end gap-6 mt-12">
-                 <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
+                 <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl text-xs md:text-sm">
                      <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة</Link>
                  </Button>
               </div>
@@ -144,10 +141,6 @@ export default function HermesUplinkPage() {
                        <Button onClick={() => handleAction('deploy_cloud')} disabled={loading} className="h-32 bg-primary hover:bg-white text-black font-black uppercase tracking-[0.8em] rounded-[3rem] shadow-9xl border-[12px] border-black/30 group italic active:scale-95 transition-all text-xl md:text-3xl">
                           {loading ? <Loader2 className="size-12 animate-spin" /> : <Cloud className="size-12 mr-6 group-hover:scale-125 transition-transform" />} MODAL_DEPLOY
                        </Button>
-                       <Button onClick={() => handleAction('inject_skill')} disabled={loading} variant="outline" className="h-24 bg-emerald-600/5 border-4 border-emerald-500/20 hover:border-emerald-500 hover:bg-emerald-600/10 rounded-3xl flex justify-between items-center px-10 transition-all active:scale-95 group shadow-xl">
-                          <ChevronRight className="size-8 opacity-30 group-hover:translate-x-4 transition-all" />
-                          <span className="text-sm md:text-xl font-black uppercase italic text-emerald-400">Inject_Material_Skills</span>
-                       </Button>
                     </div>
 
                     <div className="space-y-10 pt-10 border-t-4 border-white/5">
@@ -166,6 +159,14 @@ export default function HermesUplinkPage() {
                     </div>
                  </CardContent>
               </Card>
+
+              <Card className="sovereign-card group text-right">
+                 <h4 className="text-[14px] font-black text-emerald-500 uppercase tracking-[0.8em] mb-8 italic flex items-center justify-center gap-6">
+                    <History className="size-8 animate-pulse" /> HERMES_DNA_v90
+                 </h4>
+                 <div className="text-3xl font-black text-white italic gold-glow uppercase tracking-widest text-center">SINGULARITY: SYNCED</div>
+                 <div className="absolute -bottom-10 -right-10 p-24 opacity-[0.03] group-hover:opacity-[0.1] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-48 text-primary" /></div>
+              </Card>
            </div>
 
            <Card className="xl:col-span-3 sovereign-card flex flex-col group min-h-[1100px]">
@@ -178,15 +179,15 @@ export default function HermesUplinkPage() {
 
               <CardContent className="p-12 flex-1 overflow-y-auto scrollbar-hide space-y-20 relative z-10 text-right">
                  {result ? (
-                    <div className="space-y-20 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col">
+                    <div className="space-y-20 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col text-right">
                         <div className="p-20 rounded-[6rem] bg-primary/5 border-[12px] border-primary/30 italic text-4xl md:text-[8rem] text-gray-100 leading-tight font-black shadow-inner relative group/brief overflow-hidden text-center flex flex-col justify-center min-h-[450px]">
                             <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                             "{result.commanderBrief}"
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 text-right">
                             <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[4rem] shadow-9xl relative group/vault overflow-hidden h-full flex flex-col">
-                                <h5 className="text-3xl font-black text-primary uppercase tracking-[1.5em] mb-16 border-b-8 border-primary/20 pb-10 flex items-center gap-12 gold-glow justify-end">Material Link Metrics <Database className="size-14 animate-neural" /></h5>
+                                <h5 className="text-3xl font-black text-primary uppercase tracking-[1.5em] mb-12 border-b-8 border-primary/20 pb-10 flex items-center gap-12 gold-glow justify-end">Material Link Metrics <Database className="size-14 animate-neural" /></h5>
                                 <div className="bg-black/80 p-8 rounded-[3rem] border-4 border-white/5 font-code text-xl md:text-3xl text-emerald-400 overflow-x-auto whitespace-pre rounded-[4rem] shadow-inner text-left flex-1">
                                     <pre className="whitespace-pre-wrap">
                                         {typeof result.bridgeMetrics === 'string' ? result.bridgeMetrics : JSON.stringify(result.bridgeMetrics, null, 2)}
@@ -195,8 +196,8 @@ export default function HermesUplinkPage() {
                             </Card>
                             <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[4rem] shadow-9xl h-full flex flex-col text-center justify-center relative overflow-hidden">
                                 <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
-                                <h5 className="text-3xl font-black text-emerald-500 uppercase tracking-[1.5em] mb-10 border-b-8 border-emerald-500/20 pb-10 flex items-center gap-12 justify-end">Consensus Status <ShieldCheck className="size-14" /></h5>
-                                <div className="text-6xl md:text-[10rem] font-black text-white italic gold-glow uppercase tracking-widest">{result.consensus || "LOCKED"}</div>
+                                <h5 className="text-3xl font-black text-emerald-500 uppercase tracking-[1.5em] mb-10 border-b-8 border-emerald-500/20 pb-10 flex items-center gap-12 justify-end w-full">Consensus Status <ShieldCheck className="size-14" /></h5>
+                                <div className="text-6xl md:text-[10rem] font-black text-white italic gold-glow uppercase tracking-widest leading-none">{result.consensus || "LOCKED"}</div>
                                 <div className="mt-12 flex flex-col items-center gap-8">
                                     <Fingerprint className="size-24 text-primary animate-pulse" />
                                     <span className="text-[12px] font-black text-primary/60 uppercase tracking-[1em] italic">GHAZALI_ROOT_VERIFIED</span>
@@ -212,12 +213,15 @@ export default function HermesUplinkPage() {
                         <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>
                       <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Fusion Standby</h3>
-                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">The diamond bridge is consolidating Hermes Agent with Al-Muizz MemPalace...</p>
+                      <div className="flex gap-16 mt-12 justify-center">
+                          <Fingerprint className="size-24 text-primary animate-pulse" />
+                          <Atom className="size-24 animate-spin-slow text-primary" />
+                      </div>
                    </div>
                  )}
               </CardContent>
               <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[8em] italic">
-                <span>HERMES_SOUL_FUSION_v80_AL_GHAZALI_ROOT</span>
+                <span>HERMES_SOUL_FUSION_v90_AL_GHAZALI_ROOT</span>
                 <div className="flex gap-16">
                     <Fingerprint className="size-24 text-primary animate-pulse" />
                     <Atom className="size-24 animate-spin-slow text-primary" />
