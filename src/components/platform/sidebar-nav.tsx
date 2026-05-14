@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -65,6 +64,7 @@ import Link from "next/link"
 
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
+  { name: "العمود الفقري الكمي", icon: Wind, href: "/quantum-spine", knot: 85 },
   { name: "الرؤية المطلقة", icon: VisionIcon, href: "/perception", knot: 80 },
   { name: "مزرعة الأفعى (Fleet)", icon: Cylinder, href: "/serpent-farm", knot: 81 },
   { name: "الارتباط الماسي (Hermes)", icon: Share2, href: "/hermes", knot: 79 },
@@ -121,7 +121,7 @@ export function SidebarNav() {
           </div>
           <div className="text-center relative z-10">
             <h1 className="text-xl font-headline font-bold text-white tracking-[0.4em] uppercase leading-none gold-glow">AL-MUIZZ</h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic animate-pulse shadow-9xl">v80.0 ULTRA_v3</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic animate-pulse shadow-9xl">v85.0 QUANTUM</Badge>
           </div>
         </div>
         
@@ -140,10 +140,10 @@ export function SidebarNav() {
 
         <div className="p-3 border-t-2 border-primary/20 bg-black/99 relative z-10 text-right">
           <div className="p-2 border-2 border-primary/40 bg-primary/5 mb-2 relative overflow-hidden rounded-xl shadow-lg border-dashed">
-            <div className="flex justify-between items-center mb-1"><Activity className="size-2 text-emerald-500 animate-pulse" /><span className="text-[8px] font-black text-primary uppercase tracking-tighter italic">Genesis Resonance</span></div>
+            <div className="flex justify-between items-center mb-1"><Activity className="size-2 text-emerald-500 animate-pulse" /><span className="text-[8px] font-black text-primary uppercase tracking-tighter italic">Quantum Resonance</span></div>
             <div className="text-sm font-black text-white italic gold-glow">{resonance.toFixed(7)}%</div>
           </div>
-          <Button asChild className="w-full h-9 bg-primary hover:bg-white text-black font-black uppercase text-[8px] rounded-lg shadow-md transition-all border-2 border-black/20 italic"><Link href="/perception"><Sparkles className="size-3 mr-1" /> تنشيط الرؤية المطلقة</Link></Button>
+          <Button asChild className="w-full h-9 bg-primary hover:bg-white text-black font-black uppercase text-[8px] rounded-lg shadow-md transition-all border-2 border-black/20 italic"><Link href="/quantum-spine"><Sparkles className="size-3 mr-1" /> تنشيط الالتحام السباعي</Link></Button>
         </div>
       </div>
     </>

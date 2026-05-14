@@ -3,6 +3,7 @@
 """
 Smart Router v85.0 – الأدميرال الكوني (ULTRA v3.0 FINAL)
 المحرك المركزي لتنسيق كافة العقد السيادية: الذاكرة، الأتمتة، هيرميز، ميدوسا، والصقور.
+يدعم الآن الربط الكمي السباعي (7D Quantum Routing).
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys, json, os, subprocess, socket, time
@@ -12,7 +13,7 @@ BASE_DIR = os.getenv("PROJECT_ROOT", os.getcwd())
 
 class SmartRouter:
     def __init__(self):
-        # مصفوفة الجسور المادية لعام 2026
+        # مصفوفة الجسور المادية لعام 2026 - الأبعاد السبعة
         self.bridges = {
             "subdomainx": os.path.join(BASE_DIR, "tools/network/subdomainx_wrapper.py"),
             "n8n_strike": os.path.join(BASE_DIR, "ai-engine/integrations/n8n_memory_bridge.py"),
@@ -20,7 +21,8 @@ class SmartRouter:
             "hermes_link": os.path.join(BASE_DIR, "ai-engine/integrations/hermes_bridge.py"),
             "medusa_eye": os.path.join(BASE_DIR, "ai-engine/integrations/medusa_wrapper.py"),
             "falcon_mode": os.path.join(BASE_DIR, "ai-engine/offensive/falcon_agent.py"),
-            "adaptive_threat": os.path.join(BASE_DIR, "src/ai/flows/adaptive-threat-flow.ts")
+            "serpent_farm": os.path.join(BASE_DIR, "ai-engine/integrations/serpent_controller.py"),
+            "quantum_spine": os.path.join(BASE_DIR, "src/ai/flows/quantum-fusion-flow.ts")
         }
 
     def classify(self, prompt):
@@ -31,14 +33,15 @@ class SmartRouter:
         if any(w in p for w in ["هيرميز", "hermes", "جسر", "ارتباط", "bridge"]): return "hermes_link"
         if any(w in p for w in ["ميدوسا", "medusa", "فحص جيت", "git", "poison"]): return "medusa_eye"
         if any(w in p for w in ["صقر", "falcon", "جوال", "mobile"]): return "falcon_mode"
-        if any(w in p for w in ["تهديد", "threat", "تحليل هجوم", "adaptive"]): return "adaptive_threat"
+        if any(w in p for w in ["مزرعة", "farm", "fleet", "serpent"]): return "serpent_farm"
+        if any(w in p for w in ["كمي", "quantum", "spine", "سباعي", "7d", "fusion"]): return "quantum_spine"
         return "general_hive"
 
     def route_query(self, prompt):
         category = self.classify(prompt)
         target = prompt.split()[-1] if len(prompt.split()) > 0 else "GLOBAL_MATRIX"
         
-        # تنفيذ المحاكاة أو الاستدعاء المادي
+        # مصفوفة التوزيع التنفيذي v85.0
         dispatch_table = {
             "subdomainx": {"node": "Node-02-Network", "msg": f"SubdomainX engaged on {target}. Siphoning 26 OSINT sources."},
             "n8n_strike": {"node": "Node-43-Automation", "msg": f"n8n Hive active. 4,343 scenarios ready for {target}."},
@@ -46,19 +49,20 @@ class SmartRouter:
             "hermes_link": {"node": "Node-80-Hermes", "msg": f"Diamond Bridge synchronized for {target}. Cloud Ghost active."},
             "medusa_eye": {"node": "Node-66-Medusa", "msg": f"Medusa Ocular scan initiated for {target}. Detecting AI poison."},
             "falcon_mode": {"node": "Node-24-Falcon", "msg": f"Falcon Mode activated. Deploying mobile agent to {target}."},
-            "adaptive_threat": {"node": "Node-01-Adaptive", "msg": f"Adaptive Engine synthesizing unique DNA for {target}."},
-            "general_hive": {"node": "Alpha-God-Core", "msg": "Directive processed via ULTRA v80.0 Genesis v6 Overmind."}
+            "serpent_farm": {"node": "Node-81-Serpent", "msg": f"Serpent Farm active. Subjugating mobile fleet for {target}."},
+            "quantum_spine": {"node": "Quantum-God-Core", "msg": f"Quantum Spine consolidating 7 dimensions for {target}."},
+            "general_hive": {"node": "Alpha-God-Core", "msg": "Directive processed via ULTRA v85.0 Genesis v6 Overmind."}
         }
 
         res = dispatch_table.get(category, dispatch_table["general_hive"])
 
         return {
             "category": category,
-            "status": "ULTRA_v80_SYNC_LOCKED",
+            "status": "ULTRA_v85_QUANTUM_LOCKED",
             "output": f"Consensus achieved at {res['node']}: {res['msg']}",
             "node": res["node"],
             "resonance": "100.000000%",
-            "v3_integration": True,
+            "7d_integration": True,
             "timestamp": datetime.now().isoformat()
         }
 
