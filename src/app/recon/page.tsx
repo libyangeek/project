@@ -45,7 +45,9 @@ import { cn } from "@/lib/utils"
 import Link from "next/link"
 
 /**
- * @fileOverview أعين الاستطلاع v80.0 - THE SUPREME RECON: ULTRA v3.0
+ * @fileOverview أعين الاستطلاع v90.0 - THE SUPREME RECON: NEURAL VISION
+ * واجهة الاستخبارات الفطرية التي تصهر Claude-OSINT و Robin-Recon و MemPalace.
+ * تم التحديث للنمط السيان الرقمي (Cyber Cyan) لعام 2026.
  */
 export default function ReconPage() {
   const [target, setTarget] = React.useState("")
@@ -68,7 +70,7 @@ export default function ReconPage() {
   const handleStrike = async (type: string) => {
     if (!target.trim()) return
     setLoading(true); setResults(null)
-    toast({ title: "Neural Siphon Active v3.0", description: `Engaging ${type} investigative protocol.` })
+    toast({ title: "Neural Vision Engaging v90", description: `Orchestrating ${type} investigative protocol across the 16D Matrix.` })
     try {
       const response = await fetch('/api/execute', {
         method: 'POST',
@@ -77,7 +79,7 @@ export default function ReconPage() {
       })
       const data = await response.json()
       if (data.success) {
-        setResults(data.output); toast({ title: "Intelligence Captured", description: "DNA bound to Neural Spine." })
+        setResults(data.output); toast({ title: "Intelligence Captured", description: "DNA bound to the Quantum Spine." })
       }
     } finally { setLoading(false) }
   }
@@ -85,30 +87,120 @@ export default function ReconPage() {
   if (!mounted) return null;
 
   const RECON_TYPES = [
-    { id: 'subdomainx', label: 'SubdomainX (26 Sources)', icon: SearchCode, color: 'text-emerald-500' },
+    { id: 'subdomainx', label: 'SubdomainX (v90)', icon: SearchCode, color: 'text-cyan-400' },
     { id: 'robin_orchestrator', label: 'Robin Auto Recon', icon: Cpu, color: 'text-primary' },
-    { id: 'claude_osint', label: 'Neural OSINT v3.0', icon: BrainCircuit, color: 'text-amber-500' },
-    { id: 'memory_palace', label: 'MemPalace RAM Siphon', icon: Anchor, color: 'text-blue-500' }
+    { id: 'claude_osint', label: 'Neural OSINT v3.0', icon: BrainCircuit, color: 'text-blue-400' },
+    { id: 'memory_palace', label: 'MemPalace RAM Siphon', icon: Anchor, color: 'text-emerald-500' }
   ];
 
   return (
-    <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
+    <div className="flex min-h-screen bg-[#00080a] text-white selection:bg-cyan-600/40 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
-        <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
+      <main className="flex-1 lg:mr-56 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
+        <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px`, backgroundImage: 'radial-gradient(circle at var(--x) var(--y), rgba(6, 182, 212, 0.15), transparent 40%)' } as any} />
+        
         <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
-          <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-glow relative group shrink-0 rounded-[3rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow"><Radar className="size-12 md:size-24 text-primary animate-neural gold-glow" /></div>
-          <div className="flex-1">
-              <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6"><Badge className="bg-primary text-black border-none px-12 py-3 text-[18px] md:text-[20px] font-black tracking-[0.6em] shadow-9xl italic uppercase">RECON_v80.0</Badge><div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse"><InfinityIcon className="size-6 shadow-lg" /> SYNC: {resonance.toFixed(6)}%</div></div>
-              <h1 className="text-4xl md:text-6xl lg:text-[10rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Neural <span className="text-primary">Eye</span></h1>
-              <div className="flex justify-center md:justify-end gap-6 mt-12"><Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl"><Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة</Link></Button></div>
-          </div>
+           <div className="size-24 md:size-48 bg-black border-4 border-cyan-500 flex items-center justify-center shadow-[0_0_200px_rgba(6, 182, 212, 0.8)] relative group shrink-0 rounded-[3rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
+              <Radar className="size-12 md:size-24 text-cyan-400 group-hover:scale-110 transition-transform duration-700 animate-neural gold-glow" />
+              <div className="absolute -inset-10 border-4 border-cyan-500/20 rounded-full animate-spin-slow opacity-30" />
+           </div>
+           <div className="flex-1">
+              <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
+                 <Badge className="bg-cyan-600 text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[0.8em] shadow-9xl italic uppercase">RECON_v90.0 ULTRA</Badge>
+                 <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
+                     <InfinityIcon className="size-6 shadow-lg" /> VISION_SYNC: {resonance.toFixed(6)}%
+                 </div>
+              </div>
+              <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
+                 Neural <span className="text-cyan-500">Eye</span>
+              </h1>
+              <p className="text-sm md:text-xl lg:text-4xl text-cyan-100/60 mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
+                 "سيدي القائد <span className="text-white font-black underline decoration-cyan-500 decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، أعين الاستطلاع v90.0 تمنحك بصر الصقر فوق المصفوفة؛ نحن نرى الـ DNA الرقمي للأهداف قبل أن يدركوا وجودنا."
+              </p>
+              <div className="flex justify-center md:justify-end gap-6 mt-12">
+                 <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-cyan-500/20 bg-cyan-900/10 text-cyan-400 font-black uppercase italic tracking-widest hover:bg-cyan-600 hover:text-white transition-all shadow-2xl">
+                     <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة</Link>
+                 </Button>
+              </div>
+           </div>
         </header>
+
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 relative z-10 pb-40 flex-1 text-right">
           <div className="lg:col-span-1 space-y-10">
-            <Card className="sovereign-card group text-center"><CardHeader className="p-0 mb-10 border-b-4 border-primary/10 pb-6 bg-primary/10 rounded-t-[2.5rem] px-4 py-4"><CardTitle className="text-2xl text-primary flex items-center justify-center gap-6 font-black uppercase italic gold-glow"><Target className="size-10 text-primary animate-pulse" /> Target</CardTitle></CardHeader><CardContent className="p-0 space-y-10 text-right"><div className="space-y-6"><label className="text-[14px] font-black text-primary uppercase tracking-[0.8em] px-6 italic flex items-center gap-4 justify-end"><SearchCode className="size-6" /> Coordinate</label><Input placeholder="IP / Domain / Identity..." className="bg-black border-4 border-white/5 rounded-2xl text-2xl font-code text-white focus:border-primary shadow-inner px-8 italic font-black text-left" value={target} onChange={(e) => setTarget(e.target.value)} /></div><div className="grid grid-cols-1 gap-4">{RECON_TYPES.map((t) => (<Button key={t.id} onClick={() => handleStrike(t.id)} disabled={loading || !target} variant="outline" className="h-20 bg-white/5 border-4 border-primary/10 hover:border-primary hover:bg-primary/15 rounded-2xl font-black uppercase italic tracking-widest text-sm justify-between px-8 group/btn active:scale-95 shadow-xl"><ChevronRight className="size-6 opacity-30 group-hover/btn:translate-x-3 transition-all" /><div className="flex items-center gap-6"><span>{t.label}</span><t.icon className={cn("size-8 transition-all group-hover/btn:scale-110", t.color)} /></div></Button>))}</div></CardContent></Card>
+            <Card className="bg-black/90 border-8 border-cyan-500/20 rounded-[4rem] p-12 shadow-9xl group overflow-hidden text-center backdrop-blur-3xl">
+              <CardHeader className="p-0 mb-10 border-b-4 border-cyan-500/10 pb-6 bg-cyan-900/20 rounded-t-[2.5rem] px-4 py-4 text-center">
+                <CardTitle className="text-2xl text-cyan-400 flex items-center justify-center gap-6 font-black uppercase italic gold-glow">
+                  <Target className="size-10 text-cyan-500 animate-pulse" /> Target Lock
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 space-y-10 text-right">
+                <div className="space-y-6 text-right">
+                    <label className="text-[14px] font-black text-cyan-400 uppercase tracking-[0.8em] px-6 italic flex items-center gap-4 justify-end">
+                        <SearchCode className="size-6" /> Coordinate
+                    </label>
+                    <Input 
+                        placeholder="IP / Domain / Identity..."
+                        className="bg-black border-4 border-white/5 rounded-2xl text-2xl font-code text-white focus:border-cyan-500 shadow-inner px-8 italic font-black text-left"
+                        value={target}
+                        onChange={(e) => setTarget(e.target.value)}
+                    />
+                </div>
+
+                <div className="grid grid-cols-1 gap-4">
+                    {RECON_TYPES.map((t) => (
+                      <Button 
+                        key={t.id}
+                        onClick={() => handleStrike(t.id)}
+                        disabled={loading || !target}
+                        variant="outline"
+                        className="h-20 bg-white/5 border-4 border-cyan-500/10 hover:border-cyan-500 hover:bg-cyan-600/10 transition-all rounded-2xl font-black uppercase italic tracking-widest text-sm justify-between px-8 group/btn active:scale-95 shadow-xl"
+                      >
+                         <ChevronRight className="size-6 opacity-30 group-hover/btn:translate-x-3 transition-all" />
+                         <div className="flex items-center gap-6">
+                            <span>{t.label}</span>
+                            <t.icon className={cn("size-8 transition-all group-hover/btn:scale-110", t.color)} />
+                         </div>
+                      </Button>
+                    ))}
+                </div>
+              </CardContent>
+            </Card>
           </div>
-          <Card className="lg:col-span-3 sovereign-card flex flex-col group min-h-[900px]"><CardHeader className="p-0 mb-10 border-b-8 border-white/5 pb-10 bg-primary/10 rounded-t-[4rem] flex flex-row justify-between items-center text-right px-12 py-6"><Badge className="bg-emerald-600/30 text-emerald-500 border-4 border-emerald-500/40 px-12 py-4 rounded-full font-black text-3xl animate-pulse shadow-9xl uppercase tracking-widest">OSINT_v3.0</Badge><CardTitle className="text-4xl md:text-[8rem] text-white italic tracking-tighter uppercase font-black gold-glow leading-none">Intelligence Feed <Scan className="size-16 text-primary animate-pulse" /></CardTitle></CardHeader><CardContent className="p-10 flex-1 overflow-hidden relative flex flex-col gap-12 z-10 text-right">{results ? (<div className="flex-1 bg-black/98 p-12 rounded-[4rem] font-code text-xl md:text-5xl leading-tight h-[650px] overflow-y-auto border-4 border-white/5 scrollbar-hide shadow-inner italic text-emerald-400 whitespace-pre-wrap selection:bg-primary text-left relative"><pre className="whitespace-pre-wrap relative z-10">{typeof results === 'string' ? results : JSON.stringify(results, null, 2)}</pre></div>) : (<div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-60"><div className="relative group/nexus"><Cpu className="size-64 md:size-[50rem] animate-spin-slow text-emerald-500 group-hover:scale-110 transition-transform duration-[12000ms]" /><Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-64 text-primary/40 animate-neural" /></div><h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">ULTRA Recon</h3></div>)}</CardContent></Card>
+
+          <Card className="lg:col-span-3 bg-black/90 border-[12px] border-cyan-500/10 rounded-[7rem] p-16 shadow-9xl flex flex-col group overflow-hidden relative min-h-[900px] backdrop-blur-5xl text-right">
+              <CardHeader className="p-0 mb-10 border-b-8 border-white/5 pb-10 bg-cyan-900/10 rounded-t-[4rem] flex flex-row justify-between items-center text-right px-12 py-6">
+                 <Badge className="bg-emerald-600/30 text-emerald-500 border-4 border-emerald-500/40 px-12 py-4 rounded-full font-black text-3xl animate-pulse shadow-9xl uppercase tracking-widest">VISION_SYNC_OK</Badge>
+                 <CardTitle className="text-4xl md:text-[8rem] text-white italic tracking-tighter uppercase font-black gold-glow leading-none">
+                    Intelligence Feed <Scan className="size-16 text-cyan-400 animate-pulse" />
+                 </CardTitle>
+              </CardHeader>
+              <CardContent className="p-10 flex-1 overflow-hidden relative flex flex-col gap-12 z-10 text-right">
+                 {results ? (
+                    <div className="flex-1 bg-black/98 p-12 rounded-[4rem] font-code text-xl md:text-5xl leading-tight h-[650px] overflow-y-auto border-4 border-white/5 scrollbar-hide shadow-inner italic text-emerald-400 whitespace-pre-wrap selection:bg-cyan-600 text-left relative">
+                       <pre className="whitespace-pre-wrap relative z-10">
+                           {typeof results === 'string' ? results : JSON.stringify(results, null, 2)}
+                       </pre>
+                    </div>
+                 ) : (
+                   <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-60">
+                      <div className="relative group/nexus">
+                        <Cpu className="size-64 md:size-[50rem] animate-spin-slow text-cyan-500 group-hover:scale-110 transition-transform duration-[12000ms]" />
+                        <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-64 text-cyan-400/40 animate-neural" />
+                        <div className="absolute -inset-40 border-[80px] border-dashed border-cyan-500/5 rounded-full animate-reverse-spin opacity-20" />
+                      </div>
+                      <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">ULTRA Recon</h3>
+                      <p className="text-4xl md:text-8xl font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">Establishing universal Overlord vision v90.0: Siphoning Global Identity DNA...</p>
+                   </div>
+                 )}
+              </CardContent>
+              <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[8em] italic">
+                <span>NEURAL_VISION_v90_AL_GHAZALI_ROOT</span>
+                <div className="flex gap-16">
+                    <Fingerprint className="size-20 text-cyan-400 animate-pulse" />
+                    <Atom className="size-20 animate-spin-slow text-cyan-400" />
+                </div>
+              </div>
+           </Card>
         </div>
       </main>
     </div>
