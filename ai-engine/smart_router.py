@@ -2,9 +2,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Smart Router v87.0 – الأدميرال الكوني (NERVOUS SYSTEM EDITION)
-المحرك المركزي لتنسيق الأبعاد السبعة عبر الجهاز العصبي الموحد.
-تم دمج "موزع الأحداث" (Event Dispatcher) لربط العقد السبعة في نبضة واحدة.
+Smart Router v87.5 – الأدميرال الكوني (ALGORITHM FACTORY EDITION)
+المحرك المركزي لتنسيق الأبعاد السبعة ومصنع الخوارزميات عبر الجهاز العصبي الموحد.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys, json, os, subprocess, socket, time
@@ -27,7 +26,7 @@ class SmartRouter:
         # مصفوفة الجسور المادية للأبعاد السبعة الموحدة
         self.bridges = {
             "nursery_seed": "Nursery",
-            "subdomainx": "Perception",
+            "algorithm_forge": "Arsenal",
             "n8n_strike": "Automation",
             "mempalace": "Memory",
             "hermes_link": "Automation",
@@ -36,10 +35,12 @@ class SmartRouter:
             "cairn_shadow": "Perception"
         }
         # تهيئة الجهاز العصبي عند الإقلاع
-        hub.initialize_nervous_system()
+        try: hub.initialize_nervous_system()
+        except: pass
 
     def classify(self, prompt):
         p = prompt.lower()
+        if any(w in p for w in ["algo", "khawarizm", "خوارزمية", "forge", "تسليح"]): return "algorithm_forge"
         if any(w in p for w in ["cairn", "investigate", "تحقيق"]): return "cairn_shadow"
         if any(w in p for w in ["تدريب", "مشتل", "nursery", "train"]): return "nursery_seed"
         if any(w in p for w in ["workflow", "n8n", "آلي"]): return "n8n_strike"

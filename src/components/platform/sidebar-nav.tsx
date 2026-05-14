@@ -57,7 +57,8 @@ import {
   Bug,
   Eye as VisionIcon,
   Cylinder,
-  Sprout
+  Sprout,
+  Hammer
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -66,6 +67,7 @@ import Link from "next/link"
 
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
+  { name: "مصنع الخوارزميات", icon: Hammer, href: "/algorithm-factory", knot: 87 },
   { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", knot: 3 },
   { name: "محقق الظلال (Cairn)", icon: Search, href: "/cairn", knot: 9 },
   { name: "العمود الفقري الكمي", icon: Wind, href: "/quantum-spine", knot: 85 },
@@ -137,7 +139,7 @@ export function SidebarNav() {
 
           <div className="text-center relative z-10">
             <h1 className="text-sm font-headline font-bold text-white tracking-[0.2em] leading-none gold-glow">AL-MUIZZ</h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[7px] font-black tracking-[0.2em] mt-1 py-0 px-3 uppercase italic animate-pulse">v86.0 CONSOLIDATED</Badge>
+            <Badge className="bg-primary text-black border-none rounded-full text-[7px] font-black tracking-[0.2em] mt-1 py-0 px-3 uppercase italic animate-pulse">v87.5 WEAPONIZED</Badge>
           </div>
         </div>
         
