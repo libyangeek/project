@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -116,12 +117,25 @@ export function SidebarNav() {
 
       <div className={cn("flex flex-col h-full bg-black border-l-[4px] border-primary/60 w-64 lg:w-72 fixed right-0 top-0 z-[400] overflow-hidden shadow-2xl transition-transform duration-500 ease-in-out font-code backdrop-blur-3xl", !isOpen && "translate-x-full lg:translate-x-0")}>
         <div className="p-8 border-b-2 border-primary/20 flex flex-col items-center gap-6 bg-black relative group">
-          <div className="size-20 bg-black border-2 border-primary/40 flex items-center justify-center shadow-[0_0_80px_rgba(212,175,55,0.4)] animate-neural shrink-0 rounded-2xl group-hover:rotate-12 transition-all relative">
-            <Crown className="size-10 text-primary gold-glow" />
+          
+          {/* 7D Nucleus Sidebar Logo */}
+          <div className="relative size-24 flex items-center justify-center shrink-0 rounded-2xl group-hover:rotate-12 transition-all">
+             <div className="size-12 bg-black border-2 border-primary flex items-center justify-center shadow-[0_0_40px_rgba(251,191,36,0.4)] relative rounded-xl z-30 animate-neural">
+                <Crown className="size-6 text-primary gold-glow" />
+             </div>
+             <div className="absolute inset-0 z-20 animate-spin-slow" style={{ animationDuration: '10s' }}>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-4 bg-black border border-red-600 rounded-md flex items-center justify-center"><Flame className="size-2 text-red-600" /></div>
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 size-4 bg-black border border-blue-400 rounded-md flex items-center justify-center"><VisionIcon className="size-2 text-blue-400" /></div>
+             </div>
+             <div className="absolute inset-0 z-10 animate-reverse-spin" style={{ animationDuration: '8s' }}>
+                <div className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 size-4 bg-black border border-emerald-500 rounded-md flex items-center justify-center"><Cylinder className="size-2 text-emerald-500" /></div>
+                <div className="absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 size-4 bg-black border border-indigo-500 rounded-md flex items-center justify-center"><Share2 className="size-2 text-indigo-500" /></div>
+             </div>
           </div>
+
           <div className="text-center relative z-10">
-            <h1 className="text-xl font-headline font-bold text-white tracking-[0.4em] uppercase leading-none gold-glow">AL-MUIZZ</h1>
-            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic animate-pulse shadow-9xl">v85.0 QUANTUM</Badge>
+            <h1 className="text-xl font-headline font-bold text-white tracking-[0.4em] leading-none gold-glow">AL-MUIZZ</h1>
+            <Badge className="bg-primary text-black border-none rounded-full text-[10px] font-black tracking-[0.4em] mt-3 py-1 px-6 uppercase italic animate-pulse shadow-9xl">v85.0 7D_MATRIX</Badge>
           </div>
         </div>
         
