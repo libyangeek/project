@@ -14,6 +14,13 @@ export default {
         headline: ['Space Grotesk', 'sans-serif'],
         code: ['Source Code Pro', 'monospace'],
       },
+      boxShadow: {
+        '9xl': '0 40px 150px rgba(0, 0, 0, 0.9), 0 0 80px rgba(251, 191, 36, 0.1)',
+        'glow': '0 0 20px rgba(251, 191, 36, 0.5)',
+      },
+      blur: {
+        '5xl': '100px',
+      },
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
@@ -63,25 +70,6 @@ export default {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
-      },
-      keyframes: {
-        'accordion-down': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-accordion-content-height)' },
-        },
-        'accordion-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: '0' },
-        },
-        'pulse-glow': {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.6' },
-        }
-      },
-      animation: {
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
-        'pulse-glow': 'pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
     },
   },

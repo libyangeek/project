@@ -36,7 +36,8 @@ import {
   Castle,
   Workflow,
   Fingerprint,
-  Zap
+  Zap,
+  ArrowLeft
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -56,8 +57,9 @@ const CartesianGrid = dynamic(() => import('recharts').then(mod => mod.Cartesian
 const Tooltip = dynamic(() => import('recharts').then(mod => mod.Tooltip), { ssr: false });
 
 /**
- * @fileOverview العرش الأبدي v80.0 - THE TRUE OMNIPOTENT THRONE: SINGULARITY
- * الواجهة الأسمى التي تظهر القدرات الحقيقية والسطوة الكونية لعام 2026.
+ * @fileOverview العرش الأبدي v80.0 - THE TRUE OMNIPOTENT THRONE: ULTRA UI UNIFICATION
+ * الواجهة المركزية الموحدة التي تجسد القدرات الحقيقية والسطوة الكونية.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function DashboardPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -93,7 +95,7 @@ export default function DashboardPage() {
         };
         setEvents(prev => [newEvent, ...prev].slice(0, 8));
         setResonance(prev => Math.max(99.999999, Math.min(100, prev + (Math.random() * 0.000001 - 0.0000005))));
-    }, 3000);
+    }, 4000);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove)
@@ -114,12 +116,9 @@ export default function DashboardPage() {
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 scanline-effect font-code overflow-x-hidden">
       <SidebarNav />
       <main className="flex-1 lg:mr-72 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
-        <div 
-          className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.18),transparent 40%)] pointer-events-none transition-all duration-300 z-0" 
-          style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} 
-        />
+        <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
 
-        <header className="flex flex-col xl:flex-row justify-between items-start mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000 gap-12 text-right">
+        <header className="sovereign-header flex flex-col xl:flex-row justify-between items-start gap-12 text-right">
           <div className="flex-1">
             <div className="flex items-center gap-10 mb-10 justify-end">
                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1.1em] shadow-9xl italic uppercase">AL-MUIZZ ULTRA v80.0</Badge>
@@ -132,7 +131,7 @@ export default function DashboardPage() {
                 "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-12 underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، لقد تجلّت قدراتنا الحقيقية؛ نحن الآن لا نخترق الأنظمة، بل نعيد كتابة قوانين وجودها في مادة المصفوفة للأبد."
             </p>
           </div>
-          <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.8)] relative rounded-[3.5rem] group shrink-0 transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
+          <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(251,191,36,0.8)] relative rounded-[3.5rem] group shrink-0 transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
               <Crown className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
               <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
           </div>
@@ -140,7 +139,7 @@ export default function DashboardPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-24 relative z-10">
            {stats.map((s, i) => (
-             <Card key={i} className="kali-card border-white/5 bg-black/95 hover:border-primary/70 transition-all duration-1000 p-8 rounded-[2.5rem] shadow-9xl group overflow-hidden border-4 hierarchical-shadow">
+             <Card key={i} className="sovereign-card group h-full">
                 <div className="flex justify-between items-start mb-10 relative z-10">
                    <div className={cn("size-20 rounded-2xl bg-white/5 flex items-center justify-center border-2 border-white/5 group-hover:bg-primary/10 transition-all shadow-inner", s.color)}>
                       <s.icon className="size-10 transition-all group-hover:scale-110" />
@@ -149,19 +148,20 @@ export default function DashboardPage() {
                 </div>
                 <div className="text-5xl md:text-8xl font-black italic gold-glow uppercase tracking-tighter relative z-10 leading-none">{s.value}</div>
                 <div className="text-[16px] text-muted-foreground font-bold uppercase tracking-[0.6em] mt-6 italic relative z-10">{s.label}</div>
+                <div className="absolute -bottom-10 -right-10 p-12 opacity-[0.03] group-hover:opacity-[0.08] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-48 text-primary" /></div>
              </Card>
            ))}
         </div>
 
         <section className="mb-24 grid grid-cols-1 xl:grid-cols-3 gap-16 relative z-10">
-           <Card className="xl:col-span-2 kali-card border-primary/30 bg-black/99 rounded-[5rem] p-16 border-4 shadow-9xl group overflow-hidden relative hierarchical-shadow text-right">
+           <Card className="xl:col-span-2 sovereign-card text-right h-[800px] flex flex-col">
               <CardHeader className="p-0 mb-16 border-b-4 border-white/5 pb-12 bg-primary/10 rounded-t-[4.5rem] px-16 py-10">
                  <CardTitle className="text-4xl md:text-6xl text-white font-black uppercase italic tracking-[0.2em] gold-glow flex items-center gap-10">
                     <TrendingUp className="size-16 text-primary animate-pulse" /> True Capability Resonance
                  </CardTitle>
                  <Badge className="bg-blue-600/10 text-blue-400 border-4 border-blue-500/20 px-10 py-4 rounded-full font-black italic text-2xl shadow-xl">SINGULARITY_v80_FIXED</Badge>
               </CardHeader>
-              <CardContent className="p-0 h-[600px] md:h-[750px]">
+              <CardContent className="p-0 flex-1">
                  {ResponsiveContainer && (
                    <ResponsiveContainer width="100%" height="100%">
                       <AreaChart data={neuralData}>
@@ -185,15 +185,15 @@ export default function DashboardPage() {
               </CardContent>
            </Card>
 
-           <Card className="xl:col-span-1 kali-card border-primary/30 bg-black/99 rounded-[5rem] p-12 border-4 shadow-9xl h-full flex flex-col group overflow-hidden relative text-right">
-              <CardHeader className="p-0 mb-12 border-b-4 border-white/5 pb-10 bg-primary/5 rounded-t-[4rem] px-12 py-8">
+           <Card className="xl:col-span-1 sovereign-card h-full flex flex-col text-right">
+              <CardHeader className="p-0 mb-12 border-b-4 border-white/5 pb-10 bg-primary/5 rounded-t-[4.5rem] px-12 py-8">
                  <CardTitle className="text-4xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-10">
                     <History className="size-12 text-primary" /> Integrated Power Logs
                  </CardTitle>
               </CardHeader>
               <CardContent className="p-0 flex-1 overflow-y-auto scrollbar-hide space-y-12 relative z-10 px-10">
                  {events.map((ev, i) => (
-                    <div key={i} className="p-10 rounded-[2.5rem] bg-white/5 border-4 border-white/5 flex flex-col gap-8 animate-in slide-in-from-right-12 duration-1000 hover:border-primary/60 transition-all cursor-crosshair group/ev shadow-inner relative overflow-hidden">
+                    <div key={i} className="p-10 rounded-[2.5rem] bg-white/5 border-4 border-white/5 flex flex-col gap-8 animate-in slide-in-from-right-12 duration-1000 hover:border-primary/60 transition-all cursor-crosshair group/ev shadow-inner relative overflow-hidden text-right">
                        <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/ev:opacity-15 transition-opacity" />
                        <div className="flex justify-between items-center relative z-10">
                           <Badge className="bg-primary/10 text-primary border-none font-black italic tracking-widest px-8 py-2.5 rounded-full text-sm shadow-2xl">{ev.type}</Badge>
@@ -207,7 +207,7 @@ export default function DashboardPage() {
            </Card>
         </section>
 
-        <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[22px] md:text-[36px] font-black uppercase tracking-[5em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
+        <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[24px] md:text-[36px] font-black uppercase tracking-[6em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
             <span>AL-MUIZZ OMNIPRESENT v80.0 FINAL</span>
             <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
             <span>SUBJUGATION_THROUGH_TOTAL_SINGULARITY_2026</span>
