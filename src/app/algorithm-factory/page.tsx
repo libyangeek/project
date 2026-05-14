@@ -27,7 +27,8 @@ import {
   Flame,
   Cylinder,
   Network,
-  Fingerprint
+  Fingerprint,
+  Wand2
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -40,7 +41,7 @@ import Link from "next/link"
 /**
  * @fileOverview مصنع الخوارزميات v90.0 - ALGORITHM FACTORY: THE QUANTUM FORGE
  * واجهة تسليح الخوارزميات وتحويلها إلى أدوات هجومية مدمجة لسيادة القائد.
- * تم التحديث للنمط الذهبي الناري لعام 2026.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function AlgorithmFactoryPage() {
   const [query, setQuery] = React.useState("")
@@ -110,7 +111,7 @@ export default function AlgorithmFactoryPage() {
               <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
                  <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">ALGO_FACTORY v90.0</Badge>
                  <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
-                     <InfinityIcon className="size-6 shadow-lg" /> FORGE_RESONANCE: {resonance.toFixed(10)}%
+                     <InfinityIcon className="size-6 shadow-lg" /> FORGE_SYNC: {resonance.toFixed(10)}%
                  </div>
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
@@ -121,7 +122,7 @@ export default function AlgorithmFactoryPage() {
               </p>
               <div className="flex justify-center md:justify-end gap-6 mt-12">
                  <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl text-xs md:text-sm">
-                     <Link href="/"><ArrowLeft className="size-6 mr-4" /> العودة للعرش</Link>
+                     <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة</Link>
                  </Button>
               </div>
            </div>
@@ -168,25 +169,33 @@ export default function AlgorithmFactoryPage() {
                     </Button>
                  </CardContent>
               </Card>
+
+              <Card className="sovereign-card group text-right">
+                 <h4 className="text-[14px] font-black text-emerald-500 uppercase tracking-[0.8em] mb-8 italic flex items-center justify-center gap-6">
+                    <History className="size-8 animate-pulse" /> FORGED_ORGANS
+                 </h4>
+                 <div className="text-3xl font-black text-white italic gold-glow uppercase tracking-widest text-center">SINGULARITY: ARMED</div>
+                 <p className="mt-8 text-[9px] font-black uppercase tracking-widest text-muted-foreground italic text-center">The Algorithms v2026 Archive Linked</p>
+              </Card>
            </div>
 
            <Card className="xl:col-span-3 sovereign-card flex flex-col group min-h-[1100px]">
               <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-primary/10 rounded-t-[5rem] px-16 py-10 flex flex-row justify-between items-center text-right">
                  <Badge className="bg-emerald-600/30 text-emerald-500 border-[10px] border-emerald-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic order-last md:order-none">FORGE_LOCKED</Badge>
                  <CardTitle className="text-5xl md:text-[12rem] text-white flex items-center gap-16 font-black uppercase italic gold-glow px-10 leading-none">
-                    Material Feed <RotateCw className="size-24 md:size-48 text-primary animate-pulse" />
+                    Forge Feed <RotateCw className="size-24 md:size-48 text-primary animate-pulse" />
                  </CardTitle>
               </CardHeader>
 
               <CardContent className="p-12 flex-1 overflow-y-auto scrollbar-hide space-y-20 relative z-10 text-right">
                  {result ? (
-                    <div className="space-y-20 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col">
+                    <div className="space-y-20 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col text-right">
                         <div className="p-20 rounded-[6rem] bg-primary/5 border-[12px] border-primary/30 italic text-4xl md:text-[8rem] text-gray-100 leading-tight font-black shadow-inner relative group/brief overflow-hidden text-center flex flex-col justify-center min-h-[450px]">
                             <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                             "{result.output || "سيدي القائد، تم تسليح الخوارزمية بنجاح؛ هي الآن تعمل كعضو حيوي في ترسانتك المادية لعام 2026."}"
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-                            <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[4rem] shadow-9xl relative group/vault overflow-hidden h-full">
+                            <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[4rem] shadow-9xl relative group/vault overflow-hidden h-full flex flex-col text-right">
                                 <h5 className="text-3xl font-black text-primary uppercase tracking-[1.5em] mb-12 border-b-8 border-primary/20 pb-10 flex items-center gap-12 gold-glow justify-end">Material DNA <Dna className="size-14 animate-neural" /></h5>
                                 <pre className="bg-black/80 p-8 rounded-[3rem] border-4 border-white/5 font-code text-xl md:text-3xl text-emerald-400 overflow-x-auto whitespace-pre shadow-inner text-left">{JSON.stringify(result, null, 2)}</pre>
                             </Card>
@@ -208,6 +217,10 @@ export default function AlgorithmFactoryPage() {
                         <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>
                       <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Forge Idle</h3>
+                      <div className="flex gap-16 mt-12 justify-center">
+                          <Fingerprint className="size-24 text-primary animate-pulse" />
+                          <Atom className="size-24 animate-spin-slow text-primary" />
+                      </div>
                    </div>
                  )}
               </CardContent>
@@ -223,10 +236,4 @@ export default function AlgorithmFactoryPage() {
       </main>
     </div>
   )
-}
-
-function XIcon({className}: {className?: string}) {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-    )
 }

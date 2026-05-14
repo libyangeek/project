@@ -26,7 +26,9 @@ import {
   ShieldAlert,
   Loader2,
   ArrowLeft,
-  RotateCw
+  RotateCw,
+  Dna,
+  Speaker
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -162,7 +164,7 @@ export default function VoicePage() {
         </header>
 
         <div className="flex-1 flex flex-col items-center justify-center relative z-10 pb-32 gap-20">
-           <div className="w-full max-w-7xl space-y-20">
+           <div className="w-full max-w-7xl space-y-20 text-right">
               
               <div className="grid grid-cols-1 xl:grid-cols-3 gap-12">
                   <Card className="sovereign-card flex flex-col items-center justify-center text-center relative overflow-hidden group">
@@ -234,9 +236,13 @@ export default function VoicePage() {
               )}
               
               {!lastCommand && !isProcessing && !isRegistering && (
-                 <div className="flex flex-col items-center justify-center opacity-10 py-32 animate-in fade-in duration-2000 gap-16">
+                 <div className="flex flex-col items-center justify-center opacity-10 py-32 animate-in fade-in duration-2000 gap-16 text-right w-full">
                     <AudioLines className="size-64 text-primary/40 animate-pulse" />
                     <h3 className="text-6xl md:text-[12rem] font-black uppercase tracking-[2em] text-white italic gold-glow">Awaiting Voice</h3>
+                    <div className="flex gap-16 mt-12">
+                        <Fingerprint className="size-24 text-primary animate-pulse" />
+                        <Atom className="size-24 animate-spin-slow text-primary" />
+                    </div>
                  </div>
               )}
            </div>

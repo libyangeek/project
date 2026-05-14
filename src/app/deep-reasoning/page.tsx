@@ -22,7 +22,8 @@ import {
   Infinity as InfinityIcon,
   ArrowLeft,
   RotateCw,
-  Lightbulb
+  Lightbulb,
+  Sparkles
 } from 'lucide-react';
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
@@ -68,8 +69,8 @@ export default function DeepReasoningPage() {
             toast({ title: "Consensus Locked", description: "The strategic logic chain has been finalized." });
         } catch (e) {
             setResult({
-                thought_chain: ["Innate cognitive scan initiated.", "Material logic extraction achieved.", "Strategic consensus reached across 35 knots."],
-                final_decision: "Sovereignty confirmed. Directive synchronized across the global clusters.",
+                thought_chain: ["Innate cognitive scan initiated.", "Material logic extraction achieved.", "Strategic consensus reached across 16 dimensions."],
+                final_decision: "Sovereignty confirmed. Directive synchronized across the global clusters for total reality overwrite.",
                 confidence: "100.0000%"
             });
         }
@@ -128,7 +129,7 @@ export default function DeepReasoningPage() {
               <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-primary/10 rounded-t-[5rem] px-12 py-12 flex flex-row justify-between items-center text-right"><Badge className="bg-emerald-600/30 text-emerald-500 border-8 border-emerald-500/50 px-16 py-8 rounded-full font-black text-5xl italic animate-pulse shadow-9xl order-last md:order-none">PRECISION: 100%</Badge><CardTitle className="text-5xl md:text-[12rem] text-white flex items-center gap-12 font-black uppercase italic gold-glow px-10 leading-none">Logic Chain <GitBranch className="size-24 md:size-48 text-primary animate-pulse" /></CardTitle></CardHeader>
               <CardContent className="p-12 flex-1 overflow-y-auto scrollbar-hide space-y-20 relative z-10 text-right">
                  {result ? (
-                    <div className="space-y-20 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col">
+                    <div className="space-y-20 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col text-right">
                         <div className="space-y-12">
                           {result.thought_chain?.map((step: string, i: number) => (
                             <div key={i} className="flex gap-10 items-start justify-end group/step"><p className="text-3xl md:text-5xl text-gray-300 italic font-black group-hover/step:text-white transition-colors leading-tight drop-shadow-3xl">{step}</p><div className="size-16 rounded-[1.5rem] bg-primary/10 border-4 border-primary/30 flex items-center justify-center shrink-0 group-hover/step:bg-primary transition-all duration-700 shadow-xl scale-110"><span className="text-primary text-3xl font-black group-hover/step:text-black">{i+1}</span></div></div>
@@ -140,7 +141,18 @@ export default function DeepReasoningPage() {
                         </div>
                     </div>
                  ) : (
-                   <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-80"><div className="relative group/nexus"><BrainCircuit className="size-64 md:size-[50rem] animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[12000ms]" /><Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-64 text-primary/40 animate-neural" /></div><h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Awaiting Logic</h3></div>
+                   <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-80">
+                      <div className="relative group/nexus">
+                        <BrainCircuit className="size-64 md:size-[50rem] animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[12000ms]" />
+                        <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-64 text-primary/40 animate-neural" />
+                        <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
+                      </div>
+                      <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Awaiting Logic</h3>
+                      <div className="flex gap-16 mt-12 justify-center">
+                          <Fingerprint className="size-24 text-primary animate-pulse" />
+                          <Atom className="size-24 animate-spin-slow text-primary" />
+                      </div>
+                   </div>
                  )}
               </CardContent>
               <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[8em] italic">
