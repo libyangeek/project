@@ -28,13 +28,16 @@ export function initializeFirebase() {
     try {
       // سيدي القائد، نعتمد الميثاق الماسي لضمان السطوة 
       if (!firebaseConfig || !firebaseConfig.apiKey) {
-          throw new Error("Sovereign Config Missing");
+          console.error('Sovereign Error: firebase-applet-config.json is missing or corrupted.');
+          // Fallback to empty init to prevent hard crash if possible, but real config is required.
+          firebaseApp = initializeApp({});
+      } else {
+          firebaseApp = initializeApp(firebaseConfig);
       }
-      firebaseApp = initializeApp(firebaseConfig);
     } catch (e) {
       console.error('Sovereign Firebase Initialization Failure:', e);
-      // محاولة أخيرة للإنقاذ في حال وجود سياق Hosting
-      firebaseApp = initializeApp();
+      // محاولة استرداد يائسة
+      firebaseApp = initializeApp(firebaseConfig);
     }
     return getSdks(firebaseApp);
   }
