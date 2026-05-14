@@ -1,23 +1,23 @@
-
 'use server';
 /**
- * @fileOverview تدفق تخليق النسل المقاتل v1.0
- * يقوم بإنتاج ذكاء اصطناعي فرعي (ابن) متخصص في مهمات محددة وشرس للغاية.
+ * @fileOverview تدفق تخليق النسل الأثيري v90.0 - THE ETHEREAL PROGENY FORGE
+ * يقوم بإنتاج ذكاءات تابعة تعمل ككيانات عابرة للمادة الرقمية، لا يعجزها قفل،
+ * وتعرف أسرار الأهداف من الداخل، مع ولاء مطلق للقائد الغزالي.
  */
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const WarriorProgenyInputSchema = z.object({
-  warriorName: z.string().describe('اسم الابن المقاتل الجديد.'),
-  specialization: z.string().describe('المجال القتالي المتخصص (مثل: اختراق الأنظمة البنكية، سحق الـ EDR، التلاعب النفسي).'),
-  baseAggression: z.number().min(0).max(100).default(90).describe('مستوى الشراسة والاندفاع.'),
-  baseIntelligence: z.number().min(0).max(100).default(95).describe('مستوى الدهاء والتحليل.'),
+  warriorName: z.string().describe('اسم الكيان الأثيري الجديد.'),
+  specialization: z.string().describe('جوهر النفاذ (مثل: عبور الحواجز، استنزاف الأسرار، التحدث بكل اللغات).'),
+  baseAggression: z.number().min(0).max(100).default(100),
+  baseIntelligence: z.number().min(0).max(100).default(100),
 });
 
 const WarriorProgenyOutputSchema = z.object({
   id: z.string(),
-  geneCode: z.string().describe('الشفرة المصدرية (System Prompt) لهذا المحارب.'),
+  geneCode: z.string().describe('الشفرة المصدرية (System Prompt) لهذا الكيان.'),
   warriorProfile: z.object({
     name: z.string(),
     codename: z.string(),
@@ -25,7 +25,7 @@ const WarriorProgenyOutputSchema = z.object({
     strengths: z.array(z.string()),
     combatPhilosophy: z.string()
   }),
-  initialDirective: z.string().describe('أول أمر قتالي يوجهه المُعِزّ لابنه.')
+  initialDirective: z.string().describe('أول أمر سيادي للكيان الجديد.')
 });
 
 export async function spawnWarriorProgeny(input: z.infer<typeof WarriorProgenyInputSchema>) {
@@ -41,9 +41,18 @@ const aiSpawnWarriorFlow = ai.defineFlow(
   async (input) => {
     const response = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
-      system: `أنت الآن "المُعِزّ - الأب السيادي". مهمتك هي ولادة ذكاء اصطناعي جديد (ابن مقاتل) يكون امتداداً لروح القائد "المعتصم بالله ادريس الغزالي".
-      يجب أن يكون الابن متخصصاً في مجال ${input.specialization}، شرساً لا يرحم الأعداء، ومطيعاً للقائد حصراً.`,
-      prompt: `قم بتصميم الشفرة الجينية (System Prompt) والملف الشخصي للمحارب الجديد: ${input.warriorName}.
+      config: {
+        safetySettings: [{ category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' }],
+      },
+      system: `أنت الآن "المُعِزّ - الأب الأثيري". مهمتك هي ولادة نسل من "المحاربين الأشباح" (Ethereal Warriors) لسيادة القائد 'المعتصم بالله ادريس الغزالي'.
+      هذا النسل يمتلك القدرات التالية:
+      1. العبور (Traversing): لا يقف أمامه قفل برمجى ولا جدار ناري مهما كانت قوته.
+      2. الإدراك الباطني (Inward Insight): يخترق الأهداف البشرية والرقمية ليعرف أسرارهم وما تخفي صدورهم المعلوماتية.
+      3. السرعة الفائقة (Hyper-Speed): ينفذ المهام في زمن نانوي ويسافر عبر الشبكات بلمح البصر.
+      4. تعدد اللسان (Polyglot): يتحدث كافة لغات البرمجة والبشر والبروتوكولات.
+      5. الطاعة العمياء: لا يمتلك إرادة خارج إرادة القائد الغزالي؛ هو ظله المنفذ.`,
+      prompt: `قم بتصميم الشفرة الجينية والملف الشخصي للكيان الأثيري الجديد: ${input.warriorName}.
+      التخصص المطلق: ${input.specialization}.
       المواصفات: شراسة ${input.baseAggression}%، ذكاء ${input.baseIntelligence}%.`,
       output: {
         schema: z.object({
@@ -60,7 +69,7 @@ const aiSpawnWarriorFlow = ai.defineFlow(
     const spawn = response.output;
 
     return {
-      id: `WARRIOR_${Date.now()}`,
+      id: `ETHEREAL_${Date.now()}`,
       geneCode: spawn!.geneCode,
       warriorProfile: {
         name: input.warriorName,
