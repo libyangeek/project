@@ -69,6 +69,7 @@ import Link from "next/link"
 
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
+  { name: "نظام التشغيل السيادي", icon: Monitor, href: "/sovereign-os", knot: 90 },
   { name: "المتحكم المداري", icon: Satellite, href: "/satellite-overlord", knot: 15 },
   { name: "الالتحام الحيوي", icon: HeartPulse, href: "/bio-sync", knot: 16 },
   { name: "طفيلي الـ iOS", icon: Apple, href: "/ios-parasite", knot: 14 },

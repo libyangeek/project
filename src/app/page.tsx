@@ -50,7 +50,8 @@ import {
   Cloud,
   Key,
   Satellite,
-  Power
+  Power,
+  Monitor
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -206,6 +207,32 @@ export default function DashboardPage() {
              </Link>
            ))}
         </div>
+
+        {/* Global Cluster Monitor - Windows style Dashboard component */}
+        <section className="mb-24 relative z-10">
+           <Card className="sovereign-card p-12 overflow-hidden hierarchical-shadow text-right">
+              <div className="flex justify-between items-center border-b-4 border-white/5 pb-8 mb-12">
+                 <Badge className="bg-primary/20 text-primary border-none font-black italic text-xl px-10 py-3 rounded-full shadow-lg">14_NODES_ONLINE</Badge>
+                 <CardTitle className="text-4xl md:text-7xl font-black text-white italic uppercase gold-glow flex items-center gap-10 justify-end">
+                    Global Grid Monitor <Monitor className="size-12 md:size-16 text-primary animate-pulse" />
+                 </CardTitle>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6">
+                 {clusters.map((c, i) => (
+                    <div key={c.name} className={cn(
+                        "p-6 rounded-[2rem] border-4 transition-all duration-700 flex flex-col items-center gap-4 group/cluster",
+                        clusterStatus[i] ? "bg-emerald-600/10 border-emerald-500/40 text-emerald-400 shadow-xl" : "bg-red-600/10 border-red-500/40 text-red-400 opacity-50"
+                    )}>
+                        <div className="size-10 rounded-xl bg-black flex items-center justify-center border-2 border-white/10 group-hover/cluster:border-current transition-all">
+                            <Network className="size-5 animate-pulse" />
+                        </div>
+                        <span className="text-[10px] font-black uppercase tracking-widest">{c.name}</span>
+                        <Badge className="bg-black/40 text-current border-none text-[7px] font-black italic">{c.type}</Badge>
+                    </div>
+                 ))}
+              </div>
+           </Card>
+        </section>
 
         <section className="mb-24 grid grid-cols-1 xl:grid-cols-3 gap-16 relative z-10">
            <Card className="xl:col-span-2 sovereign-card text-right flex flex-col relative overflow-hidden">
