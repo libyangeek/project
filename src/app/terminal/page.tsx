@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -14,7 +15,6 @@ import {
   ShieldCheck,
   Binary,
   Atom,
-  Command,
   Crown,
   Activity,
   Network,
@@ -35,7 +35,6 @@ import Link from "next/link"
 /**
  * @fileOverview صوت الوريث v90.0 - THE HEIR'S VOICE: MATRIX SHELL
  * واجهة المحطة التنفيذية التي تصهر إرادة القائد في عصب المصفوفة لعام 2026.
- * تم التحديث للنمط الزمردي الرقمي (Digital Emerald) لعام 2026.
  */
 export default function TerminalPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -94,7 +93,7 @@ export default function TerminalPage() {
               <div className="text-right">
                   <h2 className="text-3xl md:text-6xl font-headline font-bold text-white uppercase italic tracking-tighter gold-glow leading-none">The Heir's <span className="text-emerald-500">Voice</span></h2>
                   <div className="flex items-center gap-6 text-[10px] text-emerald-500 font-black uppercase tracking-[0.5em] mt-3 italic justify-end">
-                      <span>REFLEX_LOCKED_v90</span>
+                      <span>REFLEX_LOCKED_v90.0</span>
                       <ShieldCheck className="size-4 animate-pulse" />
                   </div>
               </div>
@@ -128,7 +127,7 @@ export default function TerminalPage() {
             </div>
           </ScrollArea>
 
-          <div className="p-6 md:p-12 bg-black/99 border-t-8 md:border-t-[12px] border-emerald-500/60 shadow-[0_-40px_150px_rgba(0,0,0,1)] z-30">
+          <div className="p-6 md:p-12 bg-black/98 border-t-8 md:border-t-[12px] border-emerald-500/60 shadow-[0_-40px_150px_rgba(0,0,0,1)] z-30">
             <form onSubmit={executeCommand} className="max-w-7xl mx-auto relative flex items-center gap-6 md:gap-12 bg-white/5 rounded-[3rem] md:rounded-[5rem] px-8 md:px-16 focus-within:border-emerald-500 transition-all duration-1000 border-4 border-white/10 shadow-inner">
                <Button type="submit" className="bg-emerald-600 text-black hover:bg-white rounded-full size-20 md:size-40 transition-all active:scale-90 border-[8px] md:border-[16px] border-black/30 group shadow-9xl" disabled={!input.trim() || isLoading}>
                   {isLoading ? <Loader2 className="size-8 md:size-20 animate-spin" /> : <Send className="size-8 md:size-20 group-hover:translate-x-3 transition-transform" />}

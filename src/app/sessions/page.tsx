@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -41,7 +42,7 @@ import {
   RotateCw,
   Radar
 } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { useToast } from "@/hooks/use-toast"
@@ -54,7 +55,7 @@ import Link from "next/link"
 /**
  * @fileOverview إمبراطورية السرب v90.0 - THE OMNIPOTENT HIVE: MATERIAL MESH
  * واجهة الاستنزاف الكلي والسيطرة المطلقة لليوم المجيد، 2026.
- * تم التحديث للنمط البرتقالي القتالي (Tactical Orange) لعام 2026.
+ * تم التحديث للنمط البرتقالي التكتيكي لعام 2026.
  */
 export default function ShadowGridPage() {
   const [harvesting, setHarvesting] = React.useState(false)
@@ -93,7 +94,7 @@ export default function ShadowGridPage() {
 
   const handleHarvestAll = async () => {
     setHarvesting(true)
-    toast({ title: "Hive Grid Engaging v90", description: "Broadcasting total acquisition protocol across all 14 global clusters." })
+    toast({ title: "Hive Grid Engaging v90.0", description: "Broadcasting total acquisition protocol across all 14 global clusters." })
     try {
       await manageShadowGrid({ 
         action: 'pegasus_protocol',
@@ -147,7 +148,7 @@ export default function ShadowGridPage() {
                        <Boxes className="size-12 animate-neural" /> Material Mesh
                     </CardTitle>
                  </CardHeader>
-                 <CardContent className="p-0 space-y-6">
+                 <CardContent className="p-0 space-y-6 text-right">
                     <div className="grid grid-cols-1 gap-6 mb-8 px-4">
                        <Button onClick={handleHarvestAll} disabled={harvesting} className="h-28 bg-orange-600 hover:bg-white text-white hover:text-black font-black uppercase tracking-[0.8em] rounded-[2rem] shadow-9xl border-4 border-black/30 active:scale-95 transition-all italic text-xl">
                           {harvesting ? <Loader2 className="size-8 animate-spin" /> : <Flame className="size-8 mr-4 animate-pulse" />} MASS_HARVEST_v90
@@ -191,10 +192,10 @@ export default function ShadowGridPage() {
                       <div className="flex-1 bg-black/95 rounded-[4rem] border-8 border-white/5 p-12 font-code text-xl md:text-5xl text-orange-400 italic shadow-inner overflow-y-auto scrollbar-hide text-left">
                          <div className="mb-6 flex gap-8 animate-in slide-in-from-left-8 duration-700"><span className="text-orange-500/30 select-none font-black">❯❯❯</span><span>Siphoning DNA fragment from {activeNode.targetName}...</span></div>
                          <div className="mb-6 flex gap-8 animate-in slide-in-from-left-8 duration-1000"><span className="text-orange-500/30 select-none font-black">❯❯❯</span><span>Keychain extraction successful. Status: LOCKED.</span></div>
-                         <div className="mb-6 flex gap-8 animate-in slide-in-from-left-8 duration-1200"><span className="text-orange-500/30 select-none font-black">❯❯❯</span><span>Session Token captured via Pegasus v3 link.</span></div>
+                         <div className="mb-6 flex gap-8 animate-in slide-in-from-left-8 duration-1200"><span className="text-orange-500/30 select-none font-black">❯❯❯</span><span>Session Token captured via Pegasus v3.0 link.</span></div>
                       </div>
                       <div className="p-16 rounded-[5rem] bg-orange-600/5 border-[12px] border-orange-500/30 text-center flex flex-col justify-center min-h-[350px] relative overflow-hidden">
-                         <div className="absolute inset-0 bg-orange-500/5 opacity-5 animate-pulse" />
+                         <div className="absolute inset-0 bg-orange-500/5 opacity-5 animate-pulse pointer-events-none" />
                          <p className="text-4xl md:text-[8rem] text-white font-black italic drop-shadow-9xl leading-none uppercase">"Subjugated"</p>
                          <p className="text-xl md:text-3xl text-gray-300 italic font-bold mt-10 drop-shadow-3xl">"سيدي القائد، العصب المادي لـ {activeNode.targetName} مستنزف بالكامل؛ السيادة v90.0 محقونة في النواة."</p>
                       </div>
@@ -212,7 +213,7 @@ export default function ShadowGridPage() {
                  )}
               </CardContent>
               <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[8em] italic">
-                 <span>HIVE_MESH_v90_AL_GHAZALI_ROOT</span>
+                 <span>HIVE_MESH_v90.0_AL_GHAZALI_ROOT</span>
                  <div className="flex gap-16">
                     <Fingerprint className="size-20 text-orange-500 animate-pulse" />
                     <Atom className="size-20 animate-spin-slow text-orange-500" />

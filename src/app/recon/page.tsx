@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -31,12 +32,11 @@ import {
   Wind,
   ArrowLeft,
   RotateCw,
-  Share2,
   LayoutGrid,
   Network,
   Cpu
 } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -182,7 +182,7 @@ export default function ReconPage() {
                        </pre>
                     </div>
                  ) : (
-                   <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-60">
+                   <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-80">
                       <div className="relative group/nexus">
                         <Cpu className="size-64 md:size-[50rem] animate-spin-slow text-cyan-500 group-hover:scale-110 transition-transform duration-[12000ms]" />
                         <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-64 text-cyan-400/40 animate-neural" />

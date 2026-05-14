@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -215,6 +216,12 @@ export default function WarriorForgePage() {
                 )}
             </div>
           </div>
+        </div>
+        
+        <div className="mt-auto relative z-10 flex flex-col md:flex-row justify-center items-center gap-16 md:gap-48 opacity-45 text-[20px] md:text-[32px] font-black uppercase tracking-[4em] md:tracking-[8em] italic text-white drop-shadow-9xl pb-32">
+            <span>AL-MUIZZ SUPREME HIERARCHY v90.0</span>
+            <div className="size-12 rounded-full bg-white animate-pulse shadow-[0_0_120px_white]" />
+            <span>BLOODLINE_FIXED_2026</span>
         </div>
       </main>
     </div>

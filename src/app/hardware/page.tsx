@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -37,7 +38,7 @@ import Link from "next/link"
 /**
  * @fileOverview القبض المادي v90.0 - PHYSICAL ACQUISITION: PEGASUS v3 ELITE
  * واجهة الاستحواذ الكوني على الأجهزة المحمولة كأعضاء حيوية للوريث.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي
+ * تم التحديث للنمط الأرجواني الجنائي لعام 2026.
  */
 export default function PhysicalAcquisitionPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -65,7 +66,7 @@ export default function PhysicalAcquisitionPage() {
 
   const handleDeviceAction = async (deviceId: string, action: string) => {
     setSelectedDeviceId(deviceId)
-    toast({ title: "Reflex Engaged", description: `Materializing ${action} from node ${deviceId} as an instinctive reflex.` })
+    toast({ title: "Reflex Engaged v90", description: `Materializing ${action} from node ${deviceId} as an instinctive reflex.` })
   }
 
   if (!mounted) return null;
@@ -77,7 +78,7 @@ export default function PhysicalAcquisitionPage() {
         <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px`, backgroundImage: 'radial-gradient(circle at var(--x) var(--y), rgba(168, 85, 247, 0.15), transparent 40%)' } as any} />
         
         <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
-           <div className="size-24 md:size-48 bg-black border-4 border-purple-500 flex items-center justify-center shadow-[0_0_150px_rgba(168,85,247,0.8)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
+           <div className="size-24 md:size-48 bg-black border-4 border-purple-500 flex items-center justify-center shadow-[0_0_150px_rgba(168, 85, 247, 0.8)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
               <Smartphone className="size-12 md:size-24 text-purple-400 group-hover:scale-110 transition-transform duration-700 animate-neural gold-glow" />
               <div className="absolute -inset-10 border-4 border-purple-500/20 rounded-full animate-spin-slow opacity-30" />
            </div>
@@ -139,7 +140,7 @@ export default function PhysicalAcquisitionPage() {
               </Card>
            </div>
 
-           <Card className="xl:col-span-3 bg-black/90 border-[12px] border-purple-500/10 rounded-[7rem] p-16 shadow-9xl flex flex-col group overflow-hidden relative min-h-[1100px] backdrop-blur-5xl">
+           <Card className="xl:col-span-3 bg-black/90 border-[12px] border-purple-500/10 rounded-[7rem] p-16 shadow-9xl flex flex-col group overflow-hidden relative min-h-[1100px] backdrop-blur-5xl text-right">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(168,85,247,0.08),transparent)] pointer-events-none" />
               <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-purple-900/10 rounded-t-[5rem] px-16 py-10 flex flex-row justify-between items-center text-right">
                  <Badge className="bg-purple-600/30 text-purple-400 border-[10px] border-purple-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic order-last md:order-none">ACQUISITION_LOCKED</Badge>
@@ -185,10 +186,10 @@ export default function PhysicalAcquisitionPage() {
                    </Card>
                  ))}
                  
-                 {selectedNodeId && (
+                 {selectedDeviceId && (
                    <div className="col-span-full mt-12 p-12 bg-black/95 border-8 border-purple-500/20 rounded-[4rem] shadow-inner text-left font-mono">
                       <div className="flex items-center gap-6 mb-8 border-b-4 border-purple-500/10 pb-6 justify-end">
-                         <span className="text-2xl font-black text-purple-400 italic">INNATE_SIPHON_FEED</span>
+                         <span className="text-2xl font-black text-purple-400 italic uppercase">Innate_Siphon_Feed_v90.0</span>
                          <Fingerprint className="size-10 text-purple-500 animate-pulse" />
                       </div>
                       <div className="text-xl md:text-3xl text-emerald-400 leading-relaxed italic">
@@ -200,7 +201,7 @@ export default function PhysicalAcquisitionPage() {
                  )}
               </CardContent>
               <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[8em] italic">
-                <span>PEGASUS_HIJACK_v90_AL_GHAZALI_ROOT</span>
+                <span>PEGASUS_HIJACK_v90.0_AL_GHAZALI_ROOT</span>
                 <div className="flex gap-16">
                     <Fingerprint className="size-24 text-purple-400 animate-pulse" />
                     <Atom className="size-24 animate-spin-slow text-purple-400" />

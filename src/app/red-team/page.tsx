@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -261,7 +262,7 @@ export default function RedTeamPage() {
                  </ScrollArea>
               </CardContent>
               <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[6em] italic">
-                 <span>FORGE_MASTER_v90_AL_GHAZALI_ROOT</span>
+                 <span>FORGE_MASTER_v90.0_AL_GHAZALI_ROOT</span>
                  <div className="flex gap-16">
                     <Fingerprint className="size-16 text-emerald-500 animate-pulse" />
                     <Atom className="size-16 text-emerald-500 animate-spin-slow" />
