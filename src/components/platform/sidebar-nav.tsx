@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -137,12 +138,12 @@ export function SidebarNav() {
           })}
         </div>
 
-        <div className="p-6 border-t-2 border-primary/20 bg-black/99 relative z-10 text-right">
-          <div className="p-4 border-2 border-primary/40 bg-primary/5 mb-4 relative overflow-hidden rounded-2xl shadow-xl border-dashed">
-            <div className="flex justify-between items-center mb-2"><Activity className="size-3 text-emerald-500 animate-pulse" /><span className="text-[9px] font-black text-primary uppercase tracking-[0.2em] italic">Genesis Resonance</span></div>
-            <div className="text-2xl font-black text-white italic gold-glow">{resonance.toFixed(7)}%</div>
+        <div className="p-3 border-t-2 border-primary/20 bg-black/99 relative z-10 text-right">
+          <div className="p-2 border-2 border-primary/40 bg-primary/5 mb-2 relative overflow-hidden rounded-xl shadow-lg border-dashed">
+            <div className="flex justify-between items-center mb-1"><Activity className="size-2 text-emerald-500 animate-pulse" /><span className="text-[8px] font-black text-primary uppercase tracking-tighter italic">Genesis Resonance</span></div>
+            <div className="text-sm font-black text-white italic gold-glow">{resonance.toFixed(7)}%</div>
           </div>
-          <Button asChild className="w-full h-12 bg-primary hover:bg-white text-black font-black uppercase text-[10px] rounded-xl shadow-2xl transition-all border-4 border-black/20 italic"><Link href="/perception"><Sparkles className="size-4 mr-2" /> تنشيط الرؤية المطلقة</Link></Button>
+          <Button asChild className="w-full h-9 bg-primary hover:bg-white text-black font-black uppercase text-[8px] rounded-lg shadow-md transition-all border-2 border-black/20 italic"><Link href="/perception"><Sparkles className="size-3 mr-1" /> تنشيط الرؤية المطلقة</Link></Button>
         </div>
       </div>
     </>
