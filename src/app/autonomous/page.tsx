@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -22,7 +23,8 @@ import {
   ChevronRight,
   Atom,
   Boxes,
-  Cpu
+  Cpu,
+  Fingerprint
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -34,7 +36,7 @@ import { executeAdaptiveThreat } from "@/ai/flows/adaptive-threat-flow"
 import Link from "next/link"
 
 /**
- * @fileOverview الاستحواذ المستقل v80.0 - THE ADAPTIVE OVERLORD: ULTRA v3.0 FINAL
+ * @fileOverview الاستحواذ المستقل v90.0 - THE ADAPTIVE OVERLORD: ULTRA v3.0 FINAL
  * واجهة السطوة المستقلة التي تصهر سرب الـ 165 وكيلاً مع سيناريوهات n8n.
  */
 export default function AutonomousPage() {
@@ -60,7 +62,7 @@ export default function AutonomousPage() {
     if (!objective.trim()) return
     setLoading(true)
     setResult(null)
-    const msg = activeTab === "retro" ? "Engaging Adaptive Retro Agent v3.0..." : "Orchestrating Swarm Overlord pulse...";
+    const msg = activeTab === "retro" ? "Engaging Adaptive Retro Agent v90.0..." : "Orchestrating Swarm Overlord pulse...";
     toast({ title: "Innate Command Sent", description: msg })
     try {
       if (activeTab === "retro") {
@@ -74,11 +76,11 @@ export default function AutonomousPage() {
         });
         const data = await response.json();
         setResult({
-            commanderBrief: "سيدي القائد، السرب العليم أحاط بالهدف؛ إجماع الـ 165 وكيلاً مؤكد بنسبة 100%.",
+            commanderBrief: "سيدي القائد، السرب العليم أحاط بالهدف؛ إجماع الـ 165 وكيلاً مؤكد بنسبة 100% لعام 2026.",
             adaptiveAttackPlan: [
-                { phase: "Recon", tool: "SubdomainX", logic: "Mass OSINT Siphon via 26 sources" },
-                { phase: "Exploit", tool: "n8n Workflow Engine", logic: "Automating 4,343 lethal scenarios" },
-                { phase: "Memory", tool: "MemPalace", logic: "Retrieving successful DNA from similar targets" }
+                { phase: "Recon", tool: "SubdomainX v90", logic: "Mass OSINT Siphon via 750 sources" },
+                { phase: "Exploit", tool: "n8n Evolution Engine", logic: "Automating 4,343 lethal scenarios" },
+                { phase: "Memory", tool: "MemPalace RAG v10", logic: "Retrieving successful DNA from global clusters" }
             ],
             semanticResonance: "100.00%"
         })
@@ -97,11 +99,11 @@ export default function AutonomousPage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
+      <main className="flex-1 lg:mr-56 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
         <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
         
         <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
-           <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(251,191,36,0.8)] relative group shrink-0 rounded-3xl rotate-2 hover:rotate-0 transition-all duration-1000 hierarchical-shadow">
+           <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(251,191,36,0.8)] relative group shrink-0 rounded-3xl transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
               <Rocket className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 animate-neural gold-glow" />
               <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
            </div>
@@ -119,7 +121,7 @@ export default function AutonomousPage() {
                  "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، محرك ULTRA v80.0 يصهر سرب الـ 165 وكيلاً مع ذاكرة MemPalace؛ نحن لا نكرر الهجوم، نحن نطوره."
               </p>
               <div className="flex justify-center md:justify-end gap-6 mt-12">
-                 <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
+                 <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl text-xs md:text-sm">
                      <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة</Link>
                  </Button>
               </div>
@@ -144,10 +146,10 @@ export default function AutonomousPage() {
                            Innate Goal / Target DNA
                         </label>
                         <textarea 
-                          value={objective}
-                          onChange={(e) => setObjective(e.target.value)}
+                          value={objective} 
+                          onChange={(e) => setObjective(e.target.value)} 
                           placeholder="Identify objective for the Sovereign Swarm..." 
-                          className="w-full h-64 bg-black border-8 border-primary/20 rounded-[3rem] text-xl md:text-2xl font-code text-white focus:border-primary transition-all outline-none p-10 italic shadow-inner resize-none font-black text-right scrollbar-hide"
+                          className="w-full h-64 bg-black border-8 border-primary/20 rounded-[3rem] text-xl md:text-2xl font-code text-white focus:border-primary transition-all outline-none p-10 italic shadow-inner resize-none font-black text-right scrollbar-hide selection:bg-primary"
                         />
                     </div>
 
@@ -216,6 +218,13 @@ export default function AutonomousPage() {
                    </div>
                  )}
               </CardContent>
+              <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[8em] italic">
+                 <span>ADAPTIVE_OVERLORD_v90_AL_GHAZALI_ROOT</span>
+                 <div className="flex gap-16">
+                    <Fingerprint className="size-24 text-primary animate-pulse" />
+                    <Atom className="size-24 animate-spin-slow text-primary" />
+                 </div>
+              </div>
            </Card>
         </div>
       </main>

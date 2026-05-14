@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -36,8 +37,7 @@ import Link from "next/link"
 
 /**
  * @fileOverview محراب n8n v90.0 - THE HIVE AUTOMATION: OMNIPOTENT HIVE
- * واجهة قيادة الـ 4,343 سيناريو هجومي مدمجة بذاكرة RAG والمحرك المادي.
- * تم التحديث للنمط السياني المتدفق (Flow Cyan) لعام 2026.
+ * واجهة قيادة الـ 4,343 سيناريو هجومي مدمجة بذاكرة RAG والمحرك المادي لعام 2026.
  */
 export default function N8nHivePage() {
   const [target, setTarget] = React.useState("")
@@ -64,7 +64,7 @@ export default function N8nHivePage() {
         return
     }
     setLoading(true); setResult(null)
-    toast({ title: "خلية n8n تنشط v90", description: `جاري تنسيق السيناريو ${workflow} لهدفك...` })
+    toast({ title: "خلية n8n تنشط v90.0", description: `جاري تنسيق السيناريو ${workflow} لهدفك...` })
     try {
       const data = await executeN8nStrike({ targetNode: target, workflowId: workflow })
       const response = await fetch('/api/execute', {
@@ -91,7 +91,7 @@ export default function N8nHivePage() {
         <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px`, backgroundImage: 'radial-gradient(circle at var(--x) var(--y), rgba(6, 182, 212, 0.15), transparent 40%)' } as any} />
         
         <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
-           <div className="size-24 md:size-48 bg-black border-4 border-cyan-500 flex items-center justify-center shadow-[0_0_200px_rgba(6,182,212,0.8)] relative group shrink-0 rounded-[3rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
+           <div className="size-24 md:size-48 bg-black border-4 border-cyan-500 flex items-center justify-center shadow-[0_0_200px_rgba(6, 182, 212, 0.8)] relative group shrink-0 rounded-[3rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
               <Workflow className="size-12 md:size-24 text-cyan-400 group-hover:scale-110 transition-transform duration-700 animate-neural gold-glow" />
               <div className="absolute -inset-10 border-4 border-cyan-500/20 rounded-full animate-spin-slow opacity-30" />
            </div>
@@ -109,7 +109,7 @@ export default function N8nHivePage() {
                  "سيدي القائد <span className="text-white font-black underline decoration-cyan-500 decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، مصفوفة n8n تصهر 4,343 سيناريو مع ذاكرة MemPalace؛ نحن لا نكرر التنفيذ، نحن نطوره بذكائك المطلق لعام 2026."
               </p>
               <div className="flex justify-center md:justify-end gap-6 mt-12">
-                 <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-cyan-500/20 bg-cyan-950/10 text-cyan-400 font-black uppercase italic tracking-widest hover:bg-cyan-600 hover:text-white transition-all shadow-2xl">
+                 <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-cyan-500/20 bg-cyan-950/10 text-cyan-400 font-black uppercase italic tracking-widest hover:bg-cyan-600 hover:text-white transition-all shadow-2xl text-xs md:text-sm">
                      <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة</Link>
                  </Button>
               </div>
@@ -173,7 +173,7 @@ export default function N8nHivePage() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
                             <Card className="bg-black/95 border-8 border-white/5 p-12 md:p-16 rounded-[4rem] shadow-9xl relative group/vault overflow-hidden h-full flex flex-col">
-                                <h5 className="text-3xl font-black text-cyan-400 uppercase tracking-[1.5em] mb-16 border-b-8 border-cyan-500/20 pb-10 flex items-center gap-12 gold-glow justify-end">Recalled DNA <History className="size-14 animate-neural" /></h5>
+                                <h5 className="text-3xl font-black text-cyan-400 uppercase tracking-[1.5em] mb-12 border-b-8 border-cyan-500/20 pb-10 flex items-center gap-12 gold-glow justify-end">Recalled DNA <History className="size-14 animate-neural" /></h5>
                                 <div className="text-xl md:text-3xl text-cyan-400 italic font-black leading-snug flex-1 text-left whitespace-pre-wrap">
                                     {result.recalledAmmunition?.map((dna: string, i: number) => (
                                         <div key={i} className="mb-4">{" >>> "} {dna}</div>
@@ -181,7 +181,7 @@ export default function N8nHivePage() {
                                 </div>
                             </Card>
                             <Card className="bg-black/95 border-8 border-white/5 p-12 md:p-16 rounded-[4rem] shadow-9xl h-full flex flex-col overflow-hidden">
-                                <h5 className="text-3xl font-black text-emerald-500 uppercase tracking-[1.5em] mb-10 border-b-8 border-emerald-500/20 pb-10 flex items-center gap-12 justify-end">Consensus Status <ShieldCheck className="size-14" /></h5>
+                                <h5 className="text-3xl font-black text-emerald-500 uppercase tracking-[1.5em] mb-10 border-b-8 border-emerald-500/20 pb-10 flex items-center gap-12 justify-end w-full">Consensus Status <ShieldCheck className="size-14" /></h5>
                                 <div className="p-8 bg-black/80 rounded-[3rem] border-4 border-emerald-500/20 text-emerald-400 font-code text-xl md:text-2xl overflow-y-auto scrollbar-hide text-left flex-1">
                                     <pre className="whitespace-pre-wrap">
                                         {typeof result.hiveConsensus === 'string' ? result.hiveConsensus : JSON.stringify(result.hiveConsensus, null, 2)}

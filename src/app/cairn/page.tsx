@@ -44,7 +44,7 @@ import { executeCairnStrategy } from "@/ai/flows/cairn-strategy-flow"
 import Link from "next/link"
 
 /**
- * @fileOverview محقق الظلال v85.5 - THE SHADOW INVESTIGATOR: CAIRN MATRIX
+ * @fileOverview محقق الظلال v90.0 - THE SHADOW INVESTIGATOR: CAIRN MATRIX
  * واجهة البحث الاستراتيجي التي تصهر الحقائق والنوايا للوصول إلى الضربة المطلقة.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
@@ -76,9 +76,8 @@ export default function CairnPage() {
         return
     }
     setLoading(true); setStrategy(null); setGraph(null);
-    toast({ title: "Shadow Investigator Engaging", description: "Consolidating Cairn facts and intents with MemPalace DNA..." })
+    toast({ title: "Shadow Investigator Engaging v90.0", description: "Consolidating Cairn facts and intents with MemPalace DNA..." })
     try {
-      // 1. مزامنة الرسم البياني من Cairn المادي
       const response = await fetch('/api/execute', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -87,15 +86,13 @@ export default function CairnPage() {
       const data = await response.json();
       if (data.success) {
           setGraph(data.output);
-          
-          // 2. استدعاء التدفق الاستراتيجي العصبي
           const strategyData = await executeCairnStrategy({
               target: target,
               currentFacts: data.output.facts || [],
               currentIntents: data.output.intents || []
           });
           setStrategy(strategyData);
-          toast({ title: "Investigation Serialized", description: "Next strategic intent materialized in the 7D Matrix." })
+          toast({ title: "Investigation Serialized", description: "Next strategic intent materialized in the 16D Matrix." })
       }
     } catch (err) {
       toast({ variant: "destructive", title: "Neural Link Failure" })
@@ -119,7 +116,7 @@ export default function CairnPage() {
            </div>
            <div className="flex-1">
               <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
-                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">SHADOW_INVESTIGATOR v85.5</Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">SHADOW_INVESTIGATOR v90.0</Badge>
                  <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                      <InfinityIcon className="size-6 shadow-lg" /> STRATEGY_SYNC: {resonance.toFixed(8)}%
                  </div>
@@ -131,7 +128,7 @@ export default function CairnPage() {
                  "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، محقق الظلال يصهر نوايا Cairn في عصب "المُعِزّ"؛ نحن لا نبحث عشوائياً، نحن نبني خرائط السطوة التي تؤدي إلى انهيار الهدف حتماً."
               </p>
               <div className="flex justify-center md:justify-end gap-6 mt-12">
-                 <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
+                 <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl text-xs md:text-sm">
                      <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة</Link>
                  </Button>
               </div>
@@ -165,10 +162,10 @@ export default function CairnPage() {
 
               <Card className="sovereign-card group text-right">
                  <h4 className="text-[14px] font-black text-emerald-500 uppercase tracking-[0.8em] mb-8 italic flex items-center justify-center gap-6">
-                    <History className="size-8 animate-pulse" /> CAIRN_GRAPH_v1
+                    <History className="size-8 animate-pulse" /> CAIRN_GRAPH_v90.0
                  </h4>
                  <div className="text-3xl font-black text-white italic gold-glow uppercase tracking-widest text-center">FACTS & INTENTS</div>
-                 <p className="mt-8 text-[9px] font-black uppercase tracking-widest text-muted-foreground italic text-center">Strategic Pathfinding Enabled</p>
+                 <p className="mt-8 text-[9px] font-black uppercase tracking-widest text-muted-foreground italic text-center">Innate Strategic Pathfinding v90.0</p>
               </Card>
            </div>
 
@@ -183,14 +180,12 @@ export default function CairnPage() {
               <CardContent className="p-12 flex-1 overflow-y-auto scrollbar-hide space-y-20 relative z-10 text-right">
                  {strategy ? (
                     <div className="space-y-20 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col">
-                        {/* Strategic Brief */}
                         <div className="p-20 rounded-[6rem] bg-primary/5 border-[12px] border-primary/30 italic text-4xl md:text-[8rem] text-gray-100 leading-tight font-black shadow-inner relative group/brief overflow-hidden text-center flex flex-col justify-center min-h-[450px]">
                             <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                             "{strategy.commanderBrief}"
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-                            {/* Facts Column */}
                             <Card className="bg-black/95 border-8 border-white/5 p-12 md:p-16 rounded-[4rem] shadow-9xl relative group/facts overflow-hidden h-full flex flex-col">
                                 <h5 className="text-3xl font-black text-primary uppercase tracking-[1.5em] mb-12 border-b-8 border-primary/20 pb-10 flex items-center gap-12 gold-glow justify-end">Shadow Facts <Database className="size-14 animate-neural" /></h5>
                                 <div className="space-y-8 flex-1">
@@ -203,7 +198,6 @@ export default function CairnPage() {
                                 </div>
                             </Card>
 
-                            {/* Intent Column */}
                             <Card className="bg-black/95 border-8 border-white/5 p-12 md:p-16 rounded-[4rem] shadow-9xl h-full flex flex-col text-right relative overflow-hidden">
                                 <h5 className="text-3xl font-black text-emerald-500 uppercase tracking-[1.5em] mb-12 border-b-8 border-emerald-500/20 pb-10 flex items-center gap-12 justify-end w-full">Strategic Intents <Sparkles className="size-14" /></h5>
                                 <div className="space-y-8 flex-1">
@@ -217,17 +211,16 @@ export default function CairnPage() {
                             </Card>
                         </div>
 
-                        {/* Final Strategic Conclusion */}
                         <div className="p-16 rounded-[6rem] bg-emerald-600/10 border-[16px] border-emerald-500/30 flex items-center gap-16 group/siphon shadow-9xl relative overflow-hidden mt-auto min-h-[350px]">
                             <div className="absolute inset-0 bg-emerald-500/5 opacity-5 animate-pulse pointer-events-none" />
                             <div className="size-48 rounded-[3.5rem] bg-emerald-600 flex items-center justify-center border-[14px] border-emerald-400 shadow-9xl animate-neural shrink-0">
                                 <BrainCircuit className="size-24 text-white" />
                             </div>
                             <div className="flex-1">
-                                <h4 className="text-4xl font-black text-emerald-500 uppercase tracking-[1.2em] mb-6 italic">Strategic_Inference_v85.5</h4>
+                                <h4 className="text-4xl font-black text-emerald-500 uppercase tracking-[1.2em] mb-6 italic">Strategic_Inference_v90.0</h4>
                                 <div className="space-y-6">
                                     <p className="text-2xl md:text-5xl text-white font-black leading-tight drop-shadow-9xl italic">"{strategy.strategicInference}"</p>
-                                    <div className="flex items-center gap-10 mt-6">
+                                    <div className="flex items-center gap-10 mt-6 justify-end">
                                         <Badge className="bg-primary/20 text-primary border-4 border-primary/30 px-8 py-3 rounded-full font-black text-2xl italic">NEXT: {strategy.nextBestIntent}</Badge>
                                         <Badge className="bg-blue-600/20 text-blue-400 border-4 border-blue-500/30 px-8 py-3 rounded-full font-black text-2xl italic">TOOL: {strategy.recommendedTool}</Badge>
                                     </div>
@@ -243,12 +236,11 @@ export default function CairnPage() {
                         <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>
                       <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Shadow Standby</h3>
-                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">Establishing strategic Shadow-Graph for target DNA dissection and pathfinding.</p>
                    </div>
                  )}
               </CardContent>
               <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[8em] italic">
-                <span>SHADOW_INVESTIGATOR_v85_AL_GHAZALI_ROOT</span>
+                <span>SHADOW_INVESTIGATOR_v90_AL_GHAZALI_ROOT</span>
                 <div className="flex gap-16">
                     <Fingerprint className="size-24 text-primary animate-pulse" />
                     <Atom className="size-24 animate-spin-slow text-primary" />
