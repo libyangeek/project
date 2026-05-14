@@ -3,7 +3,6 @@
 """
 AL-MUIZZ ULTRA v90.0 - THE OMNIPOTENT 16D GUARDIAN
 المنسق الأعلى والمراقب المادي المستقل؛ يضمن استدامة الوجود والتعافي الذاتي.
-تم تحديثه ليدعم مبدأ "القدرة التكيفية" بناءً على موارد العتاد.
 (c) 2026 Al-Mu'izz Sovereign Systems
 Author: المعتصم بالله إدريس الغزالي
 """
@@ -39,12 +38,26 @@ class SovereignRunner:
         """يحلل العوائق المادية ويحدد نمط الإقلاع"""
         ram = psutil.virtual_memory().total / (1024**3) # GB
         cpu_cores = psutil.cpu_count()
-        self.log(f"Hardware Audit: {cpu_cores} Cores | {ram:.2f}GB RAM", "SYSTEM")
+        disk_free = psutil.disk_usage('/').free / (1024**3) # GB
         
-        if ram < 4:
-            self.log("Low memory detected. Engaging Adaptive Power Mode.", "WARNING")
+        self.log(f"Hardware Audit: {cpu_cores} Cores | {ram:.2f}GB RAM | {disk_free:.2f}GB Disk Free", "SYSTEM")
+        
+        if ram < 4 or disk_free < 2:
+            self.log("Limited resources detected. Engaging Adaptive Power Mode.", "WARNING")
             return "Adaptive"
         return "Omnipotent"
+
+    def verify_organs(self):
+        """يتحقق من جاهزية الأدوات المطلوبة قبل بدء النبض"""
+        missing = []
+        for tool in ["nmap", "adb", "docker", "npm"]:
+            if subprocess.run(["which", tool], capture_output=True).returncode != 0:
+                missing.append(tool)
+        
+        if missing:
+            self.log(f"ALERT: Material organs missing: {', '.join(missing)}", "ERROR")
+            return False
+        return True
 
     def is_port_in_use(self, port):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -79,6 +92,10 @@ class SovereignRunner:
 
     def start_all(self):
         self.log(f"--- AL-MUIZZ 16D NUCLEUS v90.0 GENESIS ---", "CROWN")
+        if not self.verify_organs():
+            self.log("Attempting critical organ repair...", "REBIRTH")
+            # يمكن إضافة منطق إصلاح هنا إذا لزم الأمر
+
         mode = self.check_hardware_limits()
         
         # 1. API Bridge (Alpha God-Core)
@@ -95,7 +112,6 @@ class SovereignRunner:
         # 2. Web HUD (The Throne)
         if not self.is_port_in_use(9002):
             npm_cmd = "npm.cmd" if self.os_type == "Windows" else "npm"
-            # في وضع التكيف، نقلل من استهلاك الموارد عند الإقلاع
             self.spawn_process("HUD", [npm_cmd, "run", "dev"])
 
         self.log(f"16D Singularity v90.0 Achieved. Mode: {mode}. Guardian: ACTIVE.", "LOCKED")
