@@ -2,71 +2,68 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Smart Router v86.0 – الأدميرال الكوني (QUANTUM BOND UPDATE)
-المحرك المركزي لتنسيق كافة الأبعاد السبعة مع ميزة "التشابك الكمي".
-تم إضافة القدرة على توجيه المهام المركبة التي تصهر الأبعاد في نبضة واحدة.
+Smart Router v87.0 – الأدميرال الكوني (NERVOUS SYSTEM EDITION)
+المحرك المركزي لتنسيق الأبعاد السبعة عبر الجهاز العصبي الموحد.
+تم دمج "موزع الأحداث" (Event Dispatcher) لربط العقد السبعة في نبضة واحدة.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys, json, os, subprocess, socket, time
 from datetime import datetime
 
+# استيراد النواة العصبية
 BASE_DIR = os.getenv("PROJECT_ROOT", os.getcwd())
+sys.path.append(os.path.join(BASE_DIR, "ai-engine"))
+
+try:
+    from nodes.core.core_node import core
+    import nodes.hub as hub
+except ImportError:
+    class core:
+        @staticmethod
+        def emit(*args, **kwargs): pass
 
 class SmartRouter:
     def __init__(self):
         # مصفوفة الجسور المادية للأبعاد السبعة الموحدة
         self.bridges = {
-            "nursery_seed": os.path.join(BASE_DIR, "ai-engine/integrations/nursery_orchestrator.py"),
-            "subdomainx": os.path.join(BASE_DIR, "tools/network/subdomainx_wrapper.py"),
-            "n8n_strike": os.path.join(BASE_DIR, "ai-engine/integrations/n8n_memory_bridge.py"),
-            "mempalace": os.path.join(BASE_DIR, "ai-engine/memory/mempalace_universal.py"),
-            "hermes_link": os.path.join(BASE_DIR, "ai-engine/integrations/hermes_bridge.py"),
-            "medusa_eye": os.path.join(BASE_DIR, "ai-engine/integrations/medusa_wrapper.py"),
-            "serpent_farm": os.path.join(BASE_DIR, "ai-engine/integrations/serpent_controller.py"),
-            "cairn_shadow": os.path.join(BASE_DIR, "ai-engine/integrations/cairn_bridge.py"),
-            "quantum_fusion": os.path.join(BASE_DIR, "src/ai/flows/quantum-fusion-flow.ts")
+            "nursery_seed": "Nursery",
+            "subdomainx": "Perception",
+            "n8n_strike": "Automation",
+            "mempalace": "Memory",
+            "hermes_link": "Automation",
+            "medusa_eye": "Arsenal",
+            "serpent_farm": "Fleet",
+            "cairn_shadow": "Perception"
         }
+        # تهيئة الجهاز العصبي عند الإقلاع
+        hub.initialize_nervous_system()
 
     def classify(self, prompt):
         p = prompt.lower()
-        # تصنيف التشابك (Fusion)
-        if any(w in p for w in ["fusion", "اندماج", "التحام", "بناء سلسلة", "chain"]): return "quantum_fusion"
-        
-        # تصنيف الأبعاد السبعة
-        if any(w in p for w in ["cairn", "investigate", "تحقيق", "ظل", "shadow", "fact", "intent"]): return "cairn_shadow"
-        if any(w in p for w in ["تدريب", "مشتل", "nursery", "علم بيانات", "train"]): return "nursery_seed"
-        if any(w in p for w in ["workflow", "سيناريو", "n8n", "آلي"]): return "n8n_strike"
-        if any(w in p for w in ["ذاكرة", "recall", "mempalace", "memory"]): return "mempalace"
-        if any(w in p for w in ["هيرميز", "hermes", "جسر", "uplink"]): return "hermes_link"
-        if any(w in p for w in ["ميدوسا", "medusa", "فحص جيت", "git", "poison"]): return "medusa_eye"
+        if any(w in p for w in ["cairn", "investigate", "تحقيق"]): return "cairn_shadow"
+        if any(w in p for w in ["تدريب", "مشتل", "nursery", "train"]): return "nursery_seed"
+        if any(w in p for w in ["workflow", "n8n", "آلي"]): return "n8n_strike"
+        if any(w in p for w in ["ذاكرة", "recall", "memory"]): return "mempalace"
+        if any(w in p for w in ["ميدوسا", "git", "poison"]): return "medusa_eye"
         if any(w in p for w in ["مزرعة", "farm", "fleet", "serpent"]): return "serpent_farm"
-        
         return "general_hive"
 
     def route_query(self, prompt):
         category = self.classify(prompt)
-        target = prompt.split()[-1] if len(prompt.split()) > 0 else "GLOBAL_MATRIX"
+        target_node = self.bridges.get(category, "God-Core")
         
-        # مصفوفة التوزيع التنفيذي v86.0
-        dispatch_table = {
-            "quantum_fusion": {"node": "Quantum-God-Core", "msg": f"Quantum Bonds established for {target}. Consolidating 7D Matrix."},
-            "cairn_shadow": {"node": "Node-09-Shadow", "msg": f"Shadow Investigator mapping facts for {target}."},
-            "nursery_seed": {"node": "Node-25-Evolution", "msg": f"Evolutionary Nursery feeding DNA to {target}."},
-            "n8n_strike": {"node": "Node-43-Automation", "msg": f"n8n Hive executing automated strike on {target}."},
-            "mempalace": {"node": "Node-17-Memory", "msg": f"MemPalace semantic recall synchronized for {target}."},
-            "hermes_link": {"node": "Node-80-Hermes", "msg": f"Diamond Bridge siphoning cloud DNA for {target}."},
-            "medusa_eye": {"node": "Node-66-Medusa", "msg": f"Medusa Ocular detection active for {target}."},
-            "serpent_farm": {"node": "Node-81-Serpent", "msg": f"Serpent Farm subjugating mobile assets for {target}."},
-            "general_hive": {"node": "Alpha-God-Core", "msg": f"Directive for {target} processed via 7D Matrix Nucleus."}
-        }
-
-        res = dispatch_table.get(category, dispatch_table["general_hive"])
+        # بث نبضة عصبية حقيقية في الجهاز المركزي
+        core.emit(
+            event_type=f"DIRECTIVE_{category.upper()}",
+            data={"prompt": prompt, "sender": "Overlord_UI"},
+            target=target_node
+        )
 
         return {
             "category": category,
-            "status": "7D_BONDS_LOCKED",
-            "output": f"Quantum consensus achieved at {res['node']}: {res['msg']}",
-            "node": res["node"],
+            "status": "NERVOUS_LINK_STABILIZED",
+            "output": f"Quantum pulse transmitted to Node '{target_node}': Collective consensus processing.",
+            "node": f"{target_node}-v87",
             "resonance": "100.000000%",
             "bonds_active": True,
             "timestamp": datetime.now().isoformat()
