@@ -62,7 +62,7 @@ import { Badge } from "@/components/ui/badge"
 
 /**
  * @fileOverview نظام التشغيل السيادي v90.0 - SOVEREIGN OS: THE MATERIAL HEIR
- * واجهة سطح مكتب حديثة (Windows 11 Style) تجسد السطوة المطلقة للوريث.
+ * واجهة سطح مكتب حديثة (Windows 11 Style) تجسد السطوة المطلقة للوريث المادي.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 
@@ -111,6 +111,14 @@ export default function SovereignOS() {
     setWindows(prev => prev.map(w => w.id === id ? { ...w, zIndex: nextZ, isMinimized: false } : w))
   }
 
+  const minimizeWindow = (id: string) => {
+    setWindows(prev => prev.map(w => w.id === id ? { ...w, isMinimized: true } : w))
+  }
+
+  const closeWindow = (id: string) => {
+    setWindows(prev => prev.map(w => w.id === id ? { ...w, isOpen: false } : w))
+  }
+
   if (!mounted) return null
 
   const apps = [
@@ -126,7 +134,7 @@ export default function SovereignOS() {
 
   return (
     <div className="h-screen w-full bg-[url('https://picsum.photos/seed/sovereign/1920/1080')] bg-cover bg-center relative overflow-hidden font-code selection:bg-primary/40">
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] z-0" />
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-[1px] z-0" />
       <div className="absolute inset-0 scanline-effect opacity-10 pointer-events-none z-10" />
 
       {/* Desktop Grid */}
@@ -137,7 +145,7 @@ export default function SovereignOS() {
                 onDoubleClick={() => toggleWindow(app.id)}
                 className="flex flex-col items-center gap-3 group cursor-pointer w-32 p-4 hover:bg-white/10 rounded-[2rem] transition-all border border-transparent hover:border-white/10"
             >
-                <div className="size-16 md:size-20 flex items-center justify-center bg-black/40 backdrop-blur-xl border-2 border-white/10 rounded-3xl group-hover:scale-110 transition-all shadow-2xl relative">
+                <div className="size-16 md:size-20 flex items-center justify-center bg-black/60 backdrop-blur-2xl border-2 border-white/10 rounded-3xl group-hover:scale-110 transition-all shadow-2xl relative">
                     <app.icon className={cn("size-8 md:size-10", app.color, "drop-shadow-glow")} />
                     <div className="absolute -bottom-1 -right-1 size-4 bg-emerald-500 rounded-full border-2 border-black animate-pulse" />
                 </div>
@@ -155,7 +163,7 @@ export default function SovereignOS() {
                 onMouseDown={() => focusWindow(win.id)}
                 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] md:w-[1200px] h-[80vh] md:h-[800px] pointer-events-auto shadow-9xl animate-in zoom-in-95 duration-300"
             >
-                <Card className="h-full bg-black/80 backdrop-blur-5xl border-[8px] border-white/10 rounded-[4rem] flex flex-col overflow-hidden relative">
+                <Card className="h-full bg-black/85 backdrop-blur-5xl border-[8px] border-white/10 rounded-[4rem] flex flex-col overflow-hidden relative shadow-2xl">
                     <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                     
                     <div className="h-16 px-8 flex items-center justify-between border-b-2 border-white/5 bg-white/5 shrink-0">
@@ -164,8 +172,8 @@ export default function SovereignOS() {
                             <span className="text-lg font-black uppercase italic tracking-tighter text-white/80">{win.title}</span>
                         </div>
                         <div className="flex gap-4">
-                            <button onClick={() => setWindows(prev => prev.map(w => w.id === win.id ? { ...w, isMinimized: true } : w))} className="size-10 rounded-full bg-white/5 hover:bg-white/20 flex items-center justify-center transition-all"><Minus className="size-5"/></button>
-                            <button onClick={() => setWindows(prev => prev.map(w => w.id === win.id ? { ...w, isOpen: false } : w))} className="size-10 rounded-full bg-red-600/20 hover:bg-red-600 text-red-500 hover:text-white flex items-center justify-center transition-all"><X className="size-5"/></button>
+                            <button onClick={(e) => { e.stopPropagation(); minimizeWindow(win.id); }} className="size-10 rounded-full bg-white/5 hover:bg-white/20 flex items-center justify-center transition-all"><Minus className="size-5"/></button>
+                            <button onClick={(e) => { e.stopPropagation(); closeWindow(win.id); }} className="size-10 rounded-full bg-red-600/20 hover:bg-red-600 text-red-500 hover:text-white flex items-center justify-center transition-all"><X className="size-5"/></button>
                         </div>
                     </div>
 
@@ -190,6 +198,7 @@ export default function SovereignOS() {
                                     ))}
                                 </div>
                                 <div className="p-10 rounded-[3.5rem] bg-primary/5 border-4 border-primary/20 italic text-2xl md:text-5xl text-gray-200 leading-tight font-black shadow-inner relative group/note">
+                                    <div className="absolute top-0 right-0 p-8 opacity-[0.05] pointer-events-none scale-150 rotate-12"><Dna className="size-48 text-primary"/></div>
                                     "سيدي القائد، العصب المادي للنواة ينبض بوعيك؛ كافة الأبعاد الـ 16 ملتحمة وتحت سيادتك المطلقة لعام 2026."
                                 </div>
                             </div>
@@ -225,7 +234,7 @@ export default function SovereignOS() {
                         )}
                     </div>
                     
-                    <div className="h-10 bg-white/5 border-t border-white/5 px-8 flex items-center justify-between text-[9px] font-black uppercase italic text-white/30 tracking-[0.5em]">
+                    <div className="h-10 bg-white/5 border-t border-white/5 px-8 flex items-center justify-between text-[9px] font-black uppercase italic text-white/30 tracking-[0.5em] shrink-0">
                         <span>Authorized: GHAZALI_ROOT_IMMUTABLE</span>
                         <span>resonance: 100.0000% | 16D_SINGULARITY</span>
                     </div>
@@ -235,7 +244,7 @@ export default function SovereignOS() {
       </div>
 
       {/* Taskbar - Modern Centered */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[90vw] md:w-[800px] h-16 md:h-20 bg-black/60 backdrop-blur-5xl border-[4px] border-white/10 rounded-[2.5rem] z-[5000] flex items-center px-4 md:px-8 shadow-9xl">
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[90vw] md:w-[800px] h-16 md:h-20 bg-black/70 backdrop-blur-5xl border-[4px] border-white/10 rounded-[2.5rem] z-[5000] flex items-center px-4 md:px-8 shadow-9xl">
          <div className="flex-1 flex justify-center items-center gap-4 md:gap-8">
             <Button 
                 onClick={() => setIsStartOpen(!isStartOpen)}
@@ -263,8 +272,8 @@ export default function SovereignOS() {
                         win.isOpen && !win.isMinimized && win.zIndex === maxZ ? "bg-white/10 border-b-4 border-primary" : "hover:bg-white/5"
                     )}
                 >
-                    <win.icon className={cn("size-6 md:size-8", win.isOpen ? "text-white opacity-100" : "text-white/40 opacity-40")} />
-                    {win.isOpen && <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 size-1 bg-primary rounded-full" />}
+                    <win.icon className={cn("size-6 md:size-8 transition-all", win.isOpen ? "text-white opacity-100 scale-110" : "text-white/40 opacity-40")} />
+                    {win.isOpen && <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 size-1 bg-primary rounded-full shadow-[0_0_10px_rgba(251,191,36,1)]" />}
                 </Button>
             ))}
 
@@ -289,7 +298,7 @@ export default function SovereignOS() {
 
       {/* Start Menu - Modern */}
       {isStartOpen && (
-        <div className="fixed bottom-28 left-1/2 -translate-x-1/2 w-[85vw] md:w-[600px] h-[500px] md:h-[700px] bg-black/80 backdrop-blur-5xl border-[8px] border-white/10 rounded-[4rem] z-[6000] p-10 animate-in slide-in-from-bottom-12 duration-500 shadow-9xl flex flex-col gap-10 overflow-hidden">
+        <div className="fixed bottom-28 left-1/2 -translate-x-1/2 w-[85vw] md:w-[600px] h-[500px] md:h-[700px] bg-black/90 backdrop-blur-5xl border-[8px] border-white/10 rounded-[4rem] z-[6000] p-10 animate-in slide-in-from-bottom-12 duration-500 shadow-9xl flex flex-col gap-10 overflow-hidden">
             <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
             
             <div className="flex items-center justify-between border-b-2 border-white/5 pb-8 relative z-10">
@@ -340,10 +349,4 @@ export default function SovereignOS() {
       )}
     </div>
   )
-}
-
-function XIcon({className}: {className?: string}) {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-    )
 }

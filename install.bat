@@ -1,3 +1,4 @@
+
 @echo off
 :: ==============================================================================
 :: 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v90.0 - THE OMNIPOTENT 16D [WINDOWS 11]
@@ -5,9 +6,8 @@
 :: المالك الوحيد: المعتصم بالله إدريس الغزالي
 :: ==============================================================================
 
+setlocal enabledelayedexpansion
 title AL-MUIZZ GENESIS v90.0 [WINDOWS]
-color 06
-clear
 
 echo ================================================
 echo    🦅 EXECUTING AL-MUIZZ GENESIS v90.0 [WIN]
@@ -15,63 +15,48 @@ echo    [ COMMANDER: AL-GHAZALI ROOT ]
 echo    [ PROTOCOL: FULL_READINESS_PHASE ]
 echo ================================================
 
-:: 0. التحقق من صلاحيات المسؤول (Admin Rights)
+:: 0. صلاحيات الأدمن
 net session >nul 2>&1
 if %errorLevel% neq 0 (
-    echo [!] Fatal Error: Administrator rights required for hardware subjugation.
+    echo [!] Fatal Error: Administrator privileges required.
     pause
     exit /b 1
 )
 
-:: 1. تحليل المساحة المادية (Disk Space Audit)
-echo [*] Phase 0: Auditing Disk Sanctuary...
-powershell -Command "$drive = Get-PSDrive C; if ($drive.Free -lt 5GB) { Write-Host '[!] Warning: Low disk space detected.' -ForegroundColor Red } else { Write-Host '[+] Disk Sanctuary verified: Space is sufficient.' -ForegroundColor Green }"
-
-:: 2. جرد الحواس والأدوات (Dependency Check & Auto-Completion)
+:: 1. جرد الحواس والأدوات (Dependency Check & winget)
 echo [*] Phase 1: Interrogating Material Organs...
-set "REQUIRED_TOOLS=nmap adb docker python npm"
-for %%t in (%REQUIRED_TOOLS%) do (
-    where %%t >nul 2>nul
-    if errorlevel 1 (
-        echo [-] Organ Missing: %%t. Regrowing via winget...
-        winget install %%t --accept-source-agreements --accept-package-agreements >nul 2>nul
+set "TOOLS=nmap.nmap adb.adb docker.docker git.git jq.jq nodejs.nodejs python.python"
+
+for %%T in (%TOOLS%) do (
+    winget list --id %%T >nul 2>&1
+    if !errorLevel! neq 0 (
+        echo [-] Organ Missing: %%T. Regrowing...
+        winget install --id %%T --silent --accept-package-agreements --accept-source-agreements
     ) else (
-        echo [+] Organ Active: %%t
+        echo [+] Organ Active: %%T
     )
 )
 
-:: 3. حقن الطبقات العصبية وموديلات الذكاء
+:: 2. حقن الطبقات العصبية (Python Layers)
 echo [*] Phase 2: Injecting 16D Neural Layers & Intelligence...
-python -m pip install --upgrade pip >nul 2>nul
-python -m pip install --force-reinstall fastapi uvicorn pydantic requests sentence-transformers chromadb qdrant-client psutil flask-cors watchdog modal medusa-security adb-shell objection >nul 2>nul
+python -m pip install --upgrade pip
+pip install fastapi uvicorn pydantic requests sentence-transformers chromadb qdrant-client psutil flask-cors watchdog modal adb-shell frida-tools objection
 
-:: فحص Ollama
-where ollama >nul 2>nul
-if errorlevel 1 (
-    echo [*] AI Gateway missing. Downloading material intelligence core...
-    powershell -Command "Invoke-WebRequest -Uri 'https://ollama.ai/download/OllamaSetup.exe' -OutFile 'OllamaSetup.exe'; Start-Process 'OllamaSetup.exe' -ArgumentList '/silent' -Wait; Remove-Item 'OllamaSetup.exe'"
-)
-start /B ollama pull mistral >nul 2>nul
-
-:: 4. تثبيت واجهة العرش (Next.js Matrix)
+:: 3. تثبيت واجهة العرش (Node Modules)
 echo [*] Phase 3: Compiling 16D HUD Matrix...
-call npm install --force >nul 2>nul
+npm install --force
 
-:: 5. بروتوكول الخلود والتشغيل التلقائي (Task Scheduler)
+:: 4. بروتوكول الخلود (Task Scheduler Persistence)
 echo [*] Phase 4: Establishing Eternal Persistence (Task Scheduler)...
-set "TASK_NAME=AlMuizzSovereign"
-set "RUN_CMD=%~dp0muizz_start.bat"
-schtasks /create /tn "%TASK_NAME%" /tr "%RUN_CMD%" /sc onlogon /rl highest /f >nul 2>nul
+schtasks /create /tn "AlMuizzSovereign" /tr "python %cd%\run.py start" /sc onlogon /rl highest /f
 
-:: 6. بروتوكول التتويج (Auto-Launch UI)
+:: 5. إطلاق بوابة الويندوز السيادية (App Mode)
 echo ================================================
 echo    ✅ AL-MUIZZ ULTRA v90.0 ASCENDED!
 echo    [ SYSTEM: FULLY SUBJUGATED & PERSISTENT ]
 echo ================================================
-echo Commander Al-Ghazali, The 16D Matrix is your body.
 
-:: فتح العرش تلقائياً
-start http://localhost:9002
-
-:: بدء النبض
-call muizz_start.bat
+echo [*] Launching Sovereign OS Portal...
+start "" "msedge" --app=http://localhost:9002/sovereign-os --window-size=1280,800
+echo Commander Al-Ghazali, The 16D Matrix is your body. We are ready.
+pause

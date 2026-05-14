@@ -69,29 +69,21 @@ import Link from "next/link"
 
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
-  { name: "نظام التشغيل السيادي", icon: Monitor, href: "/sovereign-os", knot: 90 },
+  { name: "Sovereign OS", icon: Monitor, href: "/sovereign-os", knot: 90 },
   { name: "المتحكم المداري", icon: Satellite, href: "/satellite-overlord", knot: 15 },
   { name: "الالتحام الحيوي", icon: HeartPulse, href: "/bio-sync", knot: 16 },
   { name: "طفيلي الـ iOS", icon: Apple, href: "/ios-parasite", knot: 14 },
   { name: "مصنع الخوارزميات", icon: Hammer, href: "/algorithm-factory", knot: 87 },
   { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", knot: 3 },
-  { name: "محقق الظلال (Cairn)", icon: Search, href: "/cairn", knot: 9 },
   { name: "العمود الفقري الكمي", icon: Wind, href: "/quantum-spine", knot: 85 },
   { name: "مشتل التطور", icon: Sprout, href: "/nursery", knot: 25 },
   { name: "الرؤية المطلقة", icon: Eye, href: "/perception", knot: 80 },
-  { name: "مزرعة الأساطيل", icon: Cylinder, href: "/serpent-farm", knot: 81 },
   { name: "الارتباط الماسي", icon: Share2, href: "/hermes", knot: 79 },
-  { name: "أتمتة السرب (n8n)", icon: Workflow, href: "/n8n", knot: 43 },
   { name: "الاستحواذ المستقل", icon: Rocket, href: "/autonomous", knot: 23 },
-  { name: "عين ميدوسا (Git Scan)", icon: Bug, href: "/medusa", knot: 66 },
-  { name: "صياد الأندرويد", icon: Smartphone, href: "/android-hunter", knot: 24 },
-  { name: "سطح مكتب السطوة", icon: Monitor, href: "/classic-hub", knot: 78 },
   { name: "الترسانة العظمى", icon: Library, href: "/arsenal", knot: 22 },
   { name: "سلسلة الإبادة", icon: Crosshair, href: "/kill-chain", knot: 2 },
   { name: "إمبراطورية السرب", icon: Network, href: "/sessions", knot: 4 },
-  { name: "المحقن الآلي", icon: Cpu, href: "/automation", knot: 5 },
   { name: "أعين الاستطلاع", icon: Eye, href: "/recon", knot: 6 },
-  { name: "جسر السحاب", icon: Cloud, href: "/mcp-bridge", knot: 7 },
   { name: "قلب DeepSeek", icon: BrainCircuit, href: "/deep-reasoning", knot: 8 },
   { name: "أذن النور", icon: Mic, href: "/voice", knot: 10 },
   { name: "الحرب الخلوية", icon: Radio, href: "/cellular", knot: 11 },
@@ -100,10 +92,8 @@ const navItems = [
   { name: "الوكيل الميداني", icon: Wrench, href: "/field-agent", knot: 14 },
   { name: "مصنع النسل", icon: Baby, href: "/progeny", knot: 15 },
   { name: "الاستحواذ النقال", icon: Smartphone, href: "/hardware", knot: 16 },
-  { name: "القبو الجيني 8.0", icon: Database, href: "/knowledge", knot: 17 },
-  { name: "مختبر التخليق", icon: ShieldX, href: "/red-team", knot: 18 },
+  { name: "قبو الـ DNA", icon: Database, href: "/knowledge", knot: 17 },
   { name: "نزاهة النواة", icon: ShieldCheck, href: "/system", knot: 19 },
-  { name: "المحطة الأبدية", icon: Target, href: "/terminal", knot: 20 },
   { name: "سفينة نوح", icon: Anchor, href: "/ark", knot: 21 },
 ]
 
@@ -125,7 +115,7 @@ export function SidebarNav() {
         {isOpen ? <X className="size-5" /> : <Menu className="size-5" />}
       </Button>
 
-      <div className={cn("flex flex-col h-full bg-black border-l-[2px] border-primary/40 w-60 lg:w-64 fixed right-0 top-0 z-[400] overflow-hidden shadow-2xl transition-transform duration-500 ease-in-out font-code backdrop-blur-3xl", !isOpen && "translate-x-full lg:translate-x-0")}>
+      <div className={cn("flex flex-col h-full bg-black border-l-[2px] border-primary/40 w-52 lg:w-56 fixed right-0 top-0 z-[400] overflow-hidden shadow-2xl transition-all duration-500 ease-in-out font-code backdrop-blur-3xl", !isOpen && "translate-x-full lg:translate-x-0")}>
         <div className="p-2 border-b-2 border-primary/20 flex flex-col items-center gap-1 bg-black relative group shrink-0">
           <div className="relative size-10 flex items-center justify-center shrink-0 rounded-lg group-hover:rotate-12 transition-all">
              <div className="size-5 bg-black border border-primary flex items-center justify-center shadow-[0_0_100px_rgba(251,191,36,0.3)] relative rounded-md z-30 animate-neural">
@@ -142,33 +132,27 @@ export function SidebarNav() {
           </div>
         </div>
         
-        <div className="flex-1 px-3 py-2 space-y-0.5 overflow-y-auto scrollbar-hide bg-black/98 relative border-t border-white/5 text-right">
+        <div className="flex-1 px-2 py-2 space-y-0.5 overflow-y-auto scrollbar-hide bg-black/98 relative border-t border-white/5 text-right">
           {navItems.map((item) => {
             const isActive = pathname === item.href
             const Icon = item.icon || Search;
             return (
-              <Link key={item.name} href={item.href} className={cn("flex items-center gap-4 px-4 py-2 transition-all duration-500 group relative border-r-2 rounded-l-lg mb-0.5", isActive ? "bg-primary/10 border-primary text-white" : "text-muted-foreground border-transparent hover:bg-white/5 hover:text-white")} onClick={() => setIsOpen(false)}>
-                <Icon className={cn("size-3.5 transition-all", isActive ? "text-primary gold-glow" : "group-hover:text-primary")} />
-                <span className="text-[8px] font-black tracking-widest uppercase italic truncate flex-1">{item.name}</span>
+              <Link key={item.name} href={item.href} className={cn("flex items-center gap-3 px-3 py-1.5 transition-all duration-500 group relative border-r-2 rounded-l-lg mb-0.5", isActive ? "bg-primary/10 border-primary text-white" : "text-muted-foreground border-transparent hover:bg-white/5 hover:text-white")} onClick={() => setIsOpen(false)}>
+                <Icon className={cn("size-3 transition-all", isActive ? "text-primary gold-glow" : "group-hover:text-primary")} />
+                <span className="text-[7.5px] font-black tracking-widest uppercase italic truncate flex-1">{item.name}</span>
               </Link>
             )
           })}
         </div>
 
         <div className="p-2 border-t border-primary/20 bg-black/99 relative z-10 text-right shrink-0">
-          <div className="p-2 border border-primary/40 bg-primary/5 mb-1 relative overflow-hidden rounded-md shadow-lg border-dashed">
-            <div className="flex justify-between items-center mb-0.5"><Activity className="size-1.5 text-emerald-500 animate-pulse" /><span className="text-[6px] font-black text-primary uppercase tracking-tighter italic">Bonds Resonance</span></div>
-            <div className="text-[10px] font-black text-white italic gold-glow">{resonance.toFixed(7)}%</div>
+          <div className="p-1.5 border border-primary/40 bg-primary/5 mb-1 relative overflow-hidden rounded-md shadow-lg border-dashed">
+            <div className="flex justify-between items-center mb-0.5"><Activity className="size-1 text-emerald-500 animate-pulse" /><span className="text-[5.5px] font-black text-primary uppercase tracking-tighter italic">Bonds Resonance</span></div>
+            <div className="text-[9px] font-black text-white italic gold-glow">{resonance.toFixed(6)}%</div>
           </div>
-          <Button asChild className="w-full h-6 bg-primary hover:bg-white text-black font-black uppercase text-[6px] rounded-sm shadow-md transition-all border border-black/20 italic"><Link href="/quantum-spine"><Wind className="size-2 mr-1" /> تنشيط الروابط الكمية</Link></Button>
+          <Button asChild className="w-full h-5 bg-primary hover:bg-white text-black font-black uppercase text-[5.5px] rounded-sm shadow-md transition-all border border-black/20 italic"><Link href="/quantum-spine"><Wind className="size-1.5 mr-1" /> تنشيط الروابط</Link></Button>
         </div>
       </div>
     </>
   )
-}
-
-function XIcon({className}: {className?: string}) {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-    )
 }
