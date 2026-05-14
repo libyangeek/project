@@ -3,7 +3,7 @@
 import * as React from "react"
 import { SidebarNav } from "@/components/platform/sidebar-nav"
 import { 
-  Bug, 
+  Smartphone, 
   Search, 
   Zap, 
   Loader2, 
@@ -28,13 +28,14 @@ import {
   Network,
   Atom,
   ShieldCheck,
-  Smartphone,
   Map as MapIcon,
   Camera,
   Mic,
   LayoutGrid,
   Users,
-  Cylinder
+  Cylinder,
+  Flame,
+  Globe
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -54,7 +55,7 @@ export default function SerpentFarmPage() {
   const [loading, setLoading] = React.useState(false)
   const [result, setResult] = React.useState<any>(null)
   const [nodes, setNodes] = React.useState<any[]>([])
-  const [services, setServices] = React.useState<any>({})
+  const [services, setServices] = React.useState<any>({ stf_server: "OFFLINE", fmd_tracker: "OFFLINE", clay_api: "READY", mcloud_docker: "ACTIVE" })
   const [resonance, setResonance] = React.useState(100)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
   const [mounted, setMounted] = React.useState(false)
@@ -90,7 +91,9 @@ export default function SerpentFarmPage() {
           });
           const nodesData = await nodesRes.json();
           if (nodesData.success) setNodes(nodesData.output || []);
-      } catch (e) {}
+      } catch (e) {
+          toast({ variant: "destructive", title: "Farm Link Drift" });
+      }
   }
 
   const handleIgnite = async () => {
@@ -120,8 +123,8 @@ export default function SerpentFarmPage() {
         <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
         
         <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
-           <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-glow relative group shrink-0 rounded-[3rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
-              <Bug className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 animate-neural gold-glow" />
+           <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-9xl relative group shrink-0 rounded-[3rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
+              <Cylinder className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 animate-neural gold-glow" />
               <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
            </div>
            <div className="flex-1">
@@ -163,7 +166,7 @@ export default function SerpentFarmPage() {
                           value={objective} 
                           onChange={(e) => setObjective(e.target.value)} 
                           placeholder="Execute mass Pegasus siphon on fleet..." 
-                          className="w-full h-48 bg-black border-8 border-primary/20 rounded-[2rem] text-xl italic p-8 focus:border-primary shadow-inner text-white font-black text-right resize-none scrollbar-hide"
+                          className="w-full h-48 bg-black border-8 border-primary/20 rounded-[2rem] text-xl italic p-8 focus:border-primary shadow-inner text-white font-black text-right resize-none scrollbar-hide selection:bg-primary"
                         />
                     </div>
 
@@ -171,7 +174,7 @@ export default function SerpentFarmPage() {
                         <h4 className="text-[12px] font-black text-primary uppercase tracking-[0.8em] italic border-b-2 border-primary/20 pb-4 flex items-center gap-4 justify-end">Service Pulse <Activity className="size-6" /></h4>
                         <div className="space-y-4">
                             {Object.entries(services).map(([key, val]: any) => (
-                                <div key={key} className="flex justify-between items-center p-4 bg-white/5 rounded-2xl border-2 border-white/5 group/svc hover:border-primary transition-all">
+                                <div key={key} className="flex justify-between items-center p-4 bg-white/5 rounded-2xl border-2 border-white/5 group/svc hover:border-primary transition-all shadow-inner">
                                     <Badge className={cn("text-[10px] font-black italic", val === 'ONLINE' ? "bg-emerald-600/20 text-emerald-400" : "bg-red-600/20 text-red-400")}>{val}</Badge>
                                     <span className="text-[11px] font-black uppercase italic text-gray-300">{key.replace('_', ' ')}</span>
                                 </div>
@@ -184,7 +187,7 @@ export default function SerpentFarmPage() {
                         onClick={handleIgnite}
                         className="w-full h-36 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.2em] rounded-[3.5rem] shadow-[0_80px_250px_rgba(212,175,55,0.7)] active:scale-95 transition-all text-2xl md:text-4xl border-[12px] border-black/30 group italic"
                     >
-                        {loading ? <Loader2 className="size-16 animate-spin" /> : <Zap className="size-16 mr-8 group-hover:scale-125 transition-transform gold-glow" />}
+                        {loading ? <Loader2 className="size-16 animate-spin" /> : <Flame className="size-16 mr-8 group-hover:scale-125 transition-transform gold-glow" />}
                         IGNITE_FLEET
                     </Button>
                  </CardContent>
@@ -234,15 +237,15 @@ export default function SerpentFarmPage() {
                                     ))}
                                 </div>
                             </Card>
-                            <Card className="bg-black/95 border-8 border-white/5 p-12 md:p-16 rounded-[4rem] shadow-9xl space-y-12 relative overflow-hidden h-full flex flex-col items-center justify-center text-center">
-                                <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse" />
+                            <Card className="bg-black/95 border-8 border-white/5 p-12 md:p-16 rounded-[4rem] shadow-9xl h-full flex flex-col items-center justify-center text-center relative overflow-hidden">
+                                <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                                 <h5 className="text-3xl font-black text-emerald-500 uppercase tracking-[1.5em] mb-10 border-b-8 border-emerald-500/20 pb-10 flex items-center gap-12 justify-end w-full">
                                     Pegasus Alignment <ShieldCheck className="size-14" />
                                 </h5>
                                 <div className="text-5xl md:text-[8rem] font-black text-white italic gold-glow uppercase tracking-tighter mb-8 leading-none">
                                     {result.pegasusAlignment}
                                 </div>
-                                <div className="p-8 rounded-[2rem] bg-emerald-600/10 border-4 border-emerald-500/30 text-xl font-black italic text-gray-200 uppercase tracking-widest">
+                                <div className="p-8 rounded-[2rem] bg-emerald-600/10 border-4 border-emerald-500/30 text-xl font-black italic text-gray-200 uppercase tracking-widest shadow-inner">
                                     {result.fleetRiskAssessment}
                                 </div>
                             </Card>

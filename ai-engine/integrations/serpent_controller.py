@@ -13,7 +13,6 @@ import time
 
 class SerpentController:
     def __init__(self):
-        self.base_dir = "/opt/al-muizz-ultimate/extras/serpent_farm"
         self.status = "SERPENT_EYE_ACTIVE"
 
     def refresh_nodes(self):
@@ -33,9 +32,11 @@ class SerpentController:
 
     def get_service_status(self):
         """التحقق من نبض خدمات المزرعة"""
+        stf_active = "active" in subprocess.getoutput("systemctl is-active stf 2>/dev/null")
+        fmd_active = "active" in subprocess.getoutput("systemctl is-active fmd 2>/dev/null")
         return {
-            "stf_server": "ONLINE" if "active" in subprocess.getoutput("systemctl is-active stf 2>/dev/null") else "OFFLINE",
-            "fmd_tracker": "ONLINE" if "active" in subprocess.getoutput("systemctl is-active fmd 2>/dev/null") else "OFFLINE",
+            "stf_server": "ONLINE" if stf_active else "OFFLINE",
+            "fmd_tracker": "ONLINE" if fmd_active else "OFFLINE",
             "clay_api": "READY_v80",
             "mcloud_docker": "ACTIVE"
         }
@@ -65,6 +66,7 @@ if __name__ == "__main__":
         action = sys.argv[1]
         if action == "list": print(json.dumps(sc.refresh_nodes()))
         elif action == "status": print(json.dumps(sc.get_service_status()))
-        elif action == "locate": print(json.dumps(sc.locate_node(sys.argv[2])))
+        elif action == "locate" and len(sys.argv) > 2: print(json.dumps(sc.locate_node(sys.argv[2])))
+        elif action == "sploit" and len(sys.argv) > 2: print(json.dumps(sc.execute_phonesploit(sys.argv[2])))
     else:
         print(json.dumps({"serpent_status": sc.status}))
