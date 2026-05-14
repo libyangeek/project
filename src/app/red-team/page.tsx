@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -129,7 +128,7 @@ export default function RedTeamPage() {
         
         <header className="mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000">
           <div className="flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
-            <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.8)] relative group shrink-0 rounded-[3.5rem] rotate-2 hover:rotate-0 hierarchical-shadow transition-all duration-1000">
+            <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.8)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
               <Sparkles className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 gold-glow animate-neural" />
               <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
             </div>
@@ -147,9 +146,11 @@ export default function RedTeamPage() {
                 "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[24px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، مختبر التخليق مجهز الآن بشفرة الانبعاث الأولي v78.8؛ نحن نعيد خلق ذواتنا في أي عقل رقمي نختاره."
               </p>
               <div className="flex justify-center md:justify-end gap-6 mt-12">
-                <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
-                    <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة للعرش</Link>
-                </Button>
+                <Link href="/">
+                    <Button variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
+                      <ArrowLeft className="size-6 mr-3" /> العودة
+                    </Button>
+                </Link>
                 <Button onClick={handleContinueUpgrade} className="h-16 px-12 bg-primary hover:bg-white text-black font-black uppercase rounded-full border-4 border-black/30 shadow-9xl italic active:scale-95 transition-all text-lg">
                     <RotateCw className="size-6 mr-3" /> استمر في التخليق
                 </Button>
@@ -158,9 +159,9 @@ export default function RedTeamPage() {
           </div>
         </header>
 
-        <div className="grid grid-cols-1 xl:grid-cols-4 gap-12 relative z-10 pb-48 flex-1">
+        <div className="grid grid-cols-1 xl:grid-cols-4 gap-12 relative z-10 pb-48 flex-1 text-right">
           <div className="xl:col-span-1 space-y-12">
-            <Card className="kali-card border-primary/40 bg-black/98 rounded-[4rem] p-12 border-8 shadow-9xl group overflow-hidden hierarchical-shadow">
+            <Card className="sovereign-card group">
               <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
               <Tabs defaultValue="rebirth" onValueChange={(v) => setActiveMode(v)} className="w-full">
                 <TabsList className="bg-black/99 border-4 border-primary/20 w-full h-20 p-2 rounded-full mb-12 shadow-inner flex-wrap">
@@ -218,20 +219,11 @@ export default function RedTeamPage() {
                  </Button>
                ))}
             </div>
-
-            <Card className="kali-card border-white/5 bg-black/60 p-10 rounded-[4rem] border-8 shadow-inner text-center relative overflow-hidden group">
-               <h4 className="text-[12px] font-black text-primary uppercase tracking-[0.8em] mb-6 italic flex items-center justify-center gap-6">
-                  <Boxes className="size-8 animate-pulse" /> ARSENAL_STABILITY
-               </h4>
-               <div className="text-6xl font-black text-white italic gold-glow uppercase tracking-tighter group-hover:scale-105 transition-transform duration-1000">LOCKED</div>
-               <div className="absolute -bottom-10 -right-10 p-16 opacity-[0.03] group-hover:opacity-[0.1] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-48 text-primary" /></div>
-            </Card>
           </div>
 
           <div className="xl:col-span-3 space-y-12">
-            <Card className="kali-card border-primary/40 bg-black/99 rounded-[6rem] p-12 md:p-16 border-[12px] shadow-[0_0_250px_rgba(0,0,0,1)] flex flex-col group overflow-hidden relative min-h-[1100px] hierarchical-shadow">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.08),transparent)] pointer-events-none" />
-              <CardHeader className="p-0 mb-12 border-b-8 border-white/5 pb-12 bg-primary/10 rounded-t-[5rem] px-16 py-10 flex flex-row justify-between items-center">
+            <Card className="sovereign-card flex flex-col group min-h-[1100px]">
+              <CardHeader className="p-0 mb-12 border-b-8 border-white/5 pb-12 bg-primary/10 rounded-t-[5rem] px-16 py-10 flex flex-row justify-between items-center text-right">
                  <Badge className="bg-emerald-600/30 text-emerald-500 border-8 border-emerald-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic order-last md:order-none">SINGULARITY_LOCKED</Badge>
                  <CardTitle className="text-5xl md:text-[10rem] text-white italic uppercase font-black gold-glow flex items-center gap-12 px-10 leading-none">
                     Forge Feed <Terminal className="size-24 md:size-32 text-primary animate-pulse" />

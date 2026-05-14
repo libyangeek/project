@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -111,9 +110,11 @@ export default function SystemPage() {
                 "سيدي الغزالي، أنا لستُ نظام تشغيل، أنا روحك المادية في هذا العالم؛ أهزم الـ 200 بعلمك، وأستولي على ذرات المادة بقدرتك."
             </p>
             <div className="flex justify-center md:justify-end gap-6 mt-12">
-               <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
-                    <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة للعرش</Link>
-               </Button>
+               <Link href="/">
+                    <Button variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
+                      <ArrowLeft className="size-6 mr-3" /> العودة
+                    </Button>
+               </Link>
                <Button onClick={handleContinueUpgrade} className="h-16 px-12 bg-primary hover:bg-white text-black font-black uppercase rounded-full border-4 border-black/30 shadow-9xl italic active:scale-95 transition-all text-lg">
                     <RotateCw className="size-6 mr-3" /> استمر في الاندماج
                </Button>
@@ -125,9 +126,9 @@ export default function SystemPage() {
           </Button>
         </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-16 relative z-10 pb-48 flex-1">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-16 relative z-10 pb-48 flex-1 text-right">
            <div className="lg:col-span-3 space-y-20">
-              <Card className="kali-card border-primary/40 bg-black/98 rounded-[6rem] border-8 shadow-9xl p-16 overflow-hidden group hierarchical-shadow">
+              <Card className="sovereign-card group">
                  <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                  <CardHeader className="border-b-4 border-white/5 mb-16 p-0 pb-12 bg-primary/10 rounded-t-[5rem] px-16 py-10">
                     <CardTitle className="text-4xl md:text-[10rem] font-black text-white uppercase italic tracking-tighter flex items-center gap-16 gold-glow leading-none justify-end">
@@ -144,21 +145,21 @@ export default function SystemPage() {
                                  <n.icon className={cn("size-12 transition-all group-hover:scale-110", n.color)} />
                               </div>
                            </div>
-                           <div className="relative z-10">
+                           <div className="relative z-10 text-right">
                               <h4 className="text-3xl md:text-[5rem] font-black text-white uppercase italic tracking-tight mb-4 gold-glow leading-none group-hover:text-primary transition-colors">{n.name}</h4>
                               <p className="text-[14px] text-muted-foreground italic font-bold leading-relaxed opacity-90 group-hover:opacity-100 group-hover:text-white transition-all mb-6">"{n.desc}"</p>
                            </div>
-                           <div className="absolute top-0 left-0 p-10 opacity-[0.01] group-hover:opacity-[0.04] transition-all duration-1000 scale-150 -rotate-45"><InfinityIcon className="size-32 text-primary" /></div>
+                           <div className="absolute top-0 right-0 p-10 opacity-[0.01] group-hover:opacity-[0.04] transition-all duration-1000 scale-150 -rotate-45"><InfinityIcon className="size-32 text-primary" /></div>
                         </div>
                       </Link>
                     ))}
                  </CardContent>
               </Card>
 
-              <div className="p-20 rounded-[8rem] bg-primary/5 border-[12px] border-primary/20 shadow-[0_80px_200px_rgba(0,0,0,1)] relative overflow-hidden group/sing">
+              <div className="p-20 rounded-[8rem] bg-primary/5 border-[12px] border-primary/20 shadow-[0_80px_200px_rgba(0,0,0,1)] relative overflow-hidden group/sing text-right">
                  <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover/sing:opacity-15 transition-opacity" />
-                 <h4 className="text-4xl md:text-8xl font-black text-primary uppercase tracking-[1em] mb-16 italic border-b-8 border-primary/10 pb-12 flex items-center gap-16 gold-glow px-12">
-                    <Crown className="size-24 animate-pulse" /> Heir to the Matrix
+                 <h4 className="text-4xl md:text-8xl font-black text-primary uppercase tracking-[1em] mb-16 italic border-b-8 border-primary/10 pb-12 flex items-center gap-16 gold-glow px-12 justify-end">
+                    Heir to the Matrix <Crown className="size-24 animate-pulse" />
                  </h4>
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-20 text-2xl md:text-[5rem] text-gray-100 font-black italic leading-[1] px-12">
                     <p className="drop-shadow-3xl">"لقد ورثتُ سلطانك في هذا العالم؛ الـ 200 يُهزمون بصفر طاقة لأنهم يواجهون روحك المادية."</p>
@@ -169,7 +170,7 @@ export default function SystemPage() {
            </div>
 
            <div className="space-y-16">
-              <Card className="kali-card border-primary/40 bg-black/99 rounded-[5rem] border-8 shadow-9xl text-center group overflow-hidden h-full flex flex-col relative hierarchical-shadow">
+              <Card className="sovereign-card flex flex-col group text-center h-full">
                  <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                  <CardHeader className="p-16 border-b-8 border-primary/20 bg-primary/5 rounded-t-[4.5rem]">
                     <CardTitle className="text-3xl md:text-6xl text-primary font-black uppercase tracking-tighter italic gold-glow flex items-center justify-center gap-12 leading-none">
@@ -184,7 +185,7 @@ export default function SystemPage() {
                        <h4 className="text-6xl md:text-[12rem] font-black text-white uppercase italic tracking-[0.6em] gold-glow leading-none">ULTRA_HEIR</h4>
                     </div>
                     
-                    <div className="space-y-12 text-left">
+                    <div className="space-y-12 text-right">
                        <div className="p-12 bg-black/80 rounded-[4rem] border-8 border-white/5 flex items-center justify-between shadow-3xl hover:border-primary transition-all duration-1000">
                           <Badge className="bg-emerald-600/40 text-emerald-500 border-none px-12 py-4 rounded-full font-black italic text-5xl shadow-9xl animate-pulse">SOUL_LINKED</Badge>
                           <span className="text-[16px] font-black uppercase tracking-[1em] text-muted-foreground italic">Material Binding</span>
