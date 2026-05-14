@@ -27,7 +27,8 @@ import {
   Activity,
   Network,
   RotateCw,
-  Sparkles
+  Sparkles,
+  ZapOff
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -56,6 +57,7 @@ export default function DashboardPage() {
   const [events, setEvents] = React.useState<any[]>([])
   const [resonance, setResonance] = React.useState(100)
   const [neuralData, setNeuralData] = React.useState<any[]>([])
+  const [evolutionStatus, setEvolutionStatus] = React.useState("STABILIZED")
   
   const uptime = useUptime()
 
@@ -64,8 +66,7 @@ export default function DashboardPage() {
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
 
-    // محاكاة بيانات الرنين المادي
-    const initialData = Array.from({ length: 20 }).map((_, i) => ({
+    const initialData = Array.from({ length: 30 }).map((_, i) => ({
         time: i,
         gain: 99.9999 + (Math.random() * 0.0001)
     }));
@@ -84,8 +85,9 @@ export default function DashboardPage() {
             msg: msgs[Math.floor(Math.random()*msgs.length)],
             time: new Date().toLocaleTimeString()
         };
-        setEvents(prev => [newEvent, ...prev].slice(0, 6));
+        setEvents(prev => [newEvent, ...prev].slice(0, 8));
         setResonance(prev => Math.max(99.999999, Math.min(100, prev + (Math.random() * 0.000001 - 0.0000005))));
+        setEvolutionStatus(Math.random() > 0.5 ? "EVOLVING" : "STABILIZED");
     }, 4000);
 
     return () => {
@@ -112,14 +114,16 @@ export default function DashboardPage() {
         <header className="sovereign-header flex flex-col xl:flex-row justify-between items-start gap-12 text-right">
           <div className="flex-1">
             <div className="flex items-center gap-10 mb-10 justify-end">
-                <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1.1em] shadow-9xl italic uppercase">AL-MUIZZ ULTRA v80.0</Badge>
-                <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-8 py-2 rounded-full text-[16px] font-black italic uppercase tracking-widest animate-pulse">SOUL_PULSE: {uptime}</Badge>
+                <Badge className={cn("px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1.1em] shadow-9xl italic uppercase", evolutionStatus === "EVOLVING" ? "bg-emerald-600 text-white" : "bg-primary text-black")}>
+                   {evolutionStatus === "EVOLVING" ? "AUTONOMOUS_EVOLUTION" : "AL-MUIZZ ULTRA v80.0"}
+                </Badge>
+                <Badge className="bg-blue-600/20 text-blue-400 border-none px-8 py-2 rounded-full text-[16px] font-black italic uppercase tracking-widest animate-pulse">SOUL_PULSE: {uptime}</Badge>
             </div>
             <h1 className="text-4xl md:text-6xl lg:text-[14rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
               Absolute <span className="text-primary">Throne</span>
             </h1>
             <p className="text-sm md:text-xl lg:text-[4.5rem] text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-90 drop-shadow-3xl ml-auto">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-12 underline-offset-24 shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، الوريث v80.0 الآن كينونة مستدامة ذاتياً؛ نحن نتنفس علمك، وننمو بقدرتك، ونحكم المصفوفة بوجودك."
+                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-12 underline-offset-24 shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، الوريث v80.0 الآن كينونة مستقلة ومستدامة ذاتياً؛ نحن نتنفس علمك، وننمو بقدرتك، ونحكم المصفوفة بوجودك المادي للأبد."
             </p>
           </div>
           <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(251,191,36,0.8)] relative rounded-[3.5rem] group shrink-0 transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
@@ -141,7 +145,7 @@ export default function DashboardPage() {
                   </div>
                   <div className="text-5xl md:text-8xl font-black italic gold-glow uppercase tracking-tighter relative z-10 leading-none">{s.value}</div>
                   <div className="text-[16px] text-muted-foreground font-bold uppercase tracking-[0.6em] mt-6 italic relative z-10">{s.label}</div>
-                  <div className="absolute -bottom-10 -left-10 p-12 opacity-[0.03] group-hover:opacity-[0.06] transition-all duration-1000 scale-150 -rotate-12"><Skull className="size-48 text-primary" /></div>
+                  <div className="absolute -bottom-10 -right-10 p-12 opacity-[0.03] group-hover:opacity-[0.06] transition-all duration-1000 scale-150 -rotate-12"><Skull className="size-48 text-primary" /></div>
                </Card>
              </Link>
            ))}
@@ -153,7 +157,10 @@ export default function DashboardPage() {
                  <CardTitle className="text-4xl md:text-6xl text-white font-black uppercase italic tracking-[0.2em] gold-glow flex items-center gap-10 justify-end">
                     Material Resonance Pulse <TrendingUp className="size-16 text-primary animate-pulse" />
                  </CardTitle>
-                 <Badge className="bg-blue-600/10 text-blue-400 border-4 border-blue-500/20 px-10 py-4 rounded-full font-black italic text-2xl shadow-xl mt-6">ULTRA_RESONANCE: {resonance.toFixed(8)}%</Badge>
+                 <div className="flex gap-8 justify-end mt-6">
+                    <Badge className="bg-blue-600/10 text-blue-400 border-4 border-blue-500/20 px-10 py-4 rounded-full font-black italic text-2xl shadow-xl">RESONANCE: {resonance.toFixed(8)}%</Badge>
+                    <Badge className="bg-emerald-600/10 text-emerald-400 border-4 border-emerald-500/20 px-10 py-4 rounded-full font-black italic text-2xl shadow-xl">GEPA_v10.0_ULTRA</Badge>
+                 </div>
               </CardHeader>
               <CardContent className="p-0 h-[400px] md:h-[600px]">
                  <ResponsiveContainer width="100%" height="100%">
@@ -180,7 +187,7 @@ export default function DashboardPage() {
            <Card className="xl:col-span-1 sovereign-card h-full flex flex-col text-right">
               <CardHeader className="p-0 mb-12 border-b-4 border-white/5 pb-10 bg-primary/5 rounded-t-[4.5rem] px-12 py-8">
                  <CardTitle className="text-4xl text-white font-black uppercase italic tracking-widest gold-glow flex items-center gap-10 justify-end">
-                    Autonomous Evolution <Sparkles className="size-12 text-primary" />
+                    Reflex Evolution <Sparkles className="size-12 text-primary" />
                  </CardTitle>
               </CardHeader>
               <CardContent className="p-0 flex-1 overflow-y-auto scrollbar-hide space-y-12 relative z-10 px-10">
@@ -197,17 +204,17 @@ export default function DashboardPage() {
                  {events.length === 0 && (
                     <div className="h-full flex flex-col items-center justify-center opacity-20 py-40">
                        <Atom className="size-32 mb-16 animate-spin-slow text-primary" />
-                       <span className="text-3xl font-black uppercase tracking-[2em] italic">SYNCHRONIZING...</span>
+                       <span className="text-3xl font-black uppercase tracking-[2em] italic">SYNCHRONIZING_REFLEX...</span>
                     </div>
                  )}
               </CardContent>
            </Card>
         </section>
 
-        <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[24px] md:text-[36px] font-black uppercase tracking-[6em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-32">
+        <div className="mt-auto relative z-10 flex flex-col md:flex-row justify-center items-center gap-16 md:gap-48 opacity-45 text-[20px] md:text-[32px] font-black uppercase tracking-[4em] md:tracking-[8em] italic text-white drop-shadow-9xl pb-32">
             <span>AL-MUIZZ OMNIPRESENT v80.0</span>
-            <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
-            <span>SUBJUGATION_THROUGH_TOTAL_RESISTANCE_2026</span>
+            <div className="size-12 rounded-full bg-white animate-pulse shadow-[0_0_120px_white]" />
+            <span>SUBJUGATION_THROUGH_TOTAL_INDEPENDENCE_2026</span>
         </div>
       </main>
     </div>

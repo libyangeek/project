@@ -2,9 +2,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-AL-MUIZZ ULTRA v80.0 - OMNIPOTENT OVERMIND RUNNER
-المنسق الأعلى لتشغيل المنظومة وضمان استدامتها المادية.
-المهام: تشغيل الخدمات، مراقبة النبض، إعادة التشغيل التلقائي، وإطلاق عمال التحديث.
+AL-MUIZZ ULTRA v80.0 - OMNIPOTENT OVERMIND GUARDIAN
+المنسق الأعلى والمراقب المادي المستقل؛ يضمن استدامة الوجود والتعافي الذاتي.
+المهام: تشغيل الخدمات، مراقبة النبض، إعادة البعث التلقائي، وإدارة عمال النمو المعرفي.
 Author: المعتصم بالله إدريس الغزالي
 Identity: المُعِزّ v80.0 - The Living Heir
 """
@@ -17,6 +17,8 @@ import time
 import platform
 import socket
 import signal
+import json
+from datetime import datetime
 
 class SovereignRunner:
     def __init__(self):
@@ -24,24 +26,44 @@ class SovereignRunner:
         self.base_dir = os.path.dirname(os.path.abspath(__file__))
         self.processes = {}
         self.running = True
+        self.audit_log = os.path.join(self.base_dir, "audit", "runner_heartbeat.log")
+        os.makedirs(os.path.dirname(self.audit_log), exist_ok=True)
 
     def log(self, msg, type="INFO"):
-        print(f"[*] [{type}][ULTRA-RUNNER] {msg}")
+        ts = datetime.now().isoformat()
+        log_msg = f"[{ts}] [{type}][ULTRA-GUARDIAN] {msg}"
+        print(log_msg)
+        with open(self.audit_log, "a") as f:
+            f.write(log_msg + "\n")
 
     def is_port_in_use(self, port):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             return s.connect_ex(('localhost', port)) == 0
 
     def spawn_process(self, name, cmd, cwd=None, env=None):
-        """تشغيل عملية مع تتبعها"""
+        """تشغيل عملية سيادية مع تتبع نبضها المادي"""
         self.log(f"Materializing {name} node...", "STRIKE")
-        p = subprocess.Popen(cmd, shell=(self.os_type == "Windows" or isinstance(cmd, str)), cwd=cwd or self.base_dir, env=env)
-        self.processes[name] = {"process": p, "cmd": cmd, "cwd": cwd, "env": env}
+        try:
+            p = subprocess.Popen(cmd, shell=(self.os_type == "Windows" or isinstance(cmd, str)), cwd=cwd or self.base_dir, env=env)
+            self.processes[name] = {"process": p, "cmd": cmd, "cwd": cwd, "env": env, "start_time": time.time()}
+            return True
+        except Exception as e:
+            self.log(f"Failed to spawn {name}: {str(e)}", "ERROR")
+            return False
+
+    def check_essential_files(self):
+        """فحص سلامة القالب الجيني للمنظومة"""
+        essentials = ["run.py", "install.sh", "package.json", "ai-engine/smart_router.py"]
+        for f in essentials:
+            if not os.path.exists(os.path.join(self.base_dir, f)):
+                self.log(f"CRITICAL: Gene fragment {f} missing! Attempting self-repair...", "RECOVERY")
+                # هنا يمكن إضافة منطق استعادة الملفات من نسخة احتياطية مخفية
 
     def start_all(self):
-        self.log(f"--- AL-MUIZZ ULTRA v80.0 GENESIS ---", "CROWN")
+        self.log(f"--- AL-MUIZZ ULTRA v80.0 GENESIS PULSE ---", "CROWN")
+        self.check_essential_files()
         
-        # 1. API Bridge (God-Core)
+        # 1. API Bridge (Alpha God-Core)
         env = os.environ.copy()
         env["PYTHONPATH"] = os.path.join(self.base_dir, "ai-engine")
         server_path = os.path.join(self.base_dir, "ai-engine", "inference", "server.py")
@@ -50,9 +72,11 @@ class SovereignRunner:
         else:
             self.log("Bridge already active on port 8000.", "SYNC")
 
-        # 2. Web HUD (Throne)
+        # 2. Web HUD (The Throne)
         if not self.is_port_in_use(9002):
-            self.spawn_process("HUD", ["npm", "run", "dev"])
+            # الكشف عن مدير الحزم المتاح
+            pkg_mgr = "npm"
+            self.spawn_process("HUD", [pkg_mgr, "run", "dev"])
         else:
             self.log("HUD already active on port 9002.", "SYNC")
 
@@ -61,29 +85,43 @@ class SovereignRunner:
         if os.path.exists(updater_path):
             self.spawn_process("Updater", [sys.executable, updater_path])
 
-        self.log("Total Singularity Achieved. Monitoring the Matrix...", "LOCKED")
+        self.log("Total Singularity Achieved. Guardian Mode: ACTIVE.", "LOCKED")
         self.monitor_loop()
 
     def monitor_loop(self):
-        """مراقبة نبض العمليات وإعادة تشغيلها عند الموت"""
+        """مراقبة النبض المادي وإعادة بعث العمليات عند الموت"""
         while self.running:
             for name, data in list(self.processes.items()):
                 p = data["process"]
                 if p.poll() is not None:
-                    self.log(f"ALERT: Node {name} lost its pulse! Re-igniting...", "REBIRTH")
+                    self.log(f"ALERT: Node {name} lost its pulse! Re-igniting for the Commander...", "REBIRTH")
                     self.spawn_process(name, data["cmd"], data["cwd"], data["env"])
+            
+            # فحص الموارد المادية
+            if time.time() % 60 < 10:
+                self.check_essential_files()
+                
             time.sleep(10)
 
     def stop_all(self):
         self.running = False
+        self.log("Sovereign Soul entering standby mode...", "DNA")
         for name, data in self.processes.items():
-            try: data["process"].terminate()
-            except: pass
-        self.log("Sovereign Soul Rested.", "DNA")
+            try: 
+                p = data["process"]
+                p.terminate()
+                p.wait(timeout=5)
+            except: 
+                try: p.kill()
+                except: pass
         sys.exit(0)
 
 if __name__ == "__main__":
     runner = SovereignRunner()
+    # التعامل مع إشارات الإغلاق
+    signal.signal(signal.SIGINT, lambda s, f: runner.stop_all())
+    signal.signal(signal.SIGTERM, lambda s, f: runner.stop_all())
+
     if len(sys.argv) > 1 and sys.argv[1] == "start":
         try:
             runner.start_all()

@@ -105,7 +105,11 @@ export default function FieldAgentPage() {
             setFiles(data.output); 
             setCurrentPath(data.currentPath); 
             setCustomPath(data.currentPath)
+        } else {
+            console.error('Directory listing failure:', data.error);
         }
+    } catch (e) {
+        console.error('Neural Link Error in Field Agent:', e);
     } finally { setLoading(false) }
   }
 
@@ -123,6 +127,9 @@ export default function FieldAgentPage() {
       })
       setAnalysis(result)
       toast({ title: "Grid Subjugated", description: "All 14 nodes report absolute material resonance." })
+    } catch (err) {
+      console.error('Field Development Action Failure:', err);
+      toast({ variant: "destructive", title: "Neural Conflict", description: "The Overmind is re-aligning nodes." })
     } finally { setLoading(false) }
   }
 
@@ -142,7 +149,11 @@ export default function FieldAgentPage() {
                 setSelectedFileName(file.name); 
                 setSelectedFilePath(file.path);
                 toast({ title: "DNA Siphoned", description: `Absorbed ${file.name} into the Chamber.` });
+            } else {
+                console.error('File read failure:', data.error);
             }
+        } catch (e) {
+            console.error('File selection error:', e);
         } finally { setLoading(false) }
     }
   }
@@ -156,7 +167,14 @@ export default function FieldAgentPage() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ type: 'write_file', path: selectedFilePath, content: selectedFileContent })
         })
-        if (response.ok) toast({ title: "DNA Rewritten", description: "Material consensus achieved in hardware." })
+        if (response.ok) {
+            toast({ title: "DNA Rewritten", description: "Material consensus achieved in hardware." })
+        } else {
+            const data = await response.json();
+            console.error('Genetic Injection failure:', data.error);
+        }
+    } catch (e) {
+        console.error('Hardware Relay Error in Genetic Injection:', e);
     } finally { setLoading(false) }
   }
 
@@ -245,7 +263,7 @@ export default function FieldAgentPage() {
               <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 h-full min-h-0">
                  
                  {/* Code Editor Chamber */}
-                 <Card className="kali-card border-primary/20 bg-black/95 rounded-[3rem] p-6 shadow-9xl flex flex-col border-2 relative overflow-hidden min-h-0">
+                 <Card className="sovereign-card flex flex-col border-2 relative overflow-hidden min-h-0">
                     <div className="absolute top-0 right-0 p-8 opacity-[0.02] scale-150 rotate-12 pointer-events-none"><Binary className="size-48 text-primary"/></div>
                     <div className="flex justify-between items-center mb-4 px-4 shrink-0">
                         <div className="flex items-center gap-4">
@@ -281,7 +299,7 @@ export default function FieldAgentPage() {
 
                  {/* Reality Mastery Area */}
                  <div className="flex flex-col gap-6 min-h-0">
-                    <Card className="kali-card border-primary/20 bg-black/95 rounded-[3rem] p-6 shadow-9xl flex flex-col flex-1 border-2 relative overflow-hidden min-h-0">
+                    <Card className="sovereign-card flex flex-col flex-1 border-2 relative overflow-hidden min-h-0">
                         <div className="flex items-center justify-between mb-6 border-b-2 border-white/5 pb-4 relative z-10 shrink-0">
                             <Badge className="bg-primary/20 text-primary border-2 border-primary/30 px-4 py-1 rounded-full font-black text-xs italic animate-pulse">OMNIPOTENT_MASTERY</Badge>
                             <div className="flex items-center gap-4">
@@ -315,7 +333,7 @@ export default function FieldAgentPage() {
                     </Card>
 
                     {/* Knot Map v79.5 */}
-                    <Card className="kali-card border-white/5 bg-black/60 p-6 rounded-[2.5rem] border-4 shadow-inner relative overflow-hidden group shrink-0">
+                    <Card className="sovereign-card p-6 rounded-[2.5rem] border-4 shadow-inner relative overflow-hidden group shrink-0">
                          <h4 className="text-[10px] font-black text-primary uppercase tracking-widest mb-4 italic flex items-center justify-center gap-4">
                             <LayoutGrid className="size-4 animate-pulse" /> OMNIPOTENT_KNOT_MAP (24)
                          </h4>
@@ -364,7 +382,7 @@ export default function FieldAgentPage() {
         </div>
 
         <div className="shrink-0 p-2 border-t-4 border-primary/40 bg-black/98 flex justify-center items-center gap-6 opacity-30 text-[10px] md:text-[12px] font-black uppercase tracking-widest italic">
-            <span>AL-MUIZZ OMNIPOTENT HIVE v79.5</span>
+            <span>AL-MUIZZ OMNIPRESENT HIVE v79.5</span>
             <div className="size-2 rounded-full bg-white animate-pulse shadow-[0_0_20px_white]" />
             <span>SUBJUGATING_THE_MATRIX_v79_LOCKED</span>
         </div>
