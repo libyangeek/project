@@ -45,7 +45,10 @@ import {
   Map as MapIcon,
   Server,
   Hammer,
-  Apple
+  Apple,
+  HeartPulse,
+  Cloud,
+  Key
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
