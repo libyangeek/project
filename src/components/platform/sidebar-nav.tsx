@@ -55,7 +55,6 @@ import {
   Box,
   Share2,
   Bug,
-  Eye as VisionIcon,
   Cylinder,
   Sprout,
   Hammer,
@@ -68,13 +67,13 @@ import Link from "next/link"
 
 const navItems = [
   { name: "العرش الأبدي", icon: LayoutDashboard, href: "/", knot: 0 },
-  { name: "مصنع الخوارزميات", icon: Hammer, href: "/algorithm-factory", knot: 87 },
   { name: "طفيلي الـ iOS", icon: Apple, href: "/ios-parasite", knot: 24 },
+  { name: "مصنع الخوارزميات", icon: Hammer, href: "/algorithm-factory", knot: 87 },
   { name: "عراف الثغرات", icon: Radar, href: "/vulnerabilities", knot: 3 },
   { name: "محقق الظلال (Cairn)", icon: Search, href: "/cairn", knot: 9 },
   { name: "العمود الفقري الكمي", icon: Wind, href: "/quantum-spine", knot: 85 },
   { name: "مشتل التطور", icon: Sprout, href: "/nursery", knot: 25 },
-  { name: "الرؤية المطلقة", icon: VisionIcon, href: "/perception", knot: 80 },
+  { name: "الرؤية المطلقة", icon: Eye, href: "/perception", knot: 80 },
   { name: "مزرعة الأساطيل", icon: Cylinder, href: "/serpent-farm", knot: 81 },
   { name: "الارتباط الماسي", icon: Share2, href: "/hermes", knot: 79 },
   { name: "أتمتة السرب (n8n)", icon: Workflow, href: "/n8n", knot: 43 },
@@ -123,8 +122,8 @@ export function SidebarNav() {
       </Button>
 
       <div className={cn("flex flex-col h-full bg-black border-l-[2px] border-primary/40 w-60 lg:w-64 fixed right-0 top-0 z-[400] overflow-hidden shadow-2xl transition-transform duration-500 ease-in-out font-code backdrop-blur-3xl", !isOpen && "translate-x-full lg:translate-x-0")}>
+        {/* Nano-UI Header: صغر هذه ايها المعز */}
         <div className="p-2 border-b-2 border-primary/20 flex flex-col items-center gap-1 bg-black relative group shrink-0">
-          
           <div className="relative size-10 flex items-center justify-center shrink-0 rounded-lg group-hover:rotate-12 transition-all">
              <div className="size-5 bg-black border border-primary flex items-center justify-center shadow-[0_0_100px_rgba(251,191,36,0.3)] relative rounded-md z-30 animate-neural">
                 <Radar className="size-2 text-primary gold-glow" />

@@ -28,7 +28,6 @@ import {
   Network,
   Atom,
   ShieldCheck,
-  InjectionIcon,
   Search,
   Flame,
   Bot,

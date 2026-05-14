@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -43,7 +44,8 @@ import {
   Radar,
   Map as MapIcon,
   Server,
-  Hammer
+  Hammer,
+  Apple
 } from "lucide-react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -122,7 +124,7 @@ export default function DashboardPage() {
 
   const stats = [
     { label: "رنين الـ 14 بُعداً", value: "100%", icon: Wind, color: "text-primary", status: "14D_LOCKED", href: "/quantum-spine" },
-    { label: "عراف الثغرات", icon: Radar, value: "ULTRA", color: "text-emerald-500", status: "ORACLE", href: "/vulnerabilities" },
+    { label: "طفيلي الـ iOS", icon: Apple, value: "ACTIVE", color: "text-red-500", status: "PARASITE", href: "/ios-parasite" },
     { label: "مصنع الخوارزميات", value: "ARMED", icon: Hammer, color: "text-blue-500", status: "FORGE", href: "/algorithm-factory" },
     { label: "مشتل التطور", value: "18_PROJ", icon: Sprout, color: "text-amber-500", status: "NURSERY", href: "/nursery" },
   ];

@@ -50,7 +50,6 @@ export async function POST(req: NextRequest) {
       }
 
       case 'weaponize_algorithm': {
-          const bridgePath = path.join(BASE_PROJECT_PATH, 'ai-engine/nodes/arsenal/algorithm_bridge.py');
           return NextResponse.json({
               success: true,
               output: {
