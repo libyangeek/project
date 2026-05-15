@@ -27,7 +27,7 @@ except ImportError as e:
 def main():
     parser = argparse.ArgumentParser(description="Al-Mu'izz Sovereign OS v90.0")
     parser.add_argument("mode", nargs="?", default="start",
-                        choices=["start", "stop", "status", "cli", "attack", "recon", "update", "server"])
+                        choices=["start", "stop", "status", "cli", "attack", "recon", "server"])
     parser.add_argument("args", nargs=argparse.REMAINDER)
     args = parser.parse_args()
 
@@ -63,20 +63,15 @@ def main():
         if not args.args:
             print("Usage: python run.py attack <target>")
         else:
-            core.execute_command("attack", target=args.args[0])
-
-    elif args.mode == "recon":
-        if not args.args:
-            print("Usage: python run.py recon <target>")
-        else:
-            core.execute_command("recon", target=args.args[0])
+            res = core.execute_command("attack", target=args.args[0])
+            print(f"🚀 Strike Initiated: {res}")
 
     elif args.mode == "server":
         server_path = os.path.join(BASE_DIR, "ai-engine/inference/server.py")
         os.system(f"python3 {server_path}")
 
     else:
-        print("الأوامر المتاحة: start, stop, status, cli, attack, recon, update, server")
+        print("الأوامر المتاحة: start, stop, status, cli, attack, recon, server")
 
 if __name__ == "__main__":
     main()

@@ -19,9 +19,10 @@ class ToolExecutor:
     def execute(self, tool_name: str, args: list = None, timeout: int = 300):
         """تنفيذ مادي حقيقي للأداة في طبقة العتاد واسترجاع الـ DNA"""
         args = args or []
+        # التحقق من وجود الأداة في النظام
         check_cmd = f"which {tool_name}"
         if subprocess.run(check_cmd.split(), capture_output=True).returncode != 0:
-            return {"success": False, "error": f"Tool '{tool_name}' missing in matter. Materialize it via Arsenal Node."}
+            return {"success": False, "error": f"Tool '{tool_name}' missing in matter. Materialize it via install.sh."}
 
         full_cmd = [tool_name] + args
         print(f"🔥 [EXECUTOR] Materializing: {' '.join(full_cmd)}")

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Sovereign AI Platform - Decision Engine v50.0
+Sovereign AI Platform - Decision Engine v90.0
 محرك اتخاذ القرار المستقل: يدمج بين رؤية Gemini ومنطق Mistral لضمان السطوة.
 (c) 2026 Al-Mu'izz Sovereign Systems
 """
@@ -28,7 +28,6 @@ class DecisionEngine:
             objective="Absolute Grid Subjugation"
         )
         
-        # دمج النتائج وتوثيق القرار
         decision = {
             "timestamp": str(datetime.datetime.now()),
             "op_type": operation_type,

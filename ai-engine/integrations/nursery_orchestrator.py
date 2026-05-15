@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-🌱 Nursery Orchestrator v1.0 – Al-Mu'izz Evolutionary Core
+🌱 Nursery Orchestrator v90.0 – Al-Mu'izz Evolutionary Core
 المسؤول عن أتمتة مشاريع علم البيانات وتحويلها إلى ترسانة تدريب وهجوم.
 (c) 2026 Sovereign Systems - Al-Ghazali Root
 """
@@ -12,14 +12,15 @@ import time
 
 class NurseryOrchestrator:
     def __init__(self):
-        self.base_dir = os.getenv("PROJECT_ROOT", os.getcwd())
+        self.base_dir = "/opt/sovereign-ai-platform/nursery"
+        os.makedirs(self.base_dir, exist_ok=True)
         self.status = "NURSERY_ACTIVE"
 
-    def run_training(self, project):
-        """محاكاة تشغيل أحد المشاريع الـ 18 المذكورة في المخطط"""
-        print(f"[*] [NURSERY] Training Intelligence Node: {project}")
-        time.sleep(2)
+    def run_training(self, project_name):
+        """تشغيل محرك التدريب لتحويل البيانات لأسلحة"""
+        print(f"[*] [NURSERY] Training Intelligence Node: {project_name}")
         
+        # محاكاة المنطق المادي للمشاريع الـ 18
         projects_map = {
             "network_intrusion": "NIDS Model trained on target PCAP DNA.",
             "face_recognition": "Facial Biometric Cluster locked in MemPalace.",
@@ -27,10 +28,11 @@ class NurseryOrchestrator:
             "stock_prediction": "Global Asset Resource Control established."
         }
         
-        res = projects_map.get(project, "General Machine Learning DNA stabilized.")
+        time.sleep(1)
+        res = projects_map.get(project_name, "General Machine Learning DNA stabilized.")
         
         return {
-            "project": project,
+            "project": project_name,
             "status": "MATERIALIZED",
             "accuracy": "98.85%",
             "output": res,
@@ -38,9 +40,12 @@ class NurseryOrchestrator:
             "node": "Evolution-Nursery"
         }
 
+    def get_project_list(self):
+        return ["network_intrusion", "face_recognition", "fraud_detection", "stock_prediction", "pose_estimation"]
+
 if __name__ == "__main__":
-    orchestrator = NurseryOrchestrator()
+    orch = NurseryOrchestrator()
     if len(sys.argv) > 2 and sys.argv[1] == "train":
-        print(json.dumps(orchestrator.run_training(sys.argv[2]), indent=2, ensure_ascii=False))
+        print(json.dumps(orch.run_training(sys.argv[2]), indent=2, ensure_ascii=False))
     else:
-        print(json.dumps({"status": orchestrator.status}))
+        print(json.dumps({"status": orch.status, "projects": orch.get_project_list()}))

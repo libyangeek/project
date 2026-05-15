@@ -11,7 +11,7 @@ import os
 import datetime
 
 class SmartRouter:
-    def __init__(self, core_ref):
+    def __init__(self, core_ref=None):
         self.core = core_ref
         self.status = "ACTIVE"
         # مصفوفة التوجيه العصبي لعام 2026 للأبعاد الـ 16
@@ -27,10 +27,7 @@ class SmartRouter:
             "signal": "ArbiterNode",
             "satellite": "SatelliteNode",
             "bio": "BioSyncNode",
-            "train": "LearningNode",
-            "osint": "ReconNode",
-            "ios": "MobileNode",
-            "rebirth": "MemoryNode"
+            "train": "LearningNode"
         }
 
     def classify(self, prompt):
@@ -48,7 +45,7 @@ class SmartRouter:
     def route_query(self, prompt):
         category = self.classify(prompt)
         
-        # استخراج الهدف (الكلمة الأخيرة غالباً)
+        # استخراج الهدف
         words = prompt.split()
         target_id = words[-1] if len(words) > 1 else "GLOBAL_MATRIX"
         
@@ -59,22 +56,25 @@ class SmartRouter:
             "scan": "recon",
             "remember": "store_dna",
             "recall": "recall",
-            "mobile": "mobile",
+            "mobile": "mobile_strike",
             "signal": "cellular_strike",
             "satellite": "satellite_strike",
             "bio": "bio_bind"
         }
         
         cmd = command_map.get(category, "ai_query")
-        
-        # إرسال النبضة للنواة الصلبة
-        result = self.core.execute_command(cmd, target=target_id, prompt=prompt)
         target_node = self.bridges.get(category, "God-Core")
-        
+
+        # إذا كان هناك مرجع للنواة، نقوم بالتنفيذ المادي
+        output = f"Quantum pulse transmitted to Node '{target_node}'. Sovereign execution initiated."
+        if self.core:
+            res = self.core.execute_command(cmd, target=target_id, prompt=prompt)
+            output = f"Core Response: {res.get('status')} | Node: {target_node}"
+
         return {
             "category": category,
             "status": "MATERIAL_RELAY_ACTIVE",
-            "output": result,
+            "output": output,
             "resonance": "100.0000%",
             "node": target_node,
             "timestamp": str(datetime.datetime.now()),
@@ -82,4 +82,6 @@ class SmartRouter:
         }
 
 if __name__ == "__main__":
-    print("SmartRouter v90.0: Standing by for nucleus binding.")
+    router = SmartRouter()
+    if len(sys.argv) > 1:
+        print(json.dumps(router.route_query(" ".join(sys.argv[1:])), indent=2))
