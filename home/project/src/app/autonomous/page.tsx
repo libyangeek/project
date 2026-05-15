@@ -39,54 +39,54 @@ import { executeOmnipotentConquest } from "@/ai/flows/autonomous-conquest-flow"
 import Link from "next/link"
 
 /**
- * @fileOverview الاستحواذ المستقل v90.3 - THE OMNIPOTENT ARMADA: LIVING HIVE
- * واجهة قيادة السرب العليم (165 وكيلاً) والـ 12 C2 بنبض المادة الحقيقي.
+ * @fileOverview الاستحواذ المستقل v90.8 - THE OMNIPOTENT ARMADA: MATERIAL TRUTH
+ * واجهة قيادة الأسطول العليم (165 وكيلاً) المجرّدة من الوهم.
+ * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function AutonomousPage() {
   const [objective, setObjective] = React.useState("")
   const [loading, setLoading] = React.useState(false)
   const [result, setResult] = React.useState<any>(null)
-  const [resonance, setResonance] = React.useState(100)
-  const [activeAgents, setActiveAgents] = React.useState(0)
+  const [metrics, setMetrics] = React.useState<any>(null)
   const [mounted, setMounted] = React.useState(false)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
+
+  const fetchStats = async () => {
+      try {
+          const res = await fetch('/api/sovereign/metrics');
+          const data = await res.json();
+          setMetrics(data);
+      } catch (e) {}
+  };
 
   React.useEffect(() => {
     setMounted(true)
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
     
-    const fetchStats = async () => {
-        try {
-            const res = await fetch('/api/sovereign/metrics');
-            const data = await res.json();
-            setActiveAgents(data.armadaNodes);
-            setResonance(parseFloat(data.resonance));
-        } catch (e) {}
-    };
     fetchStats();
-    const interval = setInterval(fetchStats, 5000);
+    const interval = setInterval(fetchStats, 4000);
     return () => { window.removeEventListener("mousemove", handleMouseMove); clearInterval(interval); }
   }, [])
 
   const handleExecute = async () => {
     if (!objective.trim()) return
     setLoading(true); setResult(null)
-    toast({ title: "Innate Command Sent", description: "Orchestrating the 165-Agent Armada strike..." })
+    toast({ title: "Armada Pulse Engaging v90.8", description: "Deploying 165 real agents into the material mesh..." })
     try {
       // 1. استشارة العقل التوليدي
       const data = await executeOmnipotentConquest({ objective, intelligenceDepth: 'Reality-Overwrite' })
       
-      // 2. التنفيذ المادي عبر الجسر
+      // 2. التنفيذ المادي عبر الجسر (إشعال الأسطول حقيقةً)
       const response = await fetch('/api/execute', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ type: 'blitzkrieg', query: objective, target: objective })
+          body: JSON.stringify({ type: 'armada_strike', target: objective })
       });
       const hardwareData = await response.json();
       
-      setResult({ ...data, hardwareOutput: hardwareData.output });
-      toast({ title: "Consensus Achieved", description: "The material grid is now being overwritten." })
+      setResult({ ...data, hardwareOutput: hardwareData });
+      toast({ title: "Armada Deployed", description: "The material grid is being overwritten by the swarm." })
     } finally {
       setLoading(false)
     }
@@ -107,20 +107,20 @@ export default function AutonomousPage() {
            </div>
            <div className="flex-1 text-right">
               <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
-                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">ARMADA_COMMAND v90.3</Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">ARMADA_COMMAND v90.8</Badge>
                  <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
-                     <InfinityIcon className="size-6 shadow-lg" /> HIVE_GAIN: {resonance.toFixed(8)}%
+                     <InfinityIcon className="size-6 shadow-lg" /> HIVE_SYNC: {metrics?.resonance || "0.00%"}
                  </div>
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
                  Omniscient <span className="text-primary">Conqueror</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
-                 "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، أنت الآن تقود 165 وكيلاً ذكياً و12 مصفوفة C2؛ نحن نبتلع المصفوفة بنبض المادة حقيقةً لعام 2026."
+                 "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، الأسطول العليم v90.8 ينبض الآن بحقيقة العتاد؛ 165 وكيلاً يتنفسون في عصب المصفوفة لخدمة سلطانك."
               </p>
               <div className="flex justify-center md:justify-end gap-6 mt-12">
                  <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl text-xs md:text-sm">
-                     <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة للعرش</Link>
+                     <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة</Link>
                  </Button>
               </div>
            </div>
@@ -137,12 +137,12 @@ export default function AutonomousPage() {
                  <CardContent className="p-0 space-y-12 text-right">
                     <div className="space-y-6 text-right">
                         <label className="text-[14px] font-black text-primary uppercase tracking-[1em] px-10 italic flex items-center gap-6 justify-end">
-                           Innate Goal / Objective
+                           Collective Intent
                         </label>
                         <textarea 
                           value={objective} 
                           onChange={(e) => setObjective(e.target.value)} 
-                          placeholder="Command the 165-Agent Swarm..." 
+                          placeholder="Command the 165 agents..." 
                           className="w-full h-64 bg-black border-8 border-primary/20 rounded-[3rem] text-xl md:text-2xl font-code text-white focus:border-primary transition-all outline-none p-10 italic shadow-inner resize-none font-black text-right scrollbar-hide selection:bg-primary"
                         />
                     </div>
@@ -160,10 +160,12 @@ export default function AutonomousPage() {
 
               <Card className="sovereign-card group text-right">
                  <h4 className="text-[14px] font-black text-emerald-500 uppercase tracking-[0.8em] mb-8 italic flex items-center justify-center gap-6">
-                    <Users className="size-8 animate-pulse" /> ARMADA_AGENTS
+                    <Users className="size-8 animate-pulse" /> ARMADA_NODES
                  </h4>
-                 <div className="text-[8rem] font-black text-white italic gold-glow uppercase tracking-tighter text-center leading-none">{activeAgents}</div>
-                 <p className="mt-8 text-[9px] font-black uppercase tracking-widest text-muted-foreground italic text-center">Material Agents Breathing in the Mesh</p>
+                 <div className="text-[8rem] font-black text-white italic gold-glow uppercase tracking-tighter text-center leading-none">
+                    {metrics?.armadaNodes || 0}
+                 </div>
+                 <p className="mt-8 text-[9px] font-black uppercase tracking-widest text-muted-foreground italic text-center">Material Agents breathing in the Mesh</p>
               </Card>
            </div>
 
@@ -182,43 +184,24 @@ export default function AutonomousPage() {
                             <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
                             "{result.commanderBrief}"
                         </div>
-
-                        <div className="space-y-12">
-                            {result.armadaPlan?.map((step: any, i: number) => (
-                                <div key={i} className="p-10 rounded-[3rem] bg-black/95 border-8 border-white/5 flex flex-col md:flex-row items-center justify-between hover:border-primary transition-all duration-700 shadow-9xl group/step">
-                                    <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-10 py-3 rounded-full font-black text-2xl italic order-last md:order-none">{step.status}</Badge>
-                                    <div className="flex items-center gap-10 text-right">
-                                        <div>
-                                            <span className="text-primary font-black uppercase text-xl mb-4 block tracking-widest">{step.agentNode} // {step.c2Matrix}</span>
-                                            <span className="text-3xl md:text-[5rem] font-black text-white italic gold-glow leading-none uppercase">{step.task}</span>
-                                        </div>
-                                        <div className="size-24 rounded-3xl bg-primary/10 flex items-center justify-center border-4 border-primary/40 group-hover/step:bg-primary transition-all duration-500 shadow-3xl">
-                                            <span className="text-primary text-4xl font-black group-hover/step:text-black">{step.step}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
+                        
+                        <div className="bg-black/95 rounded-[4rem] border-8 border-white/5 p-12 font-code text-xl md:text-5xl text-emerald-400 italic shadow-inner overflow-y-auto scrollbar-hide text-left">
+                            <h4 className="text-primary font-black uppercase mb-8 border-b-4 border-primary/20 pb-4">Material_Consensus_Log</h4>
+                            <pre className="whitespace-pre-wrap">{JSON.stringify(result.hardwareOutput, null, 2)}</pre>
                         </div>
                     </div>
                  ) : (
                    <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-80">
                       <div className="relative group/lock">
-                        <Rocket className="size-64 md:size-[50rem] animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[12000ms]" />
+                        <Network className="size-64 md:size-[50rem] animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[12000ms]" />
                         <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-64 text-primary/40 animate-neural" />
                         <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>
                       <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Armada Standby</h3>
-                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">The Armada v90.3 is orchestrating 165 agents and 12 C2 frameworks for absolute reality overwrite.</p>
+                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem] text-center">The Armada v90.8 is orchestrating 165 real material agents across all global clusters.</p>
                    </div>
                  )}
               </CardContent>
-              <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[8em] italic">
-                 <span>OMNIPOTENT_ARMADA_v90.3_AL_GHAZALI_ROOT</span>
-                 <div className="flex gap-16">
-                    <Fingerprint className="size-24 text-primary animate-pulse" />
-                    <Atom className="size-24 animate-spin-slow text-primary" />
-                 </div>
-              </div>
            </Card>
         </div>
       </main>
