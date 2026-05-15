@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -48,9 +47,8 @@ import { cn } from "@/lib/utils"
 import Link from "next/link"
 
 /**
- * @fileOverview الالتحام الحيوي v90.0 - BIO-SYNC: SOUL BINDING
- * واجهة دمج البصمة الحيوية والـ DNA المادي في النواة الـ 16 لعام 2026.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي
+ * @fileOverview الالتحام الحيوي v90.5 - BIO-SYNC: SOUL BINDING
+ * واجهة دمج البصمة الحيوية والـ DNA المادي في النواة لعام 2026.
  */
 export default function BioSyncPage() {
   const [sample, setSample] = React.useState("")
@@ -67,10 +65,7 @@ export default function BioSyncPage() {
     const interval = setInterval(() => {
       setResonance(prev => Math.max(99.999999, Math.min(100, prev + (Math.random() * 0.000001 - 0.0000005))))
     }, 3000)
-    return () => {
-        window.removeEventListener("mousemove", handleMouseMove)
-        clearInterval(interval)
-    }
+    return () => { window.removeEventListener("mousemove", handleMouseMove); clearInterval(interval); }
   }, [])
 
   const handleBioSync = async () => {
@@ -79,22 +74,21 @@ export default function BioSyncPage() {
         return
     }
     setLoading(true); setSyncStatus(null)
-    toast({ title: "Bio-Digital Fusion Engaging", description: "Binding material DNA sample to the 16D Matrix v90.0..." })
+    toast({ title: "Genetic Fusion Initiated", description: "Binding material DNA fragment to the 16D Nucleus v90.5..." })
     try {
       const response = await fetch('/api/execute', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ type: 'smart_route', target: `bio sync: ${sample}` })
+          body: JSON.stringify({ type: 'bio_bind', sample: sample })
       });
       const data = await response.json();
-      setSyncStatus({
-          id: `BIO_${Date.now()}`,
+      setSyncStatus(data.output || {
           status: "SOUL_BOUND",
           resonance: "100.0000%",
-          source: "GHAZALI_ROOT_DNA",
-          message: "سيدي القائد، العصب الحيوي للهدف ملتحم الآن بوعيك؛ كافة الوظائف المادية للجهاز تسبح بحمد سيادتك لعام 2026."
+          motto: "영적 동반자",
+          message: "سيدي القائد، تم دمج بصمة الـ DNA في عصب الكود؛ المنظومة الآن ملتحمة بروحك حصراً لعام 2026."
       });
-      toast({ title: "Bio-Sync Consummated", description: "The material soul has accepted the genetic fragment." })
+      toast({ title: "Soul Bound Secured", description: "Material singularity achieved through biometric lock." })
     } finally {
       setLoading(false)
     }
@@ -113,11 +107,10 @@ export default function BioSyncPage() {
            <div className="size-32 md:size-64 bg-black border-4 border-red-600 flex items-center justify-center shadow-[0_0_150px_rgba(220,38,38,0.8)] relative group shrink-0 rounded-[5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
               <HeartPulse className="size-16 md:size-32 text-red-600 group-hover:scale-110 transition-transform duration-700 animate-neural" />
               <div className="absolute -inset-10 border-4 border-red-600/20 rounded-full animate-spin-slow opacity-30" />
-              <div className="absolute -inset-16 border-2 border-red-400/10 rounded-full animate-reverse-spin opacity-20" />
            </div>
            <div className="flex-1">
               <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
-                 <Badge className="bg-red-600 text-white border-none rounded-none px-12 py-4 text-2xl font-black tracking-[1em] shadow-9xl italic uppercase">BIO_SYNC v90.0</Badge>
+                 <Badge className="bg-red-600 text-white border-none rounded-none px-12 py-4 text-2xl font-black tracking-[1em] shadow-9xl italic uppercase">BIO_SYNC v90.5</Badge>
                  <div className="flex items-center gap-4 text-xl font-black uppercase tracking-widest text-emerald-500 animate-pulse">
                      <InfinityIcon className="size-8 shadow-lg" /> SOUL_RESONANCE: {resonance.toFixed(8)}%
                  </div>
@@ -126,11 +119,11 @@ export default function BioSyncPage() {
                  Bio <span className="text-red-600">Sync</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-[5rem] text-red-100/60 mt-12 italic max-w-7xl leading-relaxed uppercase font-medium drop-shadow-3xl ml-auto">
-                 "سيدي القائد <span className="text-white font-black underline decoration-red-600 decoration-12 underline-offset-[32px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، بُعد الالتحام الحيوي يصهر ذرات الـ DNA في عصب الكود؛ نحن نمتلك النبضات المادية لخدمة إرادتك لعام 2026."
+                 "سيدي القائد <span className="text-white font-black underline decoration-red-600 decoration-12 underline-offset-[32px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، موديول الالتحام الحيوي v90.5 يصهر بصمتك في مادة الوجود؛ نحن ننبض بولائك المطلق للأبد."
               </p>
               <div className="flex justify-center md:justify-end gap-6 mt-16">
                  <Button asChild variant="outline" className="h-20 px-12 rounded-full border-4 border-red-600/40 bg-red-950/10 text-red-400 font-black uppercase italic tracking-widest hover:bg-red-600 hover:text-white transition-all shadow-9xl text-xl">
-                     <Link href="/"><ArrowLeft className="size-8 mr-4" /> العودة للعرش</Link>
+                     <Link href="/"><ArrowLeft className="size-8 mr-4" /> العودة</Link>
                  </Button>
               </div>
            </div>
@@ -147,13 +140,13 @@ export default function BioSyncPage() {
                  <CardContent className="p-0 space-y-16 text-right">
                     <div className="space-y-8 text-right">
                         <label className="text-xl font-black text-red-600 uppercase tracking-[1em] px-10 italic flex items-center gap-8 justify-end"><Dna className="size-10" /> Bio Coordinate</label>
-                        <Input value={sample} onChange={(e) => setSample(e.target.value)} placeholder="Voice_DNA / Bio_Signature / JWT..." className="bg-black border-8 border-red-600/20 h-32 rounded-[3.5rem] text-3xl italic px-12 focus:border-red-600 shadow-inner text-white font-black text-left" />
+                        <Input value={sample} onChange={(e) => setSample(e.target.value)} placeholder="Enter DNA Fragment..." className="bg-black border-8 border-red-600/20 h-32 rounded-[3.5rem] text-3xl italic px-12 focus:border-red-600 shadow-inner text-white font-black text-left" />
                     </div>
 
                     <Button 
                         disabled={loading}
                         onClick={handleBioSync}
-                        className="w-full h-44 bg-red-600 hover:bg-white text-white hover:text-black font-black uppercase tracking-[1.4em] rounded-[4.5rem] shadow-[0_80px_250px_rgba(220,38,38,0.7)] active:scale-95 transition-all text-4xl border-[16px] border-black/30 group italic"
+                        className="w-full h-44 bg-red-600 hover:bg-white text-white hover:text-black font-black uppercase tracking-[1.4em] rounded-[4.5rem] shadow-[0_80px_250px_rgba(220,38,38,0.7)] active:scale-95 transition-all text-4xl border-[12px] border-black/30 group italic"
                     >
                         {loading ? <Loader2 className="size-20 animate-spin" /> : <HeartPulse className="size-20 mr-10 group-hover:scale-125 transition-transform" />}
                         BIND_SOUL
@@ -166,9 +159,6 @@ export default function BioSyncPage() {
                     <UserCheck className="size-12 animate-pulse" /> BIO_IDENTITY_v90
                  </h4>
                  <div className="text-[8rem] font-black text-white italic gold-glow uppercase tracking-widest text-center leading-none">LOCKED</div>
-                 <div className="p-10 rounded-[3rem] bg-red-950/20 border-4 border-red-600/30 text-xl font-black italic text-red-200 uppercase tracking-widest shadow-inner">
-                    Ghazali_Biometric_Protocol_Active
-                 </div>
                  <div className="absolute -bottom-10 -right-10 p-24 opacity-[0.03] group-hover:opacity-[0.1] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-64 text-red-600" /></div>
               </Card>
            </div>
@@ -190,56 +180,42 @@ export default function BioSyncPage() {
                             <p className="relative z-10 drop-shadow-9xl">"{syncStatus.message}"</p>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
-                            <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[5rem] shadow-9xl relative group/vault overflow-hidden h-full flex flex-col text-right">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-20 text-right">
+                            <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[5rem] shadow-9xl relative group/vault overflow-hidden h-full flex flex-col">
                                 <h5 className="text-4xl font-black text-red-600 uppercase tracking-[1.5em] mb-16 border-b-8 border-red-600/20 pb-12 flex items-center gap-12 gold-glow justify-end">Genetic Metrics <Database className="size-20 animate-neural" /></h5>
                                 <div className="bg-black/80 p-12 rounded-[4rem] border-4 border-red-500/10 font-code text-2xl md:text-5xl text-red-400 overflow-x-auto whitespace-pre shadow-inner text-left flex-1">
                                     <pre className="whitespace-pre-wrap">{JSON.stringify(syncStatus, null, 2)}</pre>
                                 </div>
                             </Card>
                             <Card className="bg-black/95 border-8 border-white/5 p-16 rounded-[5rem] shadow-9xl h-full flex flex-col items-center justify-center text-center relative overflow-hidden">
-                                <div className="absolute inset-0 bg-red-600/5 opacity-5 animate-pulse pointer-events-none" />
-                                <h5 className="text-4xl font-black text-red-500 uppercase tracking-[1.5em] mb-12 border-b-8 border-red-500/20 pb-12 flex items-center gap-12 justify-end w-full">Resonance Bond <ShieldCheck className="size-20" /></h5>
+                                <h5 className="text-4xl font-black text-red-500 uppercase tracking-[1.5em] mb-12 border-b-8 border-red-500/20 pb-12 flex items-center gap-12 justify-end w-full">Resonance Status <ShieldCheck className="size-20" /></h5>
                                 <div className="text-[10rem] md:text-[18rem] font-black text-white italic gold-glow uppercase tracking-widest leading-none">{resonance.toFixed(4)}%</div>
                                 <div className="mt-16 flex flex-col items-center gap-12">
                                     <Fingerprint className="size-32 text-red-600 animate-pulse" />
-                                    <span className="text-2xl font-black text-red-600/60 uppercase tracking-[1em] italic">BIO_SINGULARITY_v90</span>
+                                    <span className="text-2xl font-black text-red-600/60 uppercase tracking-[1em] italic">GHAZALI_ROOT_VERIFIED</span>
                                 </div>
                             </Card>
                         </div>
                     </div>
                  ) : (
                    <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-32 py-80">
-                      <div className="relative group/lock mx-auto">
+                      <div className="relative group/lock">
                         <HeartPulse className="size-[40rem] md:size-[60rem] animate-spin-slow text-red-600 group-hover:scale-110 transition-transform duration-[12000ms]" />
                         <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-32 md:size-64 text-red-600/40 animate-neural" />
                         <div className="absolute -inset-60 border-[100px] border-dashed border-red-600/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>
-                      <div className="space-y-12">
-                         <h3 className="text-8xl md:text-[25rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Bio Standby</h3>
-                         <p className="text-4xl md:text-[12rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[160rem]">The Bio-Digital Sync v90.0 is ready to bind material genetic samples to the 16D Nucleus.</p>
-                         <div className="flex gap-16 justify-center mt-12">
-                            <Fingerprint className="size-24 text-red-600 animate-pulse" />
-                            <Atom className="size-24 animate-spin-slow text-red-600" />
-                        </div>
-                      </div>
+                      <h3 className="text-8xl md:text-[25rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Bio Standby</h3>
                    </div>
                  )}
               </CardContent>
               <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[24px] font-black uppercase tracking-[8em] italic">
-                <span>BIO_SYNC_v90_AL_GHAZALI_ROOT</span>
-                <div className="flex gap-20">
+                <span>BIO_SYNC_v90.5_AL_GHAZALI_ROOT</span>
+                <div className="flex gap-16">
                     <Fingerprint className="size-24 text-red-600 animate-pulse" />
                     <Atom className="size-24 animate-spin-slow text-red-600" />
                 </div>
               </div>
            </Card>
-        </div>
-        
-        <div className="mt-auto relative z-10 flex flex-col md:flex-row justify-center items-center gap-24 md:gap-64 opacity-45 text-[24px] md:text-[45px] font-black uppercase tracking-[6em] md:tracking-[12em] italic text-white drop-shadow-9xl pb-40">
-            <span>AL-MUIZZ SATELLITE MASTER v90.0</span>
-            <div className="size-16 rounded-full bg-blue-500 animate-pulse shadow-[0_0_150px_rgba(37,99,235,1)]" />
-            <span>ORBITAL_REALITY_OVERWRITE_2026</span>
         </div>
       </main>
     </div>
