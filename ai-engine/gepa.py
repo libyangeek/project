@@ -57,7 +57,7 @@ class SovereignOracleCore:
                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                       (ts, target, exploit_type, 1 if success else 0, kwargs.get('error'), kwargs.get('solution'), 
                        kwargs.get('improvement'), kwargs.get('severity', 'HIGH'), weight, 
-                       kwargs.get('agent', 'System'), kwargs.get('phase', 'Exploitation'), kwargs.get('execution_time', 0.0)))
+                       kwargs.get('agent', 'System'), kwargs.get('phase', 'Exploit'), kwargs.get('execution_time', 0.0)))
             
             # تسجيل التعلم من النمط
             pattern = f"{exploit_type}:{target}"
@@ -119,6 +119,13 @@ class SovereignOracleCore:
             "lateral_pivots": lat,
             "resonance": "100.0000%"
         }
+
+def init_db():
+    SovereignOracleCore()
+
+def record(tool, input_data, outcome, success=True, node=None, tag="", workflow=None):
+    gm = SovereignOracleCore()
+    gm.record_exploit(input_data, tool, success, solution=outcome, phase=tag)
 
 if __name__ == "__main__":
     gm = SovereignOracleCore()

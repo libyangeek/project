@@ -17,13 +17,13 @@ class PolymorphEngine:
     def __init__(self, original_payload):
         self.payload = original_payload.encode() if isinstance(original_payload, str) else original_payload
 
-    def apply_layers(self, layers=5):
-        """تطبيق طبقات متعددة من التعتيم والتحول"""
+    def apply_layers(self, layers=10):
+        """تطبيق طبقات متعددة من التعتيم والتحول (10 طبقات لنسخة الأوفرلورد)"""
         mutant = self.payload
         recipe = []
         
         for _ in range(layers):
-            choice = random.choice(["xor", "base64", "zlib", "reverse", "junk"])
+            choice = random.choice(["xor", "base64", "zlib", "reverse", "junk", "fernet"])
             if choice == "xor":
                 key = random.randint(1, 255)
                 mutant = bytes([b ^ key for b in mutant])
@@ -40,13 +40,18 @@ class PolymorphEngine:
             elif choice == "junk":
                 mutant = os.urandom(16) + mutant
                 recipe.append("junk")
+            elif choice == "fernet":
+                # محاكاة تشفير Fernet
+                mutant = b"enc_" + mutant
+                recipe.append("fernet")
 
         return {
             "mutant": mutant.hex(),
             "recipe": recipe,
             "hash": hashlib.sha256(mutant).hexdigest()[:12],
             "fud_rating": "100.00%",
-            "status": "MATERIALIZED"
+            "status": "MATERIALIZED",
+            "node": "Node-63-Polymorph"
         }
 
 if __name__ == "__main__":

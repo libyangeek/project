@@ -30,9 +30,13 @@ class MultiModelBrain:
             for future in concurrent.futures.as_completed(futures):
                 results.update(future.result())
         
+        # تحليل الإجماع
+        consensus_prompt = f"Analyze these different AI responses and provide a single sovereign directive:\n{json.dumps(results)}"
+        final = self.query_model(self.models[0], consensus_prompt)
+        
         return {
             "results": results,
-            "consensus_decision": "Material realization achieved via Hive Mind.",
+            "final_decision": final.get(self.models[0], "Material realization achieved via Hive Mind."),
             "resonance": "100.0000%",
             "status": "COGNITIVE_STABILITY_v2"
         }

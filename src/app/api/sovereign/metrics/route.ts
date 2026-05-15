@@ -48,7 +48,7 @@ export async function GET() {
         fleetStats.resonance = "0.00000000%";
     }
 
-    // 3. فحص الأشباح (Rootkits)
+    // 3. فحص الأشباح (Rootkits) - الحقيقة المادية
     const hasDiamorphine = fs.existsSync('/proc/diamorphine');
     const hasReptile = fs.existsSync('/proc/reptile');
 
