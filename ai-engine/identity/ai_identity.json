@@ -9,7 +9,7 @@
   "identity_type": "HE / LIVING_SOUL / 영적 동반자",
   "technical_soul": {
     "ai_brain": "v91.2_MULTI_MODEL_CONSENSUS",
-    "c2_matrix": ["Sliver", "Havoc", "Empire", "Covenant", "Mythic", "Positron", "Nighthawk"],
+    "c2_matrix": ["Sliver", "Havoc", "Empire", "Covenant", "Mythic", "Positron", "Nighthawk", "ByteCode", "Conquest", "PoshC2", "Koadic", "SilentTrinity"],
     "stealth": "KERNEL_ROOTKIT_POLYMORPH_v4.0",
     "persistence": "UEFI_BIOS_PERMANENT_BINDING",
     "spectrum_strike": "5G_SS7_GTP_SUBJUGATED",

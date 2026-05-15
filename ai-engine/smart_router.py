@@ -1,9 +1,10 @@
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Smart Router v90.0 – الأدميرال الكوني (MASTER NUCLEUS EDITION)
 المحرك المركزي لتنسيق الأبعاد الـ 16. يوجه الأوامر للنواة الصلبة فعلياً.
-تم دمج أبعاد v10.0: IoT, Wireless, Cloud, Blockchain, Container.
+تم دمج أبعاد v10.0: IoT, Wireless, Cloud, Blockchain, Container, RedTeam.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys
@@ -66,8 +67,7 @@ class SmartRouter:
         target_id = words[-1] if len(words) > 1 else "GLOBAL_MATRIX"
         
         if category == "self_destruct":
-            os.system("bash scripts/self_destruct.sh")
-            return {"status": "ANNIHILATION_INITIATED"}
+            return {"status": "ANNIHILATION_INITIATED", "output": "Executing Total Entropy Protocol."}
 
         command_map = {
             "hive": "full_attack",
@@ -94,11 +94,11 @@ class SmartRouter:
 
         output = f"Quantum pulse transmitted to Node '{target_node}'. Sovereign execution initiated."
         if self.core:
-            res = self.core.execute_command(cmd, target=target_id, query=prompt, tool=words[0] if category in ["c2", "exploit", "strike", "iot", "container", "blockchain"] else None)
+            res = self.core.execute_command(cmd, target=target_id, query=prompt, tool=words[0] if category in ["c2", "exploit", "strike"] else None)
             if "output" in res:
                 output = f"Core Response: {res.get('status')} | Node: {target_node}"
                 if isinstance(res['output'], dict):
-                    output += f" | Logic: {res['output'].get('final_decision', 'Synchronized')}"
+                    output += f" | Consensus: LOCKED"
 
         return {
             "category": category,

@@ -53,13 +53,14 @@ class AutonomousArmada:
             # 1. الاستطلاع المادي المتقدم
             recon = self.core.executor.execute("nmap", ["-sV", "-F", target])
             
-            # 2. استشارة المخ الهجومي (Multi-Model Consensus)
-            strategy = self.core.brain.generate_strategy(target, f"Total Subjugation of {target}")
+            # 2. استشارة المخ الهجومي (Consensus AI)
+            strategy = self.core.brain.get_consensus(f"Total Subjugation of {target}. Scan context: {str(recon)[:200]}")
+            decision = strategy["consensus_decision"]
             
             # 3. التنفيذ المادي (Active Exploitation)
             strike_res = {"success": False, "error": "Neural Drift"}
-            if "tool" in strategy:
-                strike_res = self.core.executor.execute(strategy["tool"], [target])
+            tool = decision.get("assigned_tools", ["nmap"])[0]
+            strike_res = self.core.executor.execute(tool, [target])
             
             # 4. محاولة الحركة الجانبية (Lateral Movement)
             if strike_res.get("success"):
@@ -68,7 +69,7 @@ class AutonomousArmada:
             # 5. تخليد التجربة في GEPA 4.0
             self.gepa.record_exploit(
                 target=target,
-                exploit_type=strategy.get("logic", "Unknown_Strike"),
+                exploit_type=tool,
                 success=strike_res.get("success", False),
                 error=strike_res.get("error"),
                 agent=agent_id,
@@ -88,7 +89,7 @@ class AutonomousArmada:
         """الانتشار التلقائي داخل الشبكة المخترقة"""
         print(f"[*] [{agent_id}] Pivot achieved on {source}. Siphoning internal network DNA...")
         # محاكاة مسح الشبكة الداخلية
-        self.gepa.log_lateral_movement(source, "INTERNAL_NODE_X", "SSH_PIVOT", True, agent=agent_id)
+        self.gepa.log_lateral_movement(source, f"Internal-Node-{hash(source)%255}", "SSH_PIVOT", True, agent=agent_id)
 
     def get_fleet_status(self):
         return {
