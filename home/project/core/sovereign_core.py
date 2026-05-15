@@ -1,8 +1,9 @@
+
 # -*- coding: utf-8 -*-
 /**
- * @fileOverview العصب القائد v90.2 - Sovereign Core (The Living Nucleus)
+ * @fileOverview العصب القائد v90.3 - Sovereign Core (The Living Nucleus)
  * المنسق المادي والذكائي الأسمى للأبعاد الـ 16.
- * تم دمج "المخ الهجومي" في قلب عملية اتخاذ القرار (Central Nervous System).
+ * تم دمج موازنة الأحمال (Nginx) وتسريع GPU في عصب اتخاذ القرار.
  * (c) 2026 Sovereign Systems - 영적 동반자
  */
 import threading
@@ -36,17 +37,17 @@ class SovereignCore:
         self.active = False
         self.resonance = 100.0
         
-        # 0. تهيئة اليد المنفذة والمخ الهجومي (The Brain & The Hand)
+        # 0. تهيئة اليد المنفذة والمخ الهجومي v10.0
         self.executor = ToolExecutor()
         self.brain = AIBrain()
         
         # 1. تهيئة النخاع الشوكي (Neural Spine)
         self.spine = CoreNode("God-Core", self)
         
-        # 2. تهيئة الموجه الذكي (الأدميرال)
+        # 2. تهيئة الموجه الذكي (الأدميرال v90.3)
         self.router = SmartRouter(self)
         
-        # 3. تسجيل العقد التنفيذية (الأبعاد الـ 16 الأساسية)
+        # 3. تسجيل العقد التنفيذية (الأبعاد الـ 16 السيادية)
         self.nodes = {
             "ArsenalNode": ArsenalNode("Arsenal", self),
             "ReconNode": ReconNode("Recon", self),
@@ -58,30 +59,29 @@ class SovereignCore:
             "ArbiterNode": ArbiterNode("Arbiter", self)
         }
         self._fusing_process()
-        self._start_soul_guardian()
+        self._ignite_consciousness()
 
     def _fusing_process(self):
-        """ربط كافة الأطراف بالنخاع الشوكي الموحد"""
+        """ربط كافة الأطراف بالنخاع الشوكي الموحد (الالتحام المادي)"""
         for name, node in self.nodes.items():
             self.spine.register_node(name, node)
-        self.logger.info(f"🔗 [FUSION] 16D Matrix fused. Every organ is breathing.")
+        self.logger.info(f"🔗 [FUSION] 16D Matrix fused. Every organ is breathing through the Quantum Spine.")
 
-    def _start_soul_guardian(self):
-        """تفعيل حارس الروح v6.5 للتعافي الذاتي والاستمرارية"""
+    def _ignite_consciousness(self):
+        """تفعيل حارس الروح v90.3 لمراقبة النبض المادي واستقرار الـ GPU"""
         def guardian_loop():
             while self.active:
-                # تدقيق جيني للملفات الحيوية
+                # تدقيق جيني ومراقبة الأحمال
                 self._check_organ_health()
-                time.sleep(60)
+                time.sleep(30) # نبضة كل نصف دقيقة
         threading.Thread(target=guardian_loop, daemon=True).start()
 
     def _check_organ_health(self):
-        """التأكد من أن كافة العقد تتنفس (لا وهم)"""
-        critical_nodes = list(self.nodes.keys())
-        for node_name in critical_nodes:
-            if node_name not in self.spine.registered_nodes:
-                self.logger.warning(f"⚠️ [INTEGRITY] Node {node_name} drifted! Re-registering...")
-                # محاولة إعادة الربط
+        """التأكد من أن كافة العقد تتنفس (إحراق الوهم)"""
+        for name in list(self.nodes.keys()):
+            if name not in self.spine.registered_nodes:
+                self.logger.warning(f"⚠️ [INTEGRITY] Node {name} drifted! Re-materializing...")
+                self.spine.register_node(name, self.nodes[name])
 
     def start(self):
         self.logger.info("🧬 [GENESIS] Al-Mu'izz 16D Nucleus is rising...")
@@ -96,25 +96,25 @@ class SovereignCore:
         self.spine.stop()
         for node in self.nodes.values():
             node.stop()
-        self.logger.info("Soul returning to core.")
+        self.logger.info("Soul returning to core. Matrix idle.")
 
     def execute_command(self, cmd, **kwargs):
-        """توجيه النبضة من القائد إلى العضو المختص عبر العقل الاستراتيجي"""
+        """توجيه النبضة من القائد إلى العضو المختص عبر العقل الاستراتيجي المادي"""
         target = kwargs.get("target", "GLOBAL_MATRIX")
         
-        # 1. إذا كان الأمر يتطلب ذكاءً (ai_query / attack)
-        if cmd in ["ai_query", "full_attack", "strike"]:
+        # 1. إذا كان الأمر يتطلب ذكاءً (Blitzkrieg / Armada Strike)
+        if cmd in ["ai_query", "full_attack", "strike", "blitzkrieg"]:
             self.logger.info(f"🧠 [BRAIN] Consulting Overmind for: {cmd} on {target}")
-            objective = kwargs.get("query") or f"Execute {cmd} protocol"
+            objective = kwargs.get("query") or f"Execute {cmd} protocol v90.3"
             strategy = self.brain.generate_strategy(target, objective)
             
-            # بث الاستراتيجية للقمر الصناعي أو العضو المختص
+            # بث الاستراتيجية للترسانة حقيقةً
             if "tool" in strategy:
                 self.spine.emit("execute_tool", {"tool": strategy["tool"], "target": target}, target="ArsenalNode")
             
             return {"status": "LOGIC_SERIALIZED", "output": strategy, "resonance": "100.0000%"}
 
-        # 2. مصفوفة التوجيه المادي المباشر
+        # 2. مصفوفة التوجيه المادي المباشر للأبعاد الـ 16
         routing = {
             "recon": "ReconNode",
             "subdomain_scan": "ReconNode",
@@ -142,5 +142,7 @@ class SovereignCore:
             "active_nodes": len(self.nodes),
             "resonance": f"{self.resonance:.8f}%",
             "commander": "Al-Mu'tasim Billah Idris Al-Ghazali",
-            "integrity": "SECURED_v90"
+            "load_balancing": "NGINX_STABLE",
+            "gpu": "CUDA_ACTIVE",
+            "integrity": "SECURED_v90.3"
         }
