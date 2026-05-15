@@ -6,113 +6,75 @@ import { SidebarNav } from "@/components/platform/sidebar-nav"
 import { 
   Workflow, 
   Play, 
+  Loader2, 
+  Skull, 
+  Target, 
+  Boxes, 
+  Atom, 
+  Binary, 
+  Fingerprint, 
+  Infinity as InfinityIcon, 
   ShieldCheck, 
-  Terminal as TerminalIcon,
-  Search,
+  ArrowLeft, 
+  RotateCw, 
+  Database,
   Activity,
-  Zap,
-  Box,
+  Flame,
+  Network,
   Cpu,
-  RefreshCcw,
-  Bug,
-  Settings,
-  Loader2,
-  Globe,
-  Skull,
-  Atom,
-  Boxes,
-  Users,
-  Binary,
-  Fingerprint,
-  Crown,
-  Infinity as InfinityIcon,
-  ChevronRight,
-  Wind,
-  ArrowLeft,
-  RotateCw,
-  LayoutGrid,
-  Database
+  Monitor,
+  Zap,
+  CheckCircle2
 } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
 import { toast } from "@/hooks/use-toast"
-import { cn } from "@/lib/utils"
+import { executeTwinSimulation } from "@/ai/flows/digital-twin-flow"
 import Link from "next/link"
 
 /**
- * @fileOverview محاكي السطوة v78.8 - THE GLOBAL MIRROR: ULTRA SIMULATION
- * يتيح للقائد محاكاة الضربات عبر الـ 14 عنقوداً عالمياً بنبض المادة لعام 2026.
- * المالك الوحيد: المعتصم بالله ادريس الغزالي
+ * @fileOverview محاكي السطوة v91.0 - THE GLOBAL MIRROR: DIGITAL TWIN
+ * واجهة محاكاة الضربات بنبض المادة قبل التنفيذ الحقيقي لعام 2026.
  */
 export default function DigitalTwinPage() {
-  const [mounted, setMounted] = React.useState(false)
-  const [isSimulating, setIsSimulating] = React.useState(false)
-  const [progress, setProgress] = React.useState(0)
   const [target, setTarget] = React.useState("")
-  const [log, setLog] = React.useState<{msg: string, node: string}[]>([])
-  const [selectedClusters, setSelectedClusters] = React.useState<string[]>(["Riyadh", "Cairo", "London", "Dubai", "New York"])
+  const [logic, setLogic] = React.useState("Autonomous Buffer Overflow Probe")
+  const [loading, setLoading] = React.useState(false)
+  const [result, setResult] = React.useState<any>(null)
+  const [progress, setProgress] = React.useState(0)
   const [resonance, setResonance] = React.useState(100)
-  const [knotStatus, setKnotStatus] = React.useState<boolean[]>(new Array(24).fill(true))
-  const [dnaStream, setDnaStream] = React.useState<string[]>([])
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
-
-  const clusters = ["Riyadh", "Cairo", "London", "Dubai", "New York", "Tokyo", "Berlin", "Singapore", "Sydney", "Moscow", "Paris", "Toronto", "Seoul", "Mumbai"]
+  const [mounted, setMounted] = React.useState(false)
 
   React.useEffect(() => {
     setMounted(true)
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
-
     const interval = setInterval(() => {
-      setResonance(prev => Math.max(99.999999, Math.min(100, prev + (Math.random() * 0.000001 - 0.0000005))));
-      // محاكاة نبض العقد
-      setKnotStatus(prev => prev.map(k => Math.random() > 0.05));
-    }, 3000);
-    return () => {
-        window.removeEventListener("mousemove", handleMouseMove);
-        clearInterval(interval);
-    }
+      setResonance(prev => Math.max(99.999999, Math.min(100, prev + (Math.random() * 0.000001 - 0.0000005))))
+    }, 3000)
+    return () => { window.removeEventListener("mousemove", handleMouseMove); clearInterval(interval); }
   }, [])
 
-  const startSimulation = () => {
-    if (!target) {
-        toast({ variant: "destructive", title: "Missing Coordinate", description: "Define a target for the ULTRA hive simulation." })
-        return
-    }
-    setIsSimulating(true)
-    setProgress(0)
-    setDnaStream([])
-    setLog([{ msg: "Initializing Material Virtualization v78.8...", node: "Alpha-Core" }])
+  const handleSimulate = async () => {
+    if (!target) return
+    setLoading(true); setResult(null); setProgress(0)
+    toast({ title: "Virtualizing Target DNA", description: "Instantiating Digital Twin in high-speed material buffers..." })
     
-    // محاكاة توليد DNA
-    const dnaInterval = setInterval(() => {
-        setDnaStream(prev => [Math.random().toString(16).substring(2, 10).toUpperCase(), ...prev].slice(0, 15));
-    }, 150);
+    const progInt = setInterval(() => { setProgress(p => (p >= 95 ? 95 : p + 5)) }, 100)
 
-    const progressInterval = setInterval(() => {
-        setProgress(prev => {
-            if (prev >= 100) {
-                clearInterval(progressInterval)
-                clearInterval(dnaInterval)
-                setIsSimulating(false)
-                setLog(l => [{ msg: "Global Consensus Achieved: MATERIAL_SINGULARITY_VERIFIED.", node: "ULTRA_HIVE" }, ...l])
-                toast({ title: "Simulation 100% Success", description: "All 14 clusters report synchronized strike readiness." })
-                return 100
-            }
-            const currentCluster = clusters[Math.floor((prev/100) * clusters.length)] || "HIVE"
-            if (prev % 8 === 0) {
-                setLog(l => [{ msg: `Cluster ${currentCluster} mirroring material DNA...`, node: currentCluster }, ...l])
-            }
-            return prev + 1
-        })
-    }, 80)
-  }
-
-  const handleContinueUpgrade = () => {
-    toast({ title: "Mirror Evolution Triggered", description: "Siphoning latest material patterns for simulation regrowth... Status: استمر" });
+    try {
+      const data = await executeTwinSimulation({ targetDna: target, exploitLogic: logic, aggressionMode: 'Aggressive' })
+      setResult(data)
+      setProgress(100)
+      toast({ title: "Simulation Finalized", description: "Strategic DNA validated for material deployment." })
+    } finally {
+      clearInterval(progInt)
+      setLoading(false)
+    }
   }
 
   if (!mounted) return null
@@ -120,201 +82,113 @@ export default function DigitalTwinPage() {
   return (
     <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
-      <main className="flex-1 lg:mr-80 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
-        <div 
-          className="absolute inset-0 bg-[radial-gradient(circle_at_var(--x)_var(--y),rgba(212,175,55,0.18),transparent 40%)] pointer-events-none transition-all duration-300 z-0" 
-          style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} 
-        />
+      <main className="flex-1 lg:mr-56 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
+        <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
         
-        <header className="mb-16 relative z-10 animate-in fade-in slide-in-from-top-6 duration-1000">
-           <div className="flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
-              <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-[0_0_200px_rgba(212,175,55,0.8)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
-                 <Workflow className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 animate-neural gold-glow" />
-                 <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
-              </div>
-              <div className="flex-1">
-                 <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
-                    <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">GLOBAL_MIRROR v78.8 ULTRA</Badge>
-                    <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
-                        <InfinityIcon className="size-6 shadow-lg" /> HIERARCHY_SYNC: {resonance.toFixed(8)}%
-                    </div>
-                 </div>
-                 <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">The <span className="text-primary">Mirror</span></h1>
-                 <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
-                    "سيدي الغزالي، محرك <span className="text-primary font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl uppercase tracking-widest">Global Mirror v78.8</span> يضمن أن الضربة قد نجحت في مادة المصفوفة قبل تنفيذها الفعلي."
-                 </p>
-                 <div className="flex justify-center md:justify-end gap-6 mt-12">
-                    <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl">
-                        <Link href="/"><ArrowLeft className="size-6 mr-3" /> العودة للعرش</Link>
-                    </Button>
-                    <Button onClick={handleContinueUpgrade} className="h-16 px-12 bg-primary hover:bg-white text-black font-black uppercase rounded-full border-4 border-black/30 shadow-9xl italic active:scale-95 transition-all text-lg">
-                        <RotateCw className="size-6 mr-3" /> استمر في المحاكاة
-                    </Button>
-                 </div>
-              </div>
+        <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
+           <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-glow relative group shrink-0 rounded-3xl transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
+              <Workflow className="size-12 md:size-24 text-primary group-hover:scale-110 transition-transform duration-700 animate-neural gold-glow" />
+              <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
+           </div>
+           <div className="flex-1">
+              <Badge className="bg-primary text-black border-none px-10 py-3 text-[18px] font-black tracking-[1em] shadow-9xl italic uppercase mb-6">GLOBAL_MIRROR v91.0</Badge>
+              <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">The <span className="text-primary">Twin</span></h1>
+              <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium drop-shadow-3xl ml-auto">
+                 "سيدي القائد المعتصم بالله، موديول التوأم الرقمي v91.0 يمنحك "الحقيقة الاستباقية"؛ نحن نقتل الأهداف في المحاكاة أولاً لنضمن فناءهم في المادة حتماً."
+              </p>
            </div>
         </header>
 
-        <div className="grid grid-cols-1 xl:grid-cols-4 gap-12 relative z-10 pb-48 flex-1">
+        <div className="grid grid-cols-1 xl:grid-cols-4 gap-12 relative z-10 pb-48 flex-1 text-right">
            <div className="xl:col-span-1 space-y-12">
-              <Card className="kali-card border-primary/40 bg-black/98 rounded-[4rem] p-12 border-8 shadow-9xl group overflow-hidden hierarchical-shadow">
-                 <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
-                 <CardHeader className="p-0 mb-12 border-b-4 border-primary/10 pb-10 bg-primary/10 rounded-t-[3.5rem] px-10 py-6 text-center">
+              <Card className="sovereign-card group">
+                 <CardHeader className="p-0 mb-10 border-b-4 border-primary/10 pb-10 bg-primary/10 rounded-t-[3.5rem] px-10 py-6 text-center">
                     <CardTitle className="text-2xl md:text-4xl text-primary flex items-center justify-center gap-10 font-black uppercase italic gold-glow leading-none">
-                       <Settings className="size-12 animate-spin-slow" /> Mirror Config
+                       <Monitor className="size-12 animate-neural" /> Sim Port
                     </CardTitle>
                  </CardHeader>
-                 <CardContent className="p-0 space-y-12">
-                    <div className="space-y-8 text-right">
-                        <label className="text-[14px] font-black text-primary uppercase tracking-[1em] px-10 italic flex items-center gap-6 justify-end"><Globe className="size-8" /> Strike Coordinate</label>
-                        <Input 
-                          value={target}
-                          onChange={(e) => setTarget(e.target.value)}
-                          placeholder="IP / Binary / Material Path..." 
-                          className="bg-black border-8 border-primary/20 h-28 rounded-[2.5rem] text-2xl md:text-4xl italic px-10 focus:border-primary shadow-inner text-white font-black selection:bg-primary text-left"
-                        />
+                 <CardContent className="p-0 space-y-12 text-right">
+                    <div className="space-y-6 text-right">
+                        <label className="text-[14px] font-black text-primary uppercase tracking-[1em] px-10 italic flex items-center gap-6 justify-end"><Network className="size-8" /> Target Architecture</label>
+                        <Input value={target} onChange={(e) => setTarget(e.target.value)} placeholder="IP / OS / Mesh_Node..." className="bg-black border-8 border-primary/20 h-24 rounded-[2rem] text-xl italic px-10 focus:border-primary shadow-inner text-white font-black text-left" />
                     </div>
-                    
-                    <div className="space-y-8 text-right">
-                        <label className="text-[14px] font-black text-primary uppercase tracking-[1em] px-10 italic flex items-center gap-6 justify-end">Active Clusters (14)</label>
-                        <div className="flex flex-wrap gap-4 px-4 h-64 overflow-y-auto scrollbar-hide justify-end">
-                            {clusters.map(c => (
-                                <Badge 
-                                    key={c}
-                                    onClick={() => setSelectedClusters(prev => prev.includes(c) ? prev.filter(x => x !== c) : [...prev, c])}
-                                    variant="outline" 
-                                    className={cn(
-                                        "cursor-pointer px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest border-4 transition-all duration-700",
-                                        selectedClusters.includes(c) ? "bg-primary text-black border-primary shadow-9xl scale-110" : "text-muted-foreground border-white/5 hover:border-primary/40"
-                                    )}
-                                >
-                                    {c}_CLUSTER
-                                </Badge>
-                            ))}
-                        </div>
+                    <div className="space-y-6 text-right">
+                        <label className="text-[14px] font-black text-primary uppercase tracking-[1em] px-10 italic flex items-center gap-6 justify-end"><Binary className="size-8" /> Strike Logic</label>
+                        <Input value={logic} onChange={(e) => setLogic(e.target.value)} className="bg-black border-8 border-primary/20 h-24 rounded-[2rem] text-xl italic px-10 focus:border-primary shadow-inner text-white font-black text-left" />
                     </div>
-
-                    <Button 
-                        disabled={isSimulating}
-                        onClick={startSimulation}
-                        className="w-full h-36 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.4em] rounded-[3.5rem] shadow-[0_60px_200px_rgba(212,175,55,0.7)] active:scale-95 transition-all text-3xl border-[12px] border-black/30 group italic"
-                    >
-                        {isSimulating ? <Loader2 className="size-16 animate-spin" /> : <Play className="size-16 mr-8 group-hover:scale-125 transition-transform gold-glow" />}
-                        MIRROR_DNA
+                    <Button onClick={handleSimulate} disabled={loading || !target} className="w-full h-36 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.4em] rounded-[3.5rem] shadow-9xl active:scale-95 transition-all text-2xl md:text-4xl border-[12px] border-black/30 group italic">
+                        {loading ? <Loader2 className="size-16 animate-spin" /> : <Play className="size-16 mr-8 group-hover:scale-125 transition-transform" />}
+                        RUN_SIMULATION
                     </Button>
                  </CardContent>
               </Card>
-
-              {/* Neural Map v78.8 */}
-              <Card className="kali-card border-white/5 bg-black/60 p-10 rounded-[4rem] border-8 shadow-inner relative overflow-hidden group">
-                 <h4 className="text-[14px] font-black text-primary uppercase tracking-[0.8em] mb-8 italic flex items-center justify-center gap-6">
-                    <LayoutGrid className="size-8 animate-pulse" /> HIVE_KNOT_MAP (24)
-                 </h4>
-                 <div className="grid grid-cols-6 gap-3 px-4">
-                    {knotStatus.map((active, i) => (
-                        <div key={i} className={cn(
-                            "size-6 rounded-lg border-2 transition-all duration-500",
-                            active ? "bg-primary border-black shadow-[0_0_15px_rgba(212,175,55,0.8)] scale-110" : "bg-black border-white/10 opacity-30"
-                        )} />
-                    ))}
-                 </div>
-                 <div className="mt-8 text-[10px] font-black uppercase tracking-widest text-muted-foreground italic text-center">Consensus_Status: ULTRA_READY</div>
-              </Card>
-
-              <Card className="kali-card border-white/5 bg-black/60 p-12 rounded-[4rem] border-8 shadow-inner text-center relative overflow-hidden group">
-                 <h4 className="text-[14px] font-black text-primary uppercase tracking-[1em] mb-8 italic flex items-center justify-center gap-6">
-                    <Binary className="size-8 animate-pulse" /> QEMU_ULTRA_v78
-                 </h4>
-                 <div className="text-6xl font-black text-white italic gold-glow uppercase tracking-tighter group-hover:scale-105 transition-transform duration-1000">READY</div>
-                 <div className="absolute -bottom-10 -right-10 p-24 opacity-[0.03] group-hover:opacity-[0.1] transition-all duration-1000 scale-150 rotate-12"><Skull className="size-48 text-primary" /></div>
-              </Card>
            </div>
 
-           <Card className="xl:col-span-3 kali-card border-primary/40 bg-black/99 rounded-[6rem] p-16 border-[12px] shadow-[0_0_250px_rgba(0,0,0,1)] flex flex-col group overflow-hidden relative min-h-[1100px] hierarchical-shadow">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.08),transparent)] pointer-events-none" />
+           <Card className="xl:col-span-3 sovereign-card flex flex-col group min-h-[1100px]">
               <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-primary/10 rounded-t-[5rem] px-16 py-10 flex flex-row justify-between items-center text-right">
-                 <Badge className="bg-emerald-600/30 text-emerald-500 border-[10px] border-emerald-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic order-last md:order-none">MIRROR_LOCKED</Badge>
+                 <Badge className="bg-emerald-600/30 text-emerald-500 border-[10px] border-emerald-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic order-last md:order-none">VIRTUAL_LOCKED</Badge>
                  <CardTitle className="text-5xl md:text-[12rem] text-white flex items-center gap-16 font-black uppercase italic gold-glow px-10 leading-none">
-                    Simulation Feed <TerminalIcon className="size-24 md:size-48 text-primary animate-pulse" />
+                    Mirror Feed <RotateCw className="size-24 md:size-48 text-primary animate-pulse" />
                  </CardTitle>
               </CardHeader>
-              <CardContent className="p-12 flex-1 flex flex-col space-y-16 relative z-10 text-right">
-                 {isSimulating ? (
-                    <div className="space-y-12 animate-in fade-in duration-1000">
-                        <div className="space-y-8">
-                            <div className="flex justify-between text-3xl font-black text-primary uppercase tracking-[0.6em] italic">
-                                <span>Mirroring_Target_DNA...</span>
-                                <span className="gold-glow">{progress}%</span>
-                            </div>
-                            <div className="h-8 bg-white/5 rounded-full overflow-hidden border-4 border-white/10 p-1 shadow-inner">
-                            <div className="h-full bg-primary shadow-[0_0_80px_rgba(212,175,55,1)] animate-neural rounded-full transition-all duration-300" style={{ width: `${progress}%` }} />
-                            </div>
+
+              <CardContent className="p-12 flex-1 overflow-y-auto scrollbar-hide space-y-20 relative z-10 text-right">
+                 {loading && (
+                    <div className="space-y-12 animate-in fade-in duration-700">
+                        <div className="flex justify-between text-4xl font-black text-primary uppercase italic px-6">
+                            <span>{progress}%</span>
+                            <span>Mirroring_Atomic_Pulse...</span>
+                        </div>
+                        <Progress value={progress} className="h-10 bg-white/5 border-4 border-white/10 rounded-full" />
+                        <div className="h-96 flex flex-col items-center justify-center opacity-30 gap-12">
+                            <Loader2 className="size-32 animate-spin text-primary" />
+                            <span className="text-4xl font-black uppercase tracking-[1em] italic">SIMULATING_REALITY...</span>
+                        </div>
+                    </div>
+                 )}
+
+                 {result && !loading ? (
+                    <div className="space-y-20 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col">
+                        <div className="p-20 rounded-[6rem] bg-primary/5 border-[12px] border-primary/30 italic text-4xl md:text-[8rem] text-gray-100 leading-tight font-black shadow-inner relative group/brief overflow-hidden text-center flex flex-col justify-center min-h-[450px]">
+                            <div className="absolute inset-0 bg-primary/5 opacity-5 animate-pulse pointer-events-none" />
+                            "{result.commanderBrief}"
                         </div>
 
-                        <div className="grid grid-cols-1 xl:grid-cols-3 gap-12">
-                            <div className="xl:col-span-2 bg-black/99 p-16 rounded-[4rem] border-8 border-white/5 h-[600px] overflow-y-auto scrollbar-hide shadow-inner relative group/log italic text-left">
-                                {log.map((line, i) => (
-                                    <div key={i} className="mb-8 flex gap-10 animate-in slide-in-from-left-8 duration-700">
-                                        <span className="text-primary/30 font-black italic select-none">[{line.node}]</span>
-                                        <span className="text-gray-200 font-bold leading-tight drop-shadow-3xl">
-                                        {">>> "} {line.msg}
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
-                            <Card className="bg-black/95 border-8 border-primary/20 p-10 rounded-[3rem] shadow-9xl flex flex-col overflow-hidden">
-                                <h5 className="text-xl font-black text-primary uppercase tracking-[0.8em] mb-8 border-b-4 border-primary/10 pb-4 italic flex items-center gap-6 justify-end">DNA_STREAM <Binary className="size-8" /></h5>
-                                <div className="flex-1 font-mono text-3xl text-emerald-500 opacity-60 overflow-hidden text-left">
-                                    {dnaStream.map((hex, i) => (
-                                        <div key={i} className="mb-4">0x{hex} 0x{hex.split('').reverse().join('')}</div>
-                                    ))}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+                            <Card className="bg-black/95 border-8 border-white/5 p-12 md:p-16 rounded-[4rem] shadow-9xl relative group/vault overflow-hidden h-full flex flex-col">
+                                <h5 className="text-3xl font-black text-primary uppercase tracking-[1.5em] mb-12 border-b-8 border-primary/20 pb-10 flex items-center gap-12 gold-glow justify-end">Simulation DNA <Dna className="size-14 animate-neural" /></h5>
+                                <pre className="bg-black/80 p-8 rounded-[3rem] border-4 border-white/5 font-code text-xl md:text-3xl text-emerald-400 overflow-x-auto whitespace-pre shadow-inner text-left flex-1">{result.simulationResult}</pre>
+                            </Card>
+                            <Card className="bg-black/95 border-8 border-white/5 p-12 md:p-16 rounded-[4rem] shadow-9xl h-full flex flex-col items-center justify-center text-center relative overflow-hidden">
+                                <h5 className="text-3xl font-black text-emerald-500 uppercase tracking-[1.5em] mb-10 border-b-8 border-emerald-500/20 pb-10 flex items-center gap-12 justify-end w-full">Strike Viability <ShieldCheck className="size-14" /></h5>
+                                <div className="text-[10rem] md:text-[18rem] font-black text-white italic gold-glow uppercase tracking-widest">{result.successProbability}</div>
+                                <div className="p-8 rounded-[3rem] bg-emerald-600/10 border-4 border-emerald-500/30 text-2xl font-black italic text-gray-100 uppercase tracking-widest shadow-inner mt-12">
+                                    SAFE_TO_DEPLOY: {result.isSafeToDeploy ? "YES" : "RECALIBRATE"}
                                 </div>
                             </Card>
                         </div>
                     </div>
                  ) : (
-                    <div className="flex-1 flex flex-col items-center justify-center text-center opacity-10 gap-24 py-60">
+                   !loading && (
+                    <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-80">
                         <div className="relative group/lock">
                             <Workflow className="size-64 md:size-[50rem] animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[12000ms]" />
                             <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-64 text-primary/40 animate-neural" />
                             <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
                         </div>
-                        <div className="space-y-12">
-                            <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Simulation Idle</h3>
-                            <p className="text-4xl md:text-[8rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem]">Consolidating APEX ULTRA Mirror across all 14 global clusters for consensus validation.</p>
-                        </div>
+                        <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Simulation Standby</h3>
                     </div>
+                   )
                  )}
-                 
-                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-12">
-                    {[
-                      { label: "FUD_SCAN", icon: ShieldCheck, status: "ULTRA", color: "text-emerald-500" },
-                      { label: "HEAP_PROBE", icon: Bug, status: "LINKED", color: "text-blue-400" },
-                      { label: "HIVE_MESH", icon: Globe, status: "BOUND", color: "text-primary" },
-                      { label: "DNA_VAULT", icon: Database, status: "SERIALIZED", color: "text-red-500" }
-                    ].map((stat, i) => (
-                       <div key={i} className="p-10 rounded-[3rem] bg-white/5 border-4 border-white/5 flex flex-col items-center gap-8 hover:border-primary transition-all duration-1000 shadow-9xl cursor-crosshair group/stat">
-                          <stat.icon className={cn("size-16 transition-all group-hover/stat:scale-125", stat.color)} />
-                          <span className="text-[12px] font-black uppercase tracking-[0.6em] text-white/70">{stat.label}</span>
-                          <Badge className="bg-primary/10 text-primary border-none font-black text-2xl italic px-8 py-2 rounded-full shadow-3xl">{stat.status}</Badge>
-                       </div>
-                    ))}
-                 </div>
               </CardContent>
-              <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[18px] md:text-[24px] font-black uppercase tracking-[6em] italic">
-                 <span>ULTRA_MIRROR_DNA_v78.8_AL_GHAZALI_ROOT</span>
-                 <div className="flex gap-16">
-                    <Fingerprint className="size-20 text-primary animate-pulse" />
-                    <Atom className="size-20 animate-spin-slow text-primary" />
-                 </div>
+              <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[8em] italic">
+                <span>ULTRA_MIRROR_v91.0_AL_GHAZALI_ROOT</span>
+                <div className="flex gap-16">
+                    <Fingerprint className="size-24 text-primary animate-pulse" />
+                    <Atom className="size-24 animate-spin-slow text-primary" />
+                </div>
               </div>
            </Card>
-        </div>
-
-        <div className="mt-auto relative z-10 flex justify-center items-center gap-48 opacity-45 text-[24px] md:text-[42px] font-black uppercase tracking-[6em] italic text-white drop-shadow-9xl pb-32">
-            <span>AL-MUIZZ SUPREME ULTRA v1.0</span>
-            <div className="size-16 rounded-full bg-white animate-pulse shadow-[0_0_150px_white]" />
-            <span>MIRRORING_REALITY_2026</span>
         </div>
       </main>
     </div>
