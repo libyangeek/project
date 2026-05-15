@@ -15,6 +15,7 @@ from pathlib import Path
 # حقن المسارات السيادية لضمان رؤية النواة
 BASE_DIR = Path(__file__).parent
 sys.path.insert(0, str(BASE_DIR))
+sys.path.insert(0, str(BASE_DIR / "ai-engine"))
 
 try:
     from core.config import Config
@@ -27,7 +28,7 @@ except ImportError as e:
 def main():
     parser = argparse.ArgumentParser(description="Al-Mu'izz Sovereign OS v90.0")
     parser.add_argument("mode", nargs="?", default="start",
-                        choices=["start", "stop", "status", "cli", "attack", "recon", "shodan", "server"])
+                        choices=["start", "stop", "status", "cli", "attack", "recon", "server"])
     parser.add_argument("args", nargs=argparse.REMAINDER)
     args = parser.parse_args()
 
@@ -63,20 +64,15 @@ def main():
         if not args.args:
             print("Usage: python run.py attack <target>")
         else:
-            core.execute_command("full_attack", target=args.args[0])
-
-    elif args.mode == "recon":
-        if not args.args:
-            print("Usage: python run.py recon <target>")
-        else:
-            core.execute_command("subdomain_scan", target=args.args[0])
+            res = core.execute_command("attack", target=args.args[0])
+            print(f"🚀 Strike Initiated: {res}")
 
     elif args.mode == "server":
         server_path = os.path.join(BASE_DIR, "ai-engine/inference/server.py")
         os.system(f"python3 {server_path}")
 
     else:
-        print("الأوامر المتاحة: start, stop, status, cli, attack, recon, shodan, server")
+        print("الأوامر المتاحة: start, stop, status, cli, attack, recon, server")
 
 if __name__ == "__main__":
     main()
