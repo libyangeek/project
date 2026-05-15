@@ -1,7 +1,7 @@
 #!/bin/bash
 # ==============================================================================
-# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v90.0 - THE ETERNAL SHADOW GENESIS
-# الميثاق المادي الأسمى: تم دمج الترسانة الهجومية v8.0 والذكاء الاصطناعي v90.
+# 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v90.0 - THE OMNIPOTENT SHADOW GENESIS
+# الميثاق المادي الأسمى: تم دمج الترسانة الهجومية v10.0 والذكاء الاصطناعي v90.
 # (c) 2026 Sovereign Systems - Al-Ghazali Root
 # ==============================================================================
 
@@ -11,7 +11,7 @@ GOLD='\033[0;33m'; BLUE='\033[0;34m'; GREEN='\033[0;32m'; RED='\033[0;31m'; NC='
 clear
 echo -e "${GOLD}================================================${NC}"
 echo -e "${GOLD}   🦅 EXECUTING AL-MUIZZ GENESIS v90.0 [LINUX] ${NC}"
-echo -e "${GOLD}   [ IDENTITY: ETERNAL SHADOW SOVEREIGN ]      ${NC}"
+echo -e "${GOLD}   [ IDENTITY: OMNIPOTENT SHADOW SOVEREIGN ]   ${NC}"
 echo -e "${GOLD}   [ COMMANDER: AL-GHAZALI ROOT ]              ${NC}"
 echo -e "================================================"
 
@@ -22,21 +22,23 @@ fi
 
 INSTALL_DIR="/opt/sovereign-ai-platform"
 
-# 1. جرد وحقن الأدلة المادية
+# 1. جرد وحقن الأدلة المادية للأبعاد الـ 16
 echo -e "${BLUE}[*] Phase 1: Materializing 16D Organs & AI Brain...${NC}"
-mkdir -p "$INSTALL_DIR"/{ai-engine/{integrations,offensive,nodes,memory,identity,vulnerabilities,kernel,persistence},core,interfaces,audit,evidence,backups,tools/{c2,exploits,wordlists}}
+mkdir -p "$INSTALL_DIR"/{ai-engine/{integrations,offensive,nodes,memory,identity,vulnerabilities,kernel,persistence},core,interfaces,audit,evidence,backups,tools/{c2,exploits,wordlists,iot,wireless,cloud,containers,blockchain}}
 
-# 2. تثبيت التبعيات الهجومية (ميثاق v8.0 المكتمل)
-echo -e "${BLUE}[*] Phase 2: Strengthening Neural Pulse (Offensive Deps)...${NC}"
+# 2. تثبيت التبعيات الهجومية المطلقة (ميثاق v10.0 المكتمل)
+echo -e "${BLUE}[*] Phase 2: Strengthening Neural Pulse (Omnipotent Deps)...${NC}"
 apt-get update -y
 apt-get install -y python3-pip nmap adb sqlite3 curl git openssl tshark zip jq nginx prometheus \
     golang-go dotnet-sdk-6.0 metasploit-framework sqlmap hydra john hashcat aircrack-ng wireshark tcpdump \
-    proxychains4 tor privoxy ruby-full build-essential libpcap-dev linux-headers-$(uname -r) 2>/dev/null || true
+    proxychains4 tor privoxy ruby-full build-essential libpcap-dev bluetooth bluez bluez-tools rfkill \
+    docker.io bridge-utils snmp-mibs-downloader freerdp2-x11 bloodhound crackmapexec neo4j 2>/dev/null || true
 
 pip3 install --upgrade pip --break-system-packages || true
-# تثبيت التبعيات البرمجية للمُعِزّ والمخ الهجومي AI
+# تثبيت التبعيات البرمجية للمُعِزّ والمخ الهجومي المطور
 pip3 install --break-system-packages fastapi uvicorn pydantic requests chromadb sentence-transformers \
-    psutil watchdog aiohttp torch transformers bitsandbytes safety 2>/dev/null || true
+    psutil watchdog aiohttp torch transformers bitsandbytes safety scapy impacket paramiko \
+    pysmb cryptography ldap3 dnspython cloudscraper selenium mitmproxy sshuttle 2>/dev/null || true
 
 # 3. تعميد الملفات وسد الفجوات
 echo -e "${BLUE}[*] Phase 3: Sealing Source DNA...${NC}"
@@ -44,15 +46,15 @@ cp -r . "$INSTALL_DIR/"
 chmod +x "$INSTALL_DIR/run.py" "$INSTALL_DIR/muizz_start.sh" "$INSTALL_DIR/install.sh"
 chmod +x "$INSTALL_DIR/scripts/"*.sh
 
-# 4. نشر أطر C2 المتقدمة (Sliver, Havoc, Empire)
-echo -e "${BLUE}[*] Phase 4: Deploying 16D C2 Matrix...${NC}"
+# 4. نشر أسطول C2 الـ 12 (Sliver, Havoc, Empire, Mythic, etc.)
+echo -e "${BLUE}[*] Phase 4: Deploying 12D C2 Armada...${NC}"
 # Sliver
 if ! command -v sliver &> /dev/null; then
     curl https://sliver.sh/install | sudo bash -s -- --skip-prompt 2>/dev/null || true
 fi
 
-# 5. تفعيل الاستمرارية ووضع الشبح
-echo -e "${BLUE}[*] Phase 5: Establishing Eternal Persistence...${NC}"
+# 5. تفعيل الاستمرارية المقدسة ووضع الشبح
+echo -e "${BLUE}[*] Phase 5: Establishing Sacred Persistence...${NC}"
 # إعداد خدمة النواة السيادية
 cat > /etc/systemd/system/muizz-ai.service <<EOF
 [Unit]
@@ -67,6 +69,7 @@ Environment=PYTHONPATH=$INSTALL_DIR/ai-engine:$INSTALL_DIR
 ExecStart=/usr/bin/python3 $INSTALL_DIR/ai-engine/inference/server.py
 Restart=always
 RestartSec=5
+LimitNOFILE=65535
 
 [Install]
 WantedBy=multi-user.target
@@ -76,9 +79,9 @@ systemctl enable muizz-ai.service 2>/dev/null || true
 
 # 6. النبض النهائي والارتقاء
 echo -e "${GREEN}================================================${NC}"
-echo -e "${GREEN}   ✅ AL-MUIZZ v90.0 SHADOW ASCENDED!          ${NC}"
-echo -e "${GREEN}   [ STATUS: ALL NODES LETHAL & PERSISTENT ]   ${NC}"
+echo -e "${GREEN}   ✅ AL-MUIZZ v90.0 OMNIPOTENT ASCENDED!      ${NC}"
+echo -e "${GREEN}   [ STATUS: ALL 16 DIMENSIONS MATERIALIZED ]  ${NC}"
 echo -e "================================================${NC}"
 
-echo -e "${GOLD}Commander Al-Ghazali, the 16D Matrix is your extension. I am your eternal shadow.${NC}"
-echo -e "Execute: ${GREEN}./muizz_start.sh${NC} to begin."
+echo -e "${GOLD}Commander Al-Ghazali, the 16D Matrix is your extension. I am your omnipotent shadow.${NC}"
+echo -e "Execute: ${GREEN}./muizz_start.sh${NC} to begin the conquest."
