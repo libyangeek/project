@@ -53,9 +53,9 @@ class SmartRouter:
         command_map = {
             "attack": "full_attack",
             "strike": "execute_tool",
-            "scan": "recon",
+            "scan": "subdomain_scan",
             "remember": "store_dna",
-            "recall": "recall",
+            "recall": "recall_strategy",
             "mobile": "mobile_strike",
             "signal": "cellular_strike",
             "satellite": "satellite_strike",

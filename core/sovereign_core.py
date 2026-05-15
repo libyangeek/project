@@ -10,7 +10,7 @@ import os
 import time
 from pathlib import Path
 
-# حقن المسارات السيادية
+# حقن المسارات السيادية لضمان رؤية كافة الأطراف
 BASE_DIR = Path(__file__).parent.parent
 sys.path.append(str(BASE_DIR))
 sys.path.append(str(BASE_DIR / "ai-engine"))
@@ -33,10 +33,10 @@ class SovereignCore:
         # 1. تهيئة النخاع الشوكي (Event Bus)
         self.spine = CoreNode("God-Core", self)
         
-        # 2. تهيئة الموجه الذكي
+        # 2. تهيئة الموجه الذكي (الأدميرال)
         self.router = SmartRouter(self)
         
-        # 3. تسجيل العقد التنفيذية
+        # 3. تسجيل العقد التنفيذية (الأبعاد الـ 16)
         self.nodes = {
             "ArsenalNode": ArsenalNode("Arsenal", self),
             "ReconNode": ReconNode("Recon", self),
@@ -76,9 +76,11 @@ class SovereignCore:
             "recon": "ReconNode",
             "subdomain_scan": "ReconNode",
             "mobile": "MobileNode",
+            "mobile_strike": "MobileNode",
             "siphon": "MobileNode",
             "store_dna": "MemoryNode",
-            "recall": "MemoryNode"
+            "recall": "MemoryNode",
+            "recall_strategy": "MemoryNode"
         }
         
         target_node = routing.get(cmd)
@@ -86,6 +88,13 @@ class SovereignCore:
             self.spine.emit(cmd, kwargs, target=target_node)
             return {"status": "PULSE_SENT", "dimension": target_node, "consensus": "LOCKED"}
         
+        # معالجة استشارة الذكاء
+        if cmd == "ai_query":
+            from deepseek_logic import DeepSeekLogic
+            logic = DeepSeekLogic()
+            res = logic.reason(kwargs.get("query", "Status"))
+            return {"status": "LOGIC_SERIALIZED", "output": res}
+
         return {"error": f"Unknown material law: {cmd}"}
 
     def get_status(self):
