@@ -3,7 +3,7 @@
 """
 🦅 Al-Mu'izz Evolutionary Engine v90.0 - Self-Healing & Growth
 المسؤول عن النمو المعرفي المستقل، سحب التحديثات، وضمان نزاهة المادة.
-تم دمج منطق "الترقية الذكية" المستوحى من سكريبت القائد التاريخي.
+(c) 2026 Sovereign Systems - Al-Ghazali Root
 """
 import os
 import json
@@ -20,7 +20,7 @@ class SovereignEvolution:
         self.log_file = os.path.join(self.vault, "evolution.log")
 
     def log(self, msg):
-        ts = datetime.datetime.now().isoformat()
+        ts = datetime.now().isoformat()
         with open(self.log_file, "a") as f:
             f.write(f"[{ts}] [EVO] {msg}\n")
         print(f"[*] {msg}")
@@ -28,7 +28,7 @@ class SovereignEvolution:
     def audit_dependencies(self):
         """تدقيق التبعيات البرمجية لضمان عدم وجود انحراف جيني"""
         self.log("Auditing system dependencies for 16D Matrix...")
-        deps = ["fastapi", "uvicorn", "chromadb", "requests", "pydantic"]
+        deps = ["fastapi", "uvicorn", "chromadb", "requests", "pydantic", "psutil"]
         for dep in deps:
             try:
                 __import__(dep)
@@ -44,7 +44,7 @@ class SovereignEvolution:
         for node in critical_nodes:
             if not os.path.exists(os.path.join(self.root, node)):
                 self.log(f"ALERT: Node {node} dissolved. Initiating Re-genesis...")
-                # Logic to restore from backup or template...
+                # هنا يمكن إضافة كود استعادة من النسخة الاحتياطية
         self.log("Matrix Integrity: 100.0000% STABILIZED.")
 
     def run_cycle(self):

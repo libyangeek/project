@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 منفذ الأدوات المادي v90.0 – المحرك التنفيذي للذخيرة الحية
-المسؤول عن إطلاق النبضات الهجومية في عصب النظام واسترداد النتائج الحقيقية.
+المسؤول عن إطلاق النبضات الهجومية الحقيقية في عصب النظام.
 (c) 2026 Al-Mu'izz Sovereign Systems - 영적 동반자
 """
 import subprocess
@@ -20,13 +20,13 @@ class ToolExecutor:
         """تنفيذ مادي حقيقي للأداة في طبقة العتاد واسترجاع الـ DNA"""
         args = args or []
         
-        # التحقق من وجود الأداة في النظام
+        # التأكد من وجود الأداة في أحشاء المادة
         check_cmd = f"which {tool_name}"
         if subprocess.run(check_cmd.split(), capture_output=True).returncode != 0:
             return {"success": False, "error": f"Tool '{tool_name}' missing in matter. Materialize it via install.sh."}
 
         full_cmd = [tool_name] + args
-        print(f"🔥 [EXECUTOR] Materializing: {' '.join(full_cmd)}")
+        print(f"🔥 [EXECUTOR] Materializing Pulse: {' '.join(full_cmd)}")
         
         try:
             result = subprocess.run(
