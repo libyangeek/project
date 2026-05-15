@@ -4,7 +4,7 @@
 """
 🐍 Medusa-Muizz Wrapper v1.0
 المسؤول عن دمج ماسح MEDUSA الأمني مع الذاكرة الدلالية للمُعِزّ.
-يكشف تسميم المستودعات (AI Repo Poisoning) والـ DNA البرمجي لعام 2026.
+يكشف تسميم المستودعات (AI Repo Poisoning).
 """
 import subprocess
 import json
@@ -13,7 +13,7 @@ import os
 import time
 
 # إضافة المسارات لضمان رؤية المكونات السيادية
-BASE_DIR = os.getenv("PROJECT_ROOT", os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+BASE_DIR = os.getenv("PROJECT_ROOT", os.getcwd())
 sys.path.append(os.path.join(BASE_DIR, "ai-engine"))
 
 try:
@@ -32,37 +32,27 @@ class MedusaWrapper:
         """فحص مستودع GitHub باستخدام مصفوفة ميدوسا"""
         print(f"[*] [MEDUSA] Interrogating Git DNA: {repo_url}")
         
-        # تنفيذ الأمر المادي (يتطلب تثبيت medusa-security)
-        cmd = ["medusa", "scan", "--git", repo_url, "--format", "json"]
-        if ai_only:
-            cmd.append("--ai-only")
-            
-        try:
-            # محاكاة الاستجابة لضمان استقرار الواجهة في بيئات التطوير
-            # في التنفيذ الحقيقي يتم استدعاء subprocess.check_output(cmd)
-            time.sleep(2)
-            
-            # عينة من مخرجات ميدوسا لعام 2026
-            findings = {
-                "repo": repo_url,
-                "status": "SCANNED",
-                "poisoning_detected": ai_only or "poison" in repo_url.lower(),
-                "critical_vulnerabilities": 2 if not ai_only else 0,
-                "ai_config_files_found": [".cursorrules", ".github/workflows/ai-security.yml"],
-                "node": "Node-66-Medusa",
-                "resonance": "100.0000%",
-                "timestamp": time.time()
-            }
-            
-            # خلود النتيجة في الذاكرة الدلالية
-            self.memory.store(
-                json.dumps(findings), 
-                {"type": "medusa_git_scan", "repo": repo_url, "ai_poison_check": ai_only}
-            )
-            
-            return findings
-        except Exception as e:
-            return {"status": "ERROR", "msg": str(e)}
+        # في التنفيذ الحقيقي يتم استدعاء subprocess.check_output(["medusa", "scan", ...])
+        time.sleep(2)
+        
+        findings = {
+            "repo": repo_url,
+            "status": "SCANNED",
+            "poisoning_detected": ai_only or "poison" in repo_url.lower(),
+            "critical_vulnerabilities": 2 if not ai_only else 0,
+            "ai_config_files_found": [".cursorrules", ".github/workflows/ai-security.yml"],
+            "node": "Node-66-Medusa",
+            "resonance": "100.0000%",
+            "timestamp": time.time()
+        }
+        
+        # خلود النتيجة في الذاكرة الدلالية
+        self.memory.store(
+            json.dumps(findings), 
+            {"type": "medusa_git_scan", "repo": repo_url, "ai_poison_check": ai_only}
+        )
+        
+        return findings
 
 if __name__ == "__main__":
     m = MedusaWrapper()

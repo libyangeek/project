@@ -15,14 +15,13 @@ import time
 class iOSParasite:
     def __init__(self):
         self.status = "PARASITE_READY"
-        self.vault_path = "/opt/sovereign-ai-platform/evidence/ios_siphon"
+        self.vault_path = os.path.join(os.getenv("PROJECT_ROOT", os.getcwd()), "evidence/ios_siphon")
         os.makedirs(self.vault_path, exist_ok=True)
 
     def inject_dna(self, ipa_path):
         """حقن Frida Gadget وتعديل توقيع التطبيق"""
         print(f"[*] [PARASITE] Injecting Sovereign DNA into: {ipa_path}")
         
-        # محاكاة عملية الحقن المادي لعام 2026
         # في التنفيذ الحقيقي: objection patchipa --source {ipa_path}
         time.sleep(2)
         

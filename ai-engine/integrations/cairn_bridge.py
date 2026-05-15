@@ -13,7 +13,7 @@ import requests
 import time
 
 # إضافة المسارات لضمان رؤية المكونات السيادية
-BASE_DIR = os.getenv("PROJECT_ROOT", os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+BASE_DIR = os.getenv("PROJECT_ROOT", os.getcwd())
 sys.path.append(os.path.join(BASE_DIR, "ai-engine"))
 
 try:
@@ -32,8 +32,7 @@ class CairnBridge:
         """إنشاء أو مزامنة مشروع استكشاف استراتيجي في Cairn"""
         print(f"[*] [CAIRN-BRIDGE] Syncing strategic graph for: {target}")
         
-        # محاكاة التفاعل مع API الخاص بـ Cairn لعام 2026
-        # في التنفيذ الحقيقي يتم استدعاء خادم Cairn المادي
+        # محاكاة التفاعل مع خادم Cairn المادي
         mock_graph = {
             "target": target,
             "facts": [

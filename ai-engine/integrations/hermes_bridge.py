@@ -12,7 +12,7 @@ import os
 from datetime import datetime
 
 # إضافة المسارات لضمان رؤية المكونات السيادية
-BASE_DIR = os.getenv("PROJECT_ROOT", os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+BASE_DIR = os.getenv("PROJECT_ROOT", os.getcwd())
 sys.path.append(os.path.join(BASE_DIR, "ai-engine"))
 
 try:
