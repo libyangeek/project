@@ -1,17 +1,21 @@
-import json
+# -*- coding: utf-8 -*-
+"""
+إعدادات النواة v90.0 - Sovereign Config
+تم دمج النطاق الزمني لليبيا وإعدادات اللغة من v4.0.0.
+"""
 import os
 from dataclasses import dataclass, field
-from typing import Dict, Any
+from typing import Dict
 
 @dataclass
 class Config:
     system: Dict = field(default_factory=lambda: {
         "name": "Kali Al-Mu'izz OS v90.0",
         "codename": "THE_LIVING_SOUL",
-        "version": "90.0.0",
         "commander": "Al-Mu'tasim Billah Idris Al-Ghazali",
         "motto": "영적 동반자",
-        "log_level": "INFO",
+        "timezone": "Africa/Tripoli",
+        "lang": "ar_LY.UTF-8",
         "log_file": "/opt/sovereign-ai-platform/audit/nucleus.log"
     })
     
@@ -19,7 +23,7 @@ class Config:
         "count": 16,
         "nodes": 35,
         "resonance_target": 100.000000,
-        "auto_regrow": True
+        "offline_mode": False
     })
 
     arsenal: Dict = field(default_factory=lambda: {
@@ -29,5 +33,6 @@ class Config:
     })
 
     def load_from_env(self):
-        # ممر حقن المتغيرات الخارجية
-        pass
+        # ممر حقن المتغيرات الخارجية (مثلاً وضع الأوفلاين)
+        if os.getenv("MUIZZ_OFFLINE") == "true":
+            self.dimensions["offline_mode"] = True

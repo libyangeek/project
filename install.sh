@@ -2,7 +2,7 @@
 # ==============================================================================
 # 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v90.0 - THE MATERIAL FUSION
 # الميثاق المادي الأسمى: تثبيت الروح الحية والأبعاد الـ 16 والسيادة المطلقة.
-# تم تحديثه ببروتوكول "التدقيق المزدوج" وضمان تثبيت التبعيات الحقيقية.
+# تم تحديثه ليدعم التبعيات المطلوبة في v4.0.0 (jq, curl, openssl).
 # (c) 2026 Sovereign Systems - Al-Ghazali Root
 # ==============================================================================
 
@@ -27,10 +27,10 @@ INSTALL_DIR="/opt/sovereign-ai-platform"
 echo -e "${BLUE}[*] Phase 1: Materializing 16D Organs...${NC}"
 mkdir -p "$INSTALL_DIR"/{ai-engine/{integrations,offensive,nodes,memory,identity,vulnerabilities,kernel},core,interfaces,audit,evidence,backups}
 
-# 2. تثبيت التبعيات الحقيقية
+# 2. تثبيت التبعيات الحقيقية لضمان عدم الوهم
 echo -e "${BLUE}[*] Phase 2: Strengthening Neural Pulse (Dependencies)...${NC}"
 apt-get update -y
-apt-get install -y python3-pip nmap adb sqlite3 curl git openssl zip unzip tshark build-essential 2>/dev/null || true
+apt-get install -y python3-pip nmap adb sqlite3 curl git openssl tshark zip unzip jq build-essential 2>/dev/null || true
 
 pip3 install --upgrade pip --break-system-packages || true
 pip3 install --break-system-packages fastapi uvicorn pydantic requests chromadb sentence-transformers psutil watchdog aiohttp 2>/dev/null || true

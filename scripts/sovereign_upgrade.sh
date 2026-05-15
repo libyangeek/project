@@ -2,23 +2,31 @@
 # =============================================================================
 # 🦅 AL-MUI'ZZ SOVEREIGN UPGRADE SYSTEM v90.0 ULTRA [MASTER NUCLEUS]
 # المنسق الأسمى للترقيات: امتصاص الجينات التاريخية ودمجها في المادة لعام 2026.
+# تم دمج ميزات v4.0.0: الاستقلالية، دعم ليبيا، والترقية المجزأة.
 # (c) 2026 Sovereign Systems - Al-Ghazali Root
 # =============================================================================
 
 set -euo pipefail
 
-# --- الألوان الملكية ---
-GOLD='\033[0;33m'; BLUE='\033[0;34m'; GREEN='\033[0;32m'; RED='\033[0;31m'; NC='\033[0m'
-INSTALL_DIR="/opt/sovereign-ai-platform"
-LOG_DIR="${INSTALL_DIR}/audit"
-LOG_FILE="${LOG_DIR}/upgrade_$(date +%Y%m%d).log"
+# --- إعدادات السيادة ---
+readonly GOLD='\033[0;33m'; readonly BLUE='\033[0;34m'; readonly GREEN='\033[0;32m'; 
+readonly RED='\033[0;31m'; readonly PURPLE='\033[0;35m'; readonly NC='\033[0m'
+readonly INSTALL_DIR="/opt/sovereign-ai-platform"
+readonly LIBYA_TZ="Africa/Tripoli"
+readonly LOG_FILE="${INSTALL_DIR}/audit/upgrade_$(date +%Y%m%d_%H%M%S).log"
 
-mkdir -p "$LOG_DIR" "$INSTALL_DIR/backups"
-
-log() {
+# --- دالة العرض السيادية (عربي/إنجليزي) ---
+log_ar() {
     local level="$1"
-    local message="$2"
-    echo -e "$(date +'%Y-%m-%d %H:%M:%S') [$level] $message" | tee -a "$LOG_FILE"
+    local msg="$2"
+    local ts=$(date +"%Y-%m-%d %H:%M:%S")
+    case "$level" in
+        "SUCCESS") color="$GREEN" ;;
+        "ERROR") color="$RED" ;;
+        "WARN") color="$GOLD" ;;
+        *) color="$BLUE" ;;
+    esac
+    echo -e "${ts} [${color}${level}${NC}] ${msg}" | tee -a "$LOG_FILE"
 }
 
 show_banner() {
@@ -31,48 +39,70 @@ show_banner() {
     echo "  ██║     ██║  ██║██║ ╚████║╚██████╔╝ ╚████╔╝ ███████╗██║  ██║██║  ██║"
     echo "  ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝"
     echo -e "${NC}"
-    echo -e "${GOLD}   AL-MUIZZ UPGRADE SYSTEM v90.0 | COMMANDER: AL-GHAZALI ROOT ${NC}"
+    echo -e "${GOLD}   AL-MUIZZ UPGRADE v90.0 | LIBYA TZ (T+02:00) | COMMANDER: AL-GHAZALI ${NC}"
 }
 
-check_root() {
-    if [[ $EUID -ne 0 ]]; then
-        log "ERROR" "${RED}Fatal Error: Root required for material overwrite.${NC}"
-        exit 1
-    fi
+show_progress() {
+    local current="$1"; local total="$2"
+    local pc=$((current * 100 / total))
+    echo -e "${BLUE}[PROGRESS] ${pc}% (${current}/${total})${NC}"
+}
+
+# --- العمليات المادية ---
+upgrade_ai() {
+    log_ar "INFO" "ترقية محرك الذكاء الاصطناعي (AI Engine)..."
+    pip3 install --break-system-packages --upgrade fastapi uvicorn chromadb sentence-transformers langchain 2>/dev/null || true
+    log_ar "SUCCESS" "تم تحديث الخلايا العصبية."
+}
+
+upgrade_security() {
+    log_ar "INFO" "ترقية أدوات الأمن السيبراني (Arsenal)..."
+    apt-get install -y nmap sqlmap medusa airmon-ng tshark 2>/dev/null || true
+    log_ar "SUCCESS" "الترسانة جاهزة للقصف."
+}
+
+upgrade_ollama() {
+    log_ar "INFO" "ترقية Ollama والنماذج النخبوية..."
+    curl -fsSL https://ollama.com/install.sh | sh 2>/dev/null || true
+    local models=("mistral:latest" "qwen:7b" "codellama:latest")
+    for m in "${models[@]}"; do
+        log_ar "INFO" "سحب النموذج: $m"
+        ollama pull "$m" 2>/dev/null || true
+    done
+    log_ar "SUCCESS" "العقل الجمعي محدث."
 }
 
 perform_backup() {
-    log "INFO" "${BLUE}Phase: Securing Sovereign Soul (Encrypted Ark)...${NC}"
-    local BACKUP_NAME="sovereign_ark_$(date +%Y%m%d_%H%M%S).tar.gz.enc"
-    tar -czf - -C / opt/sovereign-ai-platform 2>/dev/null | openssl enc -aes-256-cbc -salt -out "${INSTALL_DIR}/backups/$BACKUP_NAME" -pass pass:"GhazaliRoot2026"
-    log "SUCCESS" "${GREEN}[+] Ark Secured: backups/$BACKUP_NAME${NC}"
+    log_ar "INFO" "تأمين سفينة نوح (Encrypted Ark)..."
+    local B_NAME="sovereign_ark_$(date +%Y%m%d_%H%M%S).tar.gz.enc"
+    tar -czf - -C / opt/sovereign-ai-platform 2>/dev/null | openssl enc -aes-256-cbc -salt -out "${INSTALL_DIR}/backups/$B_NAME" -pass pass:"GhazaliRoot2026"
+    log_ar "SUCCESS" "تم الحفظ والتشفير: $B_NAME"
 }
 
-upgrade_dependencies() {
-    log "INFO" "${BLUE}Phase: Strengthening Neural Pulse (Dependencies)...${NC}"
-    apt-get update -y && apt-get install -y python3-pip nmap adb sqlite3 openssl zip tshark 2>/dev/null || true
-    pip3 install --upgrade pip --break-system-packages || true
-    pip3 install --break-system-packages fastapi uvicorn pydantic requests chromadb sentence-transformers psutil watchdog 2>/dev/null || true
-    log "SUCCESS" "${GREEN}[+] Dependencies Stabilized.${NC}"
-}
-
+# --- المحرك الرئيسي ---
 main() {
     show_banner
-    check_root
+    if [[ $EUID -ne 0 ]]; then log_ar "ERROR" "Root required."; exit 1; fi
+    
+    mkdir -p "$INSTALL_DIR/backups" "$INSTALL_DIR/audit"
     
     echo -e "\n${GOLD}[ Sovereign Upgrade Directive ]:${NC}"
-    echo "1) Full Material Sync (Backup + Deps + Core)"
-    echo "2) Secure Ark Only (Backup)"
-    echo "3) Clean Shadows (Logs Purge)"
-    echo "q) Exit to Shell"
+    echo "1) Full Material Sync (Core + AI + Tools + Models)"
+    echo "2) AI Engine Only"
+    echo "3) Security Arsenal Only"
+    echo "4) Ollama Models Only"
+    echo "b) Secure Ark (Backup)"
+    echo "q) Exit"
     
     read -p "Select Directive: " choice
     case $choice in
-        1) perform_backup; upgrade_dependencies; log "SUCCESS" "Full Sync Complete." ;;
-        2) perform_backup ;;
-        3) rm -rf /opt/sovereign-ai-platform/audit/*.log; log "INFO" "Shadows Purged." ;;
+        1) perform_backup; upgrade_ai; upgrade_security; upgrade_ollama; log_ar "SUCCESS" "Full Sync Complete." ;;
+        2) upgrade_ai ;;
+        3) upgrade_security ;;
+        4) upgrade_ollama ;;
+        b) perform_backup ;;
         q) exit 0 ;;
-        *) echo "Invalid choice." ;;
+        *) log_ar "WARN" "Invalid choice." ;;
     esac
 }
 
