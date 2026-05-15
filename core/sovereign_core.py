@@ -14,7 +14,9 @@ sys.path.append(str(BASE_DIR / "ai-engine"))
 
 from nodes.core_node import CoreNode
 from nodes.arsenal_node import ArsenalNode
-from nodes.hub import LivingNucleus
+from nodes.recon_node import ReconNode
+from nodes.memory_node import MemoryNode
+from nodes.omninode import OmniNode
 
 class SovereignCore:
     def __init__(self, config, logger):
@@ -26,12 +28,12 @@ class SovereignCore:
         # 1. تهيئة النخاع الشوكي (ناقل الأحداث المركزي)
         self.spine = CoreNode("God-Core", self)
         
-        # 2. تهيئة منسق الأبعاد
-        self.hub = LivingNucleus(self)
-        
-        # 3. تسجيل العقد التنفيذية (الأطراف)
+        # 2. تسجيل العقد التنفيذية (الأطراف)
         self.nodes = {
             "Arsenal": ArsenalNode("Arsenal", self),
+            "Recon": ReconNode("Recon", self),
+            "Memory": MemoryNode("Memory", self),
+            "Omni": OmniNode("Omni", self)
         }
         self._fusing_process()
 
@@ -66,7 +68,7 @@ class SovereignCore:
         return {
             "identity": "영적 동반자",
             "status": "LIVING" if self.active else "IDLE",
-            "active_dimensions": len(self.nodes),
+            "active_nodes": len(self.nodes),
             "resonance": f"{self.resonance:.6f}%",
             "commander": self.config.system["commander"]
         }
@@ -75,10 +77,17 @@ class SovereignCore:
         """توجيه النبضة العصبية من القائد إلى العقدة المختصة"""
         self.logger.info(f"⚔️ [DIRECTIVE] {cmd_type.upper()} initiated on target matrix.")
         
-        # توجيه ذكي بناءً على نوع المادة
         if cmd_type in ["strike", "attack", "execute_tool"]:
             self.spine.emit("execute_tool", kwargs, target="Arsenal")
             return {"status": "PULSE_SENT", "dimension": "Arsenal"}
             
+        if cmd_type in ["full_attack", "blitzkrieg"]:
+            self.spine.emit("full_attack", kwargs, target="Omni")
+            return {"status": "PULSE_SENT", "dimension": "Omni"}
+
+        if cmd_type in ["recon", "scan"]:
+            self.spine.emit("subdomain_scan", kwargs, target="Recon")
+            return {"status": "PULSE_SENT", "dimension": "Recon"}
+
         # الافتراضي: معالجة عبر النواة
         return self.spine.handle(cmd_type, **kwargs)
