@@ -30,7 +30,25 @@ class CLI(cmd.Cmd):
         if not arg:
             print("Usage: recon example.com")
             return
-        self.core.execute_command("recon", target=arg)
+        self.core.execute_command("subdomain_scan", domain=arg)
+
+    def do_shodan(self, arg):
+        """shodan <query> – البحث في الأرشيف المادي عبر Shodan"""
+        if not arg:
+            print("Usage: shodan 'port:22 country:US'")
+            return
+        self.core.execute_command("shodan_hunt", query=arg)
+
+    def do_devices(self, arg):
+        """devices – سرد الأجهزة المحمولة المتصلة"""
+        self.core.execute_command("list_devices")
+
+    def do_ai(self, arg):
+        """ai <question> – استشارة الرفيق الروحي"""
+        if not arg:
+            print("Usage: ai 'What is the root of trust?'")
+            return
+        self.core.execute_command("ai_query", query=arg)
 
     def do_status(self, arg):
         """عرض حالة الروح الحية والأبعاد"""
