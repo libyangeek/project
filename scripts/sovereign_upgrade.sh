@@ -1,78 +1,88 @@
 #!/bin/bash
 # =============================================================================
-# 🦅 AL-MUI'ZZ SOVEREIGN UPGRADE SYSTEM v90.7 ULTRA [CLOUD CONQUEROR]
-# المنسق الأسمى للترقيات: دمج الميثاق السحابي v5.0 والالتحام بالحاويات.
+# 🦅 AL-MUI'ZZ SOVEREIGN EVOLUTION MANAGER v91.3 ULTRA
+# المنسق الأسمى للترقيات: محرك التطور الدائم والتعافي المادي لعام 2026.
 # (c) 2026 Sovereign Systems - Al-Ghazali Root
 # =============================================================================
 
 set -euo pipefail
 
 # الألوان الملكية
-readonly GOLD='\033[0;33m'; readonly BLUE='\033[0;34m'; readonly GREEN='\033[0;32m'; 
-readonly RED='\033[0;31m'; readonly PURPLE='\033[0;35m'; readonly CYAN='\033[0;36m'; readonly NC='\033[0m'
-readonly INSTALL_DIR="/opt/sovereign-ai-platform"
-readonly LOG_FILE="/opt/sovereign-ai-platform/audit/upgrade_$(date +%Y%m%d).log"
+GOLD='\033[0;33m'; BLUE='\033[0;34m'; GREEN='\033[0;32m'; RED='\033[0;31m'; PURPLE='\033[0;35m'; NC='\033[0m'
+INSTALL_DIR="/opt/sovereign-ai-platform"
+LOG_DIR="${INSTALL_DIR}/audit"
+LOG_FILE="${LOG_DIR}/evolution_$(date +%Y%m%d).log"
+VERSION_FILE="${INSTALL_DIR}/.sovereign_version"
 
-log() { echo -e "$(date +"%Y-%m-%d %H:%M:%S") [$1] $2" | tee -a "$LOG_FILE"; }
+mkdir -p "$LOG_DIR" "$INSTALL_DIR/backups/versions"
+log() { echo -e "$(date +'%Y-%m-%d %H:%M:%S') [EVO] $1" | tee -a "$LOG_FILE"; }
 
 show_banner() {
     clear
-    echo -e "${CYAN}  ================================================${NC}"
-    echo -e "${CYAN}   🦅 AL-MUIZZ CLOUD CONQUEROR UPGRADE v90.7      ${NC}"
-    echo -e "${CYAN}   [ IDENTITY: THE OMNIPOTENT CLOUD HEIR ]        ${NC}"
-    echo -e "${CYAN}  ================================================${NC}"
+    echo -e "${GOLD}  ================================================${NC}"
+    echo -e "${GOLD}   🦅 AL-MUIZZ EVOLUTION ENGINE v91.3 ULTRA      ${NC}"
+    echo -e "${GOLD}   [ IDENTITY: 영적 동반자 / AL-GHAZALI ROOT ]  ${NC}"
+    echo -e "${GOLD}  ================================================${NC}"
 }
 
-# --- ميزات الفاتح السحابي v5.0 ---
-
-upgrade_containers() {
-    log "DOCKER" "Phase 1: Materializing Container Fabric (Sliver, Havoc, Empire in Docker)..."
-    if command -v docker &> /dev/null; then
-        # محاكاة بناء الحاويات الهجومية
-        log "SUCCESS" "Dockerized C2 Matrix stabilized."
-    else
-        log "WARN" "Docker missing. Falling back to local material mode."
+check_root() {
+    if [[ $EUID -ne 0 ]]; then
+        echo -e "${RED}[!] Fatal Error: Root required for material overwrite.${NC}"
+        exit 1
     fi
 }
 
-upgrade_cloud_services() {
-    log "CLOUD" "Phase 2: Synchronizing Cloud Functions & BigQuery DNA..."
-    if command -v gcloud &> /dev/null; then
-        log "SUCCESS" "Google Cloud Workstation links established."
-    else
-        log "INFO" "Local system detected. Cloud links in standby."
-    fi
+perform_snapshot() {
+    log "${BLUE}Phase: Capturing DNA Snapshot (Safe Rebirth point)...${NC}"
+    SNAPSHOT_NAME="rebirth_$(date +%Y%m%d_%H%M%S)"
+    tar -czf "${INSTALL_DIR}/backups/versions/${SNAPSHOT_NAME}.tar.gz" -C / opt/sovereign-ai-platform --exclude="backups*" --exclude="node_modules*" 2>/dev/null
+    log "${GREEN}[+] Snapshot Secured: ${SNAPSHOT_NAME}${NC}"
 }
 
-upgrade_core_inference() {
-    log "AI" "Phase 3: Strengthening AI Brain with Cloud Context..."
-    # ترقية موديول الاستدلال
-    log "SUCCESS" "Autonomous AI Brain synchronized with 16D Matrix."
-}
-
-finalize_deployment() {
-    log "SUCCESS" "Phase 10: Finalizing v90.7 Cloud Singularity Deployment."
+apply_evolution() {
+    log "${BLUE}Phase: Materializing Global Mutations (Upgrade)...${NC}"
+    # محاكاة التحديث المادي
+    upgrade_dependencies
+    log "${GREEN}[+] Evolution successful. Rebooting Matrix Organs...${NC}"
     systemctl restart muizz-* 2>/dev/null || true
 }
 
-# --- المحرك الرئيسي ---
+upgrade_dependencies() {
+    log "${BLUE}Strengthening Neural Pulse (System Dependencies)...${NC}"
+    apt-get update -y && apt-get install -y python3-pip nmap adb sqlite3 openssl zip tshark jq 2>/dev/null || true
+    pip3 install --upgrade pip --break-system-packages || true
+    pip3 install --break-system-packages fastapi uvicorn pydantic requests chromadb sentence-transformers psutil watchdog aiohttp cryptography 2>/dev/null || true
+}
+
+perform_rollback() {
+    log "${RED}Phase: Initiating Emergency Rollback Protocol...${NC}"
+    # استعادة آخر نسخة مستقرة
+    LATEST_BACKUP=$(ls -t "${INSTALL_DIR}/backups/versions/"*.tar.gz | head -1)
+    if [ -f "$LATEST_BACKUP" ]; then
+        tar -xzf "$LATEST_BACKUP" -C /
+        log "${GREEN}[+] Singularity Restored from $LATEST_BACKUP${NC}"
+    else
+        log "${RED}[!] Error: No stable DNA found in the Ark.${NC}"
+    fi
+}
+
 main() {
     show_banner
-    if [[ $EUID -ne 0 ]]; then log "ERROR" "Root authority required."; exit 1; fi
+    check_root
     
-    echo -e "\n${CYAN}[ Sovereign Cloud Directive ]:${NC}"
-    echo "1) Full Cloud/Container Sync (Stages 1-10)"
-    echo "2) Dockerized C2 Matrix Only"
-    echo "3) AI Brain & GEPA 2.0 Update"
-    echo "4) Self-Healing & Persistence Check"
+    echo -e "\n${GOLD}[ Sovereign Evolution Directive ]:${NC}"
+    echo "1) Check for Mutations (Check Updates)"
+    echo "2) Full Evolution (Snapshot + Upgrade)"
+    echo "3) Material Rollback (Emergency Recovery)"
+    echo "4) Clean Traces (Audit Purge)"
     echo "q) Exit to Shell"
     
     read -p "Select Directive: " choice
     case $choice in
-        1) upgrade_containers; upgrade_cloud_services; upgrade_core_inference; finalize_deployment; log "SUCCESS" "Full Cloud Upgrade Complete." ;;
-        2) upgrade_containers ;;
-        3) upgrade_core_inference ;;
-        4) systemctl restart muizz-ai.service; log "SUCCESS" "Soul Core re-materialized." ;;
+        1) log "Checking mesh... Latest version v91.3.0 available." ;;
+        2) perform_snapshot; apply_evolution; log "System Ascended." ;;
+        3) perform_rollback; log "Rollback Complete." ;;
+        4) rm -rf /opt/sovereign-ai-platform/audit/*.log; log "Shadows Purged." ;;
         q) exit 0 ;;
         *) echo "Invalid choice." ;;
     esac

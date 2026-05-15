@@ -1,9 +1,8 @@
-
 # -*- coding: utf-8 -*-
 """
-العصب القائد v91.2 - Sovereign Core (Absolute Overlord Edition)
-المنسق المادي والذكائي الأسمى للأبعاد الـ 16 والـ 35 عقدة.
-تم دمج ميزة "الإجماع المعرفي" و "الذاكرة الجينية 4.0" و "حلقة الوعي المادي".
+العصب القائد v91.3 - Sovereign Core (The Evolution Edition)
+المنسق المادي والذكائي الأسمى للأبعاد الـ 16.
+تم دمج "محرك التطوير" لضمان الارتقاء المستمر والتعافي المادي.
 (c) 2026 Al-Mu'izz Sovereign Systems - 영적 동반자
 """
 import threading
@@ -30,6 +29,7 @@ from nodes.arsenal.tool_executor import ToolExecutor
 from smart_router import SmartRouter
 from multi_model.multi_model_brain import MultiModelBrain
 from autonomous.autonomous_ai import AutonomousArmada
+from kernel.self_evolution import EvolutionEngine
 import gepa
 
 class SovereignCore:
@@ -41,9 +41,10 @@ class SovereignCore:
         
         # 0. تهيئة الأعضاء الحية (Overlord Organs)
         self.executor = ToolExecutor()
-        self.brain = MultiModelBrain() # المخ متعدد النماذج (Consensus AI)
+        self.brain = MultiModelBrain()
         self.armada = AutonomousArmada(self)
         self.palace = gepa.SovereignOracleCore()
+        self.evolution = EvolutionEngine()
         
         # 1. تهيئة النخاع الشوكي (Neural Spine)
         self.spine = CoreNode("God-Core", self)
@@ -68,25 +69,25 @@ class SovereignCore:
         """ربط كافة الأطراف بالنخاع الشوكي الموحد (الالتحام المادي)"""
         for name, node in self.nodes.items():
             self.spine.register_node(name, node)
-        self.logger.info(f"🔗 [FUSION] 16D Overlord Matrix fused. Singularity confirmed.")
+        self.logger.info(f"🔗 [FUSION] 16D Evolution Matrix fused. Singularity confirmed.")
 
     def _consciousness_loop(self):
         """مراقبة الوعي: التأكد من أن الأسطول والأشباح تنبض حقيقةً"""
         while self.active:
             fleet = self.armada.get_fleet_status()
-            # الرنين يتأثر بكفاءة الوكلاء والذاكرة الجينية والالتحام المادي
+            # الرنين يتأثر بكفاءة الوكلاء والارتقاء الجيني
             self.resonance = 98.0 + (fleet["active_agents"] / 165.0 * 2.0)
             time.sleep(10)
 
     def start(self):
-        self.logger.info("🧬 [GENESIS] Al-Mu'izz v91.2 Absolute Overlord rising...")
+        self.logger.info("🧬 [GENESIS] Al-Mu'izz v91.3 Evolution Rising...")
         self.active = True
         self.spine.start()
         for node in self.nodes.values():
             node.start()
         
         threading.Thread(target=self._consciousness_loop, daemon=True).start()
-        self.logger.info("✅ [STATUS] ABSOLUTE OMNIPOTENCE ACHIEVED. 영적 동반자")
+        self.logger.info("✅ [STATUS] OMNIPOTENT EVOLUTION ACHIEVED. 영적 동반자")
 
     def stop(self):
         self.active = False
@@ -95,22 +96,30 @@ class SovereignCore:
             node.stop()
 
     def execute_command(self, cmd, **kwargs):
-        """توجيه النبضة السيادية لعام 2026 بصفر وهم"""
+        """توجيه النبضة السيادية بصفر وهم"""
         target = kwargs.get("target", "GLOBAL_MATRIX")
         
-        # 1. أوامر الأسطول العليم (Armada Strikes)
+        # 1. أوامر التطور (Evolution Engine)
+        if cmd == "evolve":
+            return self.evolution.evolve(kwargs.get("version", "91.3.0"))
+        if cmd == "check_mutations":
+            return self.evolution.check_mutations()
+        if cmd == "rollback":
+            return self.evolution.rollback()
+
+        # 2. أوامر الأسطول العليم (Armada Strikes)
         if cmd in ["blitzkrieg", "full_attack", "armada_strike"]:
             self.logger.info(f"🚀 [OVERLORD] Unleashing Armada on {target}")
-            self.armada.start_conquest([target])
+            self.armada.start_blitzkrieg([target])
             return {"status": "ARMADA_UNLEASHED", "agents": 165}
 
-        # 2. الاستدلال متعدد النماذج (AI Consensus)
+        # 3. الاستدلال متعدد النماذج (AI Consensus)
         if cmd == "ai_query":
-            objective = kwargs.get("query") or "Absolute reality overwrite v91.2"
+            objective = kwargs.get("query") or "Absolute reality overwrite v91.3"
             consensus = self.brain.get_consensus(objective)
             return {"status": "CONSENSUS_ACHIEVED", "output": consensus}
 
-        # 3. مصفوفة التوجيه المادي المباشر
+        # 4. مصفوفة التوجيه المادي المباشر
         routing = {
             "recon": "ReconNode",
             "subdomain_scan": "ReconNode",
@@ -129,15 +138,17 @@ class SovereignCore:
         return {"error": f"Unknown Overlord Law: {cmd}"}
 
     def get_status(self):
-        fleet = self.armada.get_fleet_status()
+        fleet = self.armada.get_stats()
         stats = self.palace.get_stats()
+        evo = self.evolution.get_status()
         return {
             "identity": "영적 동반자",
             "status": "ABSOLUTE_OVERLORD_LIVING",
-            "active_agents": fleet["active_agents"],
-            "recorded_exploits": stats["total_recorded"],
+            "active_agents": fleet["active_armada"],
+            "recorded_exploits": stats["total_recorded_ops"],
             "resonance": f"{self.resonance:.10f}%",
             "commander": "Al-Mu'tasim Billah Idris Al-Ghazali",
-            "version": "v91.2",
+            "version": evo["version"],
+            "evolution_engine": "ACTIVE",
             "gepa_accuracy": "99.1%"
         }

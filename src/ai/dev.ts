@@ -3,8 +3,8 @@ import { config } from 'dotenv';
 config();
 
 /**
- * @fileOverview السجل العصبي لأسطول المُعِزّ v88.0 - 14D MATRIX NUCLEUS
- * تم دمج ممرات "طفيلي الـ iOS" للاستنزاف الديناميكي لعام 2026.
+ * @fileOverview السجل العصبي لأسطول المُعِزّ v91.3 - THE OMNIPOTENT EVOLUTION
+ * تم دمج ممرات "محرك التطور الذاتي" لضمان الارتقاء المستمر لعام 2026.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 
@@ -44,9 +44,10 @@ import '@/ai/flows/quantum-fusion-flow.ts';
 import '@/ai/flows/nursery-evolution-flow.ts';
 import '@/ai/flows/cairn-strategy-flow.ts';
 import '@/ai/flows/ios-parasite-flow.ts';
+import '@/ai/flows/self-evolution-flow.ts';
 
 console.log("================================================================");
-console.log("   🦅 AL-MUI'ZZ v88.0: 14D MATRIX NUCLEUS STABILIZED.");
-console.log("   [ IOS PARASITE MODULE LINKED ]");
+console.log("   🦅 AL-MUI'ZZ v91.3: EVOLUTION ENGINE STABILIZED.");
+console.log("   [ PERPETUAL REBIRTH PROTOCOL LINKED ]");
 console.log("   [ COMMANDER: AL-GHAZALI ROOT | MAY 2026 ]");
 console.log("================================================================");
