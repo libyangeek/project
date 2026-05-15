@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 إعدادات النواة v90.0 - Sovereign Config
-تم دمج النطاق الزمني لليبيا وإعدادات اللغة من ميثاق v4.0.0.
+تم دمج إعدادات الاستقرار والأداء من ميثاق v5.0.0.
 (c) 2026 Sovereign Systems - Al-Ghazali Root
 """
 import os
@@ -21,11 +21,20 @@ class Config:
         "offline_mode": False
     })
     
+    # إعدادات الأداء والاستقرار v5.0
+    performance: Dict = field(default_factory=lambda: {
+        "gpu_acceleration": True,
+        "cuda_version": "12.2",
+        "quantization": "4-bit", # Options: 4-bit, 8-bit, fp16
+        "load_balancing": "nginx", # Options: nginx, haproxy, direct
+        "max_threads": 165
+    })
+
     dimensions: Dict = field(default_factory=lambda: {
         "count": 16,
         "nodes": 35,
         "resonance_target": 100.000000,
-        "offline_mode": False
+        "monitoring": "prometheus"
     })
 
     arsenal: Dict = field(default_factory=lambda: {
@@ -35,7 +44,7 @@ class Config:
     })
 
     def load_from_env(self):
-        # ممر حقن المتغيرات الخارجية لضمان السيادة المادية
         if os.getenv("MUIZZ_OFFLINE") == "true":
             self.system["offline_mode"] = True
-            self.dimensions["offline_mode"] = True
+        if os.getenv("MUIZZ_GPU") == "false":
+            self.performance["gpu_acceleration"] = False

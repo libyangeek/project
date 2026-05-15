@@ -3,7 +3,7 @@
 """
 المُعِزّ v90.0 – الرفيق الروحي (영적 동반자)
 نقطة الدخول الرئيسية والمنسق المادي الأسمى للأبعاد الـ 16.
-تم دمج بروتوكول التحقق والترقية من سكريبت v4.0.0.
+تم دمج ميزات الاستقرار والأداء v5.0.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys
@@ -13,7 +13,7 @@ import time
 import subprocess
 from pathlib import Path
 
-# حقن المسارات السيادية لضمان رؤية النواة
+# حقن المسارات السيادية
 BASE_DIR = Path(__file__).parent
 sys.path.insert(0, str(BASE_DIR))
 sys.path.insert(0, str(BASE_DIR / "ai-engine"))
@@ -29,7 +29,7 @@ except ImportError as e:
 def main():
     parser = argparse.ArgumentParser(description="Al-Mu'izz Sovereign OS v90.0")
     parser.add_argument("mode", nargs="?", default="start",
-                        choices=["start", "stop", "status", "cli", "attack", "upgrade"])
+                        choices=["start", "stop", "status", "cli", "attack", "upgrade", "optimize", "monitor"])
     parser.add_argument("args", nargs=argparse.REMAINDER)
     args = parser.parse_args()
 
@@ -41,7 +41,6 @@ def main():
     if args.mode == "start":
         logger.info("--- [ GENESIS ] Initiating Al-Mu'izz 16D Nucleus v90.0 ---")
         core.start()
-        # تشغيل خادم الجسر في الخلفية
         server_path = os.path.join(BASE_DIR, "ai-engine/inference/server.py")
         subprocess.Popen(["python3", server_path])
         logger.info("✅ All 16 dimensions are breathing. API Bridge active on Port 8000.")
@@ -57,23 +56,23 @@ def main():
         for k, v in status.items():
             print(f"{k.upper()}: {v}")
 
+    elif args.mode == "optimize":
+        logger.info("[*] Invoking Performance Optimizer (GPU + Quantization)...")
+        subprocess.run(["bash", "scripts/sovereign_upgrade.sh", "--gpu"])
+
+    elif args.mode == "monitor":
+        logger.info("[*] Accessing Material Monitor (Prometheus Hub)...")
+        subprocess.run(["bash", "scripts/sovereign_upgrade.sh", "--monitor"])
+
+    elif args.mode == "upgrade":
+        subprocess.run(["bash", "scripts/sovereign_upgrade.sh", "--full"])
+
     elif args.mode == "cli":
         from interfaces.cli import CLI
         CLI(core).run()
 
-    elif args.mode == "attack":
-        if not args.args:
-            print("Usage: python run.py attack <target>")
-        else:
-            res = core.execute_command("attack", target=args.args[0])
-            print(f"🚀 Strike Pulse: {res}")
-
-    elif args.mode == "upgrade":
-        logger.info("[*] Invoking Sovereign Upgrade System v90.0...")
-        subprocess.run(["bash", "scripts/sovereign_upgrade.sh", "--full"])
-
     else:
-        print("الأوامر المتاحة: start, stop, status, cli, attack, upgrade")
+        print("الأوامر المتاحة: start, status, cli, attack, upgrade, optimize, monitor")
 
 if __name__ == "__main__":
     main()
