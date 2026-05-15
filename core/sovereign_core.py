@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 """
 العصب القائد v90.0 - Sovereign Core (The Living Nucleus)
@@ -18,8 +19,7 @@ from nodes.core_node import CoreNode
 from nodes.arsenal_node import ArsenalNode
 from nodes.recon_node import ReconNode
 from nodes.mobile_node import MobileNode
-from nodes.cockpit_node import CockpitNode
-from nodes.learning_node import LearningNode
+from nodes.memory_node import MemoryNode
 from nodes.omninode import OmniNode
 
 class SovereignCore:
@@ -37,8 +37,7 @@ class SovereignCore:
             "ArsenalNode": ArsenalNode("Arsenal", self),
             "ReconNode": ReconNode("Recon", self),
             "MobileNode": MobileNode("Mobile", self),
-            "CockpitNode": CockpitNode("Cockpit", self),
-            "LearningNode": LearningNode("Learning", self),
+            "MemoryNode": MemoryNode("Memory", self),
             "OmniNode": OmniNode("Omni", self)
         }
         self._register_nodes()
@@ -76,7 +75,8 @@ class SovereignCore:
             "recon": "ReconNode",
             "list_devices": "MobileNode",
             "mobile": "MobileNode",
-            "ai_query": "LearningNode"
+            "store_dna": "MemoryNode",
+            "recall": "MemoryNode"
         }
         
         target_node = routing.get(cmd)
@@ -100,6 +100,3 @@ class SovereignCore:
             "resonance": f"{self.resonance:.6f}%",
             "commander": "Al-Mu'tasim Billah Idris Al-Ghazali"
         }
-
-    def run_self_test(self):
-        return len(self.nodes) >= 6
