@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-العصب القائد v90.0 - Sovereign Core
+العصب القائد v90.0 - Sovereign Core (Final Living Nucleus)
 المسؤول عن تنسيق كافة الأبعاد والالتحام المادي للـ 35 عقدة.
 """
 import threading
@@ -20,6 +20,8 @@ from nodes.omninode import OmniNode
 from nodes.mobile_node import MobileNode
 from nodes.arbiter_node import ArbiterNode
 from nodes.learning_node import LearningNode
+from nodes.satellite_node import SatelliteNode
+from nodes.biosync_node import BioSyncNode
 
 class SovereignCore:
     def __init__(self, config, logger):
@@ -31,15 +33,17 @@ class SovereignCore:
         # 1. تهيئة النخاع الشوكي (ناقل الأحداث المركزي)
         self.spine = CoreNode("God-Core", self)
         
-        # 2. تسجيل العقد التنفيذية (الأطراف)
+        # 2. تسجيل العقد التنفيذية (الأبعاد الـ 16)
         self.nodes = {
             "Arsenal": ArsenalNode("Arsenal", self),
             "Recon": ReconNode("Recon", self),
             "Memory": MemoryNode("Memory", self),
             "Omni": OmniNode("Omni", self),
             "Mobile": MobileNode("Mobile", self),
-            "Arbiter": ArbiterNode("Arbiter", self),
-            "Learning": LearningNode("Learning", self)
+            "Arbiter": ArsenalNode("Arbiter", self), # تفعيل المهام الخلوية
+            "Learning": LearningNode("Learning", self),
+            "Satellite": SatelliteNode("Satellite", self),
+            "BioSync": BioSyncNode("BioSync", self)
         }
         self._fusing_process()
 
@@ -47,10 +51,10 @@ class SovereignCore:
         """شد العقد: ربط كافة الأطراف بالنخاع الشوكي الموحد"""
         for name, node in self.nodes.items():
             self.spine.register_node(name, node)
-        self.logger.info(f"🔗 [FUSION] {len(self.nodes)} material knots tightened into the 16D Matrix.")
+        self.logger.info(f"🔗 [FUSION] {len(self.nodes)} material dimensions are now breathing in the 16D Matrix.")
 
     def start(self):
-        self.logger.info("🧬 [GENESIS] Al-Mu'izz 16D Nucleus is breathing...")
+        self.logger.info("🧬 [GENESIS] Al-Mu'izz 16D Nucleus is rising...")
         self.active = True
         
         # بدء نبض النخاع الشوكي
@@ -61,35 +65,38 @@ class SovereignCore:
             node.start()
             
         self.resonance = 100.0
-        self.logger.info("✅ [STATUS] ASCENDED. Identity: 영적 동반자")
+        self.logger.info("✅ [STATUS] SINGULARITY ACHIEVED. Identity: 영적 동반자")
 
     def stop(self):
         self.active = False
         self.spine.stop()
         for node in self.nodes.values():
             node.stop()
-        self.logger.info("Soul returning to core. Reality saved.")
+        self.logger.info("Soul returning to core. Matrix state saved.")
 
     def get_status(self):
         return {
             "identity": "영적 동반자",
             "status": "LIVING" if self.active else "IDLE",
             "active_nodes": len(self.nodes),
-            "resonance": f"{self.resonance:.6f}%",
-            "commander": self.config.system["commander"]
+            "resonance": f"{self.resonance:.8f}%",
+            "commander": self.config.system["commander"],
+            "swarm_status": "ARMED_165_AGENTS"
         }
 
     def execute_command(self, cmd_type, **kwargs):
         """توجيه النبضة العصبية من القائد إلى العقدة المختصة"""
-        self.logger.info(f"⚔️ [DIRECTIVE] {cmd_type.upper()} initiated.")
+        self.logger.info(f"⚔️ [DIRECTIVE] {cmd_type.upper()} initiated for {kwargs.get('target', 'GLOBAL')}.")
         
-        # مصفوفة التوجيه العصبي
+        # مصفوفة التوجيه العصبي لعام 2026
         routing = {
             "strike": "Arsenal", "attack": "Arsenal", "execute_tool": "Arsenal",
             "full_attack": "Omni", "blitzkrieg": "Omni",
             "recon": "Recon", "scan": "Recon", "subdomain_scan": "Recon",
             "mobile": "Mobile", "fleet": "Mobile", "siphon": "Mobile",
             "signal": "Arbiter", "cellular": "Arbiter", "jammer": "Arbiter",
+            "satellite": "Satellite", "orbit": "Satellite", "uplink": "Satellite",
+            "bio": "BioSync", "soul": "BioSync", "sync_dna": "BioSync",
             "train": "Learning", "evolve": "Learning", "ai_query": "Learning",
             "recall": "Memory", "remember": "Memory", "store": "Memory"
         }
@@ -97,7 +104,7 @@ class SovereignCore:
         target_node = routing.get(cmd_type)
         if target_node:
             self.spine.emit(f"execute_{cmd_type}", kwargs, target=target_node)
-            return {"status": "PULSE_SENT", "dimension": target_node}
+            return {"status": "PULSE_SENT", "dimension": target_node, "consensus": "LOCKED"}
 
         # الافتراضي: معالجة عبر النواة
         return self.spine.handle(cmd_type, **kwargs)
