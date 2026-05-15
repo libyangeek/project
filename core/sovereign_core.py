@@ -21,6 +21,9 @@ from nodes.recon_node import ReconNode
 from nodes.mobile_node import MobileNode
 from nodes.memory_node import MemoryNode
 from nodes.omninode import OmniNode
+from nodes.satellite_node import SatelliteNode
+from nodes.biosync_node import BioSyncNode
+from nodes.arbiter_node import ArbiterNode
 from smart_router import SmartRouter
 
 class SovereignCore:
@@ -36,13 +39,16 @@ class SovereignCore:
         # 2. تهيئة الموجه الذكي (الأدميرال)
         self.router = SmartRouter(self)
         
-        # 3. تسجيل العقد التنفيذية (الأبعاد الـ 16)
+        # 3. تسجيل العقد التنفيذية (الأبعاد الـ 16 الأساسية)
         self.nodes = {
             "ArsenalNode": ArsenalNode("Arsenal", self),
             "ReconNode": ReconNode("Recon", self),
             "MobileNode": MobileNode("Mobile", self),
             "MemoryNode": MemoryNode("Memory", self),
-            "OmniNode": OmniNode("Omni", self)
+            "OmniNode": OmniNode("Omni", self),
+            "SatelliteNode": SatelliteNode("Satellite", self),
+            "BioSyncNode": BioSyncNode("BioSync", self),
+            "ArbiterNode": ArbiterNode("Arbiter", self)
         }
         self._register_nodes()
 
@@ -68,6 +74,13 @@ class SovereignCore:
 
     def execute_command(self, cmd, **kwargs):
         """توجيه النبضة من القائد إلى العضو المختص"""
+        # إذا كان الطلب من الراوتر، نستخدم التصنيف
+        if cmd == "ai_query":
+            from deepseek_logic import DeepSeekLogic
+            logic = DeepSeekLogic()
+            res = logic.reason(kwargs.get("query", "Status"))
+            return {"status": "LOGIC_SERIALIZED", "output": res}
+
         routing = {
             "attack": "OmniNode",
             "full_attack": "OmniNode",
@@ -80,7 +93,13 @@ class SovereignCore:
             "siphon": "MobileNode",
             "store_dna": "MemoryNode",
             "recall": "MemoryNode",
-            "recall_strategy": "MemoryNode"
+            "recall_strategy": "MemoryNode",
+            "satellite": "SatelliteNode",
+            "satellite_strike": "SatelliteNode",
+            "bio": "BioSyncNode",
+            "bio_bind": "BioSyncNode",
+            "signal": "ArbiterNode",
+            "cellular_strike": "ArbiterNode"
         }
         
         target_node = routing.get(cmd)
@@ -88,13 +107,6 @@ class SovereignCore:
             self.spine.emit(cmd, kwargs, target=target_node)
             return {"status": "PULSE_SENT", "dimension": target_node, "consensus": "LOCKED"}
         
-        # معالجة استشارة الذكاء
-        if cmd == "ai_query":
-            from deepseek_logic import DeepSeekLogic
-            logic = DeepSeekLogic()
-            res = logic.reason(kwargs.get("query", "Status"))
-            return {"status": "LOGIC_SERIALIZED", "output": res}
-
         return {"error": f"Unknown material law: {cmd}"}
 
     def get_status(self):

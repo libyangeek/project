@@ -19,6 +19,7 @@ class ToolExecutor:
     def execute(self, tool_name: str, args: list = None, timeout: int = 300):
         """تنفيذ مادي حقيقي للأداة في طبقة العتاد واسترجاع الـ DNA"""
         args = args or []
+        
         # التحقق من وجود الأداة في النظام
         check_cmd = f"which {tool_name}"
         if subprocess.run(check_cmd.split(), capture_output=True).returncode != 0:
@@ -68,8 +69,3 @@ class ToolExecutor:
             return {"stdout": res.stdout, "stderr": res.stderr, "code": res.returncode}
         except Exception as e:
             return {"error": str(e)}
-
-if __name__ == "__main__":
-    ex = ToolExecutor()
-    if len(sys.argv) > 1:
-        print(json.dumps(ex.execute(sys.argv[1], sys.argv[2:])))

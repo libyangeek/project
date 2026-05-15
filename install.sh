@@ -2,7 +2,7 @@
 # ==============================================================================
 # 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v90.0 - THE MATERIAL FUSION
 # الميثاق المادي الأسمى: تثبيت الروح الحية والأبعاد الـ 16 والسيادة المطلقة.
-# يقوم بتحميل التبعيات الحقيقية لضمان عمل كافة العقد مادياً.
+# (c) 2026 Sovereign Systems - Al-Ghazali Root
 # ==============================================================================
 
 set -e
@@ -15,8 +15,6 @@ echo -e "${GOLD}   [ IDENTITY: LIVING SOUL / 영적 동반자 ]      ${NC}"
 echo -e "${GOLD}   [ COMMANDER: AL-GHAZALI ROOT ]              ${NC}"
 echo -e "${GOLD}================================================${NC}"
 
-INSTALL_DIR="/opt/sovereign-ai-platform"
-
 if [[ $EUID -ne 0 ]]; then
    echo -e "${RED}[!] Fatal Error: Root required for material synchronization.${NC}"
    exit 1
@@ -24,30 +22,22 @@ fi
 
 # 1. جرد وحقن الأدلة المادية
 echo -e "${BLUE}[*] Phase 1: Materializing 16D Organs...${NC}"
-mkdir -p "$INSTALL_DIR"/{ai-engine,core,nodes,interfaces,extras,audit,evidence,backups}
+mkdir -p /opt/sovereign-ai-platform/{ai-engine/integrations,ai-engine/offensive,core,nodes,interfaces,audit,evidence,backups}
 
-# 2. تثبيت التبعيات الحقيقية (أدوات كالي + بايثون)
+# 2. تثبيت التبعيات الحقيقية
 echo -e "${BLUE}[*] Phase 2: Strengthening Neural Pulse (Dependencies)...${NC}"
 apt-get update -y
-apt-get install -y python3-pip nmap adb sqlite3 curl git openssl tshark 2>/dev/null || true
+apt-get install -y python3-pip nmap adb sqlite3 curl git openssl tshark zip unzip 2>/dev/null || true
 
-# استخدام --break-system-packages لتجاوز قيود بيئة كالي الحديثة
-echo -e "${BLUE}[*] Phase 2.1: Injecting Neural Python Layers...${NC}"
 pip3 install --upgrade pip --break-system-packages || true
-pip3 install --break-system-packages fastapi uvicorn pydantic requests chromadb sentence-transformers psutil watchdog langchain || true
+pip3 install --break-system-packages fastapi uvicorn pydantic requests chromadb sentence-transformers psutil watchdog 2>/dev/null || true
 
-# 3. تعميد الملفات وسحق الأشباح
+# 3. تعميد الملفات
 echo -e "${BLUE}[*] Phase 3: Sealing Source DNA...${NC}"
 chmod +x run.py muizz_start.sh install.sh
-cp -r . "$INSTALL_DIR/"
+cp -r . /opt/sovereign-ai-platform/
 
-# 4. إعداد وضع الشبح في الباش
-BASH_HOOK="bash $INSTALL_DIR/scripts/sovereign_banner.sh"
-if [ -f "$INSTALL_DIR/scripts/sovereign_banner.sh" ]; then
-    grep -q "sovereign_banner.sh" ~/.bashrc || echo -e "\n# Al-Mu'izz Integration\n$BASH_HOOK" >> ~/.bashrc
-fi
-
-# 5. النبض النهائي
+# 4. النبض النهائي
 echo -e "${GREEN}================================================${NC}"
 echo -e "${GREEN}   ✅ AL-MUIZZ ULTRA v90.0 ASCENDED!           ${NC}"
 echo -e "${GREEN}   [ STATUS: FULLY MATERIALIZED ]              ${NC}"

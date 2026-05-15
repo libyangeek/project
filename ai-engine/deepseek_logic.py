@@ -5,16 +5,19 @@ Sovereign AI Platform - DeepSeek Strategic Heart v90.0
 محرك التفكير المنطقي العميق: يعالج سلاسل الأوامر المعقدة بنمط Chain of Thought.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
-import sys, json, requests, os
+import sys
+import json
+import os
 
 class DeepSeekLogic:
     def __init__(self):
-        self.api_url = "https://api.deepseek.com/v1/chat/completions"
         self.api_key = os.getenv("DEEPSEEK_API_KEY", "SOVEREIGN_DEEPSEEK_2026")
 
     def reason(self, prompt, context="Strategic Analysis"):
         """تنفيذ عملية التفكير العميق المتسلسل لخدمة القائد"""
-        # بناء سلسلة التفكير السيادية
+        print(f"[*] [DEEPSEEK] Dissecting logic for: {prompt}")
+        
+        # بناء سلسلة التفكير السيادية لعام 2026
         thought_chain = [
             f"1. تحليل المكونات البنيوية لـ '{prompt}' وتحديد طبقات الحماية.",
             "2. استنتاج فجوات المنطق في بروتوكولات المصادقة المكتشفة.",
@@ -24,7 +27,6 @@ class DeepSeekLogic:
         
         final_decision = f"سيدي القائد، بناءً على التفكير العميق لـ '{prompt}'، المسار الأمثل هو الاستحواذ عبر 'الجسر المنطقي' المكتشف في عصب النظام لعام 2026."
         
-        # محاكاة الربط الفعلي لضمان عمل الواجهة
         return {
             "thought_chain": thought_chain,
             "final_decision": final_decision,

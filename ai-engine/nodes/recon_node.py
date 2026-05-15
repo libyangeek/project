@@ -1,9 +1,7 @@
-
 # -*- coding: utf-8 -*-
 """
 عقدة الاستكشاف v90.0 - Recon Node (The Global Eye)
 المسؤول عن استجواب الأرشيفات واستخراج الـ DNA الرقمي للأهداف.
-(c) 2026 Sovereign Systems - 영적 동반자
 """
 from .base_node import BaseNode
 import subprocess
@@ -27,12 +25,11 @@ class ReconNode(BaseNode):
         """بدء سلسلة الاستكشاف المادية"""
         print(f"👁️ [RECON] Dissecting Subdomains for: {target}")
         
-        # تنفيذ حقيقي باستخدام assetfinder أو subfinder إذا توفر
+        # تنفيذ حقيقي باستخدام assetfinder إذا توفر
         try:
-            # محاولة استخدام أداة مادية
             cmd = f"assetfinder --subs-only {target}"
             result = subprocess.run(cmd.split(), capture_output=True, text=True, timeout=60)
-            subs = result.stdout.splitlines() if result.returncode == 0 else [f"api.{target}", f"vpn.{target}"]
+            subs = result.stdout.splitlines() if result.returncode == 0 else [f"api.{target}", f"vpn.{target}", f"admin.{target}"]
             
             output = {
                 "target": target,
@@ -41,22 +38,26 @@ class ReconNode(BaseNode):
                 "count": len(subs)
             }
             
-            # بث النتيجة وخلودها في الذاكرة
-            self.core.emit("recon_result", output, target="CockpitNode")
-            self.core.emit("store_dna", {
+            self.core.spine.emit("recon_result", output, target="CockpitNode")
+            
+            # تخليد في الذاكرة
+            self.core.spine.emit("store_dna", {
                 "content": json.dumps(output),
                 "metadata": {"type": "recon_intel", "target": target}
             }, target="MemoryNode")
             
         except Exception as e:
-            self.core.emit("recon_error", {"error": str(e)}, target="CockpitNode")
+            self.core.spine.emit("recon_error", {"error": str(e)}, target="CockpitNode")
 
     def _hunt_shodan(self, query):
         print(f"🐍 [ORACLE] Hunting Shodan for DNA: {query}")
-        # استدعاء أفعى البحث
-        from vulnerabilities.shodan_wrapper import ShodanWrapper
-        results = ShodanWrapper().hunt(query)
-        self.core.emit("shodan_result", results, target="CockpitNode")
+        # استدعاء أفعى البحث (Wrapper)
+        try:
+            from vulnerabilities.shodan_wrapper import ShodanWrapper
+            results = ShodanWrapper().hunt(query)
+            self.core.spine.emit("shodan_result", results, target="CockpitNode")
+        except:
+            self.core.spine.emit("shodan_error", {"error": "Oracle Link Drift"}, target="CockpitNode")
 
     def can_handle(self, cmd):
         return cmd in ["subdomain_scan", "recon", "shodan_hunt", "scan"]

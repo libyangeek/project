@@ -68,8 +68,11 @@ class SmartRouter:
         # إذا كان هناك مرجع للنواة، نقوم بالتنفيذ المادي
         output = f"Quantum pulse transmitted to Node '{target_node}'. Sovereign execution initiated."
         if self.core:
-            res = self.core.execute_command(cmd, target=target_id, prompt=prompt)
-            output = f"Core Response: {res.get('status')} | Node: {target_node}"
+            res = self.core.execute_command(cmd, target=target_id, query=prompt)
+            if "output" in res:
+                output = f"Core Logic: {res['output'].get('final_decision')}"
+            else:
+                output = f"Core Response: {res.get('status')} | Node: {target_node}"
 
         return {
             "category": category,

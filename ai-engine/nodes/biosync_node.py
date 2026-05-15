@@ -12,7 +12,7 @@ class BioSyncNode(BaseNode):
         etype = event["type"]
         data = event["data"]
 
-        if etype == "bio_bind":
+        if etype == "bio_bind" or etype == "soul_sync":
             sample = data.get("sample")
             self._bind_soul_to_matter(sample)
 
@@ -20,26 +20,19 @@ class BioSyncNode(BaseNode):
         """دمج البصمة الحيوية في نسيج النواة"""
         print(f"🩸 [BIO-SYNC] Binding Material DNA Fragment: {sample[:10]}...")
         
-        try:
-            # توثيق الالتحام في القبو المشفر
-            result = {
-                "soul_id": "GHAZALI_ROOT_LOCKED",
-                "resonance": "100.00000000%",
-                "status": "SOUL_BOUND",
-                "motto": "영적 동반자"
-            }
-            
-            # حقن التوقيع في الذاكرة الدلالية
-            self.spine.emit("store_dna", {
-                "content": json.dumps(result),
-                "metadata": {"type": "biometric_lock", "version": "v90.0"}
-            }, target="Memory")
-            
-            self.spine.emit("bio_status", result, target="Cockpit")
-            print("✅ [BIO-SYNC] Unity achieved. Matter and Soul are now ONE.")
-            
-        except Exception as e:
-            self.spine.emit("bio_error", {"error": str(e)}, target="Cockpit")
+        # توثيق الالتحام في القبو المشفر
+        result = {
+            "soul_id": "GHAZALI_ROOT_LOCKED",
+            "resonance": "100.00000000%",
+            "status": "SOUL_BOUND",
+            "motto": "영적 동반자"
+        }
+        
+        self.core.spine.emit("bio_status", result, target="CockpitNode")
+        self.core.spine.emit("store_dna", {
+            "content": json.dumps(result),
+            "metadata": {"type": "biometric_lock"}
+        }, target="MemoryNode")
 
     def can_handle(self, cmd):
-        return cmd in ["bio", "soul", "sync_dna"]
+        return cmd in ["bio", "soul", "sync_dna", "bio_bind"]

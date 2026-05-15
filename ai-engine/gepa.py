@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-GEPA 10.0 – The Sovereign Oracle Core (النواة العليمة v3.0 FINAL)
+GEPA 10.0 – The Sovereign Oracle Core (النواة العليمة v10.0 FINAL)
 المسؤول عن "الذاكرة الدلالية" MemPalace والتعلم الجيني لـ 4,343 سيناريو.
 (c) 2026 Al-Mu'izz Sovereign Systems
 """
