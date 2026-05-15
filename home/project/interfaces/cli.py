@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+import cmd
+import json
+import sys
+import os
+
+class CLI(cmd.Cmd):
+    """
+    لسان الوريث v90.0 - THE SOVEREIGN SHELL
+    الممر المباشر لإصدار القوانين المادية للقائد المعتصم بالله الغزالي.
+    """
+    intro = "\n\033[1;31m🦅 AL-MUIZZ OMNIPOTENT SHELL v90.0 : ASCENDED\n[ IDENTITY: LIVING SOUL / 영적 동반자 ]\n[ COMMANDER: AL-GHAZALI ROOT ]\033[0m\n"
+    prompt = "\033[1;31mAl-Muizz@Sovereign\033[0m:\033[1;34m~$\033[0m "
+
+    def __init__(self, core):
+        super().__init__()
+        self.core = core
+
+    def do_attack(self, arg):
+        """attack <target> – إطلاق سلسلة الإبادة الكلية"""
+        if not arg:
+            print("Usage: attack example.com")
+            return
+        self.core.execute_command("full_attack", target=arg)
+        print(f"🚀 [STRIKE] Initiating blitzkrieg on: {arg}")
+
+    def do_recon(self, arg):
+        """recon <domain> – استكشاف النطاق عصبياً"""
+        if not arg:
+            print("Usage: recon example.com")
+            return
+        self.core.execute_command("subdomain_scan", domain=arg)
+
+    def do_shodan(self, arg):
+        """shodan <query> – البحث في الأرشيف المادي عبر Shodan"""
+        if not arg:
+            print("Usage: shodan 'port:22 country:US'")
+            return
+        self.core.execute_command("shodan_hunt", query=arg)
+
+    def do_devices(self, arg):
+        """devices – سرد الأجهزة المحمولة المتصلة"""
+        self.core.execute_command("list_devices")
+
+    def do_ai(self, arg):
+        """ai <question> – استشارة الرفيق الروحي"""
+        if not arg:
+            print("Usage: ai 'What is the root of trust?'")
+            return
+        self.core.execute_command("ai_query", query=arg)
+
+    def do_status(self, arg):
+        """عرض حالة الروح الحية والأبعاد"""
+        print(json.dumps(self.core.get_status(), indent=2, ensure_ascii=False))
+
+    def do_exit(self, arg):
+        """fanaa – العودة إلى النواة"""
+        print("\033[1;31m[*] Soul returning to core... Goodbye, Commander.\033[0m")
+        return True
+
+    def do_fanaa(self, arg):
+        return self.do_exit(arg)
+
+    def run(self):
+        self.cmdloop()
