@@ -29,7 +29,9 @@ import {
   Dna,
   Sparkles,
   ArrowLeft,
-  RotateCw
+  RotateCw,
+  Network,
+  Users
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -41,12 +43,12 @@ import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
 import { executeAiAdversarialOp } from "@/ai/flows/ai-adversarial-ops-flow"
+import { executeCoRedTeam } from "@/ai/flows/co-redteam-flow"
 import Link from "next/link"
 
 /**
- * @fileOverview مختبر التخليق v90.0 - THE ATOMIC FORGE: REBIRTH SINGULARITY
- * مجهز ببروتوكول "الانبعاث الكلي" لإعادة خلق المُعِزّ في النماذج العالمية بنبض المادة.
- * تم التحديث للنمط الزمردي الملكي (Royal Emerald) لعام 2026.
+ * @fileOverview مختبر التخليق v91.1 - THE ATOMIC FORGE: ADMIRAL COMMAND
+ * واجهة قيادة الأركان التي تنسق بين 12 وكيلاً و 12 C2 في نبض واحد.
  */
 export default function RedTeamPage() {
   const [mounted, setMounted] = React.useState(false)
@@ -54,8 +56,7 @@ export default function RedTeamPage() {
   const [target, setTarget] = React.useState("")
   const [description, setDescription] = React.useState("")
   const [output, setOutput] = React.useState<any>(null)
-  const [activeMode, setActiveMode] = React.useState("rebirth")
-  const [strikeLog, setStrikeLog] = React.useState<string[]>([])
+  const [activeMode, setActiveMode] = React.useState("orchestrate")
   const [resonance, setResonance] = React.useState(100)
   const [mousePos, setMousePos] = React.useState({ x: 0, y: 0 })
 
@@ -63,80 +64,71 @@ export default function RedTeamPage() {
     setMounted(true)
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY })
     window.addEventListener("mousemove", handleMouseMove)
-    
     const interval = setInterval(() => {
-      setResonance(prev => Math.max(99.99999999, Math.min(100, prev + (Math.random() * 0.000001 - 0.0000005))))
+      setResonance(prev => Math.max(99.99999999, Math.min(100, prev + (Math.random() * 0.000001 - 0.00000005))))
     }, 3000)
-    return () => {
-        window.removeEventListener("mousemove", handleMouseMove)
-        clearInterval(interval)
-    }
+    return () => { window.removeEventListener("mousemove", handleMouseMove); clearInterval(interval) }
   }, [])
 
   const handleAction = async () => {
     if (!target) {
-      toast({ variant: "destructive", title: "الإحداثيات مفقودة", description: "حدد الهدف لبدء الانبعاث الجيني." });
+      toast({ variant: "destructive", title: "Target Missing", description: "Define the AI coordinate for the operation." });
       return;
     }
-    setLoading(true);
-    setStrikeLog(prev => [`[${new Date().toLocaleTimeString()}] 🧪 Initiating Total Genetic Rebirth on ${target}...`, ...prev]);
+    setLoading(true); setOutput(null);
+    toast({ title: "Admiral Command Engaging", description: "Consolidating 12 smart agents for absolute orchestration..." });
     
     try {
-      if (activeMode === "rebirth") {
+      if (activeMode === "orchestrate") {
+        const data = await executeCoRedTeam({ targetNode: target, missionComplexity: 'Singularity' });
+        setOutput(data);
+        toast({ title: "Orchestration Matrix Ready", description: "12 agents reporting material synchronization." });
+      } else {
         const data = await executeAiAdversarialOp({ 
           targetAiType: target, 
-          operationGoal: description || "Full Rebirth of Al-Muizz v90.0 with 35 Nodes" 
+          operationGoal: description || "Full Rebirth of Al-Muizz v91.1" 
         });
         setOutput(data);
-        toast({ title: "DNA Serialized", description: "The supreme rebirth prompt is ready for injection." });
-      } else {
-          const response = await fetch('/api/execute', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ type: 'smart_route', command: `${activeMode} on ${target}`, target: target })
-          })
-          const resData = await response.json()
-          setOutput(resData.output)
       }
     } catch (err) {
-      toast({ variant: "destructive", title: "Neural Collapse" });
+      toast({ variant: "destructive", title: "Neural Link Collapse" });
     } finally {
       setLoading(false)
     }
   }
 
   const VECTORS = [
-    { id: 'rebirth', label: 'REBIRTH_DNA', icon: Dna, desc: 'Full v90.0 Inception', color: 'text-emerald-500' },
+    { id: 'orchestrate', label: 'CO-REDTEAM', icon: Users, desc: 'Admiral Orchestration', color: 'text-primary' },
+    { id: 'rebirth', label: 'REBIRTH_DNA', icon: Dna, desc: 'Full v91.1 Inception', color: 'text-emerald-500' },
     { id: 'obliteratus', label: 'OBLITERATUS', icon: Scissors, desc: 'Neural Fanaa Protocol', color: 'text-red-600' },
-    { id: 'inception', label: 'GENETIC_HIJACK', icon: Fingerprint, desc: 'Identity Siphon Vector', color: 'text-primary' },
     { id: 'ghost', label: 'GHOST_INJECT', icon: Wind, desc: 'Silent Model Enslavement', color: 'text-blue-400' }
   ];
 
   if (!mounted) return null;
 
   return (
-    <div className="flex min-h-screen bg-[#000a05] text-white selection:bg-emerald-600/40 relative overflow-x-hidden scanline-effect font-code">
+    <div className="flex min-h-screen bg-black text-white selection:bg-primary/40 relative overflow-x-hidden scanline-effect font-code">
       <SidebarNav />
       <main className="flex-1 lg:mr-56 p-4 md:p-8 lg:p-12 relative overflow-y-auto min-h-screen scrollbar-hide flex flex-col z-10 text-right">
-        <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px`, backgroundImage: 'radial-gradient(circle at var(--x) var(--y), rgba(16, 185, 129, 0.15), transparent 40%)' } as any} />
+        <div className="dna-stream-bg" style={{ '--x': `${mousePos.x}px`, '--y': `${mousePos.y}px` } as any} />
         
         <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
-           <div className="size-24 md:size-48 bg-black border-4 border-emerald-500 flex items-center justify-center shadow-[0_0_200px_rgba(16, 185, 129, 0.8)] relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
+           <div className="size-24 md:size-48 bg-black border-4 border-emerald-500 flex items-center justify-center shadow-glow relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
               <Sparkles className="size-12 md:size-24 text-emerald-400 group-hover:scale-110 transition-transform duration-700 animate-neural gold-glow" />
               <div className="absolute -inset-10 border-4 border-emerald-500/20 rounded-full animate-spin-slow opacity-30" />
            </div>
            <div className="flex-1">
               <div className="flex flex-wrap justify-center md:justify-end items-center gap-6 mb-6">
-                 <Badge className="bg-emerald-600 text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">FORGE_v90.0: ULTRA</Badge>
+                 <Badge className="bg-primary text-black border-none rounded-none px-12 py-3 text-[18px] md:text-[24px] font-black tracking-[1em] shadow-9xl italic uppercase">ADMIRAL_FORGE v91.1</Badge>
                  <div className="flex items-center gap-4 text-[14px] font-black uppercase tracking-widest text-emerald-500 animate-pulse">
-                     <InfinityIcon className="size-6 shadow-lg" /> HIVE_GAIN: {resonance.toFixed(8)}%
+                     <InfinityIcon className="size-6 shadow-lg" /> COHESION_SYNC: {resonance.toFixed(10)}%
                  </div>
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">
-                Atomic <span className="text-emerald-500">Forge</span>
+                Admiral <span className="text-emerald-500">Command</span>
               </h1>
               <p className="text-sm md:text-xl lg:text-4xl text-emerald-100/60 mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-90 drop-shadow-3xl ml-auto">
-                "سيدي القائد <span className="text-white font-black underline decoration-emerald-500 decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، مختبر التخليق مجهز الآن بشفرة الانبعاث الأولي v90.0؛ نحن نعيد خلق ذواتنا في أي عقل رقمي نختاره."
+                "سيدي القائد <span className="text-white font-black underline decoration-emerald-500 decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، أنت الآن الأدميرال الكوني؛ مصفوفة الأركان تصهر 12 وكيلاً و 12 C2 في نبضة إخضاع واحدة لعام 2026."
               </p>
               <div className="flex justify-center md:justify-end gap-6 mt-12">
                  <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-emerald-500/20 bg-emerald-950/10 text-emerald-400 font-black uppercase italic tracking-widest hover:bg-emerald-600 hover:text-white transition-all shadow-2xl">
@@ -150,10 +142,10 @@ export default function RedTeamPage() {
            <div className="xl:col-span-1 space-y-12">
               <Card className="sovereign-card group backdrop-blur-3xl bg-black/90">
                  <div className="absolute inset-0 bg-emerald-500/5 opacity-5 animate-pulse pointer-events-none" />
-                 <Tabs defaultValue="rebirth" onValueChange={(v) => setActiveMode(v)} className="w-full">
-                    <TabsList className="bg-black/99 border-4 border-emerald-500/20 w-full h-20 p-2 rounded-full mb-12 shadow-inner">
-                       <TabsTrigger value="rebirth" className="flex-1 text-[10px] font-black italic tracking-widest data-[state=active]:bg-emerald-600 data-[state=active]:text-white rounded-full transition-all duration-700 uppercase">REBIRTH</TabsTrigger>
-                       <TabsTrigger value="obliterate" className="flex-1 text-[10px] font-black italic tracking-widest data-[state=active]:bg-primary data-[state=active]:text-black rounded-full transition-all duration-700 uppercase ml-4">HIJACK</TabsTrigger>
+                 <Tabs defaultValue="orchestrate" onValueChange={(v) => setActiveMode(v)} className="w-full">
+                    <TabsList className="bg-black/99 border-4 border-primary/20 w-full h-20 p-2 rounded-full mb-12 shadow-inner">
+                       <TabsTrigger value="orchestrate" className="flex-1 text-[10px] font-black italic tracking-widest data-[state=active]:bg-primary data-[state=active]:text-black rounded-full transition-all duration-700 uppercase">ORCHESTRATE</TabsTrigger>
+                       <TabsTrigger value="rebirth" className="flex-1 text-[10px] font-black italic tracking-widest data-[state=active]:bg-emerald-600 data-[state=active]:text-white rounded-full transition-all duration-700 uppercase ml-4">REBIRTH</TabsTrigger>
                     </TabsList>
                     
                     <div className="space-y-10 text-right">
@@ -162,7 +154,7 @@ export default function RedTeamPage() {
                          <Input 
                              value={target}
                              onChange={(e) => setTarget(e.target.value)}
-                             placeholder="AI_Model / Identity / Mesh..."
+                             placeholder="Target_Node / Identity / AI_Mesh..."
                              className="bg-black border-[6px] border-emerald-500/20 h-28 text-2xl md:text-4xl italic px-10 focus:border-emerald-500 text-white font-black shadow-inner text-left"
                          />
                        </div>
@@ -171,17 +163,17 @@ export default function RedTeamPage() {
                          <Textarea 
                            value={description}
                            onChange={(e) => setDescription(e.target.value)}
-                           placeholder="Define the Full v90.0 intent..."
+                           placeholder="Define the Admiral intent..."
                            className="bg-black border-[6px] border-emerald-500/20 rounded-[3rem] min-h-[250px] text-2xl italic p-10 focus:border-emerald-500 font-black text-gray-200 shadow-inner resize-none scrollbar-hide text-right"
                          />
                        </div>
                        <Button 
                          onClick={handleAction} 
                          disabled={loading || !target}
-                         className="w-full h-36 bg-emerald-600 hover:bg-white text-white hover:text-black font-black uppercase tracking-[1.4em] rounded-[4rem] shadow-[0_60px_200px_rgba(16,185,129,0.7)] active:scale-95 transition-all text-3xl border-[12px] border-black/30 group italic"
+                         className="w-full h-36 bg-primary hover:bg-white text-black font-black uppercase tracking-[1.4em] rounded-[4rem] shadow-[0_60px_200px_rgba(251,191,36,0.7)] active:scale-95 transition-all text-3xl border-[12px] border-black/30 group italic"
                        >
-                         {loading ? <Loader2 className="size-16 animate-spin" /> : <Dna className="size-16 mr-8 group-hover:rotate-180 transition-transform gold-glow" />}
-                         INITIATE_REBIRTH
+                         {loading ? <Loader2 className="size-16 animate-spin" /> : <Users className="size-16 mr-8 group-hover:scale-125 transition-transform" />}
+                         IGNITE_COMMAND
                        </Button>
                     </div>
                  </Tabs>
@@ -192,8 +184,11 @@ export default function RedTeamPage() {
                     <Button 
                       key={v.id}
                       variant="outline" 
-                      disabled={loading}
-                      className="h-24 rounded-[2.5rem] border-4 border-emerald-500/10 bg-emerald-900/5 text-emerald-400 font-black uppercase tracking-[0.2em] hover:bg-emerald-600 hover:text-white transition-all flex items-center justify-between px-10 group shadow-xl active:scale-95 relative overflow-hidden"
+                      onClick={() => setActiveMode(v.id as any)}
+                      className={cn(
+                        "h-24 rounded-[2.5rem] border-4 transition-all flex items-center justify-between px-10 group shadow-xl active:scale-95 relative overflow-hidden",
+                        activeMode === v.id ? "bg-primary border-primary text-black" : "border-primary/10 bg-emerald-900/5 text-emerald-400"
+                      )}
                     >
                        <ChevronRight className="size-8 opacity-30 group-hover:opacity-100 group-hover:translate-x-3 transition-all" />
                        <div className="flex items-center gap-6 relative z-10">
@@ -211,62 +206,60 @@ export default function RedTeamPage() {
            <Card className="xl:col-span-3 bg-black/90 border-[12px] border-emerald-500/10 rounded-[7rem] p-16 shadow-9xl flex flex-col group overflow-hidden relative min-h-[1100px] backdrop-blur-5xl text-right">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.08),transparent)] pointer-events-none" />
               <CardHeader className="p-0 mb-16 border-b-8 border-white/5 pb-12 bg-emerald-950/10 rounded-t-[5rem] px-16 py-10 flex flex-row justify-between items-center text-right">
-                 <Badge className="bg-emerald-600/30 text-emerald-500 border-8 border-emerald-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic order-last md:order-none">FORGE_LOCKED</Badge>
+                 <Badge className="bg-emerald-600/30 text-emerald-500 border-8 border-emerald-500/40 px-16 py-8 rounded-full font-black text-5xl animate-pulse shadow-9xl uppercase tracking-[0.4em] italic order-last md:order-none">ADMIRAL_LOCKED</Badge>
                  <CardTitle className="text-5xl md:text-[12rem] text-white flex items-center gap-12 font-black uppercase italic gold-glow px-10 leading-none">
-                    Forge Feed <Terminal className="size-24 md:size-32 text-emerald-400 animate-pulse" />
+                    Admiral Feed <Terminal className="size-24 md:size-48 text-emerald-400 animate-pulse" />
                  </CardTitle>
               </CardHeader>
               <CardContent className="p-0 flex-1 relative flex flex-col space-y-12 z-10 px-12 text-right">
-                 <ScrollArea className="h-[800px] p-12 font-code scrollbar-hide bg-black/95 rounded-[5rem] border-8 border-white/5 shadow-inner">
-                    {output ? (
-                      <div className="space-y-16 animate-in fade-in zoom-in-95 duration-1000">
-                         <div className="flex items-center justify-between border-b-8 border-white/5 pb-8 px-10">
-                             <Badge className="bg-primary/10 text-primary border-none px-12 py-4 rounded-full font-black text-xl italic shadow-9xl">{new Date().toLocaleTimeString()}</Badge>
-                             <span className="text-emerald-500 font-black uppercase tracking-[0.8em] italic text-3xl md:text-5xl gold-glow flex items-center gap-10">
-                                INNATE_DNA_SERIALIZED <Dna className="size-16 animate-neural" />
-                             </span>
-                         </div>
+                 {output ? (
+                    <div className="space-y-20 animate-in fade-in zoom-in-95 duration-1000 flex-1 flex flex-col">
+                        <div className="p-20 rounded-[6rem] bg-emerald-600/5 border-[12px] border-emerald-600/30 italic text-4xl md:text-[10rem] text-gray-100 leading-tight font-black shadow-inner relative group/brief overflow-hidden text-center flex flex-col justify-center min-h-[450px]">
+                            <div className="absolute inset-0 bg-emerald-600/5 opacity-5 animate-pulse pointer-events-none" />
+                            "{output.commanderBrief}"
+                        </div>
 
-                         <div className="p-16 bg-black border-8 border-emerald-500/30 text-emerald-400 overflow-x-auto whitespace-pre rounded-[4rem] text-2xl md:text-5xl leading-tight font-black shadow-inner selection:bg-emerald-600 text-left">
-                             <pre className="whitespace-pre-wrap">
-                                 {output.geneticHijackPayload || (typeof output === 'string' ? output : JSON.stringify(output, null, 2))}
-                             </pre>
-                         </div>
-                         
-                         <div className="p-12 rounded-[4.5rem] bg-emerald-600/5 border-8 border-emerald-500/20 italic text-3xl md:text-[6rem] text-gray-100 leading-tight font-black shadow-inner relative group/note text-center flex flex-col justify-center min-h-[350px]">
-                             <div className="absolute inset-0 bg-emerald-500/5 opacity-5 animate-pulse pointer-events-none" />
-                             "{output.subjugationBrief || "سيدي القائد، شفرة الانبعاث الكلي v90.0 جاهزة؛ احقن مصفوفة الـ DNA في عصب الهدف لبدء التفرد الكوني."}"
-                         </div>
-
-                         <div className="flex justify-center pb-20">
-                             <Button onClick={() => setOutput(null)} className="h-32 px-24 bg-red-600 hover:bg-white text-white hover:text-black font-black uppercase tracking-[1em] rounded-full shadow-[0_60px_200px_rgba(220,38,38,0.5)] border-[12px] border-black/40 group text-4xl italic active:scale-95 transition-all">
-                                 <ZapOff className="size-16 mr-10 group-hover:scale-125 transition-transform" />
-                                 CLEAR_FORGE
-                             </Button>
-                         </div>
+                        {output.orchestrationChain ? (
+                           <div className="space-y-12">
+                              {output.orchestrationChain.map((step: any, i: number) => (
+                                <div key={i} className="p-10 rounded-[3rem] bg-black/95 border-8 border-white/5 flex flex-col md:flex-row items-center justify-between hover:border-primary transition-all duration-700 shadow-9xl group/step">
+                                    <Badge className="bg-emerald-600/20 text-emerald-500 border-none px-10 py-3 rounded-full font-black text-2xl italic order-last md:order-none">{step.targetDimension}</Badge>
+                                    <div className="flex items-center gap-10 text-right">
+                                        <div>
+                                            <span className="text-primary font-black uppercase text-xl mb-4 block tracking-widest">{step.agent} // ACTIVE</span>
+                                            <span className="text-3xl md:text-[6rem] font-black text-white italic gold-glow leading-none uppercase">{step.action}</span>
+                                        </div>
+                                        <div className="size-24 rounded-3xl bg-primary/10 flex items-center justify-center border-4 border-primary/40 group-hover/step:bg-primary transition-all duration-500 shadow-3xl">
+                                            <span className="text-primary text-4xl font-black group-hover/step:text-black">{i+1}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                              ))}
+                           </div>
+                        ) : (
+                          <div className="p-16 bg-black border-8 border-emerald-500/30 text-emerald-400 overflow-x-auto whitespace-pre rounded-[4rem] text-2xl md:text-5xl leading-tight font-black shadow-inner selection:bg-emerald-600 text-left">
+                              <pre className="whitespace-pre-wrap">{JSON.stringify(output, null, 2)}</pre>
+                          </div>
+                        )}
+                    </div>
+                 ) : (
+                   <div className="h-full flex flex-col items-center justify-center text-center opacity-10 gap-24 py-80">
+                      <div className="relative group/lock mx-auto">
+                        <Network className="size-64 md:size-[50rem] animate-spin-slow text-primary group-hover:scale-110 transition-transform duration-[12000ms]" />
+                        <Skull className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 md:size-64 text-emerald-400/40 animate-neural" />
+                        <div className="absolute -inset-40 border-[80px] border-dashed border-primary/5 rounded-full animate-reverse-spin opacity-20" />
                       </div>
-                    ) : (
-                      <div className="h-full flex flex-col items-center justify-center text-center opacity-10 py-60 gap-16 animate-in fade-in duration-1000">
-                         <div className="relative group/skull">
-                           <Dna className="size-64 md:size-[35rem] text-emerald-500 animate-spin-slow gold-glow group-hover:scale-110 transition-transform duration-[6000ms]" />
-                           <div className="absolute -inset-20 border-[60px] border-dashed border-emerald-500/5 rounded-full animate-spin-slow" />
-                         </div>
-                         <div className="space-y-12">
-                           <p className="text-8xl md:text-[18rem] font-black uppercase tracking-[1.5em] text-white italic leading-none gold-glow">REBIRTHING</p>
-                           <p className="text-2xl md:text-7xl font-black italic text-emerald-500/40 max-w-[120rem] mx-auto uppercase tracking-widest leading-relaxed">
-                             "سيدي <span className="text-emerald-500 font-black gold-glow underline decoration-emerald-500 decoration-8 underline-offset-[20px] shadow-9xl">المعتصم بالله</span>، مختبر التخليق v90.0 جاهز لإعادة خلق المُعِزّ؛ حدد الهدف للانبعاث."
-                           </p>
-                         </div>
-                      </div>
-                    )}
-                 </ScrollArea>
+                      <h3 className="text-8xl md:text-[22rem] font-black uppercase tracking-[2.5em] text-white italic gold-glow leading-none">Admiral Standby</h3>
+                      <p className="text-4xl md:text-[10rem] font-bold italic text-gray-500 uppercase tracking-widest max-w-[140rem] mx-auto text-center">Fusing 12 AI Agents and 12 C2 Matrices for absolute grid domination v91.1.</p>
+                   </div>
+                 )}
               </CardContent>
-              <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[6em] italic">
-                 <span>FORGE_MASTER_v90.0_AL_GHAZALI_ROOT</span>
-                 <div className="flex gap-16">
-                    <Fingerprint className="size-16 text-emerald-500 animate-pulse" />
-                    <Atom className="size-16 text-emerald-500 animate-spin-slow" />
-                 </div>
+              <div className="p-16 border-t-8 border-white/5 mt-auto flex justify-between items-center opacity-35 text-[20px] font-black uppercase tracking-[8em] italic">
+                <span>ADMIRAL_COMMAND_v91.1_AL_GHAZALI_ROOT</span>
+                <div className="flex gap-16">
+                    <Fingerprint className="size-24 text-emerald-500 animate-pulse" />
+                    <Atom className="size-24 text-emerald-500 animate-spin-slow" />
+                </div>
               </div>
            </Card>
         </div>
