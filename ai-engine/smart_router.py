@@ -3,7 +3,7 @@
 """
 Smart Router v90.0 – الأدميرال الكوني (MASTER NUCLEUS EDITION)
 المحرك المركزي لتنسيق الأبعاد الـ 16. يوجه الأوامر للنواة الصلبة فعلياً.
-تم تحديثه ليدعم النواقل الهجومية من ميثاق v6.0.
+يدعم تصنيف الضربات الهجومية، أطر C2، والتهرب السيادي.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys
@@ -15,14 +15,13 @@ class SmartRouter:
     def __init__(self, core_ref=None):
         self.core = core_ref
         self.status = "ACTIVE"
-        # مصفوفة التوجيه العصبي المحدثة لعام 2026
+        # مصفوفة التوجيه العصبي المحدثة لعام 2026 للأبعاد الـ 16
         self.bridges = {
             "strike": "ArsenalNode",
             "attack": "OmniNode",
             "scan": "ReconNode",
             "c2": "ArsenalNode",
             "exploit": "ArsenalNode",
-            "post_exploit": "ArsenalNode",
             "stealth": "God-Core",
             "remember": "MemoryNode",
             "mobile": "MobileNode",
@@ -37,7 +36,6 @@ class SmartRouter:
         if any(w in p for w in ["attack", "blitzkrieg", "إبادة", "غزو"]): return "attack"
         if any(w in p for w in ["sliver", "covenant", "havoc", "c2", "empire"]): return "c2"
         if any(w in p for w in ["metasploit", "msf", "exploit", "sqlmap", "nuclei"]): return "exploit"
-        if any(w in p for w in ["mimikatz", "bloodhound", "peas", "crackmap"]): return "post_exploit"
         if any(w in p for w in ["stealth", "ghost", "hide", "proxychains", "tor"]): return "stealth"
         if any(w in p for w in ["strike", "tool", "ضربة", "execute"]): return "strike"
         if any(w in p for w in ["scan", "recon", "استطلاع", "hunt"]): return "scan"
@@ -55,12 +53,11 @@ class SmartRouter:
         words = prompt.split()
         target_id = words[-1] if len(words) > 1 else "GLOBAL_MATRIX"
         
-        # تحديد الأمر المادي للنواة
+        # تحديد الأمر المادي للنواة بناءً على الميثاق v6.0
         command_map = {
             "attack": "full_attack",
             "c2": "execute_tool",
             "exploit": "execute_tool",
-            "post_exploit": "execute_tool",
             "stealth": "ghost_protocol",
             "strike": "execute_tool",
             "scan": "subdomain_scan",
