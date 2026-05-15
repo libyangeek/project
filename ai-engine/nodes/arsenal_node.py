@@ -2,9 +2,10 @@
 """
 عقدة الترسانة v90.0 - Arsenal Node (The Striking Hand)
 المسؤول عن تنفيذ الضربات المادية الحقيقية باستخدام الأدوات الـ 2,983.
+(c) 2026 Sovereign Systems - 영적 동반자
 """
 from .base_node import BaseNode
-import sys
+import json
 import os
 
 class ArsenalNode(BaseNode):
@@ -12,25 +13,45 @@ class ArsenalNode(BaseNode):
         etype = event["type"]
         data = event["data"]
 
-        if etype == "execute_tool" or etype == "strike":
+        # معالجة أوامر التنفيذ المادية
+        if etype in ["execute_tool", "strike", "attack"]:
             tool = data.get("tool", "nmap")
-            args = data.get("args", [])
             target = data.get("target")
             
-            # معالجة تلقائية لأهداف nmap
-            if target and tool == "nmap":
-                args = ["-sV", "-T4", target]
+            if not target:
+                self.spine.emit("tool_error", {"error": "Target coordinate missing."}, target="CockpitNode")
+                return
+
+            print(f"🔥 [ARSENAL] Materializing {tool} strike on: {target}")
             
-            print(f"🔥 [ARSENAL] Materializing {tool} strike on {target}...")
-            # استدعاء منفذ الأدوات من النواة الصلبة
+            # تجهيز الوسيطات للأدوات الشهيرة
+            args = []
+            if tool == "nmap":
+                args = ["-sV", "-T4", "-F", target]
+            elif tool == "sqlmap":
+                args = ["-u", target, "--batch", "--banner"]
+            elif tool == "assetfinder":
+                args = ["--subs-only", target]
+            else:
+                args = data.get("args", [])
+
+            # استدعاء المحرك التنفيذي المادي الحقيقي
             result = self.core_ref.executor.execute(tool, args)
             
-            # بث النتيجة للنخاع الشوكي
+            # تخليد النتيجة في الذاكرة الدلالية (MemPalace)
+            self.core.emit("store_dna", {
+                "content": result.get("stdout") or result.get("error"),
+                "metadata": {"type": "strike_result", "tool": tool, "target": target}
+            }, target="MemoryNode")
+
+            # بث النتيجة للنخاع الشوكي لعرضها في قمرة القيادة
             self.core.emit("tool_result", {
                 "tool": tool,
-                "output": result.get("stdout") or result.get("error"),
-                "status": "SUCCESS" if result.get("success") else "FAILED"
+                "target": target,
+                "output": result.get("stdout") or result.get("stderr") or result.get("error"),
+                "success": result.get("success", False),
+                "timestamp": result.get("timestamp")
             }, target="CockpitNode")
 
     def can_handle(self, cmd):
-        return cmd in ["strike", "attack", "execute_tool"]
+        return cmd in ["strike", "attack", "execute_tool", "execute"]

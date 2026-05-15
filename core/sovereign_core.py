@@ -34,10 +34,10 @@ class SovereignCore:
         self.active = False
         self.resonance = 100.0
         
-        # 0. تهيئة منفذ الأدوات المادي (The Executor)
+        # 0. تهيئة اليد المنفذة الحقيقية (The Executor)
         self.executor = ToolExecutor()
         
-        # 1. تهيئة النخاع الشوكي (Event Bus)
+        # 1. تهيئة النخاع الشوكي (Neural Spine)
         self.spine = CoreNode("God-Core", self)
         
         # 2. تهيئة الموجه الذكي (الأدميرال)
@@ -54,12 +54,13 @@ class SovereignCore:
             "BioSyncNode": BioSyncNode("BioSync", self),
             "ArbiterNode": ArbiterNode("Arbiter", self)
         }
-        self._register_nodes()
+        self._fusing_process()
 
-    def _register_nodes(self):
+    def _fusing_process(self):
+        """ربط كافة الأطراف بالنخاع الشوكي الموحد"""
         for name, node in self.nodes.items():
             self.spine.register_node(name, node)
-        self.logger.info(f"🔗 [FUSION] 16D Matrix fused. 35 knots are breathing.")
+        self.logger.info(f"🔗 [FUSION] 16D Matrix fused successfully. All nodes are breathing.")
 
     def start(self):
         self.logger.info("🧬 [GENESIS] Al-Mu'izz 16D Nucleus is rising...")
@@ -78,13 +79,14 @@ class SovereignCore:
 
     def execute_command(self, cmd, **kwargs):
         """توجيه النبضة من القائد إلى العضو المختص"""
+        # 1. استشارة العقل المنطقي (DeepSeek/Mistral)
         if cmd == "ai_query":
             from deepseek_logic import DeepSeekLogic
             logic = DeepSeekLogic()
             res = logic.reason(kwargs.get("query", "Status Report"))
             return {"status": "LOGIC_SERIALIZED", "output": res}
 
-        # مصفوفة التوجيه المادي
+        # 2. مصفوفة التوجيه المادي للأبعاد
         routing = {
             "attack": "OmniNode",
             "full_attack": "OmniNode",
@@ -92,16 +94,15 @@ class SovereignCore:
             "execute_tool": "ArsenalNode",
             "recon": "ReconNode",
             "subdomain_scan": "ReconNode",
+            "oracle_consult": "ReconNode",
+            "vulnerability_scan": "ReconNode",
             "mobile": "MobileNode",
             "mobile_strike": "MobileNode",
             "siphon": "MobileNode",
-            "list_devices": "MobileNode",
             "store_dna": "MemoryNode",
             "recall": "MemoryNode",
-            "satellite": "SatelliteNode",
             "satellite_strike": "SatelliteNode",
             "bio_bind": "BioSyncNode",
-            "signal": "ArbiterNode",
             "cellular_strike": "ArbiterNode"
         }
         

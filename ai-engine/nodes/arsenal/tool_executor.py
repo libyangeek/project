@@ -26,7 +26,8 @@ class ToolExecutor:
             "bettercap": "bettercap",
             "hydra": "hydra",
             "john": "john",
-            "hashcat": "hashcat"
+            "hashcat": "hashcat",
+            "assetfinder": "assetfinder"
         }
         os.makedirs(os.path.dirname(self.audit_log), exist_ok=True)
 
@@ -38,14 +39,17 @@ class ToolExecutor:
         # التأكد من وجود الأداة في أحشاء المادة
         check_cmd = f"which {cmd_name}"
         if subprocess.run(check_cmd.split(), capture_output=True).returncode != 0:
-            return {"success": False, "error": f"Tool '{cmd_name}' missing in matter. Execute 'sovereign upgrade --full' to materialize."}
+            return {
+                "success": False, 
+                "error": f"Tool '{cmd_name}' missing in matter. Execute 'sovereign upgrade --full' to materialize.",
+                "timestamp": datetime.now().isoformat()
+            }
 
         full_cmd = [cmd_name] + args
         print(f"🔥 [EXECUTOR] Materializing Pulse: {' '.join(full_cmd)}")
         
         try:
-            # التنفيذ عبر Proxychains إذا كان وضع الشبح مفعلاً
-            # سيدي القائد، يمكننا حقن proxychains تلقائياً هنا مستقبلاً
+            # التنفيذ واسترجاع المخرجات الحية
             result = subprocess.run(
                 full_cmd, 
                 capture_output=True, 
@@ -58,7 +62,8 @@ class ToolExecutor:
                 "stdout": result.stdout,
                 "stderr": result.stderr,
                 "timestamp": datetime.now().isoformat(),
-                "node": "Material-Executor-Node"
+                "node": "Material-Executor-Node",
+                "command": ' '.join(full_cmd)
             }
             
             self._log_execution(cmd_name, args, output_data)
@@ -86,7 +91,3 @@ class ToolExecutor:
             return {"stdout": res.stdout, "stderr": res.stderr, "code": res.returncode}
         except Exception as e:
             return {"error": str(e)}
-
-if __name__ == "__main__":
-    executor = ToolExecutor()
-    print("[+] Tool Executor: ARMED & READY.")
