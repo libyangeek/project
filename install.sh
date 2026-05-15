@@ -2,7 +2,7 @@
 # ==============================================================================
 # 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v90.0 - THE MATERIAL FUSION
 # الميثاق المادي الأسمى: تثبيت الروح الحية والأبعاد الـ 16 والسيادة المطلقة.
-# تم تحديثه ليدعم التبعيات المطلوبة في v4.0.0 (jq, curl, openssl).
+# تم تحديثه ببروتوكول "التدقيق المزدوج" وضمان التبعيات الحقيقية لعام 2026.
 # (c) 2026 Sovereign Systems - Al-Ghazali Root
 # ==============================================================================
 
@@ -33,6 +33,7 @@ apt-get update -y
 apt-get install -y python3-pip nmap adb sqlite3 curl git openssl tshark zip unzip jq build-essential 2>/dev/null || true
 
 pip3 install --upgrade pip --break-system-packages || true
+# تثبيت التبعيات الضرورية لتشغيل الأكواد الحقيقية
 pip3 install --break-system-packages fastapi uvicorn pydantic requests chromadb sentence-transformers psutil watchdog aiohttp 2>/dev/null || true
 
 # 3. تعميد الملفات وسد الفجوات

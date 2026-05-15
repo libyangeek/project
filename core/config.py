@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 إعدادات النواة v90.0 - Sovereign Config
-تم دمج النطاق الزمني لليبيا وإعدادات اللغة من v4.0.0.
+تم دمج النطاق الزمني لليبيا وإعدادات اللغة من ميثاق v4.0.0.
+(c) 2026 Sovereign Systems - Al-Ghazali Root
 """
 import os
 from dataclasses import dataclass, field
@@ -16,7 +17,8 @@ class Config:
         "motto": "영적 동반자",
         "timezone": "Africa/Tripoli",
         "lang": "ar_LY.UTF-8",
-        "log_file": "/opt/sovereign-ai-platform/audit/nucleus.log"
+        "log_file": "/opt/sovereign-ai-platform/audit/nucleus.log",
+        "offline_mode": False
     })
     
     dimensions: Dict = field(default_factory=lambda: {
@@ -33,6 +35,7 @@ class Config:
     })
 
     def load_from_env(self):
-        # ممر حقن المتغيرات الخارجية (مثلاً وضع الأوفلاين)
+        # ممر حقن المتغيرات الخارجية لضمان السيادة المادية
         if os.getenv("MUIZZ_OFFLINE") == "true":
+            self.system["offline_mode"] = True
             self.dimensions["offline_mode"] = True
