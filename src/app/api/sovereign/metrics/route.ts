@@ -1,13 +1,12 @@
-
 import { NextResponse } from 'next/server';
 import os from 'os';
 import net from 'net';
 import fs from 'fs';
+import { execSync } from 'child_process';
 
 /**
- * بوابة النزاهة المادية v90.6 - THE SUPREME TRUTH PROVIDER
- * تقوم بفحص حالة الـ 16 بُعداً السيادية عبر المنافذ والعمليات والملفات الحقيقية.
- * لا وهم بعد اليوم؛ كل رقم هنا هو نبض مادي مسحوب من عصب المصفوفة.
+ * بوابة النزاهة المادية v90.7 - THE CLOUD CONQUEROR PROVIDER
+ * تقوم بفحص حالة الـ 16 بُعداً والتحقق من بيئة السحابة والحاويات.
  */
 async function checkPort(port: number, host: string = '127.0.0.1'): Promise<boolean> {
   return new Promise((resolve) => {
@@ -18,6 +17,15 @@ async function checkPort(port: number, host: string = '127.0.0.1'): Promise<bool
     socket.on('error', () => { socket.destroy(); resolve(false); });
     socket.connect(port, host);
   });
+}
+
+function checkDockerStatus(): boolean {
+    try {
+        const status = execSync('docker info').toString();
+        return status.includes('Containers');
+    } catch (e) {
+        return false;
+    }
 }
 
 export async function GET() {
@@ -37,43 +45,38 @@ export async function GET() {
       automation: await checkPort(5678),    // n8n
       memory_db: await checkPort(6333),     // Qdrant/Chroma
       c2_sliver: await checkPort(8443),     // Sliver C2
-      c2_covenant: await checkPort(7443)    // Covenant C2
     };
 
-    // 2. فحص الأقفال المادية (Filesystem Checks)
+    // 2. فحص الأقفال والبيئة (Docker/Cloud)
+    const isDocker = fs.existsSync('/.dockerenv') || checkDockerStatus();
+    const hasGcloud = fs.existsSync('/usr/bin/gcloud');
     const bioLock = fs.existsSync('docs/voice_identity.dna');
-    const arkStatus = fs.existsSync('backups/latest_backup.txt');
-    const kevLocked = fs.existsSync('ai-engine/vulnerabilities/kev_database.json');
 
-    // 3. حساب الرنين المادي (Material Resonance)
-    // الرنين هو انعكاس لسلامة الخدمات واستقرار الـ 16 بُعداً
+    // 3. حساب الرنين المادي المطور (16D Weighted)
     const activeOrgans = Object.values(statusMap).filter(Boolean).length;
     const totalOrgans = Object.keys(statusMap).length;
-    const organResonance = (activeOrgans / totalOrgans) * 80; // 80% weight for services
-    const lockResonance = (bioLock ? 10 : 0) + (kevLocked ? 10 : 0); // 20% weight for locks
+    const organResonance = (activeOrgans / totalOrgans) * 70; 
+    const envResonance = (isDocker ? 15 : 5) + (hasGcloud ? 10 : 0);
+    const lockResonance = (bioLock ? 5 : 0);
     
     const cpuLoadFactor = Math.max(0.1, 1 - (load[0] / cpuCount));
-    const finalResonance = (organResonance + lockResonance) * cpuLoadFactor;
-
-    // 4. جرد الأسطول العليم (165 وكيلاً)
-    // يتم حساب النشاط الفعلي بناءً على رنين النواة المادي
-    const armadaActivity = Math.floor(165 * (finalResonance / 100));
+    const finalResonance = (organResonance + envResonance + lockResonance) * cpuLoadFactor;
 
     return NextResponse.json({
-      resonance: `${finalResonance.toFixed(10)}%`,
-      status: finalResonance > 95 ? "OMNIPOTENT_STABLE" : finalResonance > 70 ? "STABILIZING" : "NEURAL_DRIFT",
+      resonance: `${Math.min(100, finalResonance).toFixed(10)}%`,
+      status: finalResonance > 95 ? "OMNIPOTENT_STABLE" : "STABILIZING",
       activeDimensions: 16,
-      armadaNodes: armadaActivity,
+      armadaNodes: Math.floor(165 * (finalResonance / 100)),
       totalAgents: 165,
       cpuUsage: `${((load[0] / cpuCount) * 100).toFixed(2)}%`,
       ramUsage: `${((1 - freeMem/totalMem) * 100).toFixed(2)}%`,
-      gpuAcceleration: "CUDA_ACTIVE",
-      loadBalancing: statusMap.load_balancer ? "NGINX_STABLE" : "DIRECT_LINK",
+      environment: isDocker ? "DOCKER_CONTAINER" : "BARE_METAL",
+      cloudProvider: hasGcloud ? "GOOGLE_CLOUD" : "LOCAL_FABRIC",
       organs: {
           ...statusMap,
+          docker_engine: isDocker,
+          cloud_link: hasGcloud,
           bio_sync: bioLock,
-          ark_secured: arkStatus,
-          oracle_online: kevLocked,
           persistence: true
       },
       timestamp: new Date().toISOString(),
@@ -81,10 +84,6 @@ export async function GET() {
     });
 
   } catch (e) {
-    return NextResponse.json({ 
-        status: "LINK_RECOVERY", 
-        resonance: "0.0000000000%", 
-        armadaNodes: 0
-    });
+    return NextResponse.json({ status: "LINK_RECOVERY", resonance: "0.0000000000%" });
   }
 }
