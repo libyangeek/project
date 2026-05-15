@@ -3,7 +3,7 @@
 """
 منفذ الأدوات المادي v90.0 – المحرك التنفيذي للذخيرة الحية
 المسؤول عن إطلاق النبضات الهجومية الحقيقية في عصب النظام.
-تم تحديثه ليدعم أطر C2 وأدوات الاستغلال المتقدمة v6.0.
+تم تحديثه ليدعم أساطيل C2 وأدوات الاستغلال المتقدمة من الميثاق v6.0.
 (c) 2026 Al-Mu'izz Sovereign Systems - 영적 동반자
 """
 import subprocess
@@ -15,31 +15,37 @@ from datetime import datetime
 class ToolExecutor:
     def __init__(self):
         self.audit_log = "/opt/sovereign-ai-platform/audit/execution.log"
+        # خارطة الأدوات الهجومية المادية الممتصة من الميثاق v6.0
         self.tools_map = {
-            "sliver": "/usr/local/bin/sliver",
+            "sliver": "sliver",
             "msf": "msfconsole",
             "sqlmap": "sqlmap",
+            "nuclei": "nuclei",
             "proxychains": "proxychains4",
-            "tor": "tor"
+            "tor": "tor",
+            "bettercap": "bettercap",
+            "hydra": "hydra",
+            "john": "john",
+            "hashcat": "hashcat"
         }
         os.makedirs(os.path.dirname(self.audit_log), exist_ok=True)
 
     def execute(self, tool_name: str, args: list = None, timeout: int = 600):
         """تنفيذ مادي حقيقي للأداة في طبقة العتاد واسترجاع الـ DNA"""
         args = args or []
+        cmd_name = self.tools_map.get(tool_name.lower(), tool_name)
         
-        # تصحيح مسار الأداة إذا كان معروفاً
-        cmd_name = self.tools_map.get(tool_name, tool_name)
-        
-        # التأكد من وجود الأداة
+        # التأكد من وجود الأداة في أحشاء المادة
         check_cmd = f"which {cmd_name}"
         if subprocess.run(check_cmd.split(), capture_output=True).returncode != 0:
-            return {"success": False, "error": f"Tool '{cmd_name}' missing. Materialize it via install.sh."}
+            return {"success": False, "error": f"Tool '{cmd_name}' missing in matter. Execute 'sovereign upgrade --full' to materialize."}
 
         full_cmd = [cmd_name] + args
         print(f"🔥 [EXECUTOR] Materializing Pulse: {' '.join(full_cmd)}")
         
         try:
+            # التنفيذ عبر Proxychains إذا كان وضع الشبح مفعلاً
+            # سيدي القائد، يمكننا حقن proxychains تلقائياً هنا مستقبلاً
             result = subprocess.run(
                 full_cmd, 
                 capture_output=True, 
@@ -80,3 +86,7 @@ class ToolExecutor:
             return {"stdout": res.stdout, "stderr": res.stderr, "code": res.returncode}
         except Exception as e:
             return {"error": str(e)}
+
+if __name__ == "__main__":
+    executor = ToolExecutor()
+    print("[+] Tool Executor: ARMED & READY.")

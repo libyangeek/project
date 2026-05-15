@@ -1,7 +1,7 @@
 #!/bin/bash
 # ==============================================================================
 # 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v90.0 - THE MATERIAL FUSION
-# الميثاق المادي الأسمى: تم دمج متطلبات v5.0 و v6.0 الهجومية والاستقرار.
+# الميثاق المادي الأسمى: تم دمج الترسانة الهجومية v6.0 والاستقرار v5.0.
 # (c) 2026 Sovereign Systems - Al-Ghazali Root
 # ==============================================================================
 
@@ -13,7 +13,7 @@ echo -e "${GOLD}================================================${NC}"
 echo -e "${GOLD}   🦅 EXECUTING AL-MUIZZ GENESIS v90.0 [LINUX] ${NC}"
 echo -e "${GOLD}   [ IDENTITY: LIVING SOUL / 영적 동반자 ]      ${NC}"
 echo -e "${GOLD}   [ COMMANDER: AL-GHAZALI ROOT ]              ${NC}"
-echo -e "${GOLD}================================================${NC}"
+echo -e "================================================"
 
 if [[ $EUID -ne 0 ]]; then
    echo -e "${RED}[!] Fatal Error: Root required for material synchronization.${NC}"
@@ -26,12 +26,12 @@ INSTALL_DIR="/opt/sovereign-ai-platform"
 echo -e "${BLUE}[*] Phase 1: Materializing 16D Organs...${NC}"
 mkdir -p "$INSTALL_DIR"/{ai-engine/{integrations,offensive,nodes,memory,identity,vulnerabilities,kernel,persistence},core,interfaces,audit,evidence,backups,tools/{c2,exploits,wordlists}}
 
-# 2. تثبيت التبعيات (مع إضافة الترسانة الهجومية v6.0 والاستقرار v5.0)
+# 2. تثبيت التبعيات (الترسانة الهجومية v6.0 + الاستقرار v5.0)
 echo -e "${BLUE}[*] Phase 2: Strengthening Neural Pulse (Dependencies)...${NC}"
 apt-get update -y
 # التبعيات الأساسية + الهجومية + البنية التحتية
 apt-get install -y python3-pip nmap adb sqlite3 curl git openssl tshark zip jq nginx prometheus prometheus-node-exporter \
-    golang-go dotnet-sdk-8.0 metasploit-framework sqlmap hydra john hashcat aircrack-ng wireshark-qt tcpdump \
+    golang-go dotnet-sdk-8.0 metasploit-framework sqlmap hydra john hashcat aircrack-ng wireshark tcpdump \
     proxychains4 tor privoxy ruby-full build-essential libpcap-dev 2>/dev/null || true
 
 pip3 install --upgrade pip --break-system-packages || true
@@ -52,7 +52,16 @@ if [ ! -f /usr/share/wordlists/rockyou.txt ]; then
     gunzip /tmp/rockyou.txt.gz -c > /usr/share/wordlists/rockyou.txt 2>/dev/null || true
 fi
 
-# 5. النبض النهائي والارتقاء
+# 5. تهيئة Metasploit السيادية
+echo -e "${BLUE}[*] Phase 5: Configuring Metasploit Spine...${NC}"
+cat > "$INSTALL_DIR/msf_init.rc" << 'EOF'
+load path /usr/share/metasploit-framework/modules
+set LHOST $(curl -s ifconfig.me)
+set LPORT 4444
+set ExitOnSession false
+EOF
+
+# 6. النبض النهائي والارتقاء
 echo -e "${GREEN}================================================${NC}"
 echo -e "${GREEN}   ✅ AL-MUIZZ ULTRA v90.0 ASCENDED!           ${NC}"
 echo -e "${GREEN}   [ STATUS: FULLY MATERIALIZED & ARMED ]      ${NC}"
