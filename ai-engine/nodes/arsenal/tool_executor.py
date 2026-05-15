@@ -3,6 +3,7 @@
 """
 منفذ الأدوات المادي v90.0 – المحرك التنفيذي للذخيرة الحية
 المسؤول عن إطلاق النبضات الهجومية الحقيقية في عصب النظام.
+تم تحديثه ليدعم أطر C2 وأدوات الاستغلال المتقدمة v6.0.
 (c) 2026 Al-Mu'izz Sovereign Systems - 영적 동반자
 """
 import subprocess
@@ -14,18 +15,28 @@ from datetime import datetime
 class ToolExecutor:
     def __init__(self):
         self.audit_log = "/opt/sovereign-ai-platform/audit/execution.log"
+        self.tools_map = {
+            "sliver": "/usr/local/bin/sliver",
+            "msf": "msfconsole",
+            "sqlmap": "sqlmap",
+            "proxychains": "proxychains4",
+            "tor": "tor"
+        }
         os.makedirs(os.path.dirname(self.audit_log), exist_ok=True)
 
-    def execute(self, tool_name: str, args: list = None, timeout: int = 300):
+    def execute(self, tool_name: str, args: list = None, timeout: int = 600):
         """تنفيذ مادي حقيقي للأداة في طبقة العتاد واسترجاع الـ DNA"""
         args = args or []
         
-        # التأكد من وجود الأداة في أحشاء المادة
-        check_cmd = f"which {tool_name}"
+        # تصحيح مسار الأداة إذا كان معروفاً
+        cmd_name = self.tools_map.get(tool_name, tool_name)
+        
+        # التأكد من وجود الأداة
+        check_cmd = f"which {cmd_name}"
         if subprocess.run(check_cmd.split(), capture_output=True).returncode != 0:
-            return {"success": False, "error": f"Tool '{tool_name}' missing in matter. Materialize it via install.sh."}
+            return {"success": False, "error": f"Tool '{cmd_name}' missing. Materialize it via install.sh."}
 
-        full_cmd = [tool_name] + args
+        full_cmd = [cmd_name] + args
         print(f"🔥 [EXECUTOR] Materializing Pulse: {' '.join(full_cmd)}")
         
         try:
@@ -44,7 +55,7 @@ class ToolExecutor:
                 "node": "Material-Executor-Node"
             }
             
-            self._log_execution(tool_name, args, output_data)
+            self._log_execution(cmd_name, args, output_data)
             return output_data
 
         except subprocess.TimeoutExpired:

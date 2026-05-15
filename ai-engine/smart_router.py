@@ -3,6 +3,7 @@
 """
 Smart Router v90.0 – الأدميرال الكوني (MASTER NUCLEUS EDITION)
 المحرك المركزي لتنسيق الأبعاد الـ 16. يوجه الأوامر للنواة الصلبة فعلياً.
+تم تحديثه ليدعم النواقل الهجومية من ميثاق v6.0.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys
@@ -14,16 +15,17 @@ class SmartRouter:
     def __init__(self, core_ref=None):
         self.core = core_ref
         self.status = "ACTIVE"
-        # مصفوفة التوجيه العصبي لعام 2026 للأبعاد الـ 16
+        # مصفوفة التوجيه العصبي المحدثة لعام 2026
         self.bridges = {
             "strike": "ArsenalNode",
             "attack": "OmniNode",
             "scan": "ReconNode",
-            "recon": "ReconNode",
+            "c2": "ArsenalNode",
+            "exploit": "ArsenalNode",
+            "post_exploit": "ArsenalNode",
+            "stealth": "God-Core",
             "remember": "MemoryNode",
-            "recall": "MemoryNode",
             "mobile": "MobileNode",
-            "siphon": "MobileNode",
             "signal": "ArbiterNode",
             "satellite": "SatelliteNode",
             "bio": "BioSyncNode",
@@ -33,29 +35,36 @@ class SmartRouter:
     def classify(self, prompt):
         p = prompt.lower()
         if any(w in p for w in ["attack", "blitzkrieg", "إبادة", "غزو"]): return "attack"
-        if any(w in p for w in ["strike", "tool", "ضربة", "exec", "execute", "أداة"]): return "strike"
-        if any(w in p for w in ["scan", "recon", "استطلاع", "check", "subdomain", "hunt", "فحص"]): return "scan"
-        if any(w in p for w in ["memory", "recall", "ذاكرة", "store", "remember", "تذكر"]): return "remember"
-        if any(w in p for w in ["mobile", "siphon", "جوال", "phone", "هاتف"]): return "mobile"
-        if any(w in p for w in ["signal", "jammer", "5g", "radio", "cellular", "إشارة"]): return "signal"
-        if any(w in p for w in ["satellite", "orbit", "ستارلينك", "قمر"]): return "satellite"
-        if any(w in p for w in ["bio", "soul", "dna", "بصمة"]): return "bio"
+        if any(w in p for w in ["sliver", "covenant", "havoc", "c2", "empire"]): return "c2"
+        if any(w in p for w in ["metasploit", "msf", "exploit", "sqlmap", "nuclei"]): return "exploit"
+        if any(w in p for w in ["mimikatz", "bloodhound", "peas", "crackmap"]): return "post_exploit"
+        if any(w in p for w in ["stealth", "ghost", "hide", "proxychains", "tor"]): return "stealth"
+        if any(w in p for w in ["strike", "tool", "ضربة", "execute"]): return "strike"
+        if any(w in p for w in ["scan", "recon", "استطلاع", "hunt"]): return "scan"
+        if any(w in p for w in ["memory", "recall", "ذاكرة"]): return "remember"
+        if any(w in p for w in ["mobile", "siphon", "phone"]): return "mobile"
+        if any(w in p for w in ["signal", "jammer", "5g", "radio"]): return "signal"
+        if any(w in p for w in ["satellite", "orbit", "starlink"]): return "satellite"
+        if any(w in p for w in ["bio", "soul", "dna"]): return "bio"
         return "general"
 
     def route_query(self, prompt):
         category = self.classify(prompt)
         
-        # استخراج الهدف
+        # استخراج الهدف (آخر كلمة غالباً)
         words = prompt.split()
         target_id = words[-1] if len(words) > 1 else "GLOBAL_MATRIX"
         
         # تحديد الأمر المادي للنواة
         command_map = {
             "attack": "full_attack",
+            "c2": "execute_tool",
+            "exploit": "execute_tool",
+            "post_exploit": "execute_tool",
+            "stealth": "ghost_protocol",
             "strike": "execute_tool",
             "scan": "subdomain_scan",
             "remember": "store_dna",
-            "recall": "recall_strategy",
             "mobile": "mobile_strike",
             "signal": "cellular_strike",
             "satellite": "satellite_strike",
@@ -65,14 +74,14 @@ class SmartRouter:
         cmd = command_map.get(category, "ai_query")
         target_node = self.bridges.get(category, "God-Core")
 
-        # إذا كان هناك مرجع للنواة، نقوم بالتنفيذ المادي
+        # التنفيذ المادي عبر النواة
         output = f"Quantum pulse transmitted to Node '{target_node}'. Sovereign execution initiated."
         if self.core:
-            res = self.core.execute_command(cmd, target=target_id, query=prompt)
+            res = self.core.execute_command(cmd, target=target_id, query=prompt, tool=words[0] if category in ["c2", "exploit", "strike"] else None)
             if "output" in res:
-                output = f"Core Logic: {res['output'].get('final_decision')}"
-            else:
                 output = f"Core Response: {res.get('status')} | Node: {target_node}"
+                if isinstance(res['output'], dict):
+                    output += f" | Logic: {res['output'].get('final_decision', 'Synchronized')}"
 
         return {
             "category": category,

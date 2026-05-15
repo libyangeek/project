@@ -1,8 +1,8 @@
 #!/bin/bash
 # =============================================================================
 # 🦅 AL-MUI'ZZ SOVEREIGN UPGRADE SYSTEM v90.0 ULTRA [MASTER NUCLEUS]
-# المنسق الأسمى للترقيات: تم دمج ميزات v5.0 "المثبت الأسمى".
-# الاستقرار، الأداء، تسريع GPU، وموازنة الأحمال.
+# المنسق الأسمى للترقيات: تم دمج ميزات v5.0 و v6.0 الهجومية.
+# الاستقرار، الأداء، تسريع GPU، وأطر C2 المتقدمة.
 # (c) 2026 Sovereign Systems - Al-Ghazali Root
 # =============================================================================
 
@@ -18,47 +18,35 @@ log() { echo -e "$(date +'%Y-%m-%d %H:%M:%S') [$1] $2" | tee -a "$LOG_FILE"; }
 show_banner() {
     clear
     echo -e "${GOLD}  ================================================${NC}"
-    echo -e "${GOLD}   🦅 AL-MUIZZ UPGRADE v90.0 | ULTIMATE STABILIZER ${NC}"
-    echo -e "${GOLD}   [ GPU ACCELERATION & LOAD BALANCING ENABLED ]  ${NC}"
+    echo -e "${GOLD}   🦅 AL-MUIZZ UPGRADE v90.0 | SHADOW COMMANDER   ${NC}"
+    echo -e "${GOLD}   [ C2 MATRIX & STEALTH EVASION ENABLED ]        ${NC}"
     echo -e "${GOLD}  ================================================${NC}"
 }
 
-# --- ميزات الاستقرار v5.0 ---
-setup_load_balancer() {
-    log "INFO" "إعداد موازن الأحمال (Nginx Load Balancer)..."
-    apt-get install -y nginx 2>/dev/null || true
-    cat > /etc/nginx/conf.d/sovereign.conf <<EOF
-upstream muizz_nodes {
-    server 127.0.0.1:8000;
-}
-server {
-    listen 80;
-    server_name localhost;
-    location / {
-        proxy_pass http://muizz_nodes;
-        proxy_set_header Host \$host;
-    }
-}
-EOF
-    systemctl restart nginx 2>/dev/null || true
-    log "SUCCESS" "موازن الأحمال نشط على المنفذ 80."
-}
-
-enable_gpu() {
-    log "INFO" "فحص وتفعيل تسريع GPU (CUDA)..."
-    if command -v nvidia-smi &> /dev/null; then
-        log "SUCCESS" "بطاقة NVIDIA مكتشفة. تفعيل بروتوكول CUDA."
-        pip3 install --break-system-packages torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121 2>/dev/null || true
-    else
-        log "WARN" "لم يتم العثور على GPU. استخدام المعالج المركزي (CPU)."
+# --- ميزات السيادة الهجومية v6.0 ---
+setup_c2_matrix() {
+    log "INFO" "إعداد مصفوفة أطر C2 (Sliver, Empire, Havoc)..."
+    # Sliver C2
+    if ! command -v sliver &> /dev/null; then
+        curl https://sliver.sh/install | sudo bash -s -- --skip-prompt 2>/dev/null || log "WARN" "Sliver setup failed."
     fi
+    log "SUCCESS" "مصفوفة C2 مستقرة وجاهزة للالتحام."
 }
 
-setup_monitoring() {
-    log "INFO" "تثبيت نظام المراقبة المادي (Prometheus/Grafana)..."
-    apt-get install -y prometheus prometheus-node-exporter 2>/dev/null || true
-    systemctl enable --now prometheus-node-exporter 2>/dev/null || true
-    log "SUCCESS" "نظام المراقبة مستقر."
+enable_stealth() {
+    log "INFO" "تفعيل وضع التهرب (Stealth Mode) وتعميد الأدوات..."
+    # إعداد Proxychains و Tor
+    systemctl enable --now tor 2>/dev/null || true
+    sed -i 's/^socks4.*/socks5 127.0.0.1 9050/' /etc/proxychains4.conf 2>/dev/null || true
+    log "SUCCESS" "وضع الشبح نشط عبر مصفوفة البروكسي."
+}
+
+# --- ميزات الاستقرار v5.0 ---
+setup_infrastructure() {
+    log "INFO" "تحصين البنية التحتية (Nginx + Monitoring)..."
+    apt-get install -y nginx prometheus prometheus-node-exporter 2>/dev/null || true
+    systemctl restart nginx prometheus-node-exporter 2>/dev/null || true
+    log "SUCCESS" "البنية التحتية محصنة ومراقبة."
 }
 
 # --- المحرك الرئيسي ---
@@ -67,16 +55,18 @@ main() {
     if [[ $EUID -ne 0 ]]; then log "ERROR" "Root required."; exit 1; fi
     
     echo -e "\n${GOLD}[ Sovereign Upgrade Directive ]:${NC}"
-    echo "1) Full Material Sync (Stabilize + Optimize + Backup)"
-    echo "2) GPU & Performance Tuning Only"
-    echo "3) Infrastructure (Nginx + Monitoring)"
+    echo "1) Full Material Sync (Offensive + Stable + Hardware)"
+    echo "2) Offensive Only (C2 Frameworks + Exploits)"
+    echo "3) Stealth & Evasion (Tor + Proxychains + Masking)"
+    echo "4) Infrastructure (Nginx + Prometheus)"
     echo "q) Exit"
     
     read -p "Select: " choice
     case $choice in
-        1) enable_gpu; setup_load_balancer; setup_monitoring; log "SUCCESS" "Full Sync Complete." ;;
-        2) enable_gpu ;;
-        3) setup_load_balancer; setup_monitoring ;;
+        1) setup_c2_matrix; enable_stealth; setup_infrastructure; log "SUCCESS" "Full Sync Complete." ;;
+        2) setup_c2_matrix ;;
+        3) enable_stealth ;;
+        4) setup_infrastructure ;;
         q) exit 0 ;;
     esac
 }
