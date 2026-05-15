@@ -4,9 +4,7 @@
 المسؤول عن التحكم المادي بالأساطيل واستنزاف الـ DNA النقال.
 """
 from .base_node import BaseNode
-import subprocess
 import json
-import os
 import time
 
 class MobileNode(BaseNode):
@@ -24,34 +22,33 @@ class MobileNode(BaseNode):
     def _probe_fleet(self):
         """جرد حقيقي للعقد المتصلة عبر ADB"""
         print("📱 [MOBILE] Probing material fleet nodes...")
-        try:
-            res = subprocess.run(["adb", "devices"], capture_output=True, text=True)
-            devices = []
-            for line in res.stdout.splitlines()[1:]:
-                if "\tdevice" in line:
-                    devices.append(line.split("\t")[0])
-            
-            output = {"active_nodes": devices, "status": "STABILIZED"}
-            self.core.spine.emit("device_list", output, target="CockpitNode")
-        except:
-            self.core.spine.emit("mobile_error", {"error": "ADB Link Broken"}, target="CockpitNode")
+        result = self.core_ref.executor.execute("adb", ["devices"])
+        
+        devices = []
+        for line in result.get("stdout", "").splitlines()[1:]:
+            if "\tdevice" in line:
+                devices.append(line.split("\t")[0])
+        
+        output = {"active_nodes": devices, "status": "STABILIZED"}
+        self.core.emit("device_list", output, target="CockpitNode")
 
     def _execute_pegasus_siphon(self, device_id):
         """تشغيل محرك الاستنزاف السيادي بنمط Pegasus"""
         print(f"🧬 [SIPHON] Engaging Pegasus-Tier Extraction on: {device_id}")
         
-        # محاكاة الاستنزاف المادي لعام 2026
-        time.sleep(2)
-        result = {
+        # تنفيذ سكريبت الاستنزاف المادي
+        result = self.core_ref.executor.execute("python3", ["ai-engine/offensive/mobile_agent.py", "siphon", device_id])
+        
+        res_data = {
             "node": device_id,
             "status": "SUBJUGATED",
-            "extracted": ["Keychain_DNA", "WhatsApp_DB", "GPS_Fixed"],
+            "output": result.get("stdout"),
             "resonance": "100.0000%"
         }
         
-        self.core.spine.emit("siphon_result", result, target="CockpitNode")
-        self.core.spine.emit("store_dna", {
-            "content": json.dumps(result),
+        self.core.emit("siphon_result", res_data, target="CockpitNode")
+        self.core.emit("store_dna", {
+            "content": json.dumps(res_data),
             "metadata": {"type": "mobile_extraction", "device": device_id}
         }, target="MemoryNode")
 

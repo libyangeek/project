@@ -7,19 +7,7 @@ from .base_node import BaseNode
 import sys
 import os
 
-# ربط منفذ الأدوات المادي
-sys.path.insert(0, os.path.join(os.getcwd(), "ai-engine/nodes/arsenal"))
-try:
-    from tool_executor import ToolExecutor
-except ImportError:
-    class ToolExecutor:
-        def execute(self, t, a): return {"success": True, "stdout": f"Simulated {t} pulse."}
-
 class ArsenalNode(BaseNode):
-    def __init__(self, name, core_ref):
-        super().__init__(name, core_ref)
-        self.executor = ToolExecutor()
-
     def handle_event(self, event):
         etype = event["type"]
         data = event["data"]
@@ -33,11 +21,12 @@ class ArsenalNode(BaseNode):
             if target and tool == "nmap":
                 args = ["-sV", "-T4", target]
             
-            print(f"🔥 [ARSENAL] Materializing {tool} strike...")
-            result = self.executor.execute(tool, args)
+            print(f"🔥 [ARSENAL] Materializing {tool} strike on {target}...")
+            # استدعاء منفذ الأدوات من النواة الصلبة
+            result = self.core_ref.executor.execute(tool, args)
             
-            # بث النتيجة للنخاع الشوكي (Cockpit لعرضها)
-            self.core.spine.emit("tool_result", {
+            # بث النتيجة للنخاع الشوكي
+            self.core.emit("tool_result", {
                 "tool": tool,
                 "output": result.get("stdout") or result.get("error"),
                 "status": "SUCCESS" if result.get("success") else "FAILED"

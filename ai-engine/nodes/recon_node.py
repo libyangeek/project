@@ -4,9 +4,7 @@
 المسؤول عن استجواب الأرشيفات واستخراج الـ DNA الرقمي للأهداف.
 """
 from .base_node import BaseNode
-import subprocess
 import json
-import os
 
 class ReconNode(BaseNode):
     def handle_event(self, event):
@@ -25,39 +23,30 @@ class ReconNode(BaseNode):
         """بدء سلسلة الاستكشاف المادية"""
         print(f"👁️ [RECON] Dissecting Subdomains for: {target}")
         
-        # تنفيذ حقيقي باستخدام assetfinder إذا توفر
-        try:
-            cmd = f"assetfinder --subs-only {target}"
-            result = subprocess.run(cmd.split(), capture_output=True, text=True, timeout=60)
-            subs = result.stdout.splitlines() if result.returncode == 0 else [f"api.{target}", f"vpn.{target}", f"admin.{target}"]
-            
-            output = {
-                "target": target,
-                "subdomains": subs[:20],
-                "status": "MATERIALIZED",
-                "count": len(subs)
-            }
-            
-            self.core.spine.emit("recon_result", output, target="CockpitNode")
-            
-            # تخليد في الذاكرة
-            self.core.spine.emit("store_dna", {
-                "content": json.dumps(output),
-                "metadata": {"type": "recon_intel", "target": target}
-            }, target="MemoryNode")
-            
-        except Exception as e:
-            self.core.spine.emit("recon_error", {"error": str(e)}, target="CockpitNode")
+        # تنفيذ حقيقي باستخدام assetfinder
+        result = self.core_ref.executor.execute("assetfinder", ["--subs-only", target])
+        subs = result.get("stdout", "").splitlines()
+        
+        output = {
+            "target": target,
+            "subdomains": subs[:20],
+            "status": "MATERIALIZED",
+            "count": len(subs)
+        }
+        
+        self.core.emit("recon_result", output, target="CockpitNode")
+        
+        # تخليد في الذاكرة GEPA
+        self.core.emit("store_dna", {
+            "content": json.dumps(output),
+            "metadata": {"type": "recon_intel", "target": target}
+        }, target="MemoryNode")
 
     def _hunt_shodan(self, query):
         print(f"🐍 [ORACLE] Hunting Shodan for DNA: {query}")
         # استدعاء أفعى البحث (Wrapper)
-        try:
-            from vulnerabilities.shodan_wrapper import ShodanWrapper
-            results = ShodanWrapper().hunt(query)
-            self.core.spine.emit("shodan_result", results, target="CockpitNode")
-        except:
-            self.core.spine.emit("shodan_error", {"error": "Oracle Link Drift"}, target="CockpitNode")
+        result = self.core_ref.executor.execute("python3", ["ai-engine/vulnerabilities/shodan_wrapper.py", "hunt", query])
+        self.core.emit("shodan_result", result.get("stdout"), target="CockpitNode")
 
     def can_handle(self, cmd):
         return cmd in ["subdomain_scan", "recon", "shodan_hunt", "scan"]
