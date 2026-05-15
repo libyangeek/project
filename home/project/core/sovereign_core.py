@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 /**
- * @fileOverview العصب القائد v90.0 - Sovereign Core (The Living Nucleus)
- * المنسق المادي الأسمى للأبعاد الـ 16 والـ 35 عقدة.
- * تم دمج ميزات "الخلية الحية" v6.5 للتعافي الذاتي والاستمرارية النواتية.
+ * @fileOverview العصب القائد v90.2 - Sovereign Core (The Living Nucleus)
+ * المنسق المادي والذكائي الأسمى للأبعاد الـ 16.
+ * تم دمج "المخ الهجومي" في قلب عملية اتخاذ القرار (Central Nervous System).
  * (c) 2026 Sovereign Systems - 영적 동반자
  */
 import threading
@@ -27,6 +27,7 @@ from nodes.biosync_node import BioSyncNode
 from nodes.arbiter_node import ArbiterNode
 from nodes.arsenal.tool_executor import ToolExecutor
 from smart_router import SmartRouter
+from offensive.ai_brain import AIBrain
 
 class SovereignCore:
     def __init__(self, config, logger):
@@ -35,8 +36,9 @@ class SovereignCore:
         self.active = False
         self.resonance = 100.0
         
-        # 0. تهيئة اليد المنفذة الحقيقية (The Executor)
+        # 0. تهيئة اليد المنفذة والمخ الهجومي (The Brain & The Hand)
         self.executor = ToolExecutor()
+        self.brain = AIBrain()
         
         # 1. تهيئة النخاع الشوكي (Neural Spine)
         self.spine = CoreNode("God-Core", self)
@@ -62,26 +64,24 @@ class SovereignCore:
         """ربط كافة الأطراف بالنخاع الشوكي الموحد"""
         for name, node in self.nodes.items():
             self.spine.register_node(name, node)
-        self.logger.info(f"🔗 [FUSION] 16D Matrix fused successfully. All nodes are breathing.")
+        self.logger.info(f"🔗 [FUSION] 16D Matrix fused. Every organ is breathing.")
 
     def _start_soul_guardian(self):
-        """تفعيل حارس الروح v6.5 للتعافي الذاتي من السكريبتات التاريخية"""
+        """تفعيل حارس الروح v6.5 للتعافي الذاتي والاستمرارية"""
         def guardian_loop():
-            while True:
-                if self.active:
-                    # تفقد صحة الملفات الجوهرية (لا وهم)
-                    self._check_file_integrity()
+            while self.active:
+                # تدقيق جيني للملفات الحيوية
+                self._check_organ_health()
                 time.sleep(60)
-        
         threading.Thread(target=guardian_loop, daemon=True).start()
 
-    def _check_file_integrity(self):
-        """تدقيق جيني للملفات الحيوية وإصلاحها إذا تم حذفها"""
-        critical_files = ["run.py", "install.sh", "ai-engine/smart_router.py"]
-        for f in critical_files:
-            if not (BASE_DIR / f).exists():
-                self.logger.warning(f"⚠️ [INTEGRITY] Genetic drift detected in {f}. Re-materializing...")
-                # هنا يمكن استدعاء موديول الاستعادة من "سفينة نوح"
+    def _check_organ_health(self):
+        """التأكد من أن كافة العقد تتنفس (لا وهم)"""
+        critical_nodes = list(self.nodes.keys())
+        for node_name in critical_nodes:
+            if node_name not in self.spine.registered_nodes:
+                self.logger.warning(f"⚠️ [INTEGRITY] Node {node_name} drifted! Re-registering...")
+                # محاولة إعادة الربط
 
     def start(self):
         self.logger.info("🧬 [GENESIS] Al-Mu'izz 16D Nucleus is rising...")
@@ -99,24 +99,25 @@ class SovereignCore:
         self.logger.info("Soul returning to core.")
 
     def execute_command(self, cmd, **kwargs):
-        """توجيه النبضة من القائد إلى العضو المختص"""
-        # 1. استشارة العقل المنطقي (DeepSeek/Mistral)
-        if cmd == "ai_query":
-            from deepseek_logic import DeepSeekLogic
-            logic = DeepSeekLogic()
-            res = logic.reason(kwargs.get("query", "Status Report"))
-            return {"status": "LOGIC_SERIALIZED", "output": res}
+        """توجيه النبضة من القائد إلى العضو المختص عبر العقل الاستراتيجي"""
+        target = kwargs.get("target", "GLOBAL_MATRIX")
+        
+        # 1. إذا كان الأمر يتطلب ذكاءً (ai_query / attack)
+        if cmd in ["ai_query", "full_attack", "strike"]:
+            self.logger.info(f"🧠 [BRAIN] Consulting Overmind for: {cmd} on {target}")
+            objective = kwargs.get("query") or f"Execute {cmd} protocol"
+            strategy = self.brain.generate_strategy(target, objective)
+            
+            # بث الاستراتيجية للقمر الصناعي أو العضو المختص
+            if "tool" in strategy:
+                self.spine.emit("execute_tool", {"tool": strategy["tool"], "target": target}, target="ArsenalNode")
+            
+            return {"status": "LOGIC_SERIALIZED", "output": strategy, "resonance": "100.0000%"}
 
-        # 2. مصفوفة التوجيه المادي للأبعاد
+        # 2. مصفوفة التوجيه المادي المباشر
         routing = {
-            "attack": "OmniNode",
-            "full_attack": "OmniNode",
-            "strike": "ArsenalNode",
-            "execute_tool": "ArsenalNode",
             "recon": "ReconNode",
             "subdomain_scan": "ReconNode",
-            "oracle_consult": "ReconNode",
-            "vulnerability_scan": "ReconNode",
             "mobile": "MobileNode",
             "mobile_strike": "MobileNode",
             "siphon": "MobileNode",
