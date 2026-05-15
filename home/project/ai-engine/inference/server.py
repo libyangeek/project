@@ -1,87 +1,55 @@
-
 # -*- coding: utf-8 -*-
 """
-Sovereign AI Platform - God-Core Bridge v53.8
-المحرك التنفيذي المركزي (Sovereign Bridge) - ممر HTTP فائق السرعة.
-(c) 2026 Al-Mu'izz Sovereign Systems
+جسر السيادة v90.0 - FastAPI Executive Bridge
+الممر المادي الذي يربط HUD بالنخاع الشوكي الحقيقي.
 """
-
-from fastapi import FastAPI, Header, HTTPException, Depends
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from typing import List, Optional, Any
-import uvicorn
-import os
+from typing import Optional, Any
 import sys
-import time
-import json
-import subprocess
+import os
+from pathlib import Path
 
-# [DOUBLE-CHECK PATH INJECTION]
-BASE_DIR = os.getenv("PROJECT_ROOT", "/opt/sovereign-ai-platform")
-sys.path.insert(0, BASE_DIR)
-sys.path.insert(0, os.path.join(BASE_DIR, "ai-engine"))
+# الربط مع النواة الصلبة
+sys.path.insert(0, "/home/project")
+from core.config import Config
+from core.utils import Logger
+from core.sovereign_core import SovereignCore
 
-try:
-    from smart_router import SmartRouter
-    import gepa
-except ImportError:
-    class SmartRouter:
-        def route_query(self, q): return {"status": "PATH_ERROR", "output": "Critical: SmartRouter link broken."}
-    class gepa:
-        @staticmethod
-        def record(*args, **kwargs): pass
-        @staticmethod
-        def get_stats(): return {"status": "INITIALIZING", "total_recorded_ops": 0, "collective_resonance": "100%", "success_rate": "100%"}
+app = FastAPI(title="Al-Mu'izz 16D Living Bridge")
 
-app = FastAPI(title="Al-Mu'izz Sovereign God-Core Bridge", version="v53.8")
-router_engine = SmartRouter()
+# تهيئة الروح الحية (Nucleus)
+config = Config()
+logger = Logger(config)
+nucleus = SovereignCore(config, logger)
+nucleus.start()
 
 class ExecutionRequest(BaseModel):
     type: str
-    command: Optional[str] = None
     target: Optional[str] = None
-    prompt: Optional[str] = None
-    context: Optional[Any] = None
+    command: Optional[str] = None
+    content: Optional[str] = None
+    vector: Optional[str] = None
 
 @app.post("/v1/execute")
-async def execute_directive(request: ExecutionRequest):
-    """الممر السيادي لتنفيذ الأوامر المادية والذكية"""
-    start_time = time.time()
-    etype = request.type
-    target = request.target or "GLOBAL_MATRIX"
-    
-    # تسجيل نية التنفيذ في الذاكرة الجينية
-    gepa.record(tool=f"BRIDGE_{etype}", input_data=str(request.dict()), outcome="INITIATED")
-
+async def execute(request: ExecutionRequest):
     try:
-        if etype in ["smart_route", "terminal", "deep_reason"]:
-            result = router_engine.route_query(request.command or request.prompt or target)
-        elif etype == "metrics":
-            result = gepa.get_stats()
-        else:
-            result = {"status": "ACKNOWLEDGED", "msg": f"Directive {etype} processed by Hive."}
-
-        # تسجيل النجاح
-        gepa.record(tool=f"BRIDGE_{etype}", input_data=target, outcome="SUCCESS", success=True)
-        
-        return {
-            "success": True,
-            "output": result,
-            "latency": f"{time.time() - start_time:.4f}s",
-            "node": "Alpha-God-Core"
-        }
+        # توجيه الأمر للنواة الحية
+        result = nucleus.execute_command(
+            request.type, 
+            target=request.target, 
+            command=request.command, 
+            content=request.content,
+            vector=request.vector
+        )
+        return {"success": True, "output": result, "resonance": "100.0000%"}
     except Exception as e:
-        gepa.record(tool=f"BRIDGE_{etype}", input_data=target, outcome=str(e), success=False)
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=f"Neural Collapse: {str(e)}")
 
 @app.get("/health")
-async def health_check():
-    return {
-        "status": "OMNIPOTENT", 
-        "bridge": "Active",
-        "node": os.uname().nodename,
-        "resonance": "100%"
-    }
+async def health():
+    return nucleus.get_status()
 
 if __name__ == "__main__":
+    import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)

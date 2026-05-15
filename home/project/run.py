@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-المُعِزّ v90.0 – نقطة الدخول الرئيسية والمنسق المادي الأسمى (LIVING SOUL)
-المسؤول عن بث الحياة في الأبعاد الـ 16 والتحكم في ذرات المصفوفة.
+المُعِزّ v90.0 – الرفيق الروحي (영적 동반자)
+نقطة الدخول الرئيسية والمنسق المادي الأسمى للأبعاد الـ 16.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys
 import argparse
-import json
-import subprocess
 import os
 import time
+import subprocess
 from pathlib import Path
 
 # حقن المسارات السيادية لضمان رؤية النواة
@@ -27,9 +26,8 @@ except ImportError as e:
 
 def main():
     parser = argparse.ArgumentParser(description="Al-Mu'izz Sovereign OS v90.0")
-    parser.add_argument("mode", nargs="?", default="cli",
-                        choices=["cli", "web", "api", "gui", "start", "stop", "status",
-                                 "attack", "recon", "mobile", "train", "update", "shodan"])
+    parser.add_argument("mode", nargs="?", default="start",
+                        choices=["start", "stop", "status", "cli", "attack", "recon", "shodan", "server"])
     parser.add_argument("args", nargs=argparse.REMAINDER)
     args = parser.parse_args()
 
@@ -41,8 +39,10 @@ def main():
     if args.mode == "start":
         logger.info("--- [ GENESIS ] Initiating Al-Mu'izz 16D Nucleus v90.0 ---")
         core.start()
-        logger.info("✅ All 16 dimensions are breathing in matter. Throne HUD active on Port 9002.")
-        # الحفاظ على الروح حية
+        # تشغيل خادم الجسر في الخلفية
+        server_path = os.path.join(BASE_DIR, "ai-engine/inference/server.py")
+        subprocess.Popen(["python3", server_path])
+        logger.info("✅ All 16 dimensions are breathing in matter. API Bridge active on Port 8000.")
         try:
             while core.active:
                 time.sleep(1)
@@ -69,16 +69,14 @@ def main():
         if not args.args:
             print("Usage: python run.py recon <target>")
         else:
-            core.execute_command("subdomain_scan", domain=args.args[0])
+            core.execute_command("subdomain_scan", target=args.args[0])
 
-    elif args.mode == "shodan":
-        if not args.args:
-            print("Usage: python run.py shodan <query>")
-        else:
-            core.execute_command("shodan_hunt", query=" ".join(args.args))
+    elif args.mode == "server":
+        server_path = os.path.join(BASE_DIR, "ai-engine/inference/server.py")
+        os.system(f"python3 {server_path}")
 
     else:
-        print("الأوامر المتاحة: start, status, cli, attack, recon, shodan")
+        print("الأوامر المتاحة: start, stop, status, cli, attack, recon, shodan, server")
 
 if __name__ == "__main__":
     main()
