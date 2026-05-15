@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-جسر السيادة v90.0 - Fast-Pulse Executive Bridge
+جسر السيادة v90.0 - FastAPI Executive Bridge
 الممر المادي الذي يربط HUD بالنخاع الشوكي الحقيقي.
-(c) 2026 Sovereign Systems - 영적 동반자
 """
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -19,7 +18,7 @@ from core.sovereign_core import SovereignCore
 
 app = FastAPI(title="Al-Mu'izz 16D Living Bridge")
 
-# تهيئة الروح الحية (Nucleus) لمرة واحدة عند بدء الجسر
+# تهيئة الروح الحية (Nucleus)
 config = Config()
 logger = Logger(config)
 nucleus = SovereignCore(config, logger)
@@ -31,17 +30,10 @@ class ExecutionRequest(BaseModel):
     command: Optional[str] = None
     content: Optional[str] = None
     vector: Optional[str] = None
-    prompt: Optional[str] = None
 
 @app.post("/v1/execute")
 async def execute(request: ExecutionRequest):
     try:
-        # إذا كان الطلب استفساراً استراتيجياً، نمرره للموجه الذكي
-        if request.type == "smart_route":
-            result = nucleus.router.route_query(request.command or request.prompt or request.target)
-            return {"success": True, "output": result, "resonance": "100.0000%"}
-            
-        # توجيه الأوامر المباشرة للنواة
         result = nucleus.execute_command(
             request.type, 
             target=request.target, 
@@ -59,5 +51,4 @@ async def health():
 
 if __name__ == "__main__":
     import uvicorn
-    # التشغيل على منفذ 8000 ليكون هو "الممر المادي"
     uvicorn.run(app, host="0.0.0.0", port=8000)

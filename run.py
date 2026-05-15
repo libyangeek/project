@@ -9,6 +9,7 @@ import sys
 import argparse
 import os
 import time
+import subprocess
 from pathlib import Path
 
 # حقن المسارات السيادية لضمان رؤية النواة
@@ -26,7 +27,7 @@ except ImportError as e:
 def main():
     parser = argparse.ArgumentParser(description="Al-Mu'izz Sovereign OS v90.0")
     parser.add_argument("mode", nargs="?", default="start",
-                        choices=["start", "stop", "status", "cli", "attack", "recon", "update"])
+                        choices=["start", "stop", "status", "cli", "attack", "recon", "update", "server"])
     parser.add_argument("args", nargs=argparse.REMAINDER)
     args = parser.parse_args()
 
@@ -38,10 +39,15 @@ def main():
     if args.mode == "start":
         logger.info("--- [ GENESIS ] Initiating Al-Mu'izz 16D Nucleus v90.0 ---")
         core.start()
-        # تشغيل خادم الواجهة في خلفية الوعي
-        logger.info("✅ All 16 dimensions are breathing in matter. Throne HUD active on Port 9002.")
-        while core.active:
-            time.sleep(1)
+        # تشغيل خادم الجسر في الخلفية
+        server_path = os.path.join(BASE_DIR, "ai-engine/inference/server.py")
+        subprocess.Popen(["python3", server_path])
+        logger.info("✅ All 16 dimensions are breathing in matter. API Bridge active on Port 8000.")
+        try:
+            while core.active:
+                time.sleep(1)
+        except KeyboardInterrupt:
+            core.stop()
 
     elif args.mode == "status":
         status = core.get_status()
@@ -65,8 +71,12 @@ def main():
         else:
             core.execute_command("recon", target=args.args[0])
 
+    elif args.mode == "server":
+        server_path = os.path.join(BASE_DIR, "ai-engine/inference/server.py")
+        os.system(f"python3 {server_path}")
+
     else:
-        print("الأوامر المتاحة: start, status, cli, attack, recon, update")
+        print("الأوامر المتاحة: start, stop, status, cli, attack, recon, update, server")
 
 if __name__ == "__main__":
     main()

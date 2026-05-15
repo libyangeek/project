@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 النخاع الشوكي v90.0 - Core Node (Neural Spine)
-ناقل الأحداث المركزي الذي يضمن وصول إرادة القائد لكل ذرة في المصفوفة.
+ناقل الأحداث المركزي الذي يدير تدفق الأوامر بين أبعاد المصفوفة.
 """
 import threading
 import queue
@@ -16,10 +16,10 @@ class CoreNode(BaseNode):
 
     def register_node(self, node_name, node_instance):
         self.registered_nodes[node_name] = node_instance
-        node_instance.set_spine(self) # ربط الطرف بالنخاع
+        node_instance.set_spine(self)
 
     def emit(self, event_type, data, target=None):
-        """بث نبضة عصبية (Pub/Sub)"""
+        """بث نبضة عصبية في الحافلة المركزية"""
         self.event_bus.put({
             "type": event_type,
             "data": data,
@@ -28,25 +28,16 @@ class CoreNode(BaseNode):
         })
 
     def _run(self):
-        print(f"[*] [SPINE] Neural Bus active. Monitoring 16 dimensions...")
+        print(f"[*] [SPINE] Neural Bus active. Monitoring all dimensions...")
         while self._running:
             try:
                 event = self.event_bus.get(timeout=1)
                 target = event.get("target")
-                
                 if target and target in self.registered_nodes:
-                    # توجيه عصبي دقيق
                     self.registered_nodes[target].handle_event(event)
                 else:
-                    # بث عام لكافة الأعضاء
                     for node in self.registered_nodes.values():
                         node.handle_event(event)
-                
                 self.event_bus.task_done()
             except queue.Empty:
                 pass
-
-    def handle(self, cmd, **kwargs):
-        if cmd == "status":
-            return {"nodes": list(self.registered_nodes.keys()), "bus_size": self.event_bus.qsize()}
-        return {"error": "Unknown core law."}

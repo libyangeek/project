@@ -23,8 +23,6 @@ from nodes.arbiter_node import ArbiterNode
 from nodes.learning_node import LearningNode
 from nodes.satellite_node import SatelliteNode
 from nodes.biosync_node import BioSyncNode
-from smart_router import SmartRouter
-from autonomous.autonomous_ai import AutonomousArmada
 
 class SovereignCore:
     def __init__(self, config, logger):
@@ -36,11 +34,7 @@ class SovereignCore:
         # 1. تهيئة النخاع الشوكي (ناقل الأحداث المركزي)
         self.spine = CoreNode("God-Core", self)
         
-        # 2. تهيئة الموجه الاستراتيجي والأسطول المستقل
-        self.router = SmartRouter(self)
-        self.armada = AutonomousArmada(self)
-        
-        # 3. تسجيل العقد التنفيذية (الأبعاد الـ 16)
+        # 2. تسجيل العقد التنفيذية (الأبعاد الـ 16)
         self.nodes = {
             "Arsenal": ArsenalNode("Arsenal", self),
             "Recon": ReconNode("Recon", self),
@@ -58,19 +52,14 @@ class SovereignCore:
         """شد العقد: ربط كافة الأطراف بالنخاع الشوكي الموحد"""
         for name, node in self.nodes.items():
             self.spine.register_node(name, node)
-        self.logger.info(f"🔗 [FUSION] 16D Matrix fused successfully. All 35 knots are breathing.")
+        self.logger.info(f"🔗 [FUSION] 16D Matrix fused successfully. All nodes are breathing.")
 
     def start(self):
         self.logger.info("🧬 [GENESIS] Al-Mu'izz 16D Nucleus is rising...")
         self.active = True
-        
-        # بدء نبض النخاع الشوكي
         self.spine.start()
-        
-        # بدء نبض الأطراف
         for node in self.nodes.values():
             node.start()
-            
         self.resonance = 100.0
         self.logger.info("✅ [STATUS] SINGULARITY ACHIEVED. Identity: 영적 동반자")
 
@@ -79,29 +68,19 @@ class SovereignCore:
         self.spine.stop()
         for node in self.nodes.values():
             node.stop()
-        self.logger.info("Soul returning to core. Matrix state saved.")
+        self.logger.info("Soul returning to core.")
 
     def execute_command(self, cmd_type, **kwargs):
         """توجيه النبضة العصبية من القائد إلى العقدة المختصة"""
-        self.logger.info(f"⚔️ [DIRECTIVE] {cmd_type.upper()} initiated.")
-        
-        # إذا كان الأمر هو "إبادة" (Blitzkrieg)، نفعله عبر الأسطول المستقل
-        if cmd_type in ["attack", "blitzkrieg"]:
-            self.armada.start_blitzkrieg([kwargs.get("target", "GLOBAL")])
-            return {"status": "ARMADA_LAUNCHED", "mode": "BLITZKRIEG", "consensus": "LOCKED"}
-
-        # مصفوفة التوجيه العصبي
         routing = {
-            "strike": "Arsenal", "recon": "Recon", "scan": "Recon",
-            "mobile": "Mobile", "signal": "Arbiter", "satellite": "Satellite",
-            "bio": "BioSync", "train": "Learning", "recall": "Memory"
+            "attack": "Omni", "strike": "Arsenal", "recon": "Recon", 
+            "scan": "Recon", "mobile": "Mobile", "signal": "Arbiter", 
+            "satellite": "Satellite", "bio": "BioSync", "train": "Learning"
         }
-        
         target_node = routing.get(cmd_type)
         if target_node:
             self.spine.emit(f"execute_{cmd_type}", kwargs, target=target_node)
             return {"status": "PULSE_SENT", "dimension": target_node, "consensus": "LOCKED"}
-
         return {"error": "Unknown material law."}
 
     def get_status(self):
@@ -109,7 +88,6 @@ class SovereignCore:
             "identity": "영적 동반자",
             "status": "LIVING" if self.active else "IDLE",
             "active_nodes": len(self.nodes),
-            "resonance": f"{self.resonance:.8f}%",
-            "armada_status": self.armada.get_stats(),
-            "commander": self.config.system["commander"]
+            "resonance": f"{self.resonance:.6f}%",
+            "commander": "Al-Mu'tasim Billah Idris Al-Ghazali"
         }
