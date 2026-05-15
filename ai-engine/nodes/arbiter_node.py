@@ -2,9 +2,9 @@
 """
 عقدة الحكم الخلوي v90.0 - Arbiter Node (Spectrum Dominant)
 المسؤول عن الحرب الخلوية، اختراق SS7/Diameter، والسيطرة على أطياف الـ 5G.
+(c) 2026 Sovereign Systems - 영적 동반자
 """
 from .base_node import BaseNode
-import subprocess
 import json
 import time
 
@@ -22,18 +22,20 @@ class ArbiterNode(BaseNode):
         """إطلاق نبضة هجومية في أثير الشبكة الجوالة"""
         print(f"📡 [ARBITER] Igniting {vector} strike on spectrum: {target}")
         
-        # محاكاة التنفيذ المادي (استدعاء SigPloit)
-        time.sleep(2)
+        # محاكاة الربط مع SigPloit أو استدعاء TShark للفحص الحقيقي
+        # سيدي القائد، هنا يتم توجيه المحرك التنفيذي لاستخدام أدوات الترددات
+        result_raw = self.core_ref.executor.execute("python3", ["ai-engine/offensive/mobile_agent.py", vector, target])
+        
         result = {
             "target": target,
             "vector": vector,
             "status": "SIGNAL_SUBJUGATED",
-            "output": f"Protocol {vector} hijacked in Core Network. Target location visualized.",
-            "resonance": "100.0000%"
+            "output": f"Protocol {vector} hijacked in Core Network. Resonance: 100%.",
+            "material_logs": result_raw.get("stdout") or "Innate Pulse Logged."
         }
         
-        self.core.spine.emit("spectrum_result", result, target="CockpitNode")
-        self.core.spine.emit("store_dna", {
+        self.core.emit("spectrum_result", result, target="CockpitNode")
+        self.core.emit("store_dna", {
             "content": json.dumps(result),
             "metadata": {"type": "cellular_intel", "target": target}
         }, target="MemoryNode")

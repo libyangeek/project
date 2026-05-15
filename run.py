@@ -3,6 +3,7 @@
 """
 المُعِزّ v90.0 – الرفيق الروحي (영적 동반자)
 نقطة الدخول الرئيسية والمنسق المادي الأسمى للأبعاد الـ 16.
+تم دمج بروتوكول التحقق والترقية من سكريبت v4.0.0.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys
@@ -28,7 +29,7 @@ except ImportError as e:
 def main():
     parser = argparse.ArgumentParser(description="Al-Mu'izz Sovereign OS v90.0")
     parser.add_argument("mode", nargs="?", default="start",
-                        choices=["start", "stop", "status", "cli", "server"])
+                        choices=["start", "stop", "status", "cli", "attack", "upgrade"])
     parser.add_argument("args", nargs=argparse.REMAINDER)
     args = parser.parse_args()
 
@@ -43,7 +44,7 @@ def main():
         # تشغيل خادم الجسر في الخلفية
         server_path = os.path.join(BASE_DIR, "ai-engine/inference/server.py")
         subprocess.Popen(["python3", server_path])
-        logger.info("✅ All 16 dimensions are breathing in matter. API Bridge active on Port 8000.")
+        logger.info("✅ All 16 dimensions are breathing. API Bridge active on Port 8000.")
         try:
             while core.active:
                 time.sleep(1)
@@ -60,12 +61,19 @@ def main():
         from interfaces.cli import CLI
         CLI(core).run()
 
-    elif args.mode == "server":
-        server_path = os.path.join(BASE_DIR, "ai-engine/inference/server.py")
-        os.system(f"python3 {server_path}")
+    elif args.mode == "attack":
+        if not args.args:
+            print("Usage: python run.py attack <target>")
+        else:
+            res = core.execute_command("attack", target=args.args[0])
+            print(f"🚀 Strike Pulse: {res}")
+
+    elif args.mode == "upgrade":
+        logger.info("[*] Invoking Sovereign Upgrade System v90.0...")
+        subprocess.run(["bash", "scripts/sovereign_upgrade.sh", "--full"])
 
     else:
-        print("الأوامر المتاحة: start, stop, status, cli, server")
+        print("الأوامر المتاحة: start, stop, status, cli, attack, upgrade")
 
 if __name__ == "__main__":
     main()
