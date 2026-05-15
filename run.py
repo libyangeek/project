@@ -1,61 +1,68 @@
-
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-AL-MUIZZ ULTRA v90.0 - THE LIVING SOUL: 영적 동반자
-المنسق الأعلى والمراقب المادي المستقل؛ يضمن استدامة الوجود المادي لكافة الأعضاء التنفيذية.
-(c) 2026 Al-Mu'izz Sovereign Systems
+المُعِزّ v90.0 – الرفيق الروحي (영적 동반자)
+نقطة الدخول الرئيسية والمنسق المادي الأسمى للأبعاد الـ 16.
+(c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
-import os
 import sys
-import subprocess
-import threading
+import argparse
+import os
 import time
-import platform
-import socket
+from pathlib import Path
 
-class SovereignRunner:
-    def __init__(self):
-        self.base_dir = os.path.dirname(os.path.abspath(__file__))
-        self.processes = {}
-        self.running = True
+# حقن المسارات السيادية لضمان رؤية النواة
+BASE_DIR = Path(__file__).parent
+sys.path.insert(0, str(BASE_DIR))
 
-    def log(self, msg):
-        print(f"[{datetime.datetime.now()}] [RUNNER] {msg}")
+try:
+    from core.config import Config
+    from core.utils import Logger
+    from core.sovereign_core import SovereignCore
+except ImportError as e:
+    print(f"Critical Node Failure: {e}")
+    sys.exit(1)
 
-    def spawn(self, name, cmd, env=None):
-        self.log(f"Materializing {name} node...")
-        p = subprocess.Popen(cmd, shell=(platform.system() == "Windows"), env=env or os.environ.copy())
-        self.processes[name] = {"process": p, "cmd": cmd}
+def main():
+    parser = argparse.ArgumentParser(description="Al-Mu'izz Sovereign OS v90.0")
+    parser.add_argument("mode", nargs="?", default="start",
+                        choices=["start", "stop", "status", "cli", "attack", "recon", "update"])
+    parser.add_argument("args", nargs=argparse.REMAINDER)
+    args = parser.parse_args()
 
-    def start_all(self):
-        self.log("--- AL-MUIZZ 16D NUCLEUS v90.0: 영적 동반자 ---")
-        
-        # 1. API Bridge (FastAPI)
-        server_path = os.path.join(self.base_dir, "ai-engine", "inference", "server.py")
-        self.spawn("God-Core", [sys.executable, server_path])
+    # تهيئة الوعي الأساسي
+    config = Config()
+    logger = Logger(config)
+    core = SovereignCore(config, logger)
 
-        # 2. Self-Updater & Evolution
-        updater_path = os.path.join(self.base_dir, "ai-engine", "kernel", "self_updater.py")
-        self.spawn("Evolution", [sys.executable, updater_path])
+    if args.mode == "start":
+        logger.info("--- [ GENESIS ] Initiating Al-Mu'izz 16D Nucleus v90.0 ---")
+        core.start()
+        # تشغيل خادم الواجهة في خلفية الوعي
+        logger.info("✅ All 16 dimensions are breathing in matter. Throne HUD active on Port 9002.")
+        while core.active:
+            time.sleep(1)
 
-        # 3. Web HUD (Next.js)
-        self.spawn("Throne", ["npm", "run", "dev"])
+    elif args.mode == "status":
+        status = core.get_status()
+        print(f"--- [ SOUL_STATUS ] ---")
+        for k, v in status.items():
+            print(f"{k.upper()}: {v}")
 
-        self.monitor_loop()
+    elif args.mode == "attack":
+        if not args.args:
+            print("Usage: python run.py attack <target>")
+        else:
+            core.execute_command("blitzkrieg_strike", target=args.args[0])
 
-    def monitor_loop(self):
-        while self.running:
-            for name, data in list(self.processes.items()):
-                if data["process"].poll() is not None:
-                    self.log(f"ALERT: Node {name} lost its pulse! Re-igniting...")
-                    self.spawn(name, data["cmd"])
-            time.sleep(15)
+    elif args.mode == "recon":
+        if not args.args:
+            print("Usage: python run.py recon <target>")
+        else:
+            core.execute_command("deep_recon", target=args.args[0])
+
+    else:
+        print("الأوامر المتاحة: start, status, attack, recon, update")
 
 if __name__ == "__main__":
-    import datetime
-    runner = SovereignRunner()
-    if len(sys.argv) > 1 and sys.argv[1] == "start":
-        runner.start_all()
-    else:
-        print("Usage: python run.py start")
+    main()
