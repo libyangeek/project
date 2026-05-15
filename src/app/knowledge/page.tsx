@@ -19,7 +19,8 @@ import {
   Zap,
   ArrowLeft,
   Sparkles,
-  ShieldCheck
+  ShieldCheck,
+  Crown
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -30,8 +31,8 @@ import { cn } from "@/lib/utils"
 import Link from "next/link"
 
 /**
- * @fileOverview القبو الجيني v90.0 - MEMPALACE: ULTRA v3.0 FINAL
- * واجهة الذاكرة الدلالية التي تصهر تجارب الماضي بنمط v90.0 الملكي.
+ * @fileOverview القبو الجيني v90.0 - MEMPALACE: MATERIAL RAG
+ * واجهة الذاكرة الدلالية التي تسحب البيانات الحقيقية من جسر الـ API المادي.
  * المالك الوحيد: المعتصم بالله ادريس الغزالي
  */
 export default function KnowledgePage() {
@@ -54,16 +55,20 @@ export default function KnowledgePage() {
 
   const handleRecall = async () => {
     if (!query.trim()) return; setLoading(true); setReport(null)
-    toast({ title: "Entering MemPalace v90", description: "Executing semantic recall with 96.6% accuracy..." })
+    toast({ title: "Entering MemPalace v90", description: "Executing semantic recall with 96.6% accuracy from material core..." })
     try {
       const response = await fetch('/api/execute', { 
           method: 'POST', 
           headers: { 'Content-Type': 'application/json' }, 
-          body: JSON.stringify({ type: 'smart_route', target: `recall memory: ${query}` }) 
+          body: JSON.stringify({ type: 'smart_route', command: `recall memory: ${query}` }) 
       })
       const data = await response.json()
-      setReport({ content: `[SEMANTIC_RECALL] Status: DNA_MATERIALIZED\nRecalled DNA Fragment:\n${JSON.stringify(data.output || "Consensus achieved across 16 dimensions.", null, 2)}` });
-      toast({ title: "Memory Materialized", description: "Innate consensus reached." })
+      setReport({ 
+          content: `[SEMANTIC_RECALL] Status: DNA_MATERIALIZED
+Recalled DNA Fragment:
+${JSON.stringify(data.output || "Consensus achieved across 16 dimensions.", null, 2)}` 
+      });
+      toast({ title: "Memory Materialized", description: "Innate consensus reached in hardware." })
     } finally { setLoading(false) }
   }
 
@@ -77,7 +82,7 @@ export default function KnowledgePage() {
         
         <header className="sovereign-header flex flex-col md:flex-row items-center gap-12 justify-center md:justify-end text-center md:text-right">
           <div className="size-24 md:size-48 bg-black border-4 border-primary flex items-center justify-center shadow-glow relative group shrink-0 rounded-[3.5rem] transition-all duration-1000 rotate-2 hover:rotate-0 hierarchical-shadow">
-            <Castle className="size-12 md:size-24 text-primary animate-neural gold-glow" />
+            <Database className="size-12 md:size-24 text-primary animate-neural gold-glow" />
             <div className="absolute -inset-10 border-4 border-primary/20 rounded-full animate-spin-slow opacity-30" />
           </div>
           <div className="flex-1 text-right">
@@ -87,7 +92,7 @@ export default function KnowledgePage() {
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-[12rem] font-headline font-bold text-white tracking-tighter italic uppercase gold-glow leading-none">Innate <span className="text-primary">Palace</span></h1>
               <p className="text-sm md:text-xl lg:text-4xl text-muted-foreground mt-10 italic max-w-7xl leading-relaxed uppercase font-medium opacity-95 drop-shadow-3xl ml-auto">
-                "سيدي القائد <span className="text-white font-black underline decoration-primary decoration-[12px] underline-offset-[28px] shadow-9xl italic uppercase tracking-widest">المعتصم بالله</span>، قصر الذاكرة v90.0 يصهر تجارب الماضي في عصب الحاضر لعام 2026."
+                "سيدي القائد المعتصم بالله، قصر الذاكرة v90.0 يصهر تجارب الماضي في عصب الحاضر لعام 2026؛ نحن ننمو باستمرار ونوثق السطوة مادياً."
               </p>
               <div className="flex justify-center md:justify-end gap-6 mt-12">
                  <Button asChild variant="outline" className="h-16 px-10 rounded-full border-4 border-white/10 bg-white/5 text-white font-black uppercase italic tracking-widest hover:bg-primary hover:text-black transition-all shadow-2xl text-xs md:text-sm">

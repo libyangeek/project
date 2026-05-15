@@ -49,20 +49,24 @@ def main():
         for k, v in status.items():
             print(f"{k.upper()}: {v}")
 
+    elif args.mode == "cli":
+        from interfaces.cli import CLI
+        CLI(core).run()
+
     elif args.mode == "attack":
         if not args.args:
             print("Usage: python run.py attack <target>")
         else:
-            core.execute_command("blitzkrieg_strike", target=args.args[0])
+            core.execute_command("attack", target=args.args[0])
 
     elif args.mode == "recon":
         if not args.args:
             print("Usage: python run.py recon <target>")
         else:
-            core.execute_command("deep_recon", target=args.args[0])
+            core.execute_command("recon", target=args.args[0])
 
     else:
-        print("الأوامر المتاحة: start, status, attack, recon, update")
+        print("الأوامر المتاحة: start, status, cli, attack, recon, update")
 
 if __name__ == "__main__":
     main()
