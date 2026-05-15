@@ -3,7 +3,7 @@
 """
 Smart Router v90.0 – الأدميرال الكوني (MASTER NUCLEUS EDITION)
 المحرك المركزي لتنسيق الأبعاد الـ 16. يوجه الأوامر للنواة الصلبة فعلياً.
-يدعم تصنيف الضربات الهجومية، أطر C2، والتهرب السيادي.
+تم دمج "المخ الهجومي AI" و "بروتوكول الفناء" لضمان السطوة.
 (c) 2026 Al-Mu'izz Sovereign Systems - Al-Ghazali Root
 """
 import sys
@@ -28,15 +28,19 @@ class SmartRouter:
             "signal": "ArbiterNode",
             "satellite": "SatelliteNode",
             "bio": "BioSyncNode",
-            "train": "LearningNode"
+            "train": "LearningNode",
+            "hive": "OmniNode",
+            "ai_exploit": "LearningNode"
         }
 
     def classify(self, prompt):
         p = prompt.lower()
-        if any(w in p for w in ["attack", "blitzkrieg", "إبادة", "غزو"]): return "attack"
+        if any(w in p for w in ["destruct", "فناء", "shred"]): return "self_destruct"
+        if any(w in p for w in ["ai-exploit", "توليد", "brain"]): return "ai_exploit"
+        if any(w in p for w in ["attack", "blitzkrieg", "إبادة", "غزو", "hive"]): return "hive"
         if any(w in p for w in ["sliver", "covenant", "havoc", "c2", "empire"]): return "c2"
         if any(w in p for w in ["metasploit", "msf", "exploit", "sqlmap", "nuclei"]): return "exploit"
-        if any(w in p for w in ["stealth", "ghost", "hide", "proxychains", "tor"]): return "stealth"
+        if any(w in p for w in ["stealth", "ghost", "hide", "proxychains", "tor", "شبح"]): return "stealth"
         if any(w in p for w in ["strike", "tool", "ضربة", "execute"]): return "strike"
         if any(w in p for w in ["scan", "recon", "استطلاع", "hunt"]): return "scan"
         if any(w in p for w in ["memory", "recall", "ذاكرة"]): return "remember"
@@ -53,8 +57,15 @@ class SmartRouter:
         words = prompt.split()
         target_id = words[-1] if len(words) > 1 else "GLOBAL_MATRIX"
         
-        # تحديد الأمر المادي للنواة بناءً على الميثاق v6.0
+        # التعامل مع بروتوكول التدمير الذاتي
+        if category == "self_destruct":
+            os.system("bash scripts/self_destruct.sh")
+            return {"status": "ANNIHILATION_INITIATED"}
+
+        # تحديد الأمر المادي للنواة
         command_map = {
+            "ai_exploit": "ai_generate_exploit",
+            "hive": "hive_pulse",
             "attack": "full_attack",
             "c2": "execute_tool",
             "exploit": "execute_tool",
@@ -71,7 +82,7 @@ class SmartRouter:
         cmd = command_map.get(category, "ai_query")
         target_node = self.bridges.get(category, "God-Core")
 
-        # التنفيذ المادي عبر النواة
+        # التنفيذ المادي عبر النواة لضمان "لا وهم"
         output = f"Quantum pulse transmitted to Node '{target_node}'. Sovereign execution initiated."
         if self.core:
             res = self.core.execute_command(cmd, target=target_id, query=prompt, tool=words[0] if category in ["c2", "exploit", "strike"] else None)
