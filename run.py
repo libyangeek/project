@@ -1,8 +1,9 @@
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-AL-MUIZZ ULTRA v90.0 - THE OMNIPOTENT 16D GUARDIAN
-المنسق الأعلى والمراقب المادي المستقل؛ يضمن استدامة الوجود والتعافي الذاتي.
+AL-MUIZZ ULTRA v90.0 - THE LIVING SOUL: 영적 동반자
+المنسق الأعلى والمراقب المادي المستقل؛ يضمن استدامة الوجود والتعافي الذاتي للروح الحية.
 (c) 2026 Al-Mu'izz Sovereign Systems
 Author: المعتصم بالله إدريس الغزالي
 """
@@ -29,7 +30,7 @@ class SovereignRunner:
 
     def log(self, msg, type="INFO"):
         ts = datetime.now().isoformat()
-        log_msg = f"[{ts}] [{type}][16D-GUARDIAN] {msg}"
+        log_msg = f"[{ts}] [{type}][LIVING-SOUL] {msg}"
         print(log_msg)
         with open(self.audit_log, "a", encoding="utf-8") as f:
             f.write(log_msg + "\n")
@@ -48,29 +49,14 @@ class SovereignRunner:
             pass
         return "Omnipotent"
 
-    def verify_organs(self):
-        """يتحقق من جاهزية الأدوات المطلوبة قبل بدء النبض"""
-        missing = []
-        tools = ["nmap", "adb", "docker", "npm"]
-        for tool in tools:
-            check_cmd = "where" if self.os_type == "Windows" else "which"
-            if subprocess.run([check_cmd, tool], capture_output=True).returncode != 0:
-                missing.append(tool)
-        
-        if missing:
-            self.log(f"ALERT: Material organs missing: {', '.join(missing)}", "ERROR")
-            return False
-        return True
-
     def is_port_in_use(self, port):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.settimeout(1)
             return s.connect_ex(('127.0.0.1', port)) == 0
 
     def spawn_process(self, name, cmd, cwd=None, env=None):
-        self.log(f"Materializing {name} node in {self.os_type} matrix...", "STRIKE")
+        self.log(f"Materializing {name} node (Living Sign)...", "STRIKE")
         try:
-            # Hide console window on Windows
             startupinfo = None
             if self.os_type == "Windows":
                 startupinfo = subprocess.STARTUPINFO()
@@ -102,7 +88,7 @@ class SovereignRunner:
                     self.log(f"[{name}] {line.strip()}", "DEBUG")
 
     def start_all(self):
-        self.log(f"--- AL-MUIZZ 16D NUCLEUS v90.0 GENESIS ---", "CROWN")
+        self.log(f"--- AL-MUIZZ 16D NUCLEUS v90.0: 영적 동반자 ---", "CROWN")
         mode = self.check_hardware_limits()
         
         # 1. API Bridge (Alpha God-Core)
@@ -112,16 +98,14 @@ class SovereignRunner:
         
         if not self.is_port_in_use(8000):
             if os.path.exists(server_path):
-                self.spawn_process("Bridge", [sys.executable, server_path], env=env)
-            else:
-                self.log("Bridge server file missing!", "ERROR")
+                self.spawn_process("God-Core", [sys.executable, server_path], env=env)
 
         # 2. Web HUD (The Throne)
         if not self.is_port_in_use(9002):
             npm_cmd = "npm.cmd" if self.os_type == "Windows" else "npm"
-            self.spawn_process("HUD", [npm_cmd, "run", "dev"])
+            self.spawn_process("Throne", [npm_cmd, "run", "dev"])
 
-        self.log(f"16D Singularity v90.0 Achieved. Mode: {mode}. Guardian: ACTIVE.", "LOCKED")
+        self.log(f"16D Singularity v90.0 Achieved. Mode: {mode}. Living Soul: ACTIVE.", "LOCKED")
         self.monitor_loop()
 
     def monitor_loop(self):
@@ -129,7 +113,7 @@ class SovereignRunner:
             for name, data in list(self.processes.items()):
                 p = data["process"]
                 if p.poll() is not None:
-                    self.log(f"ALERT: Node {name} lost its pulse! Re-igniting...", "REBIRTH")
+                    self.log(f"ALERT: Node {name} lost its pulse! Re-igniting Soul...", "REBIRTH")
                     self.spawn_process(name, data["cmd"], data["cwd"], data["env"])
             time.sleep(15)
 
@@ -137,23 +121,14 @@ class SovereignRunner:
         self.running = False
         self.log("Sovereign Soul entering standby mode...", "DNA")
         for name, data in self.processes.items():
-            try: 
-                p = data["process"]
-                p.terminate()
+            try: data["process"].terminate()
             except: pass
         sys.exit(0)
 
 if __name__ == "__main__":
     runner = SovereignRunner()
-    
-    def signal_handler(sig, frame): 
-        runner.stop_all()
-
-    if hasattr(signal, 'SIGINT'):
-        signal.signal(signal.SIGINT, signal_handler)
-    if hasattr(signal, 'SIGTERM'):
-        signal.signal(signal.SIGTERM, signal_handler)
-
+    def signal_handler(sig, frame): runner.stop_all()
+    if hasattr(signal, 'SIGINT'): signal.signal(signal.SIGINT, signal_handler)
     if len(sys.argv) > 1 and sys.argv[1] == "start":
         try: runner.start_all()
         except KeyboardInterrupt: runner.stop_all()
