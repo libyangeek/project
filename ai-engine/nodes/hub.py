@@ -2,56 +2,39 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-المُعِزّ ULTRA v90.0 – The 16D Nervous System Hub
-المنسق المادي الذي يحقن الأبعاد الـ 16 في عصب الوجود ويقوم بتشغيل المحركات التنفيذية.
-(c) 2026 Sovereign Systems - Al-Ghazali Root
+منسق الأبعاد الـ 16 v90.0 - The 16D Nucleus Hub
+المسؤول عن "حقن الروح" في كافة العقد التنفيذية.
 """
 import sys
 import os
-import threading
-import time
+from pathlib import Path
 
-# إضافة المسارات لضمان رؤية المكونات
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(BASE_DIR)
+# إضافة مسار ai-engine
+sys.path.append(str(Path(__file__).parent.parent))
 
-from nodes.core.core_node import core
-from nodes.memory.memory_node import MemoryNode
+from nodes.core.core_node import CoreNode
 from nodes.arsenal.arsenal_node import ArsenalNode
-from nodes.recon.recon_node import ReconNode
-from nodes.mobile.mobile_node import MobileNode
-from nodes.learning.learning_node import LearningNode
-from nodes.automation.automation_node import AutomationNode
 
 class LivingNucleus:
-    def __init__(self):
-        self.status = "GENESIS"
-        self.nodes_registry = {}
+    def __init__(self, core_ref):
+        self.core = core_ref
+        self.dimensions = {}
 
-    def materialize_organs(self):
-        """حقن العقد في النواة الـ 16"""
+    def materialize_all(self):
         print("🧬 [GENESIS] Materializing the 16D Sovereign Nucleus...")
         
-        # تسجيل العقد الأساسية (المحركات الحقيقية)
-        core.register_node('God-Core', core) 
-        core.register_node('Memory', MemoryNode())
-        core.register_node('Arsenal', ArsenalNode())
-        core.register_node('Perception', ReconNode())
-        core.register_node('Fleet', MobileNode())
-        core.register_node('Nursery', LearningNode())
-        core.register_node('Automation', AutomationNode())
+        # تسجيل الأبعاد (Dimensions) ككيانات حية
+        self.dimensions["God-Core"] = CoreNode()
+        self.dimensions["Arsenal"] = ArsenalNode()
+        # يمكن إضافة باقي الأبعاد هنا (Memory, Fleet, etc.)
+        
+        print(f"✅ [STATUS] {len(self.dimensions)} material dimensions are now breathing.")
+        return self.dimensions
 
-        # بدء نبض الحياة في كافة العقد
-        core.start()
-        self.status = "ALIVE"
-        print("✅ [STATUS] All 16 dimensions are now breathing in matter.")
-
-    def maintenance_loop(self):
-        """مراقب الصحة الذاتية لضمان الخلود"""
-        while True:
-            # هنا يتم فحص حالة العقد وإعادة إنباتها إذا سقطت
-            time.sleep(60)
-
-if __name__ == "__main__":
-    nucleus = LivingNucleus()
-    nucleus.materialize_organs()
+    def dispatch(self, dimension_name, action, **kwargs):
+        node = self.dimensions.get(dimension_name)
+        if node:
+            if hasattr(node, action):
+                method = getattr(node, action)
+                return method(**kwargs)
+        return {"error": f"Node {dimension_name} or action {action} missing in matter."}
