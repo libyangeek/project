@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 العصب القائد v90.0 - Sovereign Core
-المسؤول عن تنسيق الأبعاد الـ 16 وإصدار القوانين المادية.
+المسؤول عن تنسيق كافة الأبعاد والالتحام المادي للـ 35 عقدة.
 """
 import threading
 import sys
@@ -17,6 +17,9 @@ from nodes.arsenal_node import ArsenalNode
 from nodes.recon_node import ReconNode
 from nodes.memory_node import MemoryNode
 from nodes.omninode import OmniNode
+from nodes.mobile_node import MobileNode
+from nodes.arbiter_node import ArbiterNode
+from nodes.learning_node import LearningNode
 
 class SovereignCore:
     def __init__(self, config, logger):
@@ -33,15 +36,18 @@ class SovereignCore:
             "Arsenal": ArsenalNode("Arsenal", self),
             "Recon": ReconNode("Recon", self),
             "Memory": MemoryNode("Memory", self),
-            "Omni": OmniNode("Omni", self)
+            "Omni": OmniNode("Omni", self),
+            "Mobile": MobileNode("Mobile", self),
+            "Arbiter": ArbiterNode("Arbiter", self),
+            "Learning": LearningNode("Learning", self)
         }
         self._fusing_process()
 
     def _fusing_process(self):
-        """شد العقد: ربط الأطراف بالنخاع الشوكي"""
+        """شد العقد: ربط كافة الأطراف بالنخاع الشوكي الموحد"""
         for name, node in self.nodes.items():
             self.spine.register_node(name, node)
-        self.logger.info(f"🔗 [FUSION] {len(self.nodes)} material knots tightened.")
+        self.logger.info(f"🔗 [FUSION] {len(self.nodes)} material knots tightened into the 16D Matrix.")
 
     def start(self):
         self.logger.info("🧬 [GENESIS] Al-Mu'izz 16D Nucleus is breathing...")
@@ -75,19 +81,23 @@ class SovereignCore:
 
     def execute_command(self, cmd_type, **kwargs):
         """توجيه النبضة العصبية من القائد إلى العقدة المختصة"""
-        self.logger.info(f"⚔️ [DIRECTIVE] {cmd_type.upper()} initiated on target matrix.")
+        self.logger.info(f"⚔️ [DIRECTIVE] {cmd_type.upper()} initiated.")
         
-        if cmd_type in ["strike", "attack", "execute_tool"]:
-            self.spine.emit("execute_tool", kwargs, target="Arsenal")
-            return {"status": "PULSE_SENT", "dimension": "Arsenal"}
-            
-        if cmd_type in ["full_attack", "blitzkrieg"]:
-            self.spine.emit("full_attack", kwargs, target="Omni")
-            return {"status": "PULSE_SENT", "dimension": "Omni"}
-
-        if cmd_type in ["recon", "scan"]:
-            self.spine.emit("subdomain_scan", kwargs, target="Recon")
-            return {"status": "PULSE_SENT", "dimension": "Recon"}
+        # مصفوفة التوجيه العصبي
+        routing = {
+            "strike": "Arsenal", "attack": "Arsenal", "execute_tool": "Arsenal",
+            "full_attack": "Omni", "blitzkrieg": "Omni",
+            "recon": "Recon", "scan": "Recon", "subdomain_scan": "Recon",
+            "mobile": "Mobile", "fleet": "Mobile", "siphon": "Mobile",
+            "signal": "Arbiter", "cellular": "Arbiter", "jammer": "Arbiter",
+            "train": "Learning", "evolve": "Learning", "ai_query": "Learning",
+            "recall": "Memory", "remember": "Memory", "store": "Memory"
+        }
+        
+        target_node = routing.get(cmd_type)
+        if target_node:
+            self.spine.emit(f"execute_{cmd_type}", kwargs, target=target_node)
+            return {"status": "PULSE_SENT", "dimension": target_node}
 
         # الافتراضي: معالجة عبر النواة
         return self.spine.handle(cmd_type, **kwargs)
