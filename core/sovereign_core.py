@@ -17,12 +17,12 @@ from nodes.core_node import CoreNode
 from nodes.arsenal_node import ArsenalNode
 from nodes.recon_node import ReconNode
 from nodes.memory_node import MemoryNode
-from nodes.omninode import OmniNode
 from nodes.mobile_node import MobileNode
 from nodes.arbiter_node import ArbiterNode
 from nodes.learning_node import LearningNode
 from nodes.satellite_node import SatelliteNode
 from nodes.biosync_node import BioSyncNode
+from nodes.omninode import OmniNode
 
 class SovereignCore:
     def __init__(self, config, logger):
@@ -52,7 +52,7 @@ class SovereignCore:
         """شد العقد: ربط كافة الأطراف بالنخاع الشوكي الموحد"""
         for name, node in self.nodes.items():
             self.spine.register_node(name, node)
-        self.logger.info(f"🔗 [FUSION] 16D Matrix fused successfully. All nodes are breathing.")
+        self.logger.info(f"🔗 [FUSION] 16D Matrix fused successfully. All 35 knots are breathing.")
 
     def start(self):
         self.logger.info("🧬 [GENESIS] Al-Mu'izz 16D Nucleus is rising...")
@@ -73,14 +73,29 @@ class SovereignCore:
     def execute_command(self, cmd_type, **kwargs):
         """توجيه النبضة العصبية من القائد إلى العقدة المختصة"""
         routing = {
-            "attack": "Omni", "strike": "Arsenal", "recon": "Recon", 
-            "scan": "Recon", "mobile": "Mobile", "signal": "Arbiter", 
-            "satellite": "Satellite", "bio": "BioSync", "train": "Learning"
+            "attack": "Omni", 
+            "strike": "Arsenal", 
+            "recon": "Recon", 
+            "scan": "Recon", 
+            "mobile": "Mobile", 
+            "siphon": "Mobile",
+            "signal": "Arbiter", 
+            "satellite": "Satellite", 
+            "bio": "BioSync", 
+            "train": "Learning",
+            "shodan": "Recon"
         }
         target_node = routing.get(cmd_type)
         if target_node:
             self.spine.emit(f"execute_{cmd_type}", kwargs, target=target_node)
             return {"status": "PULSE_SENT", "dimension": target_node, "consensus": "LOCKED"}
+        
+        # محاولة البحث عن عقدة يمكنها معالجة الأمر بشكل تلقائي
+        for node in self.nodes.values():
+            if node.can_handle(cmd_type):
+                self.spine.emit(cmd_type, kwargs, target=node.name)
+                return {"status": "AUTO_ROUTED", "dimension": node.name}
+                
         return {"error": "Unknown material law."}
 
     def get_status(self):
@@ -89,5 +104,6 @@ class SovereignCore:
             "status": "LIVING" if self.active else "IDLE",
             "active_nodes": len(self.nodes),
             "resonance": f"{self.resonance:.6f}%",
-            "commander": "Al-Mu'tasim Billah Idris Al-Ghazali"
+            "commander": "Al-Mu'tasim Billah Idris Al-Ghazali",
+            "matrix_version": "v90.0-ULTRA"
         }

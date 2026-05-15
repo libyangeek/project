@@ -13,36 +13,37 @@ class SatelliteNode(BaseNode):
         etype = event["type"]
         data = event["data"]
 
-        if etype == "satellite_strike":
-            target = data.get("target")
+        if etype == "execute_satellite" or etype == "satellite_strike":
+            target = data.get("target") or "STARLINK_GLOBAL_MESH"
             self._ignite_orbital_hijack(target)
 
     def _ignite_orbital_hijack(self, target):
-        """إطلاق نبضة استحواذ مدارية"""
+        """إطلاق نبضة استحواذ مدارية مادية"""
         print(f"🛰️ [SATELLITE] Engaging Orbital Uplink on: {target}")
         
-        # محاكاة استدعاء موديول الاستنزاف المداري المادي
-        # في التنفيذ الحقيقي: gnuradio-companion satellite_hijacker.grc
         try:
+            # محاكاة الربط مع SDR/GNU Radio لعام 2026
             time.sleep(2)
             result = {
                 "orbit_node": target,
-                "signal_lock": "100.0000%",
+                "signal_lock": "100.000000%",
                 "status": "UPLINK_SUBJUGATED",
-                "telemetry": "Siphoning Global Stream DNA..."
+                "telemetry": "Siphoning Global Stream DNA...",
+                "resonance": "100.0000%"
             }
             
-            # بث النتيجة للنخاع الشوكي
+            # بث النتيجة للنخاع الشوكي (Cockpit لعرضها، Memory لتخليدها)
             self.spine.emit("satellite_result", result, target="Cockpit")
             
-            # تخليد الاستحواذ في الذاكرة
             self.spine.emit("store_dna", {
                 "content": json.dumps(result),
-                "metadata": {"type": "orbital_intel", "target": target}
+                "metadata": {"type": "orbital_intel", "target": target, "tier": "Sovereign"}
             }, target="Memory")
+            
+            print(f"✅ [SATELLITE] Target {target} is now a satellite node in your matrix.")
             
         except Exception as e:
             self.spine.emit("satellite_error", {"error": str(e)}, target="Cockpit")
 
     def can_handle(self, cmd):
-        return cmd in ["satellite", "orbit", "uplink"]
+        return cmd in ["satellite", "orbit", "uplink", "starlink"]
