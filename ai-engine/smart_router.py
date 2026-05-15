@@ -10,37 +10,46 @@ import json
 import os
 import datetime
 
-# استيراد النواة العصبية المادية
-BASE_DIR = os.getenv("PROJECT_ROOT", os.getcwd())
-sys.path.append(os.path.join(BASE_DIR, "ai-engine"))
-
 class SmartRouter:
     def __init__(self, core_ref):
         self.core = core_ref
         self.status = "ACTIVE"
+        # مصفوفة التوجيه العصبي لعام 2026
         self.bridges = {
             "strike": "Arsenal",
             "attack": "Omni",
             "scan": "Recon",
             "recon": "Recon",
             "remember": "Memory",
-            "recall": "Memory"
+            "recall": "Memory",
+            "mobile": "Mobile",
+            "signal": "Arbiter",
+            "satellite": "Satellite",
+            "bio": "BioSync",
+            "train": "Learning"
         }
 
     def classify(self, prompt):
         p = prompt.lower()
         if any(w in p for w in ["attack", "blitzkrieg", "إبادة"]): return "attack"
-        if any(w in p for w in ["strike", "tool", "ضربة"]): return "strike"
-        if any(w in p for w in ["scan", "recon", "استطلاع"]): return "scan"
-        if any(w in p for w in ["memory", "recall", "ذاكرة"]): return "remember"
+        if any(w in p for w in ["strike", "tool", "ضربة", "exec"]): return "strike"
+        if any(w in p for w in ["scan", "recon", "استطلاع", "check"]): return "scan"
+        if any(w in p for w in ["memory", "recall", "ذاكرة", "store"]): return "remember"
+        if any(w in p for w in ["mobile", "siphon", "جوال"]): return "mobile"
+        if any(w in p for w in ["signal", "jammer", "5g", "radio"]): return "signal"
+        if any(w in p for w in ["satellite", "orbit", "ستارلينك"]): return "satellite"
+        if any(w in p for w in ["bio", "soul", "dna"]): return "bio"
         return "general"
 
     def route_query(self, prompt):
         category = self.classify(prompt)
         target_node = self.bridges.get(category, "God-Core")
         
-        # تنفيذ النبضة العصبية المادية الحقيقية
-        result = self.core.execute_command(category, target=prompt.split()[-1])
+        # تنفيذ النبضة العصبية المادية الحقيقية عبر النواة
+        target_id = prompt.split()[-1] if len(prompt.split()) > 1 else "GLOBAL"
+        
+        # استدعاء العقدة ماديًا
+        result = self.core.execute_command(category, target=target_id, prompt=prompt)
 
         return {
             "category": category,
@@ -48,9 +57,9 @@ class SmartRouter:
             "output": f"Quantum pulse transmitted to Node '{target_node}'. Sovereign execution initiated.",
             "resonance": "100.0000%",
             "node": target_node,
-            "timestamp": str(datetime.datetime.now())
+            "timestamp": str(datetime.datetime.now()),
+            "execution_id": f"SOV_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}"
         }
 
 if __name__ == "__main__":
-    # لا يمكن تشغيله مستقلاً بدون مرجع النواة
     print("SmartRouter v90.0: Standing by for nucleus binding.")

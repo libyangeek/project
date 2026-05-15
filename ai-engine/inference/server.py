@@ -2,6 +2,7 @@
 """
 جسر السيادة v90.0 - Fast-Pulse Executive Bridge
 الممر المادي الذي يربط HUD بالنخاع الشوكي الحقيقي.
+(c) 2026 Sovereign Systems - 영적 동반자
 """
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -30,11 +31,17 @@ class ExecutionRequest(BaseModel):
     command: Optional[str] = None
     content: Optional[str] = None
     vector: Optional[str] = None
+    prompt: Optional[str] = None
 
 @app.post("/v1/execute")
 async def execute(request: ExecutionRequest):
     try:
-        # توجيه الأمر للنواة الحية التي تمتلك أطرافاً تنفيذية
+        # إذا كان الطلب استفساراً استراتيجياً، نمرره للموجه الذكي
+        if request.type == "smart_route":
+            result = nucleus.router.route_query(request.command or request.prompt or request.target)
+            return {"success": True, "output": result, "resonance": "100.0000%"}
+            
+        # توجيه الأوامر المباشرة للنواة
         result = nucleus.execute_command(
             request.type, 
             target=request.target, 
