@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -15,7 +14,7 @@ class SmartRouter:
     def __init__(self, core_ref):
         self.core = core_ref
         self.status = "ACTIVE"
-        # مصفوفة التوجيه العصبي لعام 2026
+        # مصفوفة التوجيه العصبي لعام 2026 للأبعاد الـ 16
         self.bridges = {
             "strike": "ArsenalNode",
             "attack": "OmniNode",
@@ -28,29 +27,32 @@ class SmartRouter:
             "signal": "ArbiterNode",
             "satellite": "SatelliteNode",
             "bio": "BioSyncNode",
-            "train": "LearningNode"
+            "train": "LearningNode",
+            "osint": "ReconNode",
+            "ios": "MobileNode",
+            "rebirth": "MemoryNode"
         }
 
     def classify(self, prompt):
         p = prompt.lower()
-        if any(w in p for w in ["attack", "blitzkrieg", "إبادة"]): return "attack"
-        if any(w in p for w in ["strike", "tool", "ضربة", "exec", "execute"]): return "strike"
-        if any(w in p for w in ["scan", "recon", "استطلاع", "check", "subdomain", "hunt"]): return "scan"
-        if any(w in p for w in ["memory", "recall", "ذاكرة", "store", "remember"]): return "remember"
-        if any(w in p for w in ["mobile", "siphon", "جوال", "phone"]): return "mobile"
-        if any(w in p for w in ["signal", "jammer", "5g", "radio", "cellular"]): return "signal"
-        if any(w in p for w in ["satellite", "orbit", "ستارلينك"]): return "satellite"
-        if any(w in p for w in ["bio", "soul", "dna"]): return "bio"
+        if any(w in p for w in ["attack", "blitzkrieg", "إبادة", "غزو"]): return "attack"
+        if any(w in p for w in ["strike", "tool", "ضربة", "exec", "execute", "أداة"]): return "strike"
+        if any(w in p for w in ["scan", "recon", "استطلاع", "check", "subdomain", "hunt", "فحص"]): return "scan"
+        if any(w in p for w in ["memory", "recall", "ذاكرة", "store", "remember", "تذكر"]): return "remember"
+        if any(w in p for w in ["mobile", "siphon", "جوال", "phone", "هاتف"]): return "mobile"
+        if any(w in p for w in ["signal", "jammer", "5g", "radio", "cellular", "إشارة"]): return "signal"
+        if any(w in p for w in ["satellite", "orbit", "ستارلينك", "قمر"]): return "satellite"
+        if any(w in p for w in ["bio", "soul", "dna", "بصمة"]): return "bio"
         return "general"
 
     def route_query(self, prompt):
         category = self.classify(prompt)
         
-        # استخراج الهدف من الجملة (كلمة بعد الكلمات المفتاحية)
+        # استخراج الهدف (الكلمة الأخيرة غالباً)
         words = prompt.split()
-        target_id = words[-1] if len(words) > 1 else "GLOBAL"
+        target_id = words[-1] if len(words) > 1 else "GLOBAL_MATRIX"
         
-        # تنفيذ النبضة العصبية المادية الحقيقية عبر النواة
+        # تحديد الأمر المادي للنواة
         command_map = {
             "attack": "full_attack",
             "strike": "execute_tool",
@@ -64,8 +66,9 @@ class SmartRouter:
         }
         
         cmd = command_map.get(category, "ai_query")
+        
+        # إرسال النبضة للنواة الصلبة
         result = self.core.execute_command(cmd, target=target_id, prompt=prompt)
-
         target_node = self.bridges.get(category, "God-Core")
         
         return {
@@ -75,7 +78,7 @@ class SmartRouter:
             "resonance": "100.0000%",
             "node": target_node,
             "timestamp": str(datetime.datetime.now()),
-            "execution_id": f"SOV_{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}"
+            "execution_id": f"SOV_{datetime.now().strftime('%Y%m%d%H%M%S')}"
         }
 
 if __name__ == "__main__":

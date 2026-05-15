@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # ==============================================================================
 # 🦅 AL-MUI'ZZ SOVEREIGN INSTALLER v90.0 - THE MATERIAL FUSION
@@ -30,12 +29,12 @@ mkdir -p "$INSTALL_DIR"/{ai-engine,core,nodes,interfaces,extras,audit,evidence,b
 # 2. تثبيت التبعيات الحقيقية (أدوات كالي + بايثون)
 echo -e "${BLUE}[*] Phase 2: Strengthening Neural Pulse (Dependencies)...${NC}"
 apt-get update -y
-apt-get install -y python3-pip nmap adb sqlite3 curl git openssl 2>/dev/null || true
+apt-get install -y python3-pip nmap adb sqlite3 curl git openssl tshark 2>/dev/null || true
 
 # استخدام --break-system-packages لتجاوز قيود بيئة كالي الحديثة
 echo -e "${BLUE}[*] Phase 2.1: Injecting Neural Python Layers...${NC}"
 pip3 install --upgrade pip --break-system-packages || true
-pip3 install --break-system-packages fastapi uvicorn pydantic requests chromadb sentence-transformers psutil watchdog --break-system-packages || true
+pip3 install --break-system-packages fastapi uvicorn pydantic requests chromadb sentence-transformers psutil watchdog langchain || true
 
 # 3. تعميد الملفات وسحق الأشباح
 echo -e "${BLUE}[*] Phase 3: Sealing Source DNA...${NC}"
@@ -44,7 +43,9 @@ cp -r . "$INSTALL_DIR/"
 
 # 4. إعداد وضع الشبح في الباش
 BASH_HOOK="bash $INSTALL_DIR/scripts/sovereign_banner.sh"
-grep -q "sovereign_banner.sh" ~/.bashrc || echo -e "\n# Al-Mu'izz Integration\n$BASH_HOOK" >> ~/.bashrc
+if [ -f "$INSTALL_DIR/scripts/sovereign_banner.sh" ]; then
+    grep -q "sovereign_banner.sh" ~/.bashrc || echo -e "\n# Al-Mu'izz Integration\n$BASH_HOOK" >> ~/.bashrc
+fi
 
 # 5. النبض النهائي
 echo -e "${GREEN}================================================${NC}"

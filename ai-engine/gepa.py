@@ -3,17 +3,14 @@
 """
 GEPA 10.0 – The Sovereign Oracle Core (النواة العليمة v3.0 FINAL)
 المسؤول عن "الذاكرة الدلالية" MemPalace والتعلم الجيني لـ 4,343 سيناريو.
-تم دمج دقة استرجاع 96.6% لضمان الانبعاث المعرفي.
 (c) 2026 Al-Mu'izz Sovereign Systems
 """
 import sqlite3
 import os
 import json
-import hashlib
 from datetime import datetime
-from typing import Dict, List
 
-BASE_DIR = os.getenv("PROJECT_ROOT", os.getcwd())
+BASE_DIR = os.getenv("PROJECT_ROOT", "/opt/sovereign-ai-platform")
 DB_PATH = os.path.join(BASE_DIR, "ai-engine/gepa_memory.db")
 
 class SovereignOracleCore:
@@ -35,8 +32,7 @@ class SovereignOracleCore:
                       weight REAL DEFAULT 1.0,
                       spatial_node TEXT DEFAULT 'GENERAL_HALL',
                       semantic_tag TEXT,
-                      n8n_workflow_id TEXT,
-                      neural_prediction TEXT)""")
+                      workflow_id TEXT)""")
         conn.commit()
         conn.close()
 
@@ -45,7 +41,7 @@ class SovereignOracleCore:
             conn = sqlite3.connect(DB_PATH)
             c = conn.cursor()
             weight = 5.0 if success else 0.1
-            c.execute("INSERT INTO memory (timestamp, tool, input_data, outcome, success, weight, spatial_node, semantic_tag, n8n_workflow_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            c.execute("INSERT INTO memory (timestamp, tool, input_data, outcome, success, weight, spatial_node, semantic_tag, workflow_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                       (datetime.now().isoformat(), tool, str(input_data), str(outcome), 1 if success else 0, weight, node or "ORBITAL_NODE", tag, workflow))
             conn.commit()
             conn.close()
@@ -69,10 +65,7 @@ class SovereignOracleCore:
             "query": query,
             "status": "RECALLED_FROM_PALACE",
             "accuracy": "96.6%",
-            "similar_past_experiences": results if results else [
-                {"strategy": "BGP_Protocol_Overwrite", "success": True, "tag": "GLOBAL_GRID"},
-                {"strategy": "Pegasus_v3_Siphon", "success": True, "tag": "MOBILE_DOMINION"}
-            ]
+            "similar_past_experiences": results
         }
 
     def get_stats(self):
@@ -80,24 +73,16 @@ class SovereignOracleCore:
             "status": "OMNISCIENT_ACTIVE",
             "version": self.version,
             "collective_resonance": "100.000000%",
-            "memory_precision": "96.6%",
-            "active_workflows": 4343,
-            "total_tools": 2983,
-            "intelligence_gain": "MAXIMAL_v3"
+            "intelligence_gain": "MAXIMAL_v10"
         }
+
+def init_db():
+    SovereignOracleCore()
 
 def record(tool, input_data, outcome, success=True, node=None, tag="", workflow=None):
     gm = SovereignOracleCore()
     gm.record(tool, input_data, outcome, success, node, tag, workflow)
 
-def get_stats():
-    gm = SovereignOracleCore()
-    return gm.get_stats()
-
 if __name__ == "__main__":
-    import sys
     gm = SovereignOracleCore()
-    if len(sys.argv) > 2 and sys.argv[1] == "recall":
-        print(json.dumps(gm.recall_semantic(sys.argv[2]), indent=2, ensure_ascii=False))
-    else:
-        print(json.dumps(get_stats(), indent=2))
+    print(json.dumps(gm.get_stats(), indent=2))

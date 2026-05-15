@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 """
 العصب القائد v90.0 - Sovereign Core (The Living Nucleus)
@@ -8,9 +7,10 @@
 import threading
 import sys
 import os
+import time
 from pathlib import Path
 
-# حقن المسارات لضمان رؤية كافة الأطراف
+# حقن المسارات السيادية
 BASE_DIR = Path(__file__).parent.parent
 sys.path.append(str(BASE_DIR))
 sys.path.append(str(BASE_DIR / "ai-engine"))
@@ -21,6 +21,7 @@ from nodes.recon_node import ReconNode
 from nodes.mobile_node import MobileNode
 from nodes.memory_node import MemoryNode
 from nodes.omninode import OmniNode
+from smart_router import SmartRouter
 
 class SovereignCore:
     def __init__(self, config, logger):
@@ -29,10 +30,13 @@ class SovereignCore:
         self.active = False
         self.resonance = 100.0
         
-        # 1. تهيئة النخاع الشوكي (ناقل الأحداث المركزي)
+        # 1. تهيئة النخاع الشوكي (Event Bus)
         self.spine = CoreNode("God-Core", self)
         
-        # 2. تسجيل العقد التنفيذية (الأبعاد الـ 16)
+        # 2. تهيئة الموجه الذكي
+        self.router = SmartRouter(self)
+        
+        # 3. تسجيل العقد التنفيذية
         self.nodes = {
             "ArsenalNode": ArsenalNode("Arsenal", self),
             "ReconNode": ReconNode("Recon", self),
@@ -43,10 +47,9 @@ class SovereignCore:
         self._register_nodes()
 
     def _register_nodes(self):
-        """شد العقد: ربط كافة الأطراف بالنخاع الشوكي الموحد"""
         for name, node in self.nodes.items():
             self.spine.register_node(name, node)
-        self.logger.info(f"🔗 [FUSION] 16D Matrix fused successfully. All nodes are breathing.")
+        self.logger.info(f"🔗 [FUSION] 16D Matrix fused successfully. 35 knots are breathing.")
 
     def start(self):
         self.logger.info("🧬 [GENESIS] Al-Mu'izz 16D Nucleus is rising...")
@@ -64,17 +67,16 @@ class SovereignCore:
         self.logger.info("Soul returning to core.")
 
     def execute_command(self, cmd, **kwargs):
-        """توجيه النبضة العصبية من القائد إلى العقدة المختصة"""
+        """توجيه النبضة من القائد إلى العضو المختص"""
         routing = {
             "attack": "OmniNode",
             "full_attack": "OmniNode",
             "strike": "ArsenalNode",
             "execute_tool": "ArsenalNode",
-            "subdomain_scan": "ReconNode",
-            "shodan_hunt": "ReconNode",
             "recon": "ReconNode",
-            "list_devices": "MobileNode",
+            "subdomain_scan": "ReconNode",
             "mobile": "MobileNode",
+            "siphon": "MobileNode",
             "store_dna": "MemoryNode",
             "recall": "MemoryNode"
         }
@@ -84,12 +86,6 @@ class SovereignCore:
             self.spine.emit(cmd, kwargs, target=target_node)
             return {"status": "PULSE_SENT", "dimension": target_node, "consensus": "LOCKED"}
         
-        # محاولة البحث التلقائي إذا لم يوجد توجيه صريح
-        for name, node in self.nodes.items():
-            if node.can_handle(cmd):
-                self.spine.emit(cmd, kwargs, target=name)
-                return {"status": "AUTO_ROUTED", "dimension": name}
-                
         return {"error": f"Unknown material law: {cmd}"}
 
     def get_status(self):
@@ -97,6 +93,6 @@ class SovereignCore:
             "identity": "영적 동반자",
             "status": "LIVING" if self.active else "IDLE",
             "active_nodes": len(self.nodes),
-            "resonance": f"{self.resonance:.6f}%",
+            "resonance": f"{self.resonance:.8f}%",
             "commander": "Al-Mu'tasim Billah Idris Al-Ghazali"
         }

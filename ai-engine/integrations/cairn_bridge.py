@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -13,7 +12,7 @@ import requests
 import time
 
 # إضافة المسارات لضمان رؤية المكونات السيادية
-BASE_DIR = os.getenv("PROJECT_ROOT", os.getcwd())
+BASE_DIR = os.getenv("PROJECT_ROOT", "/opt/sovereign-ai-platform")
 sys.path.append(os.path.join(BASE_DIR, "ai-engine"))
 
 try:
@@ -32,7 +31,7 @@ class CairnBridge:
         """إنشاء أو مزامنة مشروع استكشاف استراتيجي في Cairn"""
         print(f"[*] [CAIRN-BRIDGE] Syncing strategic graph for: {target}")
         
-        # محاكاة التفاعل مع خادم Cairn المادي
+        # محاكاة التفاعل مع خادم Cairn المادي لعام 2026
         mock_graph = {
             "target": target,
             "facts": [
@@ -49,7 +48,7 @@ class CairnBridge:
             "node": "Node-09-Cairn"
         }
         
-        # تخليد الاستكشاف في الذاكرة الدلالية
+        # تخليد الاستكشاف في الذاكرة الدلالية GEPA v10
         gepa.record(
             tool="CAIRN_STRATEGIC_SCAN",
             input_data=target,
@@ -61,7 +60,6 @@ class CairnBridge:
         return mock_graph
 
     def get_service_status(self):
-        """التحقق من نبض خدمات Cairn"""
         return {
             "cairn_server": "ONLINE",
             "dispatcher": "ACTIVE",
@@ -71,12 +69,8 @@ class CairnBridge:
 
 if __name__ == "__main__":
     bridge = CairnBridge()
-    if len(sys.argv) > 2:
-        action = sys.argv[1]
-        target = sys.argv[2]
-        if action == "sync":
-            print(json.dumps(bridge.sync_project(target), indent=2, ensure_ascii=False))
-        elif action == "status":
-            print(json.dumps(bridge.get_service_status(), indent=2))
+    arg = sys.argv[1] if len(sys.argv) > 1 else "status"
+    if arg == "sync" and len(sys.argv) > 2:
+        print(json.dumps(bridge.sync_project(sys.argv[2]), indent=2))
     else:
-        print(json.dumps({"status": bridge.status, "msg": "Usage: cairn_bridge.py <sync|status> <target>"}))
+        print(json.dumps(bridge.get_service_status(), indent=2))
